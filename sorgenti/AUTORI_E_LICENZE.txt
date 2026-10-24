@@ -1,0 +1,92 @@
+IU0VYT FLASH - AUTORI E LICENZE
+===============================
+
+IU0VYT Flash
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
+https://www.qrz.com/db/IU0VYT
+
+Questo programma è software libero: puoi ridistribuirlo e/o modificarlo secondo i
+termini della GNU General Public License come pubblicata dalla Free Software
+Foundation, versione 3 della Licenza o (a tua scelta) qualunque versione successiva
+(SPDX: GPL-3.0-or-later).
+
+Questo programma è distribuito nella speranza che sia utile, ma SENZA ALCUNA
+GARANZIA; senza neppure la garanzia implicita di COMMERCIABILITÀ o di IDONEITÀ A UN
+FINE PARTICOLARE. Vedi la GNU General Public License per maggiori dettagli.
+
+Il testo completo della licenza è nel file LICENSE.txt (copia esatta del testo
+ufficiale https://www.gnu.org/licenses/gpl-3.0.txt; SHA-256
+3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986).
+
+Chi distribuisce il programma (anche modificato) deve farlo con la stessa licenza,
+fornire il codice sorgente completo (cartella "sorgenti") e conservare questo file,
+LICENSE.txt e le note di copyright presenti nei file sorgente.
+
+
+PARTI DERIVATE DA CHIRP
+-----------------------
+Gran parte dei driver delle radio (protocolli via cavo, mappe della memoria, regole
+dei canali) e il formato dei file .img derivano da CHIRP (https://chirpmyradio.com,
+https://github.com/kk7ds/chirp), software libero distribuito con la GNU General
+Public License (versione 2 o successiva, oppure 3 o successiva, secondo il file).
+Sono stati riscritti in Go e confrontati con CHIRP (revisione 0bfb2b50e33d del
+20/10/2026). Autori indicati nei file di CHIRP usati:
+
+  chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
+  drivers/uv5r.py                           Copyright 2012 Dan Smith
+  drivers/baofeng_uv3r.py                   Copyright 2011 Dan Smith
+  drivers/uvb5.py                           Copyright 2013 Dan Smith
+  drivers/ga510.py                          Copyright 2024 Dan Smith;
+                                            portions copyright 2023 Dave Liske,
+                                            2020 Jiaxun Yang
+  drivers/baofeng_uv17Pro.py                Copyright 2023 Sander van der Wel
+  drivers/baofeng_uv17.py                   Copyright 2023 Sander van der Wel
+  drivers/baofeng_common.py                 Copyright 2016 Jim Unroe KC9HI
+  drivers/baofeng_wp970i.py                 Copyright 2016 Jim Unroe KC9HI
+  drivers/uv6r.py                           Copyright 2016 Jim Unroe KC9HI
+  drivers/uv5x3.py                          Copyright 2016 Jim Unroe KC9HI
+  drivers/bf_t8.py                          Copyright 2022 Jim Unroe
+  drivers/radtel_t18.py                     Copyright 2021 Jim Unroe
+  drivers/retevis_rt22.py                   Copyright 2016-2020 Jim Unroe
+  drivers/bf_t1.py                          Copyright 2017 Pavel Milanes CO7WT
+                                            (con PA3CQN, H. Hankins, D. Milkov)
+  drivers/h777.py                           Copyright 2013 Andrew Morgan
+  drivers/radtel_rt900.py                   Copyright 2025, 2026 Fred Trimble;
+                                            2024 Pavel Moravec OK2MOP;
+                                            2023 Jim Unroe
+  drivers/radioddity_gm30.py                Copyright 2025 Mike Iacovacci
+
+File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
+drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
+drv_h777.go, drv_small.go, drv_rt900.go, drv_ga510.go, drv_gm30.go e le radio
+simulate genemu_*.go. Grazie agli autori di CHIRP.
+
+
+ALTRI COMPONENTI INCLUSI
+------------------------
+- go-webview2, Copyright (c) 2020 John Chadwick - licenza MIT
+  (sorgenti/vendor/github.com/jchv/go-webview2/LICENSE)
+- go-winloader, Copyright (c) 2021 John Chadwick - licenza ISC
+  (sorgenti/vendor/github.com/jchv/go-winloader/LICENSE.md)
+- WebView2Loader.dll (Microsoft WebView2 SDK, componente ridistribuibile),
+  incluso in go-webview2; la finestra usa il WebView2 Runtime di Windows.
+- rardecode v2, Copyright (c) 2015 Nicholas Waples - licenza BSD a 2 clausole
+  (sorgenti/vendor/github.com/nwaples/rardecode/v2/LICENSE): lettura degli
+  archivi .rar. Dalla versione 3.1.1 sostituisce node-unrar-js/UnRAR, la cui
+  licenza non è compatibile con la GNU GPL.
+- golang.org/x/sys e golang.org/x/text, Copyright 2009 The Go Authors - licenza BSD
+  a 3 clausole (sorgenti/vendor/golang.org/x/*/LICENSE)
+- Libreria standard di Go, Copyright The Go Authors - licenza BSD a 3 clausole.
+Tutte queste licenze sono compatibili con la GNU GPL versione 3.
+
+
+MARCHI E INTEROPERABILITÀ
+-------------------------
+IU0VYT Flash è un programma indipendente, non affiliato né approvato da Baofeng o
+da Bajeton (né dagli altri marchi citati, es. Radtel, Radioddity). I nomi dei
+modelli servono solo a indicare con quali radio funziona il programma. I marchi
+appartengono ai rispettivi titolari.
+Protocolli e formati dei dati sono stati ricostruiti, per l'interoperabilità con le
+radio, dai programmi dei costruttori (art. 64-quater L. 633/1941, art. 6 Direttiva
+2009/24/CE). Il pacchetto non contiene codice, programmi o firmware dei costruttori:
+la galleria dei modelli rimanda ai loro siti ufficiali.

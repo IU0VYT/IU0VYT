@@ -1,0 +1,89 @@
+PROGRAMMA DI CONFRONTO CON IL CODICE ORIGINALE (facoltativo, per chi vuole ripetere le prove)
+=========================================================================================
+
+Questo programma .NET 8 fa girare il codice di lettura/scrittura dei due programmi
+originali (CPS.exe del K67 Pro, cartella 5RH_PRO, e BT-11_CPS.exe della Bajeton)
+collegandolo, al posto della porta COM, a una radio simulata via TCP (SerialPort.cs).
+I test Go "TestDiff..." confrontano i byte arrivati alla radio simulata dal codice
+originale con quelli inviati da IU0VYT Flash (prima GestioneCanali).
+
+Il codice dei costruttori NON è incluso. Per ricostruirlo:
+1. Decompila CPS.exe e BT-11_CPS.exe con ILSpy (es. "ilspycmd -p -o cartella file.exe").
+2. Copia senza modifiche le classi elencate in elenco_classi.txt nelle sottocartelle
+   "cps" (da CPS.exe) e "bt" (da BT-11_CPS.exe) accanto a Program.cs.
+3. dotnet build -c Release
+4. Nella cartella dei sorgenti di IU0VYT Flash (su Linux):
+     HARNESS=percorso/bin/Release/net8.0/harness.dll go test -mod=vendor -run TestDiff -v .
+
+Modalità: k67-write ind file.xlc [pwd] | k67-read ind out.xlc [pwd] | k67-save ind in out
+          bt-write ind file.dat | bt-read ind out.dat   (ind = host:porta della radio simulata)
+
+Prova dell'eseguibile Windows con porte seriali (pseudo-terminali) sotto Wine:
+     WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run TestWineSerial -v .
+
+AGGIORNAMENTO DEL FIRMWARE (cartella "anc")
+Il programma .NET 8 "anc/harness" carica l'eseguibile ORIGINALE "BinTe ANC Bootloader.exe"
+(V1.1, dal pacchetto del firmware del costruttore) e ne fa girare la classe BootHelper,
+senza decompilarla. Le librerie che su .NET 8 mancano sono sostituite da due piccoli
+programmi: "anc/ports" (System.IO.Ports.SerialPort: la porta diventa un collegamento TCP
+con la radio simulata, che riceve anche aperture, chiusure e cambi di velocità) e
+"anc/config" (impostazioni del programma: velocità predefinita).
+1. cd verifica/anc/harness && dotnet build -c Release   (nessun pacchetto da scaricare)
+2. Nella cartella dei sorgenti di IU0VYT Flash (su Linux):
+     ANC_HARNESS=$PWD/verifica/anc/harness/bin/Release/net8.0/anc_harness.dll \
+     ANC_EXE="percorso/BinTe ANC Bootloader.exe" \
+     ANC_REAL=percorso/BJ8300_V0.12_20251112.anc \
+     go test -mod=vendor -run TestDiffAnc -v .
+   ANC_REAL è facoltativa (aggiunge la prova con il firmware vero).
+Prova dell'aggiornamento con l'eseguibile Windows sotto Wine (porta COM9 su pseudo-terminale):
+     WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run TestWineFirmware -v .
+
+AGGIORNAMENTO DEL FIRMWARE BAOFENG (cartelle "bf" e "rh5", versione 3.0)
+UV-5RM/UV-5RH (.BF): il programma "bf/harness" carica l'eseguibile ORIGINALE
+"BF_Upgrade_Tool_for_TFT_330L_Series.exe" (升级工具_V1.0) e ne fa girare la classe
+KDH_Bootloader.BootHelper, senza decompilarla, con la stessa porta simulata della
+cartella "anc" (anc/ports).
+1. cd verifica/bf/harness && dotnet build -c Release
+2. Nella cartella dei sorgenti:
+     BF_HARNESS=$PWD/verifica/bf/harness/bin/Release/net8.0/bf_harness.dll \
+     BF_EXE="percorso/BF_Upgrade_Tool_for_TFT_330L_Series.exe" \
+     BF_REAL=cartella_con_file_BF \
+     go test -mod=vendor -run 'TestDiffKdh|TestAnalyzeBaofeng' -v .
+   BF_REAL è facoltativa (aggiunge le prove con i firmware veri).
+5RH Pro (.dat): il programma "rh5/harness" compila la classe PortComm di Radio.exe
+(programma di aggiornamento della 5RH Pro) copiata SENZA MODIFICHE dalla
+decompilazione nella cartella rh5/harness/orig (non inclusa: decompila Radio.exe con
+ILSpy e salva la classe Radio.PortComm in orig/PortComm.cs, con gli "using" e il
+"namespace Radio"); Stubs.cs sostituisce le parti della finestra principale che usa.
+1. cd verifica/rh5/harness && dotnet build -c Release
+2. Nella cartella dei sorgenti:
+     RH5_HARNESS=$PWD/verifica/rh5/harness/bin/Release/net8.0/rh5_harness.dll \
+     RH5_REAL=cartella_con_file_dat \
+     go test -mod=vendor -run 'TestDiffRh5' -v .
+
+DRIVER DI CHIRP (cartella "chirp", versione 3.0)
+chirp/chirpref.py fa girare il CHIRP vero (sorgenti di https://github.com/kk7ds/chirp)
+per i confronti: lettura dei canali, modifiche, posizione dei campi, colloquio via cavo
+con le radio simulate (collegamento TCP).
+     CHIRP_DIR=percorso/dei/sorgenti/di/chirp \
+     go test -mod=vendor -run 'TestChirp(Decode|Encode|Layout|Clone)' -v .
+   (CHIRP_MODEL=bf-uv5r limita TestChirpClone a un modello).
+
+FIRMWARE UV-25 PLUS, UV-9G E BJ-9000 (cartella "bf", versione 3.1)
+Lo stesso "bf/harness" carica anche gli eseguibili ORIGINALI dei tre programmi con la
+classe KDH_Bootloader.BootHelper: "Baofeng Bootloader Pro.exe" (UV-25 Plus, .kdhx),
+"Bootloader_BaudRate38400.exe" (UV-9G, .kdh) e "BJ9000_EnUPDATE.exe" (BJ-9000,
+.Firmware). Il quinto argomento del harness è la velocità di apertura della porta
+(quella dei pulsanti del programma).
+     BF_HARNESS=$PWD/verifica/bf/harness/bin/Release/net8.0/bf_harness.dll \
+     KDHX_EXE="percorso/Baofeng Bootloader Pro.exe" \
+     K9G_EXE="percorso/Bootloader_BaudRate38400.exe" \
+     BJ9000_EXE="percorso/BJ9000_EnUPDATE.exe" \
+     KDH2_REAL=cartella_con_i_firmware_ufficiali \
+     go test -mod=vendor -run 'TestDiffKdh2' -v .
+
+DRIVER DI CHIRP (versione 3.1)
+BJ-7700 (RT910BT, RT910), serie H (RadioddityGA510Radio) e GM-15 Pro (BaofengGM15Pro)
+si provano con gli stessi test. chirpref.py, come l'interfaccia di CHIRP, non
+riassegna un campo non modificabile (immutable) se il valore non cambia (necessario per
+i canali in sola ricezione della GM-15 Pro).

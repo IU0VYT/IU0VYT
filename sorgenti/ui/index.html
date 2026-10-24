@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IU0VYT Flash</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="topbar">
+  <div class="brand"><img src="icona.png" alt="" class="brandicon">IU0VYT Flash</div>
+  <nav id="tabs">
+    <button class="tab" data-tab="gal" title="Tutti i modelli Baofeng e Bajeton: canali, ponti e firmware">📻 Modelli</button>
+    <button class="tab" data-tab="k67">Baofeng K67 Pro <span class="dot" id="dot-k67"></span></button>
+    <button class="tab" data-tab="baj">Bajeton 8300 <span class="dot" id="dot-baj"></span></button>
+    <span id="radiotabs"></span>
+    <button class="tab" data-tab="arch">Archivio ponti <span class="count" id="arch-count"></span></button>
+    <button class="tab" data-tab="info">ℹ Info</button>
+  </nav>
+  <div class="spacer"></div>
+  <button class="btn ghost" id="btn-upd" title="Verifica se è disponibile una versione più recente di IU0VYT Flash">🔄 Aggiornamenti</button>
+  <button class="btn ghost" id="btn-help" title="Guida rapida e scorciatoie (F1)">? Guida</button>
+  <button class="btn ghost" id="btn-quit" title="Chiudi il programma">Esci</button>
+</header>
+
+<main>
+  <section class="page" id="page-gal"></section>
+  <section class="page" id="page-k67"></section>
+  <section class="page" id="page-baj"></section>
+  <section class="page" id="page-arch"></section>
+  <section class="page" id="page-info"></section>
+</main>
+
+<div id="toast"></div>
+<div id="busy"><div class="spinner"></div><div id="busy-text">Attendere…</div></div>
+<div id="modal-root"></div>
+
+<script src="util.js"></script>
+<script src="grid.js"></script>
+<script src="filters.js"></script>
+<script src="radio.js"></script>
+<script src="archive.js"></script>
+<script src="dialogs.js"></script>
+<script src="firmware.js"></script>
+<script src="gallery.js"></script>
+<script src="info.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

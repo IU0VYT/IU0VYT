@@ -1,0 +1,34 @@
+// Risorse dell'eseguibile Windows (icona e proprietà del file).
+// Ricompilare (nella cartella res) con:
+//   x86_64-w64-mingw32-windres --preprocessor=cpp --preprocessor-arg=-xc-header -O coff -i risorse.rc -o ../rsrc_windows_amd64.syso
+#pragma code_page(65001)
+1 ICON "icona.ico"
+
+1 VERSIONINFO
+ FILEVERSION 3,1,2,0
+ PRODUCTVERSION 3,1,2,0
+ FILEFLAGSMASK 0x3f
+ FILEFLAGS 0x0
+ FILEOS 0x40004
+ FILETYPE 0x1
+ FILESUBTYPE 0x0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "041004b0"
+    BEGIN
+      VALUE "CompanyName", "IU0VYT"
+      VALUE "FileDescription", "IU0VYT Flash - canali, ponti e firmware delle radio Baofeng e Bajeton"
+      VALUE "FileVersion", "3.1.2.0"
+      VALUE "InternalName", "IU0VYT Flash"
+      VALUE "LegalCopyright", "Copyright (C) 2026 Daniele ""IU0VYT"" Bonifazi - GNU GPL v3 o successiva"
+      VALUE "OriginalFilename", "IU0VYT Flash.exe"
+      VALUE "ProductName", "IU0VYT Flash"
+      VALUE "ProductVersion", "3.1.2"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x410, 1200
+  END
+END
