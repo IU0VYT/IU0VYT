@@ -82,6 +82,11 @@ type fwInfo struct {
 	Valid    bool      `json:"valid"`    // si può inviare alla radio
 	Warnings bool      `json:"warnings"` // servono conferme in più
 	Saved    string    `json:"saved,omitempty"`
+	// Typed: conferma scritta del modello in ogni modalità (firmware per una
+	// radio diversa da quelle per cui il costruttore lo pubblica)
+	Typed bool `json:"typed,omitempty"`
+	// Models: driver delle radio a cui il file è destinato (dal nome del file)
+	Models []string `json:"models,omitempty"`
 }
 
 type fwImage struct {

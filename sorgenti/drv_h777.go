@@ -5,6 +5,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: h777.py.
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 
@@ -101,6 +103,18 @@ func init() {
 		mk("bf-1904", "BF-1904", "BF1904Radio", "Baofeng BF-1904", 16, b19, pw(10), []band{{400000000, 520000000}}),
 		mk("bf-1909", "BF-1909", "BF1909Radio", "Baofeng BF-1909", 16, b1909, pw(5), []band{{400000000, 520000000}}),
 	)
+	// Baofeng BF-9700 (e BF-S56 Max): come la BF-1909 (stessi identificativi
+	// «P3107»/«P320h», stesso comando «PWPG970» del programma WP970), ma con la
+	// EEPROM letta fino a 0x0400. Driver proposto per CHIRP da chi lo usa sulle
+	// proprie BF-9700 (segnalazione #11696 di CHIRP): lettura e scrittura provate
+	// sulle radio vere; si scrivono le stesse aree della BF-1909.
+	b9700 := b1909
+	b9700.memsize = 0x0400
+	x9700 := mk("bf-9700", "BF-1909", "BF1909Radio", "Baofeng BF-9700 / BF-S56 Max", 16, b9700, pw(5), []band{{400000000, 520000000}})
+	x9700.NoChirp = true
+	x9700.Notes = "Radio senza display: i canali non hanno nome. Stessa memoria della BF-1909 di CHIRP (nei file .img " +
+		"compare come BF-1909); driver segnalato a CHIRP da un utente che lo usa in lettura e scrittura sulle sue BF-9700."
+	genRegister(x9700)
 	// Baofeng BF-C2 / BF-V2 e BF-88ST: i programmi del costruttore (BF_V1_FH,
 	// «RT69») usano lo stesso protocollo, la stessa memoria e lo stesso
 	// identificativo («P3107», riscritto al contrario in 0x3D0) della BF-888S.
@@ -368,7 +382,11 @@ func (f h777Fam) Download(ctx context.Context, m *genModel, port string, prog Pr
 
 func (f h777Fam) Upload(ctx context.Context, m *genModel, port string, img []byte, prog Progress) (string, error) {
 	o := h777o(m)
-	if len(img) < o.memsize {
+	need := 0
+	for _, r := range o.ranges {
+		need = max(need, r[1])
+	}
+	if len(img) < need {
 		return "", fmt.Errorf("immagine della memoria incompleta")
 	}
 	s, err := h777Open(ctx, port)

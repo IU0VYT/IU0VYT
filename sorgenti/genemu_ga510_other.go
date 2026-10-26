@@ -7,6 +7,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: ga510.py.
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 
@@ -34,7 +36,11 @@ func (ga510Fam) emu(m *genModel, img []byte) genEmu {
 	return e
 }
 
-func (e *ga510Emu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return append([]byte{}, e.img...) }
+func (e *ga510Emu) image() []byte {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]byte{}, e.img...)
+}
 
 func (e *ga510Emu) serve(p Port) error {
 	o := ga510o(e.m)

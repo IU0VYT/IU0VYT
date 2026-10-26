@@ -56,7 +56,8 @@ func chirpRef(t *testing.T, args ...string) []byte {
 
 // immagine di prova per il modello: quella di CHIRP del modello, o della famiglia
 var chirpTestImage = map[string]string{
-	"bf-v8a": "Radtel_T18.img",
+	"bf-v8a":  "Radtel_T18.img",
+	"bf-g11s": "Retevis_RB27.img",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {

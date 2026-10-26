@@ -5,6 +5,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: bitwise.py (formato delle mappe della memoria).
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 

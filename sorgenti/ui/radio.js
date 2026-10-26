@@ -24,7 +24,7 @@ function genRadioDef(g, fw) {
   return {
     kind: g.kind, name: g.name, ext: '.img', slots: g.slots, nameMax: g.nameMax || 0, powers, powerLabels: labels,
     hasScan: g.hasScan, zones: g.zones || 0, perZone: g.perZone || 0, first: g.first, narrow: g.narrow, bands: g.bands || [],
-    dcs: new Set(g.dcs || []), charset: g.charset || '', noTxOff: g.noTxOff, notes: g.notes || '', generic: true, fw: fw || '',
+    dcs: new Set(g.dcs || []), charset: g.charset || '', noTxOff: g.noTxOff, notes: g.notes || '', generic: true, fw: fw || '', digital: g.digital || '',
   };
 }
 
@@ -149,13 +149,16 @@ class RadioView {
       { key: 'tx', title: 'TX (MHz)', width: 100, cls: 'num', text: r => r.ch ? (r.ch.txOff ? 'OFF' : fmtMHz(r.ch.tx)) : '',
         tip: d.generic && !d.noTxOff ? 'Frequenza di trasmissione; OFF = canale di sola ricezione' : '',
         bad: r => r.ch && !r.ch.txOff && this.outOfBand(r.ch.tx), edit: { type: 'text', value: r => r.ch ? (r.ch.txOff ? 'OFF' : fmtMHz(r.ch.tx)) : '' } },
-      { key: 'txTone', title: 'Tono TX', width: 76, cls: 'num', text: r => r.ch ? fmtTone(r.ch.txTone) : '', tip: 'Subtono trasmesso (per aprire il ponte): CTCSS es. 88.5, oppure DCS es. D023N / D023I',
+      { key: 'txTone', title: 'Tono TX', width: 76, cls: 'num', text: r => r.ch ? (r.ch.dig ? '—' : fmtTone(r.ch.txTone)) : '', tip: 'Subtono trasmesso (per aprire il ponte): CTCSS es. 88.5, oppure DCS es. D023N / D023I',
         edit: { type: 'tone', value: r => r.ch ? r.ch.txTone : '' } },
-      { key: 'rxTone', title: 'Tono RX', width: 76, cls: 'num', text: r => r.ch ? fmtTone(r.ch.rxTone) : '', tip: 'Subtono in ricezione (squelch a tono): CTCSS es. 88.5, oppure DCS es. D023N / D023I',
+      { key: 'rxTone', title: 'Tono RX', width: 76, cls: 'num', text: r => r.ch ? (r.ch.dig ? '—' : fmtTone(r.ch.rxTone)) : '', tip: 'Subtono in ricezione (squelch a tono): CTCSS es. 88.5, oppure DCS es. D023N / D023I',
         edit: { type: 'tone', value: r => r.ch ? r.ch.rxTone : '' } },
       { key: 'power', title: 'Potenza', width: d.powerLabels ? 96 : 72, text: r => r.ch ? powerLabel(d, r.ch.power) : '',
         edit: { type: 'select', options: () => d.powers.map(p => ({ value: p, label: powerLabel(d, p) })), value: r => r.ch ? r.ch.power : 0 } },
     ];
+    if (d.digital) cols.splice(2, 0, { key: 'mode', title: 'Modo', width: 86, text: r => r.ch ? (r.ch.dig ? d.digital : 'Analogico') : '',
+      tip: 'Canale analogico (FM) o digitale (' + d.digital + '); sui canali digitali i subtoni non si usano e le impostazioni digitali restano quelle della radio',
+      edit: { type: 'select', options: [{ value: '0', label: 'Analogico' }, { value: '1', label: d.digital }], value: r => r.ch && r.ch.dig ? '1' : '0' } });
     if (d.narrow !== false) cols.push({ key: 'narrow', title: 'Banda', width: 70, text: r => r.ch ? (r.ch.narrow ? 'Stretta' : 'Larga') : '', tip: 'Larghezza di banda: Larga 25 kHz, Stretta 12,5 kHz',
       edit: { type: 'select', options: [{ value: '0', label: 'Larga' }, { value: '1', label: 'Stretta' }], value: r => r.ch && r.ch.narrow ? '1' : '0' } });
     if (d.hasScan) cols.push({ key: 'scan', title: 'Scan', width: 52, text: r => r.ch ? (r.ch.scan ? 'Sì' : 'No') : '',
@@ -675,6 +678,7 @@ class RadioView {
       }
       case 'txTone': case 'rxTone': {
         if (!ch) return null;
+        if (ch.dig) return 'Canale digitale: i subtoni si usano solo sui canali analogici (cambia prima il modo)';
         if (val === fmtTone(ch[col.key])) return null;
         const t = normTone(val);
         if (t == null) return 'Tono non valido: scrivi un subtono CTCSS standard (es. 67.0, 88.5), un codice DCS (es. D023N, D023I invertito) oppure lascia vuoto per OFF';
@@ -693,6 +697,10 @@ class RadioView {
         break;
       }
       case 'power': if (!ch) return null; ch.power = +val; break;
+      case 'mode':
+        if (!ch) return null;
+        if (val === '1') { ch.dig = true; ch.txTone = ''; ch.rxTone = ''; } else delete ch.dig;
+        break;
       case 'narrow': if (!ch) return null; ch.narrow = val === '1'; break;
       case 'scan': if (!ch) return null; ch.scan = val === '1'; break;
       default: return null;

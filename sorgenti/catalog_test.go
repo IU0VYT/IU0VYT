@@ -60,4 +60,3 @@ func TestCatalog(t *testing.T) {
 	}
 	t.Logf("%d modelli nel catalogo, %d driver generici", len(catalog), len(genModels))
 }
-

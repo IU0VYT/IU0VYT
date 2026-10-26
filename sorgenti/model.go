@@ -31,6 +31,8 @@ type Chan struct {
 	Raw    string `json:"raw,omitempty"`
 	// trasmissione disabilitata sul canale (solo ricezione); Tx = Rx
 	TxOff bool `json:"txOff,omitempty"`
+	// canale digitale (DMR, o digitale criptato sulle PMR della serie D): i toni non si usano
+	Dig bool `json:"dig,omitempty"`
 }
 
 type Report struct {

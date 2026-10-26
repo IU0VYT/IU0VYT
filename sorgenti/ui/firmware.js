@@ -38,8 +38,8 @@ const Firmware = {
   // ------------------------------------------------------------ finestra principale
   // expect: tipo di firmware della radio da cui si apre la finestra ('anc' | 'bf' | 'rh5' | 'kdhx' | 'bj9000' | 'kdh9g'), radioKind: scheda d'origine
   open(expect, radioKind) {
-    const TARGET = { anc: 'Bajeton BJ-8300 / BJ-7800 / BJ-7700', bf: 'Baofeng UV-5RM / UV-5RH', rh5: 'Baofeng 5RH Pro / K67 Pro',
-      kdhx: 'Baofeng UV-25 Plus', bj9000: 'Bajeton BJ-9000', kdh9g: 'Baofeng UV-9G' };
+    const TARGET = { anc: 'Bajeton BJ-8300 / BJ-7800 / BJ-7700', bf: 'Baofeng UV-5RM / UV-5RH e radio con lo stesso caricatore', rh5: 'Baofeng 5RH Pro / K67 Pro',
+      kdhx: 'Baofeng UV-25 Plus e radio con il caricatore «Bootloader Pro»', bj9000: 'Bajeton BJ-9000', kdh9g: 'Baofeng UV-9G' };
     const PROTO = {
       anc: 'quello del programma originale «BinTe ANC Bootloader» V1.1',
       bf: 'quello del programma originale «BF Upgrade Tool for TFT 330L Series» (KDH Bootloader V1.0)',
@@ -50,7 +50,7 @@ const Firmware = {
     };
     // caricatori KDH recenti: istruzioni del costruttore e velocità
     const BOOT = {
-      kdhx: { manual: 'radio spenta: tieni premuti <b>SK2 e SK3</b> (i due tasti sotto il PTT) e accendila; l\'indicatore diventa verde. È la procedura indicata da Baofeng',
+      kdhx: { manual: 'radio spenta: tieni premuti <b>SK2 e SK3</b> (i due tasti sotto il PTT) e accendila; l\'indicatore diventa verde. È la procedura indicata da Baofeng per la UV-25 Plus (per le altre radio segui le istruzioni fornite con il firmware)',
         auto: 'la radio accesa viene portata nel caricatore dal programma (pulsante «自动升级»); prima 9600 baud, poi 115200', speed: 'Velocità come nel programma originale: 9600 baud per la richiesta, 115200 per il firmware.' },
       bj9000: { manual: 'radio spenta: tieni premuti i <b>tasti laterali 3 e 4</b> e accendila; compare la schermata «Update» (pulsante «Flashing Mode»)',
         auto: 'la radio accesa viene portata nel caricatore dal programma (pulsante «Upgrade Mode»)', speed: 'Velocità fissa 115200 baud, come nel programma originale. La radio controlla che il firmware sia per il suo modello prima di cancellare la memoria.' },
@@ -58,10 +58,20 @@ const Firmware = {
         auto: 'la radio accesa viene portata nel caricatore dal programma (prima 9600 baud, poi 38400)', speed: 'Velocità come nel programma originale: 38400 baud per il firmware.' },
     };
     const isBoot = k => !!BOOT[k];
-    const fwModels = k => App.catalog.filter(c => c.fw === k && (c.drivers || []).some(d => App.defs[d])).map(c => ({ id: c.drivers.find(d => App.defs[d]), name: c.brand + ' ' + c.name }));
+    // radio per la copia di sicurezza: .BF e .kdhx insieme (stesse famiglie di radio)
+    const fwFam = k => (k === 'bf' || k === 'kdhx') ? ['bf', 'kdhx'] : [k];
+    const fwModels = k => {
+      const seen = new Map();
+      App.catalog.filter(c => fwFam(k).includes(c.fw) && (c.drivers || []).some(d => App.defs[d])).forEach(c => {
+        const id = c.drivers.find(d => App.defs[d]);
+        seen.set(id, seen.has(id) ? seen.get(id) + ' / ' + c.name : c.brand + ' ' + c.name);
+      });
+      return [...seen].map(([id, name]) => ({ id, name }));
+    };
     const bfModels = fwModels('bf');
     let fw = null, running = false, timer = null, identified = null, settings = {};
     const kind = () => (fw && fw.kind) || expect || '';
+    const radioName = () => (radioKind && App.defs[radioKind] && App.defs[radioKind].name) || TARGET[expect] || 'questa radio';
     const m = openModal(`<div class="dialog mid fwdlg"><header>⬆ Aggiornamento del firmware${expect ? ' — ' + esc(TARGET[expect]) : ''}</header><div class="body">
       <div data-setup>
         <h4 class="fwh"><span class="num">1</span> Firmware</h4>
@@ -111,7 +121,7 @@ const Firmware = {
           <div class="row" data-bfbackup><label class="l">Sicurezza</label><label><input type="checkbox" data-bfbk> prima leggi la radio e salva una copia dei canali (.img) come</label>
             <select data-bfmodel>${bfModels.map(b => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('')}</select></div>
           <div data-bfman class="fwbox" style="display:none"><b>Modalità manuale.</b>
-            <ol><li>Spegni la radio e collega il cavo.</li><li>Riaccendila tenendo premuto il <b>PTT</b>: lo schermo resta spento.</li><li>Premi «Avvia aggiornamento».</li></ol></div>
+            <ol><li>Spegni la radio e collega il cavo.</li><li>Riaccendila tenendo premuto il <b>PTT</b>: lo schermo resta spento (procedura della UV-5RM/5RH; per le altre radio segui le istruzioni fornite con il firmware).</li><li>Premi «Avvia aggiornamento».</li></ol></div>
           <p class="note">Velocità fissa 115200 baud, come nel programma originale.</p>
         </div>
         <div data-panel="rh5" style="display:none">
@@ -178,7 +188,13 @@ const Firmware = {
     };
 
     const needTyped = () => (kind() === 'anc' && (mode() === 'recovery' || $('[data-skip]', el).checked)) ||
-      kind() === 'kdh9g' || (kind() === 'kdhx' && btmode() === 'manual');
+      kind() === 'kdh9g' || (kind() === 'kdhx' && btmode() === 'manual') || !!(fw && fw.typed) || otherModel();
+    // radio scelta nella finestra diversa da quelle a cui è destinato il file
+    const otherModel = () => {
+      if (!fw || !fw.models || !fw.models.length) return false;
+      const x = $(kind() === 'bf' ? '[data-bfmodel]' : '[data-btmodel]', el);
+      return !!(x && x.value && !fw.models.includes(x.value));
+    };
     const refresh = () => {
       const k = kind();
       $('[data-nokind]', el).style.display = k ? 'none' : '';
@@ -225,11 +241,12 @@ const Firmware = {
       const icon = { ok: '✔', warn: '⚠', bad: '✖' };
       card.style.display = '';
       card.className = 'fwcard ' + (!fw.valid ? 'bad' : fw.warnings ? 'warn' : 'ok');
-      const other = expect && fw.kind !== expect;
+      // radio della scheda d'origine diversa da quella indicata dal file
+      const other = radioKind && fw.models && fw.models.length ? !fw.models.includes(radioKind) : expect && fw.kind !== expect;
       card.innerHTML = `<div class="fwtitle">${fw.valid ? (fw.warnings ? '⚠' : '✅') : '❌'} <b>${esc(fw.name)}</b>
           ${fw.version ? `<span class="tag">${esc(fw.version)}</span>` : ''}${fw.date ? `<span class="tag">${esc(fw.date)}</span>` : ''}</div>
         <div class="note">Per: <b>${esc(fw.target)}</b>${fw.hw ? ' · ' + esc(fw.hw) : ''}</div>
-        ${other ? `<div class="fwbad">Attenzione: questo firmware è per ${esc(fw.target)}, non per ${esc(TARGET[expect])} (la radio della scheda da cui hai aperto questa finestra).</div>` : ''}
+        ${other ? `<div class="fwbad">Attenzione: questo firmware è per ${esc(fw.target)}, non per ${esc(radioName())} (la radio della scheda da cui hai aperto questa finestra).</div>` : ''}
         <div class="note">${esc(fmtSize(fw.size))} · da ${esc(fw.origin)}${fw.saved ? ' · copia salvata in ' + esc(fw.saved) : ''}</div>
         <div class="note">SHA-256 ${esc(fw.sha256)}</div>
         <ul class="fwchecks">${fw.checks.map(c => `<li class="${c.level}"><span>${icon[c.level]}</span> ${esc(c.text)}</li>`).join('')}</ul>
@@ -237,7 +254,14 @@ const Firmware = {
         ${!fw.valid ? '<p style="margin:6px 0 0"><b>Questo file non può essere inviato alla radio.</b></p>' : ''}`;
       $('[data-acceptwarn]', el).checked = false;
       $('[data-confirm]', el).checked = false;
+      $('[data-typed]', el).value = '';
       refresh();
+      // copia di sicurezza: la radio indicata dal file, se non si è partiti da una scheda
+      const pre = (fw.models || []).find(id => id === radioKind) || (fw.models || [])[0];
+      for (const s of ['[data-bfmodel]', '[data-btmodel]']) {
+        const x = $(s, el);
+        if (pre && x && [...x.options].some(o => o.value === pre) && !(radioKind && [...x.options].some(o => o.value === radioKind))) x.value = pre;
+      }
     };
     const loadFw = async (req) => {
       try {
@@ -374,7 +398,7 @@ const Firmware = {
       let req, how;
       if (k === 'bf') {
         const auto = bfmode() === 'auto';
-        req = Object.assign(base, { mode: bfmode(), backup: auto && bfModels.length > 0 && $('[data-bfbk]', el).checked, model: $('[data-bfmodel]', el).value });
+        req = Object.assign(base, { mode: bfmode(), backup: auto && bfModels.length > 0 && $('[data-bfbk]', el).checked, model: $('[data-bfmodel]', el).value, confirmText: $('[data-typed]', el).value });
         how = auto ? 'La radio accesa verrà portata nel caricatore' + (req.backup ? ' dopo averne salvato una copia dei canali' : '') + '.\n'
           : 'La radio deve essere già nel caricatore (accesa tenendo premuto il PTT, schermo spento).\n';
       } else if (isBoot(k)) {

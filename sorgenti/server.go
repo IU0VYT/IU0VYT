@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "3.1.2"
+const appVersion = "3.5"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -49,7 +49,7 @@ type radioSession struct {
 	Path string
 	Base []byte
 	Meta map[string]interface{} // metadati del file .img (radio generiche)
-	K6   bool // dati letti da una radio che si è identificata come BF-K6
+	K6   bool                   // dati letti da una radio che si è identificata come BF-K6
 }
 
 type App struct {

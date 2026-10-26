@@ -5,6 +5,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: formato dei file .img (chirp_common.py, directory.py).
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 
@@ -57,7 +59,7 @@ type genModel struct {
 	Bands   []band // gamme di frequenza accettate
 	Narrow  bool   // banda stretta disponibile
 	HasScan bool
-	NoTxOff bool  // la radio non permette di disabilitare la trasmissione sul canale
+	NoTxOff bool // la radio non permette di disabilitare la trasmissione sul canale
 	// NoChirp: modello non presente in CHIRP (protocollo ricavato dal programma del
 	// costruttore); RClass è la classe di CHIRP con la stessa mappa della memoria
 	NoChirp bool
@@ -67,6 +69,7 @@ type genModel struct {
 	Fam     genFamily
 	Opt     interface{} // parametri della famiglia
 	Notes   string      // avvertenze mostrate nella finestra del cavo
+	Digital string      // nome dei canali digitali ("" = radio solo analogica)
 }
 
 // genFamily: operazioni di una famiglia di radio.
@@ -217,6 +220,9 @@ func genValidate(m *genModel, c *Chan, i int) error {
 	}
 	if !c.TxOff && (c.Tx <= 0 || c.Tx >= 1e9*2) {
 		return fmt.Errorf("canale %d: frequenza TX non valida", i+m.First)
+	}
+	if c.Dig && m.Digital == "" {
+		return fmt.Errorf("canale %d: canale digitale, ma questa radio ha solo canali analogici", i+m.First)
 	}
 	if c.TxOff && m.NoTxOff {
 		return fmt.Errorf("canale %d: questa radio non permette di disabilitare la trasmissione sul canale", i+m.First)
@@ -496,12 +502,13 @@ type genDef struct {
 	PerZone int        `json:"perZone"`
 	Vendor  string     `json:"vendor"`
 	Model   string     `json:"model"`
+	Digital string     `json:"digital,omitempty"`
 }
 
 func (m *genModel) def() genDef {
 	d := genDef{Kind: m.ID, Name: m.Name, Ext: ".img", Slots: m.Slots, First: m.First, NameMax: m.NameMax,
 		Powers: m.Powers, Bands: m.Bands, Narrow: m.Narrow, HasScan: m.HasScan, Charset: m.Charset, Notes: m.Notes,
-		NoTxOff: m.NoTxOff, Zones: m.Zones, Vendor: m.Vendor, Model: m.Model}
+		NoTxOff: m.NoTxOff, Zones: m.Zones, Vendor: m.Vendor, Model: m.Model, Digital: m.Digital}
 	if m.Zones > 0 {
 		d.PerZone = m.Slots / m.Zones
 	}

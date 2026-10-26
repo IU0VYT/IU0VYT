@@ -32,6 +32,67 @@ function chiavePonte(p) {
 }
 
 const Dialogs = {
+  // ------------------------------------------------------------ scelta della radio
+  // elenco di tutte le radio compatibili, una voce per modello (anche quando più
+  // modelli hanno la stessa gestione) e, se la radio esiste in più versioni, una
+  // voce per versione; diviso per marca e tipologia, in ordine alfabetico
+  radioChoices() {
+    const seen = new Set(), out = [];
+    for (const c of App.catalog) {
+      const drv = (c.drivers || []).filter(d => d === 'k67' || d === 'baj' || App.defs[d]);
+      for (const d of drv) {
+        const def = RADIO_DEF[d] || App.defs[d];
+        const version = drv.length > 1 ? def.name.replace(/^(Baofeng|Bajeton|Radioddity)\s+/, '') : '';
+        const key = c.brand + '|' + c.name + '|' + d;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push({ kind: d, name: c.name, brand: c.brand, type: c.type, version, driver: def.name, id: c.id });
+      }
+    }
+    const bOrder = b => b === 'Baofeng' ? 0 : b === 'Bajeton' ? 1 : 2;
+    const tOrder = t => { const i = TYPE_ORDER.indexOf(t); return i < 0 ? 99 : i; };
+    out.sort((a, b) => bOrder(a.brand) - bOrder(b.brand) || a.brand.localeCompare(b.brand) || tOrder(a.type) - tOrder(b.type) ||
+      byModelName(a, b) || a.version.localeCompare(b.version, 'it', { numeric: true }));
+    return out;
+  },
+
+  // restituisce { kind, label } della voce scelta (o null)
+  pickRadio(title, text) {
+    const all = Dialogs.radioChoices();
+    return new Promise(res => {
+      const m = openModal(`<div class="dialog mid"><header>${esc(title)}</header><div class="body">
+        <p>${esc(text)}</p>
+        <div class="row"><input type="search" data-q placeholder="Cerca il modello (es. UV-5R, K67, BJ-7700)…" style="flex:1" autofocus></div>
+        <div class="radiopick" data-list></div>
+        <p class="note">Le radio già aperte nel programma sono indicate con ●. Se la radio non è ancora stata letta, potrai leggerla via cavo o aprirne un file.
+          Prima di scrivere viene controllato che i dati scelti siano compatibili con la radio.</p>
+        </div><footer><button class="btn" data-no>Annulla</button></footer></div>`, { onEsc: () => { m.close(); res(null); } });
+      const list = $('[data-list]', m.el);
+      const draw = () => {
+        const q = normKeyJS($('[data-q]', m.el).value);
+        const its = all.filter(r => !q || normKeyJS(r.name + ' ' + r.version + ' ' + r.driver).includes(q));
+        let html = '', brand = '', type = '';
+        its.forEach((r, i) => {
+          if (r.brand !== brand) { brand = r.brand; type = ''; html += `<div class="radiopick-brand">${esc(brand)}</div>`; }
+          if (r.type !== type) { type = r.type; html += `<div class="radiopick-type">${esc(TYPE_GROUP[type] || type)}</div>`; }
+          const open = Views[r.kind] && (Views[r.kind].loaded || r.kind === App.lastRadio);
+          const same = normKeyJS(r.driver).includes(normKeyJS(r.name));
+          const extra = r.version ? `versione ${r.version}` : same ? '' : `gestione: ${r.driver}`;
+          html += `<button class="radiopick-item" data-i="${i}">${open ? '● ' : ''}${esc(r.name)}${extra ? ` <span class="note">(${esc(extra)})</span>` : ''}</button>`;
+        });
+        list.innerHTML = html || '<p class="note">Nessun modello trovato.</p>';
+        $$('[data-i]', list).forEach(b => b.onclick = () => {
+          const r = its[+b.dataset.i];
+          m.close();
+          res({ kind: r.kind, label: r.brand + ' ' + r.name + (r.version ? ' (' + r.version + ')' : ''), type: r.type });
+        });
+      };
+      $('[data-q]', m.el).addEventListener('input', draw);
+      $('[data-no]', m.el).onclick = () => { m.close(); res(null); };
+      draw();
+    });
+  },
+
   // ------------------------------------------------------------ inserimento in una radio
   async insertInto(view, chans, srcKind) {
     if (!chans.length) return;
@@ -336,6 +397,8 @@ const Dialogs = {
           <datalist id="url-list">${urls.map(u => `<option value="${esc(u)}">`).join('')}</datalist>
           <button class="btn small" data-ik2ane title="Ripristina l'indirizzo dell'elenco di IK2ANE">IK2ANE</button>
         </div>
+        <div class="ik2ane-credit small">📡 L'elenco dei ponti radio italiani è curato e messo a disposizione gratuitamente da <b>IK2ANE</b>
+          (<a href="#" data-link="https://www.ik2ane.it">www.ik2ane.it</a>): grazie a lui per questo servizio alla comunità radioamatoriale.</div>
         <div class="row" style="margin:0">
           <label><input type="radio" name="src" value="file"> Da file sul PC (.xls, .xlsx, .csv)</label>
           <span class="note" data-filelabel></span>
@@ -361,6 +424,7 @@ const Dialogs = {
         <button class="btn" data-no>Chiudi</button><button class="btn primary" data-ok disabled>Importa</button></footer></div>`);
     const el = m.el;
     let picker = null, result = null, label = '';
+    $$('[data-link]', el).forEach(x => x.onclick = (e) => { e.preventDefault(); Info.open(x.dataset.link); });
     $('[data-ik2ane]', el).onclick = () => { $('[data-url]', el).value = App.init.defaultURL; $('input[name=src][value=url]', el).checked = true; };
     $('[data-url]', el).addEventListener('focus', () => { $('input[name=src][value=url]', el).checked = true; });
     const opts = () => ({ modello: $('[data-modello]', el).value.trim() || '{LOC}', toneRx: $('[data-tonerx]', el).checked });
@@ -475,9 +539,14 @@ const Dialogs = {
       Puoi anche lavorare sui <b>file</b> del programma originale (K67 Pro: <b>.xlc</b>; Bajeton 8300: <b>.dat</b>): aprili, modificali e salvali.
       Prima di salvare sopra un file ne viene conservata una copia <b>.bak</b>.</p>
       <h4>Modelli Baofeng e Bajeton</h4><ul>
-        <li>La scheda «📻 Modelli» elenca tutte le radio Baofeng e Bajeton: cerca il modello (anche con i nomi alternativi, es. UV-5RA, MINI-5) e filtra per marca,
-          tipo e funzioni. Clic sulla radio per aprirne la scheda dei canali, aggiornarne il firmware o scaricare programmi e manuali del costruttore.</li>
-        <li>Le radio gestite con i driver di <b>CHIRP</b> (oltre 55 modelli) si leggono e si scrivono via cavo e si salvano in file <b>.img</b>, apribili anche con CHIRP;
+        <li>All'avvio compare la schermata «🏠 Home». Le schede delle radio (anche Baofeng K67 Pro e Bajeton 8300) si aprono dalla galleria dei modelli
+          e si chiudono con ×.</li>
+        <li>La scheda «📻 Modelli» elenca tutte le radio Baofeng e Bajeton, divise tra «MODELLI COMPATIBILI» e «MODELLI NON COMPATIBILI» (con il numero di modelli) e,
+          in ciascuna parte, per tipologia (Radioamatoriali, DMR, GMRS / FRS, PMR446 e uso libero, Per bambini); dentro ogni tipologia i modelli sono separati tra <b>Baofeng</b> e <b>Bajeton</b>,
+          in ordine alfabetico. Ogni modello ha la sua
+          scheda, anche quando la gestione è la stessa di un altro (es. UV-5RA come UV-5R; i modelli equivalenti indicati dalla tabella di CHIRP lo dicono nella scheda).
+          Cerca il modello e filtra per marca, tipo e funzioni. Clic sulla radio per aprirne la scheda dei canali, aggiornarne il firmware o scaricare programmi e manuali del costruttore.</li>
+        <li>Le radio gestite con i driver di <b>CHIRP</b> (oltre 70 modelli) si leggono e si scrivono via cavo e si salvano in file <b>.img</b>, apribili anche con CHIRP;
           si aprono anche i file .img salvati con CHIRP. Le impostazioni della radio restano quelle lette: si modificano canali e ponti.</li>
         <li>Se una radio esiste in più versioni (es. UV-5RX3) scegli quella giusta: se non lo è, la radio non risponde e non viene modificata.</li>
         <li>Canali di sola ricezione: nella colonna TX scrivi OFF (se la radio lo permette). I canali si copiano tra tutte le radio aperte con «Copia in…».</li>
@@ -492,7 +561,12 @@ const Dialogs = {
       </ul>
       <h4>Aggiornamento del firmware Baofeng</h4><ul>
         <li><b>UV-5RM / UV-5RH</b> (file <b>.BF</b>, caricatore KDH): modalità automatica con la radio accesa, oppure manuale con la radio accesa tenendo premuto il PTT.
-          Il firmware deve essere quello del chip radio della tua radio (BK4819, AT1846S…): le versioni non sono intercambiabili.</li>
+          Il firmware deve essere quello del chip radio della tua radio (BK4819, AT1846S…): le versioni non sono intercambiabili.
+          Lo stesso caricatore si usa per le radio della stessa famiglia (K5 Plus, UV-5RM Plus, UV-17R, UV-17R Plus, UV-21R, UV-21L, UV-21, BF-T60 / TR-988UV)
+          con i file forniti dal costruttore: il modello è riconosciuto dal nome del file e va confermato scrivendolo.</li>
+        <li><b>UV-25 Plus</b> e radio del programma «BF-UVs Pro CPS» (<b>UV-28 Pro, UV-29 Pro / SW-9, AR-152 Pro, UV-7B, UV-32</b>; file <b>.kdhx</b>, caricatore
+          «Baofeng Bootloader Pro», piattaforma H802). Baofeng pubblica il firmware solo per la UV-25 Plus: per le altre radio servono i file del costruttore
+          e il modello indicato dal nome del file va scritto per confermare. <b>UV-9G</b> (file .kdh) e <b>Bajeton BJ-9000</b> (file .Firmware) con i loro caricatori.</li>
         <li><b>5RH Pro / K67 Pro</b> (file <b>.dat</b> «BF_5RH»): la radio deve essere in modalità aggiornamento; dichiara la sua elettronica (V1 o V2) e, se il file
           è per l'altra, l'aggiornamento non parte.</li>
         <li>I protocolli sono quelli dei programmi originali dei costruttori, confrontati byte per byte con il loro codice su radio simulate.</li>
@@ -500,7 +574,7 @@ const Dialogs = {
       <h4>Aggiornamento del firmware (Bajeton BJ-8300 e BJ-7800)</h4><ul>
         <li>La BJ-7800 usa lo stesso programma di aggiornamento della BJ-8300 (file <b>.anc</b>, es. BJ7800_CN_EN_V0.17_20251126.anc): si aggiorna allo stesso modo,
           dalla sua scheda o dalla galleria dei modelli. Il modello è riconosciuto dal nome del file.</li>
-        <li>Nella scheda Bajeton 8300 premi «⬆ Aggiorna firmware». Scegli il file <b>.anc</b> dal PC o scaricalo da Internet (anche link di Google Drive
+        <li>Nella scheda Bajeton 8300 (dalla galleria dei modelli) premi «⬆ Aggiorna firmware». Scegli il file <b>.anc</b> dal PC o scaricalo da Internet (anche link di Google Drive
           o Dropbox): può essere dentro archivi <b>.zip</b> o <b>.rar</b>, anche uno dentro l'altro. Il programma controlla il formato del file, la piattaforma,
           il nome e l'impronta dei firmware ufficiali conosciuti; i firmware scaricati vengono conservati nella cartella «firmware» accanto all'archivio.</li>
         <li>Prima di inviare il firmware la radio viene <b>identificata</b> con il protocollo di programmazione della Bajeton 8300 (e, di serie, ne viene salvata
@@ -518,9 +592,23 @@ const Dialogs = {
         <li>Nomi: massimo 16 caratteri sul K67 e 12 sulla Bajeton. Potenza Media solo sulla Bajeton (sul K67 diventa Alta).</li>
       </ul>
       <h4>Archivio ponti</h4><ul>
+        <li>L'elenco aggiornato dei ponti radio italiani è messo a disposizione di tutti, gratuitamente, da <b>IK2ANE</b> (www.ik2ane.it): è grazie al suo lavoro che
+          l'archivio ponti è possibile.</li>
         <li>«Importa» legge l'elenco di IK2ANE da Internet (indirizzo già impostato, modificabile) o da file .xls/.xlsx/.csv, anche esportati da CHIRP o da questo programma.</li>
         <li>Shift e toni scritti in modo irregolare vengono interpretati; le righe dubbie sono in giallo con ⚠ e l'avviso spiega cosa è stato deciso.</li>
-        <li>Filtra per banda, tipo, stato, regione, provincia, rete o testo; seleziona i ponti e usa «→ K67», «→ Bajeton» o «→ Altra radio».</li>
+        <li>Filtra per banda, tipo, stato, regione, provincia, rete o testo, poi spunta i ponti che ti interessano (casella a sinistra, oppure «☑ Seleziona tutti» /
+          «☐ Deseleziona tutti» per quelli visibili con i filtri; le spunte restano salvate nell'archivio).</li>
+        <li>«📻 Inoltra alla radio» scrive i ponti spuntati (o, se non ne hai spuntati, quelli selezionati) nella radio di destinazione indicata sopra la tabella:
+          se c'è già una radio scelta ti chiede la conferma, altrimenti puoi sceglierla dall'elenco di tutte le radio compatibili, diviso per marca e per tipologia,
+          con ogni modello elencato singolarmente in ordine alfabetico.</li>
+        <li>Prima di scrivere viene controllato che i ponti siano compatibili con la radio scelta: frequenze dentro le gamme della radio, nessun ponte radioamatoriale
+          su un apparato PMR446 / di uso libero o GMRS, nessun ponte solo digitale (DMR, C4FM, D-Star, NXDN) su una radio solo analogica (sulle radio DMR i ponti solo
+          DMR diventano canali DMR). Se qualcosa non va compare un avviso: puoi annullare, scegliere un'altra radio o, se una parte dei ponti è compatibile, inviare solo quella.
+          Le radio vendute come PMR446 / uso libero o GMRS che accettano anche le frequenze radioamatoriali (gamme del driver ricavate dal programma del
+          costruttore) ricevono un avviso giallo invece del blocco: puoi scrivere comunque i ponti, sia con «Inoltra alla radio» sia dalla scheda della radio.
+          Rispetta le norme: in Italia la trasmissione sulle frequenze radioamatoriali richiede la licenza e un apparato PMR446 omologato non va modificato.</li>
+        <li>Canali digitali (DMR sulla DM-32UV, digitali criptati sulle PMR della serie D): colonna «Modo»; i subtoni valgono solo per i canali analogici e i canali
+          digitali non si copiano sulle radio solo analogiche.</li>
         <li>L'archivio si salva da solo in: <span class="note">${esc(App.init.archivePath)}</span></li>
       </ul>
       <p class="note">IU0VYT Flash, versione ${esc(App.init.version)} (verifica degli aggiornamenti con il pulsante «🔄 Aggiornamenti» in alto o nella scheda «ℹ Info»; licenza GNU GPL v3 o successiva) · i formati dei file e i protocolli via cavo sono stati ricostruiti dai programmi originali dei costruttori e verificati con radio simulate: conserva sempre le copie di sicurezza.</p>

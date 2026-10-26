@@ -4,6 +4,7 @@ IU0VYT FLASH - AUTORI E LICENZE
 IU0VYT Flash
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 https://www.qrz.com/db/IU0VYT
+Codice sorgente: https://github.com/IU0VYT/IU0VYT
 
 Questo programma è software libero: puoi ridistribuirlo e/o modificarlo secondo i
 termini della GNU General Public License come pubblicata dalla Free Software
@@ -55,11 +56,39 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione 0bfb2b50e33d del
                                             2024 Pavel Moravec OK2MOP;
                                             2023 Jim Unroe
   drivers/radioddity_gm30.py                Copyright 2025 Mike Iacovacci
+  drivers/baofeng_dm32uv.py                 Copyright 2026 chaffed (GPL v3 o succ.)
+  chirp/kenwood_tone.py                     Copyright 2026 Dan Smith
+  drivers/baofeng_digital.py                Copyright 2024 Marcos Del Sol Vives
+                                            (GPL v2 o succ.; usato come riferimento
+                                            per W31D, BF-T20D e BF-V12D: codici dei
+                                            modelli e sblocco della BF-V12D)
 
 File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
-drv_h777.go, drv_small.go, drv_rt900.go, drv_ga510.go, drv_gm30.go e le radio
-simulate genemu_*.go. Grazie agli autori di CHIRP.
+drv_h777.go, drv_small.go, drv_rt900.go, drv_ga510.go, drv_gm30.go, drv_dm32.go,
+drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go. Grazie agli
+autori di CHIRP.
+Le modifiche rispetto ai file originali di CHIRP (riscrittura in Go, solo canali,
+adattamento all'interfaccia di IU0VYT Flash) sono descritte in testa a ciascun file
+e in CHANGELOG.txt, con le date delle versioni.
+
+
+INFORMAZIONI DI TERZI USATE (NON INCLUSE COME CODICE)
+-----------------------------------------------------
+- Tabella dei modelli equivalenti di CHIRP (chirp/share/model_alias_map.yaml, GPL):
+  da qui vengono le corrispondenze BF-R3 e UV-9S = Radioddity UV-5RX3, G11S =
+  Retevis RB27, TH-888S e BF-777S = BF-888 e, dalla 3.4, i 77 modelli equivalenti
+  della sezione Baofeng/Pofung (es. GT-1 = BF-888, GT-5 = UV-82, UV-10R = BF-F8HP),
+  riportati come elenco di nomi in catalog.go.
+- Segnalazioni pubbliche del sistema di CHIRP (chirpmyradio.com/issues): #9833
+  (UV-16), #9405 (P52UV), #10388 (GMRS-9R), #11280 (UV-E70) e #11696 (BF-9700 e
+  BF-S56 Max: identificativi, dimensione della memoria e prove di lettura e scrittura
+  pubblicate da un utente), #239 (UV-3R+ con il driver della UV-3R) e, dalla 3.5,
+  #11119 (K5 Plus derivata dalla UV-5RM, per la famiglia del firmware). Per i modelli segnalati dagli utenti la compatibilità
+  è indicata come sperimentale.
+- Elenco dei ponti radio italiani di IK2ANE (https://www.ik2ane.it): non è incluso
+  nel pacchetto; il programma lo scarica dal sito di IK2ANE quando lo chiedi. I dati
+  restano di IK2ANE, che li mette gratuitamente a disposizione di tutti.
 
 
 ALTRI COMPONENTI INCLUSI
@@ -87,6 +116,10 @@ da Bajeton (né dagli altri marchi citati, es. Radtel, Radioddity). I nomi dei
 modelli servono solo a indicare con quali radio funziona il programma. I marchi
 appartengono ai rispettivi titolari.
 Protocolli e formati dei dati sono stati ricostruiti, per l'interoperabilità con le
-radio, dai programmi dei costruttori (art. 64-quater L. 633/1941, art. 6 Direttiva
+radio, dai programmi dei costruttori (dalla 3.3 anche «BF Series CPS», «T17-T18
+PMR446 PRO / FRS», «DM-32UV CPS» e i pacchetti Bajeton della BJ-8200; dalla 3.4
+«BF-Ts», «BAOFENG GT18 PMR», «BAJETON DM-5000 CPS»; dalla 3.5 «DR-1801A6» e i
+programmi di aggiornamento «Baofeng Bootloader Pro» e «T6UV Series CPS» per le
+famiglie del firmware) (art. 64-quater L. 633/1941, art. 6 Direttiva
 2009/24/CE). Il pacchetto non contiene codice, programmi o firmware dei costruttori:
 la galleria dei modelli rimanda ai loro siti ufficiali.

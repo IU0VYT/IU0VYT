@@ -9,14 +9,21 @@
 // funzioni disponibili (canali via cavo, file .img, firmware) e i collegamenti
 // ai programmi e ai manuali dei costruttori.
 
-const TYPE_LABEL = { analog: 'Radioamatoriale', gmrs: 'GMRS', pmr: 'PMR / FRS', dmr: 'DMR', kids: 'Per bambini' };
+const TYPE_LABEL = { analog: 'Radioamatoriale', dmr: 'DMR', gmrs: 'GMRS / FRS', pmr: 'PMR446 / uso libero', kids: 'Per bambini' };
+// divisioni per tipologia nella galleria e negli elenchi (in quest'ordine)
+const TYPE_ORDER = ['analog', 'dmr', 'gmrs', 'pmr', 'kids'];
+const TYPE_GROUP = {
+  analog: 'Radioamatoriali (VHF/UHF)', dmr: 'DMR (digitali)', gmrs: 'GMRS / FRS (USA)', pmr: 'PMR446 e radio di uso libero', kids: 'Per bambini',
+};
+// ordine alfabetico «naturale» (UV-5R prima di UV-17)
+const byModelName = (a, b) => a.name.localeCompare(b.name, 'it', { numeric: true, sensitivity: 'base' }) || a.brand.localeCompare(b.brand);
 const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh' };
 const FW_KINDS = Object.keys(FW_LABEL);
 const FW_DESC = {
   anc: 'file .anc del costruttore (protocollo del programma «BinTe ANC Bootloader»)',
-  bf: 'file .BF (caricatore KDH, programma «BF Upgrade Tool for TFT 330L Series»)',
+  bf: 'file .BF (caricatore KDH, programma «BF Upgrade Tool for TFT 330L Series»; anche file .kdhx forniti dal costruttore)',
   rh5: 'file .dat «BF_5RH» (programma di aggiornamento della 5RH Pro)',
-  kdhx: 'file .kdhx (programma «Baofeng Bootloader Pro» del costruttore)',
+  kdhx: 'file .kdhx (programma «Baofeng Bootloader Pro» del costruttore, piattaforma H802)',
   bj9000: 'file .Firmware (programma «BJ9000_EnUPDATE» del costruttore)',
   kdh9g: 'file .kdh (programma «Bootloader_BaudRate38400» del costruttore)',
 };
@@ -75,6 +82,14 @@ const Gallery = {
     this.renderCards();
   },
 
+  // filtro «con firmware» (anche dalla schermata iniziale)
+  setOnlyFw(v) {
+    this.onlyFw = !!v;
+    const cb = this.page && $('[data-fw]', this.page);
+    if (cb) cb.checked = this.onlyFw;
+    this.renderCards();
+  },
+
   render() { this.renderCards(); },
 
   matches(c) {
@@ -111,10 +126,27 @@ const Gallery = {
     const list = App.catalog.filter(c => this.matches(c));
     const withDrv = list.filter(c => (c.drivers || []).length);
     const without = list.filter(c => !(c.drivers || []).length);
-    const sec = (title, note, items) => items.length ? `<h3 class="galsec">${esc(title)} <span class="note">${items.length}</span></h3>
-      ${note ? `<p class="note galnote">${note}</p>` : ''}<div class="galgrid">${items.map(c => this.card(c)).join('')}</div>` : '';
-    body.innerHTML = list.length ? sec('Gestite da IU0VYT Flash', '', withDrv) +
-      sec('Solo con il programma del costruttore', 'Radio con protocollo non documentato (o digitali DMR): qui trovi i collegamenti ai programmi e ai manuali ufficiali.', without)
+    // in ogni sezione una divisione per tipologia, con i modelli in ordine alfabetico
+    // dentro ogni tipologia: una parte per marca (Baofeng, Bajeton), in ordine alfabetico
+    const brands = its => {
+      const bs = [...new Set(its.map(c => c.brand))].sort((a, b) => (a === 'Baofeng' ? 0 : a === 'Bajeton' ? 1 : 2) - (b === 'Baofeng' ? 0 : b === 'Bajeton' ? 1 : 2) || a.localeCompare(b));
+      return bs.map(br => {
+        const bi = its.filter(c => c.brand === br);
+        return `<div class="galbrand galbrand-${esc(br.toLowerCase())}"><div class="galbrand-head"><span class="galbrand-name">${esc(br)}</span>
+          <span class="note">${bi.length} ${bi.length === 1 ? 'modello' : 'modelli'}</span></div>
+          <div class="galgrid">${bi.map(c => this.card(c)).join('')}</div></div>`;
+      }).join('');
+    };
+    const groups = items => TYPE_ORDER.concat([...new Set(items.map(c => c.type))].filter(t => !TYPE_ORDER.includes(t))).map(type => {
+      const its = items.filter(c => c.type === type).sort(byModelName);
+      return its.length ? `<div class="galarea galtype-${esc(type)}"><div class="galarea-head"><span class="galarea-name">${esc(TYPE_GROUP[type] || type)}</span>
+        <span class="note">${its.length} ${its.length === 1 ? 'modello' : 'modelli'}</span></div>
+        ${brands(its)}</div>` : '';
+    }).join('');
+    const sec = (title, note, items, cls) => `<section class="galsecbox ${cls}"><h3 class="galsec">${esc(title)}: ${items.length}</h3>
+      ${note ? `<p class="note galnote">${note}</p>` : ''}${items.length ? groups(items) : '<p class="note galnote">Nessun modello con i filtri attuali.</p>'}</section>`;
+    body.innerHTML = list.length ? sec('MODELLI COMPATIBILI', 'Canali e ponti via cavo o con i file .img; dove indicato, anche aggiornamento del firmware. Ogni modello ha la sua scheda, anche quando la gestione è la stessa di un altro.', withDrv, 'ok') +
+      sec('MODELLI NON COMPATIBILI', 'Si programmano solo con il programma del costruttore (protocollo non documentato) o con programmi liberi: qui trovi i collegamenti ai programmi e ai manuali ufficiali e, dove esistono, ai programmi liberi alternativi.', without, 'no')
       : '<div class="welcome"><h2>Nessun modello trovato</h2><p>Prova a cambiare la ricerca o i filtri.</p></div>';
     $$('.galcard', body).forEach(b => b.onclick = () => this.detail(App.catalog.find(c => c.id === b.dataset.id)));
   },
@@ -144,7 +176,7 @@ const Gallery = {
           <span class="note">${esc(this.driverLine(d))}</span></div>`).join('')}</div>` : ''}
       ${FW_KINDS.includes(c.fw) ? `<h4 class="fwh">Firmware</h4><div class="galact"><button class="btn" data-fw>⬆ Aggiorna il firmware…</button>
         <span class="note">${esc(FW_DESC[c.fw])}</span></div>` : ''}
-      ${(c.links || []).length ? `<h4 class="fwh">Programmi e documenti del costruttore</h4><ul class="gallinks">${c.links.map(l => `<li>${linkIcon[l.kind] || '🔗'} <a href="#" data-link="${esc(l.url)}">${esc(l.label)}</a> <span class="note">${esc(l.url.replace(/^https?:\/\//, '').split('/')[0])}</span></li>`).join('')}</ul>` : ''}
+      ${(c.links || []).length ? `<h4 class="fwh">Programmi e documenti</h4><ul class="gallinks">${c.links.map(l => `<li>${linkIcon[l.kind] || '🔗'} <a href="#" data-link="${esc(l.url)}">${esc(l.label)}</a> <span class="note">${esc(l.url.replace(/^https?:\/\//, '').split('/')[0])}</span></li>`).join('')}</ul>` : ''}
       </div><footer><button class="btn" data-no>Chiudi</button></footer></div>`);
     const el = m.el;
     $('[data-no]', el).onclick = () => m.close();

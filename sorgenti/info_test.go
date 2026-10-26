@@ -170,9 +170,13 @@ func TestUpdateAPI(t *testing.T) {
 	if info["name"] != "IU0VYT Flash" || info["author"] != `Daniele "IU0VYT" Bonifazi` || !strings.Contains(info["license"].(string), "GPL") {
 		t.Fatalf("%v", info)
 	}
-	// l'indirizzo degli aggiornamenti non è esposto all'interfaccia
-	if b, _ := json.Marshal(info); bytes.Contains(b, []byte("github")) || bytes.Contains(b, []byte("http")) && bytes.Contains(b, []byte("releases")) {
+	// l'indirizzo degli aggiornamenti non è esposto all'interfaccia (dalla 3.5 c'è
+	// solo il collegamento alla pagina del repository)
+	if b, _ := json.Marshal(info); bytes.Contains(b, []byte(defaultUpdateURL)) || bytes.Contains(b, []byte("releases")) || bytes.Contains(b, []byte(".zip")) {
 		t.Fatalf("indirizzo esposto: %s", b)
+	}
+	if info["repo"] != "https://github.com/IU0VYT/IU0VYT" {
+		t.Fatalf("repository: %v", info["repo"])
 	}
 	if updateSource != defaultUpdateURL || !strings.HasPrefix(defaultUpdateURL, "https://github.com/IU0VYT/") {
 		t.Fatal(defaultUpdateURL)

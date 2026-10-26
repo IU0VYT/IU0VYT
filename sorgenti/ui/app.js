@@ -9,17 +9,20 @@
 // galleria dei modelli), tasti globali, chiusura.
 
 const Views = {};
-let currentTab = 'gal';
+let currentTab = 'home';
+const FIXED_TABS = ['home', 'gal', 'arch', 'info'];
 
 Object.assign(App, {
   catalog: [], defs: {},
 
   showTab(t) {
-    if (t !== 'gal' && t !== 'arch' && t !== 'info' && !Views[t]) t = 'gal';
+    if (!FIXED_TABS.includes(t) && !Views[t]) t = 'gal';
+    if (Views[t]) { App.radioTab(t); App.lastRadio = t; }
     currentTab = t;
     $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
     $$('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + t));
     try { sessionStorage.setItem('tab', t); } catch (e) { /* facoltativo */ }
+    if (t === 'home') { Home.render($('#page-home')); return; }
     if (t === 'info') { Info.render($('#page-info')); return; }
     if (t === 'gal') { Gallery.render(); return; }
     const g = t === 'arch' ? Archive.grid : Views[t].grid;
@@ -38,14 +41,21 @@ Object.assign(App, {
     return genRadioDef(g, item && item.fw);
   },
 
+  // linguetta della scheda di una radio (creata quando la radio si apre dalla galleria)
+  radioTab(kind) {
+    if ($(`.tab[data-tab="${kind}"]`)) return;
+    const def = Views[kind] ? Views[kind].def : App.radioDef(kind);
+    const tab = h(`<button class="tab gen" data-tab="${esc(kind)}" title="${esc(def.name)}">${esc(def.name.replace(/^(Baofeng|Bajeton) /, ''))} <span class="dot" id="dot-${esc(kind)}"></span><span class="x" title="Chiudi la scheda">×</span></button>`);
+    $('#radiotabs').appendChild(tab);
+    tab.onclick = (e) => { if (e.target.classList.contains('x')) { e.stopPropagation(); App.closeRadio(kind).catch(reportError); } else App.showTab(kind); };
+  },
+
   // apre (o mostra) la scheda di una radio generica
   openRadio(kind, show) {
     if (Views[kind]) { if (show) App.showTab(kind); return Views[kind]; }
     const def = App.radioDef(kind);
     if (!def) throw new Error('Radio sconosciuta: ' + kind);
-    const tab = h(`<button class="tab gen" data-tab="${esc(kind)}" title="${esc(def.name)}">${esc(def.name.replace(/^(Baofeng|Bajeton) /, ''))} <span class="dot" id="dot-${esc(kind)}"></span><span class="x" title="Chiudi la scheda">×</span></button>`);
-    $('#radiotabs').appendChild(tab);
-    tab.onclick = (e) => { if (e.target.classList.contains('x')) { e.stopPropagation(); App.closeRadio(kind).catch(reportError); } else App.showTab(kind); };
+    App.radioTab(kind);
     const page = h(`<section class="page" id="page-${esc(kind)}"></section>`);
     $('main').appendChild(page);
     Views[kind] = new RadioView(kind, page, def);
@@ -55,7 +65,16 @@ Object.assign(App, {
 
   async closeRadio(kind) {
     const v = Views[kind];
-    if (!v || !v.def.generic) return;
+    if (!v) return;
+    if (App.lastRadio === kind) App.lastRadio = null;
+    if (Archive.target === kind) Archive.target = null;
+    if (!v.def.generic) {
+      // K67 Pro e Bajeton 8300: si chiude solo la linguetta, i dati restano in memoria
+      const t = $(`.tab[data-tab="${kind}"]`);
+      if (t) t.remove();
+      if (currentTab === kind) App.showTab('gal');
+      return;
+    }
     if (!(await v.confirmDiscard())) return;
     delete Views[kind];
     v.page.remove();
@@ -134,6 +153,7 @@ async function start() {
     const s = JSON.parse(sessionStorage.getItem('work-' + TOKEN) || 'null');
     if (s) {
       Views.k67.restore(s.k67); Views.baj.restore(s.baj);
+      for (const k of ['k67', 'baj']) if (Views[k].loaded) App.radioTab(k);
       for (const [k, d] of Object.entries(s.gen || {})) {
         if (App.defs[k] && d && d.loaded) App.openRadio(k).restore(d);
       }
@@ -145,9 +165,8 @@ async function start() {
   $('#btn-help').onclick = () => Dialogs.help();
   $('#btn-upd').onclick = () => Updates.manual();
   $('#btn-quit').onclick = () => App.quit();
-  let tab = 'gal';
-  try { tab = sessionStorage.getItem('tab') || 'gal'; } catch (e) { /* */ }
-  App.showTab(tab);
+  // a ogni avvio si parte dalla schermata iniziale
+  App.showTab('home');
   // controllo automatico degli aggiornamenti a ogni avvio (in silenzio se non c'è connessione)
   setTimeout(() => Updates.check({ auto: true }).catch(() => {}), 1200);
 
@@ -157,7 +176,7 @@ async function start() {
     if (k === 'F5' || (ctrl && k.toLowerCase() === 'r')) { e.preventDefault(); return; }
     if (modalOpen()) return;
     if (k === 'F1') { e.preventDefault(); Dialogs.help(); return; }
-    if (currentTab === 'info' || currentTab === 'gal') return;
+    if (currentTab === 'info' || currentTab === 'gal' || currentTab === 'home') return;
     if (ctrl && k.toLowerCase() === 's' && currentTab !== 'arch') { e.preventDefault(); Views[currentTab].action(e.shiftKey ? 'saveas' : 'save'); return; }
     if (ctrl && k.toLowerCase() === 'o' && currentTab !== 'arch') { e.preventDefault(); Views[currentTab].action('open'); return; }
     // tasti della tabella anche se il fuoco non è sulla tabella

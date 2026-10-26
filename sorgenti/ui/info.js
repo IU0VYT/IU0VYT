@@ -123,6 +123,7 @@ const Info = {
         <tr><th>Autore</th><td>${esc(d.author)}</td></tr>
         <tr><th>E-mail</th><td><a href="#" data-link="mailto:${esc(d.email)}">${esc(d.email)}</a></td></tr>
         <tr><th>QRZ</th><td><a href="#" data-link="${esc(d.qrz)}">${esc(d.qrz)}</a></td></tr>
+        <tr><th>Codice sorgente</th><td><a href="#" data-link="${esc(d.repo)}">${esc(d.repo)}</a> <span class="note">(repository GitHub: sorgenti, rilasci e aggiornamenti)</span></td></tr>
         <tr><th>Licenza</th><td>${esc(d.license)} — software libero, <b>senza alcuna garanzia</b> (testo completo nel file LICENSE.txt del pacchetto)</td></tr>
         <tr><th>Cartella dei dati</th><td class="note">${esc(d.dataDir)}</td></tr>
       </table>

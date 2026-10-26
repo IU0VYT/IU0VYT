@@ -23,6 +23,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -349,6 +350,9 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 		if !req.ConfirmModel {
 			return errors.New("conferma il modello della radio e il chip indicato dal firmware")
 		}
+		if (img.Info.Typed || fwOtherModel(req, img)) && normModel(req.ConfirmText) != img.Info.Confirm {
+			return fmt.Errorf("firmware per una radio diversa dalla UV-5RM/5RH o da quella scelta: scrivi %s nella casella di conferma", img.Info.Confirm)
+		}
 		if req.Backup && req.Mode == "auto" {
 			if _, ok := genByID[req.Model]; !ok {
 				return errors.New("scegli il modello della radio per la copia di sicurezza")
@@ -362,8 +366,8 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 		if !req.ConfirmModel {
 			return fmt.Errorf("conferma che la radio collegata è una %s", img.Info.Target)
 		}
-		if kdh2NeedTyped(img.Info.Kind, req.Mode) && normModel(req.ConfirmText) != img.Info.Confirm {
-			return fmt.Errorf("questa radio non controlla il firmware che riceve: scrivi %s nella casella di conferma", img.Info.Confirm)
+		if (img.Info.Typed || fwOtherModel(req, img) || kdh2NeedTyped(img.Info.Kind, req.Mode)) && normModel(req.ConfirmText) != img.Info.Confirm {
+			return fmt.Errorf("il caricatore non controlla il modello del firmware che riceve: scrivi %s nella casella di conferma", img.Info.Confirm)
 		}
 		if req.Backup && req.Mode == "auto" {
 			if _, ok := genByID[req.Model]; !ok {
@@ -660,15 +664,22 @@ func (a *App) runFirmwareRH5(ctx context.Context, j *cableJob, req *fwStartReq, 
 	return res, nil
 }
 
+// fwOtherModel: la radio scelta nella finestra (modello della copia di
+// sicurezza) non è tra quelle a cui è destinato il file: conferma scritta
+func fwOtherModel(req *fwStartReq, img *fwImage) bool {
+	return req.Model != "" && len(img.Info.Models) > 0 && !slices.Contains(img.Info.Models, req.Model)
+}
+
 // kdh2NeedTyped: conferma scritta quando la radio non controlla il firmware
-// (UV-9G sempre; UV-25 Plus nella modalità manuale, senza il codice H802)
+// (UV-9G sempre; caricatore «Bootloader Pro» nella modalità manuale, senza il
+// codice H802; sempre se il firmware non è quello della UV-25 Plus: fwInfo.Typed)
 func kdh2NeedTyped(kind, mode string) bool {
 	return kind == "kdh9g" || (kind == "kdhx" && mode == "manual")
 }
 
 // kdh2Manual: istruzioni del costruttore per portare la radio nel caricatore
 var kdh2Manual = map[string]string{
-	"kdhx":   "radio spenta: tieni premuti SK2 e SK3 (i due tasti sotto il PTT) e accendila; l'indicatore diventa verde",
+	"kdhx":   "radio spenta: tieni premuti SK2 e SK3 (i due tasti sotto il PTT) e accendila; l'indicatore diventa verde (procedura di Baofeng per la UV-25 Plus; per le altre radio segui le istruzioni fornite con il firmware)",
 	"bj9000": "radio spenta: tieni premuti i tasti laterali 3 e 4 e accendila; compare la schermata «Update»",
 	"kdh9g":  "radio spenta: tieni premuti i tasti 12 e 13 e accendila; si accende la torcia",
 }

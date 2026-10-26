@@ -7,6 +7,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: radtel_rt900.py.
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 
@@ -35,7 +37,11 @@ func (rt900Fam) emu(m *genModel, img []byte) genEmu {
 	return e
 }
 
-func (e *rt900Emu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return append([]byte{}, e.img...) }
+func (e *rt900Emu) image() []byte {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]byte{}, e.img...)
+}
 
 func (e *rt900Emu) serve(p Port) error {
 	o := rt900o(e.m)

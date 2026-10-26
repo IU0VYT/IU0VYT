@@ -12,6 +12,8 @@
 // UART: i byte scambiati a velocità diverse arrivano rovinati.
 //   PC → simulatore:  'O' baud(4) | 'C' | 'W' n(4) dati
 //   simulatore → PC:  'D' n(4) dati
+// L'evento DataReceived (usato da alcuni programmi, es. «DR-1801A6») viene
+// chiamato dal filo di lettura dopo ogni blocco ricevuto.
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -22,6 +24,19 @@ namespace System.IO.Ports
 	public enum Parity { None, Odd, Even, Mark, Space }
 	public enum StopBits { None, One, Two, OnePointFive }
 	public enum Handshake { None, XOnXOff, RequestToSend, RequestToSendXOnXOff }
+	public enum SerialData { Chars = 1, Eof = 2 }
+	public enum SerialError { TXFull = 256, RXOver = 1, Overrun = 2, RXParity = 4, Frame = 8 }
+	public class SerialDataReceivedEventArgs : EventArgs
+	{
+		public SerialDataReceivedEventArgs(SerialData t) { EventType = t; }
+		public SerialData EventType { get; }
+	}
+	public class SerialErrorReceivedEventArgs : EventArgs
+	{
+		public SerialError EventType { get; set; }
+	}
+	public delegate void SerialDataReceivedEventHandler(object sender, SerialDataReceivedEventArgs e);
+	public delegate void SerialErrorReceivedEventHandler(object sender, SerialErrorReceivedEventArgs e);
 
 	public class SerialPort : IDisposable
 	{
@@ -44,6 +59,12 @@ namespace System.IO.Ports
 		public int ReadTimeout { get; set; } = -1;
 		public int WriteTimeout { get; set; } = -1;
 		public bool IsOpen => open;
+		public int ReceivedBytesThreshold { get; set; } = 1;
+		// eventi come la porta vera: chiamati dal filo di lettura, uno alla volta
+		public event SerialDataReceivedEventHandler DataReceived;
+#pragma warning disable 67
+		public event SerialErrorReceivedEventHandler ErrorReceived;
+#pragma warning restore 67
 		public static string[] GetPortNames() => new[] { "COM9" };
 
 		public SerialPort() { }
@@ -79,6 +100,11 @@ namespace System.IO.Ports
 					{
 						if (cur.open) cur.inbuf.AddRange(d);
 						Monitor.PulseAll(cur.inbuf);
+					}
+					var ev = cur.DataReceived;
+					if (ev != null && cur.open)
+					{
+						try { ev(cur, new SerialDataReceivedEventArgs(SerialData.Chars)); } catch (Exception) { }
 					}
 				}
 			}
@@ -151,6 +177,13 @@ namespace System.IO.Ports
 				inbuf.RemoveRange(0, k);
 				return k;
 			}
+		}
+
+		public int ReadByte()
+		{
+			var b = new byte[1];
+			Read(b, 0, 1);
+			return b[0];
 		}
 
 		public static void Shutdown() { try { s?.Dispose(); c?.Close(); } catch (Exception) { } }

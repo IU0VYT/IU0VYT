@@ -25,10 +25,10 @@ const Archive = {
         <button class="btn" data-a="undo" title="Annulla (Ctrl+Z)">↶</button>
         <button class="btn" data-a="redo" title="Ripeti (Ctrl+Y)">↷</button>
         <span class="sep"></span>
-        <button class="btn" data-a="tok67" title="Inserisce i ponti selezionati nel K67">→ K67…</button>
-        <button class="btn" data-a="tobaj" title="Inserisce i ponti selezionati nella Bajeton">→ Bajeton…</button>
-        <button class="btn" data-a="toother" title="Inserisce i ponti selezionati in un'altra radio aperta dalla galleria dei modelli">→ Altra radio… ▾</button>
-        <button class="btn" data-a="copy" title="Copia i ponti selezionati: poi incollali in una radio con Ctrl+V">Copia</button>
+        <button class="btn" data-a="checkall" title="Spunta tutti i ponti visibili con i filtri attuali">☑ Seleziona tutti</button>
+        <button class="btn" data-a="uncheckall" title="Toglie la spunta a tutti i ponti visibili con i filtri attuali">☐ Deseleziona tutti</button>
+        <button class="btn primary" data-a="forward" title="Scrive nella radio i ponti spuntati (o, se non ce ne sono, quelli selezionati)">📻 Inoltra alla radio</button>
+        <button class="btn" data-a="copy" title="Copia i ponti spuntati (o selezionati): poi incollali in una radio con Ctrl+V">Copia</button>
         <span class="sep"></span>
         <button class="btn" data-a="names" title="Ricalcola i nomi dei canali con un modello">Rigenera nomi…</button>
         <button class="btn" data-a="verified" title="Toglie gli avvisi dai ponti selezionati dopo averli controllati">Segna come verificati</button>
@@ -36,14 +36,22 @@ const Archive = {
         <span class="sep"></span>
         <span class="info" data-info></span>
       </div>
+      <div class="ik2ane-credit">📡 <b>Grazie a IK2ANE.</b> L'archivio dei ponti è possibile grazie al lavoro di <b>IK2ANE</b>, che cura e mette a
+        disposizione di tutti, gratuitamente, l'elenco aggiornato dei ponti radio italiani (<a href="#" data-link="https://www.ik2ane.it">www.ik2ane.it</a>).
+        Usa «⬇ Importa…» per scaricare l'ultima versione.</div>
+      <div class="arch-target" data-target></div>
       <div class="filters" data-f></div>
       <div class="content"><div class="gridwrap" data-g></div><div class="side" data-side></div></div>
       <div class="statusbar" data-status></div>`;
     $$('[data-a]', page).forEach(b => b.addEventListener('click', () => this.action(b.dataset.a)));
+    $$('[data-link]', page).forEach(x => x.onclick = (e) => { e.preventDefault(); Info.open(x.dataset.link); });
     this.filter = new PontiFilter($('[data-f]', page), { onChange: () => { this.grid.sel.clear(); this.render(); } });
     this.grid = new Grid($('[data-g]', page), {
       columns: pontiColumns(true),
-      getRows: () => this.visible().map(p => ({ id: p.id, p, cls: p.avvisi && p.avvisi.length ? 'warn' : ((p.stato === 'Non attivo' || p.stato === 'Temporaneamente non attivo') ? 'off' : '') })),
+      checkbox: true,
+      onCheck: (ids, on) => this.setChecked(ids, on),
+      onCheckAll: on => this.setChecked(this.visible().map(p => p.id), on),
+      getRows: () => this.visible().map(p => ({ id: p.id, p, checked: !!p.scelto, cls: p.avvisi && p.avvisi.length ? 'warn' : ((p.stato === 'Non attivo' || p.stato === 'Temporaneamente non attivo') ? 'off' : '') })),
       onEdit: (row, col, val) => this.edit(row.p, col.key, val),
       onKey: e => this.onKey(e),
       onSelChange: () => { this.renderSide(); this.renderStatus(); },
@@ -69,6 +77,7 @@ const Archive = {
     this.grid.render();
     this.renderSide();
     this.renderStatus();
+    this.renderTarget();
     $('#arch-count').textContent = this.ponti.length ? '(' + this.ponti.length + ')' : '';
     $('[data-info]', this.page).textContent = App.init ? 'Salvato in: ' + App.init.archivePath : '';
     $('[data-a="undo"]', this.page).disabled = !this.undoStack.length;
@@ -79,8 +88,98 @@ const Archive = {
     const vis = this.grid.rows.length;
     const sel = this.grid.sel.size;
     const warn = this.ponti.filter(p => p.avvisi && p.avvisi.length).length;
-    $('[data-status]', this.page).innerHTML = `<span>Ponti in archivio: ${this.ponti.length} · visibili con i filtri: ${vis}${sel ? ' · selezionati: ' + sel : ''}</span>
+    const chk = this.ponti.filter(p => p.scelto).length;
+    $('[data-status]', this.page).innerHTML = `<span>Ponti in archivio: ${this.ponti.length} · visibili con i filtri: ${vis}${chk ? ' · spuntati: ' + chk : ''}${sel ? ' · selezionati: ' + sel : ''}</span>
       <span>${warn ? warn + ' con avvisi da controllare (⚠)' : ''}</span><span>Ctrl+A seleziona tutti i visibili · doppio clic per modificare</span>`;
+  },
+
+  // spunte: i ponti scelti per essere inoltrati alla radio (salvate con l'archivio)
+  setChecked(ids, on) {
+    const set = new Set(ids);
+    let n = 0;
+    for (const p of this.ponti) if (set.has(p.id) && !!p.scelto !== on) { if (on) p.scelto = true; else delete p.scelto; n++; }
+    if (!n) return;
+    this.changed();
+  },
+
+  checkVisible(on) {
+    const v = this.visible();
+    if (!v.length) { toast('Nessun ponte visibile con i filtri attuali.'); return; }
+    this.setChecked(v.map(p => p.id), on);
+    toast(on ? `Spuntati ${v.length} ponti (quelli visibili con i filtri attuali).` : `Tolta la spunta a ${v.length} ponti.`);
+  },
+
+  // ponti da inoltrare: quelli spuntati, altrimenti quelli selezionati
+  chosenPonti() {
+    const chk = this.ponti.filter(p => p.scelto);
+    if (chk.length) {
+      const order = this.visible();
+      const vis = new Set(order.map(p => p.id));
+      // prima nell'ordine della tabella, poi gli spuntati nascosti dai filtri
+      return order.filter(p => p.scelto).concat(chk.filter(p => !vis.has(p.id)));
+    }
+    return this.selectedPonti();
+  },
+
+  // radio di destinazione: quella scelta l'ultima volta, oppure l'ultima radio aperta
+  target: null, targetLabel: '', targetType: '',
+  targetKind() {
+    if (this.target) return this.target;
+    const t = App.lastRadio;
+    return t && Views[t] ? t : null;
+  },
+
+  // nome mostrato della radio di destinazione (il modello scelto nell'elenco, se c'è)
+  targetName(kind) {
+    if (kind === this.target && this.targetLabel) return this.targetLabel;
+    const v = Views[kind];
+    return v ? v.def.name : ((RADIO_DEF[kind] || App.defs[kind] || {}).name || kind);
+  },
+
+  renderTarget() {
+    const el = $('[data-target]', this.page);
+    if (!el) return;
+    const t = this.targetKind();
+    el.innerHTML = t
+      ? `📻 Radio di destinazione: <b>${esc(this.targetName(t))}</b> <button class="btn small" data-change>Cambia radio…</button>`
+      : '📻 Nessuna radio di destinazione: con «Inoltra alla radio» potrai sceglierla dall\'elenco dei modelli compatibili.';
+    const b = $('[data-change]', el);
+    if (b) b.onclick = () => this.pickTarget().catch(reportError);
+  },
+
+  async pickTarget() {
+    const r = await Dialogs.pickRadio('Scegli la radio di destinazione', 'Su quale radio vuoi scrivere i ponti scelti?');
+    if (!r) return null;
+    this.target = r.kind;
+    this.targetLabel = r.label;
+    this.targetType = r.type;
+    this.renderTarget();
+    return r.kind;
+  },
+
+  async forward() {
+    let sel = this.chosenPonti();
+    if (!sel.length) { toast('Spunta prima i ponti da inoltrare alla radio (o selezionali con clic, Maiusc+clic, Ctrl+clic).'); return; }
+    const what = this.ponti.some(p => p.scelto) ? 'spuntati' : 'selezionati';
+    let kind = this.targetKind();
+    if (!kind) kind = await this.pickTarget();
+    else {
+      const c = await chooseDlg('Inoltra alla radio', `Radio selezionata: ${this.targetName(kind)}\n\nScrivere i ${sel.length} ponti ${what} in questa radio?`,
+        [{ id: 'no', label: 'Annulla' }, { id: 'other', label: 'Scegli un\'altra radio…' }, { id: 'ok', label: 'Conferma e scrivi', primary: true }]);
+      if (!c || c === 'no') return;
+      if (c === 'other') kind = await this.pickTarget();
+    }
+    // controllo preliminare: i dati devono essere compatibili con la radio scelta
+    while (kind) {
+      const chk = radioCompat(kind, sel, kind === this.target ? this.targetType : '');
+      if (!chk.bad.length && !chk.warn.length) break;
+      const c = await compatBanner(this.targetName(kind), chk);
+      if (c === 'some') { const keep = new Set(chk.ok.concat(chk.warn.map(w => w.p))); sel = sel.filter(p => keep.has(p)); break; }
+      if (c !== 'other') return;
+      kind = await this.pickTarget();
+    }
+    if (!kind) return;
+    await this.toRadio(kind, sel);
   },
 
   selectedPonti() {
@@ -135,14 +234,9 @@ const Archive = {
         case 'del': return await this.del();
         case 'undo': return this.undo();
         case 'redo': return this.redo();
-        case 'tok67': return await this.toRadio('k67');
-        case 'tobaj': return await this.toRadio('baj');
-        case 'toother': {
-          const gens = Object.values(Views).filter(v => v.def.generic);
-          const items = gens.map(v => ({ label: v.def.name + (v.loaded ? '' : ' (da leggere o aprire)'), run: () => this.toRadio(v.kind) }));
-          items.push({ label: 'Scegli il modello dalla galleria…', run: () => { this.copy(); App.showTab('gal'); } });
-          return showMenuAt($('[data-a="toother"]'), items);
-        }
+        case 'checkall': return this.checkVisible(true);
+        case 'uncheckall': return this.checkVisible(false);
+        case 'forward': return await this.forward();
         case 'copy': return this.copy();
         case 'names': return await Dialogs.renamePonti();
         case 'verified': return this.markVerified();
@@ -177,17 +271,22 @@ const Archive = {
   },
 
   copy() {
-    const sel = this.selectedPonti();
+    const sel = this.chosenPonti();
     if (!sel.length) { toast('Seleziona prima i ponti da copiare.'); return; }
     Clipboard.kind = 'ponti';
-    Clipboard.items = sel.map(pontiToChan);
+    Clipboard.items = sel.map(p => pontiToChan(p));
     toast(`Copiati ${sel.length} ponti: vai nella scheda di una radio, scegli la posizione e premi Incolla (Ctrl+V).`);
   },
 
-  async toRadio(kind) {
-    const sel = this.selectedPonti();
-    if (!sel.length) { toast('Seleziona prima i ponti (clic, Maiusc+clic, Ctrl+clic o Ctrl+A).'); return; }
-    await Dialogs.insertInto(Views[kind], sel.map(pontiToChan), 'ponti');
+  async toRadio(kind, sel) {
+    sel = sel || this.chosenPonti();
+    if (!sel.length) { toast('Spunta o seleziona prima i ponti.'); return; }
+    const v = Views[kind] || App.openRadio(kind);
+    App.radioTab(kind);
+    if (this.target !== kind) { this.targetLabel = ''; this.targetType = ''; }
+    this.target = kind;
+    this.renderTarget();
+    await Dialogs.insertInto(v, sel.map(p => pontiToChan(p, v.def)), 'ponti');
   },
 
   markVerified() {
@@ -339,6 +438,105 @@ const Archive = {
   },
 };
 
-function pontiToChan(p) {
-  return { rx: p.rx, tx: p.tx, txTone: p.txTone || '', rxTone: p.rxTone || '', power: p.power || 0, narrow: !!p.narrow, scan: true, name: p.nome || '' };
+// ponte → canale; sulle radio DMR un ponte solo DMR diventa un canale DMR
+function pontiToChan(p, def) {
+  const c = { rx: p.rx, tx: p.tx, txTone: p.txTone || '', rxTone: p.rxTone || '', power: p.power || 0, narrow: !!p.narrow, scan: true, name: p.nome || '' };
+  if (def && def.digital === 'DMR' && ponteSoloDigitale(p) && (p.tipi || []).includes('DMR')) {
+    c.dig = true;
+    c.txTone = c.rxTone = '';
+  }
+  return c;
+}
+
+// ------------------------------------------------------------ compatibilità ponti / radio
+
+const TIPI_DIGITALI = ['DMR', 'C4FM', 'D-Star', 'NXDN'];
+// ponte senza modo analogico (solo DMR, C4FM, D-Star, NXDN)
+function ponteSoloDigitale(p) {
+  const t = p.tipi || [];
+  return t.length > 0 && t.every(x => TIPI_DIGITALI.includes(x));
+}
+
+// gamme delle due radio con file propri (5RH Pro / K67 Pro e Bajeton 8300: tre bande)
+const BANDS_FILE = [{ lo: 136e6, hi: 174e6 }, { lo: 220e6, hi: 260e6 }, { lo: 400e6, hi: 520e6 }];
+const PMR446 = { lo: 446000000, hi: 446200000 };
+const GMRS = { lo: 462550000, hi: 467725000 };
+
+// tipologia della radio: quella del modello scelto, altrimenti quella dei modelli
+// del catalogo gestiti da quel driver (se sono tutti PMR / GMRS la radio è di uso libero)
+function radioCategory(kind, chosenType) {
+  if (chosenType) return chosenType;
+  const types = new Set(App.catalog.filter(c => (c.drivers || []).includes(kind)).map(c => c.type));
+  if (!types.size) return 'analog';
+  if ([...types].every(t => t === 'pmr' || t === 'kids')) return 'pmr';
+  if ([...types].every(t => t === 'gmrs')) return 'gmrs';
+  return types.has('dmr') && types.size === 1 ? 'dmr' : 'analog';
+}
+
+// controllo preliminare prima di scrivere i ponti in una radio:
+// { ok: [...], warn: [{ p, why }] (si possono scrivere con conferma), bad: [{ p, why }] }
+function radioCompat(kind, ponti, chosenType) {
+  const def = (Views[kind] && Views[kind].def) || App.defs[kind] || RADIO_DEF[kind] || {};
+  const bands = def.bands && def.bands.length ? def.bands : BANDS_FILE;
+  const cat = radioCategory(kind, chosenType);
+  const inBand = f => bands.some(b => f >= b.lo && f <= b.hi);
+  const inR = (f, r) => f >= r.lo && f <= r.hi;
+  const mhz = f => (f / 1e6).toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+  const ok = [], warn = [], bad = [];
+  const gamme = bands.map(b => mhz(b.lo) + '-' + mhz(b.hi)).join(', ');
+  for (const p of ponti) {
+    let why = '', soft = '';
+    if (ponteSoloDigitale(p) && !(def.digital === 'DMR' && (p.tipi || []).includes('DMR'))) {
+      why = `ponte solo digitale (${(p.tipi || []).join(', ')}): ${def.digital === 'DMR' ? 'la radio gestisce solo DMR' : 'la radio è solo analogica'}`;
+    } else if (!inBand(p.rx) || !inBand(p.tx)) {
+      const fq = mhz(inBand(p.rx) ? p.tx : p.rx);
+      why = cat === 'pmr' || cat === 'kids'
+        ? `apparato PMR446 / di uso libero che non accetta ${fq} MHz (gamme della radio: ${gamme} MHz): i ponti radio non si possono caricare`
+        : cat === 'gmrs'
+          ? `apparato GMRS / FRS che non accetta ${fq} MHz (gamme della radio: ${gamme} MHz): i ponti radio non si possono caricare`
+          : `frequenza ${fq} MHz fuori dalle gamme della radio (${gamme} MHz)`;
+    } else if ((cat === 'pmr' || cat === 'kids') && !(inR(p.rx, PMR446) && inR(p.tx, PMR446))) {
+      // venduta come PMR446, ma la radio (e il suo programma) accetta queste frequenze
+      soft = `apparato venduto come PMR446 / di uso libero, ma la radio accetta queste frequenze (gamme: ${gamme} MHz)`;
+    } else if (cat === 'gmrs' && !(inR(p.rx, GMRS) && inR(p.tx, GMRS))) {
+      soft = `apparato venduto come GMRS / FRS, ma la radio accetta queste frequenze (gamme: ${gamme} MHz; il driver può comunque limitare la trasmissione)`;
+    }
+    if (why) bad.push({ p, why }); else if (soft) warn.push({ p, why: soft }); else ok.push(p);
+  }
+  return { ok, warn, bad, cat };
+}
+
+// banner: dispositivo non compatibile con i dati da inviare (o venduto come PMR446 /
+// GMRS ma in grado di usarli). Restituisce 'no' | 'other' | 'some' (solo i ponti
+// compatibili e quelli accettati dalla radio)
+function compatBanner(name, chk) {
+  const n = chk.bad.length + chk.ok.length + chk.warn.length;
+  const list = arr => {
+    const reasons = new Map();
+    for (const b of arr) reasons.set(b.why, (reasons.get(b.why) || []).concat(b.p));
+    return [...reasons].map(([why, ps]) => `<li><b>${ps.length} ${ps.length === 1 ? 'ponte' : 'ponti'}</b>: ${esc(why)}
+      <span class="note">(${esc(ps.slice(0, 6).map(p => p.nome || p.sigla || (p.rx / 1e6).toFixed(4)).join(', '))}${ps.length > 6 ? ', …' : ''})</span></li>`).join('');
+  };
+  const usable = chk.ok.length + chk.warn.length;
+  const onlyWarn = !chk.bad.length;
+  const head = onlyWarn
+    ? `<div class="compat-banner warnonly"><b>La radio scelta è venduta come apparato ${chk.cat === 'gmrs' ? 'GMRS / FRS' : 'PMR446 / di uso libero'}, ma accetta le frequenze dei ponti
+        radio che stai inviando.</b><br>Radio scelta: ${esc(name)}. Puoi scriverli se sei radioamatore, rispettando le norme sull'uso delle frequenze
+        (in Italia un apparato PMR446 omologato non si può usare fuori dalla banda PMR446). Nella radio non è ancora stato scritto nulla.</div>`
+    : `<div class="compat-banner"><b>${usable ? `Hai scelto un dispositivo non compatibile con ${chk.bad.length} dei ${n} ponti che stai cercando di inviare alla radio.`
+        : 'Hai scelto un dispositivo non compatibile con i dati che stai cercando di inviare alla radio.'}</b><br>
+        Radio scelta: ${esc(name)}. Nella radio non è stato scritto nulla.</div>`;
+  const okBtn = onlyWarn ? (usable === 1 ? 'Scrivi comunque il ponte' : `Scrivi comunque i ${usable} ponti`)
+    : usable === 1 ? `Invia solo il ponte ${chk.warn.length ? 'utilizzabile' : 'compatibile'}` : `Invia solo i ${usable} ${chk.warn.length ? 'utilizzabili' : 'compatibili'}`;
+  return new Promise(res => {
+    const m = openModal(`<div class="dialog mid"><header>⚠ ${onlyWarn ? 'Radio venduta come ' + (chk.cat === 'gmrs' ? 'GMRS' : 'PMR446') : 'Radio non compatibile con i dati da inviare'}</header><div class="body">
+      ${head}
+      ${chk.bad.length ? `<p>Non compatibili:</p><ul class="compat-list">${list(chk.bad)}</ul>` : ''}
+      ${chk.warn.length ? `<p>${onlyWarn ? '' : 'Accettati dalla radio, anche se venduta come apparato di uso libero:'}</p><ul class="compat-list">${list(chk.warn)}</ul>` : ''}
+      ${!onlyWarn && chk.ok.length ? `<p class="note">${chk.ok.length} ponti sono compatibili.</p>` : ''}
+      </div><footer><button class="btn" data-c="no">Annulla</button><button class="btn" data-c="other">Scegli un'altra radio…</button>
+      ${usable ? `<button class="btn primary" data-c="some">${okBtn}</button>` : ''}</footer></div>`,
+      { onEsc: () => { m.close(); res('no'); } });
+    $$('[data-c]', m.el).forEach(b => b.onclick = () => { m.close(); res(b.dataset.c); });
+  });
 }

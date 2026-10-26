@@ -5,6 +5,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: baofeng_uv17Pro.py.
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 
@@ -177,7 +179,7 @@ func init() {
 	ms = append(ms, mk("bf-uv5gmini", "Baofeng", "UV-5G Mini", "UV5GMini", "Baofeng UV-5G Mini (GMRS)", omg, 999, p2(5, 1), bmini))
 	// modelli ricavati dai programmi del costruttore (non presenti in CHIRP): stessa
 	// mappa della memoria e stesso protocollo della famiglia UV-17Pro.
-	// Programma "BF-UVs CPS" (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-7B): presentazione
+	// Programma "BF-UVs CPS" (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B): presentazione
 	// "PROGRAMCOLORPROU", poi 'F' (16 byte) e 'M' (nome del modello, controllato).
 	pw2 := []genPower{{"Alta", 0, 0}, {"Bassa", 0, 2}}
 	pw3 := []genPower{{"Alta", 0, 0}, {"Bassa", 0, 2}, {"Media", 0, 1}}
@@ -197,6 +199,7 @@ func init() {
 		cps("bf-uv25plus", "UV-25 Plus", "UV17ProGPS", "Baofeng UV-25 Plus", oc, pw3, "UV25PRO"),
 		cps("bf-ar152pro", "AR-152 Pro", "UV17ProGPS", "Baofeng AR-152 Pro", oc, pw3, "AR152"),
 		cps("bf-uv29pro", "UV-29 Pro", "UV17ProGPS", "Baofeng UV-29 Pro / SW-9", oc, pw3, "UV29PRO", "UV36PRO"),
+		cps("bf-uv28pro", "UV-28 Pro", "UV17ProGPS", "Baofeng UV-28 Pro", oc, pw3, "UV28PRO"),
 		cps("bf-uv7b", "UV-7B", "UV17ProGPS", "Baofeng UV-7B", oc, pw2, "UV17PRO"))
 	// Programma "T6UV Series CPS" (UV-17R, UV-21R, UV-21L): presentazione
 	// "PROGRAMBFNORMALU" come la UV-17Pro; dopo 'M' la radio invia «nome+versione».

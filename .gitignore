@@ -1,0 +1,5 @@
+# file locali, non pubblicati
+sorgenti/testdata/pontixls.xls
+**/bin/
+**/obj/
+sorgenti/gestionecanali

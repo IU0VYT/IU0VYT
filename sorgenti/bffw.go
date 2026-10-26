@@ -46,6 +46,42 @@ var (
 	reChipNRF = regexp.MustCompile(`(?i)(?:^|[_\- ])(NRF|FD6818)(?:$|[_\- ])`)
 )
 
+// fwTarget: radio a cui è destinato un firmware, riconosciuta dal nome del file
+// (i file del costruttore iniziano con la sigla del modello: «5RH_BK_…»,
+// «UV25Pro_NRF_…»). keys: sigle normalizzate (maiuscole, senza - _ . e spazi).
+type fwTarget struct {
+	keys    []string
+	target  string
+	confirm string
+	drivers []string
+}
+
+func fwTargetFromName(tbl []fwTarget, name string) *fwTarget {
+	base := normModel(strings.TrimSuffix(path.Base(name), path.Ext(name)))
+	for i := range tbl {
+		for _, k := range tbl[i].keys {
+			if strings.Contains(base, k) {
+				return &tbl[i]
+			}
+		}
+	}
+	return nil
+}
+
+// radio della serie TFT 330L e derivate (stesso caricatore KDH V1.0 della
+// UV-5RM secondo il programma del costruttore e CHIRP): l'ordine conta
+// (prima le sigle più lunghe)
+var bfTargets = []fwTarget{
+	{[]string{"5RMPLUS"}, "Baofeng UV-5RM Plus", "5RMPLUS", []string{"bf-uv5rmplus"}},
+	{[]string{"K5PLUS"}, "Baofeng K5 Plus", "K5PLUS", []string{"bf-k5plus"}},
+	{[]string{"17RPLUS"}, "Baofeng UV-17R Plus", "UV17RPLUS", []string{"bf-uv17rplus"}},
+	{[]string{"UV17R", "UV17"}, "Baofeng UV-17R", "UV17R", []string{"bf-uv17r"}},
+	{[]string{"UV21L"}, "Baofeng UV-21L", "UV21L", []string{"bf-uv21l"}},
+	{[]string{"UV21"}, "Baofeng UV-21R / UV-21", "UV21R", []string{"bf-uv21r"}},
+	{[]string{"T60", "988UV"}, "Baofeng BF-T60 / TR-988UV", "T60", []string{"bf-uv17r"}},
+	{[]string{"5RH", "5RM"}, "Baofeng UV-5RM / UV-5RH (serie TFT 330L)", "5RM", []string{"bf-uv5rm", "bf-uv5rh"}},
+}
+
 func newInfo(kind, target, confirm, name, origin string, raw []byte) (*fwImage, *fwInfo, func(level, f string, a ...interface{})) {
 	img := &fwImage{Raw: raw, Dec: raw}
 	img.Info = fwInfo{Kind: kind, Target: target, Confirm: confirm, Name: name, Origin: origin, Size: len(raw)}
@@ -98,6 +134,22 @@ func countBXLR(b []byte) int {
 // analyzeBF controlla un file .BF.
 func analyzeBF(name, origin string, raw []byte) *fwImage {
 	img, info, add := newInfo("bf", "Baofeng UV-5RM / UV-5RH (serie TFT 330L)", "5RM", name, origin, raw)
+	info.Models = []string{"bf-uv5rm", "bf-uv5rh"}
+	_, known := fwKnownBaofeng[info.SHA256]
+	if t := fwTargetFromName(bfTargets, name); t != nil && t.confirm != "5RM" && known {
+		// un file conosciuto vale più del nome: è della UV-5RM/5RH
+		add("warn", "Il nome del file indica la %s, ma il contenuto è un firmware conosciuto della UV-5RM/5RH: va usato solo su quelle radio", t.target)
+		info.Warnings = true
+	} else if t != nil {
+		info.Target, info.Confirm, info.Models = t.target, t.confirm, t.drivers
+		if t.confirm != "5RM" {
+			// Baofeng non pubblica firmware .BF; quelli raccolti dalla comunità
+			// sono tutti della UV-5RM/5RH: per le altre radio conferma scritta
+			info.Typed = true
+			add("warn", "Il nome del file indica la %s: questo programma conosce solo i firmware .BF della UV-5RM/5RH. Usalo solo se ti è stato fornito dal costruttore o dal rivenditore per la tua radio: il caricatore non controlla il modello", t.target)
+			info.Warnings = true
+		}
+	}
 	valid := true
 	if len(raw) < kdhHdr+kdhPkt || len(raw) > 512*1024 {
 		add("bad", "Dimensione non plausibile per un firmware .BF (%s)", fmtBytes(len(raw)))
@@ -114,7 +166,7 @@ func analyzeBF(name, origin string, raw []byte) *fwImage {
 		add("bad", "Aree troppo grandi per il protocollo del caricatore (massimo 255 pacchetti)")
 		valid = false
 	} else if s1 > 60*1024 || s2 > 4*1024 {
-		add("warn", "Aree più grandi della memoria della UV-5RM/5RH (60 KB + 4 KB): forse il firmware di un'altra radio")
+		add("warn", "Aree più grandi della memoria della UV-5RM/5RH (60 KB + 4 KB): forse il firmware di una radio diversa")
 		info.Warnings = true
 	}
 	// tabella dei vettori del Cortex-M (primi 2 KB in chiaro)

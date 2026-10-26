@@ -1,89 +1,118 @@
-PROGRAMMA DI CONFRONTO CON IL CODICE ORIGINALE (facoltativo, per chi vuole ripetere le prove)
-=========================================================================================
+PROVE DI CONFRONTO (facoltative, per chi vuole ripetere le verifiche)
+===================================================================
 
-Questo programma .NET 8 fa girare il codice di lettura/scrittura dei due programmi
-originali (CPS.exe del K67 Pro, cartella 5RH_PRO, e BT-11_CPS.exe della Bajeton)
-collegandolo, al posto della porta COM, a una radio simulata via TCP (SerialPort.cs).
-I test Go "TestDiff..." confrontano i byte arrivati alla radio simulata dal codice
-originale con quelli inviati da IU0VYT Flash (prima GestioneCanali).
+Questa cartella contiene i programmi di prova che confrontano IU0VYT Flash con
+programmi di riferimento, collegati alla stessa radio simulata. Nessun programma,
+codice o firmware dei costruttori è incluso: chi vuole ripetere le prove usa le
+copie che ha scaricato dai siti ufficiali.
 
-Il codice dei costruttori NON è incluso. Per ricostruirlo:
-1. Decompila CPS.exe e BT-11_CPS.exe con ILSpy (es. "ilspycmd -p -o cartella file.exe").
-2. Copia senza modifiche le classi elencate in elenco_classi.txt nelle sottocartelle
-   "cps" (da CPS.exe) e "bt" (da BT-11_CPS.exe) accanto a Program.cs.
-3. dotnet build -c Release
-4. Nella cartella dei sorgenti di IU0VYT Flash (su Linux):
-     HARNESS=percorso/bin/Release/net8.0/harness.dll go test -mod=vendor -run TestDiff -v .
+DRIVER DI CHIRP (cartella "chirp")
+chirp/chirpref.py fa girare CHIRP (sorgenti di https://github.com/kk7ds/chirp) per i
+confronti: lettura dei canali dalle immagini di prova di CHIRP, modifiche, posizione
+dei campi della memoria e colloquio via cavo con le radio simulate (collegamento TCP).
+Come l'interfaccia di CHIRP, non riassegna un campo non modificabile se il valore non
+cambia.
+     CHIRP_DIR=percorso/dei/sorgenti/di/chirp \
+     go test -mod=vendor -run 'TestChirp(Decode|Encode|Layout|Clone)' -v .
+   (CHIRP_MODEL=bf-uv5r limita TestChirpClone a un modello).
 
-Modalità: k67-write ind file.xlc [pwd] | k67-read ind out.xlc [pwd] | k67-save ind in out
-          bt-write ind file.dat | bt-read ind out.dat   (ind = host:porta della radio simulata)
-
-Prova dell'eseguibile Windows con porte seriali (pseudo-terminali) sotto Wine:
-     WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run TestWineSerial -v .
-
-AGGIORNAMENTO DEL FIRMWARE (cartella "anc")
-Il programma .NET 8 "anc/harness" carica l'eseguibile ORIGINALE "BinTe ANC Bootloader.exe"
-(V1.1, dal pacchetto del firmware del costruttore) e ne fa girare la classe BootHelper,
-senza decompilarla. Le librerie che su .NET 8 mancano sono sostituite da due piccoli
-programmi: "anc/ports" (System.IO.Ports.SerialPort: la porta diventa un collegamento TCP
-con la radio simulata, che riceve anche aperture, chiusure e cambi di velocità) e
-"anc/config" (impostazioni del programma: velocità predefinita).
-1. cd verifica/anc/harness && dotnet build -c Release   (nessun pacchetto da scaricare)
-2. Nella cartella dei sorgenti di IU0VYT Flash (su Linux):
+AGGIORNAMENTO DEL FIRMWARE BAJETON (cartella "anc")
+Il programma .NET 8 "anc/harness" carica l'eseguibile del costruttore
+"BinTe ANC Bootloader.exe" (V1.1) così com'è e ne usa la classe BootHelper. Le
+librerie che su .NET 8 mancano sono sostituite da "anc/ports" (porta seriale: diventa
+un collegamento TCP con la radio simulata) e "anc/config" (impostazioni del programma).
+1. cd verifica/anc/harness && dotnet build -c Release
+2. Nella cartella dei sorgenti (su Linux):
      ANC_HARNESS=$PWD/verifica/anc/harness/bin/Release/net8.0/anc_harness.dll \
      ANC_EXE="percorso/BinTe ANC Bootloader.exe" \
      ANC_REAL=percorso/BJ8300_V0.12_20251112.anc \
      go test -mod=vendor -run TestDiffAnc -v .
    ANC_REAL è facoltativa (aggiunge la prova con il firmware vero).
-Prova dell'aggiornamento con l'eseguibile Windows sotto Wine (porta COM9 su pseudo-terminale):
-     WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run TestWineFirmware -v .
 
-AGGIORNAMENTO DEL FIRMWARE BAOFENG (cartelle "bf" e "rh5", versione 3.0)
-UV-5RM/UV-5RH (.BF): il programma "bf/harness" carica l'eseguibile ORIGINALE
-"BF_Upgrade_Tool_for_TFT_330L_Series.exe" (升级工具_V1.0) e ne fa girare la classe
-KDH_Bootloader.BootHelper, senza decompilarla, con la stessa porta simulata della
-cartella "anc" (anc/ports).
+AGGIORNAMENTO DEL FIRMWARE BAOFENG (cartella "bf")
+Il programma "bf/harness" carica gli eseguibili dei programmi di aggiornamento del
+costruttore così come sono e ne usa la classe KDH_Bootloader.BootHelper, con la porta
+simulata di "anc/ports". Il quinto argomento è la velocità di apertura della porta.
 1. cd verifica/bf/harness && dotnet build -c Release
 2. Nella cartella dei sorgenti:
      BF_HARNESS=$PWD/verifica/bf/harness/bin/Release/net8.0/bf_harness.dll \
      BF_EXE="percorso/BF_Upgrade_Tool_for_TFT_330L_Series.exe" \
      BF_REAL=cartella_con_file_BF \
      go test -mod=vendor -run 'TestDiffKdh|TestAnalyzeBaofeng' -v .
-   BF_REAL è facoltativa (aggiunge le prove con i firmware veri).
-5RH Pro (.dat): il programma "rh5/harness" compila la classe PortComm di Radio.exe
-(programma di aggiornamento della 5RH Pro) copiata SENZA MODIFICHE dalla
-decompilazione nella cartella rh5/harness/orig (non inclusa: decompila Radio.exe con
-ILSpy e salva la classe Radio.PortComm in orig/PortComm.cs, con gli "using" e il
-"namespace Radio"); Stubs.cs sostituisce le parti della finestra principale che usa.
-1. cd verifica/rh5/harness && dotnet build -c Release
-2. Nella cartella dei sorgenti:
-     RH5_HARNESS=$PWD/verifica/rh5/harness/bin/Release/net8.0/rh5_harness.dll \
-     RH5_REAL=cartella_con_file_dat \
-     go test -mod=vendor -run 'TestDiffRh5' -v .
-
-DRIVER DI CHIRP (cartella "chirp", versione 3.0)
-chirp/chirpref.py fa girare il CHIRP vero (sorgenti di https://github.com/kk7ds/chirp)
-per i confronti: lettura dei canali, modifiche, posizione dei campi, colloquio via cavo
-con le radio simulate (collegamento TCP).
-     CHIRP_DIR=percorso/dei/sorgenti/di/chirp \
-     go test -mod=vendor -run 'TestChirp(Decode|Encode|Layout|Clone)' -v .
-   (CHIRP_MODEL=bf-uv5r limita TestChirpClone a un modello).
-
-FIRMWARE UV-25 PLUS, UV-9G E BJ-9000 (cartella "bf", versione 3.1)
-Lo stesso "bf/harness" carica anche gli eseguibili ORIGINALI dei tre programmi con la
-classe KDH_Bootloader.BootHelper: "Baofeng Bootloader Pro.exe" (UV-25 Plus, .kdhx),
-"Bootloader_BaudRate38400.exe" (UV-9G, .kdh) e "BJ9000_EnUPDATE.exe" (BJ-9000,
-.Firmware). Il quinto argomento del harness è la velocità di apertura della porta
-(quella dei pulsanti del programma).
-     BF_HARNESS=$PWD/verifica/bf/harness/bin/Release/net8.0/bf_harness.dll \
+   UV-25 Plus, UV-9G e BJ-9000:
+     BF_HARNESS=... \
      KDHX_EXE="percorso/Baofeng Bootloader Pro.exe" \
      K9G_EXE="percorso/Bootloader_BaudRate38400.exe" \
      BJ9000_EXE="percorso/BJ9000_EnUPDATE.exe" \
      KDH2_REAL=cartella_con_i_firmware_ufficiali \
      go test -mod=vendor -run 'TestDiffKdh2' -v .
 
-DRIVER DI CHIRP (versione 3.1)
-BJ-7700 (RT910BT, RT910), serie H (RadioddityGA510Radio) e GM-15 Pro (BaofengGM15Pro)
-si provano con gli stessi test. chirpref.py, come l'interfaccia di CHIRP, non
-riassegna un campo non modificabile (immutable) se il valore non cambia (necessario per
-i canali in sola ricezione della GM-15 Pro).
+RADIO BF-T17 / BF-T18 (cartella "t17")
+Il programma .NET 8 "t17/harness" carica gli eseguibili dei programmi del costruttore
+«T17-T18 PMR446 PRO» (T17_PMR446_PRO.exe) e «T17-T18 FRS» (CPS.exe) così come sono e
+ne usa la classe AnaCps.Data.DataProtocol (lettura e scrittura via cavo), con la porta
+simulata di "anc/ports" e "t17/winforms" (sostituto minimo di System.Windows.Forms:
+servono solo i campi statici delle finestre).
+1. cd verifica/t17/harness && dotnet build -c Release
+2. Nella cartella dei sorgenti:
+     T17_HARNESS=$PWD/verifica/t17/harness/bin/Release/net8.0/t17_harness.dll \
+     T17_EXE="percorso/T17_PMR446_PRO.exe" T17FRS_EXE="percorso/CPS.exe" \
+     go test -mod=vendor -run TestT17CPS -v .
+
+GT-18 PMR446 («BAOFENG GT18 PMR»): stesso programma della T17 PMR446, si prova con lo
+stesso t17_harness aggiungendo GT18_EXE="percorso/BAOFENG GT18 PMR.exe".
+
+RADIO BF-T9 (cartella "t9")
+Il programma .NET 8 "t9/harness" carica l'eseguibile del programma del costruttore
+«BF-Ts» (BF-Tseries.exe, pacchetto «BF-T9 Software») così com'è e ne usa la classe
+KDH.BF.BF480.WriFreq (lettura e scrittura via cavo) con la porta simulata di
+"anc/ports".
+1. cd verifica/t9/harness && dotnet build -c Release
+2. Nella cartella dei sorgenti:
+     T9_HARNESS=$PWD/verifica/t9/harness/bin/Release/net8.0/t9_harness.dll \
+     T9_EXE="percorso/BF-Tseries.exe" go test -mod=vendor -run TestT9CPS -v .
+Il programma del costruttore rilegge sempre «beat shift» attivo (controlla il bit 1
+con «(b & 1) == 2», sempre falso) e quindi in scrittura azzera il bit 1 di tutti i
+canali: il confronto ignora quel bit.
+
+BAJETON DM-5000 («BAJETON DM-5000 CPS»)
+TestDm5000Codec confronta i byte dei canali e delle zone con quelli calcolati a mano
+dal codice del programma del costruttore (SaveSingle, InitDigital, InitAnalog,
+SaveSubaudio, salvataggio delle zone); TestNoChirpModels prova lettura e scrittura
+con la radio simulata.
+
+RADIO DR-1801UV (cartella "dr1801")
+Il programma .NET 8 "dr1801/harness" carica l'eseguibile del programma del
+costruttore «DR-1801A6» (DR-1801A6.exe) così com'è e ne usa le classi DataLayout
+(lettura e salvataggio della memoria) e il canale di comunicazione (PipeLine: lettura
+e scrittura via cavo), con la porta simulata di "anc/ports" (dalla 3.5 con l'evento
+DataReceived, che questo programma usa). Modalità: decode, edit, read, write.
+1. cd verifica/dr1801/harness && dotnet build -c Release
+2. Nella cartella dei sorgenti:
+     DR1801_HARNESS=$PWD/verifica/dr1801/harness/bin/Release/net8.0/dr1801_harness.dll \
+     DR1801_EXE="percorso/DR-1801A6.exe" \
+     DR1801_ACCPS="percorso/Data/DM-1801A6 Factory setting.accps" \
+     go test -mod=vendor -run TestDr1801CPS -v .
+   Prova: lettura del file di fabbrica uguale; sei modifiche (cancellazioni anche di
+   canali in zone, liste e roaming, canali modificati, nuovi analogici e DMR, tono
+   non standard) con memoria identica a quella scritta da DataLayout.W; lettura e
+   scrittura del programma con la radio simulata uguali a quelle di questo programma.
+
+FIRMWARE DELLE FAMIGLIE (3.5)
+TestFwTargets prova il riconoscimento del modello dal nome dei file .BF e .kdhx, le
+conferme richieste prima dell'invio e che ogni radio indicata abbia nella galleria il
+caricatore giusto (non servono file esterni).
+
+SERIE D BAOFENG («BF Series CPS»)
+TestBfdVendorJS prende dal file dell'applicazione del costruttore (render del
+pacchetto Baofeng_V1D_CPS, cartella resources dell'app Electron) le funzioni che
+leggono e scrivono i canali e le esegue con node sugli stessi dati di questo programma:
+     BFD_JS=percorso/del/file/render.js go test -mod=vendor -run TestBfdVendorJS -v .
+TestBfdChirp (con CHIRP_DIR) confronta W31D e BF-V12D con il driver «Baofeng digital»
+di CHIRP; TestDm32ChirpEdits confronta con CHIRP le modifiche alla DM-32UV.
+
+ESEGUIBILE WINDOWS SOTTO WINE
+     WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run 'TestWine' -v .
+
+Le prove TestDiffK67*, TestDiffBt* e TestDiffRh5 richiedono materiale non
+distribuito con il programma: senza le variabili indicate vengono saltate.

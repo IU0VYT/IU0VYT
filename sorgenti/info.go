@@ -38,6 +38,7 @@ const (
 	appAuthor        = `Daniele "IU0VYT" Bonifazi`
 	appEmail         = ""
 	appQRZ           = "https://www.qrz.com/db/IU0VYT"
+	appRepo          = "https://github.com/IU0VYT/IU0VYT"
 	appLicense       = "GNU General Public License versione 3 o successiva (GPL-3.0-or-later)"
 	defaultUpdateURL = "https://github.com/IU0VYT/IU0VYT/releases/download/NEW/IU0VYT.Flash.zip"
 	// firma letta dalla verifica degli aggiornamenti nell'eseguibile pubblicato
@@ -88,7 +89,7 @@ func (a *App) apiInfo(r *http.Request) (interface{}, error) {
 	}
 	return map[string]interface{}{
 		"name": appName, "version": appVersion, "buildDate": bd, "author": appAuthor, "email": appEmail,
-		"qrz": appQRZ, "dataDir": a.store.dir, "marker": versionMarker, "license": appLicense,
+		"qrz": appQRZ, "repo": appRepo, "dataDir": a.store.dir, "marker": versionMarker, "license": appLicense,
 	}, nil
 }
 

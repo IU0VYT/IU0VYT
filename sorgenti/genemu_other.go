@@ -7,6 +7,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: protocolli dei driver indicati in AUTORI_E_LICENZE.txt.
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 
@@ -718,7 +720,7 @@ func newRBEmu(sp *rbSpec, img []byte) *rbEmu {
 	return e
 }
 
-func (bft8Fam) emu(m *genModel, img []byte) genEmu { return newRBEmu(bft8Spec, img) }
+func (bft8Fam) emu(m *genModel, img []byte) genEmu { return newRBEmu(bft8o(m).spec, img) }
 func (t18Fam) emu(m *genModel, img []byte) genEmu  { return newRBEmu(t18o(m).spec, img) }
 
 func (e *rbEmu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return append([]byte{}, e.img...) }

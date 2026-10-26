@@ -1,2 +1,2 @@
-versione=3.1.2
-compilazione=2026-10-23T01:51
+versione=3.5
+compilazione=2026-10-26T22:35

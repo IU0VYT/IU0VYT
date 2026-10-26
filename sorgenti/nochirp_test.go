@@ -44,9 +44,22 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = o.memsize
 	case *rt22Opt:
 		size = o.memsize
+	case *bfdOpt:
+		size = bfdMemsize
+	case *t17Opt:
+		size = t17Memsize
+	case *dm5kOpt:
+		size = dm5kSize()
 	}
 	mem := bytes.Repeat([]byte{0xFF}, size)
-	if err := m.Fam.Set(m, mem, 0, &Chan{Rx: 145500000, Tx: 145500000, Scan: true, Name: "S20"}); err != nil {
+	if _, ok := m.Opt.(*drOpt); ok {
+		mem = drSynthImage()
+	}
+	first := &Chan{Rx: 145500000, Tx: 145500000, Scan: true, Name: "S20"}
+	if m.NameMax == 0 {
+		first.Name = ""
+	}
+	if err := m.Fam.Set(m, mem, 0, first); err != nil {
 		t.Fatal(err)
 	}
 	return mem

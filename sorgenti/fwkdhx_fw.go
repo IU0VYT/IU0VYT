@@ -70,19 +70,48 @@ func knownKDH2(info *fwInfo, add func(level, f string, a ...interface{})) {
 	}
 }
 
-// analyzeKDHX controlla un firmware .kdhx della UV-25 Plus.
+// radio con il caricatore «Baofeng Bootloader Pro» (piattaforma H802): la
+// UV-25 Plus (firmware pubblicato da Baofeng) e le altre radio del programma
+// «BF-UVs Pro CPS», lo stesso della UV-25 Plus
+var kdhxTargets = []fwTarget{
+	{[]string{"UV25"}, "Baofeng UV-25 Plus", "UV25PLUS", []string{"bf-uv25plus"}},
+	{[]string{"UV28"}, "Baofeng UV-28 Pro", "UV28PRO", []string{"bf-uv28pro"}},
+	{[]string{"UV29", "SW9"}, "Baofeng UV-29 Pro / SW-9", "UV29PRO", []string{"bf-uv29pro"}},
+	{[]string{"AR152"}, "Baofeng AR-152 Pro", "AR152PRO", []string{"bf-ar152pro"}},
+	{[]string{"UV7B"}, "Baofeng UV-7B", "UV7B", []string{"bf-uv7b"}},
+	{[]string{"UV32"}, "Baofeng UV-32", "UV32", []string{"bf-uv32"}},
+	{[]string{"UV17"}, "Baofeng UV-17R", "UV17R", []string{"bf-uv17r"}},
+	{[]string{"UV21"}, "Baofeng UV-21R / UV-21L / UV-21", "UV21", []string{"bf-uv21r", "bf-uv21l"}},
+	{[]string{"T60", "988UV"}, "Baofeng BF-T60 / TR-988UV", "T60", []string{"bf-uv17r"}},
+	{[]string{"K5PLUS"}, "Baofeng K5 Plus", "K5PLUS", []string{"bf-k5plus"}},
+	{[]string{"5RMPLUS"}, "Baofeng UV-5RM Plus", "5RMPLUS", []string{"bf-uv5rmplus"}},
+}
+
+// analyzeKDHX controlla un firmware .kdhx (caricatore «Bootloader Pro»).
 func analyzeKDHX(name, origin string, raw []byte) *fwImage {
-	img, info, add := newInfo("kdhx", "Baofeng UV-25 Plus", "UV25PLUS", name, origin, raw)
+	img, info, add := newInfo("kdhx", "radio Baofeng con caricatore «Bootloader Pro» (H802)", "H802", name, origin, raw)
+	t := fwTargetFromName(kdhxTargets, name)
+	uv25 := t != nil && t.confirm == "UV25PLUS"
+	// un file conosciuto vale più del nome: il firmware ufficiale della UV-25
+	// Plus resta tale anche se rinominato
+	renamed := false
+	if k, ok := fwKnownKDH2[info.SHA256]; ok && strings.HasPrefix(k, "UV-25 Plus") && !uv25 {
+		t, uv25, renamed = &kdhxTargets[0], true, true
+	}
+	if t != nil {
+		info.Target, info.Confirm, info.Models = t.target, t.confirm, t.drivers
+	}
+	info.Typed = !uv25
 	valid := true
 	if len(raw) < 8*kdhPkt || len(raw) > 255*kdhPkt {
-		add("bad", "Dimensione non plausibile per un firmware della UV-25 Plus (%s; il caricatore accetta al massimo 255 KB)", fmtBytes(len(raw)))
+		add("bad", "Dimensione non plausibile per un firmware .kdhx (%s; il caricatore accetta al massimo 255 KB)", fmtBytes(len(raw)))
 		return img
 	}
 	sp, rv, ok := armVectors(raw, 48)
 	if ok {
 		add("ok", "Programma per microcontrollore ARM caricato dopo il caricatore (avvio a 0x%08X, stack a 0x%08X)", rv&^1, sp)
 	} else {
-		add("bad", "L'inizio del file non è un programma valido per questa radio (tabella dei vettori non coerente): non è un firmware .kdhx utilizzabile")
+		add("bad", "L'inizio del file non è un programma valido per queste radio (tabella dei vettori non coerente): non è un firmware .kdhx utilizzabile")
 		return img
 	}
 	if len(raw) > 4*kdhPkt {
@@ -95,9 +124,15 @@ func analyzeKDHX(name, origin string, raw []byte) *fwImage {
 		}
 	}
 	base := nameVersionDate(info, name)
-	up := strings.ToUpper(base)
-	if !strings.Contains(up, "UV25") && !strings.Contains(up, "UV-25") {
-		add("warn", "Il nome del file non indica la UV-25 Plus: verifica che sia il firmware giusto")
+	switch {
+	case renamed:
+		add("warn", "Il nome del file non corrisponde al contenuto: è il firmware ufficiale della UV-25 Plus. Va usato solo su una UV-25 Plus")
+		info.Warnings = true
+	case t == nil:
+		add("warn", "Il nome del file non indica il modello della radio: verifica con il costruttore o il rivenditore che sia il firmware giusto. Scrivi H802 per confermare")
+		info.Warnings = true
+	case !uv25:
+		add("warn", "Il nome del file indica la %s. Baofeng pubblica il firmware .kdhx solo per la UV-25 Plus: usa questo file solo se ti è stato fornito dal costruttore o dal rivenditore per la tua radio", t.target)
 		info.Warnings = true
 	}
 	if reChipNRF.MatchString(base) {
@@ -105,10 +140,10 @@ func analyzeKDHX(name, origin string, raw []byte) *fwImage {
 	}
 	if m := reHwPlus.FindStringSubmatch(base); m != nil {
 		info.Hw = "elettronica «" + m[1] + "+»"
-		add("warn", "Il nome del file contiene «%s+»: secondo la denominazione del costruttore indica le radio a partire da quella versione dell'elettronica. Usalo solo per una UV-25 Plus come indicato da Baofeng", m[1])
+		add("warn", "Il nome del file contiene «%s+»: secondo la denominazione del costruttore indica le radio a partire da quella versione dell'elettronica. Usalo solo per la radio indicata da Baofeng", m[1])
 		info.Warnings = true
 	}
-	add("warn", "Nella modalità automatica la radio controlla il proprio codice di modello (H802) prima di aggiornarsi; nella modalità manuale (radio accesa con SK2+SK3) il caricatore non fa controlli: usa solo il firmware della UV-25 Plus")
+	add("warn", "Nella modalità automatica la radio controlla solo il codice della piattaforma (H802), non il modello; nella modalità manuale (radio accesa con SK2+SK3) il caricatore non fa controlli: usa solo il firmware della tua radio")
 	info.Warnings = true
 	knownKDH2(info, add)
 	info.Valid = valid

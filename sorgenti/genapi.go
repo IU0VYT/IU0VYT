@@ -164,6 +164,10 @@ func genAdapt(c *Chan, m *genModel, label string, rep *Report) *Chan {
 	if !m.HasScan {
 		n.Scan = true
 	}
+	if n.Dig && m.Digital == "" {
+		rep.warn("%s: canale digitale, ma la %s ha solo canali analogici: canale non copiato", label, m.Name)
+		return nil
+	}
 	if n.TxOff && m.NoTxOff {
 		rep.warn("%s: questa radio non permette canali di sola ricezione: canale non copiato", label)
 		return nil

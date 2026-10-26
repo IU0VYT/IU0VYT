@@ -46,7 +46,8 @@ type Ponte struct {
 	Note       string            `json:"note"`
 	Orig       map[string]string `json:"orig,omitempty"`
 	Fonte      string            `json:"fonte,omitempty"`
-	Riga       int               `json:"riga,omitempty"` // riga nel file di origine (solo in importazione)
+	Riga       int               `json:"riga,omitempty"`   // riga nel file di origine (solo in importazione)
+	Scelto     bool              `json:"scelto,omitempty"` // spuntato dall'utente (da inoltrare alla radio)
 }
 
 const (

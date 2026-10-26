@@ -94,6 +94,10 @@ func posLabel(kind string, i int) string {
 func adaptChan(c *Chan, to string, bands []band, label string, rep *Report) *Chan {
 	n := *c
 	n.Raw = "" // i dati non interpretati appartengono all'altra radio
+	if n.Dig {
+		rep.warn("%s: canale digitale, non rappresentabile sulla %s (solo canali analogici): canale non copiato", label, radioName(to))
+		return nil
+	}
 	if n.TxOff {
 		rep.warn("%s: canale di sola ricezione (trasmissione disabilitata), non rappresentabile sulla %s: canale non copiato", label, radioName(to))
 		return nil

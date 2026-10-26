@@ -5,6 +5,8 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: uvb5.py, bf_t1.py, bf_t8.py, baofeng_uv3r.py, radtel_t18.py, retevis_rt22.py.
+// Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
+// ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
 package main
 
@@ -681,33 +683,85 @@ struct {
 } memory[99];
 `
 
+// nomi dei canali (Retevis RB27 e simili, MEM_FORMAT_PT2 di bf_t8.py)
+const bft8NamesFormat = `
+#seekto 0x0D00;
+struct {
+  char name[6];
+  u8 unknown1[2];
+} names[99];
+`
+
 type bft8Fam struct{}
+
+// bft8Opt: varianti della famiglia (classi di bf_t8.py)
+type bft8Opt struct {
+	spec  *rbSpec
+	names bool  // nomi da 6 caratteri a 0x0D00 (RB27)
+	dcs   []int // codici DCS nell'ordine della radio
+}
 
 func init() {
 	genRegister(&genModel{ID: "bf-t8", Vendor: "Baofeng", Model: "BF-T8", RClass: "BaofengBFT8Generic", Name: "Baofeng BF-T8 / BF-U9",
 		Slots: 99, First: 1, NameMax: 0, Powers: []genPower{{"Alta 2 W", 2, 0}, {"Bassa 0,5 W", 0.5, 2}},
 		Bands: []band{{400000000, 470000000}}, Narrow: true, HasScan: false, DCS: dtcsCodes, Baud: 9600, Fam: bft8Fam{},
+		Opt:   &bft8Opt{spec: bft8Spec, dcs: dtcsCodes},
 		Notes: "Radio senza nomi dei canali."})
+	// Baofeng G11S: è la Retevis RB27 (classe RetevisRB27 di CHIRP, tabella dei
+	// modelli equivalenti di CHIRP); stesso protocollo della BF-T8, 99 canali con
+	// nomi di 6 caratteri, banda 136-174 e 400-520 MHz.
+	rb27dcs := withCodes(dtcsCodes, 645)
+	genRegister(&genModel{ID: "bf-g11s", Vendor: "Retevis", Model: "RB27", RClass: "RetevisRB27", Name: "Baofeng G11S (Retevis RB27)",
+		Slots: 99, First: 1, NameMax: 6, Charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-",
+		Powers: []genPower{{"Alta 5 W", 5, 0}, {"Bassa 0,5 W", 0.5, 2}},
+		Bands:  []band{{136000000, 174000000}, {400000000, 520000000}}, Narrow: true, HasScan: true, DCS: rb27dcs, Baud: 9600, Fam: bft8Fam{},
+		Opt: &bft8Opt{spec: rb27Spec, names: true, dcs: rb27dcs},
+		Notes: "Baofeng G11S = Retevis RB27 (equivalenza indicata da CHIRP): driver della RB27 di CHIRP; " +
+			"nei file .img compare come Retevis RB27."})
 }
 
-func (bft8Fam) mem() *bwEl                 { return bwMust(bft8Format) }
-func (f bft8Fam) layout(m *genModel) *bwEl { return f.mem() }
-func (f bft8Fam) rec(i int) *bwEl          { return f.mem().F("memory").I(i) }
+func bft8o(m *genModel) *bft8Opt {
+	if o, ok := m.Opt.(*bft8Opt); ok {
+		return o
+	}
+	return &bft8Opt{spec: bft8Spec, dcs: dtcsCodes}
+}
+
+func (bft8Fam) mem() *bwEl { return bwMust(bft8Format) }
+func (f bft8Fam) layout(m *genModel) *bwEl {
+	if bft8o(m).names {
+		return bwMust(bft8Format + bft8NamesFormat)
+	}
+	return f.mem()
+}
+func (f bft8Fam) rec(i int) *bwEl { return f.mem().F("memory").I(i) }
+func (f bft8Fam) name(i int) *bwEl {
+	return bwMust(bft8Format + bft8NamesFormat).F("names").I(i).F("name")
+}
 func (f bft8Fam) Rec(m *genModel, img []byte, i int) []byte {
-	return append([]byte{}, f.rec(i).Raw(img)...)
+	r := append([]byte{}, f.rec(i).Raw(img)...)
+	if bft8o(m).names {
+		r = append(r, f.name(i).Raw(img)...)
+	}
+	return r
 }
-func (f bft8Fam) PutRec(m *genModel, img []byte, i int, raw []byte) { f.rec(i).SetRaw(img, raw) }
-func (f bft8Fam) Match(m *genModel, img []byte) bool                { return false }
+func (f bft8Fam) PutRec(m *genModel, img []byte, i int, raw []byte) {
+	f.rec(i).SetRaw(img, raw[:16])
+	if bft8o(m).names && len(raw) >= 22 {
+		f.name(i).SetRaw(img, raw[16:22])
+	}
+}
+func (f bft8Fam) Match(m *genModel, img []byte) bool { return false }
 
-func bft8ToneDec(mode, v int64) string {
+func bft8ToneDec(mode, v int64, dcs []int) string {
 	switch mode {
 	case 1:
 		if int(v) < len(chirpTones) {
 			return fmtTone(chirpTones[v])
 		}
 	case 2, 3:
-		if int(v) < len(dtcsCodes) {
-			return genTone{Mode: "DTCS", Code: dtcsCodes[v], Inv: mode == 3}.String()
+		if int(v) < len(dcs) {
+			return genTone{Mode: "DTCS", Code: dcs[v], Inv: mode == 3}.String()
 		}
 	}
 	return ""
@@ -727,20 +781,41 @@ func (f bft8Fam) Get(m *genModel, img []byte, i int) *Chan {
 	}
 	c.Narrow = r.F("isnarrow").Bool(img)
 	c.Scan = !r.F("skip").Bool(img)
-	c.TxTone = bft8ToneDec(r.F("tx_tmode").Int(img), r.F("tx_tone").Int(img))
-	c.RxTone = bft8ToneDec(r.F("rx_tmode").Int(img), r.F("rx_tone").Int(img))
+	o := bft8o(m)
+	c.TxTone = bft8ToneDec(r.F("tx_tmode").Int(img), r.F("tx_tone").Int(img), o.dcs)
+	c.RxTone = bft8ToneDec(r.F("rx_tmode").Int(img), r.F("rx_tone").Int(img), o.dcs)
 	lp := int(r.F("lowpower").Int(img))
 	c.Power = m.powerSem(lp)
+	if o.names {
+		// come CHIRP: 0xFF (anche in mezzo al nome) = spazio, spazi finali tolti
+		nb := []byte{}
+		for _, b := range f.name(i).Raw(img) {
+			if b == 0xFF {
+				b = ' '
+			}
+			nb = append(nb, b)
+		}
+		c.Name = strings.TrimRight(string(nb), " \t\n\r\x0b\x0c")
+	}
 	return c
 }
 
 func (f bft8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	r := f.rec(i)
+	o := bft8o(m)
 	if c == nil {
 		r.Fill(img, 0xFF)
+		if o.names {
+			f.name(i).Fill(img, 0xFF)
+		}
 		return nil
 	}
 	r.SetRaw(img, append(make([]byte, 13), 0xFF, 0xFF, 0xFF))
+	if o.names {
+		nb := bytes.Repeat([]byte{0xFF}, 6)
+		copy(nb, c.Name)
+		f.name(i).SetRaw(img, nb)
+	}
 	r.F("rxfreq").SetInt(img, c.Rx/10)
 	if c.TxOff {
 		r.F("txfreq").Fill(img, 0xFF)
@@ -763,7 +838,7 @@ func (f bft8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 			r.F(x.mode).SetInt(img, 1)
 			r.F(x.tone).SetInt(img, int64(k))
 		case "DTCS":
-			k := idxInt(dtcsCodes, t.Code)
+			k := idxInt(o.dcs, t.Code)
 			if k < 0 {
 				return fmt.Errorf("codice DCS D%03d non disponibile su questa radio", t.Code)
 			}
@@ -938,13 +1013,18 @@ func rbUpload(ctx context.Context, port string, baud int, sp *rbSpec, img []byte
 var bft8Spec = &rbSpec{magic: []byte("\x02PROGRAM"), finger: []byte("\x2EBF-T6\x2E"), memsize: 0x0B60,
 	ranges: [][2]int{{0x0000, 0x0B60}}, block: 0x10, tries: 5, to: time.Second}
 
+// Retevis RB27 (Baofeng G11S): stesso identificativo, memoria fino a 0x1040,
+// scrittura di canali/impostazioni (0x0000-0x0640) e nomi (0x0D00-0x1040)
+var rb27Spec = &rbSpec{magic: []byte("\x02PROGRAM"), finger: []byte("\x2EBF-T6\x2E"), memsize: 0x1040,
+	ranges: [][2]int{{0x0000, 0x0640}, {0x0D00, 0x1040}}, block: 0x10, tries: 5, to: time.Second}
+
 func (f bft8Fam) Download(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, string, error) {
-	d, err := rbDownload(ctx, port, 9600, bft8Spec, prog)
+	d, err := rbDownload(ctx, port, 9600, bft8o(m).spec, prog)
 	return d, "", err
 }
 
 func (f bft8Fam) Upload(ctx context.Context, m *genModel, port string, img []byte, prog Progress) (string, error) {
-	return "", rbUpload(ctx, port, 9600, bft8Spec, img, prog)
+	return "", rbUpload(ctx, port, 9600, bft8o(m).spec, img, prog)
 }
 
 // ---------------------------------------------------------------- UV-3R
