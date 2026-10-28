@@ -30,10 +30,15 @@ type Settings struct {
 	BajPath   string   `json:"bajPath"`
 	ShowEmpty bool     `json:"showEmpty"`
 	// collegamento via cavo
-	K67Port     string `json:"k67Port"`
-	K67Baud     int    `json:"k67Baud"`
-	K67Pwd      string `json:"k67Pwd"`
+	K67Port string `json:"k67Port"`
+	K67Baud int    `json:"k67Baud"`
+	K67Pwd  string `json:"k67Pwd"`
+	// modello dell'ultima radio K67 letta: si è identificata come «BF-K6»
+	K67K6       bool   `json:"k67K6"`
+	K67Known    bool   `json:"k67Known"`
+	K67Band     byte   `json:"k67Band"` // banda di frequenza dell'ultima radio K67 letta
 	BajPort     string `json:"bajPort"`
+	BajVer      string `json:"bajVer"`  // formato dei nuovi file .dat: "1.0.8" (predefinito) o "1.0.9"
 	GenPort     string `json:"genPort"` // radio gestite con i driver di CHIRP
 	CableBackup bool   `json:"cableBackup"`
 	CableVerify bool   `json:"cableVerify"`

@@ -500,7 +500,7 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 			var mem []byte
 			mem, info, err = btReadImage(ctx, req.Port, j.prog, nil)
 			if err == nil {
-				if dat, err2 := eepromToDAT(mem, baseDAT); err2 == nil {
+				if dat, err2 := eepromToDAT(mem, a.bajTemplate()); err2 == nil {
 					if bp, err3 := a.saveBackup(kindDAT, dat, "prima_del_firmware"); err3 == nil {
 						res["backup"] = bp
 						j.note("Copia dei canali e delle impostazioni della radio salvata in %s", bp)

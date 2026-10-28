@@ -146,6 +146,13 @@ func genAdapt(c *Chan, m *genModel, label string, rep *Report) *Chan {
 		n.Raw = "" // i dati non interpretati appartengono a un'altra radio
 	}
 	name := m.cleanName(n.Name)
+	// nome troppo lungo: prima si tolgono gli spazi («PMR CH 12» → «PMRCH12»),
+	// così i nomi restano distinti anche sulle radio con pochi caratteri
+	if m.NameMax > 0 && len(strings.TrimSpace(asciiName(n.Name))) > m.NameMax {
+		if alt := m.cleanName(strings.ReplaceAll(strings.TrimSpace(n.Name), " ", "")); alt != "" {
+			name = alt
+		}
+	}
 	if name != n.Name {
 		rep.warn("%s: nome «%s» → «%s»", label, n.Name, name)
 	}
@@ -195,6 +202,18 @@ func genAdapt(c *Chan, m *genModel, label string, rep *Report) *Chan {
 		rep.warn("%s: tono «%s» non disponibile su questa radio, impostato OFF", label, *t)
 		*t = ""
 	}
+	if m.OneDCS {
+		tc, tinv, tok := dcsParse(n.TxTone)
+		rc, _, rok := dcsParse(n.RxTone)
+		if tok && rok && tc != rc {
+			s := "D" + rc + "N"
+			if tinv {
+				s = "D" + rc + "I"
+			}
+			rep.warn("%s: la %s usa lo stesso codice DCS in trasmissione e in ricezione: TX %s → %s", label, m.Name, n.TxTone, s)
+			n.TxTone = s
+		}
+	}
 	if !m.inBands(n.Rx) {
 		rep.warn("%s: %s MHz fuori dalle gamme della radio", label, fmtMHz(n.Rx))
 	}
@@ -243,7 +262,9 @@ func (a *App) genCableStart(req *cableReq) (interface{}, error) {
 		return nil, errors.New("operazione sconosciuta")
 	}
 	st := a.store.Settings
-	st.GenPort = req.Port
+	if m.Conn == "" {
+		st.GenPort = req.Port
+	}
 	if req.Op == "write" {
 		st.CableBackup, st.CableVerify = req.Backup, req.Verify
 	}

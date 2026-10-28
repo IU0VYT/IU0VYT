@@ -59,9 +59,11 @@ var catalog = []catItem{
 	// collegamenti: pagina dei download di bajeton.com (cartelle Google Drive del costruttore)
 	{ID: "bj-8300", Brand: "Bajeton", Name: "BJ-8300", Type: "analog", Drivers: []string{"baj"}, FW: "anc",
 		Links: []catLink{{"cps", "Programma BT-11_CPS v1.0.8 (Google Drive Bajeton)", gd + "drive/folders/1l8XTP9j3STu5SsiWcWrcdblccSGgGGrn"},
+			{"cps", "Programma BT-11_CPS v1.0.9 (Google Drive Bajeton)", gd + "drive/folders/1jj9HCZTsBrlM9O29fhuKQZVm8GYmRkmP"},
 			{"fw", "Firmware BJ8300_V0.12_20251112.anc e BinTe ANC Bootloader (Google Drive Bajeton)", gd + "drive/folders/1J4fUng8bC1uRyRvbDzZNlxdm9puzuANW"},
 			{"info", "Pagina dei download Bajeton", bjDown}},
-		Notes: "Gestione originale di questo programma (file .dat del programma BT-11) e aggiornamento del firmware (.anc)."},
+		Notes: "Gestione originale di questo programma (file .dat del programma BT-11_CPS, versioni 1.0.8 e 1.0.9: le due versioni salvano i file in formati diversi e non aprono quelli dell'altra, qui si aprono entrambi e si sceglie il formato in cui salvare), " +
+			"impostazioni della radio (finestra «Optional Features» del programma) e aggiornamento del firmware (.anc)."},
 	{ID: "bj-7800", Brand: "Bajeton", Name: "BJ-7800", Aliases: []string{"BJ7800", "SHU H28Y Pro"}, Type: "analog", Drivers: []string{"bj-7800"}, FW: "anc",
 		Links: []catLink{{"cps", "Programma BT-11_CPS v1.0.9 (Google Drive Bajeton)", gd + "drive/folders/1jj9HCZTsBrlM9O29fhuKQZVm8GYmRkmP"},
 			{"fw", "Firmware BJ7800_CN_EN_V0.17_20251126.anc e BinTe ANC Bootloader (Google Drive Bajeton)", gd + "drive/folders/1VpGx-Actyg_fi-GzeMg1rXhaf5VlEHQm"},
@@ -71,7 +73,7 @@ var catalog = []catItem{
 		Links: []catLink{{"cps", "Programma BJ-9000_CPS v1.1.1 (Google Drive Bajeton)", gd + "drive/folders/1jJh1gEOniEV3Ud0ODhcH1JeKueAzq4Vm"},
 			{"fw", "Firmware BJ9000_V0.27_260313 e programma BJ9000_EnUPDATE (Google Drive Bajeton)", gd + "drive/folders/1DF17RtchbKreT_QEAsQkON3qauP0gUp-"},
 			{"info", "Pagina dei download Bajeton", bjDown}},
-		Notes: "È la Radtel RT-950 Pro. Canali (960 in 15 zone) secondo il programma del costruttore BJ-9000_CPS v1.1.1 (si scrivono solo i canali; impostazioni e APRS con il programma del costruttore). " +
+		Notes: "È la Radtel RT-950 Pro. Canali (960 in 15 zone) e impostazioni generali secondo il programma del costruttore BJ-9000_CPS v1.1.1 (VFO, DTMF e APRS con il programma del costruttore). " +
 			"Firmware .Firmware con il protocollo del programma «BJ9000_EnUPDATE» (la radio controlla il modello prima di aggiornarsi)."},
 	{ID: "bj-8200", Brand: "Bajeton", Name: "BJ-8200", Type: "analog", Drivers: []string{"bj-7700", "bj-7700nbt"}, FW: "anc",
 		Links: []catLink{{"fw", "Programma BJ-7700_EnCPS e firmware — versione con Bluetooth (stesso pacchetto della BJ-7700)", gd + "file/d/1ngQoWCWzLFUfmDSW1JLDcqKwQWxfz_Ph/view"},
@@ -334,19 +336,30 @@ var catalog = []catItem{
 	{ID: "ar888s", Brand: "Baofeng", Name: "AR888S / TH-888S", Aliases: []string{"AR888S", "TH888S", "TH-888S"}, Models: []string{"AR888S", "TH-888S"}, Type: "pmr", Drivers: []string{"bf-888s"},
 		Notes: "Nella tabella dei modelli equivalenti di CHIRP la TH-888S corrisponde alla BF-888: si usa il driver della BF-888S."},
 	{ID: "bf-t3", Brand: "Baofeng", Name: "BF-T3 (per bambini)", Type: "kids"},
-	{ID: "gt-22", Brand: "Baofeng", Name: "GT-22", Type: "pmr", Links: []catLink{{"info", "Scheda del prodotto (baofengradio.com)", "https://baofengradio.com/products/gt-22"}},
-		Notes: "PMR446 senza licenza. Il programma del costruttore non era scaricabile dalla pagina dei download al momento della verifica: protocollo non analizzato."},
-	{ID: "gt-68", Brand: "Baofeng", Name: "GT-68", Type: "gmrs", Links: []catLink{{"info", "Scheda del prodotto (baofengradio.com)", "https://baofengradio.com/products/gt-68"}},
-		Notes: "Radio FRS (USA), 16 canali. Il programma del costruttore non era scaricabile dalla pagina dei download al momento della verifica: protocollo non analizzato."},
-	{ID: "dm-1701", Brand: "Baofeng", Name: "DM-1701", Aliases: []string{"Retevis RT84"}, Type: "dmr",
-		Links: []catLink{catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}, catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}},
-		Notes: "Radio DMR: il codeplug (canali digitali, contatti, gruppi) non si gestisce qui. È supportata dai programmi liberi qdmr e dmrconfig; esiste anche il firmware libero OpenGD77 (versione per MD-UV380/DM-1701)."},
+	{ID: "gt-22", Brand: "Baofeng", Name: "GT-22", Type: "pmr", Drivers: []string{"bf-gt22"},
+		Links: []catLink{{"cps", "Programma «GT-22 CPS» (pacchetto «GT-22 Programming Software», pagina dei download Radioddity)", s3 + "GT-22%20Programming%20Software_20200318.zip"},
+			{"info", "Scheda del prodotto (baofengradio.com)", "https://baofengradio.com/products/gt-22"}},
+		Notes: "PMR446 senza licenza, 16 canali. Ricavata dal programma del costruttore «GT-22» e verificata con il suo codice originale: stessa memoria " +
+			"e stesso protocollo della BF-888S (in CHIRP la GT-22 si legge come Retevis H777, segnalazione #9633)."},
+	{ID: "gt-68", Brand: "Baofeng", Name: "GT-68", Type: "gmrs", Drivers: []string{"bf-gt68"},
+		Links: []catLink{cps(s3 + "Baofeng_GT-68_CPS.zip"), {"info", "Scheda del prodotto (baofengradio.com)", "https://baofengradio.com/products/gt-68"}},
+		Notes: "Radio FRS (USA), 16 canali. Ricavata dal programma del costruttore «BF_V1_FH» (pacchetto GT-68, lo stesso della BF-C2 / BF-V2) e " +
+			"verificata con il suo codice originale: stessa memoria e stesso protocollo della BF-888S."},
+	{ID: "dm-1701", Brand: "Baofeng", Name: "DM-1701", Aliases: []string{"Retevis RT84"}, Type: "dmr", Drivers: []string{"bf-dm1701"},
+		Links: []catLink{cps(s3 + "Baofeng_DM-1701_CPS_1.05.zip"),
+			catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}, catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}},
+		Notes: "Radio DMR della famiglia TYT MD-UV380, collegata via USB in modalità DFU: serve il driver USB del costruttore (cartella " +
+			"«DM-1701 USB Driver» del pacchetto «DM-1701 CPS»), lo stesso del suo programma. Memoria e protocollo dei programmi liberi " +
+			"dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche, cancellazione e scrittura identiche). " +
+			"Con il firmware libero OpenGD77 la radio usa un altro protocollo: in quel caso usa qdmr."},
 	{ID: "dm-1702", Brand: "Baofeng", Name: "DM-1702", Type: "dmr",
 		Links: []catLink{{"cps", "Programma «DM-1702 MD Setup» v1.00.76 (pagina dei download Baofeng)", bfDown}},
 		Notes: "Radio DMR: il programma del costruttore («DM-1702 MD Setup», famiglia TYT MD) non è documentato; il codeplug si gestisce con quel programma."},
-	{ID: "dm-1801", Brand: "Baofeng", Name: "DM-1801", Type: "dmr",
+	{ID: "dm-1801", Brand: "Baofeng", Name: "DM-1801", Type: "dmr", Drivers: []string{"bf-dm1801"},
 		Links: []catLink{catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}, catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}},
-		Notes: "Radio DMR (piattaforma della Radioddity GD-77): il codeplug non si gestisce qui. È supportata da dmrconfig e dal firmware libero OpenGD77 (programmabile poi con qdmr)."},
+		Notes: "Radio DMR (piattaforma della Radioddity GD-77), collegata via USB come dispositivo HID: nessuna porta COM e nessun driver da installare. " +
+			"Memoria e protocollo dei programmi liberi dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche e scrittura " +
+			"identiche). Con il firmware libero OpenGD77 la radio usa un altro protocollo: in quel caso usa qdmr."},
 	{ID: "dm-1801pro", Brand: "Baofeng", Name: "DM-1801 Pro", Type: "dmr", Drivers: []string{"bf-dm32uv"},
 		Links: []catLink{{"cps", "Programma «CPS DMR Radio» v1.60 (pagina dei download Radioddity)", rdDown}},
 		Notes: "Sperimentale. Il costruttore pubblica per la DM-1801 Pro lo stesso programma della DM-32UV (stesso eseguibile «DMR CPS.exe», v1.60): si usa il driver della DM-32UV. " +
@@ -360,11 +373,16 @@ var catalog = []catItem{
 			"Si modificano frequenze, nomi, potenza, banda e toni; per i canali DMR contatti, gruppi, slot e color code restano quelli impostati. " +
 			"Differenza dal programma del costruttore: cancellando un canale gli altri non vengono rinumerati."},
 	{ID: "dm-5r", Brand: "Baofeng", Name: "DM-5R", Aliases: []string{"DM-5R Tier I"}, Type: "dmr",
-		Links: []catLink{{"cps", "Programma «DM5R Software» (pagina dei download di baofengradio.co.uk)", "https://baofengradio.co.uk/software/"}},
-		Notes: "Radio DMR Tier I: il codeplug si gestisce con il programma del costruttore (la versione Tier II è la RD-5R)."},
-	{ID: "rd-5r", Brand: "Baofeng", Name: "RD-5R", Aliases: []string{"DM-5R Tier II", "Radioddity RD5R"}, Type: "dmr",
-		Links: []catLink{catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}, catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}},
-		Notes: "Radio DMR: il codeplug non si gestisce qui. È supportata da qdmr e dmrconfig e dal firmware libero OpenGD77 (OpenRD5R)."},
+		Links: []catLink{{"cps", "Programma «CPS_5R» (archivio «DM_5R_Programming_Software», password 123456, pagina dei download Baofeng)", bfDown}},
+		Notes: "Radio DMR Tier I: il programma del costruttore («CPS_5R», scritto in C++Builder, porta seriale a 57600 baud) è un programma " +
+			"nativo che non si può eseguire per un confronto e non esistono programmi liberi per questa versione: il codeplug si gestisce con " +
+			"il programma del costruttore. La versione Tier II (DM-5R Plus) è la RD-5R, compatibile."},
+	{ID: "rd-5r", Brand: "Baofeng", Name: "RD-5R", Aliases: []string{"DM-5R Tier II", "Radioddity RD5R", "TD-5R"}, Type: "dmr", Drivers: []string{"bf-rd5r"},
+		Links: []catLink{{"cps", "Programma «RD-5R Program Software» V1.0.0.4 e firmware V2.1.6 (pagina dei download Baofeng)", bfDown},
+			catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}, catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}},
+		Notes: "Radio DMR collegata via USB come dispositivo HID: nessuna porta COM e nessun driver da installare. Memoria e protocollo dei programmi " +
+			"liberi dmrconfig e qdmr (la radio si identifica come «BF-5R», anche la TD-5R), verificati con il codice originale di dmrconfig (lettura, " +
+			"modifiche e scrittura identiche). Con il firmware libero OpenGD77 (OpenRD5R) la radio usa un altro protocollo: in quel caso usa qdmr."},
 	{ID: "dm-v1", Brand: "Baofeng", Name: "DM-V1", Type: "dmr"},
 	{ID: "dm-32uv", Brand: "Baofeng", Name: "DM-32UV", Type: "dmr", Drivers: []string{"bf-dm32uv"},
 		Links: []catLink{{"cps", "Programma «DM-32UV CPS» v1.60 e firmware v1.01.048 (pagina dei download Radioddity)", rdDown},

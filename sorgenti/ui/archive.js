@@ -26,7 +26,7 @@ const Archive = {
         <button class="btn" data-a="redo" title="Ripeti (Ctrl+Y)">↷</button>
         <span class="sep"></span>
         <button class="btn" data-a="checkall" title="Spunta tutti i ponti visibili con i filtri attuali">☑ Seleziona tutti</button>
-        <button class="btn" data-a="uncheckall" title="Toglie la spunta a tutti i ponti visibili con i filtri attuali">☐ Deseleziona tutti</button>
+        <button class="btn" data-a="uncheckall" title="Toglie la spunta a tutti i ponti dell'archivio, anche a quelli nascosti dai filtri">☐ Deseleziona tutti</button>
         <button class="btn primary" data-a="forward" title="Scrive nella radio i ponti spuntati (o, se non ce ne sono, quelli selezionati)">📻 Inoltra alla radio</button>
         <button class="btn" data-a="copy" title="Copia i ponti spuntati (o selezionati): poi incollali in una radio con Ctrl+V">Copia</button>
         <span class="sep"></span>
@@ -89,7 +89,8 @@ const Archive = {
     const sel = this.grid.sel.size;
     const warn = this.ponti.filter(p => p.avvisi && p.avvisi.length).length;
     const chk = this.ponti.filter(p => p.scelto).length;
-    $('[data-status]', this.page).innerHTML = `<span>Ponti in archivio: ${this.ponti.length} · visibili con i filtri: ${vis}${chk ? ' · spuntati: ' + chk : ''}${sel ? ' · selezionati: ' + sel : ''}</span>
+    const hid = chk ? chk - this.grid.rows.filter(r => r.checked).length : 0;
+    $('[data-status]', this.page).innerHTML = `<span>Ponti in archivio: ${this.ponti.length} · visibili con i filtri: ${vis}${chk ? ' · spuntati: ' + chk : ''}${hid ? ` (<b>${hid} nascosti dai filtri</b>: «Deseleziona tutti» toglie anche quelli)` : ''}${sel ? ' · selezionati: ' + sel : ''}</span>
       <span>${warn ? warn + ' con avvisi da controllare (⚠)' : ''}</span><span>Ctrl+A seleziona tutti i visibili · doppio clic per modificare</span>`;
   },
 
@@ -102,11 +103,25 @@ const Archive = {
     this.changed();
   },
 
+  // «Seleziona tutti»: i ponti visibili con i filtri attuali; «Deseleziona tutti»:
+  // tutti i ponti spuntati, anche quelli nascosti dai filtri (prima della 3.6 solo i
+  // visibili: chi spuntava dei ponti e poi cambiava filtro non riusciva più a
+  // toglierli senza azzerare i filtri)
   checkVisible(on) {
+    if (!on) {
+      const all = this.ponti.filter(p => p.scelto);
+      if (!all.length) { toast('Nessun ponte spuntato.'); return; }
+      const hidden = all.length - this.visible().filter(p => p.scelto).length;
+      this.setChecked(all.map(p => p.id), false);
+      this.grid.sel.clear();
+      this.render();
+      toast(`Tolta la spunta a ${all.length} ponti${hidden ? ` (${hidden} erano nascosti dai filtri)` : ''}.`);
+      return;
+    }
     const v = this.visible();
     if (!v.length) { toast('Nessun ponte visibile con i filtri attuali.'); return; }
     this.setChecked(v.map(p => p.id), on);
-    toast(on ? `Spuntati ${v.length} ponti (quelli visibili con i filtri attuali).` : `Tolta la spunta a ${v.length} ponti.`);
+    toast(`Spuntati ${v.length} ponti (quelli visibili con i filtri attuali).`);
   },
 
   // ponti da inoltrare: quelli spuntati, altrimenti quelli selezionati
@@ -160,7 +175,10 @@ const Archive = {
   async forward() {
     let sel = this.chosenPonti();
     if (!sel.length) { toast('Spunta prima i ponti da inoltrare alla radio (o selezionali con clic, Maiusc+clic, Ctrl+clic).'); return; }
-    const what = this.ponti.some(p => p.scelto) ? 'spuntati' : 'selezionati';
+    let what = this.ponti.some(p => p.scelto) ? 'spuntati' : 'selezionati';
+    const nVis = new Set(this.visible().map(p => p.id));
+    const nHid = sel.filter(p => !nVis.has(p.id)).length;
+    if (nHid) what += ` (${nHid} di questi sono nascosti dai filtri attuali)`;
     let kind = this.targetKind();
     if (!kind) kind = await this.pickTarget();
     else {

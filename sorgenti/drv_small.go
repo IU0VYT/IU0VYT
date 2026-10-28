@@ -1071,7 +1071,7 @@ func init() {
 	genRegister(&genModel{ID: "bf-uv3r", Vendor: "Baofeng", Model: "UV-3R", RClass: "UV3RRadio", Name: "Baofeng UV-3R",
 		Slots: 99, First: 1, NameMax: 0, Powers: []genPower{{"Alta 2 W", 2, 0}, {"Bassa 0,5 W", 0.5, 2}},
 		Bands: []band{{136000000, 235000000}, {400000000, 529000000}}, Narrow: true, HasScan: false, NoTxOff: true,
-		DCS: dtcsCodes, Baud: 9600, Fam: uv3rFam{}, Notes: "Radio senza nomi dei canali."})
+		DCS: dtcsCodes, OneDCS: true, Baud: 9600, Fam: uv3rFam{}, Notes: "Radio senza nomi dei canali."})
 }
 
 func (uv3rFam) mem() *bwEl                 { return bwMust(uv3rFormat) }

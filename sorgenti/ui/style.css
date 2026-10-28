@@ -420,3 +420,31 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .radiopick-brand { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; padding: 8px 6px 4px; }
 .radiopick-item { display: block; width: 100%; text-align: left; background: #fff; border: 0; border-radius: 4px; padding: 6px 8px; cursor: pointer; font: inherit; }
 .radiopick-item:hover, .radiopick-item:focus { background: var(--accent-soft); outline: none; }
+
+/* finestra delle impostazioni della radio */
+.setdlg .setwrap { display: flex; height: 100%; min-height: 0; }
+.setnav { width: 230px; border-right: 1px solid var(--line); overflow: auto; padding: 8px 0; flex: none; }
+.setnav a { display: block; padding: 6px 14px; color: inherit; text-decoration: none; font-size: 13px; }
+.setnav a:hover { background: var(--hover, #eef3fb); }
+.setlist { flex: 1; overflow: auto; padding: 4px 16px 16px; }
+.setgroup h4 { margin: 14px 0 6px; font-size: 14px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+.setrow { display: grid; grid-template-columns: minmax(260px, 40%) 1fr; gap: 4px 14px; padding: 6px 4px; border-bottom: 1px dashed var(--line); align-items: center; }
+.setrow.changed { background: #fff8e1; }
+.setrow.crit .setlabel span:last-child { font-weight: 600; }
+.setlabel { display: flex; gap: 6px; align-items: center; }
+.seticon { cursor: pointer; color: #1c64d8; font-weight: 700; user-select: none; }
+.seticon:focus { outline: 2px solid #1c64d8; border-radius: 50%; }
+.setwarn { color: #d9480f; cursor: help; }
+.setctl { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.setdesc { grid-column: 1 / -1; font-size: 12.5px; color: var(--muted); background: #f4f8ff; border-left: 3px solid #1c64d8; padding: 6px 10px; line-height: 1.45; }
+.setalert { margin-top: 6px; color: #8a2c00; background: #fff1e6; border-left: 3px solid #d9480f; padding: 5px 8px; }
+.setinfo { font-family: monospace; }
+
+/* scheda Converti (3.7) */
+.page#page-conv { overflow: auto; }
+.convcard { max-width: 900px; }
+.convrow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; }
+.convsrc { background: var(--bg, #f6f7fb); border: 1px solid var(--line-soft); border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+.convbase { background: #f3f8ff; border: 1px solid #cfe0f7; border-radius: 8px; padding: 10px 12px; margin: 8px 0; line-height: 1.7; }
+.convbase p { margin: 0 0 6px; }
+.convok { background: #eaf7ee; border: 1px solid #b9e2c4; border-radius: 8px; padding: 10px 12px; margin: 8px 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }

@@ -69,6 +69,15 @@ type h777Opt struct {
 	scramble bool // impostazione "beatshift" conservata come quella del canale
 	match    bool
 	base     int // indirizzo del primo canale
+	// gt22: come il programma del costruttore della GT-22 (canali sempre a
+	// banda stretta, bit «ScanAdd» sempre a 1: la radio non ha la scansione)
+	gt22 bool
+	// endF: la radio risponde 'F' a 'E' (radio simulata, sequenza di scrittura
+	// del programma della GT-22)
+	endF bool
+	// noBeat: come i programmi «BF_V1_FH» e «GT-22», che nei canali scritti
+	// azzerano il bit 1 (beatshift: queste radio non hanno lo scrambler)
+	noBeat bool
 }
 
 type h777Fam struct{}
@@ -129,6 +138,29 @@ func init() {
 			"stessa memoria della BF-888S di CHIRP (nei file .img compare come BF-888)."
 		genRegister(x)
 	}
+	// Baofeng GT-68 (FRS) e GT-22 (PMR446): programmi del costruttore «BF_V1_FH»
+	// (pacchetto Baofeng_GT-68_CPS) e «GT-22» (GT-22 Programming Software
+	// 20200318), stessa classe del protocollo (AnaCps.Data.DataProtocol) e stessa
+	// memoria della BF-888S: 16 canali da 0x0010, impostazioni in 0x02B0 e 0x03C0.
+	// Il programma della GT-22 scrive sempre i canali a banda stretta e con il bit
+	// «ScanAdd» a 1 (la GT-22 non ha la scansione) e prima di scrivere legge la
+	// password in 0x0130; CHIRP (segnalazione #9633) legge la GT-22 come Retevis
+	// H777 e un utente la scrive con il programma della BF-88E, cioè con il
+	// protocollo della BF-888S: lo stesso usato qui.
+	o68 := std
+	o68.noBeat = true
+	g68 := mk("bf-gt68", "BF-888", "H777Radio", "Baofeng GT-68 (FRS)", 16, o68, []genPower{{"Bassa", 0.5, 2}, {"Alta", 2, 0}}, []band{{400000000, 490000000}})
+	g68.NoChirp = true
+	g68.Notes = "Radio senza display: i canali non hanno nome. Ricavata dal programma del costruttore «BF_V1_FH» (pacchetto GT-68): " +
+		"stessa memoria e stesso protocollo della BF-888S di CHIRP (nei file .img compare come BF-888)."
+	o22 := std
+	o22.gt22, o22.endF, o22.noBeat = true, true, true
+	g22 := mk("bf-gt22", "BF-888", "H777Radio", "Baofeng GT-22 (PMR446)", 16, o22, pmr, []band{{400000000, 490000000}})
+	g22.NoChirp, g22.HasScan = true, false
+	g22.Notes = "Radio senza display: i canali non hanno nome. Ricavata dal programma del costruttore «GT-22»: stessa memoria della BF-888S, " +
+		"canali sempre a banda stretta (come scrive il programma); la radio non ha la scansione. Se sulla radio è impostata una password, " +
+		"il programma del costruttore la chiede: questo programma, come CHIRP, non la controlla."
+	genRegister(g68, g22)
 }
 
 // tutti i codici DCS ottali a tre cifre (radio che accettano qualsiasi codice)
@@ -237,9 +269,12 @@ func (f h777Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	}
 	h777ToneEnc(r.F("txtone").Raw(img), tt)
 	h777ToneEnc(r.F("rxtone").Raw(img), rt)
-	r.F("narrow").SetBool(img, c.Narrow)
+	r.F("narrow").SetBool(img, c.Narrow || h777o(m).gt22)
 	r.F("highpower").SetBool(img, m.powerIndex(c.Power) == 1)
-	r.F("skip").SetBool(img, !c.Scan)
+	r.F("skip").SetBool(img, !c.Scan || h777o(m).gt22)
+	if h777o(m).noBeat {
+		r.F("beatshift").SetInt(img, 0)
+	}
 	// bcl e beatshift (impostazioni del canale) restano come sono
 	r.F("unknown1").SetInt(img, 0)
 	r.F("unknown2").SetInt(img, 0)

@@ -111,6 +111,78 @@ leggono e scrivono i canali e le esegue con node sugli stessi dati di questo pro
 TestBfdChirp (con CHIRP_DIR) confronta W31D e BF-V12D con il driver «Baofeng digital»
 di CHIRP; TestDm32ChirpEdits confronta con CHIRP le modifiche alla DM-32UV.
 
+RADIO DMR USB RD-5R, DM-1801, DM-1701 (cartella "dmrconfig", 3.6)
+dmrconfig (https://github.com/OpenRTX/dmrconfig, licenza BSD, non incluso) si compila
+con dmrconfig/tcpdev.c al posto dei file hid-*.c e dfu-*.c: le richieste HID (rapporti
+di 42 byte) e DFU (richieste di controllo: intestazione di 8 byte con tipo, richiesta,
+valore, indice e lunghezza, poi i dati; risposta: esito a 32 bit e dati) vanno su un
+collegamento TCP verso la radio simulata di questo programma
+(DMRCONFIG_HID / DMRCONFIG_DFU = host:porta).
+1. git clone https://github.com/OpenRTX/dmrconfig; copia tcpdev.c nella sua cartella
+   e compila (servono le intestazioni di libusb-1.0 e libudev; hid-libusb.c non si usa):
+     cc -O2 -DVERSION='"tcp"' $(pkg-config --cflags libusb-1.0) -o dmrconfig-tcp \
+        main.c util.c radio.c dfu-libusb.c uv380.c md380.c rd5r.c gd77.c hid.c \
+        serial.c anytone_ht.c dm1801.c tcpdev.c -ludev
+2. Nella cartella dei sorgenti:
+     DMRCONFIG=percorso/dmrconfig-tcp DMRCONFIG_EX=percorso/dmrconfig/examples \
+     go test -mod=vendor -run 'TestRdtyDmrconfig|TestTytDmrconfig' -v .
+   Prova: canali letti uguali a quelli di dmrconfig (file di esempio e immagini
+   sintetiche), sette modifiche con memoria identica byte per byte a quella scritta da
+   dmrconfig, lettura e scrittura via USB di dmrconfig e di questo programma uguali.
+
+GT-22 E GT-68 (cartella "t17", 3.6)
+Lo stesso programma .NET 8 "t17/harness" carica i programmi del costruttore «GT-22»
+(GT-22.exe) e «BF_V1_FH» (pacchetto GT-68), che hanno la stessa classe del protocollo:
+     T17_HARNESS=$PWD/verifica/t17/harness/bin/Release/net8.0/t17_harness.dll \
+     GT68_EXE="percorso/BF_V1_FH.exe" GT22_EXE="percorso/GT-22.exe" \
+     go test -mod=vendor -run TestGT2268CPS -v .
+
+IMPOSTAZIONI DELLE RADIO (3.6)
+- CHIRP (cartella "chirp"): chirpsettings.py estrae dal codice di CHIRP la tabella delle
+  impostazioni di una classe (per ogni voce fa scrivere a CHIRP ogni valore e guarda
+  quali bit cambiano: elenchi, sì/no, numeri, testi); settings_combine.py unisce le
+  tabelle in settings_chirp.json:
+     CHIRP_DIR=... python3 verifica/chirp/chirpsettings.py extract UV5R immagine.img > UV5R.json
+     python3 verifica/chirp/settings_combine.py cartella_json settings_chirp.json
+  TestSettingsChirp (con CHIRP_DIR; SETTINGS_CLASS per una sola classe) confronta per
+  ogni classe i valori letti con quelli mostrati da CHIRP e applica quattro
+  combinazioni casuali di modifiche qui e con CHIRP: memoria identica byte per byte.
+- K67 Pro (cartella "k67set"): il programma .NET 8 carica «5RH PRO» (CPS.exe) e usa
+  ConvertSetting / SettingConvert:
+     K67SET_HARNESS=$PWD/verifica/k67set/harness/bin/Release/net8.0/k67set_harness.dll \
+     K67_CPS="percorso/CPS.exe" go test -mod=vendor -run TestSettingsK67CPS -v .
+- Bajeton BJ-8300 e BJ-9000 (cartella "bt11"): il programma .NET 8 carica «BT-11_CPS»
+  (v1.0.8 e v1.0.9) o «BJ-9000_CPS» (BT-RT950PRO_CPS.exe) e ne usa le classi
+  KDH.RadioData (apertura e salvataggio dei file .dat) e KDH.RWDataOperation (lettura e
+  scrittura via cavo, con la porta simulata di "anc/ports"). Comandi: read, write,
+  dump, fun (impostazioni), new.
+     BT11_HARNESS=$PWD/verifica/bt11/harness/bin/Release/net8.0/bt11_harness.dll \
+     BT108_EXE="percorso v1.0.8/BT-11_CPS.exe" BT11_EXE="percorso v1.0.9/BT-11_CPS.exe" \
+     BJ9000_CPS="percorso/BT-RT950PRO_CPS.exe" \
+     go test -mod=vendor -run 'TestBT11CPS|TestSettingsBajCPS|TestBJ9000CPS|TestSettingsBJ9000CPS' -v .
+  Prove: per ogni versione di BT-11_CPS lettura della radio simulata uguale campo per
+  campo, scrittura identica, file convertiti dall'altra versione aperti e scritti
+  dal programma come l'originale, 10 combinazioni di modifiche alle impostazioni con
+  file identici byte per byte; BJ-9000: canali scritti qui, letti e riscritti dal
+  programma con memoria identica, 8 combinazioni di modifiche alle impostazioni con
+  bit identici. Il formato .NET dei file .dat (BinaryFormatter) richiede in .NET 8
+  l'opzione EnableUnsafeBinaryFormatterSerialization (già nel progetto); un file
+  aperto e salvato dal programma sotto .NET 8 è identico a quello salvato sotto
+  .NET Framework. Con BT11_MKTEMPLATE=1 TestBT11CPS rigenera
+  templates/bajeton_base109.dat (letto dal programma v1.0.9).
+
+CONVERTITORE E CSV DI CHIRP (3.7)
+universal_test.go: canali di prova (toni CTCSS e DCS in ogni combinazione, shift, bande
+diverse, sola ricezione, larghezza, potenze) e i file di esempio K67 e Bajeton
+convertiti in ognuno dei formati di destinazione (immagini .img con le immagini di
+prova di CHIRP come base, o sintetiche per le radio non in CHIRP); con CHIRP_DIR:
+- TestUniversalChirpOpens: CHIRP apre le immagini create per le sue 63 radio e legge
+  gli stessi canali;
+- TestUniversalChirpCSV: verifica/chirp/csvcheck.py usa il driver generic_csv di CHIRP
+  per leggere il CSV scritto qui («parse») e per scrivere il CSV delle sue immagini di
+  prova («export»), letto poi qui: canali identici.
+     CHIRP_DIR=... go test -mod=vendor -run TestUniversal -v .
+
 ESEGUIBILE WINDOWS SOTTO WINE
      WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run 'TestWine' -v .
 

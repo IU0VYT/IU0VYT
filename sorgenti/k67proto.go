@@ -175,9 +175,10 @@ func (s *k67Session) handShake(op byte) error {
 	if op == 'W' {
 		if s.info.K6 != s.o.K6 {
 			if s.info.K6 {
-				return fmt.Errorf("la radio collegata è un modello \"BF-K6\": il programma originale non vi scrive dati di un altro modello")
+				return fmt.Errorf("la radio collegata si identifica come \"BF-K6\", ma l'ultima radio letta no: come il programma originale, " +
+					"la scrittura parte solo verso lo stesso modello letto. Leggi prima questa radio (o attiva la copia di sicurezza prima della scrittura) e riprova")
 			}
-			return fmt.Errorf("la radio collegata (\"%s\") non è il modello letto in precedenza", s.info.Model)
+			return fmt.Errorf("la radio collegata (\"%s\") non è il modello dell'ultima radio letta (\"BF-K6\"): leggi prima questa radio e riprova", s.info.Model)
 		}
 		if dec[8] != s.o.FreqBand {
 			return errors.New(errK67Band)

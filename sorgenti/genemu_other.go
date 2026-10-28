@@ -395,7 +395,12 @@ func (e *h777Emu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return appe
 
 func (e *h777Emu) serve(p Port) error {
 	o := h777o(e.m)
+	done := false
+start:
 	if b, err := emuByte(p); err != nil || b != 0x02 {
+		if done && err != nil {
+			return nil // collegamento chiuso dopo la fine della sessione
+		}
 		return fmt.Errorf("0x02 atteso")
 	}
 	cmd, err := emuRead(p, len(o.cmd))
@@ -417,7 +422,13 @@ func (e *h777Emu) serve(p Port) error {
 			return nil
 		}
 		if c == 'E' {
-			return nil
+			if o.endF {
+				// GT-22: 'F', poi il programma ripete la presentazione
+				p.Write([]byte{'F'})
+			}
+			// la radio torna in attesa di una nuova sessione
+			done = true
+			goto start
 		}
 		h, err := emuRead(p, 3)
 		if err != nil {

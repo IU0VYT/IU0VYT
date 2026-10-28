@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "3.5"
+const appVersion = "3.7"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -147,6 +147,13 @@ func (a *App) handler() http.Handler {
 	api("import/load", a.apiImport)
 	api("export", a.apiExport)
 	api("settings", a.apiSettings)
+	api("radio/settings", a.apiRadioSettings)
+	api("radio/settings/set", a.apiRadioSettingsSet)
+	api("radio/datver", a.apiDatVer)
+	api("radio/import", a.apiRadioImport)
+	api("convert/open", a.apiConvertOpen)
+	api("convert/targets", a.apiConvertTargets)
+	api("convert/run", a.apiConvertRun)
 	api("rename", a.apiRename)
 	api("dirty", a.apiDirty)
 	api("cable/ports", a.apiCablePorts)
@@ -226,6 +233,7 @@ type radioResp struct {
 	Channels []*Chan  `json:"channels"`
 	Warnings []string `json:"warnings"`
 	Bands    []band   `json:"bands,omitempty"`
+	DatVer   string   `json:"datVer,omitempty"` // Bajeton: versione del programma BT-11_CPS del file
 }
 
 func (a *App) apiOpen(r *http.Request) (interface{}, error) {
@@ -276,6 +284,8 @@ func (a *App) apiOpen(r *http.Request) (interface{}, error) {
 	resp := radioResp{Kind: kind, Path: p, Channels: chs, Warnings: rep.Warnings}
 	if kind == kindXLC {
 		resp.Bands = xlcBands(b, 0x10)
+	} else {
+		resp.DatVer = datVer(b)
 	}
 	return resp, nil
 }
@@ -292,8 +302,13 @@ func (a *App) apiNew(r *http.Request) (interface{}, error) {
 	switch req.Radio {
 	case kindXLC:
 		b = blankXLC(baseXLC)
+		// come «Nuovo» del programma originale: la banda resta quella dell'ultima
+		// radio letta (altrimenti la scrittura verrebbe rifiutata)
+		if st := a.store.Settings; st.K67Known {
+			b[xlcSize-1] = st.K67Band
+		}
 	case kindDAT:
-		if b, err = blankDAT(baseDAT); err != nil {
+		if b, err = blankDAT(a.bajTemplate()); err != nil {
 			return nil, err
 		}
 	default:
@@ -308,6 +323,8 @@ func (a *App) apiNew(r *http.Request) (interface{}, error) {
 	resp := radioResp{Kind: req.Radio, Channels: make([]*Chan, radioSlots(req.Radio))}
 	if req.Radio == kindXLC {
 		resp.Bands = xlcBands(b, 0x10)
+	} else {
+		resp.DatVer = datVer(b)
 	}
 	return resp, nil
 }

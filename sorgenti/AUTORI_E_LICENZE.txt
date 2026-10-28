@@ -73,6 +73,62 @@ adattamento all'interfaccia di IU0VYT Flash) sono descritte in testa a ciascun f
 e in CHANGELOG.txt, con le date delle versioni.
 
 
+PARTI DERIVATE DA DMRCONFIG E QDMR (dalla 3.6)
+---------------------------------------------
+Memoria e protocollo via USB delle radio DMR RD-5R, DM-1801 e DM-1701 derivano da:
+- dmrconfig (https://github.com/OpenRTX/dmrconfig), Copyright (C) 2018-2019 Serge
+  Vakulenko KK6ABQ, licenza BSD a 3 clausole (testo qui sotto): rd5r.c, dm1801.c,
+  uv380.c, hid.c, hid-windows.c, dfu-libusb.c, dfu-windows.c;
+- qdmr (https://github.com/hmatuschek/qdmr), Hannes Matuschek DM3MAT, GNU GPL v3:
+  radioddity_interface.cc, dm1701_codeplug.cc, tyt_interface.cc (confronto).
+File di IU0VYT Flash con parti derivate: drv_rdty.go, drv_tyt.go, usb_windows.go,
+genemu_rdty_other.go, genemu_tyt_other.go; per le prove, verifica/dmrconfig/tcpdev.c
+(collegamento TCP per dmrconfig, che non è incluso: si scarica dal suo sito).
+Testo della licenza di dmrconfig:
+
+  BSD 3-Clause License
+
+  Copyright (C) 2018-2019, Serge Vakulenko KK6ABQ
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+
+  1. Redistributions of source code must retain the above copyright notice, this
+     list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+
+  3. Neither the name of the copyright holder nor the names of its
+     contributors may be used to endorse or promote products derived from
+     this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+IMPOSTAZIONI RICAVATE DA CHIRP (dalla 3.6)
+------------------------------------------
+Le tabelle delle impostazioni delle radio gestite con i driver di CHIRP
+(sorgenti/settings_chirp.json) sono ricavate facendo eseguire al codice di CHIRP
+(GNU GPL, autori come sopra) la lettura e la scrittura di ogni voce
+(sorgenti/verifica/chirp/chirpsettings.py): contengono la posizione dei dati nella
+memoria, i valori ammessi e i nomi inglesi delle voci di CHIRP.
+Dalla 3.7 il formato CSV di CHIRP (colonne del driver generic_csv) è letto e scritto
+dal convertitore ed è confrontato con il codice di CHIRP
+(sorgenti/verifica/chirp/csvcheck.py, che non è incluso nel programma).
+
+
 INFORMAZIONI DI TERZI USATE (NON INCLUSE COME CODICE)
 -----------------------------------------------------
 - Tabella dei modelli equivalenti di CHIRP (chirp/share/model_alias_map.yaml, GPL):
@@ -120,6 +176,7 @@ radio, dai programmi dei costruttori (dalla 3.3 anche «BF Series CPS», «T17-T
 PMR446 PRO / FRS», «DM-32UV CPS» e i pacchetti Bajeton della BJ-8200; dalla 3.4
 «BF-Ts», «BAOFENG GT18 PMR», «BAJETON DM-5000 CPS»; dalla 3.5 «DR-1801A6» e i
 programmi di aggiornamento «Baofeng Bootloader Pro» e «T6UV Series CPS» per le
-famiglie del firmware) (art. 64-quater L. 633/1941, art. 6 Direttiva
+famiglie del firmware; dalla 3.6 «GT-22», «BF_V1_FH» (GT-68), «BT-11_CPS» v1.0.8 e
+v1.0.9, «BJ-9000_CPS» e «5RH PRO» per le impostazioni) (art. 64-quater L. 633/1941, art. 6 Direttiva
 2009/24/CE). Il pacchetto non contiene codice, programmi o firmware dei costruttori:
 la galleria dei modelli rimanda ai loro siti ufficiali.

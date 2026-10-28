@@ -19,6 +19,13 @@ var baseXLC []byte
 //go:embed templates/bajeton_base.dat
 var baseDAT []byte
 
+// modello per i file del programma BT-11_CPS v1.0.9 (canali in Channel[960]):
+// file salvato dal programma originale dopo aver letto una radio con il contenuto
+// di bajeton_base.dat (bt11_test.go, BT11_MKTEMPLATE)
+//
+//go:embed templates/bajeton_base109.dat
+var baseDAT109 []byte
+
 const (
 	kindXLC = "k67"
 	kindDAT = "baj"

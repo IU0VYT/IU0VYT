@@ -16,6 +16,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -54,6 +55,12 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	mem := bytes.Repeat([]byte{0xFF}, size)
 	if _, ok := m.Opt.(*drOpt); ok {
 		mem = drSynthImage()
+	}
+	if _, ok := m.Opt.(*rdtyOpt); ok {
+		mem = rdtySynthImage(m)
+	}
+	if _, ok := m.Opt.(*tytOpt); ok {
+		mem = tytSynthImage()
 	}
 	first := &Chan{Rx: 145500000, Tx: 145500000, Scan: true, Name: "S20"}
 	if m.NameMax == 0 {
@@ -108,6 +115,9 @@ func TestNoChirpModels(t *testing.T) {
 			}
 			for i, c := range chs {
 				g := m.Fam.Get(m, want, i)
+				if _, tyt := m.Opt.(*tytOpt); tyt && c != nil && c.Name == "" && g != nil && g.Name == fmt.Sprintf("CH %d", i+1) {
+					g.Name = "" // la DM-1701 vuole un nome: si usa «CH n»
+				}
 				if c == nil && g != nil || c != nil && (g == nil || g.Rx != c.Rx || g.Name != c.Name || g.TxTone != c.TxTone || g.RxTone != c.RxTone) {
 					t.Fatalf("canale %d: scritto %+v, riletto %+v", i, c, g)
 				}

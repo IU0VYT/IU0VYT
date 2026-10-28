@@ -189,8 +189,11 @@ const Dialogs = {
         <label><input type="radio" name="scope" value="all" checked> tutti (${view.chans.filter(Boolean).length})</label>
         <label><input type="radio" name="scope" value="sel" ${sel.length ? '' : 'disabled'}> solo i selezionati (${sel.length})</label></div></div>
       ${formatChoice()}
-      </div><footer><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>Esporta…</button></footer></div>`);
+      <p class="note" style="margin-top:12px">Per creare il file di un'altra radio (K67, Bajeton, immagini .img di qualsiasi modello) usa il convertitore.</p>
+      </div><footer><button class="btn" style="margin-right:auto" data-conv title="Apre la scheda «Converti» con questi canali">🔁 Per un'altra radio…</button>
+      <button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>Esporta…</button></footer></div>`);
     $('[data-no]', m.el).onclick = () => m.close();
+    $('[data-conv]', m.el).onclick = () => { m.close(); Converter.fromView(view); };
     $('[data-ok]', m.el).onclick = async () => {
       try {
         const scope = $('input[name=scope]:checked', m.el).value;
@@ -208,15 +211,20 @@ const Dialogs = {
   cable(view, op) {
     const k67 = view.kind === 'k67';
     const write = op === 'write';
+    // radio collegate via USB (HID / DFU): nessuna porta COM da scegliere
+    const usb = view.def.conn || '';
     const n = view.chans.filter(Boolean).length;
     const title = (write ? 'Scrivi nella radio' : 'Leggi dalla radio') + ' — ' + view.def.name;
     return new Promise(resolve => {
       let running = false, result = null, timer = null, finished = false;
       const m = openModal(`<div class="dialog mid" data-cable><header>📻 ${esc(title)}</header><div class="body">
         <div data-setup>
-          <p>Collega il cavo di programmazione al PC e alla radio, poi <b>accendi la radio</b> e tieni il volume a metà.
+          <p>${usb ? 'Collega il <b>cavo USB</b> della radio al PC' : 'Collega il cavo di programmazione al PC e alla radio'}, poi <b>accendi la radio</b>${usb ? '' : ' e tieni il volume a metà'}.
           ${write ? `Saranno scritti <b>${n} canali</b>: i canali presenti nella radio verranno sostituiti da quelli della tabella.` : 'I canali letti compariranno nella tabella: poi potrai modificarli e salvarli in un file.'}</p>
-          <div class="row"><label class="l">Porta del cavo</label><select data-port style="min-width:330px"></select>
+          ${usb ? `<div class="row"><label class="l">Collegamento</label><span><b>USB</b> — ${usb === 'dfu'
+            ? 'serve il driver USB del costruttore (quello del suo programma, cartella «DM-1701 USB Driver»): vedi la nota della scheda'
+            : 'dispositivo HID, Windows lo riconosce senza driver aggiuntivi'}</span></div>` : ''}
+          <div class="row" ${usb ? 'style="display:none"' : ''}><label class="l">Porta del cavo</label><select data-port style="min-width:330px"></select>
             <button class="btn" data-refresh title="Cerca di nuovo le porte (dopo aver collegato il cavo)">🔄 Aggiorna</button></div>
           <div class="row note" data-portnote style="margin-top:-6px"></div>
           ${k67 ? `<div class="row"><label class="l">Velocità</label><select data-baud><option value="19200">19200 baud (predefinita)</option><option value="115200">115200 baud</option></select>
@@ -248,6 +256,12 @@ const Dialogs = {
       const loadPorts = async () => {
         const r = await api('cable/ports', {}, { quiet: true });
         settings = r.settings || {};
+        if (usb) {
+          sel.innerHTML = '<option value="USB">USB</option>';
+          $('[data-portnote]', el).textContent = `Copie di sicurezza e letture vengono salvate in: ${r.backupDir}`;
+          $('[data-ok]', el).disabled = false;
+          return r;
+        }
         const last = k67 ? settings.k67Port : view.def.generic ? settings.genPort : settings.bajPort;
         const cur = sel.value || last;
         sel.innerHTML = r.ports.map(p => `<option value="${esc(p.name)}">${esc(p.desc && p.desc !== p.name ? p.desc : p.name)}</option>`).join('');
@@ -334,7 +348,7 @@ const Dialogs = {
         const req = { op, radio: view.kind, port, baud: k67 ? +$('[data-baud]', el).value : 0, password: k67 ? $('[data-pwd]', el).value : '',
           backup: write ? $('[data-backup]', el).checked : false, verify: write ? $('[data-verify]', el).checked : false };
         if (write) {
-          const c = await chooseDlg('Conferma la scrittura', `Vuoi scrivere ${n} canali nel ${view.def.name} collegato a ${port}?\n` +
+          const c = await chooseDlg('Conferma la scrittura', `Vuoi scrivere ${n} canali nel ${view.def.name} collegato a ${usb ? 'USB' : port}?\n` +
             'I canali attualmente nella radio verranno sostituiti. Durante la scrittura non spegnere la radio e non scollegare il cavo.' +
             (req.backup ? '' : '\nAttenzione: hai disattivato la copia di sicurezza della radio.'),
             [{ id: 'no', label: 'Annulla' }, { id: 'ok', label: 'Scrivi', primary: true }]);
@@ -591,13 +605,23 @@ const Dialogs = {
         <li>Bajeton: 15 zone da 64 canali; scegli la zona dalla barra sopra la tabella, «Tutte» per vederle insieme, «Sposta in zona» per spostare i selezionati.</li>
         <li>Nomi: massimo 16 caratteri sul K67 e 12 sulla Bajeton. Potenza Media solo sulla Bajeton (sul K67 diventa Alta).</li>
       </ul>
+      <h4>Converti, importa ed esporta</h4><ul>
+        <li>Scheda «🔁 Converti»: scegli un file (K67 .xlc, Bajeton .dat v1.0.8 o v1.0.9, immagini .img di qualsiasi radio anche salvate con CHIRP, CSV di CHIRP,
+          tabelle Excel/CSV) o una scheda aperta, poi il formato di destinazione: CSV di CHIRP (universale), Excel, CSV, il file .xlc del K67, il .dat della Bajeton
+          o l'immagine .img di qualsiasi radio compatibile. I canali vengono adattati alla radio di destinazione e le modifiche elencate.</li>
+        <li>Per l'immagine .img di una radio serve un'immagine di quella radio (letta via cavo o aperta da file): contiene impostazioni e taratura, che non si
+          possono inventare. Si cambiano solo i canali.</li>
+        <li>«📥 Importa…» nella scheda di una radio inserisce i canali di qualsiasi di questi file, adattati, nelle posizioni che scegli.</li>
+        <li>«Esporta…» salva i canali in Excel, CSV o CSV di CHIRP; «🔁 Per un'altra radio…» apre il convertitore con i canali della scheda.</li>
+      </ul>
       <h4>Archivio ponti</h4><ul>
         <li>L'elenco aggiornato dei ponti radio italiani è messo a disposizione di tutti, gratuitamente, da <b>IK2ANE</b> (www.ik2ane.it): è grazie al suo lavoro che
           l'archivio ponti è possibile.</li>
         <li>«Importa» legge l'elenco di IK2ANE da Internet (indirizzo già impostato, modificabile) o da file .xls/.xlsx/.csv, anche esportati da CHIRP o da questo programma.</li>
         <li>Shift e toni scritti in modo irregolare vengono interpretati; le righe dubbie sono in giallo con ⚠ e l'avviso spiega cosa è stato deciso.</li>
         <li>Filtra per banda, tipo, stato, regione, provincia, rete o testo, poi spunta i ponti che ti interessano (casella a sinistra, oppure «☑ Seleziona tutti» /
-          «☐ Deseleziona tutti» per quelli visibili con i filtri; le spunte restano salvate nell'archivio).</li>
+          «☐ Deseleziona tutti»: «Seleziona tutti» spunta i ponti visibili con i filtri, «Deseleziona tutti» toglie la spunta a tutti, anche a quelli nascosti dai filtri;
+          la barra in basso indica quanti spuntati sono nascosti; le spunte restano salvate nell'archivio).</li>
         <li>«📻 Inoltra alla radio» scrive i ponti spuntati (o, se non ne hai spuntati, quelli selezionati) nella radio di destinazione indicata sopra la tabella:
           se c'è già una radio scelta ti chiede la conferma, altrimenti puoi sceglierla dall'elenco di tutte le radio compatibili, diviso per marca e per tipologia,
           con ogni modello elencato singolarmente in ordine alfabetico.</li>

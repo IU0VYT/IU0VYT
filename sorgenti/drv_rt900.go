@@ -167,12 +167,14 @@ func init() {
 	// 115200 baud, "PROGRAMBT9000U", 'F' (16 byte), 'M' → "RT-950", blocchi da 128 byte.
 	// Si scrivono solo i canali (0x0000-0x77FF): le altre aree restano quelle della radio.
 	o := &rt900Opt{
-		magic:   []byte("PROGRAMBT9000U"),
-		crypt:   append([]byte("SEND \x01\x01"), make([]byte, 18)...),
-		model:   "RT-950",
-		block:   0x80,
-		reads:   [][2]int{{0x0000, 0x7800}, {0x8000, 0x8080}, {0x9000, 0x9080}, {0xA000, 0xA180}, {0xB000, 0xB100}, {0xD000, 0xD300}},
-		ranges:  [][2]int{{0x0000, 0x7800}},
+		magic: []byte("PROGRAMBT9000U"),
+		crypt: append([]byte("SEND \x01\x01"), make([]byte, 18)...),
+		model: "RT-950",
+		block: 0x80,
+		reads: [][2]int{{0x0000, 0x7800}, {0x8000, 0x8080}, {0x9000, 0x9080}, {0xA000, 0xA180}, {0xB000, 0xB100}, {0xD000, 0xD300}},
+		// canali e impostazioni (blocco 0x9000, come lo scrive BJ-9000_CPS; si
+		// riscrivono i byte letti dalla radio, con le sole modifiche fatte qui)
+		ranges:  [][2]int{{0x0000, 0x7800}, {0x9000, 0x9080}},
 		memsize: 0xD300,
 		airband: band{108000000, 136975000},
 		format:  rt950Format,
@@ -186,7 +188,7 @@ func init() {
 		DCS: uv5rDTCS, Baud: 115200, Fam: rt900Fam{}, Opt: o,
 		Notes: "Accendi la radio con il cavo collegato. Canali 1-960 = 15 zone da 64. " +
 			"Ricavato dal programma del costruttore «BJ-9000_CPS» v1.1.1 (la BJ-9000 è la Radtel RT-950 Pro): " +
-			"si scrivono solo i canali, le impostazioni e l'APRS restano quelli della radio. Non compatibile con CHIRP."})
+			"si scrivono i canali e le impostazioni generali (finestra «Optional Features»); VFO, DTMF e APRS restano quelli della radio. Non compatibile con CHIRP."})
 }
 
 // rt900Identify: ingresso in programmazione e uscita (identificazione della radio)

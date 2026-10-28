@@ -10,7 +10,7 @@
 
 const Views = {};
 let currentTab = 'home';
-const FIXED_TABS = ['home', 'gal', 'arch', 'info'];
+const FIXED_TABS = ['home', 'gal', 'conv', 'arch', 'info'];
 
 Object.assign(App, {
   catalog: [], defs: {},
@@ -25,6 +25,7 @@ Object.assign(App, {
     if (t === 'home') { Home.render($('#page-home')); return; }
     if (t === 'info') { Info.render($('#page-info')); return; }
     if (t === 'gal') { Gallery.render(); return; }
+    if (t === 'conv') { Converter.render($('#page-conv')); return; }
     const g = t === 'arch' ? Archive.grid : Views[t].grid;
     if (t === 'arch') Archive.render(); else Views[t].render();
     const btn = $(`.tab[data-tab="${t}"]`);

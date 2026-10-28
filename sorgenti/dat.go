@@ -18,6 +18,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 )
 
@@ -55,37 +56,59 @@ func datSlots(d *Doc) ([]*datSlot, error) {
 	if outer == nil || outer.T != 7 {
 		return nil, fmt.Errorf("struttura canali inattesa")
 	}
+	els, _, err := datChannelVals(d, outer)
+	if err != nil {
+		return nil, err
+	}
 	var slots []*datSlot
-	for _, ze := range outer.Els {
-		if ze.R == nil || ze.R.T == 13 || ze.R.T == 14 || ze.R.T == 10 {
-			return nil, fmt.Errorf("zona vuota nel file: struttura non supportata")
+	for _, ce := range els {
+		c := d.Resolve(ce)
+		if c == nil || (c.T != 1 && c.T != 5) {
+			return nil, fmt.Errorf("canale mancante nel file: struttura non supportata")
 		}
-		z := d.Resolve(ze)
-		if z == nil || z.T != 7 {
-			return nil, fmt.Errorf("struttura zona inattesa")
+		mm := d.MetaOf(c)
+		s := &datSlot{rec: c, meta: mm, idx: map[string]int{}}
+		for i, n := range mm.Names {
+			s.idx[n] = i
 		}
-		for _, ce := range z.Els {
-			c := d.Resolve(ce)
-			if c == nil || (c.T != 1 && c.T != 5) {
-				return nil, fmt.Errorf("canale mancante nel file: struttura non supportata")
+		for _, need := range []string{"rxFreq", "txFreq", "rxQT", "txQT", "txPower", "bandWide", "scanAdd", "chName"} {
+			if _, ok := s.idx[need]; !ok {
+				return nil, fmt.Errorf("campo %s mancante: versione del software non supportata", need)
 			}
-			mm := d.MetaOf(c)
-			s := &datSlot{rec: c, meta: mm, idx: map[string]int{}}
-			for i, n := range mm.Names {
-				s.idx[n] = i
-			}
-			for _, need := range []string{"rxFreq", "txFreq", "rxQT", "txQT", "txPower", "bandWide", "scanAdd", "chName"} {
-				if _, ok := s.idx[need]; !ok {
-					return nil, fmt.Errorf("campo %s mancante: versione del software non supportata", need)
-				}
-			}
-			slots = append(slots, s)
 		}
+		slots = append(slots, s)
 	}
 	if len(slots) == 0 {
 		return nil, fmt.Errorf("nessun canale nel file")
 	}
 	return slots, nil
+}
+
+// datChannelVals: i 960 canali del file nell'ordine della memoria della radio.
+// BT-11_CPS fino alla v1.0.8 salva channelData come Channel[15][64] (15 zone da
+// 64); dalla v1.0.9 come Channel[960] (flat = true). Le due versioni non aprono
+// i file dell'altra: IU0VYT Flash le gestisce entrambe e conserva il formato.
+func datChannelVals(d *Doc, outer *Rec) ([]Val, bool, error) {
+	if len(outer.Els) == datZones*datPerZone {
+		if c := d.Resolve(outer.Els[0]); c != nil && (c.T == 1 || c.T == 5) {
+			return outer.Els, true, nil
+		}
+	}
+	if len(outer.Els) != datZones {
+		return nil, false, fmt.Errorf("struttura delle zone non supportata")
+	}
+	var out []Val
+	for _, ze := range outer.Els {
+		if ze.R == nil || ze.R.T == 13 || ze.R.T == 14 || ze.R.T == 10 {
+			return nil, false, fmt.Errorf("zona vuota nel file: struttura non supportata")
+		}
+		z := d.Resolve(ze)
+		if z == nil || z.T != 7 || len(z.Els) != datPerZone {
+			return nil, false, fmt.Errorf("struttura zona inattesa")
+		}
+		out = append(out, z.Els...)
+	}
+	return out, false, nil
 }
 
 func (s *datSlot) str(d *Doc, f string) string {
@@ -338,3 +361,88 @@ func writeDAT(base []byte, chs []*Chan, rep *Report) ([]byte, error) {
 }
 
 func blankDAT(base []byte) ([]byte, error) { return writeDAT(base, nil, &Report{}) }
+
+// datVer: versione del programma BT-11_CPS che apre il file ("1.0.9" se i canali
+// sono in Channel[960], altrimenti "1.0.8")
+func datVer(b []byte) string {
+	d, err := ParseNRBF(b)
+	if err != nil {
+		return ""
+	}
+	root := d.Objs[1]
+	if root == nil || d.MetaOf(root) == nil {
+		return ""
+	}
+	for i, n := range d.MetaOf(root).Names {
+		if n == "channelData" {
+			if outer := d.Resolve(root.Vals[i]); outer != nil {
+				if _, flat, err := datChannelVals(d, outer); err == nil {
+					if flat {
+						return "1.0.9"
+					}
+					return "1.0.8"
+				}
+			}
+		}
+	}
+	return ""
+}
+
+func datTemplate(ver string) []byte {
+	if ver == "1.0.9" {
+		return baseDAT109
+	}
+	return baseDAT
+}
+
+// datToVer converte il file nel formato della versione indicata del programma
+// (tutto il contenuto passa per la memoria della radio, come in lettura e scrittura)
+func datToVer(b []byte, ver string) ([]byte, error) {
+	if datVer(b) == ver {
+		return b, nil
+	}
+	img, err := datToEEPROM(b)
+	if err != nil {
+		return nil, err
+	}
+	return eepromToDAT(img, datTemplate(ver))
+}
+
+// bajTemplate: modello dei nuovi file .dat (formato scelto dall'utente)
+func (a *App) bajTemplate() []byte {
+	return datTemplate(a.store.Settings.BajVer)
+}
+
+func (a *App) apiDatVer(r *http.Request) (interface{}, error) {
+	var req struct {
+		Ver string `json:"ver"`
+	}
+	if err := decode(r, &req); err != nil {
+		return nil, err
+	}
+	if req.Ver != "1.0.8" && req.Ver != "1.0.9" {
+		return nil, fmt.Errorf("versione non valida: %q", req.Ver)
+	}
+	a.mu.Lock()
+	sess := a.radios[kindDAT]
+	var base []byte
+	if sess != nil {
+		base = sess.Base
+	}
+	a.mu.Unlock()
+	if base != nil {
+		out, err := datToVer(base, req.Ver)
+		if err != nil {
+			return nil, fmt.Errorf("conversione non riuscita: %v", err)
+		}
+		a.mu.Lock()
+		if a.radios[kindDAT] == sess {
+			sess.Base = out
+		}
+		a.mu.Unlock()
+	}
+	st := a.store.Settings
+	st.BajVer = req.Ver
+	_ = a.store.SaveSettings(st)
+	return map[string]interface{}{"ver": req.Ver}, nil
+}

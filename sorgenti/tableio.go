@@ -250,45 +250,10 @@ func chirpCSV(mems []chirpMem) []byte {
 	var b bytes.Buffer
 	w := csv.NewWriter(&b)
 	w.UseCRLF = true
-	_ = w.Write([]string{"Location", "Name", "Frequency", "Duplex", "Offset", "Tone", "rToneFreq", "cToneFreq", "DtcsCode",
-		"DtcsPolarity", "RxDtcsCode", "CrossMode", "Mode", "TStep", "Skip", "Power", "Comment", "URCALL", "RPT1CALL", "RPT2CALL", "DVCODE"})
+	_ = w.Write(chirpCSVHead)
 	for _, m := range mems {
-		duplex, off := "", m.tx-m.rx
-		if off > 0 {
-			duplex = "+"
-		} else if off < 0 {
-			duplex, off = "-", -off
-		}
-		if off > 50000000 { // banda diversa: CHIRP usa "split" con la frequenza TX
-			duplex, off = "split", m.tx
-		}
-		tx, _ := parseTone(m.txTone)
-		rx, _ := parseTone(m.rxTone)
-		tmode, cross, rt, ct := "", "Tone->Tone", 885, 885
-		switch {
-		case tx > 0 && rx == 0:
-			tmode, rt = "Tone", tx
-		case tx > 0 && rx == tx:
-			tmode, rt, ct = "TSQL", tx, tx
-		case tx > 0 && rx > 0:
-			tmode, rt, ct = "Cross", tx, rx
-		case tx == 0 && rx > 0:
-			tmode, cross, rt, ct = "Cross", "->Tone", rx, rx
-		}
-		mode := "FM"
-		if m.narrow {
-			mode = "NFM"
-		}
-		skip := ""
-		if m.skip {
-			skip = "S"
-		}
-		p := m.power
-		if p < 0 || p > 2 {
-			p = 0
-		}
-		_ = w.Write([]string{strconv.Itoa(m.loc), m.name, fmtMHz6(m.rx), duplex, fmtMHz6(off), tmode, fmtTone(rt), fmtTone(ct),
-			"023", "NN", "023", cross, mode, chirpStep(m.rx, off), skip, chirpPowers[p], m.comment, "", "", "", ""})
+		c := &Chan{Rx: m.rx, Tx: m.tx, TxTone: m.txTone, RxTone: m.rxTone, Narrow: m.narrow, Power: m.power, Name: m.name, Scan: !m.skip}
+		_ = w.Write(chirpRowOut(m.loc, c, m.comment))
 	}
 	w.Flush()
 	return b.Bytes()
@@ -309,18 +274,9 @@ func pontiChirp(pp []*Ponte) []byte {
 	return chirpCSV(mems)
 }
 
-func chanChirp(kind string, chs []*Chan, sel []int) []byte {
-	var mems []chirpMem
-	for _, i := range sel {
-		if i < 0 || i >= len(chs) || chs[i] == nil {
-			continue
-		}
-		c := chs[i]
-		mems = append(mems, chirpMem{loc: i + 1, name: c.Name, rx: c.Rx, tx: c.Tx, txTone: c.TxTone, rxTone: c.RxTone,
-			narrow: c.Narrow, power: c.Power, skip: kind == kindDAT && !c.Scan})
-	}
-	return chirpCSV(mems)
-}
+// chanChirp: canali di una radio nel CSV di CHIRP (dalla 3.7 con DCS, sola
+// ricezione, canali digitali e scansione di tutte le radio)
+func chanChirp(kind string, chs []*Chan, sel []int) []byte { return writeChirpCSV(chs, sel) }
 
 // exportSheet scrive una tabella nel formato richiesto: xlsx, xls, csv.
 func exportSheet(sh WSheet, format string) ([]byte, error) {

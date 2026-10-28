@@ -3,6 +3,78 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+3.7 (28/10/2026)
+----------------
+Correzioni
+- K67 Pro che si identifica come «BF-K6» (segnalato con una radio vera): la copia di
+  sicurezza letta prima della scrittura non aggiornava il modello letto (flagK6 del
+  programma originale), così la scrittura veniva rifiutata. Ogni lettura ricorda ora
+  modello e banda (impostazioni k67K6, k67Band); messaggi con le istruzioni; «Nuovo»
+  prende la banda dell'ultima radio letta (cable.go, k67proto.go, server.go, store.go).
+- Archivio ponti: «Deseleziona tutti» toglie le spunte anche ai ponti nascosti dai
+  filtri; barra di stato e conferma di «Inoltra alla radio» indicano gli spuntati
+  nascosti (ui/archive.js).
+- CSV di CHIRP: codici DCS (DTCS e Cross con polarità), sola ricezione, canali DMR e
+  scansione di tutte le radio (prima i DCS andavano persi).
+Convertitore universale
+- universal.go, convertapi.go, ui/converter.js: lettura di .xlc, .dat, .img (tutte le
+  radio, anche di CHIRP), CSV di CHIRP, tabelle Excel/CSV; scrittura in CSV di CHIRP,
+  Excel, CSV, .xlc, .dat v1.0.8 / v1.0.9 e .img di ogni radio (con l'immagine della
+  radio come base), adattando i canali e rispettando le posizioni bloccate.
+- Scheda «🔁 Converti», «📥 Importa…» nelle schede delle radio, «Per un'altra radio…»
+  nell'esportazione; API convert/open, convert/targets, convert/run, radio/import.
+- Nomi troppo lunghi: prima si tolgono gli spazi. UV-3R: un solo codice DCS (OneDCS).
+Verifiche
+- cable_test.go TestCableK67IdentifiedAsK6; universal_test.go (tutti i formati, CHIRP
+  apre le immagini create, CSV confrontato con il codice di CHIRP:
+  verifica/chirp/csvcheck.py).
+Ricerca
+- Forum e siti di appassionati per le radio non compatibili: risultati in LEGGIMI.
+
+3.6 (27/10/2026)
+----------------
+Impostazioni delle radio
+- Finestra «⚙ Impostazioni…» (ui/settings.js, settings.go): voci divise in gruppi, ricerca,
+  icona ⓘ con la descrizione (passaggio del mouse o clic), icona ⚠ e conferma per le voci
+  delicate; le modifiche vanno nella memoria della scheda (salvataggio e scrittura come
+  per i canali). API radio/settings e radio/settings/set.
+- K67 Pro / 5RH Pro: 53 voci dal programma «5RH PRO» (settings_k67.go).
+- Bajeton BJ-8300: 40/41 voci dalla finestra «Optional Features» di BT-11_CPS
+  (settings_baj.go): interi dell'oggetto KDH.FunConfigData cambiati al loro posto nel
+  file .dat (nrbf.go conserva la posizione dei valori letti).
+- Bajeton BJ-9000: 57 voci da BJ-9000_CPS (settings_bj9000.go); la scrittura via cavo
+  comprende ora il blocco 0x9000-0x907F (solo i bit modificati cambiano).
+- 63 famiglie di radio gestite con i driver di CHIRP: tabelle ricavate dal codice di
+  CHIRP (verifica/chirp/chirpsettings.py, settings_chirp.json), nomi, descrizioni e
+  avvisi in italiano (settings_it.go). Esclusi gruppi di taratura, prova e fabbrica.
+  Estrazione più veloce (memoria ripristinata senza rileggere l'immagine, verificata
+  per ogni classe; testi a blocchi di caratteri, solo caratteri ASCII stampabili;
+  immagini di prova di un modello vicino con valori non riconosciuti corrette prima).
+Radio (235 modelli con canali su 271)
+- RD-5R e DM-1801 (USB HID) e DM-1701 / RT84 (USB DFU, driver STTub30 del costruttore):
+  drv_rdty.go, drv_tyt.go, usb_windows.go, dalla memoria e dai protocolli di dmrconfig
+  (BSD) e qdmr (GPL).
+- GT-22 (PMR446) e GT-68 (FRS) dai programmi del costruttore (drv_h777.go).
+- Bajeton BJ-8300: file .dat della v1.0.9 di BT-11_CPS (Channel[960], cbB_DivideCH,
+  passo AM a quattro valori) aperti, salvati e scritti nella radio come quelli della
+  v1.0.8; scelta del formato nella scheda («File per BT-11_CPS»), conversione tra le
+  due versioni; modello templates/bajeton_base109.dat salvato dal programma v1.0.9.
+  Collegamento al programma v1.0.9 nella galleria.
+- Catalogo: note di BJ-8300 e BJ-9000 aggiornate; dm-5r: programma nativo, non
+  compatibile.
+Interfaccia
+- Radio gestite con i driver (schede generiche): la definizione inviata all'interfaccia
+  non riportava il tipo di collegamento USB; la finestra del cavo ora riconosce le
+  radio USB (nessuna porta COM) e indica il driver giusto per la DM-1701.
+Verifiche
+- verifica/dmrconfig: dmrconfig con collegamento TCP al posto di USB (tcpdev.c);
+  rdty_test.go e tyt_test.go confrontano lettura, modifiche e protocollo.
+- verifica/k67set: impostazioni del K67 con il codice originale (settings_k67_test.go).
+- verifica/bt11: codice originale di BT-11_CPS v1.0.8 e v1.0.9 e di BJ-9000_CPS con la
+  radio simulata (bt11_test.go, bj9000_test.go): lettura, scrittura, file convertiti,
+  impostazioni (file identici byte per byte / bit identici).
+- settings_test.go: tabelle CHIRP confrontate con CHIRP per tutte le 63 classi.
+
 3.5 (26/10/2026)
 ----------------
 Interfaccia

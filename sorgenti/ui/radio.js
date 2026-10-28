@@ -10,8 +10,8 @@
 const Clipboard = { kind: null, items: [] }; // kind: 'k67' | 'baj' | 'ponti'
 
 const RADIO_DEF = {
-  k67: { kind: 'k67', name: 'Baofeng K67 Pro', ext: '.xlc', slots: 640, nameMax: 16, powers: [0, 2], hasScan: true, zones: 0, perZone: 0, first: 1, narrow: true, fw: 'rh5' },
-  baj: { kind: 'baj', name: 'Bajeton 8300', ext: '.dat', slots: 960, nameMax: 12, powers: [0, 1, 2], hasScan: true, zones: 15, perZone: 64, first: 1, narrow: true, fw: 'anc' },
+  k67: { kind: 'k67', name: 'Baofeng K67 Pro', ext: '.xlc', slots: 640, nameMax: 16, powers: [0, 2], hasScan: true, zones: 0, perZone: 0, first: 1, narrow: true, fw: 'rh5', settings: true },
+  baj: { kind: 'baj', name: 'Bajeton 8300', ext: '.dat', slots: 960, nameMax: 12, powers: [0, 1, 2], hasScan: true, zones: 15, perZone: 64, first: 1, narrow: true, fw: 'anc', settings: true },
 };
 
 // definizione di una radio gestita con i driver di CHIRP (dalla risposta di /api/catalog)
@@ -25,6 +25,7 @@ function genRadioDef(g, fw) {
     kind: g.kind, name: g.name, ext: '.img', slots: g.slots, nameMax: g.nameMax || 0, powers, powerLabels: labels,
     hasScan: g.hasScan, zones: g.zones || 0, perZone: g.perZone || 0, first: g.first, narrow: g.narrow, bands: g.bands || [],
     dcs: new Set(g.dcs || []), charset: g.charset || '', noTxOff: g.noTxOff, notes: g.notes || '', generic: true, fw: fw || '', digital: g.digital || '',
+    conn: g.conn || '', settings: !!g.settings,
   };
 }
 
@@ -74,6 +75,9 @@ class RadioView {
         <button class="btn" data-a="cread" title="Legge i canali dalla radio collegata con il cavo di programmazione">📻 Leggi dalla radio…</button>
         <button class="btn" data-a="cwrite" title="Scrive i canali di questa tabella nella radio collegata con il cavo">📻 Scrivi nella radio…</button>
         ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw] ? `<button class="btn" data-a="firmware" title="Aggiorna il firmware della radio (file ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw]}, anche dentro archivi .zip o .rar, dal PC o da Internet)">⬆ Aggiorna firmware…</button>` : ''}
+        ${d.settings ? '<button class="btn" data-a="settings" title="Impostazioni della radio (menu, display, VOX, DTMF…), con la descrizione di ogni voce">⚙ Impostazioni…</button>' : ''}
+        ${this.kind === 'baj' ? `<label class="note" style="white-space:nowrap" title="Il programma Bajeton BT-11_CPS v1.0.9 salva i file .dat in un formato diverso dalla v1.0.8 e le due versioni non aprono i file dell'altra. Scegli la versione installata sul tuo PC: il file aperto viene convertito (canali e impostazioni restano gli stessi) e i nuovi file e le letture dalla radio useranno questo formato.">File per BT-11_CPS
+          <select data-datver><option value="1.0.8">v1.0.8</option><option value="1.0.9">v1.0.9</option></select></label>` : ''}
         <span class="sep"></span>
         <span class="info" data-info></span>
       </div>
@@ -98,7 +102,8 @@ class RadioView {
         <span class="sep"></span>
         <button class="btn" data-a="copyto" title="Copia i canali selezionati in un'altra radio">Copia in… ▾</button>
         <button class="btn" data-a="toarch" title="Aggiunge i canali selezionati all'archivio ponti">→ Archivio</button>
-        <button class="btn" data-a="export">Esporta…</button>
+        <button class="btn" data-a="import" title="Inserisce i canali di un altro file: K67 (.xlc), Bajeton (.dat), immagini .img di qualsiasi radio (anche di CHIRP), CSV di CHIRP, tabelle Excel/CSV">📥 Importa…</button>
+        <button class="btn" data-a="export" title="Esporta i canali in Excel, CSV o CSV di CHIRP, oppure nel formato di un'altra radio">Esporta…</button>
         <label style="margin-left:6px;white-space:nowrap"><input type="checkbox" data-empty checked> mostra posizioni vuote</label>
       </div>
       ${d.zones ? '<div class="zonebar" data-zones></div>' : ''}
@@ -121,6 +126,24 @@ class RadioView {
       } else b.addEventListener('click', () => this.action(a));
     });
     $('[data-empty]', this.page).addEventListener('change', e => { this.showEmpty = e.target.checked; this.render(); });
+    const dv = $('[data-datver]', this.page);
+    if (dv) {
+      dv.value = (App.init.settings && App.init.settings.bajVer) || '1.0.8';
+      dv.addEventListener('change', async () => {
+        const ver = dv.value;
+        try {
+          await api('radio/datver', { ver }, { busyText: 'Conversione del file…' });
+          if (App.init.settings) App.init.settings.bajVer = ver;
+          if (this.loaded && this.datVer && this.datVer !== ver) {
+            this.datVer = ver;
+            this.dirty = true;
+            App.onDirty();
+            this.render();
+            toast(`File convertito per BT-11_CPS v${ver}: salvalo per usarlo con quella versione del programma.`);
+          } else toast(`I nuovi file e le letture dalla radio saranno nel formato di BT-11_CPS v${ver}.`);
+        } catch (e) { dv.value = this.datVer || '1.0.8'; reportError(e); }
+      });
+    }
     this.grid = new Grid($('[data-grid]', this.page), {
       columns: this.columns(),
       getRows: () => this.rows(),
@@ -299,6 +322,9 @@ class RadioView {
     this.chans = resp.channels.map(c => c || null);
     while (this.chans.length < this.def.slots) this.chans.push(null);
     this.bands = resp.bands || [];
+    this.datVer = resp.datVer || '';
+    const dv = $('[data-datver]', this.page);
+    if (dv && this.datVer) dv.value = this.datVer;
     this.dirty = false;
     this.undoStack = []; this.redoStack = [];
     this.zone = this.def.zones ? 0 : 0;
@@ -332,11 +358,22 @@ class RadioView {
         case 'copyto': return await this.copyTo();
         case 'toarch': return await this.toArchive();
         case 'export': return await Dialogs.exportRadio(this);
+        case 'import': return await this.importFile();
         case 'cread': return await this.cableRead();
         case 'cwrite': return await this.cableWrite();
         case 'firmware': return Firmware.open(this.def.fw, this.kind);
+        case 'settings': return await RadioSettings.open(this);
       }
     } catch (e) { reportError(e); }
+  }
+
+  // canali da un file qualsiasi (3.7): adattati a questa radio e inseriti dove scegli
+  async importFile() {
+    let r;
+    try { r = await api('radio/import', { kind: this.kind }, { busyText: 'Lettura del file…' }); } catch (e) { if (!e.cancel) reportError(e); return; }
+    if (r.warnings && r.warnings.length) await alertDlg('Importa canali', `${r.desc}: alcune righe non sono state lette.`, r.warnings);
+    toast(`${r.desc}: ${r.channels.length} canali da inserire.`);
+    await Dialogs.insertInto(this, r.channels, r.kind);
   }
 
   async confirmDiscard() {

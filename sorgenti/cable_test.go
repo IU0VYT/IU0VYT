@@ -231,3 +231,47 @@ func (s verySlowPort) Write(b []byte) error {
 	time.Sleep(25 * time.Millisecond)
 	return s.Port.Write(b)
 }
+
+// K67 Pro che si identifica come «BF-K6» (segnalato da IU0VYT con una radio vera,
+// 3.6): file aperto da disco e scritto con la copia di sicurezza: la lettura della
+// copia ricorda il modello (come flagK6 del programma originale) e la scrittura
+// parte. Senza alcuna lettura precedente la scrittura viene rifiutata con un
+// messaggio che spiega cosa fare; dopo una lettura parte anche senza copia.
+func TestCableK67IdentifiedAsK6(t *testing.T) {
+	file := mustRead(t, sampleXLC)
+	radio := &k67Emu{mem: xlcImageForRadio(file), model: "BF-K6", band: file[xlcSize-1]}
+	defer withEmu(t, radio.serve)()
+	c := newAPIClient(t)
+	p := t.TempDir() + "/k67.xlc"
+	_ = os.WriteFile(p, file, 0o644)
+	r := c.must("radio/open", map[string]interface{}{"radio": "k67", "path": p})
+	chs := r["channels"].([]interface{})
+	chs[0].(map[string]interface{})["name"] = "K6 OK"
+	// 1) senza copia di sicurezza e senza letture: rifiutata, con istruzioni
+	c.must("cable/start", map[string]interface{}{"op": "write", "radio": "k67", "port": "COM3", "channels": chs})
+	st, _ := c.wait("")
+	if st["state"] != "error" || !strings.Contains(st["error"].(string), "Leggi prima questa radio") {
+		t.Fatalf("senza lettura: %v", st)
+	}
+	// 2) con la copia di sicurezza (impostazione predefinita): scritta
+	c.must("cable/start", map[string]interface{}{"op": "write", "radio": "k67", "port": "COM3", "backup": true, "verify": true, "channels": chs})
+	st, _ = c.wait("")
+	if st["state"] != "done" || st["result"].(map[string]interface{})["verified"] != true {
+		t.Fatalf("con copia di sicurezza: %v", st)
+	}
+	if back := readXLC(xlcFileFromRadio(radio.mem, 0, true, time.Now()), &Report{}); back[0] == nil || back[0].Name != "K6 OK" {
+		t.Fatalf("canale non scritto: %+v", back[0])
+	}
+	// 3) riaperto il file, senza copia: il modello letto è ricordato
+	c.must("radio/open", map[string]interface{}{"radio": "k67", "path": p})
+	c.must("cable/start", map[string]interface{}{"op": "write", "radio": "k67", "port": "COM3", "channels": chs})
+	if st, _ = c.wait(""); st["state"] != "done" {
+		t.Fatalf("dopo una lettura: %v", st)
+	}
+	// 4) radio diversa (non BF-K6) dopo aver letto un BF-K6: rifiutata
+	radio.model = "5RH-PRO"
+	c.must("cable/start", map[string]interface{}{"op": "write", "radio": "k67", "port": "COM3", "channels": chs})
+	if st, _ = c.wait(""); st["state"] != "error" || !strings.Contains(st["error"].(string), "dell'ultima radio letta") {
+		t.Fatalf("modello diverso: %v", st)
+	}
+}

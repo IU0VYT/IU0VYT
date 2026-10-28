@@ -65,11 +65,17 @@ type genModel struct {
 	NoChirp bool
 	Zones   int   // canali divisi in zone (banchi) di Slots/Zones posizioni (solo visualizzazione)
 	DCS     []int // codici DCS ammessi
+	// OneDCS: in DCS il codice di ricezione vale anche in trasmissione (CHIRP non
+	// ammette «DTCS->DTCS» con codici diversi per questa radio)
+	OneDCS  bool
 	Baud    int
 	Fam     genFamily
 	Opt     interface{} // parametri della famiglia
 	Notes   string      // avvertenze mostrate nella finestra del cavo
 	Digital string      // nome dei canali digitali ("" = radio solo analogica)
+	// Conn: collegamento ("" porta seriale; "hid" USB HID, "dfu" USB DFU: la
+	// radio si apre con openPortFunc("HID:vid:pid" / "DFU:vid:pid"))
+	Conn string
 }
 
 // genFamily: operazioni di una famiglia di radio.
@@ -503,12 +509,15 @@ type genDef struct {
 	Vendor  string     `json:"vendor"`
 	Model   string     `json:"model"`
 	Digital string     `json:"digital,omitempty"`
+	Conn    string     `json:"conn,omitempty"`
+	// Settings: impostazioni della radio modificabili (finestra «Impostazioni»)
+	Settings bool `json:"settings,omitempty"`
 }
 
 func (m *genModel) def() genDef {
 	d := genDef{Kind: m.ID, Name: m.Name, Ext: ".img", Slots: m.Slots, First: m.First, NameMax: m.NameMax,
 		Powers: m.Powers, Bands: m.Bands, Narrow: m.Narrow, HasScan: m.HasScan, Charset: m.Charset, Notes: m.Notes,
-		NoTxOff: m.NoTxOff, Zones: m.Zones, Vendor: m.Vendor, Model: m.Model, Digital: m.Digital}
+		NoTxOff: m.NoTxOff, Zones: m.Zones, Vendor: m.Vendor, Model: m.Model, Digital: m.Digital, Conn: m.Conn, Settings: settingsAvailable(m.ID)}
 	if m.Zones > 0 {
 		d.PerZone = m.Slots / m.Zones
 	}

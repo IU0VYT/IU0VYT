@@ -27,6 +27,7 @@ type Val struct {
 	PT   byte
 	Raw  []byte
 	R    *Rec
+	Off  int // posizione di Raw nel file letto (membri primitivi; 0 se creato dopo)
 }
 
 type Rec struct {
@@ -181,7 +182,8 @@ func (d *Doc) members(r *reader, m *Rec) []Val {
 		if m.T == 5 || m.T == 4 {
 			if m.BTs[i] == 0 {
 				pt := m.Add[i].(byte)
-				out[i] = Val{Prim: true, PT: pt, Raw: r.primRaw(pt)}
+				off := r.p
+				out[i] = Val{Prim: true, PT: pt, Raw: r.primRaw(pt), Off: off}
 				continue
 			}
 		}

@@ -250,13 +250,21 @@ func (a *App) cableRead(ctx context.Context, j *cableJob, req *cableReq) (file [
 		if err != nil {
 			return nil, ki, false, err
 		}
+		// come la variabile flagK6 del programma originale: ogni lettura (anche la
+		// copia di sicurezza prima della scrittura) ricorda se la radio si è
+		// identificata come «BF-K6»; la scrittura controlla poi lo stesso modello.
+		// Il valore resta anche dopo la chiusura del programma.
+		if st := a.store.Settings; st.K67K6 != ki.K6 || st.K67Band != ki.FreqBand || !st.K67Known {
+			st.K67K6, st.K67Band, st.K67Known = ki.K6, ki.FreqBand, true
+			_ = a.store.SaveSettings(st)
+		}
 		return xlcFileFromRadio(img, ki.FreqBand, ki.K6, time.Now()), ki, ki.K6, nil
 	}
 	img, bi, err := btReadImage(ctx, req.Port, j.prog, nil)
 	if err != nil {
 		return nil, bi, false, err
 	}
-	dat, err := eepromToDAT(img, baseDAT)
+	dat, err := eepromToDAT(img, a.bajTemplate())
 	if err != nil {
 		return nil, bi, false, fmt.Errorf("dati letti non convertibili: %v", err)
 	}
@@ -285,6 +293,8 @@ func (a *App) runCable(ctx context.Context, j *cableJob, req *cableReq, payload 
 		resp := radioResp{Kind: kind, Channels: chs, Warnings: rep.Warnings}
 		if kind == kindXLC {
 			resp.Bands = xlcBands(file, 0x10)
+		} else {
+			resp.DatVer = datVer(file)
 		}
 		return map[string]interface{}{"radio": resp, "info": info, "backup": bp}, nil
 	}
@@ -313,7 +323,12 @@ func (a *App) runCable(ctx context.Context, j *cableJob, req *cableReq, payload 
 		a.mu.Lock()
 		sess := a.radios[kindXLC]
 		a.mu.Unlock()
+		// modello dell'ultima radio letta (flagK6 del programma originale); in
+		// mancanza di letture, quello indicato dalla sessione
 		k6 := sess != nil && sess.K6
+		if st := a.store.Settings; st.K67Known {
+			k6 = st.K67K6
+		}
 		written = xlcImageForRadio(payload)
 		ki, err := k67Write(context.Background(), req.Port, written, &k67Opts{Password: req.Password, Baud: req.Baud,
 			FreqBand: payload[xlcSize-1], K6: k6}, j.prog)

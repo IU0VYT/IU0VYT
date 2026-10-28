@@ -1,10 +1,64 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO BAOFENG E BAJETON
 =====================================================================
-Versione 3.5 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 3.7 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 3.7:
+- CORRETTO: scrittura nel K67 Pro che si identifica come «BF-K6» (segnalato con una
+  radio vera: la lettura funzionava, la scrittura si fermava con «la radio collegata
+  è un modello BF-K6»). Come nel programma originale, ogni lettura della radio (anche
+  la copia di sicurezza che precede la scrittura) ricorda il modello letto e la
+  scrittura verso lo stesso modello parte; prima la copia di sicurezza lo dimenticava.
+  Il modello e la banda dell'ultima radio letta restano ricordati anche dopo la
+  chiusura del programma; un file «Nuovo» del K67 prende la banda dell'ultima radio
+  letta, come nel programma originale;
+- CORRETTO: archivio ponti, «☐ Deseleziona tutti» toglie la spunta a tutti i ponti,
+  anche a quelli nascosti dai filtri (prima solo ai visibili, e bisognava azzerare i
+  filtri); la barra in basso indica quanti ponti spuntati sono nascosti dai filtri e
+  «Inoltra alla radio» lo ricorda prima di scrivere;
+- controllati di nuovo tutti i percorsi di scrittura delle altre radio: il problema
+  del K67 dipendeva da un controllo legato a una lettura precedente, che nelle altre
+  radio non c'è (l'identificazione è la stessa in lettura e in scrittura);
+- CONVERTITORE UNIVERSALE (scheda "🔁 Converti", vedi "CONVERTITORE E FORMATI
+  UNIVERSALI"): i canali di qualsiasi file o scheda aperta nel formato di qualsiasi
+  altra radio (K67 .xlc, Bajeton .dat v1.0.8 / v1.0.9, immagini .img di tutte le 103
+  radio gestite con i driver) o nei formati universali (CSV di CHIRP, Excel, CSV);
+- "📥 Importa…" nella scheda di ogni radio: canali da qualsiasi di questi file,
+  adattati alla radio; "Esporta…" → "🔁 Per un'altra radio…";
+- CSV di CHIRP: ora con i codici DCS (anche con polarità e combinazioni diverse in
+  trasmissione e ricezione), canali di sola ricezione, canali DMR e scansione di tutte
+  le radio (prima i DCS andavano persi); letto e scritto in modo identico a CHIRP;
+- nomi troppo lunghi per la radio di destinazione: prima si tolgono gli spazi
+  («PMR CH 12» → «PMRCH12»), così restano distinti;
+- UV-3R: come in CHIRP, in DCS il codice di ricezione vale anche in trasmissione;
+- ricerca nei forum e nei siti di appassionati per le radio non compatibili (vedi
+  "RICERCA PER LE RADIO NON COMPATIBILI").
+Novità della 3.6:
+- IMPOSTAZIONI DELLE RADIO: nuovo pulsante "⚙ Impostazioni…" nella scheda della radio
+  (menu, display, VOX, squelch, TOT, DTMF, tasti, risparmio della batteria…). Ogni
+  voce ha l'icona ⓘ: passando il mouse compare la descrizione, con un clic si apre
+  sotto la voce. Le voci delicate (password, limiti di banda e abilitazione della
+  trasmissione, TOT spento, VOX, reset dal menu, PTT-ID, ripetitore…) hanno l'icona ⚠
+  e un avviso che va confermato prima di applicare. Disponibili per K67 Pro, Bajeton
+  BJ-8300 e BJ-9000 (dai programmi dei costruttori) e per 63 famiglie di radio gestite
+  con i driver di CHIRP: in tutto 190 dei 235 modelli compatibili (vedi "IMPOSTAZIONI
+  DELLE RADIO");
+- radio DMR collegate via USB, con memoria e protocollo dei programmi liberi dmrconfig
+  e qdmr: Baofeng RD-5R, DM-1801 (dispositivo HID, nessun driver da installare) e
+  DM-1701 / Retevis RT84 (modalità DFU, driver USB del costruttore);
+- GT-22 (PMR446) e GT-68 (FRS), ricavate dai programmi del costruttore «GT-22» e
+  «BF_V1_FH» e verificate con il loro codice originale;
+- Bajeton BJ-8300: il programma BT-11_CPS v1.0.9 salva i file .dat in un formato
+  diverso dalla v1.0.8 (e le due versioni non aprono i file dell'altra): ora si aprono
+  entrambi e nella scheda si sceglie per quale versione salvare ("File per BT-11_CPS");
+- BJ-9000: oltre ai canali si scrivono le impostazioni generali;
+- ricerca dei programmi richiesti (GT-22, GT-68, 5RHam, UV-8D / BF-UV8, BJ-98 Plus,
+  DM-5R): per 5RHam, UV-8D / BF-UV8 e BJ-98 Plus i costruttori non pubblicano un
+  programma; il programma della DM-5R («CPS_5R») è un eseguibile nativo, non
+  confrontabile con questo programma: la radio resta non compatibile;
+- in tutto 271 modelli, 235 compatibili.
 Novità della 3.5:
 - galleria dei modelli: dentro ogni tipologia (Radioamatoriali, DMR, GMRS / FRS,
   PMR446 e uso libero, Per bambini) le radio sono separate tra Baofeng e Bajeton,
@@ -204,7 +258,8 @@ RADIO GESTITE CON I DRIVER DI CHIRP
   radio della Radioddity GA-510) e GM-15 Pro.
 - Si lavora sui canali: "Leggi dalla radio" (oppure apri un file .img, anche salvato
   con CHIRP), modifica, "Scrivi nella radio" e/o "Salva" (file .img apribile con CHIRP).
-  Le impostazioni della radio restano quelle lette: per questo non c'è "Nuovo file".
+  Le impostazioni della radio sono quelle lette (si modificano con "⚙ Impostazioni…",
+  vedi "IMPOSTAZIONI DELLE RADIO"): per questo non c'è "Nuovo file".
 - Come per le altre radio: copia di sicurezza prima della scrittura (file .img nella
   cartella copie_radio) e rilettura di verifica dopo.
 - Nomi adattati ai caratteri e alla lunghezza ammessi dalla radio, potenze con i
@@ -219,7 +274,7 @@ RADIO GESTITE CON I DRIVER DI CHIRP
   programma derivate da essi sono distribuite con la stessa licenza e il codice
   sorgente completo è nella cartella "sorgenti". Grazie agli autori di CHIRP.
 
-RADIO RICAVATE DAI PROGRAMMI DEI COSTRUTTORI (3.1 - 3.5)
+RADIO RICAVATE DAI PROGRAMMI DEI COSTRUTTORI (3.1 - 3.6)
 Per queste radio CHIRP non ha un driver: protocollo e memoria sono stati ricavati dal
 codice dei programmi ufficiali scaricati dai siti Baofeng e Bajeton, e confrontati con
 la famiglia di CHIRP che ha la stessa mappa (i file .img si aprono anche con CHIRP,
@@ -235,7 +290,9 @@ con il nome di quel modello).
   usa il driver della BF-888S.
 - Bajeton BJ-9000 (Radtel RT-950 Pro, programma «BJ-9000_CPS» v1.1.1): 960 canali in
   15 zone da 64, stesso protocollo della BJ-7800 con il controllo del modello; si
-  scrivono solo canali e nomi (impostazioni e APRS con il programma del costruttore).
+  scrivono canali, nomi e (dalla 3.6) impostazioni generali; VFO, DTMF e APRS con il
+  programma del costruttore. Dalla 3.6 canali e impostazioni sono verificati con il
+  codice originale del programma collegato alla radio simulata.
 - (3.2) BF-9700 / BF-S56 Max: memoria della BF-1909 di CHIRP letta fino a 0x0400.
 - (3.3) Serie D (programma «BF Series CPS», pacchetti «Baofeng_V1D_CPS» e
   «Baofeng_BF-D_Series_CPS»): stessa memoria della BF-888S (16 canali senza nome; 30
@@ -304,10 +361,73 @@ con il nome di quel modello).
 - (3.5) BF-T60 / TR-988UV: il costruttore pubblica il programma «T6UV Series CPS»,
   lo stesso di UV-17R e UV-21R (driver della UV-17R). UV-3R+: in prova con il driver
   della UV-3R di CHIRP (segnalazione CHIRP n. 239).
-Ancora non gestite: radio DMR con protocolli a pacchetti o USB (DM-1701, DM-1702,
-DM-1801, RD-5R, DM-5R, M20D: per alcune ci sono i programmi liberi qdmr e
-dmrconfig), le PMR senza un programma pubblicato (BF-T3, BF-T6…T57, BF-V1…V6A, BF-33C,
-BF-358, GT-22…) e BJ-98 Plus: link ai programmi ufficiali nella galleria.
+- (3.6) GT-22 (PMR446, programma «GT-22») e GT-68 (FRS, programma «BF_V1_FH» del
+  pacchetto GT-68): stessa classe del protocollo e stessa memoria della BF-888S, 16
+  canali senza nome. La GT-22 scrive sempre i canali a banda stretta e non ha la
+  scansione (come il suo programma). Verificate con il codice originale dei due
+  programmi collegato alla radio simulata.
+- (3.6) RD-5R e DM-1801, radio DMR collegate via USB come dispositivo HID (nessuna
+  porta COM, nessun driver da installare): memoria della famiglia Radioddity GD-77 e
+  protocollo dei programmi liberi dmrconfig (licenza BSD) e qdmr (GPL). 1024 canali
+  analogici e DMR con nomi di 16 caratteri; un canale cancellato viene tolto da zone e
+  liste di scansione, un canale nuovo entra in una zona. Contatti, gruppi e
+  impostazioni DMR non si toccano.
+- (3.6) DM-1701 / Retevis RT84 (famiglia TYT MD-UV380), radio DMR collegata via USB in
+  modalità DFU: serve il driver USB del costruttore (cartella «DM-1701 USB Driver» del
+  pacchetto «DM-1701 CPS»), lo stesso del suo programma; chiudi il programma del
+  costruttore prima di leggere o scrivere. 3000 canali, nome obbligatorio (un canale
+  senza nome diventa «CH n», come in dmrconfig).
+- (3.6) RD-5R, DM-1801 e DM-1701 sono verificate con dmrconfig stesso, compilato con un
+  collegamento verso la radio simulata: canali letti uguali, modifiche con memoria
+  identica byte per byte, lettura e scrittura via USB identiche.
+Ancora non gestite: radio DMR con protocolli non documentati o programmi nativi
+(DM-1702, DM-5R, M20D, DMR-6X2 / 6X2 PRO: per la DMR-6X2 dmrconfig e qdmr hanno una
+mappa scritta per firmware vecchi, non confrontabile con quelli attuali), le PMR
+senza un programma pubblicato (BF-T3, BF-T6…T57, BF-V1…V6A, BF-33C, BF-358…), 5RHam,
+UV-8D / BF-UV8 e BJ-98 Plus: link ai programmi ufficiali nella galleria quando esistono.
+
+IMPOSTAZIONI DELLE RADIO (3.6)
+- Pulsante "⚙ Impostazioni…" nella scheda della radio, dopo aver letto la radio via
+  cavo o aperto un suo file. A sinistra i gruppi (es. "Ricezione e trasmissione",
+  "Display, suoni e tasti", "DTMF"), in alto la ricerca. Ogni voce ha:
+    ⓘ  descrizione della voce (passando il mouse; con un clic resta aperta sotto);
+    ⚠  sulle voci delicate: l'avviso è nella descrizione e, prima di applicare, una
+       finestra riassume gli avvisi e chiede conferma.
+  Le voci cambiate sono evidenziate; "Applica" le scrive nella memoria della scheda
+  (che diventa "modificata"): poi salva il file o scrivi nella radio come per i
+  canali. "Annulla modifiche" torna ai valori letti.
+- Voci delicate: password (accensione, lettura, scrittura), limiti di frequenza e
+  abilitazione della trasmissione per banda, trasmissione disattivata, tempo massimo
+  di trasmissione, VOX, reset e voci del menu, PTT-ID e codici trasmessi, allarme che
+  trasmette, funzione ripetitore, disattivazione a distanza, programmazione Bluetooth,
+  blocco della tastiera.
+- K67 Pro / 5RH Pro (53 voci): dal programma «5RH PRO», metodi ConvertSetting e
+  SettingConvert.
+- Bajeton BJ-8300 (40 voci; 41 nei file della v1.0.9 di BT-11_CPS, con "Divisione dei
+  canali"): finestra «Optional Features» del programma; ogni voce è un numero
+  dell'oggetto salvato nel file .dat, cambiato al suo posto (il file resta identico a
+  quello che salverebbe il programma).
+- Bajeton BJ-9000 (57 voci): finestra «Optional Features» del programma BJ-9000_CPS;
+  si cambiano solo i bit di ogni voce, gli altri byte restano quelli della radio.
+- Radio gestite con i driver di CHIRP (63 famiglie: UV-5R, UV-17 Pro, impermeabili,
+  BF-888S, UV-B5, BF-T1, BJ-7800, BJ-7700, serie H…): la tabella di ogni famiglia è
+  ricavata dal codice di CHIRP (per ogni voce si fa scrivere a CHIRP ogni valore e si
+  guarda quali bit cambiano) e le voci sono tradotte in italiano. Non sono incluse le
+  voci di taratura, di prova o di fabbrica. I testi con caratteri non latini (es. nomi
+  in cinese scritti dal programma del costruttore) si possono solo sostituire.
+- Non ancora disponibili: serie D, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST,
+  BF-9700 / BF-S56 Max, DM-5000, DR-1801UV, RD-5R, DM-1801, DM-1701 e i modelli della famiglia UV-17 Pro che
+  CHIRP non elenca (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B, UV-17R, UV-21R,
+  UV-21L): per queste usa il programma del costruttore.
+
+FILE .DAT DELLA BAJETON BJ-8300 (3.6)
+Il programma BT-11_CPS v1.0.9 salva i canali in un elenco unico di 960 (la v1.0.8 in
+15 zone da 64) e ha una voce in più ("Divisione dei canali"): la v1.0.9 non apre i file
+della v1.0.8 e viceversa. IU0VYT Flash apre entrambi i formati e salva un file nel
+formato con cui è stato aperto. Nella scheda della 8300, "File per BT-11_CPS" sceglie
+la versione: il file aperto viene convertito (canali e impostazioni restano gli
+stessi) e i nuovi file e le letture dalla radio useranno quel formato (predefinito:
+v1.0.8, la versione indicata sulla pagina dei download Bajeton per la 8300).
 
 AGGIORNAMENTO DEL FIRMWARE BAOFENG
 - Baofeng UV-5RM / UV-5RH (serie con display TFT "330L"), file .BF: protocollo del
@@ -366,7 +486,7 @@ AGGIORNAMENTO DEL FIRMWARE BAOFENG
   conosciuto (impronta SHA-256) vale più del nome: il firmware ufficiale della UV-25
   Plus rinominato resta "per UV-25 Plus". Nella modalità automatica una radio che non
   risponde alla richiesta di aggiornamento non viene modificata.
-- BJ-7700 senza Bluetooth (file .BTU), DM-32UV, DM-5000, M20D, RD-5R, DM-1701:
+- BJ-7700 senza Bluetooth (file .BTU), DM-32UV, DM-5000, M20D, RD-5R, DM-1801, DM-1701:
   aggiornamento solo con i programmi del costruttore (link nella galleria). Sono
   stati controllati di nuovo tutti i pacchetti scaricati: per la DM-32UV
   l'aggiornamento è dentro il programma nativo del costruttore (protocollo non
@@ -529,7 +649,7 @@ Il programma modifica solo ciò che cambi. Un file aperto e salvato senza modifi
 resta identico byte per byte. I dati che il programma non interpreta (altri byte del
 record K67, i campi segnalazione/PTT ID/busy lock/ecc. della Bajeton) restano invariati
 e seguono il canale quando lo sposti o lo copi nella stessa radio. Le impostazioni
-generali delle radio non vengono toccate.
+generali delle radio cambiano solo con "⚙ Impostazioni…" (e solo le voci che modifichi).
 K67: quando aggiungi o cancelli canali, le liste delle zone, i canali A/B e il canale
 di emergenza vengono aggiornati come fa il programma originale (le zone non si
 modificano da qui).
@@ -615,13 +735,65 @@ ARCHIVIO PONTI
 - "Copia" copia i ponti spuntati (o selezionati) per incollarli in una radio (Ctrl+V).
 - "Segna come verificati" toglie gli avvisi dopo il controllo (restano nelle note).
 
+CONVERTITORE E FORMATI UNIVERSALI (3.7)
+- Scheda "🔁 Converti": 1) scegli il file di partenza o una scheda aperta; 2) scegli il
+  formato di destinazione (cerca per nome); 3) "Converti e salva…". Dopo la
+  conversione l'elenco mostra tutti gli adattamenti (nomi accorciati, potenze, toni
+  non disponibili, canali fuori gamma o esclusi) e "Apri nella scheda della radio"
+  apre il file prodotto.
+- File di partenza: .xlc (K67), .dat (Bajeton, v1.0.8 o v1.0.9), immagini .img di
+  qualsiasi radio compatibile (anche salvate da CHIRP: il modello è riconosciuto dai
+  dati del file), CSV di CHIRP (anche con righe di commento), tabelle Excel o CSV
+  (esportate da qui, dall'archivio ponti o scritte a mano: serve una colonna con la
+  frequenza, es. «RX (MHz)», «Frequenza» o «Frequency»; facoltative nome, TX, shift,
+  toni, potenza, larghezza, scan, solo RX, digitale).
+- Destinazioni: CSV di CHIRP (formato universale, si apre con CHIRP per qualsiasi
+  radio), Excel .xlsx, CSV per Excel, file .xlc del K67, .dat della Bajeton per la
+  v1.0.8 o la v1.0.9 di BT-11_CPS, immagine .img di ognuna delle radio gestite con i
+  driver. I canali restano nella stessa posizione se la radio ce l'ha (oppure
+  "compatta i canali"); quelli in più vanno nelle prime posizioni libere, gli altri
+  sono esclusi e segnalati. Le posizioni bloccate di alcune radio (es. canali GMRS
+  fissi della GM-15 Pro) restano quelle della radio.
+- Per l'immagine .img di una radio serve un'immagine di quella stessa radio (la
+  scheda aperta dopo "Leggi dalla radio" o "Apri…", oppure un file .img): l'immagine
+  contiene impostazioni e taratura della radio, che non si possono inventare, e
+  scriverne una "vuota" danneggerebbe la radio. Per K67 e Bajeton si può partire
+  anche dalle impostazioni predefinite dei programmi dei costruttori.
+- "📥 Importa…" (scheda di ogni radio) e "Esporta…" → "🔁 Per un'altra radio…" usano
+  lo stesso convertitore.
+
+RICERCA PER LE RADIO NON COMPATIBILI (3.7)
+Ricerca nei forum e nei siti di appassionati (CHIRP, RadioReference, miklor.com,
+RigPix, GitHub) di programmi o accorgimenti per le radio non compatibili:
+- UV-8D / BF-UV8: CHIRP non le gestisce (segnalazioni #1225, ancora aperta, e #4519):
+  la radio non indica quali canali sono vuoti e un driver di prova del 2014 dava
+  canali scritti che la radio non mostrava; si programma solo con il programma del
+  costruttore per la UV-8 (in cinese). Non gestita qui: senza quel programma il
+  risultato non sarebbe verificabile.
+- DM-5R (Tier I): dmrconfig gestisce la TD-5R ma indica espressamente "non DM-5R";
+  la radio usa un cavo diverso dalle altre Baofeng e un programma nativo. Non gestita
+  (la RD-5R, radio diversa, è gestita).
+- DM-1702 / DM-1703: esistono strumenti liberi (MD1702-tools) che leggono e scrivono la
+  memoria, ma gli stessi autori avvertono che con il firmware L05 e il caricatore
+  MD1706-V2 hanno reso radio inutilizzabili: non gestite per prudenza.
+- DM-V1: programma proprio del costruttore, cavo micro-USB con il convertitore dentro
+  la radio; nessun programma libero lo gestisce.
+- PMR446 senza programma pubblicato (BF-T3, BF-T6…T57, BF-V1…V6A, BF-33C, BF-358…):
+  per alcune radio simili gli utenti di CHIRP hanno usato con successo parziale il
+  driver della BF-888 (es. BF-M4, segnalazione #7215, poi aggiunta a CHIRP). Non è un
+  accorgimento sicuro: senza il programma del costruttore non si può sapere se la
+  memoria è la stessa, e scrivere una memoria diversa può bloccare la radio.
+- 5RHam, BJ-98 Plus, M20D: non sono stati trovati programmi né informazioni tecniche.
+
 ESPORTAZIONE
 Dall'archivio (con filtri e spunte) o dai canali di una radio (tutti o selezionati):
 - Excel .xlsx e Excel 97-2003 .xls (prima riga bloccata, righe con avvisi in giallo);
 - CSV per Excel italiano (separatore ";" e virgola decimale);
 - CSV per CHIRP: colonne standard di CHIRP. La potenza è scritta in watt
   (Alta 5.0W, Media 2.0W, Bassa 1.0W) come si aspettano le versioni recenti di CHIRP;
-  i toni usano Tone (solo TX), TSQL (TX e RX uguali) o Cross (diversi).
+  i toni usano Tone (solo TX), TSQL (TX e RX uguali), DTCS (stesso codice DCS) o
+  Cross (diversi, anche DCS→DCS, Tone→DTCS…); dalla 3.7 anche canali di sola
+  ricezione (Duplex "off"), canali DMR (Mode "DMR") e scansione di tutte le radio.
   CHIRP adatta poi la potenza ai livelli della radio di destinazione.
 
 DIFFERENZE RISPETTO AL CONVERTITORE PRECEDENTE
@@ -706,15 +878,49 @@ Novità della 3.4 e della 3.5, stesse verifiche:
 - DM-5000: byte dei canali e delle zone calcolati dal codice del programma;
 - firmware delle famiglie (3.5): riconoscimento del modello dal nome del file,
   conferme richieste e radio della galleria collegate a ogni caricatore.
+Novità della 3.6, stesse verifiche:
+- RD-5R, DM-1801, DM-1701: dmrconfig (BSD) compilato con un collegamento TCP al posto di
+  USB/HID e DFU, verso le radio simulate: canali letti uguali a quelli di dmrconfig,
+  sette modifiche con memoria identica byte per byte, lettura e scrittura via USB
+  identiche;
+- GT-22 e GT-68: codice originale dei due programmi del costruttore con la radio
+  simulata: canali letti uguali e memoria identica;
+- impostazioni: K67 (ConvertSetting / SettingConvert del programma «5RH PRO»: 53 voci
+  lette uguali, 636 modifiche in 12 combinazioni con byte identici); BJ-8300 v1.0.8 e
+  v1.0.9 (codice originale di BT-11_CPS: voci lette uguali, 400 + 410 modifiche con file
+  identici byte per byte; lettura e scrittura del programma con la radio simulata
+  uguali a quelle di questo programma, anche per i file convertiti tra le due
+  versioni); BJ-9000 (codice originale di BJ-9000_CPS con la radio simulata: 57 voci
+  lette uguali, 456 modifiche con bit identici; canali scritti qui, letti e riscritti
+  dal programma: memoria identica); 63 famiglie CHIRP (valori letti uguali a quelli di
+  CHIRP e combinazioni casuali di modifiche applicate qui e da CHIRP: memoria
+  identica byte per byte).
+Novità della 3.7, stesse verifiche:
+- K67 «BF-K6»: lettura, scrittura con copia di sicurezza, scrittura dopo una lettura e
+  rifiuto verso un modello diverso, con l'API via cavo e la radio simulata che si
+  identifica come «BF-K6» (lo stesso caso segnalato con una radio vera; la correzione
+  non è ancora stata provata con la radio vera);
+- convertitore: 3 sorgenti (canali di prova con tutti i casi di tono, file K67 e
+  Bajeton) verso ognuno dei 109 formati: file rileggibili e canali tutti presi dalla
+  sorgente (327 conversioni); formati universali senza perdite; le immagini .img
+  create per le 63 radio di CHIRP si aprono con CHIRP con gli stessi canali (826);
+- CSV di CHIRP: scritto qui e letto dal codice di CHIRP (driver generic_csv) con gli
+  stessi canali, toni DCS compresi; CSV scritti da CHIRP dalle sue immagini di prova
+  (UV-5R, UV-9G, UV-17Pro, BJ-7800: 186 canali) letti qui uguali.
 Anche queste parti NON sono state provate con radio vere.
 
 LIMITI
 - I protocolli e i formati sono proprietari e ricostruiti dai programmi originali:
   conserva sempre le copie di sicurezza.
-- Le zone del K67, della DM-32UV e della DR-1801UV non si modificano da qui (vengono solo tenute
-  coerenti); per contatti, gruppi e impostazioni DMR usa il programma del costruttore.
-- Non si sa se il K67 Pro possa identificarsi come "BF-K6": i relativi controlli
-  sono riprodotti come nel programma originale.
+- Le zone del K67, della DM-32UV, della DR-1801UV e delle radio DMR USB non si
+  modificano da qui (vengono solo tenute coerenti); per contatti, gruppi e
+  impostazioni DMR usa il programma del costruttore.
+- Impostazioni: le descrizioni delle voci delle radio CHIRP sono scritte a partire dal
+  nome inglese della voce (molti driver usano nomi diversi per la stessa funzione):
+  il nome originale è sempre indicato in fondo alla descrizione.
+- Almeno alcuni K67 Pro si identificano come "BF-K6" (verificato con una radio vera,
+  3.7): la scrittura parte se l'ultima radio letta era dello stesso modello, come nel
+  programma originale (con la copia di sicurezza attiva la lettura avviene da sola).
 - Il download da Internet usa la connessione diretta (non il proxy di sistema).
 - Radio gestite con i driver di CHIRP: valgono i limiti di CHIRP per quel modello (es.
   BJ-7800 scritto per il firmware V0.15P; se la radio ha un firmware più recente e non

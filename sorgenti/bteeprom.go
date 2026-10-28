@@ -87,6 +87,8 @@ func (o *nobj) field(f string) int {
 	return i
 }
 
+func (o *nobj) has(f string) bool { _, ok := o.idx[f]; return ok }
+
 func (o *nobj) geti(f string) int {
 	v := o.r.Vals[o.field(f)]
 	if !v.Prim {
@@ -170,23 +172,19 @@ type btRadio struct {
 	codes    *Rec // string[]
 	mod      *nobj
 	modChans []*nobj
+	v109     bool // file della v1.0.9 (Channel[960], cbB_DivideCH)
 }
 
 func btOpen(d *Doc) *btRadio {
 	root := d.nobjOf(Val{R: &Rec{T: 9, Ref: 1}}, "KDH.RadioData")
 	br := &btRadio{d: d}
-	outer := root.arr("channelData")
-	if outer.T != 7 || len(outer.Els) != datZones {
-		btFail("struttura delle zone non supportata")
+	els, flat, err := datChannelVals(d, root.arr("channelData"))
+	if err != nil {
+		btFail("%v", err)
 	}
-	for _, ze := range outer.Els {
-		z := d.Resolve(ze)
-		if z == nil || z.T != 7 || len(z.Els) != datPerZone {
-			btFail("struttura dei canali non supportata")
-		}
-		for _, ce := range z.Els {
-			br.chans = append(br.chans, d.nobjOf(ce, "KDH.Channel"))
-		}
+	br.v109 = flat
+	for _, ce := range els {
+		br.chans = append(br.chans, d.nobjOf(ce, "KDH.Channel"))
 	}
 	fm := root.obj("freqModeData", "KDH.FreqModeData")
 	br.vfo[0] = fm.obj("vfoA", "KDH.VFOData")
@@ -623,7 +621,10 @@ type btPos struct {
 var btFun2 = []btPos{{"cbB_VoxDelay", 0, 16}, {"cbB_TimerMenuQuit", 1, 11}, {"cbB_RemoteKillEnable", 4, 2},
 	{"cbB_WeatherCH", 7, 10}, {"cbB_KeySide2", 10, 8}, {"cbB_KeySide2L", 11, 7}, {"cbB_KeySide3", 12, 7},
 	{"cbB_DenoiseSwitch", 17, 2}}
-var btFunReserved = []string{"cbB_FrOneByte31", "cbB_FrTwoByte2to3", "cbB_FrTwoByte5to6", "cbB_FrTwoByte8to9",
+
+// riservati: cbB_FrTwoByte8to9 fino alla v1.0.8; dalla v1.0.9 il byte 8 è
+// cbB_DivideCH (canali divisi in zone o tutti insieme) e resta cbB_FrTwoByte9
+var btFunReserved = []string{"cbB_FrOneByte31", "cbB_FrTwoByte2to3", "cbB_FrTwoByte5to6", "cbB_FrTwoByte8to9", "cbB_FrTwoByte9",
 	"cbB_FrTwoByte13", "cbB_FrTwoByte14to15", "cbB_FrTwoByte16", "cbB_FrTwoByte18to31"}
 
 func btEncFun(f *nobj) ([]byte, []byte) {
@@ -639,6 +640,9 @@ func btEncFun(f *nobj) ([]byte, []byte) {
 	for _, x := range btFun2 {
 		p2[x.pos] = byte(f.geti(x.f))
 	}
+	if f.has("cbB_DivideCH") {
+		p2[8] = byte(f.geti("cbB_DivideCH"))
+	}
 	return p1, p2
 }
 
@@ -653,8 +657,13 @@ func btDecFun(f *nobj, p1, p2 []byte) {
 	for _, x := range btFun2 {
 		f.seti(x.f, int(p2[x.pos]&15)%x.mod)
 	}
+	if f.has("cbB_DivideCH") {
+		f.seti("cbB_DivideCH", int(p2[8]&15)%2)
+	}
 	for _, n := range btFunReserved {
-		f.seti(n, 0)
+		if f.has(n) {
+			f.seti(n, 0)
+		}
 	}
 }
 
@@ -821,7 +830,11 @@ func (br *btRadio) decMod(b, n []byte) {
 	}
 	br.mod.seti("cbB_SSBCurChID", int(b[149])%15)
 	br.mod.seti("cbB_SSBStepFreq", int(b[150])%6)
-	br.mod.seti("cbB_AMStepFreq", int(b[151])%3)
+	if br.v109 {
+		br.mod.seti("cbB_AMStepFreq", int(b[151])%4) // v1.0.9: quattro passi
+	} else {
+		br.mod.seti("cbB_AMStepFreq", int(b[151])%3)
+	}
 	br.mod.seti("cbB_SSBRxGain", int(b[152])%37)
 	for i, c := range mc {
 		for k, f := range []string{"fmName", "amName", "ssbName"} {

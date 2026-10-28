@@ -1,12 +1,14 @@
 # IU0VYT Flash
 
-**Versione 3.5** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
+**Versione 3.7** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
 
 Programma per radioamatori e utenti di ricetrasmettitori **Baofeng** e **Bajeton**: legge e scrive canali e frequenze via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.
 
 ## Funzioni
 
-- **Canali e frequenze** di 230 modelli Baofeng e Bajeton (comprese radio PMR digitali e DMR): lettura e scrittura via cavo, file `.img` compatibili con CHIRP, file originali del Baofeng K67 Pro (`.xlc`) e della Bajeton 8300 (`.dat`).
+- **Canali e frequenze** di 235 modelli Baofeng e Bajeton (comprese radio PMR digitali e DMR, anche via USB): lettura e scrittura via cavo, file `.img` compatibili con CHIRP, file originali del Baofeng K67 Pro (`.xlc`) e della Bajeton 8300 (`.dat`).
+- **Impostazioni delle radio** (menu, display, VOX, squelch, TOT, DTMF, tasti…) per 190 modelli, con la descrizione di ogni voce e un avviso da confermare per quelle delicate.
+- **Convertitore universale**: i canali di qualsiasi radio o file (K67 `.xlc`, Bajeton `.dat`, immagini `.img` anche di CHIRP, CSV di CHIRP, Excel/CSV) nel formato di qualsiasi altra radio, adattati alle sue regole.
 - **Galleria di 271 modelli**, divisi tra compatibili e non compatibili, per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca, filtri e collegamenti ai programmi e ai manuali ufficiali.
 - **Archivio dei ponti radio** basato sull'elenco aggiornato di [IK2ANE](https://www.ik2ane.it), con filtri e inserimento nelle radio, con il controllo della compatibilità tra ponti e radio prima della scrittura.
 - **Aggiornamento del firmware** di 28 modelli, con controllo del file e copia di sicurezza della radio.
