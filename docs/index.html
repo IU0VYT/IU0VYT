@@ -67,7 +67,7 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 @keyframes flicker { 0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; } 20%, 24%, 55% { opacity: .35; } }
 .tag { margin: 18px 0 10px; font-size: 13px; letter-spacing: .32em; color: var(--yellow); font-weight: 700;
   text-shadow: 0 0 8px rgba(255,210,63,.75), 0 0 18px rgba(255,138,61,.55); }
-.lead { max-width: 640px; margin: 0 auto 30px; color: var(--ink2); font-size: 17px; }
+.lead { max-width: 860px; margin: 0 auto 30px; color: var(--ink2); font-size: 17px; }
 .start { display: inline-block; font: 700 20px/1 var(--mono); letter-spacing: .25em; color: #fff; text-decoration: none;
   border: 2px solid var(--cyan); border-radius: 6px; padding: 14px 28px;
   box-shadow: 0 0 10px var(--cyan), inset 0 0 10px rgba(0,229,255,.5); text-shadow: 0 0 8px var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
@@ -173,7 +173,7 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
       <span class="neon-bottom" aria-hidden="true">FLASH</span>
     </h1>
     <div class="tag">CANALI · PONTI · FIRMWARE — BAOFENG &amp; BAJETON</div>
-    <p class="lead">Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, inserisce i ponti radio italiani e aggiorna il firmware. Un solo file, nessuna installazione, tutto in italiano.</p>
+    <p class="lead">Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo,<br>inserisce i ponti radio italiani e aggiorna il firmware.<br>Un solo file, nessuna installazione, tutto in italiano.</p>
     <a class="start" href="#scarica">▶ PRESS START</a>
     <div class="hero-ver">ULTIMA VERSIONE: <b class="js-ver">—</b></div>
   </div>
@@ -337,7 +337,8 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
       if (sha) { document.getElementById('dl-sha').textContent = sha; document.getElementById('dl-hash').hidden = false; }
       if (rel.body) {
         var txt = rel.body.replace(/\r/g, '').replace(/^\s*sha256:.*$/gim, '').replace(/\*\*Full Changelog\*\*.*$/gim, '')
-          .replace(/^Full Changelog:.*$/gim, '').replace(/\n{3,}/g, '\n\n').trim();
+          .replace(/^Full Changelog:.*$/gim, '').replace(/^\s*[-*] .*$/gm, '') // elenchi puntati non mostrati
+          .replace(/\n{3,}/g, '\n\n').trim();
         document.getElementById('dl-body').textContent = txt; // testo semplice, nessun HTML
       }
     })
