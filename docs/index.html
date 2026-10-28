@@ -212,19 +212,19 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
     <h2 id="h-funzioni">Che cosa fa</h2>
     <p class="sub">Uno strumento unico per programmare, convertire e aggiornare le radio Baofeng e Bajeton, pensato per radioamatori e per chi usa le radio PMR446.</p>
     <div class="stats">
-      <div class="stat"><b>235</b><span>Radio programmabili</span></div>
-      <div class="stat"><b>190</b><span>Con impostazioni</span></div>
-      <div class="stat"><b>273</b><span>Modelli in galleria</span></div>
-      <div class="stat"><b>28</b><span>Firmware aggiornabili</span></div>
+      <div class="stat"><b data-n="radio">235</b><span>Radio programmabili</span></div>
+      <div class="stat"><b data-n="impostazioni">190</b><span>Con impostazioni</span></div>
+      <div class="stat"><b data-n="galleria">273</b><span>Modelli in galleria</span></div>
+      <div class="stat"><b data-n="firmware">28</b><span>Firmware aggiornabili</span></div>
     </div>
     <div class="cards">
-      <article class="card"><span class="ico" aria-hidden="true">📻</span><h3>Canali e frequenze</h3><p>Lettura e scrittura via cavo di 235 modelli, comprese radio PMR digitali e DMR anche via USB. File <code>.img</code> compatibili con CHIRP e i file originali del K67 Pro (<code>.xlc</code>) e della Bajeton 8300 (<code>.dat</code>).</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">⚙️</span><h3>Impostazioni della radio</h3><p>Menu, display, VOX, squelch, TOT, DTMF, tasti e altro per 190 modelli, con la spiegazione di ogni voce e una conferma per quelle delicate.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">📻</span><h3>Canali e frequenze</h3><p>Lettura e scrittura via cavo di <span data-n="radio">235</span> modelli, comprese radio PMR digitali e DMR anche via USB. File <code>.img</code> compatibili con CHIRP e i file originali del K67 Pro (<code>.xlc</code>) e della Bajeton 8300 (<code>.dat</code>).</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">⚙️</span><h3>Impostazioni della radio</h3><p>Menu, display, VOX, squelch, TOT, DTMF, tasti e altro per <span data-n="impostazioni">190</span> modelli, con la spiegazione di ogni voce e una conferma per quelle delicate.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🔎</span><h3>Identifica la radio</h3><p>Collega la radio: il programma la riconosce da solo e mostra marca, modello, firmware e, per le DMR, ID e nome. Senza scrivere nulla nella radio.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🔁</span><h3>Convertitore universale</h3><p>I canali di qualsiasi radio o file (K67, Bajeton, immagini CHIRP, CSV di CHIRP, Excel) nel formato di qualsiasi altra radio, adattati alle sue regole.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">📡</span><h3>Ponti radio italiani</h3><p>Archivio basato sull'elenco aggiornato di IK2ANE, con filtri, nomi automatici, controllo della compatibilità e inserimento diretto nelle radio.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">⬆️</span><h3>Aggiornamento firmware</h3><p>Firmware di 28 modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza; procedura guidata per BTECH DMR-6X2.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🖼️</span><h3>Galleria dei modelli</h3><p>273 radio divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">⬆️</span><h3>Aggiornamento firmware</h3><p>Firmware di <span data-n="firmware">28</span> modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza; procedura guidata per BTECH DMR-6X2.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🖼️</span><h3>Galleria dei modelli</h3><p><span data-n="galleria">273</span> radio divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🛡️</span><h3>Copia di sicurezza</h3><p>Prima di ogni scrittura il programma salva il contenuto della radio e dopo verifica che i dati siano stati scritti correttamente.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🔄</span><h3>Sempre aggiornato</h3><p>A ogni avvio il programma controlla se c'è una versione più recente e la scarica da questa stessa pagina dei rilasci.</p></article>
     </div>
@@ -302,6 +302,22 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
       return r;
     });
   }
+  // conteggi dei modelli (righe radio=, impostazioni=, galleria=, firmware= di
+  // versione.txt, scritte a ogni compilazione dal catalogo del programma); se il
+  // file non si legge restano i numeri già scritti nella pagina
+  var fileVer = withTimeout('https://raw.githubusercontent.com/' + REPO + '/main/versione.txt', 8000)
+    .then(function (r) { return r.text(); })
+    .then(function (t) {
+      var kv = {}, re = /^\s*([A-Za-z]+)\s*=\s*(.+?)\s*$/gm, m;
+      while ((m = re.exec(t))) kv[m[1].toLowerCase()] = m[2];
+      var els = document.querySelectorAll('[data-n]');
+      for (var i = 0; i < els.length; i++) {
+        var v = kv[els[i].getAttribute('data-n')];
+        if (v && /^\d+$/.test(v)) els[i].textContent = v;
+      }
+      return kv.versione || '';
+    });
+  fileVer.catch(function () {});
   // 1) dati completi dall'API di GitHub (versione, data, dimensione, SHA-256, note)
   withTimeout('https://api.github.com/repos/' + REPO + '/releases/latest', 8000)
     .then(function (r) { return r.json(); })
@@ -325,10 +341,7 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
     })
     .catch(function () {
       // 2) in alternativa il numero di versione dal file versione.txt del repository
-      withTimeout('https://raw.githubusercontent.com/' + REPO + '/main/versione.txt', 8000)
-        .then(function (r) { return r.text(); })
-        .then(function (t) { var m = t.match(/versione\s*=\s*([^\s]+)/); setVer(m ? m[1] : 'ultima disponibile'); })
-        .catch(function () { setVer('ultima disponibile'); });
+      fileVer.then(function (v) { setVer(v || 'ultima disponibile'); }, function () { setVer('ultima disponibile'); });
     });
 })();
 </script>
