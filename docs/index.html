@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IU0VYT Flash — canali, ponti e firmware per radio Baofeng e Bajeton</title>
+<meta name="description" content="IU0VYT Flash: programma gratuito e libero (GPL) per Windows che legge e scrive canali e frequenze delle radio Baofeng e Bajeton, gestisce i ponti radio italiani e aggiorna il firmware.">
+<meta name="theme-color" content="#07021a">
+<meta property="og:title" content="IU0VYT Flash">
+<meta property="og:description" content="Canali, ponti e firmware per radio Baofeng e Bajeton. Gratuito, software libero, per Windows 10/11.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="icona.png">
+<style>
+:root {
+  --bg: #07021a; --ink: #e9e4ff; --ink2: #cfc6ee; --muted: #9f95c7;
+  --pink: #ff2ec8; --pink2: #ff4fd8; --cyan: #00e5ff; --yellow: #ffd23f; --orange: #ff8a3d;
+  --panel: rgba(20,8,48,.72);
+  --mono: "Consolas", "Cascadia Mono", "SFMono-Regular", Menlo, "Courier New", monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.55 "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; overflow-x: hidden; }
+a { color: var(--cyan); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+/* ---------- linee del monitor CRT su tutta la pagina */
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.035) 0 1px, transparent 1px 3px); }
+
+/* ---------- barra in alto */
+.top { position: sticky; top: 0; z-index: 20; background: rgba(7,2,26,.82); backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,79,216,.25); }
+.top .wrap { display: flex; align-items: center; gap: 12px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 800; letter-spacing: .04em; }
+.brand img { width: 30px; height: 30px; border-radius: 7px; }
+.nav { margin-left: auto; display: flex; gap: 18px; }
+.nav a { color: var(--ink2); text-decoration: none; font: 700 13px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.nav a:hover { color: var(--cyan); text-shadow: 0 0 8px var(--cyan); }
+@media (max-width: 720px) { .nav { display: none; } }
+
+/* ---------- schermata iniziale (come la Home del programma) */
+.hero { position: relative; overflow: hidden; text-align: center; padding: 64px 0 120px;
+  background: radial-gradient(ellipse at 50% 35%, #2a0b52 0%, #12052e 45%, #07021a 80%); }
+.sky { position: absolute; inset: 0; pointer-events: none; }
+.sun { position: absolute; left: 50%; top: 12%; width: min(380px, 80vw); aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%;
+  background: linear-gradient(#ffd23f 0%, #ff8a3d 35%, #ff2e88 70%, #b0179b 100%); opacity: .24; filter: blur(1px);
+  -webkit-mask: repeating-linear-gradient(to bottom, #000 0 18px, transparent 18px 24px); mask: repeating-linear-gradient(to bottom, #000 0 18px, transparent 18px 24px); }
+.grid { position: absolute; left: -50%; right: -50%; bottom: -10%; height: 46%; transform: perspective(380px) rotateX(62deg); transform-origin: 50% 0;
+  background-image: linear-gradient(rgba(255,46,200,.55) 2px, transparent 2px), linear-gradient(90deg, rgba(0,229,255,.45) 2px, transparent 2px);
+  background-size: 64px 48px; animation: grid 3.2s linear infinite; opacity: .55;
+  -webkit-mask: linear-gradient(to bottom, transparent, #000 35%); mask: linear-gradient(to bottom, transparent, #000 35%); }
+@keyframes grid { from { background-position: 0 0; } to { background-position: 0 48px; } }
+.hero-inner { position: relative; z-index: 1; }
+
+.neon { margin: 0 0 6px; line-height: .95; font-family: "Arial Black", "Segoe UI Black", Impact, system-ui, sans-serif; font-weight: 900;
+  letter-spacing: .06em; user-select: none; }
+.neon span { display: block; }
+.neon-top { font-size: clamp(50px, 12vw, 124px); font-style: italic; color: #fff3fb;
+  text-shadow: 0 0 4px #fff, 0 0 10px #ff4fd8, 0 0 22px #ff2ec8, 0 0 44px #ff2ec8, 0 0 80px #b40fd1, 0 0 120px #7a0bd1; }
+.neon-top i { display: inline-block; font-style: inherit; animation: flicker 6s infinite; animation-delay: calc(var(--i) * .37s); }
+.neon-bottom { margin-top: 6px; font-size: clamp(44px, 10vw, 106px); font-style: italic; transform: skewX(-8deg);
+  background: linear-gradient(to bottom, #e9ffff 0%, #7df3ff 38%, #1a8cff 52%, #ffffff 54%, #b6f7ff 75%, #3dc8ff 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 6px rgba(0,229,255,.85)) drop-shadow(0 0 18px rgba(0,170,255,.7)) drop-shadow(0 4px 0 #3b0a6b); }
+@keyframes flicker { 0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; } 20%, 24%, 55% { opacity: .35; } }
+.tag { margin: 18px 0 10px; font-size: 13px; letter-spacing: .32em; color: var(--yellow); font-weight: 700;
+  text-shadow: 0 0 8px rgba(255,210,63,.75), 0 0 18px rgba(255,138,61,.55); }
+.lead { max-width: 640px; margin: 0 auto 30px; color: var(--ink2); font-size: 17px; }
+.start { display: inline-block; font: 700 20px/1 var(--mono); letter-spacing: .25em; color: #fff; text-decoration: none;
+  border: 2px solid var(--cyan); border-radius: 6px; padding: 14px 28px;
+  box-shadow: 0 0 10px var(--cyan), inset 0 0 10px rgba(0,229,255,.5); text-shadow: 0 0 8px var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
+.start:hover, .start:focus-visible { background: rgba(0,229,255,.15); animation: none; }
+@keyframes blink { to { visibility: hidden; } }
+.hero-ver { margin-top: 18px; font: 13px var(--mono); color: var(--muted); letter-spacing: .08em; }
+.hero-ver b { color: #fff; }
+
+/* ---------- sezioni */
+section { padding: 72px 0; position: relative; }
+.alt { background: linear-gradient(#0b0326, #07021a); border-top: 1px solid rgba(255,79,216,.18); border-bottom: 1px solid rgba(255,79,216,.18); }
+h2 { margin: 0 0 8px; text-align: center; font: 900 clamp(26px, 5vw, 38px)/1.1 "Arial Black", "Segoe UI Black", Impact, sans-serif;
+  font-style: italic; letter-spacing: .04em; color: #fff3fb; text-shadow: 0 0 8px #ff4fd8, 0 0 24px #ff2ec8; }
+.kicker { text-align: center; font: 700 12px var(--mono); letter-spacing: .3em; color: var(--yellow); margin-bottom: 6px; }
+.sub { text-align: center; color: var(--ink2); max-width: 660px; margin: 0 auto 36px; }
+
+/* ---------- download "player 1" */
+.dl { max-width: 760px; margin: 0 auto; background: var(--panel); border: 2px solid var(--cyan); border-radius: 14px;
+  box-shadow: 0 0 26px rgba(0,229,255,.28), inset 0 0 26px rgba(0,229,255,.08); padding: 28px; text-align: center; }
+.dl-ver { font: 900 clamp(40px, 9vw, 64px)/1 "Arial Black", Impact, sans-serif; font-style: italic; color: #fff;
+  text-shadow: 0 0 10px var(--cyan), 0 0 26px rgba(0,170,255,.8); margin: 4px 0 6px; }
+.dl-meta { font: 13px var(--mono); color: var(--ink2); margin-bottom: 22px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 800 18px/1 var(--mono); letter-spacing: .12em; text-decoration: none;
+  color: #1a0630; background: linear-gradient(#ffe36b, #ffd23f 50%, #ff9f3d); border-radius: 8px; padding: 16px 26px;
+  box-shadow: 0 0 18px rgba(255,210,63,.55), 0 4px 0 #a3471a; transition: transform .1s, box-shadow .1s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,210,63,.8), 0 6px 0 #a3471a; }
+.btn:active { transform: translateY(2px); box-shadow: 0 0 12px rgba(255,210,63,.5), 0 1px 0 #a3471a; }
+.links { margin-top: 18px; display: flex; gap: 8px 18px; justify-content: center; flex-wrap: wrap; font-size: 14px; }
+.hash { margin: 22px auto 0; text-align: left; background: rgba(0,0,0,.35); border: 1px dashed rgba(0,229,255,.35); border-radius: 8px;
+  padding: 12px 14px; font: 12.5px/1.5 var(--mono); color: var(--ink2); overflow-wrap: anywhere; }
+.hash b { color: var(--yellow); }
+.req { margin-top: 16px; font-size: 13.5px; color: var(--muted); }
+.notes { margin-top: 20px; text-align: left; font-size: 14px; color: var(--ink2); white-space: pre-line; }
+.notes:empty { display: none; }
+
+/* ---------- contatori */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0 auto 40px; max-width: 860px; }
+.stat { text-align: center; padding: 16px 8px; border: 1px solid rgba(255,210,63,.35); border-radius: 10px; background: rgba(20,8,48,.5); }
+.stat b { display: block; font: 900 clamp(28px, 6vw, 42px)/1 var(--mono); color: var(--yellow); text-shadow: 0 0 10px rgba(255,210,63,.7); }
+.stat span { display: block; margin-top: 6px; font: 700 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink2); }
+@media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- schede delle funzioni */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 900px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border: 1px solid rgba(255,79,216,.45); border-radius: 12px; padding: 18px;
+  box-shadow: 0 0 14px rgba(255,46,200,.16); transition: transform .12s, box-shadow .12s, border-color .12s; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 0 24px rgba(0,229,255,.4); border-color: var(--cyan); }
+.card h3 { margin: 0 0 6px; font-size: 17px; color: #fff; }
+.card p { margin: 0; font-size: 14.5px; color: var(--ink2); }
+.ico { font-size: 26px; display: block; margin-bottom: 8px; filter: drop-shadow(0 0 6px rgba(255,79,216,.6)); }
+
+/* ---------- livelli (come si usa) */
+.levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; counter-reset: lv; }
+.level { position: relative; padding: 22px 18px 18px; border: 2px solid rgba(0,229,255,.5); border-radius: 12px; background: rgba(0,20,40,.35); }
+.level::before { counter-increment: lv; content: "LEVEL " counter(lv); display: inline-block; font: 800 12px var(--mono); letter-spacing: .2em;
+  color: #07021a; background: var(--cyan); padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; box-shadow: 0 0 12px var(--cyan); }
+.level h3 { margin: 0 0 6px; color: #fff; font-size: 17px; }
+.level p { margin: 0; color: var(--ink2); font-size: 14.5px; }
+@media (max-width: 760px) { .levels { grid-template-columns: 1fr; } }
+code, kbd { font-family: var(--mono); background: rgba(255,255,255,.08); border-radius: 4px; padding: 1px 5px; font-size: .92em; }
+
+/* ---------- avvertenze e ringraziamenti */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+.box { border: 1px solid rgba(255,210,63,.4); border-radius: 12px; padding: 18px 20px; background: rgba(40,20,0,.18); }
+.box h3 { margin: 0 0 8px; color: var(--yellow); font: 800 14px var(--mono); letter-spacing: .18em; text-transform: uppercase; }
+.box ul { margin: 0; padding-left: 18px; color: var(--ink2); font-size: 14.5px; }
+.box li + li { margin-top: 6px; }
+
+/* ---------- piè di pagina */
+footer { padding: 36px 0 48px; text-align: center; font-size: 13.5px; color: var(--muted); border-top: 1px solid rgba(255,79,216,.25); }
+footer .copy { color: var(--ink); font-size: 14.5px; margin-bottom: 6px; }
+footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pink2); text-shadow: 0 0 8px var(--pink); margin-top: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .grid, .neon-top i, .start { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="icona.png" alt="" width="30" height="30">IU0VYT Flash</a>
+    <nav class="nav" aria-label="Sezioni">
+      <a href="#scarica">Scarica</a>
+      <a href="#funzioni">Funzioni</a>
+      <a href="#come">Come si usa</a>
+      <a href="#info">Info</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="titolo">
+  <div class="sky" aria-hidden="true"><div class="sun"></div><div class="grid"></div></div>
+  <div class="wrap hero-inner">
+    <h1 class="neon" id="titolo" aria-label="IU0VYT Flash">
+      <span class="neon-top" aria-hidden="true"><i style="--i:0">I</i><i style="--i:1">U</i><i style="--i:2">Ø</i><i style="--i:3">V</i><i style="--i:4">Y</i><i style="--i:5">T</i></span>
+      <span class="neon-bottom" aria-hidden="true">FLASH</span>
+    </h1>
+    <div class="tag">CANALI · PONTI · FIRMWARE — BAOFENG &amp; BAJETON</div>
+    <p class="lead">Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, inserisce i ponti radio italiani e aggiorna il firmware. Un solo file, nessuna installazione, tutto in italiano.</p>
+    <a class="start" href="#scarica">▶ PRESS START</a>
+    <div class="hero-ver">ULTIMA VERSIONE: <b class="js-ver">—</b></div>
+  </div>
+</section>
+
+<section id="scarica" class="alt" aria-labelledby="h-scarica">
+  <div class="wrap">
+    <div class="kicker">PLAYER 1 · READY</div>
+    <h2 id="h-scarica">Scarica</h2>
+    <p class="sub">Il pulsante scarica sempre il pacchetto dell'ultima versione pubblicata.</p>
+    <div class="dl">
+      <div class="kicker">ULTIMA VERSIONE</div>
+      <div class="dl-ver js-ver">—</div>
+      <div class="dl-meta" id="dl-meta">Windows 10 / 11 · 64 bit</div>
+      <a class="btn" id="dl-btn" href="https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip">⬇ SCARICA IU0VYT.Flash.zip</a>
+      <div class="links">
+        <a id="dl-notes" href="https://github.com/IU0VYT/IU0VYT/releases/latest">Note della versione</a>
+        <a href="https://github.com/IU0VYT/IU0VYT/blob/main/changelog.txt">Registro delle modifiche</a>
+        <a href="https://github.com/IU0VYT/IU0VYT/releases">Versioni precedenti</a>
+        <a href="https://github.com/IU0VYT/IU0VYT">Codice sorgente</a>
+      </div>
+      <div class="notes" id="dl-body"></div>
+      <div class="hash" id="dl-hash" hidden>
+        <b>SHA-256</b> <span id="dl-sha"></span><br>
+        Per controllare che il file sia integro, in Windows apri il Prompt dei comandi nella cartella del file e scrivi
+        <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code>: il risultato deve essere identico.
+      </div>
+      <div class="req">Estrai l'archivio e avvia <code>IU0VYT Flash.exe</code>. Usa il componente WebView2, già presente in Windows 10 aggiornato e in Windows 11.</div>
+    </div>
+  </div>
+</section>
+
+<section id="funzioni" aria-labelledby="h-funzioni">
+  <div class="wrap">
+    <div class="kicker">SELECT YOUR POWER-UP</div>
+    <h2 id="h-funzioni">Che cosa fa</h2>
+    <p class="sub">Uno strumento unico per programmare, convertire e aggiornare le radio Baofeng e Bajeton, pensato per radioamatori e per chi usa le radio PMR446.</p>
+    <div class="stats">
+      <div class="stat"><b>235</b><span>Radio programmabili</span></div>
+      <div class="stat"><b>190</b><span>Con impostazioni</span></div>
+      <div class="stat"><b>273</b><span>Modelli in galleria</span></div>
+      <div class="stat"><b>28</b><span>Firmware aggiornabili</span></div>
+    </div>
+    <div class="cards">
+      <article class="card"><span class="ico" aria-hidden="true">📻</span><h3>Canali e frequenze</h3><p>Lettura e scrittura via cavo di 235 modelli, comprese radio PMR digitali e DMR anche via USB. File <code>.img</code> compatibili con CHIRP e i file originali del K67 Pro (<code>.xlc</code>) e della Bajeton 8300 (<code>.dat</code>).</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">⚙️</span><h3>Impostazioni della radio</h3><p>Menu, display, VOX, squelch, TOT, DTMF, tasti e altro per 190 modelli, con la spiegazione di ogni voce e una conferma per quelle delicate.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🔎</span><h3>Identifica la radio</h3><p>Collega la radio: il programma la riconosce da solo e mostra marca, modello, firmware e, per le DMR, ID e nome. Senza scrivere nulla nella radio.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🔁</span><h3>Convertitore universale</h3><p>I canali di qualsiasi radio o file (K67, Bajeton, immagini CHIRP, CSV di CHIRP, Excel) nel formato di qualsiasi altra radio, adattati alle sue regole.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">📡</span><h3>Ponti radio italiani</h3><p>Archivio basato sull'elenco aggiornato di IK2ANE, con filtri, nomi automatici, controllo della compatibilità e inserimento diretto nelle radio.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">⬆️</span><h3>Aggiornamento firmware</h3><p>Firmware di 28 modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza; procedura guidata per BTECH DMR-6X2.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🖼️</span><h3>Galleria dei modelli</h3><p>273 radio divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🛡️</span><h3>Copia di sicurezza</h3><p>Prima di ogni scrittura il programma salva il contenuto della radio e dopo verifica che i dati siano stati scritti correttamente.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🔄</span><h3>Sempre aggiornato</h3><p>A ogni avvio il programma controlla se c'è una versione più recente e la scarica da questa stessa pagina dei rilasci.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="come" class="alt" aria-labelledby="h-come">
+  <div class="wrap">
+    <div class="kicker">HOW TO PLAY</div>
+    <h2 id="h-come">Come si usa</h2>
+    <p class="sub">Servono un PC con Windows 10 o 11 e il cavo di programmazione della radio.</p>
+    <div class="levels">
+      <div class="level"><h3>Scarica ed estrai</h3><p>Scarica <code>IU0VYT.Flash.zip</code> da questa pagina ed estrai l'archivio in una cartella. Non c'è nulla da installare.</p></div>
+      <div class="level"><h3>Avvia e scegli la radio</h3><p>Apri <code>IU0VYT Flash.exe</code> e, dalla scheda <b>📻 Modelli</b>, scegli la tua radio oppure usa <b>🔎 Identifica</b>.</p></div>
+      <div class="level"><h3>Collega e programma</h3><p>Collega il cavo, premi <b>Leggi dalla radio</b>, modifica canali e ponti e scrivi tutto nella radio.</p></div>
+    </div>
+    <p class="sub" style="margin:26px auto 0">La guida completa è nel file <code>LEGGIMI.txt</code> incluso nel pacchetto.</p>
+  </div>
+</section>
+
+<section id="info" aria-labelledby="h-info">
+  <div class="wrap">
+    <div class="kicker">READ ME FIRST</div>
+    <h2 id="h-info">Da sapere</h2>
+    <p class="sub">Software libero: puoi usarlo, studiarlo, modificarlo e ridistribuirlo secondo la licenza GNU GPL versione 3 o successiva.</p>
+    <div class="two">
+      <div class="box">
+        <h3>⚠ Avvertenze</h3>
+        <ul>
+          <li>I protocolli delle radio sono stati ricostruiti per l'interoperabilità e verificati con radio simulate: <b>conserva sempre le copie di sicurezza</b>.</li>
+          <li>Il programma è fornito <b>senza alcuna garanzia</b>.</li>
+          <li>Programma indipendente, non affiliato né approvato da Baofeng o Bajeton. I marchi citati appartengono ai rispettivi titolari e indicano solo le radio compatibili.</li>
+          <li>Rispetta le norme sull'uso delle frequenze del tuo Paese.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>★ Ringraziamenti</h3>
+        <ul>
+          <li><a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> e i suoi autori: gran parte dei driver delle radio deriva dal loro lavoro.</li>
+          <li><a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>, che mette a disposizione di tutti, gratuitamente, l'elenco dei ponti radio italiani.</li>
+          <li>Autori e licenze di tutti i componenti nel file <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTORI_E_LICENZE.txt</a>.</li>
+          <li>Hai trovato un errore o vuoi proporre una miglioria? Apri una <a href="https://github.com/IU0VYT/IU0VYT/issues">segnalazione su GitHub</a>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="copy">Copyright © 2026 Daniele "IU0VYT" Bonifazi · <a href="https://www.qrz.com/db/IU0VYT" rel="noopener">qrz.com/db/IU0VYT</a></div>
+    <div>Distribuito con licenza <a href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 o successiva</a> · <a href="https://github.com/IU0VYT/IU0VYT">Sorgenti su GitHub</a></div>
+    <div class="over">73 DE IU0VYT · THANKS FOR PLAYING</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var REPO = 'IU0VYT/IU0VYT';
+  var ASSET = 'IU0VYT.Flash.zip';
+  function setVer(v) {
+    var els = document.querySelectorAll('.js-ver');
+    for (var i = 0; i < els.length; i++) els[i].textContent = v;
+  }
+  function cleanVer(tag) { return String(tag || '').replace(/^[vV]\.?\s*/, ''); }
+  function mb(bytes) { return (bytes / 1048576).toLocaleString('it-IT', { maximumFractionDigits: 2 }) + ' MB'; }
+  function withTimeout(url, ms) {
+    var ctl = ('AbortController' in window) ? new AbortController() : null;
+    var t = ctl ? setTimeout(function () { ctl.abort(); }, ms) : null;
+    return fetch(url, ctl ? { signal: ctl.signal } : {}).then(function (r) {
+      if (t) clearTimeout(t);
+      if (!r.ok) throw new Error(r.status);
+      return r;
+    });
+  }
+  // 1) dati completi dall'API di GitHub (versione, data, dimensione, SHA-256, note)
+  withTimeout('https://api.github.com/repos/' + REPO + '/releases/latest', 8000)
+    .then(function (r) { return r.json(); })
+    .then(function (rel) {
+      setVer(cleanVer(rel.tag_name) || rel.name || '—');
+      var meta = [];
+      if (rel.published_at) meta.push('pubblicata il ' + new Date(rel.published_at).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }));
+      var a = (rel.assets || []).filter(function (x) { return x.name === ASSET; })[0];
+      if (a && a.size) meta.push(mb(a.size));
+      meta.push('Windows 10 / 11 · 64 bit');
+      document.getElementById('dl-meta').textContent = meta.join(' · ');
+      if (rel.html_url) document.getElementById('dl-notes').href = rel.html_url;
+      var sha = (a && a.digest && /^sha256:/.test(a.digest)) ? a.digest.slice(7) : '';
+      if (!sha && rel.body) { var m = rel.body.match(/\b[a-f0-9]{64}\b/i); if (m) sha = m[0].toLowerCase(); }
+      if (sha) { document.getElementById('dl-sha').textContent = sha; document.getElementById('dl-hash').hidden = false; }
+      if (rel.body) {
+        var txt = rel.body.replace(/\r/g, '').replace(/^\s*sha256:.*$/gim, '').replace(/\*\*Full Changelog\*\*.*$/gim, '')
+          .replace(/^Full Changelog:.*$/gim, '').replace(/\n{3,}/g, '\n\n').trim();
+        document.getElementById('dl-body').textContent = txt; // testo semplice, nessun HTML
+      }
+    })
+    .catch(function () {
+      // 2) in alternativa il numero di versione dal file versione.txt del repository
+      withTimeout('https://raw.githubusercontent.com/' + REPO + '/main/versione.txt', 8000)
+        .then(function (r) { return r.text(); })
+        .then(function (t) { var m = t.match(/versione\s*=\s*([^\s]+)/); setVer(m ? m[1] : 'ultima disponibile'); })
+        .catch(function () { setVer('ultima disponibile'); });
+    });
+})();
+</script>
+</body>
+</html>
