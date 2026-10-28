@@ -12,6 +12,8 @@ package main
 import (
 	"archive/zip"
 	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"math/rand"
@@ -233,5 +235,96 @@ func TestUpdateAPI(t *testing.T) {
 	}
 	if _, code := call("open", map[string]string{"file": out}); code != 200 {
 		t.Fatal("file salvato rifiutato")
+	}
+}
+
+// 3.9: indirizzo dell'autore mai in chiaro (né nell'interfaccia né nelle
+// costanti del programma); scrittura con il programma di posta, copia negli
+// appunti, immagine; indirizzo degli aggiornamenti «latest»; cartella dei dati
+// dell'utente che usa il programma.
+func TestContactAndDataDir(t *testing.T) {
+	// l'indirizzo non è scritto neppure qui: se ne confronta l'impronta SHA-256
+	want := authorEmail()
+	if h := sha256.Sum256([]byte(want)); hex.EncodeToString(h[:]) != "d523bb2624c69a508f02042f68a02109f5900dd12ada55cc8f9da3dc23e1b50a" ||
+		strings.Count(want, "@") != 1 {
+		t.Fatal("indirizzo decifrato errato")
+	}
+	src, _ := os.ReadFile("info.go")
+	for _, l := range strings.Split(string(src), "\n") {
+		if strings.Contains(l, want) && !strings.HasPrefix(strings.TrimSpace(l), "//") {
+			t.Fatalf("indirizzo in chiaro nel codice: %s", l)
+		}
+	}
+	if defaultUpdateURL != "https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip" {
+		t.Fatalf("indirizzo degli aggiornamenti %s", defaultUpdateURL)
+	}
+	c := newAPIClient(t)
+	info := c.must("info", nil)
+	b, _ := json.Marshal(info)
+	if bytes.Contains(b, []byte(want)) || bytes.Contains(b, []byte("@")) {
+		t.Fatalf("indirizzo esposto nella scheda Info: %s", b)
+	}
+	// nessun file del pacchetto lo contiene (sorgenti, interfaccia, documenti, verifiche)
+	_ = filepath.WalkDir("..", func(p string, d os.DirEntry, err error) error {
+		if err != nil || d.IsDir() && (d.Name() == "vendor" || d.Name() == "bin" || d.Name() == "obj") {
+			if d != nil && d.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if !d.IsDir() {
+			if b, _ := os.ReadFile(p); bytes.Contains(b, []byte(want)) {
+				t.Errorf("indirizzo in chiaro in %s", p)
+			}
+		}
+		return nil
+	})
+	ui, _ := os.ReadFile("ui/info.js")
+	for _, l := range strings.Split(string(ui), "\n") {
+		if strings.Contains(l, "@") && !strings.HasPrefix(strings.TrimSpace(l), "//") && !strings.Contains(l, "'@'") {
+			t.Fatalf("riga della scheda Info con un indirizzo: %s", l)
+		}
+	}
+	// programma di posta
+	var opened []string
+	oldOpen, oldCopy := openExternal, copyText
+	defer func() { openExternal, copyText = oldOpen, oldCopy }()
+	openExternal = func(target string, sel bool) bool { opened = append(opened, target); return true }
+	if r := c.must("contact", map[string]string{"action": "mail"}); r["opened"] != true || len(opened) != 1 ||
+		!strings.HasPrefix(opened[0], "mailto:"+want+"?subject=IU0VYT%20Flash%20") {
+		t.Fatalf("mailto: %v %v", r, opened)
+	}
+	openExternal = func(string, bool) bool { return false }
+	if r := c.must("contact", map[string]string{"action": "mail"}); r["opened"] != false {
+		t.Fatalf("senza programma di posta: %v", r)
+	}
+	var copied string
+	copyText = func(s string) bool { copied = s; return true }
+	if r := c.must("contact", map[string]string{"action": "copy"}); r["copied"] != true || copied != want {
+		t.Fatalf("appunti: %v %q", r, copied)
+	}
+	if r := c.must("contact", map[string]string{"action": "show"}); r["user"].(string)+"@"+r["domain"].(string) != want || strings.Contains(r["user"].(string), "@") {
+		t.Fatalf("immagine: %v", r)
+	}
+	// cartella dei dati: quella dell'utente che avvia il programma
+	t.Setenv("GESTIONE_CANALI_DIR", "")
+	home := t.TempDir()
+	t.Setenv("APPDATA", home)
+	t.Setenv("XDG_CONFIG_HOME", home)
+	if d := appDataDir(); d != filepath.Join(home, appDirName) {
+		t.Fatalf("cartella dei dati %s, attesa sotto %s", d, home)
+	}
+	if s := shortDataDir(filepath.Join(home, appDirName)); s != filepath.Join("%APPDATA%", appDirName) {
+		t.Fatalf("forma breve %q", s)
+	}
+	if s := shortDataDir("/altrove/dati"); s != "" {
+		t.Fatalf("forma breve fuori da APPDATA %q", s)
+	}
+	st, err := openStore(appDataDir())
+	if err != nil || st.dir != filepath.Join(home, appDirName) {
+		t.Fatalf("archivio aperto in %v (%v)", st, err)
+	}
+	if _, err := os.Stat(filepath.Join(home, appDirName)); err != nil {
+		t.Fatal(err)
 	}
 }

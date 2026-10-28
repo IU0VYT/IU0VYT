@@ -82,7 +82,9 @@ Memoria e protocollo via USB delle radio DMR RD-5R, DM-1801 e DM-1701 derivano d
 - qdmr (https://github.com/hmatuschek/qdmr), Hannes Matuschek DM3MAT, GNU GPL v3:
   radioddity_interface.cc, dm1701_codeplug.cc, tyt_interface.cc (confronto).
 File di IU0VYT Flash con parti derivate: drv_rdty.go, drv_tyt.go, usb_windows.go,
-genemu_rdty_other.go, genemu_tyt_other.go; per le prove, verifica/dmrconfig/tcpdev.c
+genemu_rdty_other.go, genemu_tyt_other.go, identify.go (dalla 3.8: posizioni di ID
+DMR, nome, data dell'ultima programmazione e versione del CPS, come print_id e
+print_version di rd5r.c, gd77.c e uv380.c); per le prove, verifica/dmrconfig/tcpdev.c
 (collegamento TCP per dmrconfig, che non è incluso: si scarica dal suo sito).
 Testo della licenza di dmrconfig:
 
@@ -142,6 +144,13 @@ INFORMAZIONI DI TERZI USATE (NON INCLUSE COME CODICE)
   pubblicate da un utente), #239 (UV-3R+ con il driver della UV-3R) e, dalla 3.5,
   #11119 (K5 Plus derivata dalla UV-5RM, per la famiglia del firmware). Per i modelli segnalati dagli utenti la compatibilità
   è indicata come sperimentale.
+- Istruzioni ufficiali BTECH per l'aggiornamento della DMR-6X2 e della DMR-6X2 PRO
+  («STOP and README FIRST.pdf» dei pacchetti DMR-6X2-221b e DMR-6X2-PRO-121e,
+  https://baofengtech.com/software/), riassunte nella procedura guidata (dalla 3.8);
+  la struttura dei file .spi/.CDI/.CDD è ricavata dai file dei pacchetti. Programmi,
+  driver e firmware BTECH non sono inclusi.
+- Zadig (https://zadig.akeo.ie, GPL) è solo citato come strumento per installare il
+  driver WinUSB della DM-1701: non è incluso.
 - Elenco dei ponti radio italiani di IK2ANE (https://www.ik2ane.it): non è incluso
   nel pacchetto; il programma lo scarica dal sito di IK2ANE quando lo chiedi. I dati
   restano di IK2ANE, che li mette gratuitamente a disposizione di tutti.
@@ -168,7 +177,7 @@ Tutte queste licenze sono compatibili con la GNU GPL versione 3.
 MARCHI E INTEROPERABILITÀ
 -------------------------
 IU0VYT Flash è un programma indipendente, non affiliato né approvato da Baofeng o
-da Bajeton (né dagli altri marchi citati, es. Radtel, Radioddity). I nomi dei
+da Bajeton (né dagli altri marchi citati, es. Radtel, Radioddity, BTECH). I nomi dei
 modelli servono solo a indicare con quali radio funziona il programma. I marchi
 appartengono ai rispettivi titolari.
 Protocolli e formati dei dati sono stati ricostruiti, per l'interoperabilità con le
@@ -177,6 +186,7 @@ PMR446 PRO / FRS», «DM-32UV CPS» e i pacchetti Bajeton della BJ-8200; dalla 3
 «BF-Ts», «BAOFENG GT18 PMR», «BAJETON DM-5000 CPS»; dalla 3.5 «DR-1801A6» e i
 programmi di aggiornamento «Baofeng Bootloader Pro» e «T6UV Series CPS» per le
 famiglie del firmware; dalla 3.6 «GT-22», «BF_V1_FH» (GT-68), «BT-11_CPS» v1.0.8 e
-v1.0.9, «BJ-9000_CPS» e «5RH PRO» per le impostazioni) (art. 64-quater L. 633/1941, art. 6 Direttiva
+v1.0.9, «BJ-9000_CPS» e «5RH PRO» per le impostazioni; dalla 3.8 la struttura dei file di
+aggiornamento della BTECH DMR-6X2) (art. 64-quater L. 633/1941, art. 6 Direttiva
 2009/24/CE). Il pacchetto non contiene codice, programmi o firmware dei costruttori:
 la galleria dei modelli rimanda ai loro siti ufficiali.

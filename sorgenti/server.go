@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "3.7"
+const appVersion = "3.9"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -58,6 +58,7 @@ type App struct {
 	mu      sync.Mutex
 	dlgMu   sync.Mutex
 	radios  map[string]*radioSession
+	ident   *identSession // radio identificata, da aprire nella sua scheda
 	dirty   bool
 	lastImp struct {
 		key    string
@@ -154,6 +155,10 @@ func (a *App) handler() http.Handler {
 	api("convert/open", a.apiConvertOpen)
 	api("convert/targets", a.apiConvertTargets)
 	api("convert/run", a.apiConvertRun)
+	api("identify/start", a.apiIdentifyStart)
+	api("identify/open", a.apiIdentifyOpen)
+	api("usb/driver", a.apiUSBDriver)
+	api("fw6x2", a.apiFw6x2)
 	api("rename", a.apiRename)
 	api("dirty", a.apiDirty)
 	api("cable/ports", a.apiCablePorts)

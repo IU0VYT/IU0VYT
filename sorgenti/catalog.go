@@ -34,6 +34,7 @@ type catItem struct {
 	FW      string    `json:"fw,omitempty"` // anc | bf | rh5 | kdhx | bj9000 | kdh9g | link
 	Links   []catLink `json:"links,omitempty"`
 	Notes   string    `json:"notes,omitempty"`
+	Guide   string    `json:"guide,omitempty"` // aggiornamento guidato con il programma ufficiale ("6x2")
 	// Models: modelli distinti venduti con nomi diversi e gestiti allo stesso modo:
 	// nella galleria e negli elenchi diventano schede separate (vedi expandCatalog)
 	Models []string `json:"-"`
@@ -45,6 +46,9 @@ const (
 	gd     = "https://drive.google.com/"
 	rdDown = "https://www.radioddity.com/pages/baofeng-download"
 	bfDown = "https://www.baofengradio.com/pages/download"
+	// BTECH (BaofengTech): pacchetti ufficiali della DMR-6X2
+	btechUp    = "https://baofengtech.com/wp-content/uploads/"
+	btechFw221 = "https://baofengtech.com/btech-releases-firmware-update-2-21-and-1-21-for-the-dmr-6x2-dmr-6x2-pro/"
 )
 
 // radio PMR446 digitali della serie D (programma «BF Series CPS»)
@@ -349,9 +353,24 @@ var catalog = []catItem{
 		Links: []catLink{cps(s3 + "Baofeng_DM-1701_CPS_1.05.zip"),
 			catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}, catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}},
 		Notes: "Radio DMR della famiglia TYT MD-UV380, collegata via USB in modalità DFU: serve il driver USB del costruttore (cartella " +
-			"«DM-1701 USB Driver» del pacchetto «DM-1701 CPS»), lo stesso del suo programma. Memoria e protocollo dei programmi liberi " +
+			"«DM-1701 USB Driver» del pacchetto «DM-1701 CPS», installabile da qui con «Installa il driver USB…»), lo stesso del suo programma, " +
+			"oppure il driver generico WinUSB (Zadig). Memoria e protocollo dei programmi liberi " +
 			"dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche, cancellazione e scrittura identiche). " +
 			"Con il firmware libero OpenGD77 la radio usa un altro protocollo: in quel caso usa qdmr."},
+	{ID: "dmr-6x2", Brand: "Baofeng", Name: "DMR-6X2 (BTECH)", Aliases: []string{"BTECH DMR-6X2", "BaofengTech DMR-6X2"}, Type: "dmr", FW: "link", Guide: "6x2",
+		Links: []catLink{{"fw", "Pacchetto ufficiale 2.21b: firmware 2.21, CPS, driver USB e istruzioni (BTECH)", btechUp + "2025/05/DMR-6X2-221b.zip"},
+			{"info", "Annuncio dei firmware 2.21 e 1.21 (BTECH, 1/4/2025)", btechFw221},
+			{"info", "Programmi e firmware BTECH", "https://baofengtech.com/software/"}},
+		Notes: "Radio DMR del marchio BTECH (BaofengTech, Stati Uniti), derivata dalle AnyTone. I canali si programmano con il CPS del costruttore " +
+			"(protocollo non gestito qui). Firmware: aggiornamento guidato con il programma ufficiale «Firmware_Update» del pacchetto: qui si controllano " +
+			"i file (modello, versione, integrità) e si segue la procedura; la scrittura la fa il programma BTECH. L'aggiornamento cancella la " +
+			"programmazione: prima salva il codeplug con il CPS."},
+	{ID: "dmr-6x2-pro", Brand: "Baofeng", Name: "DMR-6X2 PRO (BTECH)", Aliases: []string{"BTECH DMR-6X2 PRO", "DMR-6X2II"}, Type: "dmr", FW: "link", Guide: "6x2",
+		Links: []catLink{{"fw", "Pacchetto ufficiale 1.21e: firmware 1.21, CPS, driver USB e istruzioni (BTECH)", btechUp + "2025/10/DMR-6X2-PRO-121e.zip"},
+			{"info", "Annuncio dei firmware 2.21 e 1.21 (BTECH, 1/4/2025)", btechFw221},
+			{"info", "Programmi e firmware BTECH", "https://baofengtech.com/software/"}},
+		Notes: "Seconda serie della DMR-6X2 (firmware «DMR_6X2II», numerazione 1.x; la 1.21 è uscita insieme alla 2.21 della DMR-6X2). Il firmware " +
+			"è un file diverso da quello della DMR-6X2 (identificativo «D6X2UV2»): non usare quello dell'altra radio. Le icone (DMR_6X2_PIC) sono le stesse. Aggiornamento guidato con il programma ufficiale, come per la DMR-6X2."},
 	{ID: "dm-1702", Brand: "Baofeng", Name: "DM-1702", Type: "dmr",
 		Links: []catLink{{"cps", "Programma «DM-1702 MD Setup» v1.00.76 (pagina dei download Baofeng)", bfDown}},
 		Notes: "Radio DMR: il programma del costruttore («DM-1702 MD Setup», famiglia TYT MD) non è documentato; il codeplug si gestisce con quel programma."},

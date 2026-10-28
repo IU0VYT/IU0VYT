@@ -10,7 +10,7 @@
 
 const Views = {};
 let currentTab = 'home';
-const FIXED_TABS = ['home', 'gal', 'conv', 'arch', 'info'];
+const FIXED_TABS = ['home', 'gal', 'ident', 'conv', 'arch', 'info'];
 
 Object.assign(App, {
   catalog: [], defs: {},
@@ -26,6 +26,7 @@ Object.assign(App, {
     if (t === 'info') { Info.render($('#page-info')); return; }
     if (t === 'gal') { Gallery.render(); return; }
     if (t === 'conv') { Converter.render($('#page-conv')); return; }
+    if (t === 'ident') { Identify.render($('#page-ident')); return; }
     const g = t === 'arch' ? Archive.grid : Views[t].grid;
     if (t === 'arch') Archive.render(); else Views[t].render();
     const btn = $(`.tab[data-tab="${t}"]`);
@@ -177,7 +178,7 @@ async function start() {
     if (k === 'F5' || (ctrl && k.toLowerCase() === 'r')) { e.preventDefault(); return; }
     if (modalOpen()) return;
     if (k === 'F1') { e.preventDefault(); Dialogs.help(); return; }
-    if (currentTab === 'info' || currentTab === 'gal' || currentTab === 'home') return;
+    if (['info', 'gal', 'home', 'ident', 'conv'].includes(currentTab)) return;
     if (ctrl && k.toLowerCase() === 's' && currentTab !== 'arch') { e.preventDefault(); Views[currentTab].action(e.shiftKey ? 'saveas' : 'save'); return; }
     if (ctrl && k.toLowerCase() === 'o' && currentTab !== 'arch') { e.preventDefault(); Views[currentTab].action('open'); return; }
     // tasti della tabella anche se il fuoco non è sulla tabella

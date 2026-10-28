@@ -174,6 +174,8 @@ const Gallery = {
         ${drivers.length > 1 ? '<p class="note">Questa radio esiste in più versioni: scegli quella giusta. Se non è quella, la radio non risponde alla lettura e non viene modificata.</p>' : ''}
         <div class="galacts">${drivers.map(d => `<div class="galact"><button class="btn primary" data-open="${esc(d)}">📻 ${esc(d === 'k67' || d === 'baj' ? 'Vai alla scheda ' + RADIO_DEF[d].name : 'Apri la scheda ' + (App.defs[d] ? App.defs[d].name : d))}</button>
           <span class="note">${esc(this.driverLine(d))}</span></div>`).join('')}</div>` : ''}
+      ${c.guide === '6x2' ? `<h4 class="fwh">Firmware</h4><div class="galact"><button class="btn" data-guide>🧭 Aggiornamento guidato…</button>
+        <span class="note">controllo dei file del pacchetto ufficiale, procedura passo per passo e avvio del programma BTECH</span></div>` : ''}
       ${FW_KINDS.includes(c.fw) ? `<h4 class="fwh">Firmware</h4><div class="galact"><button class="btn" data-fw>⬆ Aggiorna il firmware…</button>
         <span class="note">${esc(FW_DESC[c.fw])}</span></div>` : ''}
       ${(c.links || []).length ? `<h4 class="fwh">Programmi e documenti</h4><ul class="gallinks">${c.links.map(l => `<li>${linkIcon[l.kind] || '🔗'} <a href="#" data-link="${esc(l.url)}">${esc(l.label)}</a> <span class="note">${esc(l.url.replace(/^https?:\/\//, '').split('/')[0])}</span></li>`).join('')}</ul>` : ''}
@@ -188,6 +190,8 @@ const Gallery = {
         if (Views[k]) App.showTab(k); else App.openRadio(k, true);
       } catch (e) { reportError(e); }
     });
+    const gb = $('[data-guide]', el);
+    if (gb) gb.onclick = () => { m.close(); Fw6x2.open(c); };
     const fb = $('[data-fw]', el);
     if (fb) fb.onclick = () => { m.close(); Firmware.open(c.fw, drivers[0]); };
   },

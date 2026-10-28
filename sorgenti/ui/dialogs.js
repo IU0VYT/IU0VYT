@@ -222,8 +222,12 @@ const Dialogs = {
           <p>${usb ? 'Collega il <b>cavo USB</b> della radio al PC' : 'Collega il cavo di programmazione al PC e alla radio'}, poi <b>accendi la radio</b>${usb ? '' : ' e tieni il volume a metà'}.
           ${write ? `Saranno scritti <b>${n} canali</b>: i canali presenti nella radio verranno sostituiti da quelli della tabella.` : 'I canali letti compariranno nella tabella: poi potrai modificarli e salvarli in un file.'}</p>
           ${usb ? `<div class="row"><label class="l">Collegamento</label><span><b>USB</b> — ${usb === 'dfu'
-            ? 'serve il driver USB del costruttore (quello del suo programma, cartella «DM-1701 USB Driver»): vedi la nota della scheda'
+            ? 'serve il driver USB del costruttore (cartella «DM-1701 USB Driver» del suo pacchetto) oppure il driver WinUSB (Zadig): vedi qui sotto'
             : 'dispositivo HID, Windows lo riconosce senza driver aggiuntivi'}</span></div>` : ''}
+          ${usb === 'dfu' ? `<div class="row"><label class="l">Driver USB</label><div>
+            <div data-usbdrv class="note">controllo del driver…</div>
+            <button class="btn" data-drvinst title="Avvia l'installazione del driver del pacchetto ufficiale «DM-1701 CPS» (serve l'autorizzazione di Windows)">Installa il driver USB…</button>
+            <button class="btn" data-zadig title="In alternativa: driver generico WinUSB con il programma Zadig">WinUSB (Zadig)…</button></div></div>` : ''}
           <div class="row" ${usb ? 'style="display:none"' : ''}><label class="l">Porta del cavo</label><select data-port style="min-width:330px"></select>
             <button class="btn" data-refresh title="Cerca di nuovo le porte (dopo aver collegato il cavo)">🔄 Aggiorna</button></div>
           <div class="row note" data-portnote style="margin-top:-6px"></div>
@@ -253,9 +257,18 @@ const Dialogs = {
       const sel = $('[data-port]', el);
       let settings = {};
 
+      const usbDrv = async () => {
+        const d = await api('usb/driver', { action: 'status' }, { quiet: true });
+        const box = $('[data-usbdrv]', el);
+        if (!box) return;
+        box.textContent = !d.supported ? 'Controllo del driver disponibile solo su Windows.'
+          : !d.present ? 'Radio non trovata: collegala con il cavo USB e accendila, poi premi Aggiorna.'
+          : d.driver ? `Radio collegata, driver: ${d.driver}.` : 'Radio collegata ma senza driver adatto: installa il driver USB del costruttore oppure WinUSB con Zadig.';
+      };
       const loadPorts = async () => {
         const r = await api('cable/ports', {}, { quiet: true });
         settings = r.settings || {};
+        if (usb === 'dfu') usbDrv().catch(() => {});
         if (usb) {
           sel.innerHTML = '<option value="USB">USB</option>';
           $('[data-portnote]', el).textContent = `Copie di sicurezza e letture vengono salvate in: ${r.backupDir}`;
@@ -282,6 +295,20 @@ const Dialogs = {
         }
       }).catch(reportError);
       $('[data-refresh]', el).onclick = () => loadPorts().catch(reportError);
+      if (usb === 'dfu') {
+        $('[data-drvinst]', el).onclick = async () => {
+          try {
+            await api('usb/driver', { action: 'install' }, { busyText: 'Avvio dell\'installazione…' });
+            await alertDlg('Driver USB', 'Installazione avviata: conferma la richiesta di Windows e segui le istruzioni. Al termine scollega e ricollega la radio, poi premi Aggiorna.');
+          } catch (e) { reportError(e); }
+        };
+        $('[data-zadig]', el).onclick = async () => {
+          await alertDlg('Driver WinUSB con Zadig', 'Zadig è un programma gratuito che installa il driver generico WinUSB, usato anche da dmrconfig.\n' +
+            '1) accendi la radio collegata al PC; 2) in Zadig: Options → List All Devices; 3) scegli il dispositivo con ID USB 0483 DF11 (spesso «STM32 BOOTLOADER» o «DM-1701»); ' +
+            '4) driver «WinUSB», poi «Install Driver» (o «Replace Driver»). Attenzione: dopo questa operazione il programma del costruttore non vedrà più la radio finché non reinstalli il suo driver.');
+          api('open', { url: 'https://zadig.akeo.ie/' }, { quiet: true }).catch(reportError);
+        };
+      }
 
       const showRun = () => { $('[data-setup]', el).style.display = 'none'; $('[data-run]', el).style.display = ''; };
       const setNotes = (notes) => {
@@ -605,12 +632,21 @@ const Dialogs = {
         <li>Bajeton: 15 zone da 64 canali; scegli la zona dalla barra sopra la tabella, «Tutte» per vederle insieme, «Sposta in zona» per spostare i selezionati.</li>
         <li>Nomi: massimo 16 caratteri sul K67 e 12 sulla Bajeton. Potenza Media solo sulla Bajeton (sul K67 diventa Alta).</li>
       </ul>
+      <h4>Identifica la radio</h4><ul>
+        <li>Scheda «🔎 Identifica»: scegli la porta del cavo (o «USB» per RD-5R, DM-1801, DM-1701) e premi «Identifica la radio». Il programma prova i protocolli
+          di lettura di tutte le radio che conosce, legge quella che risponde e mostra marca, modello, tipo, gamme, firmware o identificativo, canali e, per le
+          radio DMR USB, ID DMR e nome. Nessun dato viene scritto nella radio. Senza radio la ricerca completa dura circa 70 secondi.</li>
+        <li>Se più modelli hanno lo stesso protocollo e la stessa memoria, scegli il tuo dall'elenco prima di aprire i canali.</li>
+        <li>DM-1701: nella finestra «Leggi dalla radio» lo stato del driver USB, «Installa il driver USB…» (pacchetto del costruttore) o WinUSB con Zadig.</li>
+        <li>BTECH DMR-6X2 / PRO: nella galleria «🧭 Aggiornamento guidato…» controlla i file del firmware ufficiale e guida passo per passo il programma BTECH.</li>
+      </ul>
       <h4>Converti, importa ed esporta</h4><ul>
         <li>Scheda «🔁 Converti»: scegli un file (K67 .xlc, Bajeton .dat v1.0.8 o v1.0.9, immagini .img di qualsiasi radio anche salvate con CHIRP, CSV di CHIRP,
           tabelle Excel/CSV) o una scheda aperta, poi il formato di destinazione: CSV di CHIRP (universale), Excel, CSV, il file .xlc del K67, il .dat della Bajeton
           o l'immagine .img di qualsiasi radio compatibile. I canali vengono adattati alla radio di destinazione e le modifiche elencate.</li>
-        <li>Per l'immagine .img di una radio serve un'immagine di quella radio (letta via cavo o aperta da file): contiene impostazioni e taratura, che non si
-          possono inventare. Si cambiano solo i canali.</li>
+        <li>Per l'immagine .img di una radio serve un'immagine di quella radio, cioè la copia completa della sua memoria (letta via cavo con «Leggi dalla radio»,
+          anche dal pulsante «📻 Leggi adesso la radio collegata…» del convertitore, o aperta da un file .img salvato da qui o da CHIRP): contiene impostazioni e
+          taratura, che non si possono inventare. Si cambiano solo i canali.</li>
         <li>«📥 Importa…» nella scheda di una radio inserisce i canali di qualsiasi di questi file, adattati, nelle posizioni che scegli.</li>
         <li>«Esporta…» salva i canali in Excel, CSV o CSV di CHIRP; «🔁 Per un'altra radio…» apre il convertitore con i canali della scheda.</li>
       </ul>

@@ -79,7 +79,8 @@ func init() {
 		Bands:  []band{{136000000, 174000000}, {400000000, 480000000}}, Narrow: true, HasScan: false, NoChirp: true,
 		DCS: dtcsCodes, Baud: 0, Fam: tytFam{}, Opt: &tytOpt{ident: "DM-1701"}, Digital: "DMR", Conn: "dfu",
 		Notes: "Radio DMR collegata via USB in modalità DFU: serve il driver USB del costruttore (pacchetto «DM-1701 CPS», cartella " +
-			"«DM-1701 USB Driver», lo stesso usato dal suo programma). Memoria e protocollo come nei programmi liberi dmrconfig e qdmr, " +
+			"«DM-1701 USB Driver», lo stesso usato dal suo programma: si installa con il pulsante «Installa il driver USB…» della finestra " +
+			"«Leggi dalla radio») oppure il driver generico WinUSB installato con Zadig. Memoria e protocollo come nei programmi liberi dmrconfig e qdmr, " +
 			"confrontati con il codice di dmrconfig. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda, " +
 			"toni e solo ricezione; per i canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati (i canali DMR " +
 			"nuovi: color code 1, slot 1, senza contatto). Contatti, gruppi, messaggi, rubrica e impostazioni della radio non si toccano. " +

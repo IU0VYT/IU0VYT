@@ -94,10 +94,20 @@ const Converter = {
     if (!t) { box.innerHTML = ''; return; }
     const slots = t.slots ? `<span class="note">La radio ha ${t.slots} posizioni.</span>` : '';
     if (t.needsBase) {
-      box.innerHTML = `<div class="convbase"><p>Per creare l'immagine <b>.img</b> serve un'immagine di questa radio, letta via cavo o aperta da file:
-        contiene anche impostazioni e taratura della radio, che non si possono inventare. Si cambiano solo i canali. ${slots}</p>
-        <label><input type="radio" name="base" value="tab" ${t.tab ? 'checked' : 'disabled'}> immagine della scheda aperta della radio ${t.tab ? '' : '<span class="note">(apri prima la scheda: «Leggi dalla radio» o «Apri…»)</span>'}</label><br>
-        <label><input type="radio" name="base" value="file" ${t.tab ? '' : 'checked'}> un file .img della radio (salvato da qui o da CHIRP)…</label></div>`;
+      box.innerHTML = `<div class="convbase"><p>Per creare l'immagine <b>.img</b> serve un'<b>immagine di questa radio</b>, cioè la copia completa della
+        sua memoria: si ottiene leggendo la radio con il cavo («Leggi dalla radio») oppure aprendo un file .img salvato prima da qui o da CHIRP.
+        Contiene anche impostazioni e taratura della radio, che non si possono inventare: si cambiano solo i canali. ${slots}</p>
+        <label><input type="radio" name="base" value="tab" ${t.tab ? 'checked' : 'disabled'}> immagine della scheda aperta della radio ${t.tab ? '' : '<span class="note">(la scheda non ha ancora dati)</span>'}</label><br>
+        <label><input type="radio" name="base" value="file" ${t.tab ? '' : 'checked'}> un file .img della radio (salvato da qui o da CHIRP)…</label>
+        ${t.tab ? '' : '<div style="margin-top:6px"><button class="btn" data-readbase>📻 Leggi adesso la radio collegata…</button> <span class="note">poi torna qui: l\'immagine letta sarà la base</span></div>'}</div>`;
+      const rb = $('[data-readbase]', box);
+      if (rb) rb.onclick = async () => {
+        try {
+          const v = App.openRadio(t.id, true);
+          await v.cableRead();
+          if (v.loaded) { this._stale = true; App.showTab('conv'); }
+        } catch (e) { reportError(e); }
+      };
     } else if (['k67', 'baj-1.0.8', 'baj-1.0.9'].includes(t.id)) {
       box.innerHTML = `<div class="convbase">
         <label><input type="radio" name="base" value="" ${t.tab ? '' : 'checked'}> file nuovo (impostazioni predefinite del programma del costruttore)</label><br>

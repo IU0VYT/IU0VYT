@@ -3,6 +3,61 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+3.9 (28/10/2026)
+----------------
+- info.go: indirizzo degli aggiornamenti .../releases/latest/download/IU0VYT.Flash.zip
+  (controllo all'avvio, pulsante «Aggiornamenti», scheda Info: stessa costante).
+- Scheda Info: e-mail dell'autore non più mostrata; pulsante «✉ Scrivi all'autore»
+  (mailto aperto dal programma), «📋 Copia l'indirizzo» (appunti di Windows,
+  clip_windows.go), «👁 Mostra l'indirizzo» (immagine disegnata, non testo). API
+  contact; l'indirizzo è conservato mascherato (XOR) e non compare nella risposta
+  dell'API info. ui/info.js, ui/style.css.
+- Scheda Info: cartella dei dati come %APPDATA%\GestioneCanaliRadio dell'utente che
+  avvia il programma, percorso completo e pulsante «📂 Apri».
+- Indirizzo e-mail dell'autore tolto da tutti i file del pacchetto: intestazioni dei
+  sorgenti (Go, interfaccia, programmi di verifica), AUTORI_E_LICENZE.txt e riga
+  «Autore» del LEGGIMI.txt (restano nome e pagina QRZ; per scrivere: «✉ Scrivi
+  all'autore» nella scheda Info). Tolto dal pacchetto un eseguibile Linux di prova
+  (sorgenti/gestionecanali) incluso per errore dalla 3.7.
+- info_test.go TestContactAndDataDir (anche: indirizzo assente da tutti i file).
+
+
+3.8 (28/10/2026)
+----------------
+Identificazione della radio
+- identify.go, ui/identify.js: scheda «🔎 Identifica» e API identify/start,
+  identify/open. Si provano i protocolli di lettura di tutte le radio (K67 Pro a 19200
+  e 115200 baud, BJ-8300, poi i driver); i modelli con lo stesso «saluto» (byte inviati
+  a una radio muta, calcolati una volta in parallelo) formano un gruppo e se ne prova
+  uno (38 tentativi per 100 radio via cavo; via USB un tentativo per modello). Attese
+  della prima risposta abbreviate, eco del cavo ignorata. Radio che risponde: lettura
+  completa, riletture per ogni tipo di memoria del gruppo e scelta del modello che
+  riconosce la memoria (Match, come CHIRP); modelli non distinguibili proposti tutti.
+  Dati mostrati: marca, modello, tipo, gamme, memorie, collegamento, firmware o
+  identificativo, testo inviato dalla radio; RD-5R / DM-1801 / DM-1701: ID DMR, nome,
+  data dell'ultima programmazione, versione del CPS (come dmrconfig).
+DM-1701 / Retevis RT84
+- usb_windows.go: accesso alla modalità DFU anche con il driver WinUSB
+  (WinUsb_ControlTransfer), oltre a STTub30; dfuport.go: adattatore delle richieste
+  comune ai due driver. usbdrv_windows.go, usbdrvapi.go: stato del driver e
+  installazione assistita (dpinst*.exe o pnputil per un .inf, con l'autorizzazione
+  UAC); pulsanti nella finestra «Leggi dalla radio» (ui/dialogs.js).
+BTECH DMR-6X2 / DMR-6X2 PRO
+- catalog.go: due nuove schede (firmware «link», pacchetti ufficiali 2.21b e 1.21e).
+- fw6x2.go, ui/fw6x2.js: aggiornamento guidato: controllo dei file .spi/.CDI/.CDD
+  (modello, tipo, versione, dimensioni, inizio del firmware), procedura delle
+  istruzioni BTECH e avvio di Firmware_Update.exe. Il firmware lo scrive il programma
+  ufficiale.
+Altro
+- ui/converter.js: spiegazione dell'«immagine della radio» e «Leggi adesso la radio
+  collegata…». ui/app.js: Ctrl+S / Ctrl+O nella scheda Converti davano un errore.
+- Radio simulate (solo prove): UV-17 / UV-13Pro con le pagine nell'ordine di CHIRP
+  (genemu_other.go); niente blocchi per richieste fuori dalla memoria.
+Verifiche
+- identify_test.go (ogni modello, ricerca completa, nessuna radio, dati DMR confrontati
+  con dmrconfig), dfuport_test.go, fw6x2_test.go (BTECH_6X2_DIR: pacchetti ufficiali).
+
+
 3.7 (28/10/2026)
 ----------------
 Correzioni

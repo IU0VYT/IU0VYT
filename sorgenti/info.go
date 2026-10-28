@@ -24,6 +24,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -34,13 +35,14 @@ import (
 )
 
 const (
-	appName          = "IU0VYT Flash"
-	appAuthor        = `Daniele "IU0VYT" Bonifazi`
-	appEmail         = ""
-	appQRZ           = "https://www.qrz.com/db/IU0VYT"
-	appRepo          = "https://github.com/IU0VYT/IU0VYT"
-	appLicense       = "GNU General Public License versione 3 o successiva (GPL-3.0-or-later)"
-	defaultUpdateURL = "https://github.com/IU0VYT/IU0VYT/releases/download/NEW/IU0VYT.Flash.zip"
+	appName    = "IU0VYT Flash"
+	appAuthor  = `Daniele "IU0VYT" Bonifazi`
+	appQRZ     = "https://www.qrz.com/db/IU0VYT"
+	appRepo    = "https://github.com/IU0VYT/IU0VYT"
+	appLicense = "GNU General Public License versione 3 o successiva (GPL-3.0-or-later)"
+	// ultima versione pubblicata: GitHub rimanda sempre al pacchetto del rilascio
+	// più recente (3.9: prima era l'indirizzo fisso del rilascio «NEW»)
+	defaultUpdateURL = "https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip"
 	// firma letta dalla verifica degli aggiornamenti nell'eseguibile pubblicato
 	versionMarker = "IU0VYT-FLASH-VERSIONE:" + appVersion + ";"
 )
@@ -75,8 +77,30 @@ var upd = &updState{saved: map[string]bool{}}
 // updateSource: indirizzo fisso del pacchetto pubblicato (cambia solo nei test)
 var updateSource = defaultUpdateURL
 
+// Indirizzo e-mail dell'autore (3.9): non compare in chiaro né nell'eseguibile né
+// nell'interfaccia (scheda Info), per non esporlo a chi raccoglie indirizzi per
+// spam e phishing. È conservato mascherato (XOR con authorMailKey) e usato solo
+// dal programma: per aprire il programma di posta con il destinatario già
+// impostato, per copiarlo negli appunti o per mostrarlo come immagine.
+var (
+	authorMailKey = []byte("IU0VYT-Flash")
+	authorMailX   = []byte{0x2A, 0x37, 0x5D, 0x37, 0x37, 0x2E, 0x6D, 0x21, 0x01, 0x00, 0x1A, 0x04, 0x67, 0x36, 0x5F, 0x3B}
+)
+
+func authorEmail() string {
+	b := make([]byte, len(authorMailX))
+	for i, c := range authorMailX {
+		b[i] = c ^ authorMailKey[i%len(authorMailKey)]
+	}
+	return string(b)
+}
+
+// copyText: testo negli appunti di Windows (false se non disponibile)
+var copyText = func(s string) bool { return false }
+
 func (a *App) infoHandlers(api func(string, func(*http.Request) (interface{}, error))) {
 	api("info", a.apiInfo)
+	api("contact", a.apiContact)
 	api("update/check", a.apiUpdateCheck)
 	api("update/save", a.apiUpdateSave)
 	api("open", a.apiOpen2)
@@ -88,9 +112,52 @@ func (a *App) apiInfo(r *http.Request) (interface{}, error) {
 		bd = "non indicata"
 	}
 	return map[string]interface{}{
-		"name": appName, "version": appVersion, "buildDate": bd, "author": appAuthor, "email": appEmail,
-		"qrz": appQRZ, "repo": appRepo, "dataDir": a.store.dir, "marker": versionMarker, "license": appLicense,
+		"name": appName, "version": appVersion, "buildDate": bd, "author": appAuthor,
+		"qrz": appQRZ, "repo": appRepo, "dataDir": a.store.dir, "dataDirShort": shortDataDir(a.store.dir),
+		"marker": versionMarker, "license": appLicense,
 	}, nil
+}
+
+// shortDataDir: la cartella dei dati come la scrive Windows per ogni utente
+// (es. %APPDATA%\GestioneCanaliRadio); "" se non è sotto %APPDATA%
+func shortDataDir(dir string) string {
+	ad := os.Getenv("APPDATA")
+	if ad == "" {
+		return ""
+	}
+	if rel, err := filepath.Rel(ad, dir); err == nil && !strings.HasPrefix(rel, "..") && !filepath.IsAbs(rel) {
+		return filepath.Join("%APPDATA%", rel)
+	}
+	return ""
+}
+
+// contact: scrivere all'autore senza mostrare l'indirizzo nella pagina
+//
+//	mail: apre il programma di posta (mailto) con destinatario e oggetto
+//	copy: copia l'indirizzo negli appunti
+//	show: l'indirizzo, solo per disegnarlo come immagine (in assenza degli appunti)
+func (a *App) apiContact(r *http.Request) (interface{}, error) {
+	var req struct {
+		Action string `json:"action"`
+	}
+	if err := decode(r, &req); err != nil {
+		return nil, err
+	}
+	addr := authorEmail()
+	switch req.Action {
+	case "mail":
+		subj := url.PathEscape(appName + " " + appVersion)
+		return map[string]bool{"opened": openExternal("mailto:"+addr+"?subject="+subj, false)}, nil
+	case "copy":
+		return map[string]bool{"copied": copyText(addr)}, nil
+	case "show":
+		// in due parti: la pagina le disegna su un'immagine senza scriverle nel testo
+		i := strings.IndexByte(addr, '@')
+		return map[string]string{"user": addr[:i], "domain": addr[i+1:]}, nil
+	case "folder":
+		return map[string]bool{"opened": openExternal(a.store.dir, false)}, nil
+	}
+	return nil, errors.New("operazione sconosciuta")
 }
 
 var (

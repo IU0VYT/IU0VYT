@@ -121,11 +121,21 @@ const Info = {
         <tr><th>Versione</th><td><b>${esc(d.version)}</b></td></tr>
         <tr><th>Data di compilazione</th><td>${esc(d.buildDate)}</td></tr>
         <tr><th>Autore</th><td>${esc(d.author)}</td></tr>
-        <tr><th>E-mail</th><td><a href="#" data-link="mailto:${esc(d.email)}">${esc(d.email)}</a></td></tr>
+        <tr><th>E-mail</th><td><button class="btn" data-mail>✉ Scrivi all'autore</button>
+          <span class="note">si apre il tuo programma di posta con il destinatario già impostato</span>
+          <div class="note" data-mailhelp style="display:none;margin-top:6px">Non si è aperto nessun programma di posta?
+            <a href="#" data-mailalt>Altri modi per scrivere</a></div>
+          <div class="mailalt" data-mailbox style="display:none">
+            <p>Se sul PC non c'è un programma di posta, usa quella del browser (Gmail, Outlook.com…): copia l'indirizzo e incollalo nel campo «A».
+              L'indirizzo non è scritto nella pagina, per proteggerlo da spam e phishing.</p>
+            <button class="btn primary" data-mailcopy>📋 Copia l'indirizzo</button> <button class="btn" data-mailshow>👁 Mostra l'indirizzo</button>
+            <div data-mailimg style="margin-top:8px"></div></div></td></tr>
         <tr><th>QRZ</th><td><a href="#" data-link="${esc(d.qrz)}">${esc(d.qrz)}</a></td></tr>
         <tr><th>Codice sorgente</th><td><a href="#" data-link="${esc(d.repo)}">${esc(d.repo)}</a> <span class="note">(repository GitHub: sorgenti, rilasci e aggiornamenti)</span></td></tr>
         <tr><th>Licenza</th><td>${esc(d.license)} — software libero, <b>senza alcuna garanzia</b> (testo completo nel file LICENSE.txt del pacchetto)</td></tr>
-        <tr><th>Cartella dei dati</th><td class="note">${esc(d.dataDir)}</td></tr>
+        <tr><th>Cartella dei dati</th><td>${d.dataDirShort ? `<b>${esc(d.dataDirShort)}</b><br>` : ''}<span class="note">${esc(d.dataDir)}</span>
+          <button class="btn" data-folder style="margin-left:6px">📂 Apri</button>
+          <div class="note">cartella dell'utente di Windows che usa il programma, su questo PC: archivio dei ponti, impostazioni e copie delle radio</div></td></tr>
       </table>
       <h3>Aggiornamenti</h3>
       <div class="updbox">
@@ -147,8 +157,57 @@ const Info = {
     </div></div>`;
     $$('[data-link]', page).forEach(a => a.onclick = (e) => { e.preventDefault(); this.open(a.dataset.link); });
     $('[data-check]', page).onclick = () => this.check(page);
+    this.contact(page);
+    $('[data-folder]', page).onclick = async () => {
+      try { const r = await api('contact', { action: 'folder' }, { quiet: true }); if (!r.opened) toast('Impossibile aprire la cartella.', true); } catch (e) { reportError(e); }
+    };
     Updates.listeners.push(r => this.show(page, r));
     if (Updates.last) this.show(page, Updates.last);
+  },
+
+  // contatto con l'autore senza scrivere l'indirizzo nella pagina (3.9)
+  contact(page) {
+    const box = $('[data-mailbox]', page), help = $('[data-mailhelp]', page);
+    const openBox = () => { box.style.display = ''; help.style.display = 'none'; };
+    $('[data-mail]', page).onclick = async () => {
+      try {
+        const r = await api('contact', { action: 'mail' }, { quiet: true });
+        if (r.opened) { toast('Si apre il programma di posta…'); help.style.display = ''; } else openBox();
+      } catch (e) { openBox(); }
+    };
+    $('[data-mailalt]', page).onclick = (e) => { e.preventDefault(); openBox(); };
+    $('[data-mailcopy]', page).onclick = async () => {
+      try {
+        const r = await api('contact', { action: 'copy' }, { quiet: true });
+        if (r.copied) { toast('Indirizzo copiato negli appunti: incollalo nel campo «A» della tua posta (Ctrl+V).'); return; }
+      } catch (e) { /* si mostra l'immagine */ }
+      toast('Impossibile usare gli appunti: l\'indirizzo è mostrato come immagine.', true);
+      this.mailImage(page);
+    };
+    $('[data-mailshow]', page).onclick = () => this.mailImage(page);
+  },
+
+  // l'indirizzo come immagine (non è testo della pagina: non si seleziona e non si legge dal codice della pagina)
+  async mailImage(page) {
+    const r = await api('contact', { action: 'show' }, { quiet: true });
+    const c = document.createElement('canvas');
+    const dpr = window.devicePixelRatio || 1;
+    const ctx = c.getContext('2d');
+    const font = '600 17px "Segoe UI", system-ui, sans-serif';
+    ctx.font = font;
+    const parts = [r.user, '@', r.domain];
+    const w = Math.ceil(parts.reduce((t, p) => t + ctx.measureText(p).width, 0)) + 24;
+    c.width = w * dpr; c.height = 34 * dpr; c.style.width = w + 'px'; c.style.height = '34px';
+    c.className = 'mailcanvas';
+    ctx.scale(dpr, dpr);
+    ctx.fillStyle = '#f3f8ff'; ctx.fillRect(0, 0, w, 34);
+    ctx.font = font; ctx.textBaseline = 'middle';
+    let x = 12;
+    parts.forEach((p, i) => { ctx.fillStyle = i === 1 ? '#c0392b' : '#1c3d73'; ctx.fillText(p, x, 18); x += ctx.measureText(p).width; });
+    const holder = $('[data-mailimg]', page);
+    holder.innerHTML = '';
+    holder.appendChild(c);
+    holder.appendChild(h('<div class="note">Scrivi l\'indirizzo a mano nel campo «A» della tua posta.</div>'));
   },
 
   show(page, r) {

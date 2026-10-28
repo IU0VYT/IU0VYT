@@ -32,6 +32,7 @@ const Home = {
         <button class="home-start" data-go="gal">▶ PRESS START</button>
         <div class="home-cards">
           <button class="home-card" data-go="gal"><b>📻 ${nChan} radio</b><span>Canali e frequenze letti e scritti via cavo, file compatibili con CHIRP. Galleria di ${nAll} modelli Baofeng e Bajeton con programmi e manuali ufficiali.</span></button>
+          <button class="home-card" data-go="ident"><b>🔎 Identifica</b><span>Collega una radio: il programma la riconosce da solo e mostra marca, modello, firmware e le altre informazioni che comunica.</span></button>
           <button class="home-card" data-go="arch"><b>📡 Ponti radio</b><span>Archivio dei ponti italiani (elenco gratuito di IK2ANE), filtri, nomi automatici e inserimento nelle radio.</span></button>
           <button class="home-card" data-go="gal-fw"><b>⬆ Firmware</b><span>Aggiornamento del firmware di ${nFw} modelli con i protocolli dei programmi ufficiali, con controllo del file e copia di sicurezza.</span></button>
           <button class="home-card" data-go="info"><b>🔄 Aggiornamenti</b><span>Il programma controlla da solo a ogni avvio se esiste una versione più recente.</span></button>

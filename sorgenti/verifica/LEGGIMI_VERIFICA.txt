@@ -183,6 +183,22 @@ prova di CHIRP come base, o sintetiche per le radio non in CHIRP); con CHIRP_DIR
   prova («export»), letto poi qui: canali identici.
      CHIRP_DIR=... go test -mod=vendor -run TestUniversal -v .
 
+IDENTIFICAZIONE, DM-1701 CON WINUSB, DMR-6X2 (3.8)
+identify_test.go (con CHIRP_DIR per le memorie di prova di CHIRP):
+- TestIdentifyEachModel: ogni modello dei driver simulato con la sua memoria di prova,
+  cercato con il tentativo del suo gruppo: riconosciuto (o riconosciuto come il
+  modello a cui appartiene la memoria di prova), stessi canali, memoria invariata;
+- TestIdentifyFullScan: ricerca completa dall'API (K67 «BF-K6», BJ-8300 e radio dei
+  driver in fondo ai tentativi) e apertura nella scheda;
+- TestIdentifyNoRadio: nessuna radio, tempi reali;
+- TestIdentifyDMRInfo (DMRCONFIG, DMRCONFIG_EX): ID, nome e data uguali a dmrconfig.
+dfuport_test.go: lettura e scrittura della DM-1701 simulata attraverso l'adattatore
+delle richieste USB usato con WinUSB e STTub30.
+fw6x2_test.go (BTECH_6X2_DIR = cartella con i pacchetti BTECH DMR-6X2-221b e
+DMR-6X2-PRO-121e estratti): controllo di tutti i file ufficiali e di file danneggiati.
+     CHIRP_DIR=... DMRCONFIG=... DMRCONFIG_EX=... BTECH_6X2_DIR=... \
+     go test -mod=vendor -run 'TestIdentify|TestDFUPort|TestFw6x2' -v .
+
 ESEGUIBILE WINDOWS SOTTO WINE
      WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run 'TestWine' -v .
 

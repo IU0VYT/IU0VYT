@@ -259,7 +259,7 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .infoicon { width: 72px; height: 72px; border-radius: 12px; }
 .infotab { border-collapse: collapse; width: 100%; }
 .infotab th { text-align: left; color: var(--muted); font-weight: 500; width: 190px; padding: 6px 0; vertical-align: top; }
-.infotab td { padding: 6px 0; word-break: break-all; }
+.infotab td { padding: 6px 0; overflow-wrap: anywhere; }
 .infotab a, .infores a { color: var(--accent); }
 .infocard h3 { margin: 22px 0 10px; font-size: 15px; border-top: 1px solid var(--line-soft); padding-top: 16px; }
 #topbar { flex: none; }
@@ -367,7 +367,7 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
   box-shadow: 0 0 10px #00e5ff, inset 0 0 10px rgba(0,229,255,.5); text-shadow: 0 0 8px #00e5ff; animation: home-blink 1.1s steps(2, start) infinite; }
 .home-start:hover, .home-start:focus-visible { background: rgba(0,229,255,.15); animation: none; outline: none; }
 @keyframes home-blink { to { visibility: hidden; } }
-.home-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 12px; margin: 30px 0 26px; }
+.home-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 12px; margin: 30px 0 26px; }
 .home-card { text-align: left; color: #e9e4ff; background: rgba(20,8,48,.72); border: 1px solid rgba(255,79,216,.45); border-radius: 10px;
   padding: 12px 14px; cursor: pointer; box-shadow: 0 0 14px rgba(255,46,200,.18); transition: transform .12s, box-shadow .12s; }
 .home-card b { display: block; font-size: 15px; margin-bottom: 4px; color: #fff; }
@@ -441,10 +441,20 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .setinfo { font-family: monospace; }
 
 /* scheda Converti (3.7) */
-.page#page-conv { overflow: auto; }
+.page#page-conv, .page#page-ident { overflow: auto; }
+.convrow label.l { min-width: 70px; color: var(--muted); }
 .convcard { max-width: 900px; }
 .convrow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; }
 .convsrc { background: var(--bg, #f6f7fb); border: 1px solid var(--line-soft); border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
 .convbase { background: #f3f8ff; border: 1px solid #cfe0f7; border-radius: 8px; padding: 10px 12px; margin: 8px 0; line-height: 1.7; }
 .convbase p { margin: 0 0 6px; }
 .convok { background: #eaf7ee; border: 1px solid #b9e2c4; border-radius: 8px; padding: 10px 12px; margin: 8px 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* aggiornamento guidato DMR-6X2 (3.8) */
+.fw6steps { margin: 6px 0 10px 18px; padding: 0; line-height: 1.55; }
+.fw6steps li { margin: 4px 0; }
+
+/* contatto con l'autore (3.9) */
+.mailalt { margin-top: 8px; padding: 10px 12px; border-radius: 8px; background: #f3f8ff; border: 1px solid #cfe0f7; }
+.mailalt p { margin: 0 0 8px; }
+.mailcanvas { border: 1px solid #cfe0f7; border-radius: 6px; user-select: none; }

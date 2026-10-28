@@ -1,10 +1,48 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO BAOFENG E BAJETON
 =====================================================================
-Versione 3.7 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 3.9 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 3.9:
+- aggiornamenti: il programma verifica e scarica l'ultima versione dall'indirizzo
+  https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip (sempre
+  il pacchetto dell'ultimo rilascio pubblicato su GitHub), sia nel controllo a ogni
+  avvio sia con "🔄 Aggiornamenti" e "🔄 Verifica aggiornamenti" della scheda Info;
+- scheda Info: l'indirizzo e-mail dell'autore non è più scritto. Al suo posto
+  "✉ Scrivi all'autore" apre il programma di posta con il destinatario già impostato;
+  senza programma di posta, "📋 Copia l'indirizzo" lo mette negli appunti (da
+  incollare nella posta del browser) e "👁 Mostra l'indirizzo" lo mostra come
+  immagine. L'indirizzo è conservato mascherato anche nel programma ed è stato tolto
+  da tutti i file del pacchetto e dei sorgenti, per renderlo più difficile da
+  raccogliere per spam e phishing;
+- scheda Info: la cartella dei dati è quella dell'utente di Windows che usa il
+  programma su quel PC (%APPDATA%\GestioneCanaliRadio, scritta anche per esteso), con
+  il pulsante "📂 Apri".
+Novità della 3.8:
+- IDENTIFICA LA RADIO (scheda "🔎 Identifica", vedi "IDENTIFICAZIONE DELLA RADIO"):
+  collega una radio e il programma la riconosce da solo provando i protocolli di
+  lettura di tutte le radio che conosce; mostra marca, modello, tipo, gamme, memorie,
+  collegamento, firmware o identificativo comunicato dalla radio e, per le radio DMR
+  USB, ID DMR, nome della radio e data dell'ultima programmazione; la lettura si apre
+  poi nella scheda della radio. Nessun dato viene scritto nella radio;
+- DM-1701 / Retevis RT84: oltre al driver USB del costruttore (STTub30) ora funziona
+  anche con il driver generico di Windows WinUSB (installabile con Zadig, come per
+  dmrconfig); nella finestra "Leggi dalla radio" lo stato del driver e il pulsante
+  "Installa il driver USB…" che avvia l'installatore del pacchetto ufficiale (vedi
+  "DRIVER USB DELLA DM-1701");
+- BTECH DMR-6X2 e DMR-6X2 PRO nella galleria, con "🧭 Aggiornamento guidato…" del
+  firmware: controllo dei file del pacchetto ufficiale (modello, versione, integrità),
+  procedura passo per passo dalle istruzioni BTECH e avvio del programma ufficiale
+  (vedi "BTECH DMR-6X2: AGGIORNAMENTO GUIDATO DEL FIRMWARE");
+- Converti: spiegato meglio che cos'è l'"immagine della radio" che serve come base per
+  i file .img, con il pulsante "📻 Leggi adesso la radio collegata…";
+- CORRETTO: nella scheda Converti i tasti Ctrl+S / Ctrl+O davano un errore;
+- verifiche: la radio simulata della UV-17 / UV-13Pro restituiva le pagine della
+  memoria nell'ordine sbagliato rispetto a CHIRP (solo nelle prove, il programma era
+  già corretto): corretta; le radio simulate non si bloccano più con richieste fuori
+  dalla memoria.
 Novità della 3.7:
 - CORRETTO: scrittura nel K67 Pro che si identifica come «BF-K6» (segnalato con una
   radio vera: la lettura funzionava, la scrittura si fermava con «la radio collegata
@@ -583,10 +621,20 @@ decodificatore libero rardecode (licenza BSD). Non sono supportati gli archivi p
 da password e quelli divisi in più parti.
 
 SCHEDA INFO E AGGIORNAMENTI
-- La scheda "ℹ Info" mostra nome, versione, data di compilazione, autore, e-mail,
-  pagina QRZ, repository GitHub (https://github.com/IU0VYT/IU0VYT: codice sorgente,
-  rilasci e aggiornamenti), licenza e note legali (i collegamenti si aprono nel browser / nel
-  programma di posta).
+- La scheda "ℹ Info" mostra nome, versione, data di compilazione, autore, pagina QRZ,
+  repository GitHub (https://github.com/IU0VYT/IU0VYT: codice sorgente, rilasci e
+  aggiornamenti), licenza, cartella dei dati e note legali (i collegamenti si aprono
+  nel browser).
+- E-mail (3.9): "✉ Scrivi all'autore" apre il programma di posta del PC con il
+  destinatario già impostato e l'oggetto "IU0VYT Flash x.y". Se non si apre nessun
+  programma: "📋 Copia l'indirizzo" (da incollare nel campo «A» di Gmail, Outlook.com
+  o altra posta del browser) oppure "👁 Mostra l'indirizzo" (come immagine, da
+  ricopiare). L'indirizzo non è scritto nella pagina.
+- Cartella dei dati: archivio dei ponti, impostazioni, copie delle radio. È la
+  cartella %APPDATA%\GestioneCanaliRadio dell'utente di Windows che avvia il
+  programma, calcolata a ogni avvio su quel PC (es. C:\Users\<nome utente>\AppData\
+  Roaming\GestioneCanaliRadio): ogni utente e ogni PC ha la sua. "📂 Apri" la apre in
+  Esplora risorse.
 - Verifica degli aggiornamenti: a ogni avvio, in automatico, e con il pulsante
   "🔄 Aggiornamenti" in alto (o "🔄 Verifica aggiornamenti" nella scheda Info).
   Il programma confronta la sua versione con quella pubblicata dall'autore:
@@ -600,12 +648,16 @@ SCHEDA INFO E AGGIORNAMENTI
   il pacchetto .zip viene scaricato e controllato. Poi chiudi il programma, estrai lo
   zip e sostituisci l'eseguibile: archivio ponti e impostazioni restano dove sono.
 - L'indirizzo da cui si verificano e scaricano gli aggiornamenti è fisso nel programma
-  e non si può modificare.
+  e non si può modificare: https://github.com/IU0VYT/IU0VYT/releases/latest/download/
+  IU0VYT.Flash.zip (dalla 3.9). GitHub lo rimanda al file IU0VYT.Flash.zip
+  dell'ultimo rilascio pubblicato.
 - Per l'autore, pubblicare una nuova versione: aumentare appVersion (server.go) e la
   versione in res/risorse.rc, ricompilare, aggiornare versione.txt (righe
-  "versione=x.y" e "compilazione=...") e sostituire il file "IU0VYT.Flash.zip" nel
-  rilascio "NEW" del repository GitHub (che deve essere pubblico). La versione viene
-  letta da versione.txt, oppure dalla riga "Versione x.y" del LEGGIMI.txt.
+  "versione=x.y" e "compilazione=...") e creare nel repository GitHub (pubblico) un
+  nuovo rilascio, NON pre-release e NON bozza, con allegato il file chiamato
+  esattamente "IU0VYT.Flash.zip": diventa l'"ultimo rilascio" (latest) e i programmi
+  già installati lo trovano da soli. La versione viene letta da versione.txt, oppure
+  dalla riga "Versione x.y" del LEGGIMI.txt.
 
 TABELLE DEI CANALI
 - Doppio clic, Invio o F2 per modificare una cella; puoi anche iniziare a scrivere.
@@ -754,13 +806,82 @@ CONVERTITORE E FORMATI UNIVERSALI (3.7)
   "compatta i canali"); quelli in più vanno nelle prime posizioni libere, gli altri
   sono esclusi e segnalati. Le posizioni bloccate di alcune radio (es. canali GMRS
   fissi della GM-15 Pro) restano quelle della radio.
-- Per l'immagine .img di una radio serve un'immagine di quella stessa radio (la
-  scheda aperta dopo "Leggi dalla radio" o "Apri…", oppure un file .img): l'immagine
+- Per l'immagine .img di una radio serve un'immagine di quella stessa radio, cioè la
+  copia completa della sua memoria (la scheda aperta dopo "Leggi dalla radio" o
+  "Apri…", oppure un file .img salvato prima da qui o da CHIRP; dalla 3.8 anche con
+  "📻 Leggi adesso la radio collegata…" direttamente dal convertitore): l'immagine
   contiene impostazioni e taratura della radio, che non si possono inventare, e
   scriverne una "vuota" danneggerebbe la radio. Per K67 e Bajeton si può partire
   anche dalle impostazioni predefinite dei programmi dei costruttori.
 - "📥 Importa…" (scheda di ogni radio) e "Esporta…" → "🔁 Per un'altra radio…" usano
   lo stesso convertitore.
+
+IDENTIFICAZIONE DELLA RADIO (3.8)
+- Scheda "🔎 Identifica": scegli la porta del cavo (o "USB" per le radio DMR con il cavo
+  USB diretto: RD-5R, DM-1801, DM-1701) e premi "Identifica la radio". Si può
+  restringere la ricerca per marca o tipo (analogiche / DMR): è più veloce.
+- Il programma prova uno dopo l'altro i protocolli di LETTURA (prima K67 Pro e Bajeton
+  BJ-8300, poi le radio dei driver, cominciando da quelle con una scheda aperta). I
+  modelli che iniziano il collegamento nello stesso modo sono provati una volta sola
+  (38 tentativi per le 100 radio via cavo). Quando una radio risponde viene letta per
+  intero, come con "Leggi dalla radio", e una copia della lettura viene salvata nella
+  cartella delle copie (copie_radio).
+- Il modello si riconosce dal contenuto della memoria, come fa CHIRP con i file. Molte
+  radio però usano lo stesso protocollo e la stessa memoria senza scrivere da nessuna
+  parte il proprio nome (es. le radio della famiglia UV-17Pro, le PMR della famiglia
+  BF-888S): in quel caso il programma lo dice ("Modello non distinguibile via cavo") e
+  fa scegliere il modello giusto prima di aprire i canali.
+- Si vedono: marca e modello, tipo (analogica FM o DMR, PMR446, GMRS), gamme di
+  frequenza, numero di memorie, collegamento usato, firmware o identificativo
+  comunicato dalla radio (es. UV-5R "BFB297", BJ-8300 "BT-11U V1.00", DM-32UV
+  firmware, K67 "5RH-PRO" o "BF-K6"), testo inviato dalla radio durante il
+  collegamento, canali presenti; per RD-5R, DM-1801 e DM-1701 anche ID DMR, nome della
+  radio, data dell'ultima programmazione e (DM-1701) versione del programma che l'ha
+  scritta. Il numero di serie: nessuna di queste radio lo comunica con il protocollo
+  di programmazione (è solo sull'etichetta).
+- "Apri i canali nella scheda della radio": come dopo "Leggi dalla radio".
+- Tempi: senza radio collegata la ricerca completa dura circa 70 secondi (38 tentativi; meno se restringi la ricerca); una radio
+  che risponde viene trovata appena arriva il suo turno e poi letta.
+- Se una radio risponde ma la lettura non va a buon fine (es. password, modello
+  diverso) le risposte sono elencate nei dettagli. Se la radio resta bloccata in
+  modalità di programmazione, spegnila e riaccendila.
+
+DRIVER USB DELLA DM-1701 (3.8)
+- La DM-1701 (e la Retevis RT84) si collega via USB in modalità DFU (dispositivo
+  0483:DF11) e serve un driver. Due possibilità:
+  1. il driver del costruttore (STTub30), cartella "DM-1701 USB Driver" del pacchetto
+     "DM-1701 CPS": nella finestra "Leggi dalla radio" della DM-1701 il pulsante
+     "Installa il driver USB…" chiede l'installatore (dpinst_amd64.exe, o il file
+     .inf) e lo avvia con l'autorizzazione di Windows (con un .inf usa
+     "pnputil /add-driver … /install", Windows 10 e 11);
+  2. il driver generico WinUSB di Windows, installato con Zadig (https://zadig.akeo.ie,
+     Options → List All Devices, dispositivo 0483 DF11, driver WinUSB): lo stesso usato
+     da dmrconfig e qdmr. Dopo questa operazione il programma del costruttore non vede
+     più la radio finché non si reinstalla il suo driver.
+- Il programma usa da solo quello installato; la finestra mostra se la radio è
+  collegata e con quale driver.
+- Un driver di Windows non si può includere nel programma né ridistribuire: per questo
+  si usa quello ufficiale (o WinUSB, che fa parte di Windows).
+
+BTECH DMR-6X2: AGGIORNAMENTO GUIDATO DEL FIRMWARE (3.8)
+- DMR-6X2 (firmware 2.21) e DMR-6X2 PRO (firmware 1.21) sono radio DMR del marchio BTECH
+  (BaofengTech, Stati Uniti). Il firmware si installa con il programma ufficiale
+  "Firmware_Update" del pacchetto BTECH (menu Tool → Firmware Upgrade del CPS, oppure
+  C:\DMR_6X2_2.21\Update\Firmware_Update.exe), con la radio in modalità
+  aggiornamento: spenta, tieni premuti PTT e Alarm (il tasto arancione) e accendi (il
+  LED lampeggia in rosso); porta COM del "USB Virtual Com Port Driver", 921600 baud,
+  Duplex, "Write". Dopo il firmware (e le icone, PTT + PF2 all'accensione) va fatto il
+  reset (PTT + PF1 all'accensione) e riscritto il codeplug salvato prima: l'aggiornamento
+  cancella la programmazione. Fonte: "STOP and README FIRST.pdf" dei pacchetti
+  ufficiali DMR-6X2-221b e DMR-6X2-PRO-121e (https://baofengtech.com/software/).
+- Nella galleria, scheda della radio → "🧭 Aggiornamento guidato…": scegli il file .spi
+  e il programma controlla che i file .spi, .CDI e .CDD siano coerenti e completi, per
+  quale radio sono (DMR-6X2 o PRO: i firmware non vanno scambiati), che tipo di
+  aggiornamento è (firmware, icone, scheda APRS) e la versione; mostra la procedura
+  giusta e avvia il programma ufficiale (anche come amministratore).
+- La scrittura del firmware la fa il programma BTECH: il suo protocollo non è
+  pubblicato e il programma è compilato, quindi non è stato possibile confrontarlo con
+  un'altra realizzazione; uno sbaglio potrebbe rendere la radio inutilizzabile.
 
 RICERCA PER LE RADIO NON COMPATIBILI (3.7)
 Ricerca nei forum e nei siti di appassionati (CHIRP, RadioReference, miklor.com,
@@ -772,7 +893,12 @@ RigPix, GitHub) di programmi o accorgimenti per le radio non compatibili:
   risultato non sarebbe verificabile.
 - DM-5R (Tier I): dmrconfig gestisce la TD-5R ma indica espressamente "non DM-5R";
   la radio usa un cavo diverso dalle altre Baofeng e un programma nativo. Non gestita
-  (la RD-5R, radio diversa, è gestita).
+  (la RD-5R, radio diversa, è gestita). Per gestirla servirebbero (3.8): il suo
+  programma del costruttore (scritto in C++Builder, quindi codice macchina: si studia
+  con un disassemblatore come Ghidra o IDR, molto più lentamente di un programma .NET)
+  e soprattutto una registrazione del dialogo tra quel programma e una DM-5R vera
+  (lettura e scrittura) fatta con un monitor della porta seriale, insieme al file
+  salvato dal programma e al cavo specifico della radio.
 - DM-1702 / DM-1703: esistono strumenti liberi (MD1702-tools) che leggono e scrivono la
   memoria, ma gli stessi autori avvertono che con il firmware L05 e il caricatore
   MD1706-V2 hanno reso radio inutilizzabili: non gestite per prudenza.
@@ -908,6 +1034,23 @@ Novità della 3.7, stesse verifiche:
   stessi canali, toni DCS compresi; CSV scritti da CHIRP dalle sue immagini di prova
   (UV-5R, UV-9G, UV-17Pro, BJ-7800: 186 canali) letti qui uguali.
 Anche queste parti NON sono state provate con radio vere.
+Novità della 3.8, stesse verifiche:
+- identificazione: ognuno dei 103 modelli dei driver, simulato con la sua memoria di
+  prova, è stato cercato con il tentativo del suo gruppo e riconosciuto (o, quando la
+  memoria di prova è quella di un altro modello della famiglia, riconosciuto come
+  quel modello, come farebbe CHIRP), con gli stessi canali della radio simulata e la
+  memoria della radio simulata invariata; ricerca completa dall'API con K67 Pro
+  (anche «BF-K6»), BJ-8300 e 9 radio dei driver messe in fondo ai tentativi, compresa
+  l'apertura nella scheda; nessuna radio: ricerca finita senza falsi riconoscimenti;
+- ID DMR, nome e data di programmazione di RD-5R, DM-1801 e DM-1701 uguali a quelli
+  stampati da dmrconfig per memorie create da dmrconfig;
+- DM-1701: lettura e scrittura complete attraverso lo stesso adattatore delle
+  richieste USB usato con WinUSB e STTub30 (5.967 richieste); l'accesso WinUSB vero e
+  l'installazione del driver NON sono stati provati (servono Windows e la radio);
+- DMR-6X2: controllo dei file su tutti i file dei pacchetti ufficiali 2.21b e 1.21e
+  (firmware, icone, scheda APRS) e su file danneggiati (dati troncati, modello
+  scambiato, inizio del firmware errato, file mancante).
+Anche queste parti NON sono state provate con radio vere.
 
 LIMITI
 - I protocolli e i formati sono proprietari e ricostruiti dai programmi originali:
@@ -921,6 +1064,10 @@ LIMITI
 - Almeno alcuni K67 Pro si identificano come "BF-K6" (verificato con una radio vera,
   3.7): la scrittura parte se l'ultima radio letta era dello stesso modello, come nel
   programma originale (con la copia di sicurezza attiva la lettura avviene da sola).
+- Identificazione: alcune radio diverse usano lo stesso protocollo e la stessa memoria
+  senza indicare il proprio modello: in quel caso il programma propone i modelli
+  possibili e la scelta è tua. Una radio che risponde a un protocollo di un'altra
+  famiglia potrebbe restare in modalità di programmazione: spegnila e riaccendila.
 - Il download da Internet usa la connessione diretta (non il proxy di sistema).
 - Radio gestite con i driver di CHIRP: valgono i limiti di CHIRP per quel modello (es.
   BJ-7800 scritto per il firmware V0.15P; se la radio ha un firmware più recente e non

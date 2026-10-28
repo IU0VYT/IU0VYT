@@ -19,11 +19,14 @@ package main
 
 import (
 	"context"
+	"encoding/binary"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+	"unicode/utf16"
 	"unsafe"
 
 	"golang.org/x/sys/windows"
@@ -208,21 +211,126 @@ func (p *hidPort) Purge() error      { p.rbuf = nil; return nil }
 func (p *hidPort) SetBaud(int) error { return nil }
 func (p *hidPort) Close() error      { return windows.CloseHandle(p.h) }
 
-// ---------------------------------------------------------------- DFU (driver STTub30)
+// ---------------------------------------------------------------- DFU (driver STTub30 o WinUSB)
 
-// Radio in modalità DFU (DM-1701): come dfu-windows.c di dmrconfig, le richieste
-// di controllo passano al driver «STTub30» di STMicroelectronics (installato dal
-// pacchetto del costruttore) con DeviceIoControl(PU_VENDOR_REQUEST). Il Port
-// riceve le richieste nel formato di drv_tyt.go (8 byte + dati in uscita) e
-// restituisce l'esito (4 byte) e i dati in entrata.
-type dfuPort struct {
-	h    windows.Handle
-	rbuf []byte
-	wbuf []byte
-}
+// Radio in modalità DFU (DM-1701): le richieste di controllo USB passano
+//   - al driver «STTub30» di STMicroelectronics (installato dal pacchetto del
+//     costruttore) con DeviceIoControl(PU_VENDOR_REQUEST), come dfu-windows.c di
+//     dmrconfig;
+//   - oppure (3.8) al driver generico di Windows «WinUSB» (installabile con
+//     Zadig), con WinUsb_ControlTransfer, come dfu-libusb.c di dmrconfig con
+//     libusb su Windows.
+//
+// Il Port (dfuPort, dfuport.go) riceve le richieste nel formato di drv_tyt.go
+// (8 byte + dati in uscita) e restituisce l'esito (4 byte) e i dati in entrata.
 
 // CTL_CODE(FILE_DEVICE_UNKNOWN, 0x0805, METHOD_BUFFERED, FILE_ANY_ACCESS)
 const puVendorRequest = 0x22<<16 | 0x0805<<2
+
+var (
+	modWinusb                 = windows.NewLazySystemDLL("winusb.dll")
+	procWinUsbInitialize      = modWinusb.NewProc("WinUsb_Initialize")
+	procWinUsbFree            = modWinusb.NewProc("WinUsb_Free")
+	procWinUsbControlTransfer = modWinusb.NewProc("WinUsb_ControlTransfer")
+	procWinUsbSetPipePolicy   = modWinusb.NewProc("WinUsb_SetPipePolicy")
+	// GUID_DEVINTERFACE_USB_DEVICE: tutti i dispositivi USB presenti
+	guidUSBDevice = windows.GUID{Data1: 0xA5DCBF10, Data2: 0x6530, Data3: 0x11D2, Data4: [8]byte{0x90, 0x1F, 0x00, 0xC0, 0x4F, 0xB9, 0x51, 0xED}}
+)
+
+const dfuNoDriver = "la radio è collegata ma Windows non ha un driver adatto per la modalità DFU (dispositivo 0483:DF11). " +
+	"Installa il driver USB del costruttore (pulsante «Installa il driver USB…», cartella «DM-1701 USB Driver» del pacchetto «DM-1701 CPS») " +
+	"oppure il driver WinUSB con Zadig (https://zadig.akeo.ie: Options → List All Devices, scegli «STM32 BOOTLOADER» o 0483 DF11, driver WinUSB, Install Driver)"
+
+var procSetupDiOpenDevRegKey = modSetupapi.NewProc("SetupDiOpenDevRegKey")
+
+// usbPresent: percorsi dei dispositivi USB presenti con questi VID e PID: quelli
+// dell'interfaccia generica dei dispositivi USB e quelli delle interfacce
+// dichiarate dal driver nel registro («DeviceInterfaceGUIDs», scritte per
+// WinUSB da Zadig / libwdi), come fa libusb su Windows.
+func usbPresent(vid, pid uint16) []string {
+	key := strings.ToLower(fmt.Sprintf("vid_%04x&pid_%04x", vid, pid))
+	var out []string
+	seen := map[string]bool{}
+	add := func(paths []string) {
+		for _, p := range paths {
+			if l := strings.ToLower(p); strings.Contains(l, key) && !seen[l] {
+				seen[l] = true
+				out = append(out, p)
+			}
+		}
+	}
+	add(usbDevicePaths(guidUSBDevice))
+	for _, g := range usbDriverInterfaceGUIDs(key) {
+		add(usbDevicePaths(g))
+	}
+	return out
+}
+
+// usbDriverInterfaceGUIDs: GUID delle interfacce scritti nel registro per i
+// dispositivi USB presenti con l'identificativo key («vid_0483&pid_df11»)
+func usbDriverInterfaceGUIDs(key string) []windows.GUID {
+	const digcfPresent, digcfAllClasses = 0x2, 0x4
+	enum, _ := windows.UTF16PtrFromString("USB")
+	h, _, _ := procSetupDiGetClassDevsW.Call(0, uintptr(unsafe.Pointer(enum)), 0, digcfPresent|digcfAllClasses)
+	if h == 0 || h == ^uintptr(0) {
+		return nil
+	}
+	defer procSetupDiDestroyDeviceInfoList.Call(h)
+	var out []windows.GUID
+	for i := 0; i < 512; i++ {
+		var d spDevinfoData
+		d.cbSize = uint32(unsafe.Sizeof(d))
+		if r, _, _ := procSetupDiEnumDeviceInfo.Call(h, uintptr(i), uintptr(unsafe.Pointer(&d))); r == 0 {
+			break
+		}
+		buf := make([]uint16, 1024)
+		const spdrpHardwareID = 0x1
+		if r, _, _ := procSetupDiGetDeviceRegistryPropW.Call(h, uintptr(unsafe.Pointer(&d)), spdrpHardwareID, 0,
+			uintptr(unsafe.Pointer(&buf[0])), uintptr(len(buf)*2), 0); r == 0 {
+			continue
+		}
+		if !strings.Contains(strings.ToLower(windows.UTF16ToString(buf)), key) {
+			continue
+		}
+		// chiave del dispositivo (DICS_FLAG_GLOBAL, DIREG_DEV, KEY_READ)
+		k, _, _ := procSetupDiOpenDevRegKey.Call(h, uintptr(unsafe.Pointer(&d)), 1, 0, 1, windows.KEY_READ)
+		if k == 0 || k == ^uintptr(0) {
+			continue
+		}
+		rk := registryKey(windows.Handle(k))
+		for _, name := range []string{"DeviceInterfaceGUIDs", "DeviceInterfaceGUID"} {
+			for _, gs := range rk.strings(name) {
+				if g, err := windows.GUIDFromString(strings.TrimSpace(gs)); err == nil {
+					out = append(out, g)
+				}
+			}
+		}
+		windows.RegCloseKey(windows.Handle(k))
+	}
+	return out
+}
+
+type registryKey windows.Handle
+
+// strings: valore REG_SZ o REG_MULTI_SZ come elenco di stringhe
+func (k registryKey) strings(name string) []string {
+	n, _ := windows.UTF16PtrFromString(name)
+	var typ, size uint32
+	if windows.RegQueryValueEx(windows.Handle(k), n, nil, &typ, nil, &size) != nil || size < 2 || size > 8192 {
+		return nil
+	}
+	buf := make([]uint16, size/2+1)
+	if windows.RegQueryValueEx(windows.Handle(k), n, nil, &typ, (*byte)(unsafe.Pointer(&buf[0])), &size) != nil {
+		return nil
+	}
+	var out []string
+	for _, part := range strings.Split(string(utf16.Decode(buf[:size/2])), "\x00") {
+		if part != "" {
+			out = append(out, part)
+		}
+	}
+	return out
+}
 
 func openDFUPort(name string) (Port, error) {
 	vid, pid, err := usbIDs(name)
@@ -232,14 +340,30 @@ func openDFUPort(name string) (Port, error) {
 	if vid != 0x0483 || pid != 0xDF11 {
 		return nil, fmt.Errorf("dispositivo DFU %04X:%04X non gestito", vid, pid)
 	}
-	// GUID dell'interfaccia del driver STTub30 (dfu-windows.c)
+	// 1) driver del costruttore (STTub30): GUID dell'interfaccia (dfu-windows.c)
 	guid := windows.GUID{Data1: 0x3fe809ab, Data2: 0xfb91, Data3: 0x4cb5, Data4: [8]byte{0xa6, 0x43, 0x69, 0x67, 0x0d, 0x52, 0x36, 0x6e}}
-	paths := usbDevicePaths(guid)
+	if paths := usbDevicePaths(guid); len(paths) > 0 {
+		return openSTTubPort(paths[0])
+	}
+	// 2) WinUSB
+	paths := usbPresent(vid, pid)
 	if len(paths) == 0 {
 		return nil, fmt.Errorf("radio non trovata sulla porta USB (modalità DFU, dispositivo 0483:DF11): collega il cavo USB, accendi la radio " +
-			"e installa il driver USB del costruttore (cartella «DM-1701 USB Driver» del pacchetto «DM-1701 CPS»)")
+			"e installa il driver USB del costruttore (cartella «DM-1701 USB Driver» del pacchetto «DM-1701 CPS») oppure WinUSB con Zadig")
 	}
-	p, err := windows.UTF16PtrFromString(paths[0])
+	var last error
+	for _, p := range paths {
+		port, err := openWinUSBPort(p)
+		if err == nil {
+			return port, nil
+		}
+		last = err
+	}
+	return nil, last
+}
+
+func openSTTubPort(path string) (Port, error) {
+	p, err := windows.UTF16PtrFromString(path)
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +371,84 @@ func openDFUPort(name string) (Port, error) {
 	if err != nil {
 		return nil, fmt.Errorf("impossibile aprire la radio USB (DFU): %v. Chiudi il programma del costruttore se è aperto", err)
 	}
-	return &dfuPort{h: h}, nil
+	port := &dfuPort{close: func() error { return windows.CloseHandle(h) }}
+	port.xfer = func(in bool, rt, req byte, value, index uint16, out []byte, n int) (int32, []byte) {
+		var got uint32
+		if in {
+			rq := cntrpipeRq(true, req, value, index, n)
+			data := make([]byte, n)
+			var o *byte
+			if n > 0 {
+				o = &data[0]
+			}
+			if err := windows.DeviceIoControl(h, puVendorRequest, &rq[0], uint32(len(rq)), o, uint32(n), &got, nil); err != nil || int(got) != n {
+				return -1, nil
+			}
+			return int32(n), data
+		}
+		rq := append(cntrpipeRq(false, req, value, index, len(out)), out...)
+		if err := windows.DeviceIoControl(h, puVendorRequest, &rq[0], uint32(len(rq)), nil, 0, &got, nil); err != nil {
+			return -1, nil
+		}
+		return int32(len(out)), nil
+	}
+	return port, nil
+}
+
+// openWinUSBPort: dispositivo con il driver WinUSB (WinUsb_Initialize fallisce
+// se il driver è un altro o manca)
+func openWinUSBPort(path string) (Port, error) {
+	if err := modWinusb.Load(); err != nil {
+		return nil, fmt.Errorf("winusb.dll non disponibile: %v", err)
+	}
+	p, err := windows.UTF16PtrFromString(path)
+	if err != nil {
+		return nil, err
+	}
+	h, err := windows.CreateFile(p, windows.GENERIC_READ|windows.GENERIC_WRITE, windows.FILE_SHARE_READ|windows.FILE_SHARE_WRITE, nil,
+		windows.OPEN_EXISTING, windows.FILE_ATTRIBUTE_NORMAL|windows.FILE_FLAG_OVERLAPPED, 0)
+	if err != nil {
+		return nil, errors.New(dfuNoDriver)
+	}
+	var wu uintptr
+	if r, _, _ := procWinUsbInitialize.Call(uintptr(h), uintptr(unsafe.Pointer(&wu))); r == 0 {
+		windows.CloseHandle(h)
+		return nil, errors.New(dfuNoDriver)
+	}
+	// tempo massimo delle richieste di controllo (PIPE_TRANSFER_TIMEOUT, ms)
+	tmo := uint32(5000)
+	procWinUsbSetPipePolicy.Call(wu, 0, 0x03, 4, uintptr(unsafe.Pointer(&tmo)))
+	port := &dfuPort{close: func() error {
+		procWinUsbFree.Call(wu)
+		return windows.CloseHandle(h)
+	}}
+	port.xfer = func(in bool, rt, req byte, value, index uint16, out []byte, n int) (int32, []byte) {
+		// WINUSB_SETUP_PACKET (8 byte, passato per valore)
+		var sp [8]byte
+		sp[0], sp[1] = rt, req
+		binary.LittleEndian.PutUint16(sp[2:], value)
+		binary.LittleEndian.PutUint16(sp[4:], index)
+		buf := out
+		if in {
+			buf = make([]byte, n)
+		}
+		binary.LittleEndian.PutUint16(sp[6:], uint16(len(buf)))
+		var bp *byte
+		if len(buf) > 0 {
+			bp = &buf[0]
+		}
+		var got uint32
+		r, _, _ := procWinUsbControlTransfer.Call(wu, uintptr(binary.LittleEndian.Uint64(sp[:])), uintptr(unsafe.Pointer(bp)),
+			uintptr(len(buf)), uintptr(unsafe.Pointer(&got)), 0)
+		if r == 0 {
+			return -1, nil
+		}
+		if in {
+			return int32(got), buf[:got]
+		}
+		return int32(got), nil
+	}
+	return port, nil
 }
 
 // CNTRPIPE_RQ del driver: USHORT Function, ULONG Direction, UCHAR Request,
@@ -264,63 +465,3 @@ func cntrpipeRq(in bool, req byte, value, index uint16, length int) []byte {
 	b[16], b[17], b[18], b[19] = byte(length), byte(length>>8), byte(length>>16), byte(length>>24)
 	return b
 }
-
-func (p *dfuPort) Write(b []byte) error {
-	p.wbuf = append(p.wbuf, b...)
-	for len(p.wbuf) >= 8 {
-		h := p.wbuf
-		in := h[0]&0x80 != 0
-		n := int(h[6]) | int(h[7])<<8
-		need := 8
-		if !in {
-			need += n
-		}
-		if len(p.wbuf) < need {
-			return nil
-		}
-		req, value, index := h[1], uint16(h[2])|uint16(h[3])<<8, uint16(h[4])|uint16(h[5])<<8
-		var res int32
-		var data []byte
-		var got uint32
-		if in {
-			rq := cntrpipeRq(true, req, value, index, n)
-			data = make([]byte, n)
-			var out *byte
-			if n > 0 {
-				out = &data[0]
-			}
-			if err := windows.DeviceIoControl(p.h, puVendorRequest, &rq[0], uint32(len(rq)), out, uint32(n), &got, nil); err != nil || int(got) != n {
-				res = -1
-			} else {
-				res = int32(n)
-			}
-		} else {
-			rq := append(cntrpipeRq(false, req, value, index, n), h[8:8+n]...)
-			if err := windows.DeviceIoControl(p.h, puVendorRequest, &rq[0], uint32(len(rq)), nil, 0, &got, nil); err != nil {
-				res = -1
-			} else {
-				res = int32(n)
-			}
-		}
-		r := []byte{byte(res), byte(res >> 8), byte(res >> 16), byte(res >> 24)}
-		p.rbuf = append(p.rbuf, r...)
-		if in && res > 0 {
-			p.rbuf = append(p.rbuf, data...)
-		}
-		p.wbuf = p.wbuf[need:]
-	}
-	return nil
-}
-
-func (p *dfuPort) ReadFull(ctx context.Context, b []byte, timeout time.Duration) error {
-	if len(p.rbuf) < len(b) {
-		return errTimeout
-	}
-	copy(b, p.rbuf)
-	p.rbuf = p.rbuf[len(b):]
-	return nil
-}
-
-func (p *dfuPort) Purge() error      { p.rbuf, p.wbuf = nil, nil; return nil }
-func (p *dfuPort) SetBaud(int) error { return nil }
-func (p *dfuPort) Close() error      { return windows.CloseHandle(p.h) }

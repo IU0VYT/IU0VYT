@@ -553,7 +553,9 @@ func (e *uv17lEmu) serve(p Port) error {
 			e.mu.Lock()
 			var d []byte
 			if n == 1 && off == 0xFFF {
-				d = []byte{e.num[pg-1]}
+				// numero della pagina nell'ultimo byte della pagina stessa (come
+				// _get_memory_map di CHIRP: indirizzo 0x1FFF → pagina 1, letta da 0x1000)
+				d = []byte{e.num[pg]}
 			} else if pd, ok := e.pages[pg]; ok {
 				d = append([]byte{}, pd[off:off+n]...)
 			} else {
@@ -696,6 +698,12 @@ func (e *bft1Emu) serve(p Port) error {
 		switch c {
 		case 'R':
 			e.mu.Lock()
+			if a+n > len(e.img) {
+				// indirizzo fuori dalla memoria (richiesta del driver di un altro
+				// modello, ad esempio durante l'identificazione): la radio tace
+				e.mu.Unlock()
+				return fmt.Errorf("indirizzo 0x%04X fuori dalla memoria", a)
+			}
 			d := append([]byte{}, e.img[a:a+n]...)
 			e.mu.Unlock()
 			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
@@ -762,6 +770,12 @@ func (e *rbEmu) serve(p Port) error {
 		switch c {
 		case 'R':
 			e.mu.Lock()
+			if a+n > len(e.img) {
+				// indirizzo fuori dalla memoria (richiesta del driver di un altro
+				// modello, ad esempio durante l'identificazione): la radio tace
+				e.mu.Unlock()
+				return fmt.Errorf("indirizzo 0x%04X fuori dalla memoria", a)
+			}
 			d := append([]byte{}, e.img[a:a+n]...)
 			e.mu.Unlock()
 			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
@@ -828,6 +842,12 @@ func (e *uv3rEmu) serve(p Port) error {
 		switch c {
 		case 'R':
 			e.mu.Lock()
+			if a+n > len(e.img) {
+				// indirizzo fuori dalla memoria (richiesta del driver di un altro
+				// modello, ad esempio durante l'identificazione): la radio tace
+				e.mu.Unlock()
+				return fmt.Errorf("indirizzo 0x%04X fuori dalla memoria", a)
+			}
 			d := append([]byte{}, e.img[a:a+n]...)
 			e.mu.Unlock()
 			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
@@ -908,6 +928,12 @@ func (e *rt22Emu) serve(p Port) error {
 		switch c {
 		case 'R':
 			e.mu.Lock()
+			if a+n > len(e.img) {
+				// indirizzo fuori dalla memoria (richiesta del driver di un altro
+				// modello, ad esempio durante l'identificazione): la radio tace
+				e.mu.Unlock()
+				return fmt.Errorf("indirizzo 0x%04X fuori dalla memoria", a)
+			}
 			d := append([]byte{}, e.img[a:a+n]...)
 			e.mu.Unlock()
 			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
