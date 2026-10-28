@@ -16,9 +16,10 @@ import (
 
 // Conteggi dei modelli del catalogo, gli stessi della schermata «Home»: radio
 // con i canali gestiti, radio con le impostazioni modificabili, modelli della
-// galleria e radio con l'aggiornamento del firmware. Si scrivono in versione.txt
-// (righe radio=, impostazioni=, galleria=, firmware=) e il sito del programma
-// (cartella docs del repository) li legge da lì: vedi TestConteggiVersione.
+// galleria e radio con l'aggiornamento del firmware. Il sito del programma li
+// mostra: a ogni modifica del ramo main il flusso .github/workflows/sito.yml li
+// scrive in versione.txt con TestConteggiVersione e pubblica il file insieme alla
+// cartella docs.
 
 type catCounts struct {
 	Radio        int // radio con i canali gestiti (almeno un driver)
@@ -47,9 +48,9 @@ func catalogCounts() catCounts {
 	return n
 }
 
-// I conteggi in ../versione.txt devono essere quelli del catalogo.
-// Con IU0VYT_SCRIVI_CONTEGGI=1 il test li scrive (o li corregge) lasciando com'è
-// il resto del file:
+// Con IU0VYT_SCRIVI_CONTEGGI=1 il test scrive in ../versione.txt i conteggi del
+// catalogo (righe radio=, impostazioni=, galleria=, firmware=) lasciando com'è il
+// resto del file; senza la variabile controlla quelli presenti (se ci sono):
 //
 //	IU0VYT_SCRIVI_CONTEGGI=1 go test -mod=vendor -count=1 -run TestConteggiVersione .
 func TestConteggiVersione(t *testing.T) {
@@ -90,6 +91,9 @@ func TestConteggiVersione(t *testing.T) {
 			t.Fatal(err)
 		}
 		return
+	}
+	if len(got) == 0 {
+		t.Skip("versione.txt senza conteggi (li scrive il flusso del sito)")
 	}
 	for _, w := range want {
 		if got[w.key] != strconv.Itoa(w.val) {

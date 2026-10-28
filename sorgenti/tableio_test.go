@@ -245,7 +245,7 @@ func TestChannelExport(t *testing.T) {
 		}
 	}
 	x := readXLC(mustRead(t, sampleXLC), &Report{})
-	if !strings.Contains(string(chanChirp(kindXLC, x, []int{90})), "91,PROVA MONTE ALTO,145.450000,-,0.600000,Tone,67.0,88.5") {
+	if !strings.Contains(string(chanChirp(kindXLC, x, []int{90})), "91,PROVA MONTE ALTO,145.637500,-,0.600000,Tone,67.0,88.5") {
 		t.Error("CHIRP K67")
 	}
 }

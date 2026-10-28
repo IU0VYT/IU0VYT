@@ -73,14 +73,19 @@ func readRadio(b []byte, rep *Report) (string, []*Chan, error) {
 }
 
 func writeRadio(kind string, base []byte, chs []*Chan, rep *Report) ([]byte, error) {
+	// senza file di base si parte dal modello incluso svuotato, come «Nuovo»
 	if kind == kindXLC {
 		if base == nil {
-			base = baseXLC
+			base = blankXLC(baseXLC)
 		}
 		return writeXLC(base, chs, rep), nil
 	}
 	if base == nil {
-		base = baseDAT
+		b, err := blankDAT(baseDAT)
+		if err != nil {
+			return nil, err
+		}
+		base = b
 	}
 	return writeDAT(base, chs, rep)
 }

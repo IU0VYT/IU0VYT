@@ -245,7 +245,7 @@ func TestEditDAT(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if b[64+21] != nil || b[9*64+4] == nil || b[9*64+4].Name != "PMR DI PROVA" || b[9*64+4].TxTone != "141.3" || !b[9*64+4].Narrow {
+	if b[64+21] != nil || b[9*64+4] == nil || b[9*64+4].Name != "PMR DI PROVA" || b[9*64+4].TxTone != "107.2" || !b[9*64+4].Narrow {
 		t.Fatalf("spostamento errato: %+v", b[9*64+4])
 	}
 	if b[0].Name != "NUOVO NOME" || b[0].Power != 1 || b[0].Scan {
@@ -328,6 +328,41 @@ func TestBlank(t *testing.T) {
 	chs, err := readDAT(d, &Report{})
 	if err != nil || count(chs) != 0 {
 		t.Fatal("Bajeton vuoto con canali", err)
+	}
+}
+
+// Senza file di base il file nasce dal modello incluso svuotato: contiene solo i
+// canali passati, identico a quello scritto partendo da «Nuovo».
+func TestWriteRadioNoBase(t *testing.T) {
+	x := readXLC(mustRead(t, sampleXLC), &Report{})
+	d, _ := readDAT(mustRead(t, sampleDAT), &Report{})
+	for _, k := range []struct {
+		kind  string
+		chs   []*Chan
+		blank func() []byte
+	}{
+		{kindXLC, x, func() []byte { return blankXLC(baseXLC) }},
+		{kindDAT, d, func() []byte { b, _ := blankDAT(baseDAT); return b }},
+	} {
+		some := make([]*Chan, len(k.chs))
+		some[2], some[90] = k.chs[2], k.chs[90]
+		got, err := writeRadio(k.kind, nil, some, &Report{})
+		if err != nil {
+			t.Fatal(err)
+		}
+		want, err := writeRadio(k.kind, k.blank(), some, &Report{})
+		if err != nil || !bytes.Equal(got, want) {
+			t.Fatalf("%s: diverso dal file scritto partendo dal modello vuoto", k.kind)
+		}
+		var back []*Chan
+		if k.kind == kindXLC {
+			back = readXLC(got, &Report{})
+		} else if back, err = readDAT(got, &Report{}); err != nil {
+			t.Fatal(err)
+		}
+		if count(back) != 2 || back[2] == nil || back[90] == nil || back[90].Name != some[90].Name {
+			t.Fatalf("%s: canali nel file: %d", k.kind, count(back))
+		}
 	}
 }
 

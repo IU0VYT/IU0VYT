@@ -3,6 +3,30 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+3.9.1 (28/10/2026)
+------------------
+- templates/: k67_base.xlc, bajeton_base.dat (BT-11_CPS v1.0.8) e bajeton_base109.dat
+  (BT-11_CPS v1.0.9) sostituiti con file salvati dai programmi dei costruttori senza
+  leggere nessuna radio: nessun canale, impostazioni di fabbrica. Il file vuoto del
+  K67 resta identico byte per byte; Bajeton: banda all'accensione A
+  (cbB_CurWorkMode 0) e, nel formato v1.0.9, cbB_DivideCH 1 (tutti i canali), come
+  il file nuovo del BT-11_CPS v1.0.9.
+- convert.go writeRadio: senza file di base usa il modello svuotato
+  (blankXLC/blankDAT), come «Nuovo». radio_test.go TestWriteRadioNoBase.
+- testdata/k67.xlc e testdata/bajeton.dat: nomi, frequenze e toni dei canali
+  sostituiti con dati inventati, stessa struttura dei file dei programmi originali
+  (radio_test.go, tableio_test.go e diff_test.go aggiornati). testdata/pontixls.xls
+  non è più nel repository (elenco IK2ANE: da scaricare per TestImportIK2ANE).
+- identify_test.go TestIdentifyFullScan: radio simulate con i file di prova.
+- Esempi di nomi nei testi (LEGGIMI.txt, finestra dei nomi in ui/dialogs.js,
+  model.go) e nei test con località di fantasia.
+- conteggi_test.go TestConteggiVersione e .github/workflows/sito.yml: il sito
+  (cartella docs) mostra i conteggi dei modelli calcolati dal catalogo, pubblicati
+  a ogni modifica del ramo main.
+- Tolti dal repository file di prova non usati dalla compilazione e dai test
+  (verifica: programmi di confronto privati, cartella __pycache__).
+
+
 3.9 (28/10/2026)
 ----------------
 - info.go: indirizzo degli aggiornamenti .../releases/latest/download/IU0VYT.Flash.zip

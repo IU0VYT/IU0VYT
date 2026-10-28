@@ -195,8 +195,9 @@ func TestIdentifyFullScan(t *testing.T) {
 		want  []string // campi attesi (etichetta=valore, valore parziale)
 		mem   func() []byte
 	}
-	k67 := &k67Emu{mem: xlcImageForRadio(baseXLC), model: "BF-K6"}
-	btImg, err := datToEEPROM(baseDAT)
+	// radio simulate con i canali dei file di prova (dati inventati)
+	k67 := &k67Emu{mem: xlcImageForRadio(mustRead(t, sampleXLC)), model: "BF-K6"}
+	btImg, err := datToEEPROM(mustRead(t, sampleDAT))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -267,10 +268,10 @@ func TestIdentifyFullScan(t *testing.T) {
 			}
 		})
 	}
-	if !bytes.Equal(k67.mem, xlcImageForRadio(baseXLC)) {
+	if !bytes.Equal(k67.mem, xlcImageForRadio(mustRead(t, sampleXLC))) {
 		t.Errorf("memoria della K67 simulata cambiata")
 	}
-	if b2, _ := datToEEPROM(baseDAT); !bytes.Equal(bt.mem[:len(b2)], b2) {
+	if b2, _ := datToEEPROM(mustRead(t, sampleDAT)); !bytes.Equal(bt.mem[:len(b2)], b2) {
 		t.Errorf("memoria della BJ-8300 simulata cambiata")
 	}
 }

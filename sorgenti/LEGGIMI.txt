@@ -1,10 +1,20 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO BAOFENG E BAJETON
 =====================================================================
-Versione 3.9 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 3.9.1 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 3.9.1:
+- modelli vuoti neutri: i file nuovi del K67 Pro e della Bajeton (pulsante "Nuovo",
+  convertitore, copia tra le radio) partono da file salvati dai programmi dei
+  costruttori senza leggere nessuna radio, quindi senza canali e con le
+  impostazioni di fabbrica. Per la Bajeton in formato BT-11_CPS v1.0.9 la
+  "Divisione dei canali" di un file nuovo è "Tutti i canali (960)", come nel
+  programma originale (si cambia con "⚙ Impostazioni…");
+- un file scritto senza file di base parte sempre dal modello vuoto;
+- file di prova dei sorgenti con nomi e frequenze inventati;
+- il sito del programma si aggiorna da solo con i conteggi dei modelli.
 Novità della 3.9:
 - aggiornamenti: il programma verifica e scarica l'ultima versione dall'indirizzo
   https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip (sempre
@@ -653,17 +663,15 @@ SCHEDA INFO E AGGIORNAMENTI
   dell'ultimo rilascio pubblicato.
 - Per l'autore, pubblicare una nuova versione: aumentare appVersion (server.go) e la
   versione in res/risorse.rc, ricompilare, aggiornare versione.txt (righe
-  "versione=x.y" e "compilazione=..."), aggiungere a versione.txt i conteggi dei
-  modelli eseguendo nella cartella sorgenti
-    IU0VYT_SCRIVI_CONTEGGI=1 go test -mod=vendor -count=1 -run TestConteggiVersione .
-  (righe "radio=", "impostazioni=", "galleria=", "firmware=", calcolate dal catalogo
-  come nella schermata Home e mostrate dal sito https://iu0vyt.github.io/IU0VYT/;
-  senza la variabile il test controlla che siano giuste), caricare versione.txt
-  anche nel repository e creare nel repository GitHub (pubblico) un
+  "versione=x.y" e "compilazione=...") e creare nel repository GitHub (pubblico) un
   nuovo rilascio, NON pre-release e NON bozza, con allegato il file chiamato
   esattamente "IU0VYT.Flash.zip": diventa l'"ultimo rilascio" (latest) e i programmi
   già installati lo trovano da soli. La versione viene letta da versione.txt, oppure
   dalla riga "Versione x.y" del LEGGIMI.txt.
+- Il sito https://iu0vyt.github.io/IU0VYT/ (cartella docs) si aggiorna da solo: a
+  ogni modifica del ramo main il flusso .github/workflows/sito.yml calcola dal
+  catalogo i conteggi dei modelli (come nella schermata Home) e li pubblica; la
+  versione e il pulsante di download seguono l'ultimo rilascio pubblicato.
 
 TABELLE DEI CANALI
 - Doppio clic, Invio o F2 per modificare una cella; puoi anche iniziare a scrivere.

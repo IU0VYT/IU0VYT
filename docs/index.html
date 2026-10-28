@@ -303,9 +303,11 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
     });
   }
   // conteggi dei modelli (righe radio=, impostazioni=, galleria=, firmware= di
-  // versione.txt, scritte a ogni compilazione dal catalogo del programma); se il
-  // file non si legge restano i numeri già scritti nella pagina
-  var fileVer = withTimeout('https://raw.githubusercontent.com/' + REPO + '/main/versione.txt', 8000)
+  // versione.txt, calcolate dal catalogo del programma e pubblicate con il sito a
+  // ogni modifica dei sorgenti); se il file non si legge restano i numeri già
+  // scritti nella pagina
+  var fileVer = withTimeout('versione.txt', 8000)
+    .catch(function () { return withTimeout('https://raw.githubusercontent.com/' + REPO + '/main/versione.txt', 8000); })
     .then(function (r) { return r.text(); })
     .then(function (t) {
       var kv = {}, re = /^\s*([A-Za-z]+)\s*=\s*(.+?)\s*$/gm, m;

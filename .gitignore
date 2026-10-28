@@ -3,3 +3,4 @@ sorgenti/testdata/pontixls.xls
 **/bin/
 **/obj/
 sorgenti/gestionecanali
+**/__pycache__/
