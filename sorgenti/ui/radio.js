@@ -77,7 +77,9 @@ class RadioView {
         ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw] ? `<button class="btn" data-a="firmware" title="Aggiorna il firmware della radio (file ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw]}, anche dentro archivi .zip o .rar, dal PC o da Internet)">⬆ Aggiorna firmware…</button>` : ''}
         ${d.settings ? '<button class="btn" data-a="settings" title="Impostazioni della radio (menu, display, VOX, DTMF…), con la descrizione di ogni voce">⚙ Impostazioni…</button>' : ''}
         ${this.kind === 'baj' ? `<label class="note" style="white-space:nowrap" title="Il programma Bajeton BT-11_CPS v1.0.9 salva i file .dat in un formato diverso dalla v1.0.8 e le due versioni non aprono i file dell'altra. Scegli la versione installata sul tuo PC: il file aperto viene convertito (canali e impostazioni restano gli stessi) e i nuovi file e le letture dalla radio useranno questo formato.">File per BT-11_CPS
-          <select data-datver><option value="1.0.8">v1.0.8</option><option value="1.0.9">v1.0.9</option></select></label>` : ''}
+          <select data-datver><option value="1.0.8">v1.0.8</option><option value="1.0.9">v1.0.9</option></select></label>
+          <label class="note" data-dividebox style="white-space:nowrap;display:none" title="Come nel programma BT-11_CPS v1.0.9 (Channel Divide): canali divisi in 15 zone da 64 oppure tutti i 960 canali in un unico elenco. Cambia anche il modo in cui la radio mostra i canali.">Canali
+          <select data-divide><option value="0">in 15 zone da 64</option><option value="1">tutti (960)</option></select></label>` : ''}
         <span class="sep"></span>
         <span class="info" data-info></span>
       </div>
@@ -132,16 +134,32 @@ class RadioView {
       dv.addEventListener('change', async () => {
         const ver = dv.value;
         try {
-          await api('radio/datver', { ver }, { busyText: 'Conversione del file…' });
+          const rv = await api('radio/datver', { ver }, { busyText: 'Conversione del file…' });
           if (App.init.settings) App.init.settings.bajVer = ver;
+          if (this.loaded && rv.single !== undefined) this.setLayout(rv.single);
           if (this.loaded && this.datVer && this.datVer !== ver) {
             this.datVer = ver;
+            this.syncDivide();
             this.dirty = true;
             App.onDirty();
             this.render();
             toast(`File convertito per BT-11_CPS v${ver}: salvalo per usarlo con quella versione del programma.`);
           } else toast(`I nuovi file e le letture dalla radio saranno nel formato di BT-11_CPS v${ver}.`);
         } catch (e) { dv.value = this.datVer || '1.0.8'; reportError(e); }
+      });
+    }
+    const dvd = $('[data-divide]', this.page);
+    if (dvd) {
+      dvd.addEventListener('change', async () => {
+        try {
+          const res = await api('radio/settings/set', { kind: this.kind, values: { divide_ch: dvd.value } }, { busyText: 'Applicazione…' });
+          this.dirty = true;
+          App.onDirty();
+          this.setLayout(!!res.single);
+          this.render();
+          toast(res.single ? 'Canali in un unico elenco (960): salva il file o scrivi nella radio per conservare la scelta.'
+            : 'Canali divisi in 15 zone da 64: salva il file o scrivi nella radio per conservare la scelta.');
+        } catch (e) { reportError(e); this.syncDivide(); }
       });
     }
     this.grid = new Grid($('[data-grid]', this.page), {
@@ -159,7 +177,6 @@ class RadioView {
 
   columns() {
     const d = this.def;
-    const tones = { type: 'tone', value: r => r.ch ? r.ch[this._tk] : '' };
     const cols = [
       { key: 'pos', title: d.zones ? 'Pos.' : 'N°', width: 58, cls: 'pos', text: r => this.posText(r.id) },
       { key: 'name', title: 'Nome', width: d.nameMax * 9 + 30, cls: 'name', text: r => r.ch ? r.ch.name : '',
@@ -315,7 +332,32 @@ class RadioView {
     this.changed();
   }
 
+  // Bajeton: scelta «Canali» visibile solo per i file della v1.0.9
+  syncDivide() {
+    const box = $('[data-dividebox]', this.page), sel = $('[data-divide]', this.page);
+    if (!box) return;
+    box.style.display = this.loaded && this.datVer === '1.0.9' ? '' : 'none';
+    sel.value = this.single ? '1' : '0';
+  }
+
+  // Bajeton: canali in 15 zone da 64 oppure in un unico elenco di 960 («tutti i
+  // canali» dei file della v1.0.9 di BT-11_CPS, cbB_DivideCH), come il programma originale
+  setLayout(single) {
+    if (this.kind !== 'baj') return;
+    const zones = single ? 0 : RADIO_DEF.baj.zones;
+    this.single = !!single;
+    if ((this.def.zones || 0) === zones) { this.syncDivide(); return; }
+    this.def = Object.assign({}, RADIO_DEF.baj, { zones, perZone: single ? 0 : RADIO_DEF.baj.perZone });
+    this.single = !!single;
+    this.zone = 0;
+    this.build();
+    const dv = $('[data-datver]', this.page);
+    if (dv && this.datVer) dv.value = this.datVer;
+    this.syncDivide();
+  }
+
   load(resp) {
+    this.setLayout(!!resp.single);
     this.loaded = true;
     this.path = resp.path || '';
     this.fromRadio = false;
@@ -325,6 +367,7 @@ class RadioView {
     this.datVer = resp.datVer || '';
     const dv = $('[data-datver]', this.page);
     if (dv && this.datVer) dv.value = this.datVer;
+    this.syncDivide();
     this.dirty = false;
     this.undoStack = []; this.redoStack = [];
     this.zone = this.def.zones ? 0 : 0;
@@ -790,11 +833,14 @@ class RadioView {
   }
 
   sessionData() {
-    return { loaded: this.loaded, path: this.path, chans: this.chans, bands: this.bands, dirty: this.dirty, zone: this.zone, fromRadio: !!this.fromRadio };
+    return { loaded: this.loaded, path: this.path, chans: this.chans, bands: this.bands, dirty: this.dirty, zone: this.zone, fromRadio: !!this.fromRadio, single: !!this.single, datVer: this.datVer || '' };
   }
   restore(s) {
     if (!s || !s.loaded) return;
+    this.datVer = s.datVer || '';
+    this.setLayout(!!s.single);
     this.loaded = true; this.path = s.path; this.fromRadio = !!s.fromRadio; this.chans = s.chans; this.bands = s.bands || []; this.dirty = s.dirty; this.zone = s.zone || 0;
+    this.syncDivide();
     this.render();
   }
 }

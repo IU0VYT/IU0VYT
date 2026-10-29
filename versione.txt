@@ -1,2 +1,2 @@
-versione=3.9.1
-compilazione=2026-10-28T21:40
+versione=3.9.2
+compilazione=2026-10-29T20:25

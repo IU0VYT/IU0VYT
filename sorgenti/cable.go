@@ -113,7 +113,7 @@ func (a *App) apiCablePorts(r *http.Request) (interface{}, error) {
 	if ports == nil {
 		ports = []PortInfo{}
 	}
-	return map[string]interface{}{"ports": ports, "settings": a.store.Settings, "backupDir": a.backupDir()}, nil
+	return map[string]interface{}{"ports": ports, "settings": a.store.Get(), "backupDir": a.backupDir()}, nil
 }
 
 func (a *App) apiCableStart(r *http.Request) (interface{}, error) {
@@ -169,7 +169,7 @@ func (a *App) apiCableStart(r *http.Request) (interface{}, error) {
 		return nil, errors.New("operazione sconosciuta")
 	}
 	// impostazioni ricordate
-	st := a.store.Settings
+	st := a.store.Get()
 	if req.Radio == kindXLC {
 		st.K67Port, st.K67Baud, st.K67Pwd = req.Port, req.Baud, req.Password
 	} else {
@@ -197,7 +197,17 @@ func (a *App) apiCableStart(r *http.Request) (interface{}, error) {
 	a.mu.Unlock()
 	go func() {
 		defer cancel()
-		res, err := a.runCable(ctx, j, &req, payload)
+		var res interface{}
+		var err error
+		func() {
+			// un errore imprevisto non deve chiudere il programma (come genCableStart)
+			defer func() {
+				if e := recover(); e != nil {
+					err = fmt.Errorf("errore interno: %v", e)
+				}
+			}()
+			res, err = a.runCable(ctx, j, &req, payload)
+		}()
 		j.mu.Lock()
 		defer j.mu.Unlock()
 		switch {
@@ -254,7 +264,7 @@ func (a *App) cableRead(ctx context.Context, j *cableJob, req *cableReq) (file [
 		// copia di sicurezza prima della scrittura) ricorda se la radio si è
 		// identificata come «BF-K6»; la scrittura controlla poi lo stesso modello.
 		// Il valore resta anche dopo la chiusura del programma.
-		if st := a.store.Settings; st.K67K6 != ki.K6 || st.K67Band != ki.FreqBand || !st.K67Known {
+		if st := a.store.Get(); st.K67K6 != ki.K6 || st.K67Band != ki.FreqBand || !st.K67Known {
 			st.K67K6, st.K67Band, st.K67Known = ki.K6, ki.FreqBand, true
 			_ = a.store.SaveSettings(st)
 		}
@@ -294,7 +304,7 @@ func (a *App) runCable(ctx context.Context, j *cableJob, req *cableReq, payload 
 		if kind == kindXLC {
 			resp.Bands = xlcBands(file, 0x10)
 		} else {
-			resp.DatVer = datVer(file)
+			resp.DatVer, resp.Single = datVer(file), datSingleList(file)
 		}
 		return map[string]interface{}{"radio": resp, "info": info, "backup": bp}, nil
 	}
@@ -326,7 +336,7 @@ func (a *App) runCable(ctx context.Context, j *cableJob, req *cableReq, payload 
 		// modello dell'ultima radio letta (flagK6 del programma originale); in
 		// mancanza di letture, quello indicato dalla sessione
 		k6 := sess != nil && sess.K6
-		if st := a.store.Settings; st.K67Known {
+		if st := a.store.Get(); st.K67Known {
 			k6 = st.K67K6
 		}
 		written = xlcImageForRadio(payload)
@@ -349,13 +359,19 @@ func (a *App) runCable(ctx context.Context, j *cableJob, req *cableReq, payload 
 		}
 	}
 	if req.Verify {
-		j.set("Verifica: rilettura della radio", true)
-		file, _, _, err := a.cableRead(ctx, j, req)
+		var file []byte
+		err := verifyRead(ctx, j, func(phase string) error {
+			j.set(phase, true)
+			var e error
+			file, _, _, e = a.cableRead(ctx, j, req)
+			return e
+		})
 		if err == errCancelled {
 			j.note("Verifica annullata: la scrittura era già completata.")
 		} else if err != nil {
-			j.note("Scrittura completata, ma la rilettura di verifica non è riuscita: %v", err)
+			j.note("%s", verifyFailNote(err))
 			res["verified"] = false
+			res["verifyNoRead"] = true
 		} else {
 			bad := verifyWritten(req.Radio, written, file)
 			res["verified"] = len(bad) == 0
@@ -392,4 +408,77 @@ func verifyWritten(kind string, written, readFile []byte) []string {
 		}
 	}
 	return bad
+}
+
+// ---------------------------------------------------------------- verifica dopo la scrittura
+
+// Molte radio, alla fine della scrittura, escono dalla modalità di programmazione
+// e si riavviano (la Bajeton BJ-8300, ad esempio): per qualche secondo non
+// rispondono e, con le radio che hanno l'USB dentro, la porta può sparire e
+// ricomparire. La rilettura di verifica perciò parte dopo una pausa e, se la
+// radio non risponde (o la lettura si interrompe), si riprova finché la radio
+// torna pronta, entro verifyMaxWait. Si legge soltanto: riprovare non cambia
+// nulla nella radio.
+var (
+	verifyFirstWait = 3 * time.Second
+	verifyRetryWait = 3 * time.Second
+	verifyMaxWait   = 45 * time.Second
+)
+
+// errVerify: rilettura di verifica non riuscita neppure riprovando
+type errVerify struct {
+	tries int
+	secs  int
+	last  error
+}
+
+func (e *errVerify) Error() string { return e.last.Error() }
+
+// verifyRead: read(fase) viene chiamata finché riesce; restituisce nil,
+// errCancelled o *errVerify
+func verifyRead(ctx context.Context, j *cableJob, read func(phase string) error) error {
+	start := time.Now()
+	wait := verifyFirstWait
+	for try := 1; ; try++ {
+		j.set("Verifica: attendo che la radio sia di nuovo pronta…", true)
+		if try > 1 {
+			j.prog(0, 0, fmt.Sprintf("La radio non risponde ancora (forse si sta riavviando dopo la scrittura): nuovo tentativo, il %d°…", try))
+		}
+		select {
+		case <-ctx.Done():
+			return errCancelled
+		case <-time.After(wait):
+		}
+		phase := "Verifica: rilettura della radio"
+		if try > 1 {
+			phase += fmt.Sprintf(" (tentativo %d)", try)
+		}
+		err := read(phase)
+		if err == nil {
+			if try > 1 {
+				j.note("La radio si è riavviata dopo la scrittura: la rilettura di verifica è riuscita al tentativo %d.", try)
+			}
+			return nil
+		}
+		if err == errCancelled || ctx.Err() != nil {
+			return errCancelled
+		}
+		j.logf("verifica, tentativo %d: %v", try, err)
+		if time.Since(start)+verifyRetryWait >= verifyMaxWait {
+			return &errVerify{tries: try, secs: int(time.Since(start).Round(time.Second).Seconds()), last: err}
+		}
+		wait = verifyRetryWait
+	}
+}
+
+func verifyFailNote(err error) string {
+	if v, ok := err.(*errVerify); ok {
+		t := fmt.Sprintf("%d tentativi", v.tries)
+		if v.tries == 1 {
+			t = "un tentativo"
+		}
+		return fmt.Sprintf("Scrittura completata, ma la rilettura di verifica non è riuscita dopo %s in %d secondi (%v). "+
+			"La scrittura era già terminata: per controllare, quando la radio è di nuovo accesa e pronta usa «Leggi dalla radio».", t, v.secs, v.last)
+	}
+	return fmt.Sprintf("Scrittura completata, ma la rilettura di verifica non è riuscita: %v", err)
 }

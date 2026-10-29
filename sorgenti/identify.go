@@ -537,7 +537,7 @@ func (a *App) identPlan(req *identReq) []identProbe {
 		if identWanted(req, "Baofeng", false) {
 			// come il programma originale: prima la velocità usata l'ultima volta
 			b1, b2 := 19200, 115200
-			if a.store.Settings.K67Baud == 115200 {
+			if a.store.Get().K67Baud == 115200 {
 				b1, b2 = b2, b1
 			}
 			for _, b := range []int{b1, b2} {
@@ -627,7 +627,7 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 		switch {
 		case p.k67 || p.bt:
 			kind := kindXLC
-			creq := &cableReq{Op: "read", Radio: kindXLC, Port: req.Port, Baud: p.baud, Password: a.store.Settings.K67Pwd}
+			creq := &cableReq{Op: "read", Radio: kindXLC, Port: req.Port, Baud: p.baud, Password: a.store.Get().K67Pwd}
 			if p.bt {
 				kind, creq.Radio, creq.Baud, creq.Password = kindDAT, kindDAT, 0, ""
 			}
@@ -930,7 +930,7 @@ func (a *App) apiIdentifyStart(r *http.Request) (interface{}, error) {
 	a.ident = nil
 	a.mu.Unlock()
 	if !strings.EqualFold(req.Port, "USB") {
-		st := a.store.Settings
+		st := a.store.Get()
 		st.GenPort = req.Port
 		_ = a.store.SaveSettings(st)
 	}
@@ -1011,7 +1011,7 @@ func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 	if kind == kindXLC {
 		resp.Bands = xlcBands(id.sess.Base, 0x10)
 	} else {
-		resp.DatVer = datVer(id.sess.Base)
+		resp.DatVer, resp.Single = datVer(id.sess.Base), datSingleList(id.sess.Base)
 	}
 	return map[string]interface{}{"radio": resp}, nil
 }

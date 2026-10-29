@@ -669,5 +669,9 @@ func (a *App) apiRadioSettingsSet(r *http.Request) (interface{}, error) {
 		return nil, errors.New("impostazioni non applicate: " + strings.Join(errs, "; "))
 	}
 	sess.Base = img
-	return map[string]interface{}{"ok": true, "changed": len(keys), "groups": settingsView(t, img)}, nil
+	out := map[string]interface{}{"ok": true, "changed": len(keys), "groups": settingsView(t, img)}
+	if req.Kind == kindDAT {
+		out["single"] = datSingleList(img) // «Divisione dei canali» cambia la vista della tabella
+	}
+	return out, nil
 }

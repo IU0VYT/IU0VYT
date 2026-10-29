@@ -57,8 +57,9 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 .neon { margin: 0 0 6px; line-height: .95; font-family: "Arial Black", "Segoe UI Black", Impact, system-ui, sans-serif; font-weight: 900;
   letter-spacing: .06em; user-select: none; }
 .neon span { display: block; }
-.neon-top { font-size: clamp(50px, 12vw, 124px); font-style: italic; color: #fff3fb;
-  text-shadow: 0 0 4px #fff, 0 0 10px #ff4fd8, 0 0 22px #ff2ec8, 0 0 44px #ff2ec8, 0 0 80px #b40fd1, 0 0 120px #7a0bd1; }
+.neon-top { font-size: clamp(50px, 12vw, 124px); font-style: italic; color: #a8ffb8;
+  /* verde neon «Matrix» (3.9.2): #00ff41 con alone #008f11 */
+  text-shadow: 0 0 2px #eaffec, 0 0 7px #00ff41, 0 0 16px #00ff41, 0 0 32px #00e03a, 0 0 60px #00b32e, 0 0 104px #008f11; }
 .neon-top i { display: inline-block; font-style: inherit; animation: flicker 6s infinite; animation-delay: calc(var(--i) * .37s); }
 .neon-bottom { margin-top: 6px; font-size: clamp(44px, 10vw, 106px); font-style: italic; transform: skewX(-8deg);
   background: linear-gradient(to bottom, #e9ffff 0%, #7df3ff 38%, #1a8cff 52%, #ffffff 54%, #b6f7ff 75%, #3dc8ff 100%);

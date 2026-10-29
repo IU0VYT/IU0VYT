@@ -131,7 +131,11 @@ func writeAtomic(path string, b []byte) error {
 	if err := os.WriteFile(tmp, b, 0o644); err != nil {
 		return err
 	}
-	return os.Rename(tmp, path)
+	if err := os.Rename(tmp, path); err != nil {
+		_ = os.Remove(tmp)
+		return err
+	}
+	return nil
 }
 
 func (s *Store) SavePonti(pp []*Ponte) error {
@@ -157,6 +161,14 @@ func (s *Store) SavePonti(pp []*Ponte) error {
 	}
 	s.Ponti = pp
 	return nil
+}
+
+// Get: copia delle impostazioni (lette anche dalle operazioni con la radio in
+// corso, in parallelo con le richieste dell'interfaccia)
+func (s *Store) Get() Settings {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.Settings
 }
 
 func (s *Store) SaveSettings(st Settings) error {

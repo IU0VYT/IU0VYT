@@ -111,8 +111,8 @@ func (a *App) genSave(kind string, chs []*Chan, saveAs bool, path string) (inter
 		suggest := genFileBase(m) + ".img"
 		if sess.Path != "" {
 			suggest = sess.Path
-		} else if a.store.Settings.LastDir != "" {
-			suggest = filepath.Join(a.store.Settings.LastDir, suggest)
+		} else if a.store.Get().LastDir != "" {
+			suggest = filepath.Join(a.store.Get().LastDir, suggest)
 		}
 		if p, err = a.dialog(true, "Salva il file della "+m.Name, imgFilter, suggest, "img"); err != nil {
 			return nil, err
@@ -261,7 +261,7 @@ func (a *App) genCableStart(req *cableReq) (interface{}, error) {
 	default:
 		return nil, errors.New("operazione sconosciuta")
 	}
-	st := a.store.Settings
+	st := a.store.Get()
 	if m.Conn == "" {
 		st.GenPort = req.Port
 	}
@@ -382,17 +382,19 @@ func (a *App) runGenCable(ctx context.Context, j *cableJob, m *genModel, req *ca
 	}
 	a.mu.Unlock()
 	if req.Verify {
-		select {
-		case <-ctx.Done():
-		case <-time.After(1500 * time.Millisecond):
-		}
-		mem, err := read("Verifica: rilettura della radio")
+		var mem []byte
+		err := verifyRead(ctx, j, func(phase string) error {
+			var e error
+			mem, e = read(phase)
+			return e
+		})
 		switch {
 		case err == errCancelled:
 			j.note("Verifica annullata: la scrittura era già completata.")
 		case err != nil:
-			j.note("Scrittura completata, ma la rilettura di verifica non è riuscita: %v", err)
+			j.note("%s", verifyFailNote(err))
 			res["verified"] = false
+			res["verifyNoRead"] = true
 		default:
 			var bad []string
 			for i := 0; i < m.Slots; i++ {

@@ -388,6 +388,26 @@ func datVer(b []byte) string {
 	return ""
 }
 
+// datSingleList: true se nel file (formato della v1.0.9 di BT-11_CPS) è scelto
+// «tutti i canali» (cbB_DivideCH = 1): come nel programma originale (FormCHInfo,
+// arrayArea = {15, 1}) i 960 canali si mostrano in un unico elenco invece che in
+// 15 zone da 64. L'ordine dei canali nella memoria della radio è lo stesso.
+// I file della v1.0.8 non hanno questa impostazione: sempre a zone.
+func datSingleList(b []byte) (single bool) {
+	defer func() {
+		if recover() != nil {
+			single = false
+		}
+	}()
+	d, err := ParseNRBF(b)
+	if err != nil {
+		return false
+	}
+	root := d.nobjOf(Val{R: &Rec{T: 9, Ref: 1}}, "KDH.RadioData")
+	f := root.obj("funConfigData", "KDH.FunConfigData")
+	return f.has("cbB_DivideCH") && f.geti("cbB_DivideCH") == 1
+}
+
 func datTemplate(ver string) []byte {
 	if ver == "1.0.9" {
 		return baseDAT109
@@ -410,7 +430,7 @@ func datToVer(b []byte, ver string) ([]byte, error) {
 
 // bajTemplate: modello dei nuovi file .dat (formato scelto dall'utente)
 func (a *App) bajTemplate() []byte {
-	return datTemplate(a.store.Settings.BajVer)
+	return datTemplate(a.store.Get().BajVer)
 }
 
 func (a *App) apiDatVer(r *http.Request) (interface{}, error) {
@@ -441,8 +461,14 @@ func (a *App) apiDatVer(r *http.Request) (interface{}, error) {
 		}
 		a.mu.Unlock()
 	}
-	st := a.store.Settings
+	st := a.store.Get()
 	st.BajVer = req.Ver
 	_ = a.store.SaveSettings(st)
-	return map[string]interface{}{"ver": req.Ver}, nil
+	out := map[string]interface{}{"ver": req.Ver}
+	a.mu.Lock()
+	if s := a.radios[kindDAT]; s != nil {
+		out["single"] = datSingleList(s.Base)
+	}
+	a.mu.Unlock()
+	return out, nil
 }

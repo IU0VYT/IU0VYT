@@ -68,3 +68,38 @@ func TestDatVersions(t *testing.T) {
 		t.Fatalf("impostazioni: %d (1.0.8) e %d (1.0.9)", n8, n9)
 	}
 }
+
+// 3.9.2: canali in zone o in un unico elenco come il programma BT-11_CPS v1.0.9
+// (cbB_DivideCH: 0 zone, 1 tutti i canali); i file della v1.0.8 sono sempre a zone
+func TestDatSingleList(t *testing.T) {
+	if datSingleList(baseDAT) || !datSingleList(baseDAT109) {
+		t.Fatalf("modelli: v1.0.8 %v, v1.0.9 %v", datSingleList(baseDAT), datSingleList(baseDAT109))
+	}
+	src := mustRead(t, sampleDAT) // v1.0.8
+	v9, err := datToVer(src, "1.0.9")
+	if err != nil || datSingleList(src) || datSingleList(v9) {
+		t.Fatalf("conversione di un file a zone: %v %v %v", err, datSingleList(src), datSingleList(v9))
+	}
+	c := newAPIClient(t)
+	c.must("radio/datver", map[string]string{"ver": "1.0.9"})
+	r := c.must("radio/new", map[string]string{"radio": "baj"})
+	if r["datVer"] != "1.0.9" || r["single"] != true {
+		t.Fatalf("nuovo file v1.0.9: %v %v", r["datVer"], r["single"])
+	}
+	s := c.must("radio/settings/set", map[string]interface{}{"kind": "baj", "values": map[string]string{"divide_ch": "0"}})
+	if s["single"] != false {
+		t.Fatalf("divisione in zone: %v", s["single"])
+	}
+	s = c.must("radio/settings/set", map[string]interface{}{"kind": "baj", "values": map[string]string{"divide_ch": "1"}})
+	if s["single"] != true {
+		t.Fatalf("tutti i canali: %v", s["single"])
+	}
+	// ritorno alla v1.0.8: sempre a zone
+	if d := c.must("radio/datver", map[string]string{"ver": "1.0.8"}); d["single"] != false {
+		t.Fatalf("v1.0.8: %v", d)
+	}
+	c.must("radio/datver", map[string]string{"ver": "1.0.8"})
+	if r := c.must("radio/new", map[string]string{"radio": "baj"}); r["single"] != nil {
+		t.Fatalf("nuovo file v1.0.8: %v", r["single"])
+	}
+}

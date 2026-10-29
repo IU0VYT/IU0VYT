@@ -64,7 +64,7 @@ func (a *App) fwHandlers(mux *http.ServeMux, api func(string, func(*http.Request
 	api("fw/identify", a.apiFwIdentify)
 	api("fw/start", a.apiFwStart)
 	api("fw/info", func(r *http.Request) (interface{}, error) {
-		return map[string]interface{}{"settings": a.store.Settings, "firmwareDir": a.fwDir(), "backupDir": a.backupDir()}, nil
+		return map[string]interface{}{"settings": a.store.Get(), "firmwareDir": a.fwDir(), "backupDir": a.backupDir()}, nil
 	})
 }
 
@@ -171,7 +171,7 @@ func (a *App) apiFwLoad(r *http.Request) (interface{}, error) {
 			return nil, err
 		}
 		data, name, where = b, n, strings.TrimSpace(req.URL)
-		st := a.store.Settings
+		st := a.store.Get()
 		st.FwURL = where
 		_ = a.store.SaveSettings(st)
 	} else {
@@ -269,7 +269,7 @@ func (a *App) apiFwIdentify(r *http.Request) (interface{}, error) {
 	if strings.TrimSpace(req.Port) == "" {
 		return nil, errors.New("scegli la porta del cavo di programmazione")
 	}
-	st := a.store.Settings
+	st := a.store.Get()
 	st.BajPort = req.Port
 	_ = a.store.SaveSettings(st)
 	return a.startJob("identify", true, func(ctx context.Context, j *cableJob) (interface{}, error) {
@@ -414,7 +414,7 @@ func (a *App) apiFwStart(r *http.Request) (interface{}, error) {
 		return nil, err
 	}
 	recovery := req.Mode == "recovery"
-	st := a.store.Settings
+	st := a.store.Get()
 	if img.Info.Kind == "anc" {
 		st.BajPort, st.FwBaud = req.Port, req.Baud
 	} else {

@@ -152,7 +152,7 @@ func (a *App) apiConvertRun(r *http.Request) (interface{}, error) {
 		base = b
 	}
 	var band *byte
-	if st := a.store.Settings; st.K67Known {
+	if st := a.store.Get(); st.K67Known {
 		b := st.K67Band
 		band = &b
 	}
@@ -177,8 +177,8 @@ func (a *App) apiConvertRun(r *http.Request) (interface{}, error) {
 			suffix = "_" + genFileBase(m)
 		}
 		suggest := stem + suffix + "." + ext
-		if a.store.Settings.LastDir != "" {
-			suggest = filepath.Join(a.store.Settings.LastDir, suggest)
+		if a.store.Get().LastDir != "" {
+			suggest = filepath.Join(a.store.Get().LastDir, suggest)
 		}
 		filt := map[string]string{"csv": "CSV (*.csv)|*.csv", "xlsx": "Excel (*.xlsx)|*.xlsx", "xlc": radioFilter[kindXLC],
 			"dat": radioFilter[kindDAT], "img": imgFilter}[ext]

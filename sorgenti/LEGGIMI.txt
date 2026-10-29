@@ -1,10 +1,34 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO BAOFENG E BAJETON
 =====================================================================
-Versione 3.9.1 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 3.9.2 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 3.9.2:
+- CORRETTO: verifica dopo la scrittura (segnalato con una Bajeton BJ-8300 vera: la
+  scrittura riusciva ma la verifica diceva che la radio non risponde). Alla fine
+  della scrittura molte radio escono dalla programmazione e si riavviano: per
+  qualche secondo non rispondono e, se hanno l'USB dentro, la porta può sparire.
+  Ora la rilettura di verifica parte dopo una pausa e, se la radio non risponde,
+  riprova da sola finché la radio è di nuovo pronta (fino a 45 secondi). Vale per
+  tutte le radio: K67 Pro, Bajeton e tutte quelle gestite con i driver. Se la radio
+  non torna in tempo, il programma dice che la scrittura è comunque riuscita e che
+  si può controllare con "Leggi dalla radio";
+- CORRETTO: Bajeton BJ-8300 con i file della v1.0.9 di BT-11_CPS. Come nel programma
+  originale, la tabella mostra i canali in 15 zone da 64 oppure, con "tutti i
+  canali", in un unico elenco di 960 (impostazione "Channel Divide" della v1.0.9,
+  cbB_DivideCH). Prima si vedevano sempre le zone. Nella barra della scheda, con i
+  file della v1.0.9, la scelta "Canali: in 15 zone da 64 / tutti (960)" è la stessa
+  impostazione di "⚙ Impostazioni → Divisione dei canali" e viene scritta anche
+  nella radio. L'ordine dei canali nella memoria della radio non cambia: cambia solo
+  come li mostrano la radio e il programma. I file della v1.0.8 sono sempre a zone;
+- titolo "IU0VYT" della schermata Home e del sito in verde neon (stile Matrix);
+- controllo completo: un'operazione via cavo con K67 Pro o Bajeton che incontra un
+  errore imprevisto ora termina con un messaggio invece di chiudere il programma;
+  le impostazioni salvate sono lette in modo sicuro anche durante le operazioni con
+  la radio; il pacchetto non contiene più file usati solo per lo sviluppo
+  (.gitignore); esempi di località nei test sostituiti con nomi di fantasia.
 Novità della 3.9.1:
 - modelli vuoti neutri: i file nuovi del K67 Pro e della Bajeton (pulsante "Nuovo",
   convertitore, copia tra le radio) partono da file salvati dai programmi dei
@@ -476,6 +500,15 @@ formato con cui è stato aperto. Nella scheda della 8300, "File per BT-11_CPS" s
 la versione: il file aperto viene convertito (canali e impostazioni restano gli
 stessi) e i nuovi file e le letture dalla radio useranno quel formato (predefinito:
 v1.0.8, la versione indicata sulla pagina dei download Bajeton per la 8300).
+Canali in zone o in un unico elenco (3.9.2): come in BT-11_CPS v1.0.9, con i file
+della v1.0.9 la tabella segue l'impostazione "Divisione dei canali" (Channel Divide):
+"in 15 zone da 64" (barra delle zone, numeri 1-64 in ogni zona) oppure "tutti (960)"
+(un unico elenco, numeri 1-960). La scelta è nella barra della scheda ("Canali") e
+in "⚙ Impostazioni"; viene salvata nel file e scritta nella radio, che mostra i
+canali allo stesso modo. Un file nuovo della v1.0.9 parte da "tutti i canali", come
+nel programma originale; una radio letta mantiene la sua scelta. La v1.0.8 non ha
+questa impostazione: i suoi file sono sempre a zone e, scritti nella radio, la
+riportano alle zone.
 
 AGGIORNAMENTO DEL FIRMWARE BAOFENG
 - Baofeng UV-5RM / UV-5RH (serie con display TFT "330L"), file .BF: protocollo del
@@ -554,7 +587,9 @@ LETTURA E SCRITTURA VIA CAVO
              password di programmazione facoltativa (max 8 caratteri).
     Bajeton 8300: 57600 baud.
 - Prima di scrivere, di serie, il programma legge la radio e ne salva una copia di
-  sicurezza; dopo la scrittura rilegge la radio e confronta i canali.
+  sicurezza; dopo la scrittura rilegge la radio e confronta i canali. Se la radio si
+  riavvia alla fine della scrittura, la rilettura aspetta e riprova finché la radio
+  risponde di nuovo (fino a 45 secondi, 3.9.2).
   Copie e letture si trovano in %APPDATA%\GestioneCanaliRadio\copie_radio
   (si aprono come normali file .xlc/.dat). Se la copia di sicurezza non riesce,
   non viene scritto nulla.

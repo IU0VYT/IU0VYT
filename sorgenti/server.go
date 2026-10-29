@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "3.9.1"
+const appVersion = "3.9.2"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -189,12 +189,12 @@ func decode(r *http.Request, v interface{}) error {
 func (a *App) dialog(save bool, title, filter, initial, defExt string) (string, error) {
 	a.dlgMu.Lock()
 	defer a.dlgMu.Unlock()
-	if initial == "" && a.store.Settings.LastDir != "" {
-		initial = a.store.Settings.LastDir + string(os.PathSeparator)
+	if initial == "" && a.store.Get().LastDir != "" {
+		initial = a.store.Get().LastDir + string(os.PathSeparator)
 	}
 	p, err := fileDialog(save, title, filter, initial, defExt)
 	if err == nil && p != "" {
-		st := a.store.Settings
+		st := a.store.Get()
 		st.LastDir = filepath.Dir(p)
 		_ = a.store.SaveSettings(st)
 	}
@@ -213,7 +213,7 @@ func (a *App) apiInit(r *http.Request) (interface{}, error) {
 	}
 	return map[string]interface{}{
 		"version":     appVersion,
-		"settings":    a.store.Settings,
+		"settings":    a.store.Get(),
 		"archivePath": a.store.archivePath(),
 		"ponti":       a.store.Ponti,
 		"tipi":        tipiNoti,
@@ -239,6 +239,8 @@ type radioResp struct {
 	Warnings []string `json:"warnings"`
 	Bands    []band   `json:"bands,omitempty"`
 	DatVer   string   `json:"datVer,omitempty"` // Bajeton: versione del programma BT-11_CPS del file
+	// Single: Bajeton, canali in un unico elenco invece che in zone (v1.0.9, «tutti i canali»)
+	Single bool `json:"single,omitempty"`
 }
 
 func (a *App) apiOpen(r *http.Request) (interface{}, error) {
@@ -279,7 +281,7 @@ func (a *App) apiOpen(r *http.Request) (interface{}, error) {
 	a.mu.Lock()
 	a.radios[kind] = &radioSession{Path: p, Base: b}
 	a.mu.Unlock()
-	st := a.store.Settings
+	st := a.store.Get()
 	if kind == kindXLC {
 		st.K67Path = p
 	} else {
@@ -290,7 +292,7 @@ func (a *App) apiOpen(r *http.Request) (interface{}, error) {
 	if kind == kindXLC {
 		resp.Bands = xlcBands(b, 0x10)
 	} else {
-		resp.DatVer = datVer(b)
+		resp.DatVer, resp.Single = datVer(b), datSingleList(b)
 	}
 	return resp, nil
 }
@@ -309,7 +311,7 @@ func (a *App) apiNew(r *http.Request) (interface{}, error) {
 		b = blankXLC(baseXLC)
 		// come «Nuovo» del programma originale: la banda resta quella dell'ultima
 		// radio letta (altrimenti la scrittura verrebbe rifiutata)
-		if st := a.store.Settings; st.K67Known {
+		if st := a.store.Get(); st.K67Known {
 			b[xlcSize-1] = st.K67Band
 		}
 	case kindDAT:
@@ -329,7 +331,7 @@ func (a *App) apiNew(r *http.Request) (interface{}, error) {
 	if req.Radio == kindXLC {
 		resp.Bands = xlcBands(b, 0x10)
 	} else {
-		resp.DatVer = datVer(b)
+		resp.DatVer, resp.Single = datVer(b), datSingleList(b)
 	}
 	return resp, nil
 }
@@ -368,8 +370,8 @@ func (a *App) apiSave(r *http.Request) (interface{}, error) {
 		}
 		if sess.Path != "" {
 			suggest = sess.Path
-		} else if a.store.Settings.LastDir != "" {
-			suggest = filepath.Join(a.store.Settings.LastDir, suggest)
+		} else if a.store.Get().LastDir != "" {
+			suggest = filepath.Join(a.store.Get().LastDir, suggest)
 		}
 		var err error
 		if p, err = a.dialog(true, "Salva il file del "+radioName(req.Radio), filt, suggest, ext); err != nil {
@@ -496,7 +498,7 @@ func (a *App) apiSettings(r *http.Request) (interface{}, error) {
 	if err := decode(r, &st); err != nil {
 		return nil, err
 	}
-	cur := a.store.Settings
+	cur := a.store.Get()
 	cur.URL, cur.URLs, cur.Modello, cur.ShowEmpty = st.URL, st.URLs, st.Modello, st.ShowEmpty
 	if err := a.store.SaveSettings(cur); err != nil {
 		return nil, err
@@ -599,7 +601,7 @@ func (a *App) apiImport(r *http.Request) (interface{}, error) {
 		if sheets, err = readTable(b, label); err != nil {
 			return nil, err
 		}
-		st := a.store.Settings
+		st := a.store.Get()
 		st.URL = label
 		found := false
 		for _, u := range st.URLs {
@@ -707,8 +709,8 @@ func (a *App) apiExport(r *http.Request) (interface{}, error) {
 	p := req.Path
 	if p == "" {
 		suggest := base + "." + ext
-		if a.store.Settings.LastDir != "" {
-			suggest = filepath.Join(a.store.Settings.LastDir, suggest)
+		if a.store.Get().LastDir != "" {
+			suggest = filepath.Join(a.store.Get().LastDir, suggest)
 		}
 		if p, err = a.dialog(true, "Esporta", filt, suggest, ext); err != nil {
 			return nil, err

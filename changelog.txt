@@ -3,6 +3,29 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+3.9.2 (29/10/2026)
+------------------
+- Verifica dopo la scrittura (cable.go verifyRead, usata da runCable e da
+  runGenCable): pausa iniziale e nuovi tentativi finché la radio, che si riavvia
+  alla fine della scrittura, torna a rispondere (prima: un solo tentativo, fallito
+  con «la radio non risponde» sulla BJ-8300 vera). Nota e risultato verifyNoRead
+  quando la radio non torna entro 45 s (ui/dialogs.js). verify_test.go: Bajeton
+  (radio muta e porta assente durante il riavvio), K67 Pro, UV-5R; radio che non
+  torna.
+- Bajeton, file della v1.0.9 di BT-11_CPS: tabella a zone o in un unico elenco
+  secondo cbB_DivideCH, come FormCHInfo del programma originale (arrayArea {15, 1});
+  dat.go datSingleList, campo single nelle risposte (apertura, nuovo, lettura,
+  identificazione, conversione di versione, impostazioni); ui/radio.js setLayout e
+  scelta «Canali» nella barra. bajver_test.go TestDatSingleList.
+- Titolo «IU0VYT» in verde neon (#00ff41, alone #008f11): ui/style.css e docs/index.html.
+- cable.go: le operazioni via cavo di K67 Pro e Bajeton recuperano gli errori
+  imprevisti (come genCableStart). store.go: Store.Get, lettura delle impostazioni
+  sincronizzata; writeAtomic toglie il file temporaneo se la sostituzione fallisce.
+- tableio_test.go: località di fantasia. Pacchetto senza .gitignore.
+- .claude/settings.json: nei commit preparati con Claude Code nessuna riga
+  «Co-Authored-By» (attribution vuota).
+
+
 3.9.1 (28/10/2026)
 ------------------
 - templates/: k67_base.xlc, bajeton_base.dat (BT-11_CPS v1.0.8) e bajeton_base109.dat

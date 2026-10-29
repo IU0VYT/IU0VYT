@@ -1,6 +1,6 @@
 # IU0VYT Flash
 
-**Versione 3.9.1** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
+**Versione 3.9.2** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
 
 Programma per radioamatori e utenti di ricetrasmettitori **Baofeng** e **Bajeton**: legge e scrive canali e frequenze via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.
 

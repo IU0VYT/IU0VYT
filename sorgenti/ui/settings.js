@@ -126,6 +126,7 @@ const RadioSettings = {
         render();
         view.dirty = true;
         App.onDirty();
+        if (res.single !== undefined) view.setLayout(res.single);
         view.render();
         toast(`${keys.length} impostazioni applicate alla memoria della radio: salva il file o scrivi nella radio per conservarle.`);
         if (lines.length > 1) console.log(lines.join('\n'));

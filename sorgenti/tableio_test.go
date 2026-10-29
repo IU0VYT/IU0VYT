@@ -251,13 +251,14 @@ func TestChannelExport(t *testing.T) {
 }
 
 func TestNomi(t *testing.T) {
-	for loc, want := range map[string]string{"Alpe Colombino - Giaveno (TO)": "ALPE COLOMBINO", "M.Alto (PR)": "M.ALTO", "Bric di Pui - Prarostino (TO)": "BRIC DI PUI",
-		"Castelvecchio Pianello (PR)": "CASTELVECCHIO PI", "Monte Prova - Paese": "MONTE PROVA", "Sant'Angelo in Vado (PU)": "SANT'ANGELO IN V"} {
+	// località di fantasia (stessa forma dei nomi dell'elenco dei ponti)
+	for loc, want := range map[string]string{"Alpe Fiorita - Borgo Nuovo (XX)": "ALPE FIORITA", "M.Alto (XX)": "M.ALTO", "Bric di Sopra - Valfiorita (XX)": "BRIC DI SOPRA",
+		"Castelvecchio Prataverde (XX)": "CASTELVECCHIO PR", "Monte Prova - Paese": "MONTE PROVA", "Sant'Angelo in Valle (XX)": "SANT'ANGELO IN V"} {
 		if g := nomeDaModello(&Ponte{Localita: loc}, "{LOC}"); g != want {
 			t.Errorf("%q -> %q (atteso %q)", loc, g, want)
 		}
 	}
-	if g := nomeDaModello(&Ponte{Localita: "M.Alto (PR)", Sigla: "RV", Nominativo: "IR0XX"}, "{NOMINATIVO} {LOC}"); g != "IR0XX M.ALTO" {
+	if g := nomeDaModello(&Ponte{Localita: "M.Alto (XX)", Sigla: "RV", Nominativo: "IR0XX"}, "{NOMINATIVO} {LOC}"); g != "IR0XX M.ALTO" {
 		t.Error(g)
 	}
 	if g := nomeDaModello(&Ponte{Sigla: "RU5", Rx: 430125000}, "{LOC}"); g != "RU5" {

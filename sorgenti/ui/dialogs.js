@@ -327,7 +327,8 @@ const Dialogs = {
           result = st.result; finished = true;
           if (write) {
             const v = st.result && st.result.verified;
-            fin.innerHTML = v === false ? '⚠ <b>Scrittura completata, ma la verifica ha trovato differenze</b>: controlla le segnalazioni.'
+            fin.innerHTML = st.result && st.result.verifyNoRead ? '✅ <b>Scrittura completata.</b> ⚠ La rilettura di verifica non è riuscita (la radio non era pronta dopo la scrittura): vedi le segnalazioni.'
+              : v === false ? '⚠ <b>Scrittura completata, ma la verifica ha trovato differenze</b>: controlla le segnalazioni.'
               : '✅ <b>Scrittura completata.</b> ' + (v ? 'I canali riletti dalla radio corrispondono.' : '') + ' Puoi spegnere e riaccendere la radio.';
           } else {
             fin.innerHTML = '✅ <b>Lettura completata.</b> I canali sono nella tabella: ricordati di salvarli in un file.';
@@ -629,7 +630,8 @@ const Dialogs = {
         <li>Selezione: clic, <kbd>Maiusc</kbd>+clic per un intervallo, <kbd>Ctrl</kbd>+clic per aggiungere, <kbd>Ctrl</kbd>+<kbd>A</kbd> tutti.</li>
         <li><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>X</kbd> / <kbd>V</kbd> copia, taglia, incolla (anche tra le due radio e dall'archivio, con gli adattamenti segnalati);
           <kbd>Canc</kbd> cancella; <kbd>Ins</kbd> inserisce una riga; <kbd>Alt</kbd>+<kbd>↑</kbd>/<kbd>↓</kbd> sposta; <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Y</kbd> annulla/ripeti; <kbd>Ctrl</kbd>+<kbd>S</kbd> salva.</li>
-        <li>Bajeton: 15 zone da 64 canali; scegli la zona dalla barra sopra la tabella, «Tutte» per vederle insieme, «Sposta in zona» per spostare i selezionati.</li>
+        <li>Bajeton: 15 zone da 64 canali; scegli la zona dalla barra sopra la tabella, «Tutte» per vederle insieme, «Sposta in zona» per spostare i selezionati.
+          Con i file della v1.0.9 di BT-11_CPS impostati su «tutti i canali» (⚙ Impostazioni → Divisione dei canali) i 960 canali sono in un unico elenco, come nel programma originale.</li>
         <li>Nomi: massimo 16 caratteri sul K67 e 12 sulla Bajeton. Potenza Media solo sulla Bajeton (sul K67 diventa Alta).</li>
       </ul>
       <h4>Identifica la radio</h4><ul>
