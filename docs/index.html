@@ -144,6 +144,27 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13.5px; color: var
 footer .copy { color: var(--ink); font-size: 14.5px; margin-bottom: 6px; }
 footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pink2); text-shadow: 0 0 8px var(--pink); margin-top: 18px; }
 
+/* ---------- testo leggibile su schermi stretti */
+.nw { white-space: nowrap; }
+.lead, .sub, .card p, .level p, .box li, .req, .notes, footer div { text-wrap: pretty; }
+h2, .tag { text-wrap: balance; }
+@media (max-width: 720px) {
+  .hero { padding: 48px 0 100px; }
+  .lead { font-size: 16px; margin-bottom: 26px; }
+  .lead br { display: none; } /* a capo voluti solo su schermi larghi */
+  .tag { font-size: 12px; letter-spacing: .2em; line-height: 1.7; }
+  .tag-sep { display: none; }
+  .tag-b { display: block; }
+  .btn { font-size: 15px; letter-spacing: .05em; padding: 15px 18px; }
+  .dl { padding: 22px 16px; }
+  .stat span { letter-spacing: .06em; }
+  footer .copy span, footer .copy a { display: block; }
+  footer .copy .dot { display: none; }
+}
+@media (max-width: 380px) {
+  .btn { font-size: 14px; letter-spacing: .03em; padding: 14px 14px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .grid, .neon-top i, .start { animation: none; }
@@ -172,8 +193,8 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
       <span class="neon-top" aria-hidden="true"><i style="--i:0">I</i><i style="--i:1">U</i><i style="--i:2">Ø</i><i style="--i:3">V</i><i style="--i:4">Y</i><i style="--i:5">T</i></span>
       <span class="neon-bottom" aria-hidden="true">FLASH</span>
     </h1>
-    <div class="tag">CANALI · PONTI · FIRMWARE — BAOFENG &amp; BAJETON</div>
-    <p class="lead">Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo,<br>inserisce i ponti radio italiani e aggiorna il firmware.<br>Un solo file, nessuna installazione, tutto in italiano.</p>
+    <div class="tag">CANALI · PONTI · FIRMWARE<span class="tag-sep"> — </span><span class="tag-b">BAOFENG &amp; BAJETON</span></div>
+    <p class="lead">Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, <br>inserisce i ponti radio italiani e aggiorna il firmware. <br>Un solo file, nessuna installazione, tutto in italiano.</p>
     <a class="start" href="#scarica">▶ PRESS START</a>
     <div class="hero-ver">ULTIMA VERSIONE: <b class="js-ver">—</b></div>
   </div>
@@ -187,7 +208,7 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
     <div class="dl">
       <div class="kicker">ULTIMA VERSIONE</div>
       <div class="dl-ver js-ver">—</div>
-      <div class="dl-meta" id="dl-meta">Windows 10 / 11 · 64 bit</div>
+      <div class="dl-meta" id="dl-meta"><span class="nw">Windows 10 / 11 · 64 bit</span></div>
       <a class="btn" id="dl-btn" href="https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip">⬇ SCARICA IU0VYT.Flash.zip</a>
       <div class="links">
         <a id="dl-notes" href="https://github.com/IU0VYT/IU0VYT/releases/latest">Note della versione</a>
@@ -276,8 +297,8 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
 
 <footer>
   <div class="wrap">
-    <div class="copy">Copyright © 2026 Daniele "IU0VYT" Bonifazi · <a href="https://www.qrz.com/db/IU0VYT" rel="noopener">qrz.com/db/IU0VYT</a></div>
-    <div>Distribuito con licenza <a href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 o successiva</a> · <a href="https://github.com/IU0VYT/IU0VYT">Sorgenti su GitHub</a></div>
+    <div class="copy"><span class="nw">Copyright © 2026 Daniele "IU0VYT" Bonifazi</span><span class="dot"> · </span><a href="https://www.qrz.com/db/IU0VYT" rel="noopener">qrz.com/db/IU0VYT</a></div>
+    <div>Distribuito con licenza <a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 o successiva</a>&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">Sorgenti su GitHub</a></div>
     <div class="over">73 DE IU0VYT · THANKS FOR PLAYING</div>
   </div>
 </footer>
@@ -330,7 +351,13 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
       var a = (rel.assets || []).filter(function (x) { return x.name === ASSET; })[0];
       if (a && a.size) meta.push(mb(a.size));
       meta.push('Windows 10 / 11 · 64 bit');
-      document.getElementById('dl-meta').textContent = meta.join(' · ');
+      // ogni voce resta intera; la riga può andare a capo solo dopo un punto separatore
+      var dm = document.getElementById('dl-meta');
+      dm.textContent = '';
+      meta.forEach(function (t, k) {
+        if (k) dm.appendChild(document.createTextNode('\u00a0· '));
+        var sp = document.createElement('span'); sp.className = 'nw'; sp.textContent = t; dm.appendChild(sp);
+      });
       if (rel.html_url) document.getElementById('dl-notes').href = rel.html_url;
       var sha = (a && a.digest && /^sha256:/.test(a.digest)) ? a.digest.slice(7) : '';
       if (!sha && rel.body) { var m = rel.body.match(/\b[a-f0-9]{64}\b/i); if (m) sha = m[0].toLowerCase(); }
