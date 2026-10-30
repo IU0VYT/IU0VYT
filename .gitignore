@@ -4,3 +4,12 @@ sorgenti/testdata/pontixls.xls
 **/obj/
 sorgenti/gestionecanali
 **/__pycache__/
+
+# Eseguibili e file binari di Go
+*.exe
+*.exe~
+*.so
+*.dylib
+
+# Pacchetti ZIP di distribuzione e copie di Claude
+*.zip
