@@ -1,7 +1,7 @@
 # file locali, non pubblicati
 sorgenti/testdata/pontixls.xls
-**/bin/
-**/obj/
+sorgenti/verifica/**/bin/
+sorgenti/verifica/**/obj/
 sorgenti/gestionecanali
 **/__pycache__/
 
@@ -10,6 +10,19 @@ sorgenti/gestionecanali
 *.exe~
 *.so
 *.dylib
+*.test
+*.out
 
 # Pacchetti ZIP di distribuzione e copie di Claude
 *.zip
+
+# Configurazione locale di Claude Code
+.claude/
+
+# Impostazioni personali degli editor
+.vs/
+.vscode/
+
+# File di sistema di Windows e OneDrive
+desktop.ini
+Thumbs.db
