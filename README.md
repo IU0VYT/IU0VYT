@@ -4,6 +4,8 @@
 
 Programma per radioamatori e utenti di ricetrasmettitori **Baofeng** e **Bajeton**: legge e scrive canali e frequenze via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.
 
+🌐 Sito del programma: **[iu0vyt.github.io/IU0VYT](https://iu0vyt.github.io/IU0VYT/)**
+
 ## Funzioni
 
 - **Canali e frequenze** di 235 modelli Baofeng e Bajeton (comprese radio PMR digitali e DMR, anche via USB): lettura e scrittura via cavo, file `.img` compatibili con CHIRP, file originali del Baofeng K67 Pro (`.xlc`) e della Bajeton 8300 (`.dat`).
