@@ -131,6 +131,7 @@ const Info = {
             <button class="btn primary" data-mailcopy>📋 Copia l'indirizzo</button> <button class="btn" data-mailshow>👁 Mostra l'indirizzo</button>
             <div data-mailimg style="margin-top:8px"></div></div></td></tr>
         <tr><th>QRZ</th><td><a href="#" data-link="${esc(d.qrz)}">${esc(d.qrz)}</a></td></tr>
+        ${d.site ? `<tr><th>Sito web</th><td><a href="#" data-link="${esc(d.site)}">${esc(d.site)}</a> <span class="note">(sito del programma: novità, funzioni e download dell'ultima versione)</span></td></tr>` : ''}
         <tr><th>Codice sorgente</th><td><a href="#" data-link="${esc(d.repo)}">${esc(d.repo)}</a> <span class="note">(repository GitHub: sorgenti, rilasci e aggiornamenti)</span></td></tr>
         <tr><th>Licenza</th><td>${esc(d.license)} — software libero, <b>senza alcuna garanzia</b> (testo completo nel file LICENSE.txt del pacchetto)</td></tr>
         <tr><th>Cartella dei dati</th><td>${d.dataDirShort ? `<b>${esc(d.dataDirShort)}</b><br>` : ''}<span class="note">${esc(d.dataDir)}</span>

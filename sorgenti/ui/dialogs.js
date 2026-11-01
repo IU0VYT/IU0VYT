@@ -93,6 +93,108 @@ const Dialogs = {
     });
   },
 
+  // ------------------------------------------------------------ inoltro ad altra radio (3.9.3)
+  // canali di una radio (spuntati o selezionati) scritti via cavo in un'altra radio:
+  // scelta di marca e modello, conferma del modello e del collegamento, controllo
+  // di compatibilità, poi lettura con copia di sicurezza, adattamento, scrittura e
+  // verifica (operazione «forward» del programma)
+  lastForward: null,
+  async forward(src, chans, how) {
+    for (;;) {
+      const pick = await Dialogs.forwardTarget(src, chans.length, how);
+      if (!pick) return null;
+      Dialogs.lastForward = pick;
+      const c = await chooseDlg('Conferma la radio di destinazione',
+        `Hai scelto: ${pick.label}\n\nSei sicuro che sia proprio questo il modello della radio in cui scrivere? ` +
+        'Con un modello sbagliato la radio non risponde oppure i canali scritti non sono leggibili.\n\n' +
+        'La radio è già collegata al cavo di programmazione e accesa?',
+        [{ id: 'no', label: 'Annulla' }, { id: 'other', label: 'Cambia radio…' }, { id: 'ok', label: 'Sì: modello giusto e radio collegata', primary: true }]);
+      if (!c || c === 'no') return null;
+      if (c === 'other') continue;
+      // controllo di compatibilità (gamme di frequenza, PMR446 / GMRS, canali digitali)
+      let send = chans;
+      const pseudo = chans.map(ch => ({ nome: ch.name, rx: ch.rx, tx: ch.txOff ? ch.rx : ch.tx,
+        tipi: ch.dig && src.def.digital === 'DMR' ? ['DMR'] : ['Analogico'], ch }));
+      const chk = radioCompat(pick.kind, pseudo, pick.type, COMPAT_CANALI);
+      if (chk.bad.length || chk.warn.length) {
+        const r = await compatBanner(pick.label, chk, COMPAT_CANALI);
+        if (r === 'other') continue;
+        if (r !== 'some') return null;
+        const keep = new Set(chk.ok.concat(chk.warn.map(w => w.p)));
+        send = pseudo.filter(p => keep.has(p)).map(p => p.ch);
+      }
+      const tv = Views[pick.kind];
+      const adopt = !tv || !tv.loaded;
+      const target = { kind: pick.kind, def: App.radioDef(pick.kind), chans: send };
+      return Dialogs.cable(target, 'forward', { label: pick.label, mode: pick.mode, from: src.def.name, how, adopt,
+        onShow: res => {
+          const v = App.openRadio(pick.kind);
+          v.load(res.radio);
+          v.path = '';
+          v.fromRadio = true;
+          v.dirty = true;
+          v.setSel(res.placed || [], (res.placed || [])[0]);
+          if (v.def.zones && res.placed && res.placed.length) v.zone = Math.floor(res.placed[0] / v.def.perZone);
+          App.onDirty();
+          App.showTab(pick.kind);
+          v.render();
+          v.grid.ensureVisible();
+          App.saveSession();
+          toast('Canali della radio dopo l\'inoltro: ricordati di salvarli in un file.');
+        } });
+    }
+  },
+
+  // finestra di scelta: marca e modello dai menu a tendina, posizioni
+  forwardTarget(src, n, how) {
+    const all = Dialogs.radioChoices();
+    const brands = [...new Set(all.map(r => r.brand))];
+    const last = Dialogs.lastForward;
+    return new Promise(res => {
+      const m = openModal(`<div class="dialog mid"><header>📻 Inoltra ad altra radio</header><div class="body">
+        <p>Canali da inoltrare: <b>${n}</b> (${esc(how)}) del <b>${esc(src.def.name)}</b>.</p>
+        <div class="row"><label class="l">Marca</label><select data-brand style="min-width:200px">${brands.map(b => `<option>${esc(b)}</option>`).join('')}</select></div>
+        <div class="row"><label class="l">Modello</label><select data-model style="min-width:330px"></select></div>
+        <div class="row radiolist"><label class="l">Dove</label><div>
+          <label><input type="radio" name="fwmode" value="free" checked> nelle posizioni libere della radio (i canali già presenti restano)</label>
+          <label><input type="radio" name="fwmode" value="replace"> al posto di tutti i canali della radio (quelli presenti vengono cancellati)</label></div></div>
+        <p class="note">Dopo la scelta ti viene chiesto di confermare il modello e il collegamento. Poi il programma controlla la compatibilità,
+          legge la radio e ne salva una copia di sicurezza, adatta i canali alla radio, li scrive e rilegge la radio per verificare.
+          Le impostazioni della radio (menu, VFO, tasti…) restano quelle lette dalla radio.</p>
+        </div><footer><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok disabled>Avanti</button></footer></div>`,
+        { onEsc: () => { m.close(); res(null); } });
+      const el = m.el, bs = $('[data-brand]', el), ms = $('[data-model]', el), ok = $('[data-ok]', el);
+      let its = [];
+      const draw = (keep) => {
+        its = all.filter(r => r.brand === bs.value);
+        let html = '<option value="">— scegli il modello —</option>', type = null;
+        its.forEach((r, i) => {
+          if (r.type !== type) { if (type !== null) html += '</optgroup>'; type = r.type; html += `<optgroup label="${esc(TYPE_GROUP[r.type] || r.type)}">`; }
+          const same = normKeyJS(r.driver).includes(normKeyJS(r.name));
+          const extra = r.version ? ` – versione ${r.version}` : same ? '' : ` – gestione: ${r.driver}`;
+          html += `<option value="${i}">${esc(r.name + extra)}</option>`;
+        });
+        if (type !== null) html += '</optgroup>';
+        ms.innerHTML = html;
+        if (keep) { const k = its.findIndex(r => r.kind === keep.kind && r.brand + ' ' + r.name + (r.version ? ' (' + r.version + ')' : '') === keep.label); if (k >= 0) ms.value = String(k); }
+        ok.disabled = ms.value === '';
+      };
+      if (last && brands.includes(last.brand)) bs.value = last.brand;
+      draw(last);
+      if (last && last.mode) $(`input[name=fwmode][value="${last.mode}"]`, el).checked = true;
+      bs.onchange = () => draw(null);
+      ms.onchange = () => { ok.disabled = ms.value === ''; };
+      $('[data-no]', el).onclick = () => { m.close(); res(null); };
+      ok.onclick = () => {
+        if (ms.value === '') return;
+        const r = its[+ms.value];
+        m.close();
+        res({ kind: r.kind, brand: r.brand, type: r.type, mode: $('input[name=fwmode]:checked', el).value,
+          label: r.brand + ' ' + r.name + (r.version ? ' (' + r.version + ')' : '') });
+      };
+    });
+  },
+
   // ------------------------------------------------------------ inserimento in una radio
   async insertInto(view, chans, srcKind) {
     if (!chans.length) return;
@@ -207,20 +309,24 @@ const Dialogs = {
   },
 
   // ------------------------------------------------------------ radio via cavo
-  // op: 'read' | 'write'. Restituisce il risultato dell'operazione (o null).
-  cable(view, op) {
+  // op: 'read' | 'write' | 'forward' (3.9.3: inoltro di canali da un'altra radio; fw:
+  // { label, mode, from, how, adopt, onShow }). Restituisce il risultato (o null).
+  cable(view, op, fw) {
     const k67 = view.kind === 'k67';
-    const write = op === 'write';
+    const fwd = op === 'forward';
+    const write = op === 'write' || fwd;
     // radio collegate via USB (HID / DFU): nessuna porta COM da scegliere
     const usb = view.def.conn || '';
     const n = view.chans.filter(Boolean).length;
-    const title = (write ? 'Scrivi nella radio' : 'Leggi dalla radio') + ' — ' + view.def.name;
+    const title = fwd ? 'Inoltra ad altra radio — ' + fw.label : (write ? 'Scrivi nella radio' : 'Leggi dalla radio') + ' — ' + view.def.name;
     return new Promise(resolve => {
       let running = false, result = null, timer = null, finished = false;
       const m = openModal(`<div class="dialog mid" data-cable><header>📻 ${esc(title)}</header><div class="body">
         <div data-setup>
           <p>${usb ? 'Collega il <b>cavo USB</b> della radio al PC' : 'Collega il cavo di programmazione al PC e alla radio'}, poi <b>accendi la radio</b>${usb ? '' : ' e tieni il volume a metà'}.
-          ${write ? `Saranno scritti <b>${n} canali</b>: i canali presenti nella radio verranno sostituiti da quelli della tabella.` : 'I canali letti compariranno nella tabella: poi potrai modificarli e salvarli in un file.'}</p>
+          ${fwd ? `Saranno inoltrati <b>${n} canali</b> del ${esc(fw.from)} ${fw.mode === 'replace' ? '<b>al posto di tutti i canali</b> della radio (quelli presenti verranno cancellati)'
+            : 'nelle <b>posizioni libere</b> della radio (i canali già presenti restano)'}, adattati alla radio.`
+            : write ? `Saranno scritti <b>${n} canali</b>: i canali presenti nella radio verranno sostituiti da quelli della tabella.` : 'I canali letti compariranno nella tabella: poi potrai modificarli e salvarli in un file.'}</p>
           ${usb ? `<div class="row"><label class="l">Collegamento</label><span><b>USB</b> — ${usb === 'dfu'
             ? 'serve il driver USB del costruttore (cartella «DM-1701 USB Driver» del suo pacchetto) oppure il driver WinUSB (Zadig): vedi qui sotto'
             : 'dispositivo HID, Windows lo riconosce senza driver aggiuntivi'}</span></div>` : ''}
@@ -235,7 +341,11 @@ const Dialogs = {
             <span class="note">come nel programma originale: la radio può passare da sola a 115200</span></div>
           <div class="row"><label class="l">Password radio</label><input type="text" data-pwd maxlength="8" style="width:120px" autocomplete="off">
             <span class="note">solo se nella radio è impostata una password di programmazione</span></div>` : ''}
-          ${write ? `<div class="row"><label class="l">Sicurezza</label><div>
+          ${fwd ? `<div class="row"><label class="l">Sicurezza</label><div>
+            <label style="display:block"><input type="checkbox" checked disabled> prima legge la radio e salva una copia di sicurezza</label>
+            <label style="display:block"><input type="checkbox" checked disabled> dopo la scrittura rilegge la radio e verifica i canali</label></div></div>
+            <p class="note">Le impostazioni della radio (menu, VFO, tasti…) restano quelle lette dalla radio: cambiano solo i canali.
+            Se qualcosa non va prima della scrittura, nella radio non viene scritto nulla.</p>` : write ? `<div class="row"><label class="l">Sicurezza</label><div>
             <label style="display:block"><input type="checkbox" data-backup> prima leggi la radio e salva una copia di sicurezza</label>
             <label style="display:block"><input type="checkbox" data-verify> dopo la scrittura rileggi la radio e verifica i canali</label></div></div>
             <p class="note">Insieme ai canali vengono scritte anche le impostazioni generali contenute nel file aperto${k67 ? ' (menu, zone, tasti…)' : ' (menu, VFO, DTMF…)'}.
@@ -250,7 +360,7 @@ const Dialogs = {
           <p data-final style="margin-top:12px;display:none"></p>
           <ul class="warnlist" data-notes style="display:none"></ul>
         </div>
-        </div><footer><span class="left note" data-foot></span><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>${write ? 'Scrivi nella radio' : 'Leggi dalla radio'}</button></footer></div>`,
+        </div><footer><span class="left note" data-foot></span><button class="btn" data-show style="display:none">Mostra i canali della radio</button><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>${fwd ? 'Inoltra e scrivi' : write ? 'Scrivi nella radio' : 'Leggi dalla radio'}</button></footer></div>`,
         { onEsc: () => { if (!running) close(); } });
       const el = m.el;
       const close = () => { clearTimeout(timer); m.close(); resolve(finished ? result : null); };
@@ -289,7 +399,7 @@ const Dialogs = {
           $('[data-baud]', el).value = String(settings.k67Baud === 115200 ? 115200 : 19200);
           $('[data-pwd]', el).value = settings.k67Pwd || '';
         }
-        if (write) {
+        if (write && !fwd) {
           $('[data-backup]', el).checked = settings.cableBackup !== false;
           $('[data-verify]', el).checked = settings.cableVerify !== false;
         }
@@ -325,7 +435,20 @@ const Dialogs = {
         $('[data-bar]', el).classList.toggle('err', !ok);
         if (ok) {
           result = st.result; finished = true;
-          if (write) {
+          if (fwd) {
+            const r = st.result || {};
+            const v = r.verified;
+            fin.innerHTML = `✅ <b>Inoltro completato:</b> ${r.count === 1 ? '1 canale scritto' : (r.count || 0) + ' canali scritti'} nella ${esc(fw.label)}` +
+              (r.skipped ? ` (${r.skipped} non inoltrati: vedi le segnalazioni)` : '') + '. ' +
+              (r.verifyNoRead ? '⚠ La rilettura di verifica non è riuscita (la radio non era pronta dopo la scrittura): vedi le segnalazioni.'
+                : v === false ? '⚠ <b>La verifica ha trovato differenze</b>: controlla le segnalazioni.'
+                : v ? 'I canali riletti dalla radio corrispondono a quelli scritti. Puoi spegnere e riaccendere la radio.' : '');
+            if (fw.adopt && r.radio && fw.onShow) {
+              const sb = $('[data-show]', el);
+              sb.style.display = '';
+              sb.onclick = () => { close(); fw.onShow(r); };
+            }
+          } else if (write) {
             const v = st.result && st.result.verified;
             fin.innerHTML = st.result && st.result.verifyNoRead ? '✅ <b>Scrittura completata.</b> ⚠ La rilettura di verifica non è riuscita (la radio non era pronta dopo la scrittura): vedi le segnalazioni.'
               : v === false ? '⚠ <b>Scrittura completata, ma la verifica ha trovato differenze</b>: controlla le segnalazioni.'
@@ -374,8 +497,12 @@ const Dialogs = {
         const port = sel.value;
         if (!port) { toast('Scegli la porta del cavo di programmazione.', true); return; }
         const req = { op, radio: view.kind, port, baud: k67 ? +$('[data-baud]', el).value : 0, password: k67 ? $('[data-pwd]', el).value : '',
-          backup: write ? $('[data-backup]', el).checked : false, verify: write ? $('[data-verify]', el).checked : false };
-        if (write) {
+          backup: write && !fwd ? $('[data-backup]', el).checked : fwd, verify: write && !fwd ? $('[data-verify]', el).checked : fwd };
+        if (fwd) {
+          req.channels = view.chans;
+          req.mode = fw.mode;
+          req.adopt = !!fw.adopt;
+        } else if (write) {
           const c = await chooseDlg('Conferma la scrittura', `Vuoi scrivere ${n} canali nel ${view.def.name} collegato a ${usb ? 'USB' : port}?\n` +
             'I canali attualmente nella radio verranno sostituiti. Durante la scrittura non spegnere la radio e non scollegare il cavo.' +
             (req.backup ? '' : '\nAttenzione: hai disattivato la copia di sicurezza della radio.'),
@@ -591,7 +718,14 @@ const Dialogs = {
         <li>Le radio gestite con i driver di <b>CHIRP</b> (oltre 70 modelli) si leggono e si scrivono via cavo e si salvano in file <b>.img</b>, apribili anche con CHIRP;
           si aprono anche i file .img salvati con CHIRP. Le impostazioni della radio restano quelle lette: si modificano canali e ponti.</li>
         <li>Se una radio esiste in più versioni (es. UV-5RX3) scegli quella giusta: se non lo è, la radio non risponde e non viene modificata.</li>
-        <li>Canali di sola ricezione: nella colonna TX scrivi OFF (se la radio lo permette). I canali si copiano tra tutte le radio aperte con «Copia in…».</li>
+        <li>Canali di sola ricezione: nella colonna TX scrivi OFF (se la radio lo permette). I canali si copiano tra le radio aperte con Copia e Incolla (Ctrl+C, Ctrl+V).</li>
+        <li>Ogni canale ha una casella a sinistra per spuntarlo; la casella in testa alla colonna spunta i canali visibili, «☑ Seleziona tutti» e «☐ Deseleziona tutti»
+          valgono per tutti i canali della radio (anche nelle altre zone). Le operazioni sui canali scelti («Inoltra ad altra radio», «→ Archivio») usano i canali
+          spuntati oppure, se non ne hai spuntati, quelli selezionati con il clic.</li>
+        <li>«📻 Inoltra ad altra radio» scrive i canali scelti in un'altra radio collegata con il cavo: scegli marca e modello dai menu a tendina e se metterli nelle
+          posizioni libere o al posto di tutti i canali, conferma il modello e che la radio sia collegata; il programma controlla la compatibilità (gamme di frequenza,
+          apparati PMR446 / GMRS, canali digitali), legge la radio e ne salva una copia di sicurezza, adatta i canali (nomi, toni, potenze…), li scrive e rilegge la radio
+          per verificarli. Le impostazioni della radio restano quelle lette; se qualcosa non va prima della scrittura, nella radio non viene scritto nulla.</li>
       </ul>
       <h4>Radio via cavo</h4><ul>
         <li>Scegli la porta COM del cavo (se non compare, collega il cavo, installa il driver e premi «Aggiorna»). Accendi la radio prima di iniziare.</li>
@@ -660,6 +794,8 @@ const Dialogs = {
         <li>Filtra per banda, tipo, stato, regione, provincia, rete o testo, poi spunta i ponti che ti interessano (casella a sinistra, oppure «☑ Seleziona tutti» /
           «☐ Deseleziona tutti»: «Seleziona tutti» spunta i ponti visibili con i filtri, «Deseleziona tutti» toglie la spunta a tutti, anche a quelli nascosti dai filtri;
           la barra in basso indica quanti spuntati sono nascosti; le spunte restano salvate nell'archivio).</li>
+        <li>«🗑 Elimina» toglie dall'archivio i ponti spuntati (o, se non ne hai spuntati, quelli selezionati; il tasto Canc elimina le righe selezionate);
+          «🗑 Elimina tutti» svuota l'archivio, anche dei ponti nascosti dai filtri. Entrambi chiedono conferma e si possono annullare con ↶ (Ctrl+Z).</li>
         <li>«📻 Inoltra alla radio» scrive i ponti spuntati (o, se non ne hai spuntati, quelli selezionati) nella radio di destinazione indicata sopra la tabella:
           se c'è già una radio scelta ti chiede la conferma, altrimenti puoi sceglierla dall'elenco di tutte le radio compatibili, diviso per marca e per tipologia,
           con ogni modello elencato singolarmente in ordine alfabetico.</li>

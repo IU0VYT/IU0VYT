@@ -56,11 +56,38 @@ class RadioView {
     this.redoStack = [];
     this.zone = 0;
     this.showEmpty = true;
+    // canali spuntati (3.9.3): si ricordano gli oggetti canale, così la spunta segue il
+    // canale quando viene spostato, ordinato o compattato
+    this.chk = new WeakSet();
     this.build();
   }
 
-  // altre radio in cui copiare i canali: le schede aperte e le due radio principali
-  others() { return Object.values(Views).filter(v => v !== this && (v.loaded || !v.def.generic)); }
+  // ------------------------------------------------------------ spunte (3.9.3)
+  isChecked(i) { const c = this.chans[i]; return !!c && this.chk.has(c); }
+  checkedSlots() { const out = []; this.chans.forEach((c, i) => { if (c && this.chk.has(c)) out.push(i); }); return out; }
+  setChecked(ids, on) {
+    for (const i of ids) {
+      const c = typeof i === 'number' ? this.chans[i] : null;
+      if (!c) continue;
+      if (on) this.chk.add(c); else this.chk.delete(c);
+    }
+    this.grid.render();
+    this.renderStatus();
+  }
+  // «Seleziona tutti» / «Deseleziona tutti»: tutti i canali della radio, in tutte le zone
+  checkAll(on) {
+    const used = this.chans.filter(Boolean);
+    if (!used.length) { toast('Non ci sono canali.'); return; }
+    if (on) used.forEach(c => this.chk.add(c)); else this.chk = new WeakSet();
+    this.grid.render();
+    this.renderStatus();
+    toast(on ? `Spuntati tutti i ${used.length} canali${this.def.zones ? ' (di tutte le zone)' : ''}.` : 'Tolta la spunta a tutti i canali.');
+  }
+  // canali scelti per un'operazione: quelli spuntati, altrimenti quelli selezionati con il clic
+  chosenSlots() {
+    const c = this.checkedSlots();
+    return c.length ? { slots: c, how: 'spuntati' } : { slots: this.selected().filter(i => this.chans[i]), how: 'selezionati' };
+  }
 
   // ------------------------------------------------------------ interfaccia
   build() {
@@ -102,8 +129,10 @@ class RadioView {
         <button class="btn" data-a="undo" title="Annulla (Ctrl+Z)">↶</button>
         <button class="btn" data-a="redo" title="Ripeti (Ctrl+Y)">↷</button>
         <span class="sep"></span>
-        <button class="btn" data-a="copyto" title="Copia i canali selezionati in un'altra radio">Copia in… ▾</button>
-        <button class="btn" data-a="toarch" title="Aggiunge i canali selezionati all'archivio ponti">→ Archivio</button>
+        <button class="btn" data-a="checkall" title="Spunta tutti i canali della radio${d.zones ? ' (di tutte le zone)' : ''}">☑ Seleziona tutti</button>
+        <button class="btn" data-a="uncheckall" title="Toglie la spunta a tutti i canali">☐ Deseleziona tutti</button>
+        <button class="btn primary" data-a="forward" title="Scrive i canali spuntati (o selezionati) in un'altra radio collegata con il cavo: scegli marca e modello, poi il programma controlla la compatibilità, adatta i canali, salva una copia di sicurezza della radio, scrive e verifica">📻 Inoltra ad altra radio…</button>
+        <button class="btn" data-a="toarch" title="Aggiunge all'archivio ponti i canali spuntati (o selezionati)">→ Archivio</button>
         <button class="btn" data-a="import" title="Inserisce i canali di un altro file: K67 (.xlc), Bajeton (.dat), immagini .img di qualsiasi radio (anche di CHIRP), CSV di CHIRP, tabelle Excel/CSV">📥 Importa…</button>
         <button class="btn" data-a="export" title="Esporta i canali in Excel, CSV o CSV di CHIRP, oppure nel formato di un'altra radio">Esporta…</button>
         <label style="margin-left:6px;white-space:nowrap"><input type="checkbox" data-empty checked> mostra posizioni vuote</label>
@@ -119,8 +148,6 @@ class RadioView {
           { label: 'Per nome', run: () => this.sort('name') },
           { label: 'Per tono', run: () => this.sort('tone') },
         ]);
-      } else if (a === 'copyto') {
-        b.addEventListener('click', () => this.copyToMenu(b));
       } else if (a === 'tozone') {
         const items = [];
         for (let z = 0; z < d.zones; z++) items.push({ label: 'Zona ' + (z + 1), run: () => this.moveToZone(z) });
@@ -164,6 +191,9 @@ class RadioView {
     }
     this.grid = new Grid($('[data-grid]', this.page), {
       columns: this.columns(),
+      checkbox: true,
+      onCheck: (ids, on) => this.setChecked(ids, on),
+      onCheckAll: on => this.setChecked(this.rows().filter(r => r.ch).map(r => r.id), on),
       getRows: () => this.rows(),
       onEdit: (row, col, val) => this.edit(row, col, val),
       onKey: e => this.onKey(e),
@@ -230,7 +260,7 @@ class RadioView {
       }
       const ch = this.chans[i];
       if (!ch && !this.showEmpty) continue;
-      out.push({ id: i, ch, cls: ch ? '' : 'empty' });
+      out.push({ id: i, ch, cls: ch ? '' : 'empty', checked: !!ch && this.chk.has(ch), nochk: !ch });
     }
     return out;
   }
@@ -303,6 +333,8 @@ class RadioView {
     const sel = this.grid.sel.size;
     let s = `Canali programmati: ${used} su ${this.def.slots}`;
     if (this.def.zones && this.zone >= 0) s += ` · Zona ${this.zone + 1}: ${this.usedIn(...this.range())} su ${this.def.perZone}`;
+    const nChk = this.chans.filter(c => c && this.chk.has(c)).length;
+    if (nChk) s += ` · Spuntati: ${nChk}`;
     if (sel) s += ` · Selezionati: ${sel}`;
     st.innerHTML = `<span>${esc(s)}</span><span>Doppio clic o Invio per modificare · tasto destro per il menu</span>`;
   }
@@ -323,12 +355,14 @@ class RadioView {
     if (!this.undoStack.length) return;
     this.redoStack.push(JSON.stringify(this.chans));
     this.chans = JSON.parse(this.undoStack.pop());
+    this.chk = new WeakSet();
     this.changed();
   }
   redo() {
     if (!this.redoStack.length) return;
     this.undoStack.push(JSON.stringify(this.chans));
     this.chans = JSON.parse(this.redoStack.pop());
+    this.chk = new WeakSet();
     this.changed();
   }
 
@@ -363,6 +397,7 @@ class RadioView {
     this.fromRadio = false;
     this.chans = resp.channels.map(c => c || null);
     while (this.chans.length < this.def.slots) this.chans.push(null);
+    this.chk = new WeakSet();
     this.bands = resp.bands || [];
     this.datVer = resp.datVer || '';
     const dv = $('[data-datver]', this.page);
@@ -398,7 +433,9 @@ class RadioView {
         case 'paste': return await this.paste();
         case 'undo': return this.undo();
         case 'redo': return this.redo();
-        case 'copyto': return await this.copyTo();
+        case 'forward': return await this.forward();
+        case 'checkall': return this.checkAll(true);
+        case 'uncheckall': return this.checkAll(false);
         case 'toarch': return await this.toArchive();
         case 'export': return await Dialogs.exportRadio(this);
         case 'import': return await this.importFile();
@@ -695,23 +732,19 @@ class RadioView {
     toast(`Spostati ${s.length} canali nella zona ${z + 1}.`);
   }
 
-  copyToMenu(btn) {
-    const s = this.selected().filter(i => this.chans[i]);
-    if (!s.length) { toast('Seleziona prima i canali da copiare.'); return; }
-    const items = this.others().map(v => ({ label: v.def.name + (v.loaded ? '' : ' (file da aprire)'), run: () => this.copyTo(v) }));
-    items.push({ label: 'Altra radio dalla galleria dei modelli…', run: () => { Clipboard.kind = this.kind; Clipboard.items = s.map(i => clone(this.chans[i])); App.showTab('gal'); toast('Canali copiati: apri la scheda della radio dalla galleria e usa Incolla (Ctrl+V).'); } });
-    showMenuAt(btn, items);
-  }
-
-  async copyTo(target) {
-    const s = this.selected().filter(i => this.chans[i]);
-    if (!s.length) { toast('Seleziona prima i canali da copiare.'); return; }
-    await Dialogs.insertInto(target, s.map(i => clone(this.chans[i])), this.kind);
+  // «Inoltra ad altra radio» (3.9.3, prima «Copia in…»): i canali spuntati (o
+  // selezionati) vengono scritti via cavo nella radio scelta per marca e modello
+  async forward() {
+    if (!this.loaded) return;
+    if (this.grid.editing) await this.grid.commitEdit();
+    const { slots, how } = this.chosenSlots();
+    if (!slots.length) { toast('Spunta prima i canali da inoltrare (oppure selezionali con clic, Maiusc+clic, Ctrl+clic).'); return; }
+    await Dialogs.forward(this, slots.map(i => clone(this.chans[i])), how);
   }
 
   async toArchive() {
-    const s = this.selected().filter(i => this.chans[i]);
-    if (!s.length) { toast('Seleziona prima i canali da aggiungere all\'archivio.'); return; }
+    const s = this.chosenSlots().slots;
+    if (!s.length) { toast('Spunta (o seleziona) prima i canali da aggiungere all\'archivio.'); return; }
     Archive.addFromChannels(s.map(i => this.chans[i]), this.def.name);
   }
 
@@ -787,6 +820,7 @@ class RadioView {
     }
     if (JSON.stringify(ch) === JSON.stringify(old)) return null;
     this.snapshot();
+    if (old && ch && this.chk.has(old)) this.chk.add(ch);
     this.chans[i] = ch;
     this.dirty = true;
     App.onDirty();
@@ -818,7 +852,7 @@ class RadioView {
       ['Copia', () => this.copy()], ['Taglia', () => this.cut()], ['Incolla', () => this.paste()],
       ['Cancella', () => this.deleteSel(false)], ['Elimina e compatta', () => this.deleteSel(true)], ['Inserisci riga', () => this.insertRow()],
       ['Sposta su', () => this.move(-1)], ['Sposta giù', () => this.move(1)],
-      ...this.others().map(v => [`Copia in ${v.def.name}…`, () => this.copyTo(v)]), ['Aggiungi all\'archivio', () => this.toArchive()],
+      ['Inoltra ad altra radio…', () => this.forward()], ['Aggiungi all\'archivio', () => this.toArchive()],
     ];
     const m = h('<div class="menu open ctxmenu" style="position:fixed"></div>');
     for (const [label, fn] of items) {
@@ -839,6 +873,7 @@ class RadioView {
     if (!s || !s.loaded) return;
     this.datVer = s.datVer || '';
     this.setLayout(!!s.single);
+    this.chk = new WeakSet();
     this.loaded = true; this.path = s.path; this.fromRadio = !!s.fromRadio; this.chans = s.chans; this.bands = s.bands || []; this.dirty = s.dirty; this.zone = s.zone || 0;
     this.syncDivide();
     this.render();

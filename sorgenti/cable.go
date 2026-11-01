@@ -83,7 +83,7 @@ func (j *cableJob) snapshot() map[string]interface{} {
 }
 
 type cableReq struct {
-	Op       string  `json:"op"`    // read | write
+	Op       string  `json:"op"`    // read | write | forward
 	Radio    string  `json:"radio"` // k67 | baj
 	Port     string  `json:"port"`
 	Baud     int     `json:"baud"`
@@ -91,6 +91,12 @@ type cableReq struct {
 	Backup   bool    `json:"backup"`
 	Verify   bool    `json:"verify"`
 	Channels []*Chan `json:"channels"`
+	// forward («Inoltra ad altra radio», 3.9.3): Channels sono i canali da inoltrare;
+	// Mode "free" (posizioni libere) | "replace" (al posto di tutti i canali);
+	// Adopt: la scheda della radio di destinazione non è aperta, i dati scritti
+	// diventano i suoi (come dopo una lettura)
+	Mode  string `json:"mode"`
+	Adopt bool   `json:"adopt"`
 }
 
 func (a *App) backupDir() string {
@@ -120,6 +126,9 @@ func (a *App) apiCableStart(r *http.Request) (interface{}, error) {
 	var req cableReq
 	if err := decode(r, &req); err != nil {
 		return nil, err
+	}
+	if req.Op == "forward" {
+		return a.forwardStart(&req)
 	}
 	if isGenKind(req.Radio) {
 		return a.genCableStart(&req)

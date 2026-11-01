@@ -377,6 +377,9 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .home-meta { font-size: 13px; line-height: 1.75; color: #d9d2f5; }
 .home-meta b { color: #fff; }
 .home-small { font-size: 11.5px; color: #9f95c7; margin-top: 4px; }
+.home-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; margin-top: 6px; }
+.home-links a { color: #7fe9ff; text-decoration: none; border-bottom: 1px dotted #7fe9ff; }
+.home-links a:hover { color: #fff; border-bottom-color: #fff; }
 @media (prefers-reduced-motion: reduce) {
   .home-grid, .neon-top .nl, .home-start { animation: none; }
 }

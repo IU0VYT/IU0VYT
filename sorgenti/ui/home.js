@@ -8,6 +8,10 @@
 // Scheda «Home»: schermata iniziale mostrata a ogni avvio (titolo a neon in stile
 // sala giochi anni '80, funzioni principali, versione, copyright e licenza).
 
+// indirizzi mostrati anche se l'API info non risponde (uguali a appSite e appRepo di info.go)
+const SITE_URL = 'https://iu0vyt.github.io/IU0VYT/';
+const REPO_URL = 'https://github.com/IU0VYT/IU0VYT';
+
 const Home = {
   built: false,
 
@@ -41,10 +45,15 @@ const Home = {
           <div>Versione <b>${esc(d.version || '')}</b>${d.buildDate && d.buildDate !== 'non indicata' ? ` · compilata il ${esc(d.buildDate)}` : ''}</div>
           <div>Copyright © 2026 ${esc(d.author)}</div>
           <div>Software libero: ${esc(d.license || '')} — senza alcuna garanzia</div>
+          <div class="home-links">
+            <span>🌐 Sito web: <a href="#" data-link="${esc(d.site || SITE_URL)}">${esc(d.site || SITE_URL)}</a></span>
+            <span>💻 Sorgenti: <a href="#" data-link="${esc(d.repo || REPO_URL)}">${esc(d.repo || REPO_URL)}</a></span>
+          </div>
           <div class="home-small">Programma indipendente, non affiliato a Baofeng o Bajeton. I marchi appartengono ai rispettivi titolari.</div>
         </div>
       </div>
     </div>`;
+    $$('[data-link]', page).forEach(x => x.onclick = (e) => { e.preventDefault(); Info.open(x.dataset.link); });
     $$('[data-go]', page).forEach(b => b.onclick = () => {
       const g = b.dataset.go;
       if (g === 'gal-fw') {

@@ -21,7 +21,8 @@ const Archive = {
         <button class="btn" data-a="export" title="Esporta in Excel, CSV o CSV per CHIRP">⬆ Esporta…</button>
         <span class="sep"></span>
         <button class="btn" data-a="new">＋ Nuovo ponte</button>
-        <button class="btn" data-a="del" title="Elimina i ponti selezionati (Canc)">Elimina</button>
+        <button class="btn" data-a="del" title="Elimina i ponti spuntati (o, se non ce ne sono, quelli selezionati con il clic). Il tasto Canc elimina le righe selezionate.">🗑 Elimina</button>
+        <button class="btn" data-a="delall" title="Svuota l'archivio: elimina tutti i ponti, anche quelli nascosti dai filtri">🗑 Elimina tutti</button>
         <button class="btn" data-a="undo" title="Annulla (Ctrl+Z)">↶</button>
         <button class="btn" data-a="redo" title="Ripeti (Ctrl+Y)">↷</button>
         <span class="sep"></span>
@@ -249,7 +250,8 @@ const Archive = {
         case 'import': return await Dialogs.importPonti();
         case 'export': return await Dialogs.exportPonti();
         case 'new': return this.newPonte();
-        case 'del': return await this.del();
+        case 'del': return await this.del(true);
+        case 'delall': return await this.delAll();
         case 'undo': return this.undo();
         case 'redo': return this.redo();
         case 'checkall': return this.checkVisible(true);
@@ -276,16 +278,38 @@ const Archive = {
     toast('Nuovo ponte aggiunto in cima: completa i dati nel pannello a destra.');
   },
 
-  async del() {
-    const sel = this.selectedPonti();
-    if (!sel.length) { toast('Seleziona prima i ponti da eliminare.'); return; }
-    if (sel.length > 1 && !(await confirmDlg('Elimina ponti', `Eliminare ${sel.length} ponti dall'archivio? (puoi annullare con Ctrl+Z)`, 'Elimina'))) return;
+  // «Elimina» (3.9.3): i ponti spuntati, oppure, se non ce ne sono, quelli selezionati
+  // con il clic; il tasto Canc (useChecked false) elimina sempre le righe selezionate
+  async del(useChecked) {
+    const chk = useChecked ? this.ponti.filter(p => p.scelto) : [];
+    const sel = chk.length ? chk : this.selectedPonti();
+    if (!sel.length) { toast('Spunta (o seleziona con il clic) prima i ponti da eliminare.'); return; }
+    const vis = new Set(this.visible().map(p => p.id));
+    const hid = sel.filter(p => !vis.has(p.id)).length;
+    const what = chk.length ? (sel.length === 1 ? 'spuntato' : 'spuntati') : (sel.length === 1 ? 'selezionato' : 'selezionati');
+    if ((sel.length > 1 || chk.length) && !(await confirmDlg('Elimina ponti',
+      `Eliminare ${sel.length === 1 ? 'il ponte' : 'i ' + sel.length + ' ponti'} ${what} dall'archivio?` +
+      (hid ? `\n${hid === 1 ? 'Uno di questi è nascosto' : hid + ' di questi sono nascosti'} dai filtri attuali.` : '') +
+      '\nPuoi annullare con ↶ (Ctrl+Z).', 'Elimina'))) return;
     this.snapshot();
     const ids = new Set(sel.map(p => p.id));
     this.ponti = this.ponti.filter(p => !ids.has(p.id));
     this.grid.sel.clear();
     this.changed(true);
-    toast(`Eliminati ${sel.length} ponti.`);
+    toast(sel.length === 1 ? 'Eliminato 1 ponte.' : `Eliminati ${sel.length} ponti.`);
+  },
+
+  // «Elimina tutti» (3.9.3): svuota l'archivio, con conferma (si può annullare con ↶)
+  async delAll() {
+    const n = this.ponti.length;
+    if (!n) { toast('L\'archivio è già vuoto.'); return; }
+    if (!(await confirmDlg('Elimina tutti i ponti', `Eliminare tutti i ${n} ponti dell'archivio, anche quelli nascosti dai filtri?\n` +
+      'Puoi annullare con ↶ (Ctrl+Z) finché non chiudi il programma; per ricaricare l\'elenco di IK2ANE usa «⬇ Importa…».', `Elimina tutti i ${n} ponti`))) return;
+    this.snapshot();
+    this.ponti = [];
+    this.grid.sel.clear();
+    this.changed(true);
+    toast(`Archivio svuotato: eliminati ${n} ponti.`);
   },
 
   copy() {
@@ -448,7 +472,7 @@ const Archive = {
 
   onKey(e) {
     const k = e.key, ctrl = e.ctrlKey || e.metaKey;
-    if (k === 'Delete') { this.del().catch(reportError); return true; }
+    if (k === 'Delete') { this.del(false).catch(reportError); return true; }
     if (ctrl && k.toLowerCase() === 'c') { this.copy(); return true; }
     if (ctrl && k.toLowerCase() === 'z' && !e.shiftKey) { this.undo(); return true; }
     if (ctrl && (k.toLowerCase() === 'y' || (k.toLowerCase() === 'z' && e.shiftKey))) { this.redo(); return true; }
@@ -493,7 +517,12 @@ function radioCategory(kind, chosenType) {
 
 // controllo preliminare prima di scrivere i ponti in una radio:
 // { ok: [...], warn: [{ p, why }] (si possono scrivere con conferma), bad: [{ p, why }] }
-function radioCompat(kind, ponti, chosenType) {
+// words (3.9.3, inoltro dei canali di una radio): testi per «canali» invece che «ponti»
+const COMPAT_PONTI = { one: 'ponte', many: 'ponti', dig: 'ponte solo digitale', load: 'i ponti radio non si possono caricare', freq: 'le frequenze dei ponti radio che stai inviando', usable: 'utilizzabile', usables: 'utilizzabili' };
+const COMPAT_CANALI = { one: 'canale', many: 'canali', dig: 'canale digitale', load: 'questi canali non si possono caricare', freq: 'le frequenze dei canali che stai inviando', usable: 'utilizzabile', usables: 'utilizzabili' };
+
+function radioCompat(kind, ponti, chosenType, words) {
+  const W = words || COMPAT_PONTI;
   const def = (Views[kind] && Views[kind].def) || App.defs[kind] || RADIO_DEF[kind] || {};
   const bands = def.bands && def.bands.length ? def.bands : BANDS_FILE;
   const cat = radioCategory(kind, chosenType);
@@ -505,13 +534,13 @@ function radioCompat(kind, ponti, chosenType) {
   for (const p of ponti) {
     let why = '', soft = '';
     if (ponteSoloDigitale(p) && !(def.digital === 'DMR' && (p.tipi || []).includes('DMR'))) {
-      why = `ponte solo digitale (${(p.tipi || []).join(', ')}): ${def.digital === 'DMR' ? 'la radio gestisce solo DMR' : 'la radio è solo analogica'}`;
+      why = `${W.dig} (${(p.tipi || []).join(', ')}): ${def.digital === 'DMR' ? 'la radio gestisce solo DMR' : 'la radio è solo analogica'}`;
     } else if (!inBand(p.rx) || !inBand(p.tx)) {
       const fq = mhz(inBand(p.rx) ? p.tx : p.rx);
       why = cat === 'pmr' || cat === 'kids'
-        ? `apparato PMR446 / di uso libero che non accetta ${fq} MHz (gamme della radio: ${gamme} MHz): i ponti radio non si possono caricare`
+        ? `apparato PMR446 / di uso libero che non accetta ${fq} MHz (gamme della radio: ${gamme} MHz): ${W.load}`
         : cat === 'gmrs'
-          ? `apparato GMRS / FRS che non accetta ${fq} MHz (gamme della radio: ${gamme} MHz): i ponti radio non si possono caricare`
+          ? `apparato GMRS / FRS che non accetta ${fq} MHz (gamme della radio: ${gamme} MHz): ${W.load}`
           : `frequenza ${fq} MHz fuori dalle gamme della radio (${gamme} MHz)`;
     } else if ((cat === 'pmr' || cat === 'kids') && !(inR(p.rx, PMR446) && inR(p.tx, PMR446))) {
       // venduta come PMR446, ma la radio (e il suo programma) accetta queste frequenze
@@ -527,31 +556,32 @@ function radioCompat(kind, ponti, chosenType) {
 // banner: dispositivo non compatibile con i dati da inviare (o venduto come PMR446 /
 // GMRS ma in grado di usarli). Restituisce 'no' | 'other' | 'some' (solo i ponti
 // compatibili e quelli accettati dalla radio)
-function compatBanner(name, chk) {
+function compatBanner(name, chk, words) {
+  const W = words || COMPAT_PONTI;
   const n = chk.bad.length + chk.ok.length + chk.warn.length;
   const list = arr => {
     const reasons = new Map();
     for (const b of arr) reasons.set(b.why, (reasons.get(b.why) || []).concat(b.p));
-    return [...reasons].map(([why, ps]) => `<li><b>${ps.length} ${ps.length === 1 ? 'ponte' : 'ponti'}</b>: ${esc(why)}
+    return [...reasons].map(([why, ps]) => `<li><b>${ps.length} ${ps.length === 1 ? W.one : W.many}</b>: ${esc(why)}
       <span class="note">(${esc(ps.slice(0, 6).map(p => p.nome || p.sigla || (p.rx / 1e6).toFixed(4)).join(', '))}${ps.length > 6 ? ', …' : ''})</span></li>`).join('');
   };
   const usable = chk.ok.length + chk.warn.length;
   const onlyWarn = !chk.bad.length;
   const head = onlyWarn
-    ? `<div class="compat-banner warnonly"><b>La radio scelta è venduta come apparato ${chk.cat === 'gmrs' ? 'GMRS / FRS' : 'PMR446 / di uso libero'}, ma accetta le frequenze dei ponti
-        radio che stai inviando.</b><br>Radio scelta: ${esc(name)}. Puoi scriverli se sei radioamatore, rispettando le norme sull'uso delle frequenze
+    ? `<div class="compat-banner warnonly"><b>La radio scelta è venduta come apparato ${chk.cat === 'gmrs' ? 'GMRS / FRS' : 'PMR446 / di uso libero'}, ma accetta
+        ${W.freq}.</b><br>Radio scelta: ${esc(name)}. Puoi scriverli se sei radioamatore, rispettando le norme sull'uso delle frequenze
         (in Italia un apparato PMR446 omologato non si può usare fuori dalla banda PMR446). Nella radio non è ancora stato scritto nulla.</div>`
-    : `<div class="compat-banner"><b>${usable ? `Hai scelto un dispositivo non compatibile con ${chk.bad.length} dei ${n} ponti che stai cercando di inviare alla radio.`
+    : `<div class="compat-banner"><b>${usable ? `Hai scelto un dispositivo non compatibile con ${chk.bad.length} dei ${n} ${W.many} che stai cercando di inviare alla radio.`
         : 'Hai scelto un dispositivo non compatibile con i dati che stai cercando di inviare alla radio.'}</b><br>
         Radio scelta: ${esc(name)}. Nella radio non è stato scritto nulla.</div>`;
-  const okBtn = onlyWarn ? (usable === 1 ? 'Scrivi comunque il ponte' : `Scrivi comunque i ${usable} ponti`)
-    : usable === 1 ? `Invia solo il ponte ${chk.warn.length ? 'utilizzabile' : 'compatibile'}` : `Invia solo i ${usable} ${chk.warn.length ? 'utilizzabili' : 'compatibili'}`;
+  const okBtn = onlyWarn ? (usable === 1 ? `Scrivi comunque il ${W.one}` : `Scrivi comunque i ${usable} ${W.many}`)
+    : usable === 1 ? `Invia solo il ${W.one} ${chk.warn.length ? 'utilizzabile' : 'compatibile'}` : `Invia solo i ${usable} ${chk.warn.length ? 'utilizzabili' : 'compatibili'}`;
   return new Promise(res => {
     const m = openModal(`<div class="dialog mid"><header>⚠ ${onlyWarn ? 'Radio venduta come ' + (chk.cat === 'gmrs' ? 'GMRS' : 'PMR446') : 'Radio non compatibile con i dati da inviare'}</header><div class="body">
       ${head}
       ${chk.bad.length ? `<p>Non compatibili:</p><ul class="compat-list">${list(chk.bad)}</ul>` : ''}
       ${chk.warn.length ? `<p>${onlyWarn ? '' : 'Accettati dalla radio, anche se venduta come apparato di uso libero:'}</p><ul class="compat-list">${list(chk.warn)}</ul>` : ''}
-      ${!onlyWarn && chk.ok.length ? `<p class="note">${chk.ok.length} ponti sono compatibili.</p>` : ''}
+      ${!onlyWarn && chk.ok.length ? `<p class="note">${chk.ok.length === 1 ? `1 ${W.one} è compatibile` : `${chk.ok.length} ${W.many} sono compatibili`}.</p>` : ''}
       </div><footer><button class="btn" data-c="no">Annulla</button><button class="btn" data-c="other">Scegli un'altra radio…</button>
       ${usable ? `<button class="btn primary" data-c="some">${okBtn}</button>` : ''}</footer></div>`,
       { onEsc: () => { m.close(); res('no'); } });

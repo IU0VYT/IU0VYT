@@ -39,6 +39,7 @@ const (
 	appAuthor  = `Daniele "IU0VYT" Bonifazi`
 	appQRZ     = "https://www.qrz.com/db/IU0VYT"
 	appRepo    = "https://github.com/IU0VYT/IU0VYT"
+	appSite    = "https://iu0vyt.github.io/IU0VYT/" // sito del programma (GitHub Pages, cartella docs)
 	appLicense = "GNU General Public License versione 3 o successiva (GPL-3.0-or-later)"
 	// ultima versione pubblicata: GitHub rimanda sempre al pacchetto del rilascio
 	// più recente (3.9: prima era l'indirizzo fisso del rilascio «NEW»)
@@ -113,7 +114,7 @@ func (a *App) apiInfo(r *http.Request) (interface{}, error) {
 	}
 	return map[string]interface{}{
 		"name": appName, "version": appVersion, "buildDate": bd, "author": appAuthor,
-		"qrz": appQRZ, "repo": appRepo, "dataDir": a.store.dir, "dataDirShort": shortDataDir(a.store.dir),
+		"qrz": appQRZ, "site": appSite, "repo": appRepo, "dataDir": a.store.dir, "dataDirShort": shortDataDir(a.store.dir),
 		"marker": versionMarker, "license": appLicense,
 	}, nil
 }

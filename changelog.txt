@@ -3,6 +3,38 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+3.9.3 (01/11/2026)
+------------------
+- Schede delle radio: casella di spunta per ogni canale (ui/grid.js: righe senza
+  casella per le posizioni vuote, nochk), casella in testata per i canali visibili,
+  «☑ Seleziona tutti» / «☐ Deseleziona tutti» per tutti i canali della radio
+  (ui/radio.js: spunte in un WeakSet degli oggetti canale, che seguono il canale
+  spostato, ordinato o modificato; non salvate nel file). «→ Archivio» usa i canali
+  spuntati o, se non ce ne sono, quelli selezionati.
+- «📻 Inoltra ad altra radio» al posto di «Copia in…» (ui/dialogs.js forward,
+  forwardTarget; cable con op «forward»): marca e modello da due menu a tendina
+  (modelli divisi per tipologia), posizioni libere oppure al posto di tutti i canali,
+  conferma del modello e del collegamento, controllo di compatibilità (radioCompat e
+  compatBanner con i testi per i canali: COMPAT_CANALI), poi forward.go: lettura della
+  radio di destinazione salvata come copia di sicurezza («prima_dell_inoltro»),
+  adattamento (adaptChan / genAdapt), posizioni (planForward: posizioni bloccate e
+  regole delle singole posizioni rispettate, errore senza scrivere nulla se mancano
+  posizioni libere), scrittura e verifica con runCable / runGenCable. La sessione
+  della scheda aperta non cambia; se la scheda della destinazione non è aperta
+  (adopt), i dati scritti diventano i suoi e «Mostra i canali della radio» la apre.
+- Archivio ponti: «🗑 Elimina» elimina i ponti spuntati (anche nascosti dai filtri,
+  indicati nella conferma) o, se non ce ne sono, quelli selezionati; Canc elimina le
+  righe selezionate; nuovo «🗑 Elimina tutti» (ui/archive.js delAll), con conferma e ↶.
+- Home: collegamenti al sito (https://iu0vyt.github.io/IU0VYT/) e ai sorgenti in fondo
+  alla pagina (ui/home.js, ui/style.css .home-links). Info: riga «Sito web» tra QRZ e
+  Codice sorgente (info.go appSite, campo site dell'API info).
+- forward_test.go (K67 → Bajeton nelle posizioni libere, Bajeton → K67 al posto di tutti
+  i canali con un canale digitale escluso, posizioni insufficienti senza scrittura,
+  sessione della scheda, UV-5R con il protocollo di CHIRP), forward_plan_test.go
+  (posizioni bloccate della GM-15 Pro, fmtPositions).
+- LEGGIMI.txt: «INOLTRO AD ALTRA RADIO», spunte, eliminazione nell'archivio, sito web;
+  guida del programma aggiornata.
+
 3.9.2 (29/10/2026)
 ------------------
 - Verifica dopo la scrittura (cable.go verifyRead, usata da runCable e da

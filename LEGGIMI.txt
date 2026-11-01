@@ -1,10 +1,26 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO BAOFENG E BAJETON
 =====================================================================
-Versione 3.9.2 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 3.9.3 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
+Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 3.9.3:
+- schede delle radio: casella di spunta su ogni canale (la casella in testa alla
+  colonna spunta i canali visibili; "☑ Seleziona tutti" e "☐ Deseleziona tutti"
+  valgono per tutti i canali della radio, anche nelle altre zone);
+- "📻 Inoltra ad altra radio" al posto di "Copia in…": scrive i canali spuntati (o
+  selezionati) in un'altra radio collegata con il cavo. Si sceglie marca e modello
+  dai menu a tendina, si conferma il modello e che la radio sia collegata; il
+  programma controlla la compatibilità, legge la radio e ne salva una copia di
+  sicurezza, adatta i canali, li scrive e rilegge la radio per verificarli (vedi
+  "INOLTRO AD ALTRA RADIO");
+- archivio ponti: "🗑 Elimina" toglie i ponti spuntati (o selezionati) e il nuovo
+  "🗑 Elimina tutti" svuota l'archivio, con conferma (si annulla con ↶);
+- schermata Home: in fondo i collegamenti al sito del programma
+  (https://iu0vyt.github.io/IU0VYT/) e ai sorgenti (https://github.com/IU0VYT/IU0VYT);
+  scheda "ℹ Info": nuova riga "Sito web" tra QRZ e Codice sorgente.
 Novità della 3.9.2:
 - CORRETTO: verifica dopo la scrittura (segnalato con una Bajeton BJ-8300 vera: la
   scrittura riusciva ma la verifica diceva che la radio non risponde). Alla fine
@@ -667,7 +683,7 @@ da password e quelli divisi in più parti.
 
 SCHEDA INFO E AGGIORNAMENTI
 - La scheda "ℹ Info" mostra nome, versione, data di compilazione, autore, pagina QRZ,
-  repository GitHub (https://github.com/IU0VYT/IU0VYT: codice sorgente, rilasci e
+  sito del programma (https://iu0vyt.github.io/IU0VYT/, dalla 3.9.3), repository GitHub (https://github.com/IU0VYT/IU0VYT: codice sorgente, rilasci e
   aggiornamenti), licenza, cartella dei dati e note legali (i collegamenti si aprono
   nel browser).
 - E-mail (3.9): "✉ Scrivi all'autore" apre il programma di posta del PC con il
@@ -721,6 +737,12 @@ TABELLE DEI CANALI
 - Modo (solo radio con canali digitali): Analogico oppure DMR / Digitale. Sui canali
   digitali i subtoni non si usano e restano le impostazioni digitali della radio.
 - Selezione: clic, Maiusc+clic (intervallo), Ctrl+clic (aggiungi), Ctrl+A (tutti).
+- Spunte (3.9.3): casella a sinistra di ogni canale (Maiusc+clic spunta un intervallo,
+  la barra spaziatrice le righe selezionate); la casella in testa alla colonna spunta
+  i canali visibili, "☑ Seleziona tutti" / "☐ Deseleziona tutti" tutti i canali della
+  radio. "📻 Inoltra ad altra radio" e "→ Archivio" usano i canali spuntati oppure, se
+  non ce ne sono, quelli selezionati. Le spunte seguono il canale quando lo sposti o
+  lo modifichi; non vengono salvate nel file.
 - Pulsanti e tasti: Aggiungi; Inserisci riga (Ins); Cancella (Canc);
   Elimina e compatta (Maiusc+Canc); Sposta su/giù (Alt+↑ / Alt+↓);
   Ordina (per frequenza, nome, tono: se hai selezionato più canali ordina solo quelli);
@@ -734,8 +756,10 @@ TABELLE DEI CANALI
   le frequenze fuori gamma sono evidenziate in rosso.
 
 COPIA TRA LE DUE RADIO
-"Copia in Bajeton… / Copia in K67…" (oppure Copia nella prima scheda e Incolla
-nell'altra) adatta i canali con la logica del convertitore e mostra gli avvisi:
+Copia nella prima scheda e Incolla nell'altra (dalla 3.9.3 "Copia in…" è diventato
+"📻 Inoltra ad altra radio", che scrive direttamente nella radio collegata: vedi
+"INOLTRO AD ALTRA RADIO") adatta i canali con la logica del convertitore e mostra gli
+avvisi:
 - nomi: max 16 caratteri sul K67, 12 sulla Bajeton (abbreviazioni M. S. D. e
   numero finale conservato, es. "CAMPOLUNGHINO 3" → "CAMPOLUNGH 3");
 - potenza: la Media della Bajeton diventa Alta sul K67;
@@ -744,6 +768,34 @@ nell'altra) adatta i canali con la logica del convertitore e mostra gli avvisi:
 - frequenze fuori dalle gamme del K67.
 Nella finestra di inserimento scegli la zona (Bajeton), la posizione di partenza e
 se usare solo le posizioni libere o sovrascrivere.
+
+INOLTRO AD ALTRA RADIO (3.9.3)
+"📻 Inoltra ad altra radio" (nella scheda di ogni radio e nel menu del tasto destro)
+scrive i canali scelti direttamente in un'altra radio collegata con il cavo:
+1) spunta i canali (casella a sinistra; "☑ Seleziona tutti" per tutti i canali della
+   radio): se non ne hai spuntati si usano quelli selezionati con il clic;
+2) scegli marca e modello della radio di destinazione dai due menu a tendina (i
+   modelli sono divisi per tipologia) e dove mettere i canali: nelle posizioni
+   libere (i canali già presenti nella radio restano) oppure al posto di tutti i
+   canali della radio;
+3) conferma che il modello è quello giusto e che la radio è collegata al cavo e
+   accesa;
+4) controllo di compatibilità, come per l'archivio ponti: frequenze dentro le gamme
+   della radio, nessun canale radioamatoriale su un apparato PMR446 / GMRS (avviso
+   giallo se la radio accetta comunque quelle frequenze), nessun canale DMR su una
+   radio solo analogica. Puoi annullare, scegliere un'altra radio o inviare solo i
+   canali compatibili;
+5) scegli la porta del cavo e premi "Inoltra e scrivi". Il programma legge la radio e
+   ne salva una copia di sicurezza (cartella "copie_radio", file "..._prima_dell_
+   inoltro_..."), adatta i canali alla radio (nomi, caratteri, toni, potenze, canali
+   di sola ricezione o digitali, posizioni bloccate come i canali GMRS fissi), li
+   scrive e rilegge la radio per verificarli.
+Le impostazioni della radio (menu, VFO, tasti…) restano quelle lette dalla radio:
+cambiano solo i canali. Se mancano posizioni libere o nessun canale si può usare, il
+programma si ferma prima della scrittura e nella radio non viene scritto nulla.
+Alla fine la finestra indica le posizioni usate e gli adattamenti; se la scheda
+della radio di destinazione non era aperta, "Mostra i canali della radio" la apre
+con i canali come sono ora nella radio.
 
 COSA VIENE CONSERVATO
 Il programma modifica solo ciò che cambi. Un file aperto e salvato senza modifiche
@@ -834,6 +886,11 @@ ARCHIVIO PONTI
   letta il programma propone di leggerla via cavo o di aprirne un file. "Cambia
   radio…" nella barra azzurra cambia la destinazione.
 - "Copia" copia i ponti spuntati (o selezionati) per incollarli in una radio (Ctrl+V).
+- "🗑 Elimina" (3.9.3) toglie dall'archivio i ponti spuntati, anche quelli nascosti dai
+  filtri (la conferma dice quanti), oppure, se non ce ne sono, quelli selezionati con
+  il clic; il tasto Canc elimina le righe selezionate. "🗑 Elimina tutti" svuota
+  l'archivio. Entrambi chiedono conferma e si annullano con ↶ (Ctrl+Z) finché il
+  programma resta aperto; per ricaricare l'elenco di IK2ANE usa "⬇ Importa…".
 - "Segna come verificati" toglie gli avvisi dopo il controllo (restano nelle note).
 
 CONVERTITORE E FORMATI UNIVERSALI (3.7)

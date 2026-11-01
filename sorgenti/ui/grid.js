@@ -9,6 +9,7 @@
 
 class Grid {
   // opts: { columns, getRows, onEdit, onSelChange, onKey, onDblRow, checkbox, onSort, rowClass }
+  // riga: { id, checked, nochk (nessuna casella: es. posizione vuota di una radio), head, cls }
   // colonna: { key, title, width, cls, html(row) | text(row), edit: { type: 'text'|'select'|'tone', options, value(row) } }
   constructor(wrap, opts) {
     this.wrap = wrap;
@@ -45,7 +46,8 @@ class Grid {
     for (const c of cols) out.push(`<col style="width:${c.width || 100}px">`);
     out.push('</colgroup><thead><tr>');
     if (this.o.checkbox) {
-      const all = this.rows.length > 0 && this.rows.every(r => r.checked);
+      const ck = this.rows.filter(r => !r.head && !r.nochk);
+      const all = ck.length > 0 && ck.every(r => r.checked);
       out.push(`<th class="chk"><input type="checkbox" data-all ${all ? 'checked' : ''} title="Seleziona/deseleziona tutte le righe visibili"></th>`);
     }
     for (const c of cols) {
@@ -62,7 +64,7 @@ class Grid {
       const cls = [r.cls || ''];
       if (this.sel.has(r.id)) cls.push('sel');
       out.push(`<tr data-i="${i}" class="${cls.join(' ')}">`);
-      if (this.o.checkbox) out.push(`<td class="chk"><input type="checkbox" data-chk ${r.checked ? 'checked' : ''}></td>`);
+      if (this.o.checkbox) out.push(r.nochk ? '<td class="chk"></td>' : `<td class="chk"><input type="checkbox" data-chk ${r.checked ? 'checked' : ''}></td>`);
       for (let j = 0; j < cols.length; j++) {
         const c = cols[j];
         let content = c.html ? c.html(r) : esc(c.text ? c.text(r) : '');
@@ -152,7 +154,7 @@ class Grid {
         if (e.shiftKey && this.lastChk != null) {
           const [lo, hi] = this.lastChk < i ? [this.lastChk, i] : [i, this.lastChk];
           const ids = [];
-          for (let k = lo; k <= hi; k++) if (this.rows[k] && !this.rows[k].head) ids.push(this.rows[k].id);
+          for (let k = lo; k <= hi; k++) if (this.rows[k] && !this.rows[k].head && !this.rows[k].nochk) ids.push(this.rows[k].id);
           this.o.onCheck(ids, e.target.checked);
         } else this.o.onCheck([this.rows[i].id], e.target.checked);
         this.lastChk = i;
