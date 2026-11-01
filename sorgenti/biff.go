@@ -98,6 +98,18 @@ func (r *biffStr) avail() int {
 	return len(r.parts[r.pi]) - r.p
 }
 
+// remaining: byte ancora da leggere, compresi i record CONTINUE successivi.
+func (r *biffStr) remaining() int {
+	if r.pi >= len(r.parts) {
+		return 0
+	}
+	n := len(r.parts[r.pi]) - r.p
+	for _, p := range r.parts[r.pi+1:] {
+		n += len(p)
+	}
+	return n
+}
+
 func (r *biffStr) next() bool {
 	if r.pi+1 >= len(r.parts) {
 		return false
@@ -108,6 +120,11 @@ func (r *biffStr) next() bool {
 }
 
 func (r *biffStr) bytes(n int) ([]byte, error) {
+	// una lunghezza oltre i dati disponibili (file danneggiato) fallirebbe
+	// comunque: si esce subito, senza riservare memoria per quella lunghezza
+	if n < 0 || n > r.remaining() {
+		return nil, errors.New("stringa troncata")
+	}
 	out := make([]byte, 0, n)
 	for n > 0 {
 		if r.avail() == 0 && !r.next() {
@@ -163,7 +180,13 @@ func (r *biffStr) str(cch int) (string, error) {
 		}
 	}
 	high := flags&0x01 != 0
-	u := make([]uint16, 0, cch)
+	if cch < 0 {
+		return "", errors.New("lunghezza della stringa non valida")
+	}
+	// ogni carattere occupa almeno un byte: la capacità iniziale non supera mai
+	// i dati presenti nel file (la lettura resta identica, cambia solo la
+	// memoria riservata in anticipo)
+	u := make([]uint16, 0, min(cch, r.remaining()))
 	for len(u) < cch {
 		if r.avail() == 0 {
 			// la stringa continua nel record successivo, preceduta da un byte di flag

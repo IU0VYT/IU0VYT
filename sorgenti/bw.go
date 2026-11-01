@@ -150,8 +150,11 @@ func (p *bwParser) expect(s string) {
 	}
 }
 
+// I numeri delle mappe (indirizzi, spostamenti, dimensioni) sono letti a 32 bit:
+// bastano ampiamente per la memoria delle radio e la conversione in int è
+// sicura su qualunque architettura.
 func bwCount(s string) (int, bool) {
-	v, err := strconv.ParseInt(s, 0, 64)
+	v, err := strconv.ParseInt(s, 0, 32)
 	return int(v), err == nil && v > 0
 }
 
@@ -182,13 +185,13 @@ func (p *bwParser) statement(st *bwEl) {
 		p.expect(";")
 		switch d {
 		case "seekto":
-			n, err := strconv.ParseInt(v, 0, 64)
+			n, err := strconv.ParseInt(v, 0, 32)
 			if err != nil {
 				p.fail("indirizzo non valido %q", v)
 			}
 			p.off = int(n)
 		case "seek":
-			n, err := strconv.ParseInt(v, 0, 64)
+			n, err := strconv.ParseInt(v, 0, 32)
 			if err != nil {
 				p.fail("valore non valido %q", v)
 			}

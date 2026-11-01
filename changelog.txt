@@ -3,6 +3,24 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+3.9.4 (01/11/2026)
+------------------
+- Sicurezza (avvisi dell'analisi CodeQL): biff.go, lettura dei file .xls: nuovo
+  biffStr.remaining (byte rimasti, compresi i record CONTINUE); biffStr.bytes rifiuta
+  subito una lunghezza negativa o oltre i dati disponibili (prima la memoria veniva
+  riservata in anticipo: con i dati estesi di 0xFFFFFFFF byte di un file danneggiato
+  il programma poteva esaurire la memoria); biffStr.str rifiuta cch negativo e
+  riserva al massimo min(cch, remaining) caratteri. Lettura dei file validi invariata.
+- bw.go, mappe della memoria: #seekto, #seek e le dimensioni degli array letti con
+  strconv.ParseInt a 32 bit (prima 64 bit convertiti in int); un valore oltre il
+  limite è un errore della mappa invece di un numero troncato. Le mappe del programma
+  arrivano al massimo a 0x40010, ben dentro il limite.
+- sicurezza_test.go: TestBWNumeriA32Bit e TestBIFFStringaDanneggiata.
+- Repository: .github/SECURITY.md (versioni supportate, segnalazione privata con
+  «Report a vulnerability») e .github/dependabot.yml (action dei workflow ogni
+  lunedì in un'unica pull request; librerie Go solo per le correzioni di sicurezza,
+  con aggiornamento della cartella vendor).
+
 3.9.3 (01/11/2026)
 ------------------
 - Schede delle radio: casella di spunta per ogni canale (ui/grid.js: righe senza

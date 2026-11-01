@@ -1,11 +1,19 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO BAOFENG E BAJETON
 =====================================================================
-Versione 3.9.3 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 3.9.4 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 3.9.4:
+- più robustezza con i file danneggiati: un file Excel (.xls) con una lunghezza
+  di testo impossibile ora viene rifiutato con un messaggio invece di poter far
+  chiudere il programma per mancanza di memoria; i numeri delle mappe della
+  memoria delle radio sono controllati entro i limiti. Nessun cambiamento per i
+  file e le radio che funzionavano già;
+- repository: istruzioni per segnalare in privato i problemi di sicurezza
+  (.github/SECURITY.md) e aggiornamenti automatici proposti da Dependabot.
 Novità della 3.9.3:
 - schede delle radio: casella di spunta su ogni canale (la casella in testa alla
   colonna spunta i canali visibili; "☑ Seleziona tutti" e "☐ Deseleziona tutti"

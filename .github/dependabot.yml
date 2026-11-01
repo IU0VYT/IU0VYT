@@ -1,0 +1,32 @@
+# Dependabot: aggiornamenti automatici proposti come pull request (nulla viene
+# unito senza approvazione).
+version: 2
+updates:
+  # Action usate dai workflow in .github/workflows (fissate per hash): una pull
+  # request a settimana con tutte le nuove versioni insieme.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Europe/Rome"
+    groups:
+      action:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "Action"
+
+  # Librerie Go dei sorgenti. Nessun aggiornamento di versione ordinario
+  # (open-pull-requests-limit: 0): solo le correzioni di sicurezza, che usano
+  # questa configurazione per aggiornare anche la cartella vendor (la
+  # compilazione usa -mod=vendor).
+  - package-ecosystem: "gomod"
+    directory: "/sorgenti"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
+    vendor: true
+    commit-message:
+      prefix: "Librerie Go"
