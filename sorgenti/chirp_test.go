@@ -71,6 +71,12 @@ var chirpTestImage = map[string]string{
 	"qs-uvk5":    "Quansheng_UV-K5.img",
 	"mt-tk6":     "Quansheng_UV-K5.img",
 	"qs-uvk1":    "Quansheng_UV-K5.img",
+	// TIDRADIO TD-H8 terza generazione e TD-H3: stessa memoria della versione con immagine
+	"td-tdh8g3":     "TIDRADIO_TD-H8-HAM_G3.img",
+	"td-tdh8g3ham":  "TIDRADIO_TD-H8-HAM_G3.img",
+	"td-tdh8g3gmrs": "TIDRADIO_TD-H8-HAM_G3.img",
+	"td-tdh3ham":    "TIDRADIO_TD-H3.img",
+	"td-tdh3gmrs":   "TIDRADIO_TD-H3.img",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {

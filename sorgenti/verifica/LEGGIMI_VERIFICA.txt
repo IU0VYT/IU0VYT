@@ -207,6 +207,22 @@ DMR-6X2-PRO-121e estratti): controllo di tutti i file ufficiali e di file danneg
      CHIRP_DIR=... DMRCONFIG=... DMRCONFIG_EX=... BTECH_6X2_DIR=... \
      go test -mod=vendor -run 'TestIdentify|TestDFUPort|TestFw6x2' -v .
 
+AGGIORNAMENTO DEL FIRMWARE DELLA UV-K5 (cartella "k5", 4.1)
+TestK5FirmwarePack e TestK5FirmwareUpdate provano decifratura dei file .bin e
+aggiornamento con un caricatore simulato (firmware di prova a byte casuali). Con
+K5REF_JS (cartella "js" dei sorgenti di uvtools, https://github.com/egzumer/uvtools) e
+node, TestK5FirmwareUvtools confronta con il codice di uvtools la decifratura e tutti
+i byte inviati alla radio:
+     K5REF_JS=percorso/uvtools/js go test -mod=vendor -run TestK5FirmwareUvtools -v .
+
+SITO: RIQUADRO DELLE MARCHE (cartella "sito", 4.1)
+Il riquadro «PLAYER SELECT» di docs/index.html si rigenera dal catalogo:
+     IU0VYT_ELENCO_MARCHE=/tmp/marche.txt go test -mod=vendor -run TestSitoMarche .
+     node verifica/sito/brandcolors.js ui/gallery.js < /tmp/marche.txt |
+       python3 verifica/sito/site_brands.py ../docs/index.html
+(brandcolors.js legge colori e ordine da ui/gallery.js; site_brands.py riceve righe
+«Marca|colore»). TestSitoMarche controlla che il sito elenchi le marche del catalogo.
+
 ESEGUIBILE WINDOWS SOTTO WINE
      WINEPREFIX=... WINE_EXE="IU0VYT Flash.exe" go test -mod=vendor -run 'TestWine' -v .
 

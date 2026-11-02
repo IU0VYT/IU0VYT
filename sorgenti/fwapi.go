@@ -7,7 +7,8 @@
 
 package main
 
-// Aggiornamento del firmware (Bajeton BJ-8300/BJ-7800 .anc e BJ-9000 .Firmware, Baofeng .BF, .dat, .kdhx e .kdh): API per l'interfaccia.
+// Aggiornamento del firmware (Bajeton BJ-8300/BJ-7800 .anc e BJ-9000 .Firmware, Baofeng .BF, .dat, .kdhx e .kdh,
+// Quansheng UV-K5 .bin): API per l'interfaccia.
 //
 //   fw/load      sceglie il firmware: file del PC (.anc, .zip, .rar) o indirizzo Internet
 //   fw/pick      scelta tra più firmware trovati negli archivi
@@ -83,7 +84,7 @@ func (a *App) fwResult() (interface{}, error) {
 	s.exp = nil
 	cands := exp.found
 	if len(cands) == 0 {
-		msg := "nell'archivio non c'è nessun file firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware)"
+		msg := "nell'archivio non c'è nessun file firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5)"
 		if len(skipped) > 0 {
 			msg += " (" + strings.Join(skipped, "; ") + ")"
 		}
@@ -133,6 +134,8 @@ func (a *App) fwSelect(i int, skipped []string) (interface{}, error) {
 		img = analyzeBJ9000(c.Name, c.Where, c.data)
 	case fwKDH9G:
 		img = analyzeKDH9G(c.Name, c.Where, c.data)
+	case fwK5:
+		img = analyzeK5(c.Name, c.Where, c.data)
 	default:
 		img = analyzeANC(c.Name, c.Where, c.data)
 	}
@@ -179,7 +182,7 @@ func (a *App) apiFwLoad(r *http.Request) (interface{}, error) {
 		if p == "" {
 			var err error
 			if p, err = a.dialog(false, "Scegli il firmware",
-				"Firmware o archivio (*.anc, *.BF, *.dat, *.kdhx, *.kdh, *.Firmware, *.zip, *.rar)|*.anc;*.bf;*.dat;*.kdhx;*.kdh;*.firmware;*.btf;*.zip;*.rar|Bajeton BJ-8300/BJ-7800 (*.anc)|*.anc|Bajeton BJ-9000 (*.Firmware)|*.firmware;*.btf|Baofeng UV-5RM/5RH (*.BF)|*.bf|Baofeng 5RH Pro (*.dat)|*.dat|Baofeng UV-25 Plus (*.kdhx)|*.kdhx|Baofeng UV-9G (*.kdh)|*.kdh|Archivi (*.zip, *.rar)|*.zip;*.rar|Tutti i file|*.*", "", ""); err != nil {
+				"Firmware o archivio (*.anc, *.BF, *.dat, *.kdhx, *.kdh, *.Firmware, *.bin, *.zip, *.rar)|*.anc;*.bf;*.dat;*.kdhx;*.kdh;*.firmware;*.btf;*.bin;*.zip;*.rar|Bajeton BJ-8300/BJ-7800 (*.anc)|*.anc|Bajeton BJ-9000 (*.Firmware)|*.firmware;*.btf|Baofeng UV-5RM/5RH (*.BF)|*.bf|Baofeng 5RH Pro (*.dat)|*.dat|Baofeng UV-25 Plus (*.kdhx)|*.kdhx|Baofeng UV-9G (*.kdh)|*.kdh|Quansheng UV-K5/K6/5R Plus (*.bin)|*.bin|Archivi (*.zip, *.rar)|*.zip;*.rar|Tutti i file|*.*", "", ""); err != nil {
 				return nil, err
 			}
 		}
@@ -305,7 +308,7 @@ func (a *App) apiFwIdentify(r *http.Request) (interface{}, error) {
 
 type fwStartReq struct {
 	Port           string `json:"port"`
-	Mode           string `json:"mode"`  // anc: update | recovery; bf, kdhx, bj9000, kdh9g: auto | manual; rh5: update
+	Mode           string `json:"mode"`  // anc: update | recovery; bf, kdhx, bj9000, kdh9g: auto | manual; rh5: update; k5: manual
 	Model          string `json:"model"` // bf: driver per la copia di sicurezza (es. bf-uv5rm)
 	Baud           int    `json:"baud"`
 	Backup         bool   `json:"backup"`
@@ -376,6 +379,14 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 			}
 		}
 		return nil
+	case "k5":
+		if req.Mode != "manual" {
+			return errors.New("modalità sconosciuta")
+		}
+		if !req.ConfirmModel {
+			return fmt.Errorf("conferma che la radio collegata è una %s ed è nel caricatore", img.Info.Target)
+		}
+		return nil
 	case "rh5":
 		if req.Mode != "update" {
 			return errors.New("modalità sconosciuta")
@@ -438,6 +449,8 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 		return a.runFirmwareRH5(ctx, j, req, img)
 	case "kdhx", "bj9000", "kdh9g":
 		return a.runFirmwareKDH2(ctx, j, req, img)
+	case "k5":
+		return a.runFirmwareK5(ctx, j, req, img)
 	}
 	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
 	j.logf("Firmware: %s (%s, SHA-256 %s…)", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16])
@@ -749,5 +762,30 @@ func (a *App) runFirmwareKDH2(ctx context.Context, j *cableJob, req *fwStartReq,
 	}
 	res["seconds"] = int(time.Since(t0).Seconds())
 	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
+	return res, nil
+}
+
+// runFirmwareK5: Quansheng UV-K5 / UV-K6 / UV-5R Plus nel caricatore (fwk5.go)
+func (a *App) runFirmwareK5(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
+	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
+	j.logf("Firmware: %s (versione %s, %s da inviare, SHA-256 %s…)", img.Info.Name, img.Info.Version, fmtBytes(len(img.Dec)), img.Info.SHA256[:16])
+	j.set("In attesa della radio nel caricatore", true)
+	started := false
+	t0 := time.Now()
+	sent, err := k5Update(ctx, req.Port, img.Ver, img.Dec, j.prog, func(s string) { j.logf("%s", s) },
+		func() { fwStarted(j, &started)(); j.set("Aggiornamento del firmware", false) })
+	res["sent"] = sent
+	if err == errCancelled && !started {
+		return nil, err
+	}
+	if err != nil {
+		if !started {
+			return nil, fmt.Errorf("aggiornamento non avviato, la radio non è stata modificata: %v", err)
+		}
+		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati): la radio resta nel caricatore e non si avvia finché non ripeti l'aggiornamento "+
+			"(spegnila, riaccendila tenendo premuto il PTT e riprova; le memorie dei canali e la taratura non sono state toccate). %v", fmtBytes(int(sent)), err)
+	}
+	res["seconds"] = int(time.Since(t0).Seconds())
+	j.note("Firmware %s inviato: %s in %d secondi. Spegni e riaccendi la radio: all'accensione mostra la nuova versione.", img.Info.Version, fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
 	return res, nil
 }

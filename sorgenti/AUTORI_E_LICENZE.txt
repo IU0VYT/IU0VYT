@@ -60,6 +60,8 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
   chirp/kenwood_tone.py                     Copyright 2026 Dan Smith
   drivers/uvk5.py                           (c) 2023 Jacek Lipkowski SQ5BPF (UV-K5);
                                             (c) 2025 Thibaut Berg (UV-K1)
+  drivers/mml_jc8810.py                     Copyright 2023 Jim Unroe
+  drivers/tdh8.py                           Copyright 2012 Dan Smith (e altri autori)
   drivers/baofeng_digital.py                Copyright 2024 Marcos Del Sol Vives
                                             (GPL v2 o succ.; usato come riferimento
                                             per W31D, BF-T20D e BF-V12D: codici dei
@@ -68,8 +70,17 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
 File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
 drv_h777.go, drv_small.go, drv_rt900.go, drv_ga510.go, drv_gm30.go, drv_dm32.go,
-drv_uvk5.go, drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go.
-Grazie agli autori di CHIRP.
+drv_uvk5.go, drv_jc8810.go, drv_tdh8.go, drv_bfd.go (riferimento incrociato) e le
+radio simulate genemu_*.go. Grazie agli autori di CHIRP.
+
+AGGIORNAMENTO DEL FIRMWARE DELLA QUANSHENG UV-K5 (4.1)
+Il formato dei file .bin di Quansheng e il protocollo del caricatore della UV-K5 sono
+documentati dai programmi liberi k5prog (Copyright 2023 Jacek Lipkowski SQ5BPF, GNU GPL
+v3, https://github.com/sq5bpf/k5prog) e uvtools (egzumer,
+https://github.com/egzumer/uvtools). fwk5.go è scritto da zero sulla base di quella
+documentazione, per l'interoperabilità; nessun codice di quei programmi è incluso nel
+pacchetto. verifica/k5/k5ref.js, usato solo per le prove, carica il codice di uvtools
+dalla cartella indicata da chi esegue la verifica. Grazie a SQ5BPF e a egzumer.
 Le modifiche rispetto ai file originali di CHIRP (riscrittura in Go, solo canali,
 adattamento all'interfaccia di IU0VYT Flash) sono descritte in testa a ciascun file
 e in CHANGELOG.txt, con le date delle versioni.
@@ -180,7 +191,8 @@ MARCHI E INTEROPERABILITÀ
 -------------------------
 IU0VYT Flash è un programma indipendente, non affiliato né approvato da Baofeng, da
 Bajeton o dagli altri costruttori citati (es. Quansheng, Retevis, Radtel, Radioddity,
-TIDRADIO, BTECH, Abbree, MaxTalker, Intek, Maverick, WLN, Zastone, Luiton). I nomi dei
+TIDRADIO, Hiroyasu, Talkpod, Anysecu, BTECH, Abbree, MaxTalker, Intek, Maverick, WLN,
+Zastone, Luiton). I nomi dei
 modelli servono solo a indicare con quali radio funziona il programma. I marchi
 appartengono ai rispettivi titolari.
 Protocolli e formati dei dati sono stati ricostruiti, per l'interoperabilità con le

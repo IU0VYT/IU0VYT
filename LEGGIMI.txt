@@ -1,11 +1,41 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.0.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.1.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.1.0:
+- CORRETTO: identificazione automatica. Dopo aver riconosciuto una radio il programma
+  non ne cercava più altre finché il cavo non veniva staccato dal PC (e se il cavo
+  veniva staccato e ricollegato durante una ricerca non se ne accorgeva). Ora, in
+  qualsiasi scheda ci si trovi, controlla ogni pochi secondi che la radio
+  riconosciuta sia ancora collegata: se la scolleghi dal cavo, la spegni o la cambi,
+  lo segnala e la ricerca riparte da sola, e riconosce la radio collegata dopo (anche
+  se è la stessa, anche accesa dopo il cavo). Le porte vengono controllate anche
+  durante le ricerche; un cavo appena collegato ha la precedenza sulle ricerche
+  ripetute su altre porte;
+- durante la ricerca automatica compare in basso, in tutte le schede, il riquadro
+  "Identificazione Radio In Corso. Attendere prego." con la porta e il pulsante
+  "Interrompi" (la ricerca riprende quando ricolleghi il cavo o con "▶ Riprendi la
+  ricerca" nella scheda Identifica);
+- 14 radio nuove (21 versioni), 3 marche in più (Hiroyasu, Talkpod, Anysecu):
+  - Radtel RT-470, RT-470L, RT-470X, RT-470X Plus (Bluetooth), RT-630, RT-495 e
+    RT-730, Hiroyasu HI-8811, Talkpod A36plus e A36plus 8 W, Anysecu UV-A37, Abbree
+    AR-730 (famiglia MML JC-8810 della Radtel RT-470, driver mml_jc8810.py);
+  - TIDRADIO TD-H8 (seconda e terza generazione) e TD-H3, nelle versioni base, HAM
+    e GMRS (driver tdh8.py; la versione si riconosce dall'identificativo della
+    radio);
+  canali, impostazioni, file .img, conversione, inoltro e identificazione come per
+  le altre radio, verificati con CHIRP;
+- AGGIORNAMENTO DEL FIRMWARE delle Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus con
+  i file .bin di Quansheng (vedi "AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5");
+- schermata Home e sito: "GESTIONE CANALI - FREQUENZE - PONTI RADIO - FIRMWARE" e,
+  sotto, i nomi di tutte le marche in quattro colonne in una cornice a pixel da
+  sala giochi anni '80 ("PLAYER SELECT");
+- galleria: 349 modelli di 19 marche (311 con canali, 265 con impostazioni, 31 con
+  l'aggiornamento del firmware).
 Novità della 4.0.0:
 - PROGRAMMA PLURIMARCA: oltre a Baofeng e Bajeton ora gestisce le radio di altre 14
   marche, con lettura e scrittura via cavo di canali, frequenze e ponti, impostazioni
@@ -355,7 +385,8 @@ GALLERIA DEI MODELLI
 - La scheda "📻 Modelli" mostra tutte le radio Baofeng (catalogo e pagina dei download
   di baofengradio.com), Bajeton (bajeton.com) e, dalla 4.0, delle altre marche gestite
   (Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, MaxTalker, Abbree, Intek,
-  Maverick, BTECH, WLN, Zastone, Luiton, TID). Cerca per marca o nome, anche
+  Maverick, BTECH, WLN, Zastone, Luiton, TID e, dalla 4.1, Hiroyasu, Talkpod,
+  Anysecu). Cerca per marca o nome, anche
   alternativo (es. UV-5RA, MINI-5, GT-3TP, UV-K5), e filtra per marca (menu "Tutte
   le marche"), tipo (radioamatoriali, DMR, GMRS
   / FRS, PMR446 e uso libero, per bambini), radio con canali via cavo o con firmware.
@@ -404,6 +435,14 @@ RADIO GESTITE CON I DRIVER DI CHIRP
   famiglia UV-17 Pro (MaxTalker P15, MT-5RM, Radioddity GM-30 Plus e GM-30 Pro),
   famiglia RT-900 (Radtel RT-900, RT-900 BT, RT-920, Radioddity GS-10B), Radioddity
   GM-30, Retevis RT6 e Intek KT-980HP (famiglia UV-5R).
+- Dalla 4.1: famiglia MML JC-8810 (Radtel RT-470, RT-470L, RT-470X, RT-470X Plus,
+  RT-630, RT-495, Hiroyasu HI-8811, Talkpod A36plus e A36plus 8 W, Anysecu UV-A37,
+  Abbree AR-730: driver mml_jc8810.py; 256 canali, 512 sulle A36plus, nomi di 12
+  caratteri; sulla RT-470X la banda aerea 118-136 MHz è in AM) e famiglia TD-H8
+  (TIDRADIO TD-H8 di seconda e terza generazione, TD-H3, versioni base, HAM e GMRS,
+  Radtel RT-730: driver tdh8.py; 199 canali con nome di 8 caratteri; le frequenze
+  che la versione HAM può solo ricevere sono di sola ricezione; nelle versioni GMRS i
+  canali 1-30 hanno la frequenza fissa).
 - Quansheng UV-K5 e simili: 200 memorie con nome fino a 10 caratteri, potenze Bassa
   1,5 W / Media 3 W / Alta 5 W, banda aerea in AM (frequenze arrotondate al passo di
   8,33 kHz come fa CHIRP), trasmissione su una banda diversa dalla ricezione ammessa.
@@ -593,6 +632,25 @@ canali allo stesso modo. Un file nuovo della v1.0.9 parte da "tutti i canali", c
 nel programma originale; una radio letta mantiene la sua scelta. La v1.0.8 non ha
 questa impostazione: i suoi file sono sempre a zone e, scritti nella radio, la
 riportano alle zone.
+
+AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
+- Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus, file .bin pubblicati da Quansheng
+  (es. k5_v2.01.26_publish.bin, k6_v3.00.22_publish.bin). Quansheng protegge i
+  download del suo sito con una password che fornisce il rivenditore.
+- Il file viene controllato (somma CRC16, versione) e decifrato; la versione (es.
+  2.01.26) indica il tipo di radio: 2 = UV-K5, 3 = UV-K5(8) e UV-K6, 4 = UV-5R Plus.
+- Procedura: spegni la radio, collega il cavo, riaccendila tenendo premuto il PTT (la
+  torcia si accende e lo schermo resta spento), poi "Avvia aggiornamento". Prima di
+  scrivere il programma legge la versione del caricatore della radio: se non è del
+  tipo del firmware (es. firmware della UV-K6 su una UV-K5) si ferma e la radio non
+  viene toccata. Canali, impostazioni e taratura non vengono cancellati.
+- Il protocollo del caricatore (pacchetti da 256 byte con conferma) è quello
+  documentato dai programmi liberi k5prog e uvtools, ricavato dal programma di
+  aggiornamento di Quansheng; qui è riscritto da zero e provato con una radio
+  simulata. Le radio con il caricatore più recente (es. UV-K1, UV-K5 V3) non si
+  presentano in questo modo: per quelle serve il programma di Quansheng.
+- Un firmware non di Quansheng (es. egzumer, F4HWN) si può installare, ma poi questo
+  programma (come CHIRP) non legge più i canali della radio.
 
 AGGIORNAMENTO DEL FIRMWARE BAOFENG
 - Baofeng UV-5RM / UV-5RH (serie con display TFT "330L"), file .BF: protocollo del
@@ -997,7 +1055,7 @@ IDENTIFICAZIONE DELLA RADIO (3.8)
 - Il programma prova uno dopo l'altro i protocolli di LETTURA (prima K67 Pro e Bajeton
   BJ-8300, poi le radio dei driver, cominciando da quelle con una scheda aperta). I
   modelli che iniziano il collegamento nello stesso modo sono provati una volta sola
-  (38 tentativi per le 100 radio via cavo; dalla 4.0, 54 tentativi per tutte le radio
+  (38 tentativi per le 100 radio via cavo; dalla 4.1, 60 tentativi per tutte le radio
   via cavo). Quando una radio risponde viene letta per
   intero, come con "Leggi dalla radio", e una copia della lettura viene salvata nella
   cartella delle copie (copie_radio).
@@ -1015,23 +1073,31 @@ IDENTIFICAZIONE DELLA RADIO (3.8)
   scritta. Il numero di serie: nessuna di queste radio lo comunica con il protocollo
   di programmazione (è solo sull'etichetta).
 - "Apri i canali nella scheda della radio": come dopo "Leggi dalla radio".
-- Tempi: senza radio collegata la ricerca completa dura circa 100 secondi (54 tentativi;
+- Tempi: senza radio collegata la ricerca completa dura circa 110 secondi (60 tentativi;
   meno se restringi la ricerca per marca o tipo); una radio
   che risponde viene trovata appena arriva il suo turno e poi letta.
 - Se una radio risponde ma la lettura non va a buon fine (es. password, modello
   diverso) le risposte sono elencate nei dettagli. Se la radio resta bloccata in
   modalità di programmazione, spegnila e riaccendila.
 
-IDENTIFICAZIONE AUTOMATICA (4.0)
+IDENTIFICAZIONE AUTOMATICA (4.0, 4.1)
 - Nella scheda "🔎 Identifica" premi "🔄 Abilita identificazione automatica". Da quel
   momento, finché il programma è aperto, ogni volta che colleghi il cavo di
   programmazione (o una radio DMR via USB) la radio viene cercata da sola, con gli
   stessi comandi di sola LETTURA di "Identifica la radio": nella radio non si scrive
   nulla.
+- Funziona in qualsiasi scheda del programma. Durante la ricerca compare in basso il
+  riquadro "Identificazione Radio In Corso. Attendere prego." (con "Interrompi").
 - Quando la radio è riconosciuta compaiono i suoi dati (anche in una finestra) e si
   apre la sua scheda con i canali letti; se nella scheda c'erano modifiche non salvate
-  il programma chiede prima di sostituirle. La stessa radio non viene più cercata
-  finché non scolleghi e ricolleghi il cavo.
+  il programma chiede prima di sostituirle.
+- Dalla 4.1, finché la radio resta collegata il programma ne controlla ogni pochi
+  secondi la presenza, con il solo saluto iniziale del suo protocollo (lo stesso con
+  cui comincia la ricerca, senza leggere né scrivere la memoria). Se la radio non
+  risponde più (cavo staccato dalla radio, radio spenta, radio cambiata) lo segnala
+  e la ricerca riparte da sola: la radio collegata dopo viene riconosciuta, anche se
+  è la stessa. Se stacchi il cavo dal PC la porta viene cercata di nuovo appena la
+  ricolleghi, anche durante una ricerca.
 - Radio spenta o volume al minimo: la ricerca si ripete finché il cavo resta
   collegato (nei primi minuti ogni pochi secondi, poi ogni 20 secondi). Puoi quindi
   collegare il cavo e accendere la radio dopo.

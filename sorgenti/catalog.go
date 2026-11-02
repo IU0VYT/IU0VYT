@@ -31,7 +31,7 @@ type catItem struct {
 	Aliases []string  `json:"aliases,omitempty"`
 	Type    string    `json:"type"` // analog | gmrs | pmr | dmr | kids
 	Drivers []string  `json:"drivers,omitempty"`
-	FW      string    `json:"fw,omitempty"` // anc | bf | rh5 | kdhx | bj9000 | kdh9g | link
+	FW      string    `json:"fw,omitempty"` // anc | bf | rh5 | kdhx | bj9000 | kdh9g | k5 | link
 	Links   []catLink `json:"links,omitempty"`
 	Notes   string    `json:"notes,omitempty"`
 	Guide   string    `json:"guide,omitempty"` // aggiornamento guidato con il programma ufficiale ("6x2")

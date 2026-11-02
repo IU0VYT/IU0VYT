@@ -56,7 +56,9 @@ func (e *rt900Emu) serve(p Port) error {
 	if b, err := emuByte(p); err != nil || b != 'F' {
 		return fmt.Errorf("comando F atteso (%v)", err)
 	}
-	if o.fp1 != nil {
+	if o.plain {
+		p.Write(o.fp1[0])
+	} else if o.fp1 != nil {
 		p.Write(append(append([]byte{}, o.fp1[0]...), o.fp2[0]...))
 	} else {
 		p.Write([]byte{0x01, 0x36, 0x01, 0x80, 0x04, 0x00, 0x05, 0x20, 0x02, 0x00, 0x02, 0x60, 0x01, 0x03, 0x30, 0x04})
@@ -67,14 +69,16 @@ func (e *rt900Emu) serve(p Port) error {
 		}
 		p.Write([]byte(fmt.Sprintf("%-12s", o.model)))
 	}
-	cs, err := emuRead(p, len(o.crypt))
-	if err != nil {
-		return err
+	if !o.plain {
+		cs, err := emuRead(p, len(o.crypt))
+		if err != nil {
+			return err
+		}
+		if !bytes.Equal(cs, o.crypt) {
+			return fmt.Errorf("pacchetto di cifratura inatteso % X", cs)
+		}
+		p.Write([]byte{0x06})
 	}
-	if !bytes.Equal(cs, o.crypt) {
-		return fmt.Errorf("pacchetto di cifratura inatteso % X", cs)
-	}
-	p.Write([]byte{0x06})
 	key := []byte(btSymbols[1])
 	for {
 		c, err := emuByte(p)
@@ -97,7 +101,7 @@ func (e *rt900Emu) serve(p Port) error {
 				copy(d, e.img[addr:])
 			}
 			e.mu.Unlock()
-			if addr < 0xF000 {
+			if addr < 0xF000 && !o.plain {
 				btCrypt(d, key)
 			}
 			p.Write(append([]byte{'R', h[0], h[1], h[2]}, d...))
@@ -106,7 +110,7 @@ func (e *rt900Emu) serve(p Port) error {
 			if err != nil {
 				return err
 			}
-			if addr < 0xF000 {
+			if addr < 0xF000 && !o.plain {
 				btCrypt(d, key)
 			}
 			e.mu.Lock()

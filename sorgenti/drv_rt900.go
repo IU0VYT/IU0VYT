@@ -102,6 +102,10 @@ type rt900Opt struct {
 	block   int      // byte per blocco (predefinito 0x40)
 	reads   [][2]int // aree lette (nil: da 0 a memsize)
 	txen    bool     // bit "txen" sempre a 1 (BJ-9000)
+	// plain: protocollo di mml_jc8810.py (4.1, Radtel RT-470 e simili): dopo
+	// l'identificativo non c'è il secondo identificativo né il pacchetto "SEND",
+	// e i dati non sono cifrati
+	plain bool
 }
 
 func (o *rt900Opt) blk() int {
@@ -233,7 +237,12 @@ func rt900Identify(ctx context.Context, m *genModel, port string) error {
 	return nil
 }
 
-func rt900o(m *genModel) *rt900Opt { return m.Opt.(*rt900Opt) }
+func rt900o(m *genModel) *rt900Opt {
+	if o, ok := m.Opt.(*jc8810Opt); ok {
+		return &o.rt900Opt
+	}
+	return m.Opt.(*rt900Opt)
+}
 
 func (rt900Fam) mem(m *genModel) *bwEl {
 	f := rt900o(m).format
@@ -413,6 +422,9 @@ func (s *rt900Sess) enter() error {
 	if o.fp1 != nil && !bytesIn(o.fp1, id) {
 		return rErr("identificativo della radio sconosciuto (% X): è il modello giusto?", id)
 	}
+	if o.plain {
+		return nil
+	}
 	id2, err := s.recv(8)
 	if err != nil {
 		return err
@@ -504,7 +516,7 @@ func (f rt900Fam) Download(ctx context.Context, m *genModel, port string, prog P
 				return nil, "", genFail(fmt.Sprintf("Lettura (0x%04X)", a), err)
 			}
 			blk := append([]byte{}, d[4:]...)
-			if a < 0xF000 {
+			if a < 0xF000 && !o.plain {
 				btCrypt(blk, key)
 			}
 			if o.reads == nil {
@@ -546,7 +558,7 @@ func (f rt900Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 		for a := r[0]; a < r[1]; a += bs {
 			prog(done, total, "Scrittura…")
 			blk := append([]byte{}, img[a:a+bs]...)
-			if a < 0xF000 {
+			if a < 0xF000 && !o.plain {
 				btCrypt(blk, key)
 			}
 			if err := s.p.Write(append([]byte{'W', byte(a >> 8), byte(a), byte(bs)}, blk...)); err != nil {

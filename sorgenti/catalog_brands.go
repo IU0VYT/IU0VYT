@@ -24,6 +24,7 @@ const (
 	qsDown  = "https://en.qsfj.com/support/downloads"
 	tidDown = "https://tidradio.com/pages/programming-software"
 	rddDown = "https://www.radioddity.com/pages/download-center"
+	hiroWeb = "https://globalhiroyasu.com/"
 )
 
 func info(label, url string) catLink { return catLink{"info", label, url} }
@@ -41,10 +42,13 @@ func fixedNote(what string) string {
 var catalogOther = []catItem{
 	// ------------------------------------------------ Quansheng
 	{ID: "qs-uv-k5", Brand: "Quansheng", Name: "UV-K5 / UV-K6 / UV-5R Plus", Aliases: []string{"UV-K5", "UV-K6", "UV-5R Plus"},
-		Models: []string{"UV-K5", "UV-K6", "UV-5R Plus"}, Type: "analog", Drivers: []string{"qs-uvk5"},
+		Models: []string{"UV-K5", "UV-K6", "UV-5R Plus"}, Type: "analog", Drivers: []string{"qs-uvk5"}, FW: "k5",
 		Links: []catLink{info("Download center Quansheng", qsDown)},
 		Notes: chirpNote("UVK5Radio") + " Solo con le versioni del firmware originale conosciute (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»): " +
-			"con un firmware modificato (egzumer, IJV, F4HWN…) il programma si ferma senza leggere né scrivere, come CHIRP."},
+			"con un firmware modificato (egzumer, IJV, F4HWN…) il programma si ferma senza leggere né scrivere, come CHIRP. " +
+			"Firmware: file .bin di Quansheng (es. k5_v2.01.26_publish.bin) con il caricatore della radio (accesa tenendo premuto il PTT); " +
+			"il programma controlla che il firmware sia per il tipo di caricatore della radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). " +
+			"Quansheng protegge i download con una password che fornisce il rivenditore."},
 	{ID: "qs-uv-k1", Brand: "Quansheng", Name: "UV-K1", Type: "analog", Drivers: []string{"qs-uvk1"},
 		Links: []catLink{info("Download center Quansheng", qsDown)},
 		Notes: chirpNote("UVK1Radio") + " Solo canali (CHIRP non gestisce ancora le impostazioni) e solo con il firmware 7.03."},
@@ -65,6 +69,27 @@ var catalogOther = []catItem{
 	{ID: "rtl-rt-950-pro", Brand: "Radtel", Name: "RT-950 Pro", Type: "analog", Drivers: []string{"bj-9000"},
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
 		Notes: "Stessa radio della Bajeton BJ-9000: canali e impostazioni come nella scheda BJ-9000. Il firmware Radtel si aggiorna con il programma del costruttore."},
+	// 4.1: famiglia MML JC-8810 (mml_jc8810.py)
+	{ID: "rtl-rt-470", Brand: "Radtel", Name: "RT-470", Type: "analog", Drivers: []string{"rt-rt470"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470Radio") + " 256 canali, potenze 10/8/4 W."},
+	{ID: "rtl-rt-470l", Brand: "Radtel", Name: "RT-470L", Type: "analog", Drivers: []string{"rt-rt470l"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470LRadio") + " 256 canali."},
+	{ID: "rtl-rt-470x", Brand: "Radtel", Name: "RT-470X", Type: "analog", Drivers: []string{"rt-rt470x"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470XRadio") + " 256 canali; in banda aerea (118-136 MHz) la radio riceve in AM."},
+	{ID: "rtl-rt-470x-plus", Brand: "Radtel", Name: "RT-470X Plus", Aliases: []string{"RT-470X BT", "RT-470X Plus BT"}, Type: "analog", Drivers: []string{"rt-rt470xbt"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470XPlusRadio") + " Versione con Bluetooth della RT-470X."},
+	{ID: "rtl-rt-630", Brand: "Radtel", Name: "RT-630", Type: "analog", Drivers: []string{"rt-rt630"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT630Radio") + " 256 canali."},
+	{ID: "rtl-rt-495", Brand: "Radtel", Name: "RT-495", Type: "analog", Drivers: []string{"rt-rt495"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT495Radio") + " 256 canali, piattaforma RT-630."},
+	{ID: "hy-hi-8811", Brand: "Hiroyasu", Name: "HI-8811", Type: "analog", Drivers: []string{"hy-hi8811"},
+		Links: []catLink{info("Sito Hiroyasu", hiroWeb)}, Notes: chirpNote("HI8811Radio") + " Piattaforma Radtel RT-470L."},
+	{ID: "as-uv-a37", Brand: "Anysecu", Name: "UV-A37", Type: "analog", Drivers: []string{"as-uva37"}, Notes: chirpNote("UVA37Radio") + " 256 canali."},
+	{ID: "tp-a36plus", Brand: "Talkpod", Name: "A36plus", Aliases: []string{"A36 Plus"}, Type: "analog", Drivers: []string{"tp-a36plus"},
+		Notes: chirpNote("A36plusRadio") + " 512 canali (firmware 1.22 o successivo)."},
+	{ID: "tp-a36plus-8w", Brand: "Talkpod", Name: "A36plus 8 W", Aliases: []string{"A36 Plus 8W"}, Type: "analog", Drivers: []string{"tp-a36plus8w"},
+		Notes: chirpNote("A36plus8wRadio") + " 512 canali."},
+	{ID: "ab-ar-730", Brand: "Abbree", Name: "AR-730", Type: "analog", Drivers: []string{"ab-ar730"}, Notes: chirpNote("AR730Radio") + " Piattaforma Anysecu UV-A37."},
 	{ID: "rtl-t18", Brand: "Radtel", Name: "T18", Type: "pmr", Drivers: []string{"rt-t18"}, Notes: chirpNote("T18Radio") + " 16 canali senza nome."},
 
 	// ------------------------------------------------ Radioddity
@@ -82,6 +107,17 @@ var catalogOther = []catItem{
 		Notes: "Stessa radio della serie Baofeng H: driver di CHIRP della GA-510 (prima versione, 9600 baud). La GA-510 V2 (57600 baud) non è ancora gestita."},
 
 	// ------------------------------------------------ TIDRADIO
+	// 4.1: famiglia TD-H8 (tdh8.py)
+	{ID: "tid-td-h8", Brand: "TIDRADIO", Name: "TD-H8", Aliases: []string{"TD-H8 HAM", "TD-H8 GMRS"}, Type: "analog",
+		Drivers: []string{"td-tdh8", "td-tdh8ham", "td-tdh8gmrs", "td-tdh8g3", "td-tdh8g3ham", "td-tdh8g3gmrs"},
+		Links:   []catLink{info("Programmi TIDRADIO", tidDown)},
+		Notes: chirpNote("TDH8") + " 199 canali con nome di 8 caratteri. Versioni: base, HAM e GMRS, di seconda e di terza generazione " +
+			"(la radio comunica quale è: se scegli quella sbagliata non viene letta)."},
+	{ID: "tid-td-h3", Brand: "TIDRADIO", Name: "TD-H3", Aliases: []string{"TD-H3 HAM", "TD-H3 GMRS"}, Type: "analog",
+		Drivers: []string{"td-tdh3", "td-tdh3ham", "td-tdh3gmrs"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
+		Notes: chirpNote("TDH3") + " 199 canali con nome di 8 caratteri; versioni base, HAM e GMRS."},
+	{ID: "rtl-rt-730", Brand: "Radtel", Name: "RT-730", Type: "analog", Drivers: []string{"rt-rt730"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT730") + " Piattaforma TIDRADIO TD-H8, 199 canali."},
 	{ID: "tid-td-h6", Brand: "TIDRADIO", Name: "TD-H6", Type: "analog", Drivers: []string{"td-h6"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: chirpNote("TDH6Radio") + " Piattaforma Radioddity GA-510."},
 

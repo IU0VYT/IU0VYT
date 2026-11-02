@@ -17,7 +17,7 @@ const TYPE_GROUP = {
 };
 // ordine alfabetico «naturale» (UV-5R prima di UV-17)
 const byModelName = (a, b) => a.name.localeCompare(b.name, 'it', { numeric: true, sensitivity: 'base' }) || a.brand.localeCompare(b.brand);
-const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh' };
+const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin' };
 const FW_KINDS = Object.keys(FW_LABEL);
 const FW_DESC = {
   anc: 'file .anc del costruttore (protocollo del programma «BinTe ANC Bootloader»)',
@@ -26,6 +26,7 @@ const FW_DESC = {
   kdhx: 'file .kdhx (programma «Baofeng Bootloader Pro» del costruttore, piattaforma H802)',
   bj9000: 'file .Firmware (programma «BJ9000_EnUPDATE» del costruttore)',
   kdh9g: 'file .kdh (programma «Bootloader_BaudRate38400» del costruttore)',
+  k5: 'file .bin di Quansheng (caricatore della UV-K5: radio accesa tenendo premuto il PTT)',
 };
 
 // colore di ogni marca (icone e riquadri della galleria); le marche non
@@ -33,7 +34,7 @@ const FW_DESC = {
 const BRAND_COLOR = {
   Baofeng: '#1c64d8', Bajeton: '#e8590c', Quansheng: '#0f8a5f', Retevis: '#c2255c', Radtel: '#7048e8', Radioddity: '#d9480f',
   TIDRADIO: '#1098ad', TID: '#0b7285', BTECH: '#495057', Abbree: '#5f3dc4', MaxTalker: '#2b8a3e', Intek: '#a61e4d', Maverick: '#364fc7',
-  WLN: '#e67700', Zastone: '#087f5b', Luiton: '#862e9c',
+  WLN: '#e67700', Zastone: '#087f5b', Luiton: '#862e9c', Hiroyasu: '#b02a8f', Anysecu: '#1971c2', Talkpod: '#5c940d',
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];

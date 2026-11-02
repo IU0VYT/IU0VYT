@@ -3,6 +3,57 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.1.0 (02/11/2026)
+------------------
+- Identificazione automatica (autoident.go riscritto): il controllo delle porte non
+  si ferma più durante una ricerca (le ricerche e i controlli girano in un goroutine
+  a parte: prima un cavo staccato e ricollegato durante una ricerca non veniva
+  notato); dopo il riconoscimento, controllo della presenza della radio ogni 4 s con
+  il solo saluto iniziale del suo protocollo (presenceProbe: la lettura si ferma alla
+  prima risposta); due controlli senza risposta = radio scollegata (identify/auto:
+  lost, lostSeq) e nuova ricerca sulla stessa porta (radio staccata dal cavo che
+  resta nel PC, spenta o cambiata; prima la porta restava ferma fino al
+  ricollegamento del cavo al PC). Precedenza alle porte appena collegate e agli
+  adattatori noti (cablePortKind); una porta nuova interrompe una ricerca ripetuta su
+  un'altra. Pausa di 1,5 s dopo un saluto interrotto prima di un'operazione
+  dell'utente (yieldAuto, quietUntil). Nuovi comandi identify/auto stop e resume.
+- ui: riquadro «Identificazione Radio In Corso. Attendere prego.» in tutte le schede
+  (index.html #autobanner, style.css) con «Interrompi»; avviso della radio
+  scollegata; «▶ Riprendi la ricerca» nella scheda Identifica; il controllo
+  dell'identificazione automatica è ogni 1,5 s in qualsiasi scheda.
+- drv_jc8810.go (nuovo): famiglia MML JC-8810 da mml_jc8810.py (Radtel RT-470,
+  RT-470L, RT-470X, RT-470X Plus BT, RT-630, RT-495, Hiroyasu HI-8811, Talkpod A36plus
+  e A36plus 8 W, Anysecu UV-A37, Abbree AR-730): stesso protocollo della RT-900 senza
+  cifratura (rt900Opt.plain), record di 32 byte, potenze H/L/M = 0/1/2, nomi come
+  str() di CHIRP (latin-1).
+- drv_tdh8.go (nuovo) e genemu_tdh8_other.go: famiglia TIDRADIO TD-H8 da tdh8.py
+  (TD-H8, TD-H8 HAM/GMRS di seconda e terza generazione, TD-H3 base/HAM/GMRS, Radtel
+  RT-730): saluto, identificativo, blocchi di 32 byte con somma, immagine con
+  l'identificativo all'inizio come CHIRP; gamme di sola ricezione, canali GMRS 1-30
+  fissi; nelle versioni GMRS, come validate_memory di CHIRP, solo frequenze GMRS nei
+  canali 31-54 e solo simplex o +5 MHz (31-54 sulla TD-H8 GMRS, tutti i canali su
+  quella di terza generazione): nella conversione e nell'inoltro gli altri canali
+  vanno nelle posizioni libere adatte; prima della scrittura la lettura del blocco
+  della versione (0x1B40) come CHIRP. verifica/chirp/chirpref.py: per tdh8.py l'ingresso in programmazione è fatto
+  da detect_from_serial, come nell'interfaccia di CHIRP.
+- fwk5.go, fwk5_emu_other.go, fwk5_test.go (nuovi): aggiornamento del firmware delle
+  Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus (file .bin di Quansheng: controllo del
+  CRC16, decifratura, versione a 0x2000; caricatore a 38400 baud: annuncio 0x0518,
+  versione 0x0530, blocchi 0x0519 da 256 byte con conferma 0x051A; controllo del tipo
+  di caricatore prima di scrivere). Protocollo come documentato da k5prog e uvtools;
+  verifica/k5/k5ref.js confronta decifratura e byte inviati con il codice di uvtools
+  (TestK5FirmwareUvtools, con K5REF_JS). ancfw.go, fwapi.go, ui/firmware.js,
+  ui/gallery.js: tipo di firmware «k5».
+- settings_chirp.json: impostazioni di 21 classi di CHIRP in più (140 in tutto).
+- catalog_brands.go: 14 voci nuove (349 modelli di 19 marche: 311 con canali, 265 con
+  impostazioni, 31 con l'aggiornamento del firmware).
+- ui/home.js, docs/index.html: titolo «GESTIONE CANALI - FREQUENZE - PONTI RADIO -
+  FIRMWARE» e riquadro delle marche «PLAYER SELECT» (cornice a pixel, 4 colonne);
+  nel sito generato da verifica/sito (site_brands.py, brandcolors.js) e controllato
+  da TestSitoMarche. Colori delle marche nuove in ui/gallery.js.
+- Sito, README.md, LEGGIMI.txt, AUTORI_E_LICENZE.txt e verifica/LEGGIMI_VERIFICA.txt
+  aggiornati.
+
 4.0.0 (02/11/2026)
 ------------------
 - Programma plurimarca: 62 radio nuove di 14 marche (oltre a Baofeng e Bajeton),

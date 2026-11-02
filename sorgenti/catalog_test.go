@@ -35,7 +35,7 @@ func TestCatalog(t *testing.T) {
 			used[d] = true
 		}
 		switch c.FW {
-		case "", "anc", "bf", "rh5", "kdhx", "bj9000", "kdh9g":
+		case "", "anc", "bf", "rh5", "kdhx", "bj9000", "kdh9g", "k5":
 		case "link":
 			ok := false
 			for _, l := range c.Links {

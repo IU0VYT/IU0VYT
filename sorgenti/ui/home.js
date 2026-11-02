@@ -12,6 +12,23 @@
 const SITE_URL = 'https://iu0vyt.github.io/IU0VYT/';
 const REPO_URL = 'https://github.com/IU0VYT/IU0VYT';
 
+// riquadro delle marche (4.1) in stile cabinato da sala giochi anni '80: cornice a
+// pixel, titolo «PLAYER SELECT» con due invasori, marche in 4 colonne
+function pixelInvader(cls) {
+  // invasore 11 x 8 pixel
+  const rows = ['00100000100', '00010001000', '00111111100', '01101110110', '11111111111', '10111111101', '10100000101', '00011011000'];
+  let r = '';
+  rows.forEach((row, y) => [...row].forEach((c, x) => { if (c === '1') r += `<rect x="${x}" y="${y}" width="1" height="1"/>`; }));
+  return `<svg class="${cls}" viewBox="0 0 11 8" width="22" height="16" aria-hidden="true" shape-rendering="crispEdges">${r}</svg>`;
+}
+function brandMarquee(brands, where) {
+  return `<div class="hb hb-${where}" role="group" aria-label="Marche di radio gestite: ${brands.length}">
+    <div class="hb-frame"><div class="hb-in">
+      <div class="hb-title">${pixelInvader('hb-inv')}<span>PLAYER SELECT · ${brands.length} MARCHE</span>${pixelInvader('hb-inv hb-inv2')}</div>
+      <ul class="hb-grid">${brands.map((b, i) => `<li style="--i:${i}"><span class="hb-dot" style="background:${brandColor(b)}"></span>${esc(b)}</li>`).join('')}</ul>
+    </div></div></div>`;
+}
+
 const Home = {
   built: false,
 
@@ -34,7 +51,8 @@ const Home = {
           <span class="neon-top">${letters('IU0VYT', 'nl')}</span>
           <span class="neon-bottom">${letters('FLASH', 'nl')}</span>
         </h1>
-        <div class="home-tag">CANALI · PONTI · FIRMWARE — RADIO DI ${nBrands} MARCHE</div>
+        <div class="home-tag">GESTIONE CANALI - FREQUENZE - PONTI RADIO - FIRMWARE</div>
+        ${brandMarquee(catalogBrands(), 'home')}
         <button class="home-start" data-go="gal">▶ PRESS START</button>
         <div class="home-cards">
           <button class="home-card" data-go="gal"><b>📻 ${nChan} radio</b><span>Canali e frequenze letti e scritti via cavo, file compatibili con CHIRP. Galleria di ${nAll} modelli di ${nBrands} marche (${esc(brandsShort)}) con programmi e manuali ufficiali.</span></button>

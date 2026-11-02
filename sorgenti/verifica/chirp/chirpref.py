@@ -363,10 +363,11 @@ def main():
                 # ga510.py: l'ingresso in programmazione è fatto da
                 # detect_from_serial (scelta del modello in CHIRP), non da sync_in
                 mod.start_program(r)
-            elif len(cls.detected_models()) > 1:
+            elif len(cls.detected_models()) > 1 or mod.__name__.endswith("tdh8"):
                 # classe che riconosce più modelli (es. Retevis H777): come
                 # l'interfaccia di CHIRP, prima detect_from_serial (che entra in
-                # programmazione), poi la lettura
+                # programmazione), poi la lettura; tdh8.py: l'ingresso in
+                # programmazione è sempre fatto da detect_from_serial
                 rc = cls.detect_from_serial(pipe)
                 r = rc(pipe)
                 r.status_fn = lambda s: None

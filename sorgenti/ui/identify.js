@@ -34,10 +34,13 @@ const Identify = {
         <span class="note">restringere la ricerca la rende più veloce</span></div>
       <h3>Identificazione automatica</h3>
       <div class="convrow"><button class="btn primary" data-auto>🔄 Abilita identificazione automatica</button>
-        <span class="note" data-autost></span></div>
+        <span class="note" data-autost></span>
+        <button class="btn" data-autoresume hidden>▶ Riprendi la ricerca</button></div>
       <div class="note">Con l'identificazione automatica attiva il programma riconosce da solo la radio appena colleghi il cavo di programmazione
         (con la radio accesa, oppure accendendola dopo) e ne apre la scheda con i canali letti. Si usano solo comandi di lettura e si interrogano solo
-        le porte dei cavi di programmazione. La scelta resta memorizzata anche dopo la chiusura del programma.</div>
+        le porte dei cavi di programmazione. Funziona in qualsiasi scheda: durante la ricerca compare in alto «Identificazione Radio In Corso».
+        Dopo il riconoscimento il programma controlla ogni pochi secondi che la radio sia ancora collegata: se la scolleghi, la spegni o la cambi,
+        la ricerca riparte da sola. La scelta resta memorizzata anche dopo la chiusura del programma.</div>
       <h3>2. Ricerca</h3>
       <div class="convrow"><button class="btn primary" data-go>🔎 Identifica la radio</button><button class="btn" data-stop style="display:none">Interrompi</button></div>
       <div data-run style="display:none">
@@ -54,6 +57,7 @@ const Identify = {
     $('[data-go]', page).onclick = () => this.start(page).catch(reportError);
     $('[data-stop]', page).onclick = () => api('cable/cancel', {}, { quiet: true }).catch(reportError);
     $('[data-auto]', page).onclick = () => AutoIdent.toggle().catch(reportError);
+    $('[data-autoresume]', page).onclick = () => AutoIdent.tick({ resume: true }).catch(reportError);
     AutoIdent.paint();
     await this.loadPorts(page);
   },
@@ -160,17 +164,22 @@ const Identify = {
   },
 };
 
-// ------------------------------------------------------------ identificazione automatica (4.0)
-// Controllo in sottofondo (ogni 2 secondi): stato mostrato nella scheda «Identifica»;
-// quando il programma riconosce da solo una radio appena collegata, ne mostra i
-// dati e apre la sua scheda con i canali letti.
+// ------------------------------------------------------------ identificazione automatica (4.0, 4.1)
+// Controllo in sottofondo (ogni secondo e mezzo), in qualsiasi scheda: stato nella
+// scheda «Identifica» e, durante la ricerca, il banner «Identificazione Radio In
+// Corso» in alto in tutte le schede. Quando il programma riconosce da solo una
+// radio ne mostra i dati e apre la sua scheda con i canali letti; quando la radio
+// viene scollegata (o spenta, o cambiata) lo segnala e la ricerca riparte da sola.
 const AutoIdent = {
   st: null,
   seq: null, // ultimo esito già mostrato
+  lostSeq: null, // ultimo scollegamento già segnalato
   busy: false,
 
   start() {
-    const tick = () => this.tick().catch(() => {}).finally(() => setTimeout(tick, 2000));
+    const stop = $('#autobanner-stop');
+    if (stop) stop.onclick = () => this.tick({ stop: true }).then(() => toast('Ricerca interrotta. Riprende quando ricolleghi il cavo o con «Riprendi la ricerca» nella scheda Identifica.')).catch(reportError);
+    const tick = () => this.tick().catch(() => {}).finally(() => setTimeout(tick, 1500));
     tick();
   },
 
@@ -178,11 +187,16 @@ const AutoIdent = {
     const r = await api('identify/auto', body || {}, { quiet: true });
     this.st = r;
     if (this.seq === null) this.seq = r.seq; // esiti precedenti all'apertura della pagina: non si ripetono
+    if (this.lostSeq === null) this.lostSeq = r.lostSeq || 0;
     this.paint();
+    if (r.lost && r.lost.seq > this.lostSeq) {
+      this.lostSeq = r.lost.seq;
+      toast(`📻 ${r.lost.name} scollegata da ${r.lost.port}: la ricerca riparte da sola quando colleghi una radio.`);
+    }
     if (r.last && r.last.seq > this.seq && !this.busy) {
       this.seq = r.last.seq;
       this.busy = true;
-      try { await this.found(r.last); } finally { this.busy = false; }
+      try { await this.found(r.last); } catch (e) { reportError(e); } finally { this.busy = false; }
     }
   },
 
@@ -193,12 +207,21 @@ const AutoIdent = {
   },
 
   paint() {
+    const st = this.st;
+    const ban = $('#autobanner');
+    if (ban) {
+      const show = !!(st && st.enabled && st.searching);
+      ban.hidden = !show;
+      if (show) $('.ab-port', ban).textContent = st.searchPort ? `(${st.searchPort})` : '';
+    }
     const page = $('#page-ident');
     const btn = page && $('[data-auto]', page);
-    if (!btn || !this.st) return;
-    const on = this.st.enabled;
+    if (!btn || !st) return;
+    const on = st.enabled;
     btn.textContent = on ? '⏹ Disattiva identificazione automatica' : '🔄 Abilita identificazione automatica';
-    $('[data-autost]', page).textContent = on ? ('Attiva. ' + (this.st.status || 'In attesa del collegamento di una radio')) : 'Non attiva.';
+    $('[data-autost]', page).textContent = on ? ('Attiva. ' + (st.status || 'In attesa del collegamento di una radio')) : 'Non attiva.';
+    const res = $('[data-autoresume]', page);
+    if (res) res.hidden = !(on && st.paused);
   },
 
   async found(ev) {
@@ -227,6 +250,8 @@ const AutoIdent = {
     list.push('Canali presenti: ' + r.count);
     if (r.backup) list.push('Copia della lettura: ' + r.backup);
     if ((r.others || []).length) list.push('Altri modelli possibili (stesso collegamento): ' + r.others.map(o => o.name).join(', ') + ' — puoi sceglierli nella scheda «Identifica».');
-    await alertDlg('Radio collegata riconosciuta: ' + r.name, `${r.type} — porta ${ev.port}. Ho aperto la sua scheda con i canali letti dalla radio: ricordati di salvarli in un file.`, list);
+    list.push('Se scolleghi questa radio (o la spegni) e ne colleghi un\'altra, la ricerca riparte da sola.');
+    await alertDlg((ev.again ? 'Radio ricollegata riconosciuta: ' : 'Radio collegata riconosciuta: ') + r.name,
+      `${r.type} — porta ${ev.port}. Ho aperto la sua scheda con i canali letti dalla radio: ricordati di salvarli in un file.`, list);
   },
 };

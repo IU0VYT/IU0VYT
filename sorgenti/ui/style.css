@@ -381,8 +381,26 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .home-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; margin-top: 6px; }
 .home-links a { color: #7fe9ff; text-decoration: none; border-bottom: 1px dotted #7fe9ff; }
 .home-links a:hover { color: #fff; border-bottom-color: #fff; }
+/* 4.1: riquadro delle marche, cornice a pixel da cabinato anni '80 */
+.hb { --notch: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
+  100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+  8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
+  max-width: 640px; margin: -8px auto 24px; filter: drop-shadow(0 0 10px rgba(255,46,200,.45)) drop-shadow(0 0 18px rgba(0,229,255,.25)); }
+.hb-frame { clip-path: var(--notch); background: repeating-linear-gradient(90deg, #ff2ec8 0 12px, #ffd23f 12px 24px, #00e5ff 24px 36px); padding: 4px; }
+.hb-in { clip-path: var(--notch); background: #12052e; padding: 8px 14px 10px;
+  background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 6px 6px; }
+.hb-title { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 6px;
+  font: 700 11px/1 "Consolas", "Courier New", monospace; letter-spacing: .28em; color: #ffd23f; text-shadow: 0 0 6px rgba(255,210,63,.8); }
+.hb-inv { fill: #00ff41; filter: drop-shadow(0 0 3px #00ff41); animation: hb-march 1.2s steps(2) infinite; }
+.hb-inv2 { fill: #ff2ec8; filter: drop-shadow(0 0 3px #ff2ec8); animation-delay: .6s; }
+@keyframes hb-march { 50% { transform: translateX(3px); } }
+.hb-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px 14px; }
+.hb-grid li { display: flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: 700 11px/1.5 "Consolas", "Courier New", monospace; letter-spacing: .06em; text-transform: uppercase; color: #cfe6ff; text-align: left; }
+.hb-dot { flex: none; width: 6px; height: 6px; box-shadow: 0 0 4px currentColor; }
+@media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (prefers-reduced-motion: reduce) {
-  .home-grid, .neon-top .nl, .home-start { animation: none; }
+  .home-grid, .neon-top .nl, .home-start, .hb-inv { animation: none; }
 }
 
 /* ---------------------------------------------------------------- galleria: macro aree per marca */
@@ -462,3 +480,14 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .mailalt { margin-top: 8px; padding: 10px 12px; border-radius: 8px; background: #f3f8ff; border: 1px solid #cfe0f7; }
 .mailalt p { margin: 0 0 8px; }
 .mailcanvas { border: 1px solid #cfe0f7; border-radius: 6px; user-select: none; }
+
+/* 4.1: banner dell'identificazione automatica (visibile in tutte le schede) */
+.autobanner { position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%); z-index: 900; display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; border-radius: 10px; background: #0b1530; color: #fff; border: 2px solid #ffd54a; box-shadow: 0 0 0 3px #1c64d8, 0 8px 24px rgba(0,0,0,.35);
+  font-size: 14px; max-width: calc(100vw - 32px); }
+.autobanner[hidden] { display: none; }
+.autobanner .ab-port { color: #cfe6ff; font-size: 12px; }
+.autobanner .ab-led { width: 10px; height: 10px; border-radius: 50%; background: #ffd54a; box-shadow: 0 0 8px #ffd54a; animation: abblink 1s steps(2, start) infinite; }
+.autobanner .btn.small { padding: 2px 10px; font-size: 12px; background: #ffd54a; color: #10142a; border-color: #ffd54a; font-weight: 700; }
+.autobanner .btn.small:hover { background: #fff; }
+@keyframes abblink { to { visibility: hidden; } }

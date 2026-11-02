@@ -65,7 +65,7 @@ type fwCheck struct {
 }
 
 type fwInfo struct {
-	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G)
+	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5)
 	Target   string    `json:"target"` // radio a cui è destinato
 	Confirm  string    `json:"confirm"`
 	Hw       string    `json:"hw,omitempty"`
@@ -93,6 +93,7 @@ type fwImage struct {
 	Info fwInfo
 	Raw  []byte // file .anc come distribuito
 	Dec  []byte // decifrato (quello che riceve la radio)
+	Ver  []byte // UV-K5: versione del firmware (16 byte) da presentare al caricatore
 }
 
 var (
@@ -229,6 +230,7 @@ const (
 	fwKDHX   // Baofeng UV-25 Plus (.kdhx)
 	fwBJ9000 // Bajeton BJ-9000 (.Firmware)
 	fwKDH9G  // Baofeng UV-9G (.kdh)
+	fwK5     // Quansheng UV-K5 / UV-K6 / UV-5R Plus (.bin, 4.1)
 )
 
 func sniffKind(name string, b []byte) fwKind {
@@ -248,6 +250,10 @@ func sniffKind(name string, b []byte) fwKind {
 		return fwKDH9G
 	case ".firmware", ".btf":
 		return fwBJ9000
+	case ".bin":
+		if k5IsPacked(b) {
+			return fwK5
+		}
 	}
 	if bytes.HasPrefix(b, []byte("BaoFeng")) && len(b) > rh5Head && string(b[16:22]) == "BF_5RH" {
 		return fwRH5
@@ -289,7 +295,7 @@ type fwExpander struct {
 // fwWanted: file da estrarre dagli archivi (firmware conosciuti e altri archivi)
 func fwWanted(name string) bool {
 	switch strings.ToLower(path.Ext(name)) {
-	case ".anc", ".bf", ".dat", ".kdhx", ".kdh", ".firmware", ".btf", ".zip", ".rar":
+	case ".anc", ".bf", ".dat", ".kdhx", ".kdh", ".firmware", ".btf", ".bin", ".zip", ".rar":
 		return true
 	}
 	return false
@@ -305,7 +311,7 @@ func (e *fwExpander) run() error {
 		it := e.queue[0]
 		e.queue = e.queue[1:]
 		switch sniffKind(it.Name, it.Data) {
-		case fwANC, fwBF, fwRH5, fwKDHX, fwBJ9000, fwKDH9G:
+		case fwANC, fwBF, fwRH5, fwKDHX, fwBJ9000, fwKDH9G, fwK5:
 			e.found = append(e.found, fwCandidate{Name: it.Name, Where: it.Where, Size: len(it.Data), data: it.Data})
 		case fwZIP:
 			if it.Depth >= fwMaxDepth {
@@ -333,7 +339,7 @@ func (e *fwExpander) run() error {
 			}
 		default:
 			if it.Depth == 0 {
-				return fmt.Errorf("«%s» non è un firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware) né un archivio .zip o .rar", it.Name)
+				return fmt.Errorf("«%s» non è un firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5) né un archivio .zip o .rar", it.Name)
 			}
 		}
 	}

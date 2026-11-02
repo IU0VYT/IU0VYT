@@ -38,20 +38,36 @@ func TestAutoIdentCablePorts(t *testing.T) {
 }
 
 // Radio collegata quando l'opzione è attiva: ricerca automatica, radio
-// riconosciuta una sola volta, nuova ricerca solo dopo aver ricollegato il cavo.
-// Radio accesa dopo il collegamento del cavo: riconosciuta alla ricerca successiva.
+// riconosciuta una sola volta mentre resta collegata (controllo della presenza);
+// radio staccata dal cavo, che resta nel PC: segnalata come scollegata e
+// ritrovata quando si ricollega (anche accesa dopo); radio sostituita con un
+// altro modello: riconosciuta; cavo staccato e ricollegato durante una ricerca.
 func TestAutoIdentConnect(t *testing.T) {
 	identFast(t)
 	oldS, oldF, oldSl, oldL := autoSettle, autoRetryFast, autoRetrySlow, listPortsFunc
+	oldPE, oldPW, oldQ := autoPresenceEvery, autoPresenceWait, autoQuiet
 	autoSettle, autoRetryFast, autoRetrySlow = 10*time.Millisecond, 20*time.Millisecond, 20*time.Millisecond
-	t.Cleanup(func() { autoSettle, autoRetryFast, autoRetrySlow, listPortsFunc = oldS, oldF, oldSl, oldL })
+	autoPresenceEvery, autoPresenceWait, autoQuiet = 60*time.Millisecond, 400*time.Millisecond, 10*time.Millisecond
+	t.Cleanup(func() {
+		autoSettle, autoRetryFast, autoRetrySlow, listPortsFunc = oldS, oldF, oldSl, oldL
+		autoPresenceEvery, autoPresenceWait, autoQuiet = oldPE, oldPW, oldQ
+	})
 
-	m := genByID["bf-uv5r"]
-	mem := identModelBase(t, m)
-	if mem == nil {
-		t.Skip("manca l'immagine di prova della UV-5R")
+	type radio struct {
+		m   *genModel
+		mem []byte
 	}
-	var on atomic.Bool
+	mk := func(id string) radio {
+		m := genByID[id]
+		mem := identModelBase(t, m)
+		if mem == nil {
+			t.Skip("manca l'immagine di prova di CHIRP (CHIRP_DIR)")
+		}
+		return radio{m, mem}
+	}
+	uv5r, k5 := mk("bf-uv5r"), mk("qs-uvk5")
+	var cur atomic.Value // radio collegata al cavo (nil: nessuna)
+	cur.Store((*radio)(nil))
 	var mu sync.Mutex
 	ports := []PortInfo{}
 	listPortsFunc = func() []PortInfo { mu.Lock(); defer mu.Unlock(); return append([]PortInfo{}, ports...) }
@@ -59,28 +75,40 @@ func TestAutoIdentConnect(t *testing.T) {
 	old := openPortFunc
 	t.Cleanup(func() { openPortFunc = old })
 	identAttachRaw(func(p Port) {
-		if on.Load() {
-			genEmuFor(m, append([]byte{}, mem...)).serve(p)
+		if r := cur.Load().(*radio); r != nil {
+			genEmuFor(r.m, append([]byte{}, r.mem...)).serve(p)
 		}
 	}, "")
+	plug := func(r *radio) { cur.Store(r) }
 
 	a := newApp(mustStore(t))
-	step := func() { a.autoStep(time.Now()); time.Sleep(15 * time.Millisecond) }
-	searches := func() int {
+	t.Cleanup(func() { st := a.store.Get(); st.AutoIdent = false; _ = a.store.SaveSettings(st); a.yieldAuto() })
+	snap := func() (seq, lost int, last *autoEvent) {
 		a.auto.mu.Lock()
 		defer a.auto.mu.Unlock()
-		if p := a.auto.ports["COM6"]; p != nil {
-			return p.tries
-		}
-		return -1
+		return a.auto.seq, a.auto.lostSeq, a.auto.last
 	}
+	waitFor := func(what string, max time.Duration, cond func() bool) {
+		t.Helper()
+		end := time.Now().Add(max)
+		for !cond() {
+			if time.Now().After(end) {
+				t.Fatalf("%s: tempo scaduto (stato %q)", what, a.auto.status)
+			}
+			a.autoStep(time.Now())
+			time.Sleep(20 * time.Millisecond)
+		}
+	}
+	cable := PortInfo{"COM6", "USB-SERIAL CH340 (COM6)"}
 
 	// opzione disattivata: nessuna ricerca
-	setPorts(PortInfo{"COM6", "USB-SERIAL CH340 (COM6)"}, PortInfo{"COM1", "Porta di comunicazione (COM1)"})
-	on.Store(true)
-	step()
-	step()
-	if a.auto.seq != 0 || searches() != -1 {
+	setPorts(cable, PortInfo{"COM1", "Porta di comunicazione (COM1)"})
+	plug(&uv5r)
+	for i := 0; i < 5; i++ {
+		a.autoStep(time.Now())
+		time.Sleep(20 * time.Millisecond)
+	}
+	if seq, _, _ := snap(); seq != 0 || a.auto.run != nil {
 		t.Fatalf("ricerca con l'opzione disattivata")
 	}
 
@@ -88,53 +116,67 @@ func TestAutoIdentConnect(t *testing.T) {
 	st := a.store.Get()
 	st.AutoIdent = true
 	_ = a.store.SaveSettings(st)
-	for i := 0; i < 50 && a.auto.seq == 0; i++ {
-		step()
-	}
-	if a.auto.seq != 1 || a.auto.last == nil || !a.auto.last.Result.Found || a.auto.last.Port != "COM6" {
-		t.Fatalf("radio non riconosciuta: %+v", a.auto.last)
+	waitFor("prima radio", 90*time.Second, func() bool { s, _, _ := snap(); return s == 1 })
+	_, _, last := snap()
+	if last.Port != "COM6" || !last.Result.Found || last.Result.Kind != "bf-uv5r" || last.Again {
+		t.Fatalf("radio non riconosciuta: %+v", last)
 	}
 	if _, ok := a.auto.ports["COM1"]; ok {
 		t.Fatal("COM1 interrogata")
 	}
-	t.Logf("riconosciuta: %s", a.auto.last.Result.Name)
-	// già riconosciuta: nessuna nuova ricerca
-	n := searches()
-	for i := 0; i < 5; i++ {
-		step()
-	}
-	if searches() != n || a.auto.seq != 1 {
-		t.Fatalf("nuova ricerca sulla stessa radio")
+	// radio ancora collegata: controlli della presenza, nessuna nuova ricerca
+	time0 := time.Now()
+	waitFor("controlli della presenza", 10*time.Second, func() bool { return time.Since(time0) > 1500*time.Millisecond })
+	if s, l, _ := snap(); s != 1 || l != 0 {
+		t.Fatalf("radio collegata data per scollegata o cercata di nuovo: esiti %d, scollegamenti %d", s, l)
 	}
 
-	// cavo scollegato e ricollegato con la radio spenta: ricerche ripetute
-	on.Store(false)
+	// radio staccata dal cavo (il cavo resta nel PC): scollegata, poi ricerche
+	plug(nil)
+	waitFor("scollegamento", 20*time.Second, func() bool { _, l, _ := snap(); return l == 1 })
+	waitFor("ricerche senza radio", 60*time.Second, func() bool {
+		a.auto.mu.Lock()
+		defer a.auto.mu.Unlock()
+		p := a.auto.ports["COM6"]
+		return p != nil && p.tries >= 1
+	})
+	// la stessa radio ricollegata (o accesa dopo): riconosciuta di nuovo
+	plug(&uv5r)
+	waitFor("stessa radio ricollegata", 90*time.Second, func() bool { s, _, _ := snap(); return s == 2 })
+	if _, _, last = snap(); !last.Again || last.Result.Kind != "bf-uv5r" {
+		t.Fatalf("radio ricollegata: %+v", last)
+	}
+
+	// radio sostituita con un altro modello, sempre con il cavo nel PC
+	plug(nil)
+	waitFor("scollegamento 2", 20*time.Second, func() bool { _, l, _ := snap(); return l == 2 })
+	plug(&k5)
+	waitFor("radio diversa", 120*time.Second, func() bool { s, _, _ := snap(); return s == 3 })
+	if _, _, last = snap(); last.Again || last.Result.Kind != "qs-uvk5" {
+		t.Fatalf("radio sostituita: %+v", last)
+	}
+
+	// cavo staccato dal PC e ricollegato con un'altra radio mentre si cerca
+	plug(nil)
 	setPorts()
-	step()
-	setPorts(PortInfo{"COM6", "USB-SERIAL CH340 (COM6)"})
-	for i := 0; i < 200 && searches() < 1; i++ {
-		step()
-	}
-	if searches() < 1 || a.auto.seq != 1 {
-		t.Fatalf("radio spenta: ricerche %d, esiti %d", searches(), a.auto.seq)
-	}
-	// la radio si accende: riconosciuta alla ricerca successiva
-	on.Store(true)
-	for i := 0; i < 200 && a.auto.seq == 1; i++ {
-		step()
-	}
-	if a.auto.seq != 2 {
-		t.Fatalf("radio accesa dopo il cavo non riconosciuta")
-	}
+	waitFor("cavo staccato", 10*time.Second, func() bool { a.auto.mu.Lock(); defer a.auto.mu.Unlock(); return len(a.auto.ports) == 0 })
+	setPorts(cable)
+	waitFor("ricerca sul cavo ricollegato", 10*time.Second, func() bool { a.auto.mu.Lock(); defer a.auto.mu.Unlock(); return a.auto.run != nil })
+	setPorts()
+	time.Sleep(30 * time.Millisecond)
+	plug(&uv5r)
+	setPorts(cable)
+	waitFor("radio sul cavo ricollegato", 90*time.Second, func() bool { s, _, _ := snap(); return s == 4 })
 
 	// disattivazione: stato azzerato
 	st = a.store.Get()
 	st.AutoIdent = false
 	_ = a.store.SaveSettings(st)
-	step()
+	a.autoStep(time.Now())
 	if len(a.auto.ports) != 0 {
 		t.Fatalf("stato non azzerato dopo la disattivazione")
 	}
+	t.Logf("esiti %d, scollegamenti %d", a.auto.seq, a.auto.lostSeq)
 }
 
 // Un'operazione chiesta dall'utente interrompe la ricerca automatica in corso.

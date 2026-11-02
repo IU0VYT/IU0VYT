@@ -8,7 +8,9 @@
 package main
 
 import (
+	"html"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -44,7 +46,7 @@ func catalogCounts() catCounts {
 			}
 		}
 		switch c.FW {
-		case "anc", "bf", "rh5", "kdhx", "bj9000", "kdh9g": // come FW_KINDS in ui/gallery.js («link» escluso)
+		case "anc", "bf", "rh5", "kdhx", "bj9000", "kdh9g", "k5": // come FW_KINDS in ui/gallery.js («link» escluso)
 			n.Firmware++
 		}
 	}
@@ -103,5 +105,54 @@ func TestConteggiVersione(t *testing.T) {
 		if got[w.key] != strconv.Itoa(w.val) {
 			t.Errorf("versione.txt: %s=%q, nel catalogo %d (aggiornalo con IU0VYT_SCRIVI_CONTEGGI=1)", w.key, got[w.key], w.val)
 		}
+	}
+}
+
+// TestSitoMarche (4.1): il riquadro delle marche del sito (docs/index.html,
+// rigenerato con verifica/sito) elenca le marche del catalogo, una sola volta
+// ciascuna; senza la cartella docs (pacchetto del programma) il test si salta.
+func TestSitoMarche(t *testing.T) {
+	if f := os.Getenv("IU0VYT_ELENCO_MARCHE"); f != "" {
+		// elenco delle marche (una per riga) per verifica/sito
+		seen, out := map[string]bool{}, ""
+		for _, c := range catalog {
+			if !seen[c.Brand] {
+				seen[c.Brand] = true
+				out += c.Brand + "\n"
+			}
+		}
+		if err := os.WriteFile(f, []byte(out), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	b, err := os.ReadFile("../docs/index.html")
+	if err != nil {
+		t.Skip("docs/index.html assente: ", err)
+	}
+	s := string(b)
+	i, j := strings.Index(s, `<ul class="hb-grid">`), strings.Index(s, "<!-- /marche -->")
+	if i < 0 || j < i {
+		t.Fatal("riquadro delle marche non trovato nel sito")
+	}
+	site := map[string]int{}
+	for _, m := range regexp.MustCompile(`</span>([^<]+)</li>`).FindAllStringSubmatch(s[i:j], -1) {
+		site[html.UnescapeString(m[1])]++
+	}
+	cat := map[string]bool{}
+	for _, c := range catalog {
+		cat[c.Brand] = true
+	}
+	for b := range cat {
+		if site[b] != 1 {
+			t.Errorf("marca %s: %d volte nel sito", b, site[b])
+		}
+	}
+	for b := range site {
+		if !cat[b] {
+			t.Errorf("marca %s nel sito ma non nel catalogo", b)
+		}
+	}
+	if n := regexp.MustCompile(`PLAYER SELECT · <span data-n="marche">(\d+)</span>`).FindStringSubmatch(s); n == nil || n[1] != strconv.Itoa(len(cat)) {
+		t.Errorf("numero di marche nel titolo del riquadro: %v, nel catalogo %d", n, len(cat))
 	}
 }
