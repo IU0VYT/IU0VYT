@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -224,6 +224,7 @@ func (a *App) apiFwPick(r *http.Request) (interface{}, error) {
 func (a *App) startJob(op string, canStop bool, run func(ctx context.Context, j *cableJob) (interface{}, error)) (map[string]interface{}, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	j := &cableJob{ID: randID(), Op: op, Radio: kindDAT, State: "running", cancel: cancel, started: time.Now(), Notes: []string{}, Log: []string{}, CanStop: canStop}
+	a.yieldAuto()
 	a.mu.Lock()
 	if a.job != nil && a.job.isRunning() {
 		a.mu.Unlock()

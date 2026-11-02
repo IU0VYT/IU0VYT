@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+# IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 # Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -32,6 +32,11 @@ import sys
 import time
 
 sys.path.insert(0, os.environ.get("CHIRP_DIR", "."))
+# le versioni recenti di CHIRP usano nei driver la funzione di traduzione «_»,
+# installata dall'interfaccia grafica: qui i testi restano quelli originali
+import builtins  # noqa: E402
+if not hasattr(builtins, "_"):
+    builtins._ = lambda s: s
 logging.disable(logging.CRITICAL)
 
 from chirp import chirp_common, directory, errors, memmap  # noqa: E402
@@ -358,6 +363,13 @@ def main():
                 # ga510.py: l'ingresso in programmazione è fatto da
                 # detect_from_serial (scelta del modello in CHIRP), non da sync_in
                 mod.start_program(r)
+            elif len(cls.detected_models()) > 1:
+                # classe che riconosce più modelli (es. Retevis H777): come
+                # l'interfaccia di CHIRP, prima detect_from_serial (che entra in
+                # programmazione), poi la lettura
+                rc = cls.detect_from_serial(pipe)
+                r = rc(pipe)
+                r.status_fn = lambda s: None
             r.sync_in()
             open(sys.argv[5], "wb").write(raw_mmap(r))
         else:

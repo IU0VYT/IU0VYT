@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -142,6 +142,13 @@ func init() {
 	b5rm := []band{air, vhf, vhf2, uhf, uhf2}
 	ms = append(ms, mk("bf-uv5rm", "Baofeng", "5RM", "BF5RM", "Baofeng UV-5RM", o5, 1000, p3(8, 1, 5), b5rm))
 	ms = append(ms, mk("bf-k5plus", "Baofeng", "K5-Plus", "BFK5Plus", "Baofeng K5 Plus", o5, 1000, p3(8, 1, 5), b5rm))
+	// 4.0: altre marche con la stessa radio della UV-5RM e della GM-21 (classi di CHIRP)
+	ms = append(ms, mk("mt-p15", "MaxTalker", "P15", "MaxTalkerP15", "MaxTalker P15", o5, 1000, p3(8, 1, 5), b5rm))
+	ms = append(ms, mk("mt-mt5rm", "MaxTalker", "MT-5RM", "MaxTalkerMT5RM", "MaxTalker MT-5RM", o5, 1000, p3(8, 1, 5), b5rm))
+	ms = append(ms, mk("rd-gm30plus", "Radioddity", "GM-30 Plus", "RadioddityGM30Plus", "Radioddity GM-30 Plus (GMRS)", ogm, 1000, p2(5, 1), []band{air, vhf, vhf2, uhf, uhf2}))
+	ogmp := ogm
+	ogmp.scramble = true
+	ms = append(ms, mk("rd-gm30pro", "Radioddity", "GM-30 Pro", "RadioddityGM30Pro", "Radioddity GM-30 Pro (GMRS)", ogmp, 1000, p2(5, 1), []band{air, vhf, vhf2, uhf, uhf2}))
 	o5p := o5
 	o5p.magics = []uv17Magic{{[]byte{0x46}, 16}, {[]byte{0x4D}, 15}, {uv17MagicSend5RM, 1}}
 	o5p.encrsym, o5p.scramble = 13, true

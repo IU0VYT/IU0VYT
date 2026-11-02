@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -858,7 +858,7 @@ func (f bft8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 
 // protocollo comune a BF-T8 e simili: comando, identificativo, blocchi 'R'/'W' con conferma, 'E'
 type rbSpec struct {
-	exit          []byte // comando di uscita ("E"; "b" sulle radio tipo T18)
+	exit          []byte // comando di uscita ("E"; "b" sulle radio tipo T18; vuoto: nessun comando)
 	quiet         bool   // in caso di errore di identificazione non invia il comando di uscita
 	magic, finger []byte
 	memsize       int
@@ -866,13 +866,33 @@ type rbSpec struct {
 	block         int
 	tries         int
 	to            time.Duration
+	// 4.0 (famiglia T18 di CHIRP, radtel_t18.py):
+	// fingers: identificativi ammessi (inizio degli 8 byte inviati dalla radio),
+	// al posto di finger; noAck: nessuna conferma dopo ogni blocco letto
+	// (ACK_BLOCK = False); echo: il cavo restituisce i byte inviati (_echo);
+	// enterAck: risposta alla conferma dell'identificativo (0xF0 sulla RT647)
+	fingers  [][]byte
+	noAck    bool
+	echo     bool
+	enterAck byte
+}
+
+// rbSend: invia e, con i cavi che restituiscono i byte inviati, li scarta
+func (s *rawSess) rbSend(sp *rbSpec, b []byte) error {
+	if err := s.send(b); err != nil {
+		return err
+	}
+	if sp.echo && len(b) > 0 {
+		readUpTo(s.ctx, s.p, len(b), sp.to)
+	}
+	return nil
 }
 
 func (s *rawSess) rbEnter(sp *rbSpec) error {
 	ok := false
 	got := false
 	for k := 0; k < sp.tries && !ok; k++ {
-		if err := s.send(sp.magic); err != nil {
+		if err := s.rbSend(sp, sp.magic); err != nil {
 			return err
 		}
 		b := readUpTo(s.ctx, s.p, 1, sp.to)
@@ -893,21 +913,35 @@ func (s *rawSess) rbEnter(sp *rbSpec) error {
 		}
 		return rErr("la radio non è entrata in modalità di programmazione: controlla il cavo e riaccendi la radio")
 	}
-	if err := s.send([]byte{0x02}); err != nil {
+	if err := s.rbSend(sp, []byte{0x02}); err != nil {
 		return err
 	}
-	id := readUpTo(s.ctx, s.p, len(sp.finger), sp.to)
-	if !bytes.Equal(id, sp.finger) {
+	var id []byte
+	known := false
+	if sp.fingers != nil {
+		id = readUpTo(s.ctx, s.p, 8, sp.to)
+		for _, f := range sp.fingers {
+			known = known || bytes.HasPrefix(id, f)
+		}
+	} else {
+		id = readUpTo(s.ctx, s.p, len(sp.finger), sp.to)
+		known = bytes.Equal(id, sp.finger)
+	}
+	if !known {
 		if !sp.quiet {
 			_ = s.send(sp.exitCmd())
 		}
 		return rErr("la radio ha restituito un identificativo sconosciuto (%q)", id)
 	}
-	if err := s.send([]byte{0x06}); err != nil {
+	if err := s.rbSend(sp, []byte{0x06}); err != nil {
 		return err
 	}
+	want := byte(0x06)
+	if sp.enterAck != 0 {
+		want = sp.enterAck
+	}
 	b := readUpTo(s.ctx, s.p, 1, sp.to)
-	if len(b) != 1 || b[0] != 0x06 {
+	if len(b) != 1 || b[0] != want {
 		if !sp.quiet {
 			_ = s.send(sp.exitCmd())
 		}
@@ -940,7 +974,7 @@ func rbDownload(ctx context.Context, port string, baud int, sp *rbSpec, prog Pro
 		}
 		prog(a, sp.memsize, "Lettura…")
 		cmd := []byte{'R', byte(a >> 8), byte(a), byte(sp.block)}
-		if err := s.send(cmd); err != nil {
+		if err := s.rbSend(sp, cmd); err != nil {
 			return nil, err
 		}
 		resp := readUpTo(ctx, s.p, 4+sp.block, sp.to)
@@ -953,19 +987,21 @@ func rbDownload(ctx context.Context, port string, baud int, sp *rbSpec, prog Pro
 			}
 			return nil, rErr("lettura del blocco 0x%04X non riuscita", a)
 		}
-		if err := s.send([]byte{0x06}); err != nil {
-			return nil, err
-		}
-		ack := readUpTo(ctx, s.p, 1, sp.to)
-		if len(ack) != 1 || ack[0] != 0x06 {
-			if !sp.quiet {
-				_ = s.send(sp.exitCmd())
+		if !sp.noAck {
+			if err := s.rbSend(sp, []byte{0x06}); err != nil {
+				return nil, err
 			}
-			return nil, rErr("nessuna conferma leggendo il blocco 0x%04X", a)
+			ack := readUpTo(ctx, s.p, 1, sp.to)
+			if len(ack) != 1 || ack[0] != 0x06 {
+				if !sp.quiet {
+					_ = s.send(sp.exitCmd())
+				}
+				return nil, rErr("nessuna conferma leggendo il blocco 0x%04X", a)
+			}
 		}
 		data = append(data, resp[4:]...)
 	}
-	if err := s.send(sp.exitCmd()); err != nil {
+	if err := s.rbSend(sp, sp.exitCmd()); err != nil {
 		return nil, err
 	}
 	prog(sp.memsize, sp.memsize, "Lettura completata")
@@ -988,7 +1024,7 @@ func rbUpload(ctx context.Context, port string, baud int, sp *rbSpec, img []byte
 	for _, r := range sp.ranges {
 		for a := r[0]; a < r[1]; a += sp.block {
 			prog(a, sp.memsize, "Scrittura…")
-			if err := s.send(append([]byte{'W', byte(a >> 8), byte(a), byte(sp.block)}, img[a:a+sp.block]...)); err != nil {
+			if err := s.rbSend(sp, append([]byte{'W', byte(a >> 8), byte(a), byte(sp.block)}, img[a:a+sp.block]...)); err != nil {
 				return err
 			}
 			ack := readUpTo(ctx, s.p, 1, sp.to)
@@ -1003,7 +1039,7 @@ func rbUpload(ctx context.Context, port string, baud int, sp *rbSpec, img []byte
 			}
 		}
 	}
-	if err := s.send(sp.exitCmd()); err != nil {
+	if err := s.rbSend(sp, sp.exitCmd()); err != nil {
 		return err
 	}
 	prog(sp.memsize, sp.memsize, "Scrittura completata")
@@ -1321,7 +1357,7 @@ func (f uv3rFam) Upload(ctx context.Context, m *genModel, port string, img []byt
 
 // ---------------------------------------------------------------- BF-V8A, BF-T20FRS (driver radtel_t18.py)
 
-const t18Format = `
+const t18FormatTpl = `
 #seekto 0x0010;
 struct {
     lbcd rxfreq[4];
@@ -1337,7 +1373,7 @@ struct {
        unknown2:1,
        bcl:1;
     u8 unknown3[3];
-} memory[16];
+} memory[%d];
 `
 
 const t20frsFormat = `
@@ -1360,26 +1396,237 @@ struct {
 type t18Opt struct {
 	format string
 	spec   *rbSpec
+	// 4.0: varianti della famiglia (radtel_t18.py di CHIRP)
+	// potenza come in CHIRP: "rw" letta e scritta; "r" letta, ma il canale scritto
+	// è sempre ad alta potenza (RB18); "" non gestita (T18); "low" non letta,
+	// il canale scritto è a bassa potenza (RB618); "keep" non letta, il canale
+	// scritto conserva la potenza che aveva (nuovo: bassa) (RT647)
+	power    string
+	reset    byte     // primo dei 4 byte finali del canale nuovo (0xF9; 0x09 BF-V8A/BF-T20FRS; 0xF7 RB29/RB629)
+	reserved bool     // gli ultimi 3 byte del canale si conservano anche cancellandolo (H777H)
+	extras   []string // bit del canale conservati se il canale esisteva (impostazioni «extra» di CHIRP)
+	lock     string   // canali con frequenza fissa: frs, frs16, murs, pmr, gmrs
 }
 
 type t18Fam struct{}
 
-func init() {
-	pw := []genPower{{"Alta 2 W", 2, 0}, {"Bassa 0,5 W", 0.5, 2}}
-	mk := func(id, model, rclass, name string, slots int, o *t18Opt) *genModel {
-		return &genModel{ID: id, Vendor: "Baofeng", Model: model, RClass: rclass, Name: name, Slots: slots, First: 1,
-			Powers: pw, Bands: []band{{400000000, 470000000}}, Narrow: true, HasScan: true, DCS: dtcsCodes, Baud: 9600,
-			Fam: t18Fam{}, Opt: o, Notes: "Radio senza nomi dei canali."}
+// frequenze fisse dei canali (come radtel_t18.py)
+var (
+	t18FRS1   = []int64{462562500, 462587500, 462612500, 462637500, 462662500, 462687500, 462712500}
+	t18FRS2   = []int64{467562500, 467587500, 467612500, 467637500, 467662500, 467687500, 467712500}
+	t18FRS3   = []int64{462550000, 462575000, 462600000, 462625000, 462650000, 462675000, 462700000, 462725000}
+	t18FRS    = append(append(append([]int64{}, t18FRS1...), t18FRS2...), t18FRS3...)
+	t18FRS16  = []int64{462562500, 462587500, 462612500, 462637500, 462662500, 462625000, 462725000, 462687500, 462712500, 462550000, 462575000, 462600000, 462650000, 462675000, 462700000, 462725000}
+	t18GMRS   = append(append([]int64{}, t18FRS...), t18FRS3...)
+	t18MURS   = []int64{151820000, 151880000, 151940000, 154570000, 154600000}
+	t18PMR    = []int64{446006250, 446018750, 446031250, 446043750, 446056250, 446068750, 446081250, 446093750, 446106250, 446118750, 446131250, 446143750, 446156250, 446168750, 446181250, 446193750}
+	t18Format = t18FormatN(16)
+)
+
+func t18In(list []int64, f int64) bool {
+	for _, x := range list {
+		if x == f {
+			return true
+		}
 	}
-	spec := func(ranges [][2]int) *rbSpec {
-		return &rbSpec{exit: []byte("b"), quiet: true, magic: []byte("\x02PROGRAM"), finger: []byte("P3107\xF7\x00\x00"),
-			memsize: 0x03F0, ranges: ranges, block: 8, tries: 1, to: time.Second}
-	}
-	genRegister(
-		mk("bf-v8a", "BF-V8A", "BFV8ARadio", "Baofeng BF-V8A", 16, &t18Opt{format: t18Format, spec: spec([][2]int{{0x0000, 0x03F0}})}),
-		mk("bf-t20frs", "BF-T20FRS", "BFT20FRSRadio", "Baofeng BF-T20FRS", 22, &t18Opt{format: t20frsFormat, spec: spec([][2]int{{0x0000, 0x0160}, {0x02B0, 0x02D0}})}),
-	)
+	return false
 }
+
+// t18FormatN: canali della memoria «MEM_FORMAT» di radtel_t18.py
+func t18FormatN(n int) string { return strings.Replace(t18FormatTpl, "%d", fmt.Sprint(n), 1) }
+
+// memoria «MEM_FORMAT_RB18» (canali da 0x0000)
+const rb18FormatTpl = `
+#seekto 0x0000;
+struct {
+    lbcd rxfreq[4];
+    lbcd txfreq[4];
+    lbcd rxtone[2];
+    lbcd txtone[2];
+    u8 jumpcode:1,
+       unknown1:2,
+       skip:1,
+       highpower:1,
+       narrow:1,
+       unknown2:1,
+       bcl:1;
+    u8 unknown3[3];
+} memory[%d];
+`
+
+func init() {
+	pmr := func(h, l float64) []genPower {
+		return []genPower{{fmt.Sprintf("Alta %g W", h), h, 0}, {fmt.Sprintf("Bassa %g W", l), l, 2}}
+	}
+	uhf := []band{{400000000, 470000000}}
+	vhf := []band{{136000000, 174000000}}
+	type v struct {
+		id, vendor, model, rclass, name string
+		slots                           int
+		pw                              []genPower
+		bands                           []band
+		o                               t18Opt
+	}
+	spec := func(magic string, fingers [][]byte, block int, ack bool, exit string, echo bool, memsize int, ranges [][2]int) *rbSpec {
+		return &rbSpec{exit: []byte(exit), quiet: true, magic: append([]byte{0x02}, magic...), fingers: fingers,
+			memsize: memsize, ranges: ranges, block: block, tries: 1, to: time.Second, noAck: !ack, echo: echo}
+	}
+	all := [][2]int{{0x0000, 0x03F0}}
+	smp := func(tail string) [][]byte { return [][]byte{[]byte("SMP558" + tail)} }
+	six := [][]byte{[]byte("\x06\x00\x00\x00\x00\x00\x00\x00")}
+	t18 := func(lock string, extras ...string) t18Opt {
+		return t18Opt{power: "rw", reset: 0xF9, lock: lock, extras: append([]string{"bcl"}, extras...)}
+	}
+	sc := []string{"scramble", "compander", "speccode"}
+	list := []v{
+		{"bf-v8a", "Baofeng", "BF-V8A", "BFV8ARadio", "Baofeng BF-V8A", 16, pmr(2, 0.5), uhf,
+			t18Opt{format: t18FormatN(16), spec: spec("PROGRAM", [][]byte{[]byte("P3107\xF7\x00\x00")}, 8, true, "b", false, 0x03F0, all),
+				power: "rw", reset: 0x09, extras: []string{"bcl"}}},
+		{"bf-t20frs", "Baofeng", "BF-T20FRS", "BFT20FRSRadio", "Baofeng BF-T20FRS", 22, pmr(2, 0.5), uhf,
+			t18Opt{format: t20frsFormat, spec: spec("PROGRAM", [][]byte{[]byte("P3107\xF7\x00\x00")}, 8, true, "b", false, 0x03F0, [][2]int{{0x0000, 0x0160}, {0x02B0, 0x02D0}}),
+				power: "rw", reset: 0x09, extras: []string{"bcl"}}},
+		{"rt-t18", "Radtel", "T18", "T18Radio", "Radtel T18", 16, []genPower{{"Unica", 0.5, 0}}, uhf,
+			t18Opt{spec: spec("1ROGRAM", smp("\x00\x00"), 8, true, "b", false, 0x03F0, all), reset: 0xF9, extras: append([]string{"bcl"}, sc...)}},
+		{"rt-rt20", "Retevis", "RT20", "RT20Radio", "Retevis RT20", 16, pmr(2, 0.5), uhf,
+			withSpec(t18("", sc...), spec("8AOGRAM", smp("\x02"), 8, true, "b", false, 0x03F0, all))},
+		{"rt-rt22s", "Retevis", "RT22S", "RT22SRadio", "Retevis RT22S", 22, pmr(2, 0.5), uhf,
+			withSpec(t18("frs", sc...), spec("9COGRAM", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+		{"rt-rb18", "Retevis", "RB18", "RB18Radio", "Retevis RB18", 22, pmr(2, 0.5), uhf,
+			t18Opt{format: strings.Replace(rb18FormatTpl, "%d", "22", 1), spec: spec("PROGRAL", [][]byte{[]byte("P3107\xF7")}, 16, true, "E", false, 0x0660, [][2]int{{0x0000, 0x0660}}),
+				power: "r", reset: 0xF9, lock: "frs", extras: []string{"bcl"}}},
+		{"rt-rb618", "Retevis", "RB618", "RB618Radio", "Retevis RB618", 16, []genPower{{"Unica 0,5 W", 0.5, 0}}, uhf,
+			t18Opt{format: strings.Replace(rb18FormatTpl, "%d", "16", 1), spec: spec("PROGRAL", [][]byte{[]byte("P3107\xF7")}, 16, true, "E", false, 0x0660, [][2]int{{0x0000, 0x0660}}),
+				power: "low", reset: 0xF9, lock: "pmr", extras: []string{"bcl"}}},
+		{"rt-rt68", "Retevis", "RT68", "RT68Radio", "Retevis RT68", 16, pmr(2, 0.5), uhf, withSpec(t18("frs16", sc...), spec("83OGRAM", six, 8, false, "", false, 0x03F0, all))},
+		{"rt-rt668", "Retevis", "RT668", "RT668Radio", "Retevis RT668", 16, pmr(2, 0.5), uhf, withSpec(t18("pmr", sc...), spec("83OGRAM", six, 8, false, "", false, 0x03F0, all))},
+		{"rt-rb17", "Retevis", "RB17", "RB17Radio", "Retevis RB17", 16, pmr(2, 0.5), uhf,
+			withSpec(t18("frs16", "scramble", "compander"), spec("A5OGRAM", [][]byte{[]byte("S\x00\x00\x00\x00\x00\x00\x00")}, 8, false, "", false, 0x03F0, all))},
+		{"rt-rb617", "Retevis", "RB617", "RB617Radio", "Retevis RB617", 16, pmr(2, 0.5), uhf,
+			withSpec(t18("pmr", "scramble", "compander"), spec("A5OGRAM", [][]byte{[]byte("S\x00\x00\x00\x00\x00\x00\x00")}, 8, false, "", false, 0x03F0, all))},
+		{"rt-rb17v", "Retevis", "RB17V", "RB17VRadio", "Retevis RB17V (MURS)", 5, pmr(2, 0.5), vhf,
+			withSpec(t18("murs", "scramble", "compander", "speccode"), spec("A5OGRAM", [][]byte{[]byte("S\x00\x00\x00\x00\x00\x00\x00")}, 8, false, "", false, 0x03F0, all))},
+		{"rt-rb85", "Retevis", "RB85", "RB85Radio", "Retevis RB85", 16, pmr(10, 5), uhf, withSpec(t18("", sc...), spec("H19GRAM", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+		{"rt-rb75", "Retevis", "RB75", "RB75Radio", "Retevis RB75", 30, pmr(5, 0.5), uhf,
+			withSpec(t18("", "scramble", "compander"), spec("KVOGRAM", smp("\x00"), 8, false, "b", false, 0x03F0, all))},
+		{"bt-frsb1", "BTECH", "FRS-B1", "FRSB1Radio", "BTECH FRS-B1", 22, pmr(2, 0.5), uhf,
+			withSpec(t18("frs"), spec("PROGRAM", [][]byte{[]byte("P3107\xF7\x00")}, 8, true, "b", false, 0x03F0, all))},
+		{"rt-rb19", "Retevis", "RB19", "RB19Radio", "Retevis RB19", 22, pmr(2, 0.5), uhf, withSpec(t18("frs", sc...), spec("9COGRAM", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+		{"rt-rb19p", "Retevis", "RB19P", "RB19PRadio", "Retevis RB19P", 30, pmr(3, 0.5), uhf,
+			withSpec(t18("gmrs", "scramble", "compander"), spec("70OGRAM", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+		{"rt-rb619", "Retevis", "RB619", "RB619Radio", "Retevis RB619", 16, pmr(0.5, 0.499), uhf, withSpec(t18("pmr", sc...), spec("9COGRAM", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+		{"rt-rt47", "Retevis", "RT47", "RT47Radio", "Retevis RT47", 16, pmr(2, 0.5), uhf, withSpec(t18("frs16", sc...), spec("47OGRAM", six, 8, false, "b", true, 0x03F0, all))},
+		{"rt-rt47v", "Retevis", "RT47V", "RT47VRadio", "Retevis RT47V (MURS)", 5, pmr(2, 0.5), vhf, withSpec(t18("murs", "compander"), spec("47OGRAM", six, 8, false, "b", true, 0x03F0, all))},
+		{"rt-rt647", "Retevis", "RT647", "RT647Radio", "Retevis RT647", 16, []genPower{{"Unica 0,5 W", 0.5, 0}}, uhf, withSpec(t18Pow(t18("pmr", sc...), "keep"), spec("47OGRAM", six, 8, false, "b", true, 0x03F0, all))},
+		{"rt-rb29", "Retevis", "RB29", "RB29Radio", "Retevis RB29", 16, pmr(2, 0.5), uhf,
+			t18Opt{spec: spec("S19GRAM", smp("\x02"), 8, false, "b", false, 0x03F0, all), power: "rw", reset: 0xF7, lock: "frs16", extras: []string{"bcl"}}},
+		{"rt-rb629", "Retevis", "RB629", "RB629Radio", "Retevis RB629", 16, pmr(0.5, 0.499), uhf,
+			t18Opt{spec: spec("S19GRAM", smp("\x02"), 8, false, "b", false, 0x03F0, all), power: "rw", reset: 0xF7, lock: "pmr", extras: []string{"bcl"}}},
+		{"rt-rt15", "Retevis", "RT15", "RT15Radio", "Retevis RT15", 16, pmr(2, 0.5), uhf,
+			withSpec(t18("", sc...), spec("KAOGRAM", [][]byte{[]byte("\x06\x00\x00\x00\x00\x00\x00\x00"), []byte("\x06\x03\xe8\x08\xff\xff\xff\xff"), []byte("\x06MP558\xff\xff")}, 8, false, "b", false, 0x03F0, all))},
+		{"rt-rb87", "Retevis", "RB87", "RB87Radio", "Retevis RB87", 30, pmr(5, 0.5), uhf,
+			withSpec(t18("gmrs", "compander", "speccode"), spec("C8OGRAN", smp(""), 8, false, "", false, 0x03F0, all))},
+		{"rt-h777h-frs", "Retevis", "H777H_FRS", "H777HFRSRadio", "Retevis H777H (FRS)", 16, pmr(2, 0.5), uhf,
+			withSpec(t18Res(t18("frs16", sc...)), spec("C701RAD", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+		{"rt-h777h-pmr", "Retevis", "H777H_PMR", "H777HPMRRadio", "Retevis H777H (PMR446)", 16, pmr(0.5, 0.5), uhf,
+			withSpec(t18Pow(t18Res(t18("pmr", sc...)), "high"), spec("C701RAD", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+	}
+	for _, x := range list {
+		o := x.o
+		if o.format == "" {
+			o.format = t18FormatN(x.slots)
+		}
+		m := &genModel{ID: x.id, Vendor: x.vendor, Model: x.model, RClass: x.rclass, Name: x.name, Slots: x.slots, First: 1,
+			Powers: x.pw, Bands: x.bands, Narrow: true, HasScan: true, DCS: dtcsCodes, Baud: 9600,
+			Fam: t18Fam{}, Opt: &o, Notes: "Radio senza nomi dei canali."}
+		if x.rclass == "RT647Radio" {
+			o.spec.enterAck = 0xF0
+		}
+		genRegister(m)
+	}
+}
+
+// t18Fixed: campi del canale che CHIRP non lascia modificare (immutable),
+// per i canali che contengono una frequenza fissa FRS, PMR446, MURS o GMRS
+func t18Fixed(o *t18Opt, n int, rx int64) (fixed, dup, mode, power bool) {
+	switch o.lock {
+	case "frs":
+		if t18In(t18FRS, rx) {
+			return true, true, true, n >= 8 && n <= 14
+		}
+	case "frs16":
+		if t18In(t18FRS16, rx) {
+			return true, true, true, false
+		}
+	case "murs":
+		if t18In(t18MURS, rx) {
+			return true, true, n <= 3, false
+		}
+	case "pmr":
+		if t18In(t18PMR, rx) {
+			return true, true, true, true
+		}
+	case "gmrs":
+		if t18In(t18GMRS, rx) {
+			return n <= 30, n <= 30, n >= 8 && n <= 14, n >= 8 && n <= 14
+		}
+	}
+	return false, false, false, false
+}
+
+// lockedSlotImg: canale a frequenza fissa (escluso dalle prove di scrittura)
+func (f t18Fam) lockedSlotImg(m *genModel, img []byte, i int) bool {
+	c := f.Get(m, img, i)
+	if c == nil {
+		return false
+	}
+	fx, _, _, _ := t18Fixed(t18o(m), i+1, c.Rx)
+	return fx
+}
+
+// Locked: i canali con una frequenza fissa (FRS, PMR446, MURS, GMRS) non si
+// cancellano e non cambiano frequenza, come in CHIRP
+func (f t18Fam) Locked(m *genModel, i int, old, want *Chan) error {
+	if want != nil {
+		// frequenza di un canale fisso nella posizione sbagliata: la radio (come
+		// CHIRP) la sostituirebbe con quella della posizione
+		if fx, _, _, _ := t18Fixed(t18o(m), i+1, want.Rx); fx {
+			buf := bytes.Repeat([]byte{0xFF}, genMinSize(m))
+			if err := f.Set(m, buf, i, want); err == nil {
+				if back := f.Get(m, buf, i); back == nil || back.Rx != want.Rx || (!want.TxOff && back.Tx != want.Tx) {
+					return fmt.Errorf("nella posizione %d della %s la frequenza %s MHz non è ammessa (canali fissi)", i+1, m.Name, fmtMHz(want.Rx))
+				}
+			}
+		}
+	}
+	if old == nil {
+		return nil
+	}
+	fx, dup, mode, power := t18Fixed(t18o(m), i+1, old.Rx)
+	if !fx {
+		return nil
+	}
+	what := map[string]string{"frs": "FRS", "frs16": "FRS", "murs": "MURS", "pmr": "PMR446", "gmrs": "GMRS"}[t18o(m).lock]
+	switch {
+	case want == nil:
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: non si può cancellare", i+1, m.Name, what)
+	case want.Rx != old.Rx:
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: frequenza non modificabile", i+1, m.Name, what)
+	case dup && (want.Tx != old.Tx || want.TxOff != old.TxOff):
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: frequenza di trasmissione non modificabile", i+1, m.Name, what)
+	case mode && want.Narrow != old.Narrow:
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: sempre a banda stretta", i+1, m.Name, what)
+	case power && want.Power != old.Power:
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: potenza non modificabile", i+1, m.Name, what)
+	}
+	return nil
+}
+
+func withSpec(o t18Opt, sp *rbSpec) t18Opt { o.spec = sp; return o }
+func t18Pow(o t18Opt, p string) t18Opt     { o.power = p; return o }
+
+// powerFixed: la potenza scelta non viene scritta così com'è (vedi t18Opt.power)
+func (f t18Fam) powerFixed(m *genModel) bool { return t18o(m).power != "rw" }
+func t18Res(o t18Opt) t18Opt                 { o.reserved = true; return o }
 
 func t18o(m *genModel) *t18Opt { return m.Opt.(*t18Opt) }
 
@@ -1422,6 +1669,7 @@ func t18ToneEnc(dst []byte, t genTone) {
 }
 
 func (f t18Fam) Get(m *genModel, img []byte, i int) *Chan {
+	o := t18o(m)
 	r := f.rec(m, i)
 	rx := r.F("rxfreq").Int(img) * 10
 	if rx == 0 || bytes.Equal(r.F("rxfreq").Raw(img), []byte{0xFF, 0xFF, 0xFF, 0xFF}) {
@@ -1437,18 +1685,94 @@ func (f t18Fam) Get(m *genModel, img []byte, i int) *Chan {
 	c.Scan = !r.F("skip").Bool(img)
 	c.TxTone = t18ToneDec(r.F("txtone").Raw(img))
 	c.RxTone = t18ToneDec(r.F("rxtone").Raw(img))
-	c.Power = m.powerSem(int(1 - r.F("highpower").Int(img)))
+	if o.power == "rw" || o.power == "r" || o.power == "high" {
+		c.Power = m.powerSem(int(1 - r.F("highpower").Int(img)))
+	}
+	// canali a frequenza fissa: come li mostra CHIRP (get_memory)
+	n := i + 1
+	simplex := func() { c.Tx, c.TxOff = c.Rx, false }
+	low := func() {
+		if len(m.Powers) > 1 {
+			c.Power = m.Powers[1].Sem
+		}
+	}
+	switch o.lock {
+	case "frs":
+		if t18In(t18FRS, rx) {
+			if n <= 22 {
+				c.Rx = t18FRS[n-1]
+			}
+			simplex()
+			c.Narrow = true
+			if n >= 8 && n <= 14 {
+				low()
+			}
+		}
+	case "frs16":
+		if t18In(t18FRS16, rx) {
+			if n <= 16 {
+				c.Rx = t18FRS16[n-1]
+			}
+			simplex()
+			c.Narrow = true
+		}
+	case "murs":
+		if t18In(t18MURS, rx) {
+			if n <= 5 {
+				c.Rx = t18MURS[n-1]
+			}
+			simplex()
+			if n <= 3 {
+				c.Narrow = true
+			}
+		}
+	case "pmr":
+		if t18In(t18PMR, rx) {
+			if n <= 16 {
+				c.Rx = t18PMR[n-1]
+			}
+			simplex()
+			c.Narrow = true
+			low()
+		}
+	case "gmrs":
+		if t18In(t18GMRS, rx) {
+			if n <= 30 {
+				c.Rx = t18GMRS[n-1]
+			}
+			switch {
+			case n <= 7, n >= 15 && n <= 22:
+				simplex()
+			case n >= 8 && n <= 14:
+				simplex()
+				c.Narrow = true
+				low()
+			case n >= 23 && n <= 30:
+				c.Tx, c.TxOff = c.Rx+5000000, false
+			}
+		}
+	}
 	return c
 }
 
 func (f t18Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
+	o := t18o(m)
 	r := f.rec(m, i)
+	raw := r.Raw(img)
+	rsvd := append([]byte{}, raw[13:16]...)
 	if c == nil {
 		r.Fill(img, 0xFF)
+		if o.reserved {
+			copy(r.Raw(img)[13:], rsvd)
+		}
 		return nil
 	}
 	wasEmpty := f.Get(m, img, i) == nil
-	bcl := r.F("bcl").Int(img)
+	oldHigh := r.F("highpower").Int(img)
+	keep := map[string]int64{}
+	for _, k := range o.extras {
+		keep[k] = r.F(k).Int(img)
+	}
 	tt, err := genToneParse(c.TxTone)
 	if err != nil {
 		return err
@@ -1457,7 +1781,11 @@ func (f t18Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	if err != nil {
 		return err
 	}
-	r.SetRaw(img, append(make([]byte, 12), 0x09, 0xFF, 0xFF, 0xFF))
+	if o.reserved {
+		r.SetRaw(img, append(make([]byte, 13), rsvd...))
+	} else {
+		r.SetRaw(img, append(make([]byte, 12), o.reset, 0xFF, 0xFF, 0xFF))
+	}
 	r.F("rxfreq").SetInt(img, c.Rx/10)
 	if c.TxOff {
 		r.F("txfreq").Fill(img, 0xFF)
@@ -1466,13 +1794,29 @@ func (f t18Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	}
 	t18ToneEnc(r.F("txtone").Raw(img), tt)
 	t18ToneEnc(r.F("rxtone").Raw(img), rt)
-	r.F("highpower").SetBool(img, m.powerIndex(c.Power) == 0)
+	switch o.power {
+	case "rw":
+		r.F("highpower").SetBool(img, m.powerIndex(c.Power) == 0)
+	case "low":
+		r.F("highpower").SetInt(img, 0)
+	case "high":
+		// H777H PMR: le due potenze di CHIRP valgono entrambe 0,5 W e CHIRP
+		// scrive sempre «alta»
+		r.F("highpower").SetInt(img, 1)
+	case "keep":
+		if wasEmpty {
+			oldHigh = 0
+		}
+		r.F("highpower").SetInt(img, oldHigh)
+	}
 	r.F("narrow").SetBool(img, c.Narrow)
 	r.F("skip").SetBool(img, !c.Scan)
 	r.F("unknown2").SetInt(img, 1)
 	if !wasEmpty {
-		// impostazione del canale conservata (come CHIRP)
-		r.F("bcl").SetInt(img, bcl)
+		// impostazioni del canale conservate (come CHIRP)
+		for k, v := range keep {
+			r.F(k).SetInt(img, v)
+		}
 	}
 	return nil
 }
@@ -1545,6 +1889,27 @@ func init() {
 	t22.Notes = "Radio PMR446 senza nomi dei canali. Ricavato dal programma del costruttore (versione PMR), " +
 		"stessa memoria della W31E di CHIRP: nei file .img compare come W31E."
 	genRegister(t22)
+
+	// 4.0: gli altri modelli del driver retevis_rt22.py di CHIRP (stessa memoria e
+	// stesso protocollo della Retevis RT22, come la BF-T20)
+	rtr := [][3]int{{0x0000, 0x0180, 0x10}, {0x01B8, 0x01F8, 0x10}, {0x01F8, 0x0200, 0x08}, {0x0200, 0x0340, 0x10}}
+	for _, v := range []struct{ id, vendor, model, rclass, name string }{
+		{"rt-rt22", "Retevis", "RT22", "RT22Radio", "Retevis RT22"},
+		{"rt-rt22frs", "Retevis", "RT22FRS", "RT22FRS", "Retevis RT22FRS"},
+		{"rt-rt622", "Retevis", "RT622", "RT622", "Retevis RT622"},
+		{"wln-kdc1", "WLN", "KD-C1", "KDC1", "WLN KD-C1"},
+		{"zt-ztx6", "Zastone", "ZT-X6", "ZTX6", "Zastone ZT-X6"},
+		{"lt-lt316", "LUITON", "LT-316", "LT316", "Luiton LT-316"},
+		{"tid-tdm8", "TID", "TD-M8", "TDM8", "TID TD-M8"},
+	} {
+		ids := rt22DefaultIDs
+		if v.rclass == "RT622" {
+			ids = append(append([][]byte{}, rt22DefaultIDs...), []byte("\xFF\xFF\xF8\xFF"))
+		}
+		x := mk(v.id, v.model, v.rclass, v.name, &rt22Opt{fileid: ids, memsize: 0x0400, ranges: rtr})
+		x.Vendor = v.vendor
+		genRegister(x)
+	}
 }
 
 func rt22o(m *genModel) *rt22Opt { return m.Opt.(*rt22Opt) }

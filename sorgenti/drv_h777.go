@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -62,7 +62,11 @@ func chirpClosestTone(t10 float64) int {
 }
 
 type h777Opt struct {
-	cmd      []byte
+	cmd []byte
+	// detect: come RetevisH777.detect_from_serial di CHIRP, prima si prova il
+	// comando della H777 V4 («C777HAM»); l'identificativo dice quale radio è
+	// collegata. Se la radio non risponde si riprova con cmd (più robusto di CHIRP).
+	detect   []byte
 	idents   [][]byte
 	ranges   [][2]int
 	memsize  int
@@ -161,6 +165,24 @@ func init() {
 		"canali sempre a banda stretta (come scrive il programma); la radio non ha la scansione. Se sulla radio è impostata una password, " +
 		"il programma del costruttore la chiede: questo programma, come CHIRP, non la controlla."
 	genRegister(g68, g22)
+
+	h777Detect := std
+	h777Detect.detect = []byte("C777HAM")
+	// 4.0: altri modelli della stessa famiglia in CHIRP (h777.py), con lo stesso
+	// protocollo e la stessa memoria della BF-888S / BF-M4 / BF-1904
+	other := func(id, vendor, model, rclass, name string, o h777Opt, p []genPower, bands []band) *genModel {
+		x := mk(id, model, rclass, name, 16, o, p, bands)
+		x.Vendor = vendor
+		return x
+	}
+	genRegister(
+		other("rt-h777", "Retevis", "H777", "RetevisH777", "Retevis H777", h777Detect, pw(5), []band{{400000000, 490000000}}),
+		other("rt-h777plus", "Retevis", "H777 Plus", "H777PlusRadio", "Retevis H777 Plus", std, pw(5), []band{{400000000, 490000000}}),
+		other("rd-ga2s", "Radioddity", "GA-2S", "ROGA2SRadio", "Radioddity GA-2S", std, pw(5), []band{{400000000, 490000000}}),
+		other("mt-mt8s", "MaxTalker", "MT-8S", "MT8SRadio", "MaxTalker MT-8S", std, pw(5), []band{{400000000, 490000000}}),
+		other("mv-ra100", "Maverick", "RA-100", "MAVERICKRA100Radio", "Maverick RA-100", std, pw(5), []band{{400000000, 490000000}}),
+		other("mv-ra425", "Maverick", "RA-425", "MAVERICKRA425Radio", "Maverick RA-425", b19, pw(10), []band{{400000000, 520000000}}),
+	)
 }
 
 // tutti i codici DCS ottali a tre cifre (radio che accettano qualsiasi codice)
@@ -306,7 +328,36 @@ func (s *h777Sess) read(n int, to time.Duration) ([]byte, error) {
 	return b, nil
 }
 
+// h777V4Idents: identificativi della Retevis H777 V4 (retevis_h777v4.py), che ha
+// un'altra memoria e non è gestita
+var h777V4Idents = [][]byte{bytes.Repeat([]byte{0}, 6), bytes.Repeat([]byte{0xFF}, 6)}
+
 func (s *h777Sess) enter(m *genModel) ([]byte, error) {
+	o := h777o(m)
+	if o.detect == nil {
+		return s.enterWith(m, o.cmd)
+	}
+	ident, err := s.enterWith(m, o.detect)
+	if err == nil || err == errCancelled {
+		return ident, err
+	}
+	for _, id := range h777V4Idents {
+		if bytes.HasPrefix(ident, id) {
+			return ident, rErr("la radio è una %s V4 (nuova versione, memoria diversa): non ancora gestita", m.Name)
+		}
+	}
+	if ident != nil {
+		return ident, err
+	}
+	// nessuna risposta al comando della V4: uscita e comando classico
+	_ = s.p.Write([]byte("E"))
+	if err := s.sleep(1500 * time.Millisecond); err != nil {
+		return nil, err
+	}
+	return s.enterWith(m, o.cmd)
+}
+
+func (s *h777Sess) enterWith(m *genModel, cmd []byte) ([]byte, error) {
 	o := h777o(m)
 	if err := s.p.Write([]byte{0x02}); err != nil {
 		return nil, err
@@ -314,7 +365,7 @@ func (s *h777Sess) enter(m *genModel) ([]byte, error) {
 	if err := s.sleep(100 * time.Millisecond); err != nil {
 		return nil, err
 	}
-	if err := s.p.Write(o.cmd); err != nil {
+	if err := s.p.Write(cmd); err != nil {
 		return nil, err
 	}
 	ack, err := s.read(1, 500*time.Millisecond)
@@ -430,7 +481,7 @@ func (f h777Fam) Upload(ctx context.Context, m *genModel, port string, img []byt
 	}
 	defer s.p.Close()
 	prog(0, o.memsize, "Collegamento con la radio…")
-	ident, err := s.enter(m)
+	ident, err := s.enterWith(m, h777o(m).cmd) // scrittura: come do_upload di CHIRP, solo il comando classico
 	if err != nil {
 		return "", genFail("Identificazione", err)
 	}

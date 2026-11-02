@@ -1,6 +1,6 @@
 //go:build !windows
 
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -404,7 +404,8 @@ start:
 		return fmt.Errorf("0x02 atteso")
 	}
 	cmd, err := emuRead(p, len(o.cmd))
-	if err != nil || !bytes.Equal(cmd, o.cmd) {
+	// Retevis H777: risponde anche al comando della V4 provato per primo da CHIRP
+	if err != nil || !(bytes.Equal(cmd, o.cmd) || (o.detect != nil && bytes.Equal(cmd, o.detect))) {
 		return fmt.Errorf("comando di programmazione inatteso %q", cmd)
 	}
 	p.Write([]byte{0x06})
@@ -745,24 +746,49 @@ func (t18Fam) emu(m *genModel, img []byte) genEmu  { return newRBEmu(t18o(m).spe
 func (e *rbEmu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return append([]byte{}, e.img...) }
 
 func (e *rbEmu) serve(p Port) error {
-	if got, err := emuRead(p, len(e.sp.magic)); err != nil || !bytes.Equal(got, e.sp.magic) {
+	// rd: byte ricevuti; con i cavi che li restituiscono (echo) tornano indietro
+	rd := func(n int) ([]byte, error) {
+		b, err := emuRead(p, n)
+		if err == nil && e.sp.echo {
+			p.Write(b)
+		}
+		return b, err
+	}
+	one := func() (byte, error) {
+		b, err := rd(1)
+		if err != nil {
+			return 0, err
+		}
+		return b[0], nil
+	}
+	if got, err := rd(len(e.sp.magic)); err != nil || !bytes.Equal(got, e.sp.magic) {
 		return fmt.Errorf("comando di programmazione atteso (%q)", got)
 	}
 	p.Write([]byte{0x06})
-	if b, err := emuByte(p); err != nil || b != 0x02 {
+	if b, err := one(); err != nil || b != 0x02 {
 		return fmt.Errorf("0x02 atteso")
 	}
-	p.Write(e.sp.finger)
-	if b, err := emuByte(p); err != nil || b != 0x06 {
+	if e.sp.fingers != nil {
+		id := append(append([]byte{}, e.sp.fingers[0]...), make([]byte, 8)...)[:8]
+		p.Write(id)
+	} else {
+		p.Write(e.sp.finger)
+	}
+	if b, err := one(); err != nil || b != 0x06 {
 		return fmt.Errorf("0x06 atteso")
 	}
-	p.Write([]byte{0x06})
+	if e.sp.enterAck != 0 {
+		p.Write([]byte{e.sp.enterAck})
+	} else {
+		p.Write([]byte{0x06})
+	}
+	exit := e.sp.exitCmd()
 	for {
-		c, err := emuByte(p)
-		if err != nil || c == e.sp.exitCmd()[0] {
+		c, err := one()
+		if err != nil || (len(exit) > 0 && c == exit[0]) {
 			return nil
 		}
-		h, err := emuRead(p, 3)
+		h, err := rd(3)
 		if err != nil {
 			return err
 		}
@@ -779,12 +805,14 @@ func (e *rbEmu) serve(p Port) error {
 			d := append([]byte{}, e.img[a:a+n]...)
 			e.mu.Unlock()
 			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
-			if b, err := emuByte(p); err != nil || b != 0x06 {
-				return fmt.Errorf("conferma attesa")
+			if !e.sp.noAck {
+				if b, err := one(); err != nil || b != 0x06 {
+					return fmt.Errorf("conferma attesa")
+				}
+				p.Write([]byte{0x06})
 			}
-			p.Write([]byte{0x06})
 		case 'W':
-			d, err := emuRead(p, n)
+			d, err := rd(n)
 			if err != nil {
 				return err
 			}

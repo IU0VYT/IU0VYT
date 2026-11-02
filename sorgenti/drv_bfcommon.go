@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -103,6 +103,10 @@ func init() {
 			NameMax: nameLen, Charset: cs, Powers: pw, Bands: bands, Narrow: true, HasScan: true, DCS: uv5rDTCS, Baud: 9600,
 			Fam: bfcFam{}, Opt: &oo, Notes: "Accendi la radio con il volume a metà e su un canale libero."}
 	}
+	// 4.0: Retevis RT6 = Baofeng WP970I (classe RT6 di CHIRP)
+	rt6 := mk("rt-rt6", "RT6", "RT6", "Retevis RT6", bfcOpt{}, 6, pw3, std)
+	rt6.Vendor = "Retevis"
+	genRegister(rt6)
 	a58s := []band{{130000000, 180000000}, {200000000, 260000000}, {400000000, 521000000}}
 	b5rx := []band{{108000000, 136000000}, {136000000, 174000000}, {200000000, 260000000}, {350000000, 390000000}, {400000000, 520000000}}
 	genRegister(

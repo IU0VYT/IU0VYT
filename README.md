@@ -1,19 +1,19 @@
 # IU0VYT Flash
 
-**Versione 3.9.4** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
+**Versione 4.0.0** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
 
-Programma per radioamatori e utenti di ricetrasmettitori **Baofeng** e **Bajeton**: legge e scrive canali e frequenze via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.
+Programma per radioamatori e utenti di ricetrasmettitori di **16 marche** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID): legge e scrive canali, frequenze e impostazioni via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.
 
 🌐 Sito del programma: **[iu0vyt.github.io/IU0VYT](https://iu0vyt.github.io/IU0VYT/)**
 
 ## Funzioni
 
-- **Canali e frequenze** di 235 modelli Baofeng e Bajeton (comprese radio PMR digitali e DMR, anche via USB): lettura e scrittura via cavo, file `.img` compatibili con CHIRP, file originali del Baofeng K67 Pro (`.xlc`) e della Bajeton 8300 (`.dat`).
-- **Impostazioni delle radio** (menu, display, VOX, squelch, TOT, DTMF, tasti…) per 190 modelli, con la descrizione di ogni voce e un avviso da confermare per quelle delicate.
-- **Identificazione della radio collegata**: il programma la riconosce da solo e mostra marca, modello, tipo, firmware e le altre informazioni che comunica (per le radio DMR USB anche ID DMR e nome).
+- **Canali e frequenze** di 297 modelli (comprese radio PMR digitali e DMR, anche via USB): lettura e scrittura via cavo, file `.img` compatibili con CHIRP, file originali del Baofeng K67 Pro (`.xlc`) e della Bajeton 8300 (`.dat`).
+- **Impostazioni delle radio** (menu, display, VOX, squelch, TOT, DTMF, tasti…) per 251 modelli, con la descrizione di ogni voce e un avviso da confermare per quelle delicate.
+- **Identificazione della radio collegata**: il programma la riconosce da solo e mostra marca, modello, tipo, firmware e le altre informazioni che comunica (per le radio DMR USB anche ID DMR e nome). Con l'**identificazione automatica** (pulsante nella scheda «Identifica», scelta ricordata) basta collegare il cavo: la radio viene riconosciuta e la sua scheda si apre con i canali letti.
 - **Inoltro ad altra radio**: i canali spuntati in una radio vengono scritti direttamente in un'altra radio collegata, scelta per marca e modello, con controllo di compatibilità, adattamento, copia di sicurezza e verifica.
 - **Convertitore universale**: i canali di qualsiasi radio o file (K67 `.xlc`, Bajeton `.dat`, immagini `.img` anche di CHIRP, CSV di CHIRP, Excel/CSV) nel formato di qualsiasi altra radio, adattati alle sue regole.
-- **Galleria di 273 modelli**, divisi tra compatibili e non compatibili, per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca, filtri e collegamenti ai programmi e ai manuali ufficiali.
+- **Galleria di 335 modelli** di 16 marche, divisi tra compatibili e non compatibili, per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca, filtri e collegamenti ai programmi e ai manuali ufficiali.
 - **Archivio dei ponti radio** basato sull'elenco aggiornato di [IK2ANE](https://www.ik2ane.it), con filtri e inserimento nelle radio, con il controllo della compatibilità tra ponti e radio prima della scrittura.
 - **Aggiornamento del firmware** di 28 modelli, con controllo del file e copia di sicurezza della radio; aggiornamento guidato con il programma ufficiale per BTECH DMR-6X2 e DMR-6X2 PRO.
 - **Copia di sicurezza** automatica prima di ogni scrittura e verifica dopo.
@@ -40,7 +40,7 @@ Le librerie sono incluse nella cartella `vendor`.
 ## Avvertenze
 
 - I protocolli delle radio sono stati ricostruiti per l'interoperabilità e verificati con radio simulate: **conserva sempre le copie di sicurezza**. Il programma è fornito senza alcuna garanzia.
-- Programma indipendente, **non affiliato né approvato** da Baofeng o Bajeton. I marchi citati appartengono ai rispettivi titolari e servono solo a indicare le radio compatibili.
+- Programma indipendente, **non affiliato né approvato** dai costruttori delle radio (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e gli altri). I marchi citati appartengono ai rispettivi titolari e servono solo a indicare le radio compatibili.
 - Rispetta le norme sull'uso delle frequenze del tuo Paese.
 
 ## Ringraziamenti

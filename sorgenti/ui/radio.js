@@ -1,5 +1,5 @@
 'use strict';
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -99,8 +99,8 @@ class RadioView {
         <button class="btn primary" data-a="save" title="Salva (Ctrl+S)">💾 Salva</button>
         <button class="btn" data-a="saveas">Salva con nome…</button>
         <span class="sep"></span>
-        <button class="btn" data-a="cread" title="Legge i canali dalla radio collegata con il cavo di programmazione">📻 Leggi dalla radio…</button>
-        <button class="btn" data-a="cwrite" title="Scrive i canali di questa tabella nella radio collegata con il cavo">📻 Scrivi nella radio…</button>
+        <button class="btn primary" data-a="cread" title="Legge i canali dalla radio collegata con il cavo di programmazione">📻 Leggi dalla radio…</button>
+        <button class="btn primary" data-a="cwrite" title="Scrive i canali di questa tabella nella radio collegata con il cavo">📻 Scrivi nella radio…</button>
         ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw] ? `<button class="btn" data-a="firmware" title="Aggiorna il firmware della radio (file ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw]}, anche dentro archivi .zip o .rar, dal PC o da Internet)">⬆ Aggiorna firmware…</button>` : ''}
         ${d.settings ? '<button class="btn" data-a="settings" title="Impostazioni della radio (menu, display, VOX, DTMF…), con la descrizione di ogni voce">⚙ Impostazioni…</button>' : ''}
         ${this.kind === 'baj' ? `<label class="note" style="white-space:nowrap" title="Il programma Bajeton BT-11_CPS v1.0.9 salva i file .dat in un formato diverso dalla v1.0.8 e le due versioni non aprono i file dell'altra. Scegli la versione installata sul tuo PC: il file aperto viene convertito (canali e impostazioni restano gli stessi) e i nuovi file e le letture dalla radio useranno questo formato.">File per BT-11_CPS

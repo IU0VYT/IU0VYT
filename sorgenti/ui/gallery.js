@@ -1,11 +1,11 @@
 'use strict';
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
-// Galleria dei modelli Baofeng e Bajeton: ricerca, filtri, schede con le
+// Galleria dei modelli di tutte le marche: ricerca, filtri, schede con le
 // funzioni disponibili (canali via cavo, file .img, firmware) e i collegamenti
 // ai programmi e ai manuali dei costruttori.
 
@@ -28,10 +28,27 @@ const FW_DESC = {
   kdh9g: 'file .kdh (programma «Bootloader_BaudRate38400» del costruttore)',
 };
 
+// colore di ogni marca (icone e riquadri della galleria); le marche non
+// elencate hanno un colore ricavato dal nome
+const BRAND_COLOR = {
+  Baofeng: '#1c64d8', Bajeton: '#e8590c', Quansheng: '#0f8a5f', Retevis: '#c2255c', Radtel: '#7048e8', Radioddity: '#d9480f',
+  TIDRADIO: '#1098ad', TID: '#0b7285', BTECH: '#495057', Abbree: '#5f3dc4', MaxTalker: '#2b8a3e', Intek: '#a61e4d', Maverick: '#364fc7',
+  WLN: '#e67700', Zastone: '#087f5b', Luiton: '#862e9c',
+};
+function brandColor(b) {
+  if (BRAND_COLOR[b]) return BRAND_COLOR[b];
+  let h = 0;
+  for (const ch of String(b || '')) h = (h * 31 + ch.charCodeAt(0)) % 360;
+  return `hsl(${h}, 62%, 40%)`;
+}
+// ordine delle marche: prima Baofeng e Bajeton, poi le altre in ordine alfabetico
+const brandOrder = (a, b) => (a === 'Baofeng' ? 0 : a === 'Bajeton' ? 1 : 2) - (b === 'Baofeng' ? 0 : b === 'Bajeton' ? 1 : 2) || a.localeCompare(b, 'it', { sensitivity: 'base' });
+function catalogBrands() { return [...new Set(App.catalog.map(c => c.brand))].sort(brandOrder); }
+
 // disegno stilizzato della radio (per tipo e marca)
 function radioIcon(item, size) {
   const s = size || 64;
-  const body = item.Brand === 'Bajeton' ? '#e2711d' : '#1c64d8';
+  const body = brandColor(item.Brand);
   const dark = '#243044';
   let ant, h = 34, w = 22, y = 22, scr = true, keys = true;
   switch (item.type) {
@@ -56,11 +73,11 @@ const Gallery = {
   build(page) {
     this.page = page;
     page.innerHTML = `<div class="galhead">
-        <div><h2>Modelli Baofeng e Bajeton</h2>
+        <div><h2>Modelli di radio</h2>
           <div class="note">Scegli la tua radio per gestire canali e ponti (via cavo o con i file .img, compatibili con CHIRP) o aggiornarne il firmware.</div></div>
         <div class="galtools">
-          <input type="search" data-q placeholder="Cerca modello (es. UV-5R, 888, BJ-7800)…" autocomplete="off">
-          <div class="seg" data-brand><button data-v="" class="on">Tutte</button><button data-v="Baofeng">Baofeng</button><button data-v="Bajeton">Bajeton</button></div>
+          <input type="search" data-q placeholder="Cerca marca o modello (es. UV-5R, UV-K5, RT-22, BJ-7800)…" autocomplete="off">
+          <select data-brandsel title="Marca"><option value="">Tutte le marche (${App.catalog.length})</option>${catalogBrands().map(b => `<option value="${esc(b)}">${esc(b)} (${App.catalog.filter(c => c.brand === b).length})</option>`).join('')}</select>
           <div class="seg" data-type><button data-v="" class="on">Tutti</button>${Object.entries(TYPE_LABEL).map(([k, v]) => `<button data-v="${k}">${v}</button>`).join('')}</div>
           <label><input type="checkbox" data-chan> con canali via cavo</label>
           <label><input type="checkbox" data-fw> con firmware</label>
@@ -69,7 +86,8 @@ const Gallery = {
       <div class="galbody" data-body></div>`;
     const q = $('[data-q]', page);
     q.addEventListener('input', debounce(() => { this.q = q.value; this.renderCards(); }, 120));
-    for (const [sel, key] of [['[data-brand]', 'brand'], ['[data-type]', 'type']]) {
+    $('[data-brandsel]', page).onchange = e => { this.brand = e.target.value; this.renderCards(); };
+    for (const [sel, key] of [['[data-type]', 'type']]) {
       const seg = $(sel, page);
       $$('button', seg).forEach(b => b.onclick = () => {
         $$('button', seg).forEach(x => x.classList.toggle('on', x === b));
@@ -127,12 +145,12 @@ const Gallery = {
     const withDrv = list.filter(c => (c.drivers || []).length);
     const without = list.filter(c => !(c.drivers || []).length);
     // in ogni sezione una divisione per tipologia, con i modelli in ordine alfabetico
-    // dentro ogni tipologia: una parte per marca (Baofeng, Bajeton), in ordine alfabetico
+    // dentro ogni tipologia: una parte per marca (Baofeng, Bajeton, poi le altre), in ordine alfabetico
     const brands = its => {
-      const bs = [...new Set(its.map(c => c.brand))].sort((a, b) => (a === 'Baofeng' ? 0 : a === 'Bajeton' ? 1 : 2) - (b === 'Baofeng' ? 0 : b === 'Bajeton' ? 1 : 2) || a.localeCompare(b));
+      const bs = [...new Set(its.map(c => c.brand))].sort(brandOrder);
       return bs.map(br => {
         const bi = its.filter(c => c.brand === br);
-        return `<div class="galbrand galbrand-${esc(br.toLowerCase())}"><div class="galbrand-head"><span class="galbrand-name">${esc(br)}</span>
+        return `<div class="galbrand" style="--bc:${brandColor(br)}"><div class="galbrand-head"><span class="galbrand-name">${esc(br)}</span>
           <span class="note">${bi.length} ${bi.length === 1 ? 'modello' : 'modelli'}</span></div>
           <div class="galgrid">${bi.map(c => this.card(c)).join('')}</div></div>`;
       }).join('');

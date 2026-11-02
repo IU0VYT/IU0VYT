@@ -1,6 +1,6 @@
 //go:build !windows
 
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -48,7 +48,7 @@ func diffRanges(a, b []byte) string {
 	for i := 0; i < len(a) && i < len(b); i++ {
 		if a[i] != b[i] {
 			j := i
-			for j < len(a) && a[j] != b[j] {
+			for j < len(a) && j < len(b) && a[j] != b[j] {
 				j++
 			}
 			n += j - i

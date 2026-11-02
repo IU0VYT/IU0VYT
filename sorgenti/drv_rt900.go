@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -159,6 +159,33 @@ func init() {
 				"Canali 1-960 = 15 zone da 64 (zona 1: canali 1-64, zona 2: 65-128, …). " +
 				"La BJ-7700 è la Radtel RT-910 (il programma del costruttore è lo stesso): driver di CHIRP per il firmware " + v.fw + "; " +
 				"nei file .img compare come Radtel " + v.model + "."})
+	}
+
+	// 4.0: Radtel RT-900, RT-900 BT, RT-920 e Radioddity GS-10B (radtel_rt900.py
+	// di CHIRP): stesso protocollo, cambiano il numero di canali e le aree scritte
+	// aree scritte nell'ordine di CHIRP (_ranges)
+	mkO := func(magic string, chans int, extra ...[2]int) *rt900Opt {
+		r := [][2]int{{0x0000, chans}, {0x8000, 0x8040}, {0x9000, 0x9040}, {0xA000, 0xA140}}
+		r = append(append(r, extra...), [2]int{0xD000, 0xD040})
+		return &rt900Opt{magic: []byte(magic), fp1: o.fp1, fp2: o.fp2, crypt: o.crypt, ranges: r, memsize: 0xF250, airband: o.airband}
+	}
+	for _, v := range []struct {
+		id, vendor, model, rclass, name string
+		slots                           int
+		o                               *rt900Opt
+	}{
+		{"rt-rt900", "Radtel", "RT-900", "RT900", "Radtel RT-900", 999, mkO("PROGRAMBT80U", 0x7CE0)},
+		{"rt-rt900bt", "Radtel", "RT-900_BT", "RT900BT", "Radtel RT-900 BT", 999, mkO("PROGRAMBT80U", 0x7CE0)},
+		{"rd-gs10b", "Radioddity", "GS-10B", "RadioddityGS10B", "Radioddity GS-10B", 256, mkO("PROGRAMBT80U", 0x2000)},
+		{"rt-rt920", "Radtel", "RT-920", "RT920", "Radtel RT-920", 990, mkO("PROGRAMBT11U", 0x7BC0, [2]int{0xB000, 0xB400}, [2]int{0xC000, 0xC400}, [2]int{0xC800, 0xC8A0})},
+	} {
+		genRegister(&genModel{ID: v.id, Vendor: v.vendor, Model: v.model, RClass: v.rclass,
+			Name: v.name, Slots: v.slots, First: 1, NameMax: 12,
+			Charset: charsetAlnum + "`~!@#$%^&*()-=_+[]\\{}|;':\",./<>?",
+			Powers:  []genPower{{"Alta 8 W", 8, 0}, {"Media 4 W", 4, 1}, {"Bassa 1 W", 1, 2}},
+			Bands:   []band{{18000000, 1000000000}}, Narrow: true, HasScan: true,
+			DCS: uv5rDTCS, Baud: 57600, Fam: rt900Fam{}, Opt: v.o,
+			Notes: "Accendi la radio con il cavo collegato, su un canale libero. Driver di CHIRP della famiglia Radtel RT-900."})
 	}
 }
 

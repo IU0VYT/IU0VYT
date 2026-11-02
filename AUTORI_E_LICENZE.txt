@@ -30,8 +30,8 @@ Gran parte dei driver delle radio (protocolli via cavo, mappe della memoria, reg
 dei canali) e il formato dei file .img derivano da CHIRP (https://chirpmyradio.com,
 https://github.com/kk7ds/chirp), software libero distribuito con la GNU General
 Public License (versione 2 o successiva, oppure 3 o successiva, secondo il file).
-Sono stati riscritti in Go e confrontati con CHIRP (revisione 0bfb2b50e33d del
-20/10/2026). Autori indicati nei file di CHIRP usati:
+Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
+01/11/2026). Autori indicati nei file di CHIRP usati:
 
   chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
   drivers/uv5r.py                           Copyright 2012 Dan Smith
@@ -58,6 +58,8 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione 0bfb2b50e33d del
   drivers/radioddity_gm30.py                Copyright 2025 Mike Iacovacci
   drivers/baofeng_dm32uv.py                 Copyright 2026 chaffed (GPL v3 o succ.)
   chirp/kenwood_tone.py                     Copyright 2026 Dan Smith
+  drivers/uvk5.py                           (c) 2023 Jacek Lipkowski SQ5BPF (UV-K5);
+                                            (c) 2025 Thibaut Berg (UV-K1)
   drivers/baofeng_digital.py                Copyright 2024 Marcos Del Sol Vives
                                             (GPL v2 o succ.; usato come riferimento
                                             per W31D, BF-T20D e BF-V12D: codici dei
@@ -66,8 +68,8 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione 0bfb2b50e33d del
 File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
 drv_h777.go, drv_small.go, drv_rt900.go, drv_ga510.go, drv_gm30.go, drv_dm32.go,
-drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go. Grazie agli
-autori di CHIRP.
+drv_uvk5.go, drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go.
+Grazie agli autori di CHIRP.
 Le modifiche rispetto ai file originali di CHIRP (riscrittura in Go, solo canali,
 adattamento all'interfaccia di IU0VYT Flash) sono descritte in testa a ciascun file
 e in CHANGELOG.txt, con le date delle versioni.
@@ -176,8 +178,9 @@ Tutte queste licenze sono compatibili con la GNU GPL versione 3.
 
 MARCHI E INTEROPERABILITÀ
 -------------------------
-IU0VYT Flash è un programma indipendente, non affiliato né approvato da Baofeng o
-da Bajeton (né dagli altri marchi citati, es. Radtel, Radioddity, BTECH). I nomi dei
+IU0VYT Flash è un programma indipendente, non affiliato né approvato da Baofeng, da
+Bajeton o dagli altri costruttori citati (es. Quansheng, Retevis, Radtel, Radioddity,
+TIDRADIO, BTECH, Abbree, MaxTalker, Intek, Maverick, WLN, Zastone, Luiton). I nomi dei
 modelli servono solo a indicare con quali radio funziona il programma. I marchi
 appartengono ai rispettivi titolari.
 Protocolli e formati dei dati sono stati ricostruiti, per l'interoperabilità con le
@@ -187,6 +190,7 @@ PMR446 PRO / FRS», «DM-32UV CPS» e i pacchetti Bajeton della BJ-8200; dalla 3
 programmi di aggiornamento «Baofeng Bootloader Pro» e «T6UV Series CPS» per le
 famiglie del firmware; dalla 3.6 «GT-22», «BF_V1_FH» (GT-68), «BT-11_CPS» v1.0.8 e
 v1.0.9, «BJ-9000_CPS» e «5RH PRO» per le impostazioni; dalla 3.8 la struttura dei file di
-aggiornamento della BTECH DMR-6X2) (art. 64-quater L. 633/1941, art. 6 Direttiva
+aggiornamento della BTECH DMR-6X2; dalla 4.0 i protocolli delle radio delle altre
+marche come documentati dai driver di CHIRP) (art. 64-quater L. 633/1941, art. 6 Direttiva
 2009/24/CE). Il pacchetto non contiene codice, programmi o firmware dei costruttori:
 la galleria dei modelli rimanda ai loro siti ufficiali.

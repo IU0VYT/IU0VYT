@@ -46,7 +46,7 @@ jobs:
           if [ -n "$ver" ]; then
             sed -i -E "s/(class=\"[a-z -]*js-ver\">)[^<]*</\1${ver}</g; s/(\"softwareVersion\": \")[^\"]*\"/\1${ver}\"/" docs/index.html
           fi
-          for k in radio impostazioni galleria firmware; do
+          for k in radio impostazioni galleria firmware marche; do
             n=$(val $k)
             if [ -n "$n" ]; then sed -i -E "s/(data-n=\"$k\">)[0-9]+</\1${n}</g" docs/index.html; fi
           done

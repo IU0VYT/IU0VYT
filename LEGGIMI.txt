@@ -1,11 +1,48 @@
-IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO BAOFENG E BAJETON
-=====================================================================
-Versione 3.9.4 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
+====================================================================
+Versione 4.0.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.0.0:
+- PROGRAMMA PLURIMARCA: oltre a Baofeng e Bajeton ora gestisce le radio di altre 14
+  marche, con lettura e scrittura via cavo di canali, frequenze e ponti, impostazioni
+  della radio, file .img compatibili con CHIRP, conversione dei file, inoltro ad
+  altra radio e identificazione, come per le radio già presenti. Radio nuove:
+  - Quansheng UV-K5, UV-K6, UV-5R Plus e UV-K1 (200 memorie, 50-76 e 108-600 MHz
+    in ricezione, banda aerea AM; la versione del firmware della radio si vede dopo
+    la lettura);
+  - Retevis H777, H777 Plus, H777H, RT22, RT22FRS, RT622, RT22S, RT20, RT15, RT47,
+    RT47V, RT647, RT68, RT668, RB17, RB17V, RB617, RB18, RB618, RB19, RB19P, RB619,
+    RB29, RB629, RB75, RB85, RB87, RT6, RA79, RA85, RA685;
+  - Radtel RT-900, RT-900 BT, RT-920, T18 (e RT-910 / RT-910B, RT-950 Pro già
+    presenti come Bajeton);
+  - Radioddity GM-30, GM-30 Plus, GM-30 Pro, GS-10B, GA-2S, GA-510;
+  - TIDRADIO TD-H6, TID TD-M8, MaxTalker TK-6, P15, MT-5RM, MT-8S, Abbree AR-F5,
+    Intek KT-980HP, Maverick RA-100 e RA-425, BTECH FRS-B1, WLN KD-C1, Zastone
+    ZT-X6, Luiton LT-316.
+  La Retevis H777 V4 (versione recente, con un'altra memoria) non è ancora gestita:
+  il programma la riconosce e si ferma senza leggere né scrivere.
+  Per le radio PMR446 e FRS/GMRS i canali di legge restano fissi come sulla radio
+  (frequenza e, dove previsto, potenza), come fa CHIRP: nella conversione e
+  nell'inoltro un canale con la frequenza di un canale fisso va nella sua posizione.
+  Protocolli e memoria sono quelli dei driver di CHIRP, confrontati byte per byte
+  con CHIRP stesso;
+- galleria "📻 Modelli": 335 modelli di 16 marche; la marca si sceglie dal menu
+  "Tutte le marche" (con il numero di modelli di ciascuna), ogni marca ha il suo
+  colore; ricerca anche per marca. Schermata Home, scheda Info, sito e guida
+  aggiornati al programma plurimarca;
+- IDENTIFICAZIONE AUTOMATICA (scheda "🔎 Identifica", pulsante "🔄 Abilita
+  identificazione automatica"): quando colleghi il cavo di programmazione (o una
+  radio DMR via USB) il programma riconosce da solo la radio, ne mostra i dati e
+  apre la sua scheda con i canali letti. Se la radio è ancora spenta la ricerca si
+  ripete finché il cavo resta collegato. La scelta resta memorizzata anche dopo la
+  chiusura del programma; per non usarla più premi "⏹ Disattiva identificazione
+  automatica" (vedi "IDENTIFICAZIONE AUTOMATICA");
+- schede delle radio: "📻 Leggi dalla radio" e "📻 Scrivi nella radio" in blu;
+- identificazione: il filtro per marca vale per tutte le marche gestite.
 Novità della 3.9.4:
 - più robustezza con i file danneggiati: un file Excel (.xls) con una lunghezza
   di testo impossibile ora viene rifiutato con un messaggio invece di poter far
@@ -316,8 +353,11 @@ accanto con estensione .bak (es. k67.xlc.bak).
 
 GALLERIA DEI MODELLI
 - La scheda "📻 Modelli" mostra tutte le radio Baofeng (catalogo e pagina dei download
-  di baofengradio.com) e Bajeton (bajeton.com). Cerca per nome, anche alternativo
-  (es. UV-5RA, MINI-5, GT-3TP), e filtra per marca, tipo (radioamatoriali, DMR, GMRS
+  di baofengradio.com), Bajeton (bajeton.com) e, dalla 4.0, delle altre marche gestite
+  (Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, MaxTalker, Abbree, Intek,
+  Maverick, BTECH, WLN, Zastone, Luiton, TID). Cerca per marca o nome, anche
+  alternativo (es. UV-5RA, MINI-5, GT-3TP, UV-K5), e filtra per marca (menu "Tutte
+  le marche"), tipo (radioamatoriali, DMR, GMRS
   / FRS, PMR446 e uso libero, per bambini), radio con canali via cavo o con firmware.
 - In alto i "MODELLI COMPATIBILI: N", gestiti da questo programma (etichette "Canali"
   e "Firmware"), in basso i "MODELLI NON COMPATIBILI: N", che si programmano solo con
@@ -326,10 +366,11 @@ GALLERIA DEI MODELLI
   e i filtri, quelli mostrati).
 - In ciascuna parte le radio sono divise per tipologia: Radioamatoriali (VHF/UHF),
   DMR (digitali), GMRS / FRS (USA), PMR446 e radio di uso libero, Per bambini; dentro
-  ogni divisione le radio sono separate per marca (prima Baofeng, poi Bajeton, con il
-  numero di modelli di ciascuna) e i modelli sono in ordine alfabetico (UV-5R prima di
-  UV-17). Sulla scheda di ogni radio c'è la marca (Baofeng in blu, Bajeton in
-  arancione).
+  ogni divisione le radio sono separate per marca (prima Baofeng, poi Bajeton, poi le
+  altre in ordine alfabetico, con il numero di modelli di ciascuna) e i modelli sono
+  in ordine alfabetico (UV-5R prima di UV-17). Sulla scheda di ogni radio c'è la marca,
+  ognuna con il suo colore (Baofeng in blu, Bajeton in arancione, Quansheng in verde,
+  Retevis in rosso, Radtel in viola…).
 - Ogni modello ha la sua scheda anche quando la gestione è la stessa di un altro: per
   esempio UV-5R, UV-5RA, UV-5RE, GT-3 usano lo stesso driver, BF-888S e BF-777S pure.
   La nota della scheda indica i modelli con la stessa gestione. Per i modelli
@@ -352,6 +393,25 @@ RADIO GESTITE CON I DRIVER DI CHIRP
   BF-T8/U9, UV-3R, BF-V8A, BF-T20FRS, BF-T20, W31E, Bajeton BJ-7800 e (dalla 3.1)
   Bajeton BJ-7700 (Radtel RT-910 / RT-910 BT), serie H (H-31, H-32, BF-H…: stessa
   radio della Radioddity GA-510) e GM-15 Pro.
+- Dalla 4.0 anche le radio delle altre marche: famiglia UV-K5 (Quansheng UV-K5, UV-K6,
+  UV-5R Plus, UV-K1, Retevis RA79, MaxTalker TK-6: driver uvk5.py), famiglia T18
+  (Radtel T18, Retevis RT22S, RT20, RB18, RB618, RT68, RT668, RB17, RB617, RB17V,
+  RB85, RB75, RB19, RB19P, RB619, RT47, RT47V, RT647, RB29, RB629, RT15, RB87, H777H,
+  BTECH FRS-B1: radtel_t18.py), famiglia RT22 (Retevis RT22, RT22FRS, RT622, WLN
+  KD-C1, Zastone ZT-X6, Luiton LT-316, TID TD-M8: retevis_rt22.py), famiglia H777
+  (Retevis H777, H777 Plus, Radioddity GA-2S, MaxTalker MT-8S, Maverick RA-100 e
+  RA-425), famiglia GA-510 (Retevis RA685, RA85, Abbree AR-F5, TIDRADIO TD-H6),
+  famiglia UV-17 Pro (MaxTalker P15, MT-5RM, Radioddity GM-30 Plus e GM-30 Pro),
+  famiglia RT-900 (Radtel RT-900, RT-900 BT, RT-920, Radioddity GS-10B), Radioddity
+  GM-30, Retevis RT6 e Intek KT-980HP (famiglia UV-5R).
+- Quansheng UV-K5 e simili: 200 memorie con nome fino a 10 caratteri, potenze Bassa
+  1,5 W / Media 3 W / Alta 5 W, banda aerea in AM (frequenze arrotondate al passo di
+  8,33 kHz come fa CHIRP), trasmissione su una banda diversa dalla ricezione ammessa.
+  Il firmware comunicato dalla radio (es. "k5_2.01.32") compare nei dettagli della
+  lettura e nell'identificazione. Il programma gestisce solo il firmware originale
+  Quansheng (versioni conosciute da CHIRP): con un firmware modificato (es. egzumer,
+  IJV, F4HWN), che usa la memoria in modo diverso, si ferma senza leggere né scrivere,
+  come CHIRP; in quel caso usa il programma indicato da chi ha scritto il firmware.
 - Si lavora sui canali: "Leggi dalla radio" (oppure apri un file .img, anche salvato
   con CHIRP), modifica, "Scrivi nella radio" e/o "Salva" (file .img apribile con CHIRP).
   Le impostazioni della radio sono quelle lette (si modificano con "⚙ Impostazioni…",
@@ -937,7 +997,8 @@ IDENTIFICAZIONE DELLA RADIO (3.8)
 - Il programma prova uno dopo l'altro i protocolli di LETTURA (prima K67 Pro e Bajeton
   BJ-8300, poi le radio dei driver, cominciando da quelle con una scheda aperta). I
   modelli che iniziano il collegamento nello stesso modo sono provati una volta sola
-  (38 tentativi per le 100 radio via cavo). Quando una radio risponde viene letta per
+  (38 tentativi per le 100 radio via cavo; dalla 4.0, 54 tentativi per tutte le radio
+  via cavo). Quando una radio risponde viene letta per
   intero, come con "Leggi dalla radio", e una copia della lettura viene salvata nella
   cartella delle copie (copie_radio).
 - Il modello si riconosce dal contenuto della memoria, come fa CHIRP con i file. Molte
@@ -954,11 +1015,34 @@ IDENTIFICAZIONE DELLA RADIO (3.8)
   scritta. Il numero di serie: nessuna di queste radio lo comunica con il protocollo
   di programmazione (è solo sull'etichetta).
 - "Apri i canali nella scheda della radio": come dopo "Leggi dalla radio".
-- Tempi: senza radio collegata la ricerca completa dura circa 70 secondi (38 tentativi; meno se restringi la ricerca); una radio
+- Tempi: senza radio collegata la ricerca completa dura circa 100 secondi (54 tentativi;
+  meno se restringi la ricerca per marca o tipo); una radio
   che risponde viene trovata appena arriva il suo turno e poi letta.
 - Se una radio risponde ma la lettura non va a buon fine (es. password, modello
   diverso) le risposte sono elencate nei dettagli. Se la radio resta bloccata in
   modalità di programmazione, spegnila e riaccendila.
+
+IDENTIFICAZIONE AUTOMATICA (4.0)
+- Nella scheda "🔎 Identifica" premi "🔄 Abilita identificazione automatica". Da quel
+  momento, finché il programma è aperto, ogni volta che colleghi il cavo di
+  programmazione (o una radio DMR via USB) la radio viene cercata da sola, con gli
+  stessi comandi di sola LETTURA di "Identifica la radio": nella radio non si scrive
+  nulla.
+- Quando la radio è riconosciuta compaiono i suoi dati (anche in una finestra) e si
+  apre la sua scheda con i canali letti; se nella scheda c'erano modifiche non salvate
+  il programma chiede prima di sostituirle. La stessa radio non viene più cercata
+  finché non scolleghi e ricolleghi il cavo.
+- Radio spenta o volume al minimo: la ricerca si ripete finché il cavo resta
+  collegato (nei primi minuti ogni pochi secondi, poi ogni 20 secondi). Puoi quindi
+  collegare il cavo e accendere la radio dopo.
+- Si cercano solo le porte dei cavi di programmazione (adattatori USB-seriale CH340,
+  Prolific, Silicon Labs, FTDI…), mai porte Bluetooth, modem o le porte seriali di
+  sistema (COM1, COM2).
+- Una ricerca automatica in corso si interrompe da sola quando chiedi un'altra
+  operazione (lettura, scrittura, firmware, inoltro o identificazione manuale).
+- La scelta resta memorizzata anche dopo la chiusura e il riavvio del programma. Per
+  non usarla più torna nella scheda "🔎 Identifica" e premi "⏹ Disattiva
+  identificazione automatica".
 
 DRIVER USB DELLA DM-1701 (3.8)
 - La DM-1701 (e la Retevis RT84) si collega via USB in modalità DFU (dispositivo

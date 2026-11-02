@@ -1,6 +1,6 @@
 //go:build !windows
 
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -72,7 +72,9 @@ func (c *apiClient) must(name string, body interface{}) map[string]interface{} {
 func (c *apiClient) wait(stopPhase string) (map[string]interface{}, []string) {
 	c.t.Helper()
 	var stopErrs []string
-	for i := 0; i < 3000; i++ {
+	// fino a 2 minuti: l'inoltro alla UV-5R simulata (lettura, scrittura, pausa
+	// del riavvio e rilettura) con le immagini recenti di CHIRP supera i 30 secondi
+	for i := 0; i < 12000; i++ {
 		st := c.must("cable/status", nil)
 		if st["state"] != "running" {
 			return st, stopErrs

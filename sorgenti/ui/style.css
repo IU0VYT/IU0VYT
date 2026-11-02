@@ -1,5 +1,5 @@
 /*
- * IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+ * IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
  * Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
  * SPDX-License-Identifier: GPL-3.0-or-later
  * Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -295,6 +295,7 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .galtools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .galtools input[type=search] { width: 300px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
 .galtools label { white-space: nowrap; }
+.galtools select { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: #fff; font: inherit; }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; background: #fff; }
 .seg button { border: 0; background: transparent; padding: 5px 10px; cursor: pointer; border-right: 1px solid var(--line-soft); }
 .seg button:last-child { border-right: 0; }
@@ -403,8 +404,7 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .galbrand { border: 1px solid var(--line-soft); border-radius: 10px; padding: 8px 10px 10px; margin: 6px 0 10px; background: rgba(255,255,255,.6); }
 .galbrand-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 6px; }
 .galbrand-name { font-size: 13px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 1px 9px; border-radius: 5px; color: #fff; }
-.galbrand-baofeng { border-left: 4px solid #1c64d8; } .galbrand-baofeng .galbrand-name { background: #1c64d8; }
-.galbrand-bajeton { border-left: 4px solid #e8590c; } .galbrand-bajeton .galbrand-name { background: #e8590c; }
+.galbrand { border-left: 4px solid var(--bc, #1c64d8); } .galbrand .galbrand-name { background: var(--bc, #1c64d8); }
 .radiopick-type { font-weight: 600; font-size: 12px; color: var(--text, #222); padding: 4px 6px 2px 14px; border-top: 1px dashed var(--line); margin-top: 2px; }
 .radiopick-item .note { font-size: 11px; }
 .compat-list { max-height: 34vh; overflow: auto; margin: 6px 0 0; padding-left: 18px; font-size: 13px; }

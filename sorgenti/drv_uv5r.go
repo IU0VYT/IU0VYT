@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -165,6 +165,12 @@ func init() {
 	o8.vhf, o8.uhf = band{130000000, 180000000}, band{400000000, 521000000}
 	f8hp := mk("bf-f8hp", "Baofeng", "BF-F8HP", "BaofengBFF8HPRadio", "Baofeng BF-F8HP / UV-5RTP / UV-5R 8W", o8, uv5rPow3, uv5rCharset, 0)
 
+	// 4.0: Intek KT-980HP (classe IntekKT980Radio di CHIRP): come la BF-F8HP,
+	// con il proprio identificativo di base
+	okt := o8
+	okt.idents, okt.basetype, okt.vhf = [][]byte{uv5rModel291}, []string{"BFP3V3 B"}, band{130000000, 180000000}
+	kt980 := mk("in-kt980hp", "Intek", "KT-980HP", "IntekKT980Radio", "Intek KT-980HP", okt, uv5rPow3, uv5rCharset, 0)
+
 	o82hp := std
 	o82hp.idents, o82hp.basetype, o82hp.triPower, o82hp.neverOrig = [][]byte{uv5rModelUV82}, basetypeUV82HP, true, true
 	o82hp.vhf, o82hp.uhf = band{136000000, 175000000}, band{400000000, 521000000}
@@ -183,7 +189,7 @@ func init() {
 	o5gr.idents, o5gr.match = [][]byte{uv5rModelUV5G}, false
 	uv5g := mk("bf-uv5g", "Radioddity", "UV-5G", "RadioddityUV5GRadio", "Baofeng UV-5G (GMRS)", o5gr, uv5rPow2, uv5rCharset, 0)
 
-	genRegister(uv5r, uv5gpro, f11, uv82, uv82x3, uv6, f8hp, uv82hp, uv5rx3, gt5r, uv5g)
+	genRegister(uv5r, uv5gpro, f11, uv82, uv82x3, uv6, f8hp, uv82hp, uv5rx3, gt5r, uv5g, kt980)
 }
 
 func uv5ro(m *genModel) *uv5rOpt { return m.Opt.(*uv5rOpt) }

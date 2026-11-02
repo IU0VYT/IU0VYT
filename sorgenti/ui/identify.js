@@ -1,5 +1,5 @@
 'use strict';
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -29,9 +29,15 @@ const Identify = {
         <button class="btn" data-refresh title="Cerca di nuovo le porte (dopo aver collegato il cavo)">🔄 Aggiorna</button></div>
       <div class="note" data-portnote></div>
       <div class="convrow"><label class="l">Cerca tra</label>
-        <select data-brand><option value="">tutte le marche</option><option>Baofeng</option><option>Bajeton</option></select>
+        <select data-brand><option value="">tutte le marche</option>${catalogBrands().filter(b => App.catalog.some(c => c.brand === b && (c.drivers || []).length)).map(b => `<option>${esc(b)}</option>`).join('')}</select>
         <select data-family><option value="">radio analogiche e DMR</option><option value="analog">solo radio analogiche</option><option value="dmr">solo radio DMR</option></select>
         <span class="note">restringere la ricerca la rende più veloce</span></div>
+      <h3>Identificazione automatica</h3>
+      <div class="convrow"><button class="btn primary" data-auto>🔄 Abilita identificazione automatica</button>
+        <span class="note" data-autost></span></div>
+      <div class="note">Con l'identificazione automatica attiva il programma riconosce da solo la radio appena colleghi il cavo di programmazione
+        (con la radio accesa, oppure accendendola dopo) e ne apre la scheda con i canali letti. Si usano solo comandi di lettura e si interrogano solo
+        le porte dei cavi di programmazione. La scelta resta memorizzata anche dopo la chiusura del programma.</div>
       <h3>2. Ricerca</h3>
       <div class="convrow"><button class="btn primary" data-go>🔎 Identifica la radio</button><button class="btn" data-stop style="display:none">Interrompi</button></div>
       <div data-run style="display:none">
@@ -47,6 +53,8 @@ const Identify = {
     $('[data-refresh]', page).onclick = () => this.loadPorts(page).catch(reportError);
     $('[data-go]', page).onclick = () => this.start(page).catch(reportError);
     $('[data-stop]', page).onclick = () => api('cable/cancel', {}, { quiet: true }).catch(reportError);
+    $('[data-auto]', page).onclick = () => AutoIdent.toggle().catch(reportError);
+    AutoIdent.paint();
     await this.loadPorts(page);
   },
 
@@ -92,7 +100,7 @@ const Identify = {
   async poll(page) {
     let st;
     try { st = await api('cable/status', {}, { quiet: true }); } catch (e) { this.timer = setTimeout(() => this.poll(page), 500); return; }
-    if (st.op !== 'identify') { this.finish(page); return; }
+    if (st.op !== 'identify' || st.auto) { this.finish(page); return; }
     $('[data-phase]', page).textContent = st.phase || '';
     const pct = st.total ? Math.round(st.done * 100 / st.total) : 0;
     $('[data-bar]', page).style.width = pct + '%';
@@ -149,5 +157,76 @@ const Identify = {
     App.showTab(kind);
     App.saveSession();
     toast('Canali letti dalla radio: ricordati di salvarli in un file.');
+  },
+};
+
+// ------------------------------------------------------------ identificazione automatica (4.0)
+// Controllo in sottofondo (ogni 2 secondi): stato mostrato nella scheda «Identifica»;
+// quando il programma riconosce da solo una radio appena collegata, ne mostra i
+// dati e apre la sua scheda con i canali letti.
+const AutoIdent = {
+  st: null,
+  seq: null, // ultimo esito già mostrato
+  busy: false,
+
+  start() {
+    const tick = () => this.tick().catch(() => {}).finally(() => setTimeout(tick, 2000));
+    tick();
+  },
+
+  async tick(body) {
+    const r = await api('identify/auto', body || {}, { quiet: true });
+    this.st = r;
+    if (this.seq === null) this.seq = r.seq; // esiti precedenti all'apertura della pagina: non si ripetono
+    this.paint();
+    if (r.last && r.last.seq > this.seq && !this.busy) {
+      this.seq = r.last.seq;
+      this.busy = true;
+      try { await this.found(r.last); } finally { this.busy = false; }
+    }
+  },
+
+  async toggle() {
+    const on = !(this.st && this.st.enabled);
+    await this.tick({ enabled: on });
+    toast(on ? 'Identificazione automatica attiva: collega la radio con il cavo di programmazione.' : 'Identificazione automatica disattivata.');
+  },
+
+  paint() {
+    const page = $('#page-ident');
+    const btn = page && $('[data-auto]', page);
+    if (!btn || !this.st) return;
+    const on = this.st.enabled;
+    btn.textContent = on ? '⏹ Disattiva identificazione automatica' : '🔄 Abilita identificazione automatica';
+    $('[data-autost]', page).textContent = on ? ('Attiva. ' + (this.st.status || 'In attesa del collegamento di una radio')) : 'Non attiva.';
+  },
+
+  async found(ev) {
+    const r = ev.result;
+    const page = $('#page-ident');
+    if (Identify.built && !Identify.running) {
+      Identify.result = r;
+      Identify.show(page, r);
+    }
+    const kind = r.kind;
+    const old = Views[kind];
+    if (old && old.loaded && !(await old.confirmDiscard())) {
+      toast('Radio riconosciuta: ' + r.name + '. I dati sono nella scheda «Identifica».');
+      return;
+    }
+    const res = await api('identify/open', { kind, seq: ev.seq }, { busyText: 'Apertura…' });
+    const v = App.openRadio(kind, false);
+    v.load(res.radio);
+    v.path = '';
+    v.fromRadio = true;
+    v.dirty = true;
+    App.onDirty();
+    App.showTab(kind);
+    App.saveSession();
+    const list = (r.fields || []).map(f => f.l + ': ' + f.v);
+    list.push('Canali presenti: ' + r.count);
+    if (r.backup) list.push('Copia della lettura: ' + r.backup);
+    if ((r.others || []).length) list.push('Altri modelli possibili (stesso collegamento): ' + r.others.map(o => o.name).join(', ') + ' — puoi sceglierli nella scheda «Identifica».');
+    await alertDlg('Radio collegata riconosciuta: ' + r.name, `${r.type} — porta ${ev.port}. Ho aperto la sua scheda con i canali letti dalla radio: ricordati di salvarli in un file.`, list);
   },
 };

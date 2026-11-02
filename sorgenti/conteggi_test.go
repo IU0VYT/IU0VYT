@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -26,11 +26,14 @@ type catCounts struct {
 	Impostazioni int // radio con le impostazioni modificabili
 	Galleria     int // modelli nella galleria (compatibili e non)
 	Firmware     int // radio con l'aggiornamento del firmware fatto dal programma
+	Marche       int // marche presenti nella galleria (4.0)
 }
 
 func catalogCounts() catCounts {
 	n := catCounts{Galleria: len(catalog)}
+	brands := map[string]bool{}
 	for _, c := range catalog {
+		brands[c.Brand] = true
 		if len(c.Drivers) > 0 {
 			n.Radio++
 		}
@@ -45,11 +48,12 @@ func catalogCounts() catCounts {
 			n.Firmware++
 		}
 	}
+	n.Marche = len(brands)
 	return n
 }
 
 // Con IU0VYT_SCRIVI_CONTEGGI=1 il test scrive in ../versione.txt i conteggi del
-// catalogo (righe radio=, impostazioni=, galleria=, firmware=) lasciando com'è il
+// catalogo (righe radio=, impostazioni=, galleria=, firmware=, marche=) lasciando com'è il
 // resto del file; senza la variabile controlla quelli presenti (se ci sono):
 //
 //	IU0VYT_SCRIVI_CONTEGGI=1 go test -mod=vendor -count=1 -run TestConteggiVersione .
@@ -63,8 +67,8 @@ func TestConteggiVersione(t *testing.T) {
 	want := []struct {
 		key string
 		val int
-	}{{"radio", n.Radio}, {"impostazioni", n.Impostazioni}, {"galleria", n.Galleria}, {"firmware", n.Firmware}}
-	t.Logf("radio=%d impostazioni=%d galleria=%d firmware=%d", n.Radio, n.Impostazioni, n.Galleria, n.Firmware)
+	}{{"radio", n.Radio}, {"impostazioni", n.Impostazioni}, {"galleria", n.Galleria}, {"firmware", n.Firmware}, {"marche", n.Marche}}
+	t.Logf("radio=%d impostazioni=%d galleria=%d firmware=%d marche=%d", n.Radio, n.Impostazioni, n.Galleria, n.Firmware, n.Marche)
 
 	got := map[string]string{}
 	var keep []string // righe diverse dai conteggi, nell'ordine originale

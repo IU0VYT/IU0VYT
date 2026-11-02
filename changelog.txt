@@ -3,6 +3,71 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.0.0 (02/11/2026)
+------------------
+- Programma plurimarca: 62 radio nuove di 14 marche (oltre a Baofeng e Bajeton),
+  tutte con canali via cavo, file .img, impostazioni (dove CHIRP le gestisce),
+  conversione, inoltro e identificazione. Driver riscritti in Go dai driver di CHIRP
+  (revisione dcf5d2519310 del 01/11/2026) e confrontati con CHIRP stesso
+  (TestChirpDecode, TestChirpEncode, TestChirpClone, TestChirpLayout, TestSettingsChirp).
+- drv_uvk5.go (nuovo): famiglia UV-K5 da uvk5.py (Quansheng UV-K5 / UV-K6 / UV-5R
+  Plus, UV-K1 con firmware 7.03, Retevis RA79, MaxTalker TK-6): pacchetti con XOR e
+  CRC16-XModem, saluto con la versione del firmware (doppio saluto per i modelli
+  riconosciuti dal firmware, come detect_from_serial), lettura di 0x2000 byte a
+  blocchi di 0x80, scrittura di 0x1D00 byte e riavvio; 200 memorie, nomi di 10
+  caratteri, potenze 1,5/3/5 W, banda aerea AM con passo 8,33 kHz, crossband.
+  genemu_uvk5_other.go: radio simulata. genapi.go: interfaccia metaDownloader
+  (versione del firmware nei metadati del file .img, uvk5_firmware come CHIRP).
+- drv_small.go: famiglia T18 riscritta sul modello di radtel_t18.py (t18Opt: formato,
+  potenza, byte riservati, bit extra, canali bloccati FRS/GMRS/MURS/PMR446) con 27
+  modelli (Radtel T18, Retevis RT22S, RT20, RB18, RB618, RT68, RT668, RB17, RB617,
+  RB17V, RB85, RB75, RB19, RB19P, RB619, RT47, RT47V, RT647, RB29, RB629, RT15, RB87,
+  H777H FRS/PMR, BTECH FRS-B1, oltre a BF-V8A e BF-T20FRS); protocollo comune rbSpec
+  con impronte multiple, eco, risposta d'ingresso e scrittura senza conferma.
+  Famiglia RT22: Retevis RT22, RT22FRS, RT622, WLN KD-C1, Zastone ZT-X6, Luiton
+  LT-316, TID TD-M8.
+- drv_h777.go: Retevis H777 (lettura come detect_from_serial di CHIRP: prima il
+  comando della H777 V4 «C777HAM», poi, se la radio non risponde, «PROGRAM»; una
+  H777 V4, con un'altra memoria, viene riconosciuta e rifiutata) e H777 Plus, Radioddity GA-2S, MaxTalker MT-8S, Maverick
+  RA-100 e RA-425. drv_ga510.go: Retevis RA685 e RA85, Abbree AR-F5, TIDRADIO TD-H6.
+  drv_uv17pro.go: MaxTalker P15 e MT-5RM, Radioddity GM-30 Plus e GM-30 Pro.
+  drv_rt900.go: Radtel RT-900, RT-900 BT, RT-920, Radioddity GS-10B. drv_gm30.go:
+  Radioddity GM-30. drv_bfcommon.go: Retevis RT6. drv_uv5r.go: Intek KT-980HP.
+- settings_chirp.json: impostazioni di 56 classi di CHIRP in più (119 in tutto).
+- catalog_brands.go (nuovo): galleria delle altre marche con i collegamenti ai
+  programmi e alle pagine di download dei costruttori; catalogo di 335 modelli di 16
+  marche (297 con canali, 251 con impostazioni).
+- autoident.go (nuovo): identificazione automatica (impostazione AutoIdent, API
+  identify/auto; identify/open con "seq" apre la radio dell'esito automatico anche
+  se nel frattempo è partita un'altra ricerca, che non cancella più la radio
+  identificata prima): controllo delle porte ogni 1,5 s, solo adattatori USB-seriale
+  (cableLikePort), ricerca dopo il collegamento del cavo, ripetuta ogni 3 s per 8
+  volte e poi ogni 20 s finché la radio non risponde; una sola ricerca per
+  collegamento; yieldAuto interrompe la ricerca automatica prima di ogni operazione
+  chiesta dall'utente. identify.go: startIdentify comune a ricerca manuale e
+  automatica; filtro per marca con le marche della galleria (modelBrands).
+  ui/identify.js: sezione "Identificazione automatica" con il pulsante blu; a radio
+  riconosciuta apre la scheda con i canali letti. autoident_test.go.
+- ui/radio.js: "Leggi dalla radio" e "Scrivi nella radio" in blu (btn primary).
+- ui/gallery.js: menu delle marche costruito dal catalogo, colore per marca
+  (brandColor), ordine delle marche comune (brandOrder); Home, Info, guida rapida,
+  titoli e intestazioni dei file per tutte le marche.
+- conteggi_test.go e flusso del sito: nuovo conteggio "marche".
+- drv_small.go, famiglia T18: una frequenza di un canale fisso (FRS, PMR446, MURS,
+  GMRS) in una posizione diversa da quella prevista non viene accettata nella
+  conversione e nell'inoltro (la radio, come CHIRP, la sostituirebbe con quella della
+  posizione): il canale va nella posizione giusta, se libera, o viene escluso con un
+  avviso.
+- Verifiche: verifica/chirp/*.py compatibili con la revisione recente di CHIRP
+  (funzione _ di gettext), lettura dei modelli che si riconoscono dal collegamento
+  (detect_from_serial); chirp_test.go: canali bloccati e potenze fisse nelle prove di
+  scrittura; diff_test.go: corretto il controllo dei limiti di diffRanges;
+  cable_test.go: attesa delle operazioni fino a 2 minuti (l'inoltro alla UV-5R
+  simulata con le immagini recenti di CHIRP dura più di 30 secondi);
+  h777detect_test.go (nuovo).
+- Sito, README.md, LEGGIMI.txt e AUTORI_E_LICENZE.txt aggiornati (uvk5.py tra i file
+  di CHIRP usati).
+
 3.9.4 (01/11/2026)
 ------------------
 - Sicurezza (avvisi dell'analisi CodeQL): biff.go, lettura dei file .xls: nuovo

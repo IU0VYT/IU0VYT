@@ -15,6 +15,14 @@ cambia.
      CHIRP_DIR=percorso/dei/sorgenti/di/chirp \
      go test -mod=vendor -run 'TestChirp(Decode|Encode|Layout|Clone)' -v .
    (CHIRP_MODEL=bf-uv5r limita TestChirpClone a un modello).
+Dalla 4.0 le prove valgono anche per le radio delle altre marche (Quansheng UV-K5,
+famiglie T18, RT22, H777, GA-510, RT-900 di Retevis, Radtel, Radioddity e altre),
+confrontate con la revisione dcf5d2519310 di CHIRP (01/11/2026). Le revisioni recenti
+di CHIRP richiedono la funzione _ di gettext: gli script chirpref.py, chirpsettings.py
+e csvcheck.py la definiscono se manca. Per i modelli che CHIRP riconosce dal
+collegamento (detect_from_serial, es. Retevis H777, Quansheng UV-K5) chirpref.py usa
+la stessa scelta del modello di CHIRP. TestAutoIdentConnect (con CHIRP_DIR) prova
+l'identificazione automatica con una radio simulata.
 
 AGGIORNAMENTO DEL FIRMWARE BAJETON (cartella "anc")
 Il programma .NET 8 "anc/harness" carica l'eseguibile del costruttore

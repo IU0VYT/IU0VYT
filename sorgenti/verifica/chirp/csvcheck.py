@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+# IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 # Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -18,6 +18,11 @@ import os
 import sys
 
 sys.path.insert(0, os.environ.get("CHIRP_DIR", "."))
+# le versioni recenti di CHIRP usano nei driver la funzione di traduzione «_»,
+# installata dall'interfaccia grafica: qui i testi restano quelli originali
+import builtins  # noqa: E402
+if not hasattr(builtins, "_"):
+    builtins._ = lambda s: s
 import logging  # noqa: E402
 logging.disable(logging.CRITICAL)
 

@@ -1,5 +1,5 @@
 'use strict';
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -116,7 +116,7 @@ const Info = {
     try { d = this.data = await api('info', {}, { quiet: true }); } catch (e) { reportError(e); this.built = false; return; }
     page.innerHTML = `<div class="infopage"><div class="infocard">
       <div class="infohead"><img src="icona.png" alt="" class="infoicon">
-        <div><h1>${esc(d.name)}</h1><div class="note">Canali e ponti delle radio Baofeng e Bajeton · archivio ponti · aggiornamento del firmware</div></div></div>
+        <div><h1>${esc(d.name)}</h1><div class="note">Canali e ponti delle radio ricetrasmittenti di ${catalogBrands().length} marche · archivio ponti · aggiornamento del firmware</div></div></div>
       <table class="infotab">
         <tr><th>Versione</th><td><b>${esc(d.version)}</b></td></tr>
         <tr><th>Data di compilazione</th><td>${esc(d.buildDate)}</td></tr>
@@ -152,7 +152,7 @@ const Info = {
       <p class="note">I driver delle radio derivano in gran parte da CHIRP (chirpmyradio.com, © gli autori di CHIRP, GNU GPL). Altri componenti:
         WebView2 (Microsoft), go-webview2 (licenza MIT), go-winloader (licenza ISC), rardecode (archivi .rar, licenza BSD), librerie Go golang.org/x (licenza BSD).
         Elenco completo in AUTORI_E_LICENZE.txt.</p>
-      <p class="note">Programma indipendente, non affiliato né approvato da Baofeng o da Bajeton: i nomi dei
+      <p class="note">Programma indipendente, non affiliato né approvato dai costruttori delle radio (${esc(catalogBrands().join(', '))}): i nomi dei
         modelli servono solo a indicare con quali radio funziona. I marchi appartengono ai rispettivi titolari. I protocolli delle radio sono ricostruiti
         dai programmi originali dei costruttori per l'interoperabilità: conserva sempre le copie di sicurezza.</p>
     </div></div>`;

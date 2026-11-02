@@ -1,6 +1,6 @@
 //go:build windows
 
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -49,6 +49,10 @@ func init() {
 			return openDFUPort(name)
 		}
 		return serial(name, baud)
+	}
+	// identificazione automatica: radio DMR collegate via USB (HID o DFU)
+	usbRadioPresentFunc = func() bool {
+		return len(usbPresent(rdtyVID, rdtyPID)) > 0 || len(usbPresent(tytVID, tytPID)) > 0
 	}
 }
 

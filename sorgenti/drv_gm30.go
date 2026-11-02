@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -201,6 +201,16 @@ func init() {
 		Notes: "Radio GMRS (USA). Canali come in CHIRP: 1-30 frequenze GMRS fisse (8-14 solo ricezione), " +
 			"23-54 ponti GMRS (+5 MHz; 31-54 solo frequenze GMRS dei ponti), 55-250 solo ricezione. " +
 			"Driver di CHIRP (radioddity_gm30, GM-15Pro)."})
+	// 4.0: Radioddity GM-30, la radio da cui deriva la GM-15 Pro (stessa memoria,
+	// stesso protocollo; gamma UHF fino a 470 MHz)
+	genRegister(&genModel{ID: "rd-gm30", Vendor: "Radioddity", Model: "GM-30", RClass: "RadioddityGM30",
+		Name: "Radioddity GM-30 (GMRS)", Slots: 250, First: 1, NameMax: 6,
+		Powers: []genPower{{"Bassa", 0.5, 2}, {"Alta", 3, 0}},
+		Bands:  []band{{136000000, 174000000}, {400000000, 470000000}}, Narrow: true, HasScan: true,
+		DCS: dtcsCodes, Baud: 57600, Fam: gm30Fam{}, Opt: &gm30Opt{ident: []byte("P13GMRS")},
+		Notes: "Radio GMRS (USA). Canali come in CHIRP: 1-30 frequenze GMRS fisse (8-14 solo ricezione), " +
+			"23-54 ponti GMRS (+5 MHz; 31-54 solo frequenze GMRS dei ponti), 55-250 solo ricezione. " +
+			"Driver di CHIRP (radioddity_gm30, GM-30)."})
 }
 
 func gm30o(m *genModel) *gm30Opt { return m.Opt.(*gm30Opt) }

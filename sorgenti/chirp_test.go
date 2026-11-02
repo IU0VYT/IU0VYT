@@ -1,6 +1,6 @@
 //go:build !windows
 
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -58,6 +58,19 @@ func chirpRef(t *testing.T, args ...string) []byte {
 var chirpTestImage = map[string]string{
 	"bf-v8a":  "Radtel_T18.img",
 	"bf-g11s": "Retevis_RB27.img",
+	// stessa memoria e stesso protocollo della versione FRS
+	"rt-h777h-pmr": "Retevis_H777H_FRS.img",
+	// stessa radio della Retevis RT22 con un altro marchio (classi di CHIRP senza immagine)
+	"wln-kdc1":   "Retevis_RT22.img",
+	"zt-ztx6":    "Retevis_RT22.img",
+	"lt-lt316":   "Retevis_RT22.img",
+	"tid-tdm8":   "Retevis_RT22.img",
+	"td-h6":      "Radioddity_GA-510.img",
+	"rt-rt6":     "Baofeng_UV-82WP.img",
+	"in-kt980hp": "Baofeng_BF-F8HP.img",
+	"qs-uvk5":    "Quansheng_UV-K5.img",
+	"mt-tk6":     "Quansheng_UV-K5.img",
+	"qs-uvk1":    "Quansheng_UV-K5.img",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {
@@ -221,9 +234,18 @@ func chirpEdits(m *genModel, img []byte) []struct {
 	np := len(m.Powers)
 	pw := func(k int) int { return m.Powers[k%np].Sem }
 	name := func(s string) string { return m.cleanName(s) }
+	locked := func(i int) bool {
+		if lk, ok := m.Fam.(interface{ lockedSlot(*genModel, int) bool }); ok && lk.lockedSlot(m, i) {
+			return true
+		}
+		lk, ok := m.Fam.(interface {
+			lockedSlotImg(*genModel, []byte, int) bool
+		})
+		return ok && lk.lockedSlotImg(m, img, i)
+	}
 	var free, used []int
 	for i := 0; i < m.Slots; i++ {
-		if lk, ok := m.Fam.(interface{ lockedSlot(*genModel, int) bool }); ok && lk.lockedSlot(m, i) {
+		if locked(i) {
 			continue
 		}
 		if m.Fam.Get(m, img, i) == nil {
@@ -247,6 +269,15 @@ func chirpEdits(m *genModel, img []byte) []struct {
 		{Rx: vhf, Tx: uhf, Power: pw(0), Scan: true, Name: name("SPLIT")},
 		{Rx: uhf, Tx: uhf, Power: pw(np - 1), Narrow: m.Narrow, Scan: false, Name: name("ABCDEFGHIJKLMNOPQRST")},
 		{Rx: vhf + 12500, Tx: vhf + 12500, Power: pw(0), Scan: true, Name: name("a-b.c/1")},
+	}
+	if cb, ok := m.Fam.(interface{ crossband() bool }); ok && cb.crossband() {
+		// spostamento oltre 70 MHz: per CHIRP è «split», che questa radio non ha
+		for k, c := range chs {
+			if c.Name == name("SPLIT") {
+				chs = append(chs[:k], chs[k+1:]...)
+				break
+			}
+		}
 	}
 	if m.NoTxOff {
 		for k, c := range chs {
@@ -294,11 +325,15 @@ func chirpEdits(m *genModel, img []byte) []struct {
 			Chan *Chan
 		}{used[len(used)-2], nil})
 	}
-	// ultima posizione
-	out = append(out, struct {
-		N    int
-		Chan *Chan
-	}{m.Slots - 1, &Chan{Rx: uhf, Tx: uhf - 1600000, TxTone: "151.4", Power: pw(0), Scan: true, Name: name("LAST")}})
+	// ultima posizione (se non è un canale fisso)
+	if _, ok := m.Fam.(interface {
+		lockedSlotImg(*genModel, []byte, int) bool
+	}); !ok || !locked(m.Slots-1) {
+		out = append(out, struct {
+			N    int
+			Chan *Chan
+		}{m.Slots - 1, &Chan{Rx: uhf, Tx: uhf - 1600000, TxTone: "151.4", Power: pw(0), Scan: true, Name: name("LAST")}})
+	}
 	// posizioni in sola ricezione (es. GM-15 Pro): stesso canale senza TX
 	if ro, ok := m.Fam.(interface{ rxOnlySlot(*genModel, int) bool }); ok {
 		for k := range out {
@@ -324,6 +359,25 @@ func TestChirpEncode(t *testing.T) {
 			p := chirpImageFor(t, m)
 			img := loadImg(t, p)
 			edits := chirpEdits(m, img)
+			if _, ok := m.Fam.(interface {
+				lockedSlotImg(*genModel, []byte, int) bool
+			}); ok && len(edits) < 4 {
+				// immagine di prova con soli canali a frequenza fissa (FRS, PMR…):
+				// metà dei canali portati su una frequenza libera, poi le stesse
+				// modifiche qui e con CHIRP
+				for i := 1; i < m.Slots; i += 2 {
+					f := m.Bands[0].Lo + 3000000 + int64(i)*25000
+					if err := m.Fam.Set(m, img, i, &Chan{Rx: f, Tx: f, Power: m.Powers[0].Sem, Scan: true}); err != nil {
+						t.Fatal(err)
+					}
+				}
+				p = filepath.Join(tmp, m.ID+"_base.img")
+				if err := os.WriteFile(p, img, 0o644); err != nil {
+					t.Fatal(err)
+				}
+				edits = chirpEdits(m, img)
+				t.Logf("immagine di prova con %d canali a frequenza libera", m.Slots/2)
+			}
 			var js []map[string]interface{}
 			out := append([]byte{}, img...)
 			for _, e := range edits {
@@ -363,6 +417,9 @@ func TestChirpEncode(t *testing.T) {
 				}
 				if !m.Narrow {
 					w.Narrow = g.Narrow
+				}
+				if pf, ok := m.Fam.(interface{ powerFixed(*genModel) bool }); ok && pf.powerFixed(m) {
+					w.Power = g.Power
 				}
 				if *g != w {
 					t.Errorf("canale %d riletto diverso:\n  scritto %+v\n  riletto %+v", e.N, w, *g)

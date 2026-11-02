@@ -1,5 +1,5 @@
 'use strict';
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -42,16 +42,15 @@ const Dialogs = {
       const drv = (c.drivers || []).filter(d => d === 'k67' || d === 'baj' || App.defs[d]);
       for (const d of drv) {
         const def = RADIO_DEF[d] || App.defs[d];
-        const version = drv.length > 1 ? def.name.replace(/^(Baofeng|Bajeton|Radioddity)\s+/, '') : '';
+        const version = drv.length > 1 ? def.name.replace(/^(Baofeng|Bajeton|Radioddity)\s+/, '').replace(new RegExp('^' + c.brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s+'), '') : '';
         const key = c.brand + '|' + c.name + '|' + d;
         if (seen.has(key)) continue;
         seen.add(key);
         out.push({ kind: d, name: c.name, brand: c.brand, type: c.type, version, driver: def.name, id: c.id });
       }
     }
-    const bOrder = b => b === 'Baofeng' ? 0 : b === 'Bajeton' ? 1 : 2;
     const tOrder = t => { const i = TYPE_ORDER.indexOf(t); return i < 0 ? 99 : i; };
-    out.sort((a, b) => bOrder(a.brand) - bOrder(b.brand) || a.brand.localeCompare(b.brand) || tOrder(a.type) - tOrder(b.type) ||
+    out.sort((a, b) => brandOrder(a.brand, b.brand) || tOrder(a.type) - tOrder(b.type) ||
       byModelName(a, b) || a.version.localeCompare(b.version, 'it', { numeric: true }));
     return out;
   },
@@ -148,7 +147,7 @@ const Dialogs = {
   // finestra di scelta: marca e modello dai menu a tendina, posizioni
   forwardTarget(src, n, how) {
     const all = Dialogs.radioChoices();
-    const brands = [...new Set(all.map(r => r.brand))];
+    const brands = [...new Set(all.map(r => r.brand))].sort(brandOrder);
     const last = Dialogs.lastForward;
     return new Promise(res => {
       const m = openModal(`<div class="dialog mid"><header>📻 Inoltra ad altra radio</header><div class="body">
@@ -707,11 +706,11 @@ const Dialogs = {
       <p>Con il <b>cavo di programmazione</b> puoi leggere i canali dalla radio («📻 Leggi dalla radio»), modificarli e scriverli («📻 Scrivi nella radio»).
       Puoi anche lavorare sui <b>file</b> del programma originale (K67 Pro: <b>.xlc</b>; Bajeton 8300: <b>.dat</b>): aprili, modificali e salvali.
       Prima di salvare sopra un file ne viene conservata una copia <b>.bak</b>.</p>
-      <h4>Modelli Baofeng e Bajeton</h4><ul>
+      <h4>Modelli di radio</h4><ul>
         <li>All'avvio compare la schermata «🏠 Home». Le schede delle radio (anche Baofeng K67 Pro e Bajeton 8300) si aprono dalla galleria dei modelli
           e si chiudono con ×.</li>
-        <li>La scheda «📻 Modelli» elenca tutte le radio Baofeng e Bajeton, divise tra «MODELLI COMPATIBILI» e «MODELLI NON COMPATIBILI» (con il numero di modelli) e,
-          in ciascuna parte, per tipologia (Radioamatoriali, DMR, GMRS / FRS, PMR446 e uso libero, Per bambini); dentro ogni tipologia i modelli sono separati tra <b>Baofeng</b> e <b>Bajeton</b>,
+        <li>La scheda «📻 Modelli» elenca le radio di tutte le marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e altre; scegli la marca dal menu «Tutte le marche»), divise tra «MODELLI COMPATIBILI» e «MODELLI NON COMPATIBILI» (con il numero di modelli) e,
+          in ciascuna parte, per tipologia (Radioamatoriali, DMR, GMRS / FRS, PMR446 e uso libero, Per bambini); dentro ogni tipologia i modelli sono separati per marca (prima Baofeng e Bajeton, poi le altre),
           in ordine alfabetico. Ogni modello ha la sua
           scheda, anche quando la gestione è la stessa di un altro (es. UV-5RA come UV-5R; i modelli equivalenti indicati dalla tabella di CHIRP lo dicono nella scheda).
           Cerca il modello e filtra per marca, tipo e funzioni. Clic sulla radio per aprirne la scheda dei canali, aggiornarne il firmware o scaricare programmi e manuali del costruttore.</li>

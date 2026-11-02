@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -277,6 +277,7 @@ func (a *App) genCableStart(req *cableReq) (interface{}, error) {
 	for _, w := range rep.Warnings {
 		j.note("%s", w)
 	}
+	a.yieldAuto()
 	a.mu.Lock()
 	if a.job != nil && a.job.isRunning() {
 		a.mu.Unlock()
@@ -316,10 +317,34 @@ func (a *App) genCableStart(req *cableReq) (interface{}, error) {
 	return j.snapshot(), nil
 }
 
+// metaDownloader: famiglia che legge dalla radio anche dei metadati del file .img
+type metaDownloader interface {
+	DownloadMeta(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, map[string]interface{}, string, error)
+}
+
 func (a *App) runGenCable(ctx context.Context, j *cableJob, m *genModel, req *cableReq, payload []byte, meta map[string]interface{}) (interface{}, error) {
 	read := func(phase string) ([]byte, error) {
 		j.set(phase, true)
-		mem, note, err := m.Fam.Download(ctx, m, req.Port, j.prog)
+		var mem []byte
+		var note string
+		var err error
+		if md, ok := m.Fam.(metaDownloader); ok {
+			// metadati letti dalla radio (es. versione del firmware della UV-K5)
+			var extra map[string]interface{}
+			mem, extra, note, err = md.DownloadMeta(ctx, m, req.Port, j.prog)
+			if err == nil && len(extra) > 0 {
+				nm := map[string]interface{}{}
+				for k, v := range meta {
+					nm[k] = v
+				}
+				for k, v := range extra {
+					nm[k] = v
+				}
+				meta = nm
+			}
+		} else {
+			mem, note, err = m.Fam.Download(ctx, m, req.Port, j.prog)
+		}
 		if err != nil {
 			return nil, err
 		}

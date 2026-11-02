@@ -1,6 +1,6 @@
 //go:build windows
 
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -235,6 +235,7 @@ func main() {
 		app.token = t
 	}
 	theApp = app
+	app.startAutoIdent()
 	ln, url, err := app.listen()
 	if err != nil {
 		msgBox("Impossibile avviare il programma:\n"+err.Error(), mbOK|mbIconError)

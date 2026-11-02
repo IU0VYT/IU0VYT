@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -527,6 +527,8 @@ var fwFamily = map[string]string{
 }
 
 func init() {
+	// 4.0: radio delle altre marche (catalog_brands.go)
+	catalog = append(catalog, catalogOther...)
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" {

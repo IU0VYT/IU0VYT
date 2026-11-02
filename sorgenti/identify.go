@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -504,7 +504,7 @@ func genIdentFill(m *genModel, cands []*genModel, mem []byte, note string, st *p
 
 type identReq struct {
 	Port   string `json:"port"`   // porta COM o "USB"
-	Brand  string `json:"brand"`  // "" tutte, Baofeng, Bajeton
+	Brand  string `json:"brand"`  // "" tutte, oppure la marca (Baofeng, Bajeton, Quansheng, Retevis…)
 	Family string `json:"family"` // "" tutte, analog, dmr
 }
 
@@ -516,8 +516,37 @@ type identProbe struct {
 	bt    bool
 }
 
+var (
+	driverBrandsOnce sync.Once
+	driverBrands     map[string]map[string]bool // driver → marche della galleria che lo usano
+)
+
+// modelBrands: marche (in minuscolo) delle radio della galleria gestite dal
+// driver; senza voci nella galleria vale la marca indicata da CHIRP
+func modelBrands(m *genModel) map[string]bool {
+	driverBrandsOnce.Do(func() {
+		driverBrands = map[string]map[string]bool{}
+		for _, c := range catalog {
+			for _, d := range c.Drivers {
+				if driverBrands[d] == nil {
+					driverBrands[d] = map[string]bool{}
+				}
+				driverBrands[d][strings.ToLower(c.Brand)] = true
+			}
+		}
+	})
+	if b := driverBrands[m.ID]; len(b) > 0 {
+		return b
+	}
+	return map[string]bool{strings.ToLower(m.Vendor): true}
+}
+
 func identWanted(req *identReq, brand string, dmr bool) bool {
-	if req.Brand != "" && !strings.EqualFold(req.Brand, brand) {
+	return identWantedAny(req, map[string]bool{strings.ToLower(brand): true}, dmr)
+}
+
+func identWantedAny(req *identReq, brands map[string]bool, dmr bool) bool {
+	if req.Brand != "" && !brands[strings.ToLower(req.Brand)] {
 		return false
 	}
 	switch req.Family {
@@ -561,7 +590,7 @@ func (a *App) identPlan(req *identReq) []identProbe {
 		keys = identTranscripts()
 	}
 	for _, m := range genModels {
-		if usb != (m.Conn != "") || !identWanted(req, m.Vendor, m.Digital != "") {
+		if usb != (m.Conn != "") || !identWantedAny(req, modelBrands(m), m.Digital != "") {
 			continue
 		}
 		key := "usb " + m.ID // via USB: un tentativo per modello (se la radio manca, l'apertura fallisce subito)
@@ -916,10 +945,21 @@ func (a *App) apiIdentifyStart(r *http.Request) (interface{}, error) {
 	if strings.TrimSpace(req.Port) == "" {
 		return nil, errors.New("scegli la porta del cavo di programmazione (o «USB» per le radio DMR collegate via USB)")
 	}
+	a.yieldAuto()
+	j, err := a.startIdentify(&req, false)
+	if err != nil {
+		return nil, err
+	}
+	return j.snapshot(), nil
+}
+
+// startIdentify: avvia la ricerca della radio (dalla scheda «Identifica» o, con
+// auto, dall'identificazione automatica al collegamento della radio)
+func (a *App) startIdentify(req *identReq, auto bool) (*cableJob, error) {
 	b := make([]byte, 6)
 	_, _ = rand.Read(b)
 	ctx, cancel := context.WithCancel(context.Background())
-	j := &cableJob{ID: hex.EncodeToString(b), Op: "identify", State: "running", cancel: cancel, started: time.Now(), Notes: []string{}, Log: []string{}}
+	j := &cableJob{ID: hex.EncodeToString(b), Op: "identify", State: "running", cancel: cancel, started: time.Now(), Notes: []string{}, Log: []string{}, Auto: auto}
 	a.mu.Lock()
 	if a.job != nil && a.job.isRunning() {
 		a.mu.Unlock()
@@ -927,9 +967,14 @@ func (a *App) apiIdentifyStart(r *http.Request) (interface{}, error) {
 		return nil, errors.New("è già in corso un'operazione con la radio")
 	}
 	a.job = j
-	a.ident = nil
+	if !auto {
+		// una ricerca automatica non cancella la radio identificata prima (ancora da
+		// aprire nella scheda «Identifica» o dall'identificazione automatica): la
+		// sostituisce solo se trova una radio
+		a.ident = nil
+	}
 	a.mu.Unlock()
-	if !strings.EqualFold(req.Port, "USB") {
+	if !auto && !strings.EqualFold(req.Port, "USB") {
 		st := a.store.Get()
 		st.GenPort = req.Port
 		_ = a.store.SaveSettings(st)
@@ -944,7 +989,7 @@ func (a *App) apiIdentifyStart(r *http.Request) (interface{}, error) {
 					err = fmt.Errorf("errore interno: %v", e)
 				}
 			}()
-			res, err = a.runIdentify(ctx, j, &req)
+			res, err = a.runIdentify(ctx, j, req)
 		}()
 		j.mu.Lock()
 		defer j.mu.Unlock()
@@ -958,13 +1003,14 @@ func (a *App) apiIdentifyStart(r *http.Request) (interface{}, error) {
 		}
 		j.CanStop = false
 	}()
-	return j.snapshot(), nil
+	return j, nil
 }
 
 // identify/open: la radio identificata nella sua scheda (come dopo «Leggi dalla radio»)
 func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 	var req struct {
 		Kind string `json:"kind"`
+		Seq  int    `json:"seq"` // esito dell'identificazione automatica
 	}
 	if err := decode(r, &req); err != nil {
 		return nil, err
@@ -972,6 +1018,9 @@ func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 	a.mu.Lock()
 	id := a.ident
 	a.mu.Unlock()
+	if req.Seq > 0 {
+		id = a.autoIdentSession(req.Seq)
+	}
 	if id == nil {
 		return nil, errors.New("nessuna radio identificata da aprire")
 	}

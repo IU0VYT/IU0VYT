@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -40,6 +40,9 @@ type cableJob struct {
 	Log     []string    `json:"log"` // messaggi in tempo reale (aggiornamento del firmware)
 	Result  interface{} `json:"result"`
 	CanStop bool        `json:"canStop"`
+	// Auto: ricerca avviata dall'identificazione automatica (4.0): lascia il
+	// posto a qualsiasi operazione chiesta dall'utente (yieldAuto)
+	Auto    bool `json:"auto"`
 	cancel  context.CancelFunc
 	started time.Time
 }
@@ -79,7 +82,7 @@ func (j *cableJob) snapshot() map[string]interface{} {
 	defer j.mu.Unlock()
 	return map[string]interface{}{"id": j.ID, "op": j.Op, "radio": j.Radio, "state": j.State, "phase": j.Phase,
 		"done": j.Done, "total": j.Total, "msg": j.Msg, "error": j.Error, "notes": j.Notes, "result": j.Result,
-		"canStop": j.CanStop, "seconds": int(time.Since(j.started).Seconds()), "log": append([]string{}, j.Log...)}
+		"canStop": j.CanStop, "auto": j.Auto, "seconds": int(time.Since(j.started).Seconds()), "log": append([]string{}, j.Log...)}
 }
 
 type cableReq struct {
@@ -139,6 +142,7 @@ func (a *App) apiCableStart(r *http.Request) (interface{}, error) {
 	if strings.TrimSpace(req.Port) == "" {
 		return nil, errors.New("scegli la porta del cavo di programmazione")
 	}
+	a.yieldAuto()
 	a.mu.Lock()
 	busy := a.job != nil && a.job.isRunning()
 	sess := a.radios[req.Radio]
@@ -196,6 +200,7 @@ func (a *App) apiCableStart(r *http.Request) (interface{}, error) {
 	for _, w := range rep.Warnings {
 		j.note("%s", w)
 	}
+	a.yieldAuto()
 	a.mu.Lock()
 	if a.job != nil && a.job.isRunning() {
 		a.mu.Unlock()

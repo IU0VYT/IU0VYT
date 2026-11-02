@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -76,6 +76,24 @@ func init() {
 		Notes: "Accendi la radio con il cavo collegato. Canali 0-127. Il programma del costruttore della serie H " +
 			"usa lo stesso protocollo e la stessa memoria della Radioddity GA-510 (prodotta da Baofeng): driver di CHIRP " +
 			"della GA-510; nei file .img compare come Radioddity GA-510."})
+
+	// 4.0: altri modelli dello stesso driver di CHIRP (ga510.py): stessa memoria e
+	// stesso protocollo, cambiano il comando di aggancio, le potenze, le gamme e la
+	// numerazione dei canali (1-128 invece di 0-127)
+	cs := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"#$%&'()~+-,./:;<=>?@[\\]^`{}*| "
+	wltu := &ga510Opt{magic: []byte("PROGROMWLTU"), memsize: 0x1C40, wsize: 0x1C20}
+	bfhu := &ga510Opt{magic: []byte("PROGROMBFHU"), memsize: 0x1C40, wsize: 0x1C20}
+	wide := []band{{136000000, 174000000}, {400000000, 520000000}}
+	add := func(id, vendor, model, rclass, name string, first int, o *ga510Opt, pw []genPower) {
+		genRegister(&genModel{ID: id, Vendor: vendor, Model: model, RClass: rclass, Name: name, Slots: 128, First: first, NameMax: 10,
+			Charset: cs, Powers: pw, Bands: wide, Narrow: true, HasScan: true, DCS: uv5rDTCS, Baud: 9600, Fam: ga510Fam{}, Opt: o,
+			Notes: "Accendi la radio con il cavo collegato. Driver di CHIRP della famiglia Radioddity GA-510."})
+	}
+	add("rt-ra685", "Retevis", "RA685", "RetevisRA685Radio", "Retevis RA685", 1, wltu, []genPower{{"Alta 5 W", 5, 0}, {"Bassa 1 W", 1, 2}, {"Media 3 W", 3, 1}})
+	add("rt-ra85", "Retevis", "RA85", "RetevisRA85Radio", "Retevis RA85", 1, wltu, []genPower{{"Alta 5 W", 5, 0}, {"Bassa 0,5 W", 0.5, 2}, {"Media 0,6 W", 0.6, 1}})
+	add("ab-arf5", "Abbree", "AR-F5", "AbbreeARF5Radio", "Abbree AR-F5", 1, wltu, []genPower{{"Alta 5 W", 5, 0}, {"Bassa 1 W", 1, 2}, {"Media 2 W", 2, 1}})
+	genByID["ab-arf5"].Bands = []band{{136000000, 174000000}, {200000000, 300000000}, {300000000, 400000000}, {400000000, 520000000}}
+	add("td-h6", "TIDRADIO", "TD-H6", "TDH6Radio", "TIDRADIO TD-H6", 0, bfhu, []genPower{{"Alta 10 W", 10, 0}, {"Bassa 1 W", 1, 2}, {"Media 5 W", 5, 1}})
 }
 
 func ga510o(m *genModel) *ga510Opt { return m.Opt.(*ga510Opt) }

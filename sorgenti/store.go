@@ -1,4 +1,4 @@
-// IU0VYT Flash — canali, ponti e firmware delle radio Baofeng e Bajeton
+// IU0VYT Flash — canali, ponti e firmware delle radio ricetrasmittenti
 // Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
@@ -41,7 +41,9 @@ type Settings struct {
 	BajVer      string `json:"bajVer"`  // formato dei nuovi file .dat: "1.0.8" (predefinito) o "1.0.9"
 	GenPort     string `json:"genPort"` // radio gestite con i driver di CHIRP
 	CableBackup bool   `json:"cableBackup"`
-	CableVerify bool   `json:"cableVerify"`
+	// identificazione automatica della radio al collegamento (4.0, scheda «Identifica»)
+	AutoIdent   bool `json:"autoIdent"`
+	CableVerify bool `json:"cableVerify"`
 	// aggiornamento del firmware della Bajeton
 	FwURL      string `json:"fwURL"`
 	FwBaud     int    `json:"fwBaud"`
