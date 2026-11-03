@@ -3,6 +3,46 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.2.0 (03/11/2026)
+------------------
+- Identificazione automatica (autoident.go riscritto di nuovo): niente più controlli
+  di presenza dopo il riconoscimento; il riquadro «Identificazione Radio In Corso» si
+  mostra solo quando la radio ha inviato byte veri (non l'eco del cavo): probeState
+  onAnswer → cableJob.answered (identify.go, cable.go), identify/auto «searching».
+  Prima il riquadro compariva all'avvio con il solo cavo collegato. Dopo il
+  riconoscimento tutte le porte sono «done»: la ricerca si ferma senza disattivare la
+  funzione; un cavo nuovo (o ricollegato al PC) si cerca da solo. Nuovo comando
+  identify/auto rescan (rifiutato se la funzione è disattivata); tolti stop/resume
+  per porta, avviso «radio scollegata» e «▶ Riprendi la ricerca».
+- ui: pulsante «🔎 Identifica Nuova Radio Automaticamente» (index.html #btn-autonew,
+  style.css .autonew) tra le schede e «Aggiornamenti», a uguale distanza (due
+  .spacer); grigio e disattivato se l'identificazione automatica è spenta; su due
+  righe sotto i 1320 px; #tabs con flex-shrink al posto della larghezza massima fissa.
+- drv_thuv88.go (nuovo) e genemu_thuv88_other.go: famiglia TYT TH-UV88 da th_uv88.py
+  (TH-UV88, TH-UV98, Retevis RT85, RA89, P2, P62, Explorer QRZ-1).
+- drv_rt490.go (nuovo) e genemu_rt490_other.go: famiglia Radtel RT-490 da
+  radtel_rt490.py (9 modelli), nomi GB2312 come CHIRP (gb2312Dec/gb2312Enc).
+- drv_rt21.go (nuovo): famiglia Retevis RT21 da retevis_rt21.py (19 modelli), canali
+  FRS/PMR446/GMRS fissi come in CHIRP (Locked con prova di rilettura); rbSpec con
+  wblock, noAckFirst e ackReads (drv_small.go) e radio simulata (genemu_other.go).
+- drv_tk11.go (nuovo) e genemu_tk11_other.go: Quansheng TK11 da tk11.py (999 canali,
+  pacchetti AB CD a 16 bit con la chiave XOR della UV-K5, metadati del firmware).
+- Catalogo: 37 voci nuove (35 radio dei driver di CHIRP, Radtel RT-590 e RT-600 con
+  il driver della UV-K5 e l'aggiornamento del firmware «k5»), 8 marche nuove.
+  settings_chirp.json: 176 classi.
+- Firmware UV-K5: TestK5FirmwareUvtools eseguito con uvtools (autorizzato) e, con
+  K5REF_BIN, sui file veri di Radtel 2.01.32 (RT-590) e 4.00.06 (RT-600): stessi
+  byte di uvtools.
+- Corretti: bytes.TrimRight/strings.Trim/bytes.IndexAny con «\xff» nell'elenco
+  (Go lo legge come U+FFFD e tratta così ogni byte non UTF-8: tagliava le lettere
+  latin-1/cinesi finali dei nomi della DM-5000 e della famiglia RD-5R e dei testi
+  letti dalle radio) → trimBytes/trimBytesBoth/indexAnyByte; drv_tdh8.go: spazi
+  finali tolti dopo la conversione latin-1 (0x85 e 0xA0 come str.rstrip()).
+- Test: chirpref.py non tocca i campi immutabili invariati (canali fissi);
+  chirpFixedEdits per le radio con tutti i canali fissi; chirpInvalid per le
+  modifiche che CHIRP non ammette; passi più piccoli per i numeri con 1-2 decimali
+  in TestSettingsChirp (stazioni FM della TK11).
+
 4.1.0 (02/11/2026)
 ------------------
 - Identificazione automatica (autoident.go riscritto): il controllo delle porte non

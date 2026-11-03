@@ -196,7 +196,7 @@ func (f tdh8Fam) Get(m *genModel, img []byte, i int) *Chan {
 			nb = append(nb, b)
 		}
 	}
-	c.Name = latin1Str(pyRstrip(string(nb)))
+	c.Name = pyRstrip(latin1Str(string(nb))) // come str.rstrip() di Python, anche 0x85 e 0xA0
 	c.TxTone = t18ToneDec(r.F("txtone").Raw(img))
 	c.RxTone = t18ToneDec(r.F("rxtone").Raw(img))
 	c.Scan = f.mem(m).F("scanadd").I(i).Bool(img)

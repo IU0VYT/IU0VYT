@@ -774,10 +774,10 @@ const Dialogs = {
       <h4>Identifica la radio</h4><ul>
         <li>Scheda «🔎 Identifica»: scegli la porta del cavo (o «USB» per RD-5R, DM-1801, DM-1701) e premi «Identifica la radio». Il programma prova i protocolli
           di lettura di tutte le radio che conosce, legge quella che risponde e mostra marca, modello, tipo, gamme, firmware o identificativo, canali e, per le
-          radio DMR USB, ID DMR e nome. Nessun dato viene scritto nella radio. Senza radio la ricerca completa dura circa 110 secondi.</li>
+          radio DMR USB, ID DMR e nome. Nessun dato viene scritto nella radio. Senza radio la ricerca completa dura circa 135 secondi.</li>
         <li><b>Identificazione automatica</b> («🔄 Abilita identificazione automatica», scelta ricordata): in qualsiasi scheda, quando colleghi il cavo la radio viene
-          riconosciuta e si apre la sua scheda; durante la ricerca compare in basso «Identificazione Radio In Corso». Se scolleghi la radio, la spegni o la cambi,
-          la ricerca riparte da sola.</li>
+          riconosciuta e si apre la sua scheda; quando una radio collegata risponde compare in basso «Identificazione Radio In Corso». Dopo il riconoscimento la
+          ricerca si ferma: per un'altra radio premi «🔎 Identifica Nuova Radio Automaticamente» nella barra in alto (grigio se la funzione è disattivata).</li>
         <li>Se più modelli hanno lo stesso protocollo e la stessa memoria, scegli il tuo dall'elenco prima di aprire i canali.</li>
         <li>DM-1701: nella finestra «Leggi dalla radio» lo stato del driver USB, «Installa il driver USB…» (pacchetto del costruttore) o WinUSB con Zadig.</li>
         <li>BTECH DMR-6X2 / PRO: nella galleria «🧭 Aggiornamento guidato…» controlla i file del firmware ufficiale e guida passo per passo il programma BTECH.</li>

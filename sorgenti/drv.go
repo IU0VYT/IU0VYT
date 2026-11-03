@@ -534,6 +534,35 @@ var dtcsCodes = []int{23, 25, 26, 31, 32, 36, 43, 47, 51, 53, 54, 65, 71, 72, 73
 	413, 423, 431, 432, 445, 446, 452, 454, 455, 462, 464, 465, 466, 503, 506, 516, 523, 526, 532, 546, 565, 606,
 	612, 624, 627, 631, 632, 654, 662, 664, 703, 712, 723, 731, 732, 734, 743, 754}
 
+// trimBytes / trimBytesBoth / indexAnyByte: come bytes.TrimRight, bytes.Trim e
+// bytes.IndexAny ma su singoli byte. Con un elenco come "\x00\xff" le funzioni
+// della libreria leggono l'elenco come UTF-8 (0xFF diventa U+FFFD) e trattano
+// allo stesso modo ogni byte non UTF-8 dei dati: un nome con lettere accentate
+// latin-1 o cinesi verrebbe tagliato.
+func trimBytes(b []byte, cut ...byte) []byte {
+	for len(b) > 0 && bytes.IndexByte(cut, b[len(b)-1]) >= 0 {
+		b = b[:len(b)-1]
+	}
+	return b
+}
+
+func trimBytesBoth(b []byte, cut ...byte) []byte {
+	b = trimBytes(b, cut...)
+	for len(b) > 0 && bytes.IndexByte(cut, b[0]) >= 0 {
+		b = b[1:]
+	}
+	return b
+}
+
+func indexAnyByte(b []byte, set ...byte) int {
+	for i, c := range b {
+		if bytes.IndexByte(set, c) >= 0 {
+			return i
+		}
+	}
+	return -1
+}
+
 func withCodes(base []int, extra ...int) []int {
 	out := append(append([]int{}, base...), extra...)
 	sort.Ints(out)

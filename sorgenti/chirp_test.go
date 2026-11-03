@@ -77,6 +77,19 @@ var chirpTestImage = map[string]string{
 	"td-tdh8g3gmrs": "TIDRADIO_TD-H8-HAM_G3.img",
 	"td-tdh3ham":    "TIDRADIO_TD-H3.img",
 	"td-tdh3gmrs":   "TIDRADIO_TD-H3.img",
+	// 4.2: TYT TH-UV98 e Retevis RT85, stessa memoria della TH-UV88
+	"tyt-thuv98": "TYT_TH-UV88.img",
+	"rt-rt85":    "TYT_TH-UV88.img",
+	// 4.2: famiglia Radtel RT-490, stessa radio con altri marchi
+	"jjcc-jc8629": "Radtel_RT-490.img",
+	"soc-jc8629":  "Radtel_RT-490.img",
+	"soc-fb8629":  "Radtel_RT-490.img",
+	"jp-8800plus": "Radtel_RT-490.img",
+	"bor-8rs":     "Radtel_RT-490.img",
+	"ab-ar869":    "Radtel_RT-490.img",
+	"hg-hg590":    "Radtel_RT-490.img",
+	// 4.2: Retevis RT21V, stessa memoria della RT21
+	"rt-rt21v": "Retevis_RT21.img",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {
@@ -260,6 +273,9 @@ func chirpEdits(m *genModel, img []byte) []struct {
 			used = append(used, i)
 		}
 	}
+	if len(free)+len(used) == 0 {
+		return chirpFixedEdits(m, img, dcs1, dcs2)
+	}
 	chs := []*Chan{
 		{Rx: vhf, Tx: vhf, Power: pw(0), Scan: true, Name: name("SIMPLEX")},
 		{Rx: vhf, Tx: vhf - 600000, TxTone: "88.5", Power: pw(1), Scan: true, Name: name("RPT TONE")},
@@ -284,6 +300,18 @@ func chirpEdits(m *genModel, img []byte) []struct {
 				break
 			}
 		}
+	}
+	// modifiche che CHIRP non ammette per questa radio (e non scrive)
+	if ci, ok := m.Fam.(interface {
+		chirpInvalid(*genModel, *Chan) bool
+	}); ok {
+		var keep []*Chan
+		for _, c := range chs {
+			if !ci.chirpInvalid(m, c) {
+				keep = append(keep, c)
+			}
+		}
+		chs = keep
 	}
 	if m.NoTxOff {
 		for k, c := range chs {
@@ -520,4 +548,60 @@ func TestChirpLayout(t *testing.T) {
 			t.Logf("%d campi confrontati, %d differenze", n, bad)
 		})
 	}
+}
+
+// chirpFixedEdits: radio con tutti i canali a frequenza fissa (FRS, PMR446,
+// GMRS: famiglia Retevis RT21): sui canali presenti si cambiano toni, scansione
+// e, dove la radio (e CHIRP) lo permettono, potenza, banda e trasmissione; ogni
+// modifica non ammessa da Locked viene tolta.
+func chirpFixedEdits(m *genModel, img []byte, dcs1, dcs2 string) []struct {
+	N    int
+	Chan *Chan
+} {
+	lk, _ := m.Fam.(interface {
+		Locked(m *genModel, i int, old, want *Chan) error
+	})
+	tones := [][2]string{{"88.5", ""}, {"123.0", "123.0"}, {dcs1 + "N", dcs1 + "N"}, {dcs2 + "I", dcs2 + "N"},
+		{"100.0", dcs1 + "I"}, {dcs2 + "N", "67.0"}, {"", "254.1"}, {"", dcs2 + "I"}, {"77.0", "203.5"}, {"", ""}}
+	var out []struct {
+		N    int
+		Chan *Chan
+	}
+	k := 0
+	for i := 0; i < m.Slots; i++ {
+		old := m.Fam.Get(m, img, i)
+		if old == nil {
+			continue
+		}
+		w := *old
+		w.TxTone, w.RxTone = tones[k%len(tones)][0], tones[k%len(tones)][1]
+		if m.HasScan && k%3 == 0 {
+			w.Scan = !w.Scan
+		}
+		try := func(f func(c *Chan)) {
+			c := w
+			f(&c)
+			if lk == nil || lk.Locked(m, i, old, &c) == nil {
+				w = c
+			}
+		}
+		if k%2 == 1 {
+			try(func(c *Chan) { c.Power = m.Powers[(m.powerIndex(c.Power)+1)%len(m.Powers)].Sem })
+		}
+		if k%4 == 2 {
+			try(func(c *Chan) { c.Narrow = !c.Narrow })
+		}
+		if k%5 == 3 {
+			try(func(c *Chan) { c.TxOff, c.Tx = !c.TxOff, c.Rx })
+		}
+		if lk != nil && lk.Locked(m, i, old, &w) != nil {
+			continue
+		}
+		out = append(out, struct {
+			N    int
+			Chan *Chan
+		}{i, &w})
+		k++
+	}
+	return out
 }

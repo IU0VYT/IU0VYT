@@ -25,7 +25,11 @@ const (
 	tidDown = "https://tidradio.com/pages/programming-software"
 	rddDown = "https://www.radioddity.com/pages/download-center"
 	hiroWeb = "https://globalhiroyasu.com/"
+	tytWeb  = "https://www.tyt888.com/"
 )
+
+// rt21Fixed30: nota dei modelli GMRS della famiglia Retevis RT21
+const rt21Fixed30 = " 30 canali GMRS senza nome." + " I canali con una frequenza GMRS fissa non si cancellano e non cambiano frequenza (come in CHIRP)."
 
 func info(label, url string) catLink { return catLink{"info", label, url} }
 
@@ -57,6 +61,18 @@ var catalogOther = []catItem{
 	{ID: "mt-tk6", Brand: "MaxTalker", Name: "TK-6", Type: "analog", Drivers: []string{"mt-tk6"}, Notes: "È una Quansheng UV-K5. " + chirpNote("MaxTalkerTK6")},
 
 	// ------------------------------------------------ Radtel
+	// 4.2: Radtel RT-590 / RT-600 (la stessa radio della Quansheng UV-K5 / UV-5R
+	// Plus: file del firmware di Radtel nel formato di Quansheng, verificati con uvtools)
+	{ID: "rtl-rt-590", Brand: "Radtel", Name: "RT-590 / RT-590 Plus", Aliases: []string{"RT-590", "RT-590 Plus"}, Type: "analog", Drivers: []string{"qs-uvk5"}, FW: "k5",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: "È la Quansheng UV-K5: canali e impostazioni con il driver di CHIRP della UV-K5 (firmware originale 2.01.xx). " +
+			"Firmware: il file .bin di Radtel (es. «590 231110_v2.01.32_publish.bin», in RT590_update_file_v2.01.32.rar) con il caricatore " +
+			"della radio (accesa tenendo premuto il PTT, torcia accesa), come il programma di Radtel."},
+	{ID: "rtl-rt-600", Brand: "Radtel", Name: "RT-600 / RT-600 Plus", Aliases: []string{"RT-600", "RT-600 Plus"}, Type: "analog", Drivers: []string{"qs-uvk5"}, FW: "k5",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: "È la Quansheng UV-5R Plus: canali e impostazioni con il driver di CHIRP della UV-K5 (firmware originale 4.00.xx). " +
+			"Firmware: il file .bin di Radtel (es. «5RPLUS_v4.00.06_publish.bin», in RT600_update_file_v4.00.06.rar) con il caricatore " +
+			"della radio (accesa tenendo premuto il PTT)."},
 	{ID: "rtl-rt-900", Brand: "Radtel", Name: "RT-900", Type: "analog", Drivers: []string{"rt-rt900"},
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT900") + " 999 canali."},
 	{ID: "rtl-rt-900-bt", Brand: "Radtel", Name: "RT-900 BT", Aliases: []string{"RT-900 Bluetooth"}, Type: "analog", Drivers: []string{"rt-rt900bt"},
@@ -179,4 +195,56 @@ var catalogOther = []catItem{
 	{ID: "zt-zt-x6", Brand: "Zastone", Name: "ZT-X6", Type: "pmr", Drivers: []string{"zt-ztx6"}, Notes: "È la Retevis RT22. " + chirpNote("ZTX6")},
 	{ID: "lt-lt-316", Brand: "Luiton", Name: "LT-316", Type: "pmr", Drivers: []string{"lt-lt316"}, Notes: "È la Retevis RT22. " + chirpNote("LT316")},
 	{ID: "tid-td-m8", Brand: "TID", Name: "TD-M8", Type: "pmr", Drivers: []string{"tid-tdm8"}, Notes: "È la Retevis RT22. " + chirpNote("TDM8")},
+	// ------------------------------------------------ 4.2: famiglia TYT TH-UV88 (th_uv88.py)
+	{ID: "tyt-th-uv88", Brand: "TYT", Name: "TH-UV88", Type: "analog", Drivers: []string{"tyt-thuv88"}, Links: []catLink{info("Sito TYT", tytWeb)},
+		Notes: chirpNote("THUV88Radio") + " 200 canali con nome di 10 caratteri, tre potenze (5, 2,5 e 0,5 W)."},
+	{ID: "tyt-th-uv98", Brand: "TYT", Name: "TH-UV98", Type: "analog", Drivers: []string{"tyt-thuv98"}, Links: []catLink{info("Sito TYT", tytWeb)},
+		Notes: chirpNote("THUV98Radio") + " Piattaforma della TH-UV88 (protocollo «UV98»)."},
+	{ID: "rtv-rt85", Brand: "Retevis", Name: "RT85", Type: "analog", Drivers: []string{"rt-rt85"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: "È la TYT TH-UV88. " + chirpNote("RT85")},
+	{ID: "rtv-ra89", Brand: "Retevis", Name: "RA89", Type: "analog", Drivers: []string{"rt-ra89"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: chirpNote("RA89") + " Piattaforma della TYT TH-UV88 (protocollo «UV99»)."},
+	{ID: "rtv-p2", Brand: "Retevis", Name: "P2", Type: "analog", Drivers: []string{"rt-p2"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: chirpNote("P2") + " Radio senza display, piattaforma della TYT TH-UV88."},
+	{ID: "rtv-p62", Brand: "Retevis", Name: "P62", Type: "analog", Drivers: []string{"rt-p62"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: chirpNote("P62") + " Radio senza display, piattaforma della TYT TH-UV88."},
+	{ID: "ex-qrz-1", Brand: "Explorer", Name: "QRZ-1", Type: "analog", Drivers: []string{"ex-qrz1"},
+		Notes: chirpNote("QRZ1") + " Piattaforma della TYT TH-UV88 (protocollo «UV78»)."},
+
+	// ------------------------------------------------ 4.2: famiglia Radtel RT-490 (radtel_rt490.py)
+	{ID: "rtl-rt-490", Brand: "Radtel", Name: "RT-490", Type: "analog", Drivers: []string{"rtl-rt490"}, Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: chirpNote("RT490Radio") + " 256 canali con nome di 12 caratteri (anche in cinese, GB2312), bande aerea, VHF, 220, 350 e UHF."},
+	{ID: "mml-jc-8629", Brand: "MMLradio", Name: "JC-8629", Type: "analog", Drivers: []string{"mml-jc8629"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("MML8629Radio")},
+	{ID: "jjcc-jc-8629", Brand: "JJCC", Name: "JC-8629", Type: "analog", Drivers: []string{"jjcc-jc8629"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("JJCC8629Radio")},
+	{ID: "soc-jc-8629", Brand: "Socotran", Name: "JC-8629", Type: "analog", Drivers: []string{"soc-jc8629"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("SocotranJC8629Radio")},
+	{ID: "soc-fb-8629", Brand: "Socotran", Name: "FB-8629", Type: "analog", Drivers: []string{"soc-fb8629"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("SocotranFB8629Radio")},
+	{ID: "jp-8800-plus", Brand: "Jianpai", Name: "8800 Plus", Type: "analog", Drivers: []string{"jp-8800plus"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("Jianpai8629Radio")},
+	{ID: "bor-8rs", Brand: "Boristone", Name: "8RS", Type: "analog", Drivers: []string{"bor-8rs"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("Boristone8RSRadio")},
+	{ID: "ab-ar-869", Brand: "Abbree", Name: "AR-869", Type: "analog", Drivers: []string{"ab-ar869"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("AbbreeAR869Radio")},
+	{ID: "hg-hg-590", Brand: "HamGeek", Name: "HG-590", Type: "analog", Drivers: []string{"hg-hg590"}, Notes: "Stessa radio della Radtel RT-490. " + chirpNote("HamGeekHG590Radio")},
+
+	// ------------------------------------------------ 4.2: famiglia Retevis RT21 (retevis_rt21.py)
+	{ID: "rtv-rt21", Brand: "Retevis", Name: "RT21", Type: "pmr", Drivers: []string{"rt-rt21"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT21Radio") + " 16 canali UHF senza nome."},
+	{ID: "rtv-rt21v", Brand: "Retevis", Name: "RT21V", Type: "pmr", Drivers: []string{"rt-rt21v"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT21VRadio") + " 5 canali VHF senza nome."},
+	{ID: "rtv-rb17a", Brand: "Retevis", Name: "RB17A", Type: "gmrs", Drivers: []string{"rt-rb17a"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RB17ARadio") + rt21Fixed30},
+	{ID: "rtv-rb23", Brand: "Retevis", Name: "RB23", Type: "gmrs", Drivers: []string{"rt-rb23"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RB23Radio") + rt21Fixed30},
+	{ID: "rtv-rb26", Brand: "Retevis", Name: "RB26", Type: "gmrs", Drivers: []string{"rt-rb26"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RB26Radio") + rt21Fixed30},
+	{ID: "rtv-rb626", Brand: "Retevis", Name: "RB626", Type: "pmr", Drivers: []string{"rt-rb626"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RB626") + " 32 canali senza nome."},
+	{ID: "rtv-rb89", Brand: "Retevis", Name: "RB89", Type: "gmrs", Drivers: []string{"rt-rb89"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RB89Radio") + " 30 canali senza nome (in CHIRP senza canali fissi)."},
+	{ID: "rtv-rt76", Brand: "Retevis", Name: "RT76", Type: "gmrs", Drivers: []string{"rt-rt76"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT76Radio") + rt21Fixed30},
+	{ID: "rtv-rt29", Brand: "Retevis", Name: "RT29", Aliases: []string{"RT29 UHF", "RT29 VHF"}, Type: "analog", Drivers: []string{"rt-rt29u", "rt-rt29v"},
+		Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT29UHFRadio / RT29VHFRadio") + " Versioni UHF e VHF, 16 canali senza nome, 10 W."},
+	{ID: "rtv-rt19", Brand: "Retevis", Name: "RT19", Type: "gmrs", Drivers: []string{"rt-rt19"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT19Radio") + " 22 canali FRS." + fixedNote("FRS")},
+	{ID: "rtv-rt619", Brand: "Retevis", Name: "RT619", Type: "pmr", Drivers: []string{"rt-rt619"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT619Radio") + " 16 canali PMR446." + fixedNote("PMR446")},
+	{ID: "ab-ar-63", Brand: "Abbree", Name: "AR-63", Type: "pmr", Drivers: []string{"ab-ar63"}, Notes: chirpNote("AR63Radio") + " 16 canali UHF senza nome."},
+	{ID: "rtv-rt40b", Brand: "Retevis", Name: "RT40B", Type: "gmrs", Drivers: []string{"rt-rt40b"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT40BRadio") + " 22 canali GMRS." + fixedNote("GMRS")},
+	{ID: "rtv-rb28b", Brand: "Retevis", Name: "RB28B", Type: "gmrs", Drivers: []string{"rt-rb28b"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RB28BRadio") + " 22 canali FRS." + fixedNote("FRS")},
+	{ID: "rtv-rb628b", Brand: "Retevis", Name: "RB628B", Type: "pmr", Drivers: []string{"rt-rb628b"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RB628BRadio") + " 16 canali PMR446." + fixedNote("PMR446")},
+	{ID: "rtv-rt86", Brand: "Retevis", Name: "RT86", Type: "pmr", Drivers: []string{"rt-rt86"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT86Radio") + " 16 canali UHF senza nome."},
+	{ID: "rtv-rt86s", Brand: "Retevis", Name: "RT86S", Type: "pmr", Drivers: []string{"rt-rt86s"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT86SRadio") + " 30 canali senza nome, tre potenze."},
+	{ID: "rtv-rt86a", Brand: "Retevis", Name: "RT86A", Type: "pmr", Drivers: []string{"rt-rt86a"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT86ARadio") + " 30 canali senza nome; potenza alta o media (come CHIRP)."},
+
+	// ------------------------------------------------ 4.2: Quansheng TK11 (tk11.py)
+	{ID: "qs-tk11", Brand: "Quansheng", Name: "TK11", Type: "analog", Drivers: []string{"qs-tk11"}, Links: []catLink{info("Download center Quansheng", qsDown)},
+		Notes: chirpNote("TK11") + " 999 canali con nome di 16 caratteri, ricezione da 0,15 a 1160 MHz (AM, SSB e CW restano come sono), tre potenze."},
 }

@@ -627,7 +627,7 @@ func (f uv5rFam) Download(ctx context.Context, m *genModel, port string, prog Pr
 		if ver, dropped, err = s.radioVersion(); err != nil {
 			return nil, info, genFail("Lettura della versione", err)
 		}
-		info += fmt.Sprintf(", firmware %q", string(bytes.TrimRight(ver, "\x00\xff ")))
+		info += fmt.Sprintf(", firmware %q", string(trimBytes(ver, 0x00, 0xFF, ' ')))
 	}
 	for a := 0; a < 0x1800; a += 0x40 {
 		if ctx.Err() != nil {
@@ -722,7 +722,7 @@ func (f uv5rFam) Upload(ctx context.Context, m *genModel, port string, img []byt
 		if err != nil {
 			return info, genFail("Lettura dell'area ausiliaria", err)
 		}
-		info += fmt.Sprintf(", firmware %q", string(bytes.TrimRight(rver, "\x00\xff ")))
+		info += fmt.Sprintf(", firmware %q", string(trimBytes(rver, 0x00, 0xFF, ' ')))
 		radioOrig := false
 		if i := bytes.Index(rver, []byte("BFB")); i >= 0 && i+6 <= len(rver) {
 			v, err := strconv.Atoi(string(rver[i+3 : i+6]))

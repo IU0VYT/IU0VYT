@@ -438,7 +438,7 @@ func (s *rt900Sess) enter() error {
 		if err != nil {
 			return err
 		}
-		if got := strings.TrimSpace(strings.Trim(string(mb), "\x00\xff")); got != o.model {
+		if got := strings.TrimSpace(string(trimBytesBoth(mb, 0x00, 0xFF))); got != o.model {
 			return rErr("la radio si è identificata come «%s», non come %s: è il modello giusto?", got, o.model)
 		}
 	}

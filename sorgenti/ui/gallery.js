@@ -35,6 +35,8 @@ const BRAND_COLOR = {
   Baofeng: '#1c64d8', Bajeton: '#e8590c', Quansheng: '#0f8a5f', Retevis: '#c2255c', Radtel: '#7048e8', Radioddity: '#d9480f',
   TIDRADIO: '#1098ad', TID: '#0b7285', BTECH: '#495057', Abbree: '#5f3dc4', MaxTalker: '#2b8a3e', Intek: '#a61e4d', Maverick: '#364fc7',
   WLN: '#e67700', Zastone: '#087f5b', Luiton: '#862e9c', Hiroyasu: '#b02a8f', Anysecu: '#1971c2', Talkpod: '#5c940d',
+  TYT: '#c92a2a', Explorer: '#2f9e44', MMLradio: '#9c36b5', JJCC: '#e8590c', Socotran: '#3b5bdb', Jianpai: '#0c8599',
+  Boristone: '#a0522d', HamGeek: '#f08c00',
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];

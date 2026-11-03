@@ -214,6 +214,16 @@ K5REF_JS (cartella "js" dei sorgenti di uvtools, https://github.com/egzumer/uvto
 node, TestK5FirmwareUvtools confronta con il codice di uvtools la decifratura e tutti
 i byte inviati alla radio:
      K5REF_JS=percorso/uvtools/js go test -mod=vendor -run TestK5FirmwareUvtools -v .
+Dalla 4.2, con K5REF_BIN (percorsi di file .bin veri separati da «;», es. i firmware
+2.01.32 della Radtel RT-590 e 4.00.06 della RT-600 di radtels.com) lo stesso confronto
+si fa anche sui file dei costruttori.
+
+FAMIGLIE NUOVE DELLA 4.2 (TH-UV88, RT-490, RT21, TK11)
+Confronto con CHIRP come per le altre (TestChirpDecode/Encode/Clone/Layout e
+TestSettingsChirp). Per le radio con tutti i canali fissi (FRS, PMR446, GMRS della
+famiglia RT21) le modifiche di prova cambiano toni, scansione e, dove CHIRP lo
+permette, potenza, banda e trasmissione (chirpFixedEdits); chirpref.py non tocca i
+campi immutabili che non cambiano, come l'interfaccia di CHIRP.
 
 SITO: RIQUADRO DELLE MARCHE (cartella "sito", 4.1)
 Il riquadro «PLAYER SELECT» di docs/index.html si rigenera dal catalogo:

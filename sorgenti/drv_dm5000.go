@@ -151,7 +151,7 @@ func (f dm5kFam) Get(m *genModel, img []byte, i int) *Chan {
 		return nil
 	}
 	c := &Chan{Rx: int64(binary.LittleEndian.Uint32(r[6:])) * 10, Tx: int64(binary.LittleEndian.Uint32(r[10:])) * 10}
-	c.Name = strings.TrimRight(string(bytes.TrimRight(r[32:48], "\xff\x00")), " ")
+	c.Name = strings.TrimRight(string(trimBytes(r[32:48], 0xFF, 0x00)), " ")
 	if r[16] == 1 {
 		c.Power = m.powerSem(0)
 	} else {

@@ -742,6 +742,13 @@ func newRBEmu(sp *rbSpec, img []byte) *rbEmu {
 
 func (bft8Fam) emu(m *genModel, img []byte) genEmu { return newRBEmu(bft8o(m).spec, img) }
 func (t18Fam) emu(m *genModel, img []byte) genEmu  { return newRBEmu(t18o(m).spec, img) }
+func (rt21Fam) emu(m *genModel, img []byte) genEmu {
+	// RB28B/RB628B: memoria di 0x1F0 byte letta a blocchi di 0x20 (CHIRP legge
+	// anche l'ultimo blocco intero)
+	sp := *rt21o(m).spec
+	sp.memsize = (sp.memsize + sp.block - 1) / sp.block * sp.block
+	return newRBEmu(&sp, img)
+}
 
 func (e *rbEmu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return append([]byte{}, e.img...) }
 
@@ -805,7 +812,7 @@ func (e *rbEmu) serve(p Port) error {
 			d := append([]byte{}, e.img[a:a+n]...)
 			e.mu.Unlock()
 			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
-			if !e.sp.noAck {
+			if !e.sp.noAck && (a != 0 || !e.sp.noAckFirst) {
 				if b, err := one(); err != nil || b != 0x06 {
 					return fmt.Errorf("conferma attesa")
 				}

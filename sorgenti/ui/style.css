@@ -282,7 +282,7 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 @media (max-width: 600px) { .infotab th { width: 120px; } .infocard { padding: 18px 16px; } }
 
 /* ------------------------------------------------ schede delle radio aperte */
-#tabs { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; max-width: calc(100vw - 330px); }
+#tabs { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; flex: 0 1 auto; min-width: 0; }
 #radiotabs { display: contents; }
 .tab.gen { padding-right: 8px; }
 .tab .x { display: inline-block; margin-left: 6px; width: 16px; height: 16px; line-height: 15px; text-align: center; border-radius: 4px; opacity: .55; font-weight: 400; }
@@ -491,3 +491,12 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .autobanner .btn.small { padding: 2px 10px; font-size: 12px; background: #ffd54a; color: #10142a; border-color: #ffd54a; font-weight: 700; }
 .autobanner .btn.small:hover { background: #fff; }
 @keyframes abblink { to { visibility: hidden; } }
+
+/* 4.2: «Identifica Nuova Radio Automaticamente» nella barra in alto (attivo solo con
+   l'identificazione automatica attiva) */
+#topbar .btn.autonew { flex: none; font-weight: 800; font-size: 12.5px; padding: 5px 10px; color: #10142a; background: #ffd54a; border: 2px solid #ffd54a;
+  box-shadow: 0 0 0 2px rgba(255,213,74,.25), 0 0 12px rgba(255,213,74,.45); white-space: nowrap; }
+#topbar .btn.autonew:hover:not(:disabled) { background: #fff3c4; border-color: #fff3c4; }
+#topbar .btn.autonew:disabled { color: #8a93a6; background: #3a4356; border-color: #4a5468; box-shadow: none; cursor: not-allowed; opacity: 1; }
+/* finestre strette: il testo va su due righe, le schede scorrono */
+@media (max-width: 1320px) { #topbar .btn.autonew { font-size: 11.5px; padding: 3px 8px; white-space: normal; max-width: 172px; line-height: 1.15; text-align: center; } }

@@ -22,6 +22,7 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -42,9 +43,11 @@ type cableJob struct {
 	CanStop bool        `json:"canStop"`
 	// Auto: ricerca avviata dall'identificazione automatica (4.0): lascia il
 	// posto a qualsiasi operazione chiesta dall'utente (yieldAuto)
-	Auto    bool `json:"auto"`
-	cancel  context.CancelFunc
-	started time.Time
+	Auto bool `json:"auto"`
+	// answered: durante la ricerca una radio ha risposto (identificazione automatica)
+	answered atomic.Bool
+	cancel   context.CancelFunc
+	started  time.Time
 }
 
 func (j *cableJob) set(phase string, canStop bool) {

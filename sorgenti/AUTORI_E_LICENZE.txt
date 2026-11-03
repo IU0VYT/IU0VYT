@@ -62,6 +62,11 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
                                             (c) 2025 Thibaut Berg (UV-K1)
   drivers/mml_jc8810.py                     Copyright 2023 Jim Unroe
   drivers/tdh8.py                           Copyright 2012 Dan Smith (e altri autori)
+  drivers/th_uv88.py                        2020 James Berry; Jim Unroe (GPL v2 o succ.)
+  drivers/radtel_rt490.py                   Copyright 2023 angeof9 (GPL v3; anche BSD a
+                                            2 clausole)
+  drivers/retevis_rt21.py                   Copyright 2021-2026 Jim Unroe
+  drivers/tk11.py                           Copyright 2012 Dan Smith; 2025 Thibaut Berg
   drivers/baofeng_digital.py                Copyright 2024 Marcos Del Sol Vives
                                             (GPL v2 o succ.; usato come riferimento
                                             per W31D, BF-T20D e BF-V12D: codici dei
@@ -70,8 +75,9 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
 File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
 drv_h777.go, drv_small.go, drv_rt900.go, drv_ga510.go, drv_gm30.go, drv_dm32.go,
-drv_uvk5.go, drv_jc8810.go, drv_tdh8.go, drv_bfd.go (riferimento incrociato) e le
-radio simulate genemu_*.go. Grazie agli autori di CHIRP.
+drv_uvk5.go, drv_jc8810.go, drv_tdh8.go, drv_thuv88.go, drv_rt490.go, drv_rt21.go,
+drv_tk11.go, drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go.
+Grazie agli autori di CHIRP.
 
 AGGIORNAMENTO DEL FIRMWARE DELLA QUANSHENG UV-K5 (4.1)
 Il formato dei file .bin di Quansheng e il protocollo del caricatore della UV-K5 sono

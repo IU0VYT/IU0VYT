@@ -187,7 +187,7 @@ func (e *k67Emu) session(p Port) error {
 	if o := op[0] ^ seed; o != 'R' && o != 'W' {
 		return errors.New("modo errato")
 	} else {
-		e.note("HS:" + string(o) + ":" + string(bytes.TrimRight(xorBytes(pw, seed), "\xff")))
+		e.note("HS:" + string(o) + ":" + string(trimBytes(xorBytes(pw, seed), 0xFF)))
 	}
 	p.Write([]byte{'A' ^ seed})
 	for {

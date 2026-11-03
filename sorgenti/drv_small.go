@@ -875,6 +875,13 @@ type rbSpec struct {
 	noAck    bool
 	echo     bool
 	enterAck byte
+	// 4.2 (famiglia Retevis RT21 di CHIRP, retevis_rt21.py): wblock: blocchi
+	// scritti più piccoli di quelli letti (BLOCK_SIZE_UP); noAckFirst: nessuna
+	// conferma dopo il primo blocco letto (_ack_1st_block = False); ackReads: il
+	// saluto si invia una volta sola e si leggono fino a ackReads byte cercando 0x06
+	wblock     int
+	noAckFirst bool
+	ackReads   int
 }
 
 // rbSend: invia e, con i cavi che restituiscono i byte inviati, li scarta
@@ -891,7 +898,22 @@ func (s *rawSess) rbSend(sp *rbSpec, b []byte) error {
 func (s *rawSess) rbEnter(sp *rbSpec) error {
 	ok := false
 	got := false
-	for k := 0; k < sp.tries && !ok; k++ {
+	if sp.ackReads > 0 {
+		if err := s.rbSend(sp, sp.magic); err != nil {
+			return err
+		}
+		for k := 0; k < sp.ackReads && !ok; k++ {
+			b := readUpTo(s.ctx, s.p, 1, sp.to)
+			if s.ctx.Err() != nil {
+				return errCancelled
+			}
+			if len(b) == 1 {
+				got = true
+				ok = b[0] == 0x06
+			}
+		}
+	}
+	for k := 0; k < sp.tries && !ok && sp.ackReads == 0; k++ {
 		if err := s.rbSend(sp, sp.magic); err != nil {
 			return err
 		}
@@ -987,7 +1009,7 @@ func rbDownload(ctx context.Context, port string, baud int, sp *rbSpec, prog Pro
 			}
 			return nil, rErr("lettura del blocco 0x%04X non riuscita", a)
 		}
-		if !sp.noAck {
+		if !sp.noAck && (a != 0 || !sp.noAckFirst) {
 			if err := s.rbSend(sp, []byte{0x06}); err != nil {
 				return nil, err
 			}
@@ -1021,10 +1043,14 @@ func rbUpload(ctx context.Context, port string, baud int, sp *rbSpec, img []byte
 	if err := s.rbEnter(sp); err != nil {
 		return genFail("Identificazione", err)
 	}
+	wb := sp.block
+	if sp.wblock > 0 {
+		wb = sp.wblock
+	}
 	for _, r := range sp.ranges {
-		for a := r[0]; a < r[1]; a += sp.block {
+		for a := r[0]; a < r[1]; a += wb {
 			prog(a, sp.memsize, "Scrittura…")
-			if err := s.rbSend(sp, append([]byte{'W', byte(a >> 8), byte(a), byte(sp.block)}, img[a:a+sp.block]...)); err != nil {
+			if err := s.rbSend(sp, append([]byte{'W', byte(a >> 8), byte(a), byte(wb)}, img[a:a+wb]...)); err != nil {
 				return err
 			}
 			ack := readUpTo(ctx, s.p, 1, sp.to)

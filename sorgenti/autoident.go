@@ -10,36 +10,29 @@ package main
 // Identificazione automatica (4.0, scheda «Identifica», pulsante «Abilita
 // identificazione automatica»; la scelta resta salvata nelle impostazioni).
 //
-// Con l'opzione attiva il programma, in qualsiasi scheda ci si trovi:
-//   - controlla ogni secondo le porte seriali e i dispositivi USB delle radio
-//     DMR, anche mentre una ricerca è in corso (4.1: prima il controllo si
-//     fermava durante la ricerca e un cavo scollegato e ricollegato in quel
-//     momento non veniva notato);
-//   - quando compare una porta nuova (cavo di programmazione appena collegato)
-//     o un dispositivo USB di una radio, avvia da solo la stessa ricerca della
-//     scheda «Identifica» (solo comandi di lettura, nessuna scrittura);
-//   - se la radio non risponde (ad esempio è ancora spenta) la ricerca si ripete
-//     finché il cavo resta collegato: prima ogni pochi secondi, poi più di rado;
+// Regole (4.2, come richiesto):
+//   - con l'opzione attiva il programma, in qualsiasi scheda ci si trovi,
+//     controlla ogni secondo le porte dei cavi di programmazione e i dispositivi
+//     USB delle radio DMR, anche mentre una ricerca è in corso;
+//   - un cavo appena collegato (porta nuova) avvia la ricerca della radio, con gli
+//     stessi comandi di sola lettura della scheda «Identifica». Se nessuna radio
+//     risponde la ricerca si ripete in silenzio (la radio può essere accesa dopo);
+//   - il riquadro «Identificazione Radio In Corso» compare solo quando una radio
+//     risponde davvero (byte ricevuti che non sono l'eco del cavo) e sparisce
+//     quando la radio è riconosciuta o la ricerca finisce senza riconoscerla: con
+//     il cavo senza radio non compare;
 //   - quando la radio è riconosciuta l'interfaccia ne mostra i dati e apre la sua
-//     scheda con i canali letti. Da quel momento (4.1) il programma controlla ogni
-//     pochi secondi che la radio sia ancora collegata, con il solo saluto iniziale
-//     del suo protocollo (lo stesso con cui comincia la ricerca): se la radio non
-//     risponde più (cavo staccato dalla radio, radio spenta o sostituita) la
-//     ricerca riparte da sola e riconosce la radio collegata dopo, anche se è la
-//     stessa. Prima la porta restava ferma finché il cavo non veniva staccato dal
-//     PC: una radio scollegata e ricollegata con il cavo ancora nel PC non veniva
-//     più cercata.
-//
-// Si interrogano solo le porte dei cavi di programmazione (adattatori USB-seriale
-// CH340, Prolific, Silicon Labs, FTDI…), mai porte Bluetooth, modem o porte
-// seriali di sistema. Le porte con il nome di un adattatore noto hanno la
-// precedenza; un cavo appena collegato (o una radio appena scollegata) interrompe
-// una ricerca ripetuta su un'altra porta. Una ricerca automatica lascia sempre il
-// posto alle operazioni chieste dall'utente (yieldAuto): lettura, scrittura,
-// firmware, inoltro e ricerca manuale la interrompono subito.
+//     scheda; subito dopo la ricerca si ferma (l'opzione resta attiva): nessuna
+//     porta viene più interrogata finché non si preme «Identifica Nuova Radio
+//     Automaticamente» (barra in alto) o non si collega un altro cavo;
+//   - si interrogano solo le porte dei cavi di programmazione (adattatori
+//     USB-seriale CH340, Prolific, Silicon Labs, FTDI…), mai porte Bluetooth,
+//     modem o porte seriali di sistema; gli adattatori noti hanno la precedenza;
+//   - una ricerca automatica lascia sempre il posto alle operazioni chieste
+//     dall'utente (yieldAuto): lettura, scrittura, firmware, inoltro e ricerca
+//     manuale la interrompono subito.
 
 import (
-	"context"
 	"errors"
 	"net/http"
 	"sort"
@@ -54,11 +47,7 @@ var (
 	autoRetryFast = 3 * time.Second         // pausa tra le ricerche nei primi minuti
 	autoRetrySlow = 20 * time.Second        // pausa tra le ricerche dopo autoFastTries
 	autoFastTries = 8
-	// controllo della presenza della radio riconosciuta
-	autoPresenceEvery = 4 * time.Second
-	autoPresenceWait  = 4 * time.Second // attesa massima della risposta al saluto
-	autoPresenceMiss  = 2               // controlli senza risposta prima di dire «scollegata»
-	autoQuiet         = 1500 * time.Millisecond
+	autoQuiet     = 1500 * time.Millisecond // pausa dopo un saluto interrotto (la radio torna pronta)
 	// usbRadioPresentFunc: c'è un dispositivo USB di una radio DMR conosciuta
 	// (impostata dalla versione Windows)
 	usbRadioPresentFunc = func() bool { return false }
@@ -69,15 +58,9 @@ type autoPort struct {
 	strong     bool // adattatore USB-seriale riconosciuto dal nome
 	next       time.Time
 	tries      int
-	done       bool   // radio riconosciuta: si controlla solo la presenza
-	kind       string // radio riconosciuta (per il controllo della presenza)
-	miss       int
-	checkNext  time.Time
-	lostKind   string    // radio scollegata (controllo della presenza)
-	lostAt     time.Time //
-	falseLoss  int       // radio «scollegata» e ritrovata uguale dopo pochi secondi
-	gone       bool      // porta sparita (cavo staccato dal PC)
-	paused     bool      // ricerca interrotta dall'utente («Interrompi»): fino a «Riprendi» o al ricollegamento del cavo
+	done       bool // ricerca ferma (radio riconosciuta qui o altrove)
+	paused     bool // ricerca interrotta dall'utente («Interrompi»)
+	gone       bool // porta sparita (cavo staccato dal PC)
 }
 
 // autoEvent: esito dell'ultima ricerca automatica che ha trovato la radio
@@ -86,21 +69,11 @@ type autoEvent struct {
 	Port   string       `json:"port"`
 	Result *identResult `json:"result"`
 	When   string       `json:"when"`
-	Again  bool         `json:"again"` // stessa radio ritrovata dopo uno scollegamento
-}
-
-// autoLost: ultima radio data per scollegata
-type autoLost struct {
-	Seq  int    `json:"seq"`
-	Port string `json:"port"`
-	Name string `json:"name"`
-	When string `json:"when"`
 }
 
 type autoRun struct {
-	p        *autoPort
-	job      *cableJob
-	presence bool
+	p   *autoPort
+	job *cableJob
 }
 
 type autoIdent struct {
@@ -111,11 +84,9 @@ type autoIdent struct {
 	seq        int
 	last       *autoEvent
 	ident      *identSession // radio dell'ultimo esito (per identify/open con "seq")
-	lostSeq    int
-	lost       *autoLost
 	status     string
 	run        *autoRun
-	quietUntil time.Time // pausa dopo un saluto interrotto (la radio torna pronta)
+	quietUntil time.Time
 	stop       chan struct{}
 }
 
@@ -189,8 +160,19 @@ func (a *App) stopAutoIdent() {
 	a.auto.mu.Unlock()
 }
 
-// autoStep: un controllo di porte e dispositivi; avvia al massimo una ricerca o
-// un controllo della presenza, senza aspettarne la fine
+func (a *App) autoAllLocked() []*autoPort {
+	var all []*autoPort
+	for _, p := range a.auto.ports {
+		all = append(all, p)
+	}
+	if a.auto.usb != nil {
+		all = append(all, a.auto.usb)
+	}
+	return all
+}
+
+// autoStep: un controllo di porte e dispositivi; avvia al massimo una ricerca,
+// senza aspettarne la fine
 func (a *App) autoStep(now time.Time) {
 	if !a.autoEnabled() {
 		a.auto.mu.Lock()
@@ -237,17 +219,10 @@ func (a *App) autoStep(now time.Time) {
 	}
 	a.auto.usbWas = usb
 
-	var all []*autoPort
-	for _, p := range a.auto.ports {
-		all = append(all, p)
-	}
-	if a.auto.usb != nil {
-		all = append(all, a.auto.usb)
-	}
-	// ricerche da fare: prima le porte appena collegate (o con la radio appena
-	// scollegata), poi gli adattatori noti, poi la più vecchia
+	// ricerche da fare: prima le porte appena collegate, poi gli adattatori
+	// noti, poi la più vecchia
 	var cands []*autoPort
-	for _, p := range all {
+	for _, p := range a.autoAllLocked() {
 		if !p.done && !p.paused {
 			cands = append(cands, p)
 		}
@@ -269,11 +244,10 @@ func (a *App) autoStep(now time.Time) {
 			break
 		}
 	}
-
 	if r := a.auto.run; r != nil {
-		// porta staccata dal PC durante la ricerca, oppure una porta appena
-		// collegata mentre si ripete la ricerca su un'altra: si interrompe
-		if r.p.gone || (due != nil && due != r.p && due.tries == 0 && (r.presence || r.p.tries > 0)) {
+		// cavo staccato dal PC durante la ricerca, oppure un cavo appena collegato
+		// mentre si ripete la ricerca su un'altra porta: si interrompe
+		if r.p.gone || (due != nil && due != r.p && due.tries == 0 && r.p.tries > 0) {
 			if r.job.cancel != nil {
 				r.job.cancel()
 			}
@@ -281,82 +255,54 @@ func (a *App) autoStep(now time.Time) {
 		a.autoStatusLocked(cands, due)
 		return
 	}
-	if userBusy {
-		return
+	if !userBusy && due != nil {
+		a.autoLaunchLocked(due)
 	}
-	if due != nil {
-		a.autoLaunchLocked(due, false)
-		a.autoStatusLocked(cands, due)
-		return
-	}
-	// controllo della presenza delle radio riconosciute
-	for _, p := range all {
-		if p.done && p.kind != "" && p.name != "USB" && !p.checkNext.After(now) {
-			a.autoLaunchLocked(p, true)
-			break
-		}
-	}
-	a.autoStatusLocked(cands, nil)
+	a.autoStatusLocked(cands, due)
 }
 
 func (a *App) autoStatusLocked(cands []*autoPort, due *autoPort) {
-	if r := a.auto.run; r != nil && !r.presence {
-		a.auto.status = "Ricerca della radio su " + r.p.name + "…"
+	if r := a.auto.run; r != nil {
+		if r.job.answered.Load() {
+			a.auto.status = "Una radio risponde su " + r.p.name + ": identificazione in corso…"
+		} else {
+			a.auto.status = "Controllo del cavo su " + r.p.name + " (nessuna radio ha ancora risposto)"
+		}
 		return
 	}
-	var done []string
-	for _, p := range a.auto.ports {
-		if p.done {
-			done = append(done, p.name)
-		}
-	}
-	if a.auto.usb != nil && a.auto.usb.done {
-		done = append(done, "USB")
+	all := a.autoAllLocked()
+	done, paused := false, false
+	for _, p := range all {
+		done = done || p.done
+		paused = paused || p.paused
 	}
 	switch {
-	case len(cands) == 0 && a.autoPausedLocked():
-		a.auto.status = "Ricerca interrotta: premi «Riprendi la ricerca» o ricollega il cavo"
-	case len(cands) == 0 && len(done) == 0:
-		a.auto.status = "In attesa del collegamento di una radio"
+	case len(all) == 0:
+		a.auto.status = "In attesa del collegamento del cavo di programmazione"
+	case len(cands) == 0 && done && a.auto.last != nil:
+		a.auto.status = "Radio riconosciuta: " + a.auto.last.Result.Name + " (" + a.auto.last.Port +
+			"). Ricerca ferma: per un'altra radio premi «Identifica Nuova Radio Automaticamente»"
+	case len(cands) == 0 && paused:
+		a.auto.status = "Ricerca interrotta: premi «Identifica Nuova Radio Automaticamente» o ricollega il cavo"
 	case len(cands) == 0:
-		sort.Strings(done)
-		a.auto.status = "Radio collegata già riconosciuta (" + strings.Join(done, ", ") + "): se la scolleghi o la cambi, la ricerca riparte da sola"
+		a.auto.status = "Ricerca ferma: per cercare una radio premi «Identifica Nuova Radio Automaticamente»"
 	case due == nil:
-		a.auto.status = "In attesa che la radio risponda (" + cands[0].name + "): accendila con il volume a metà"
+		a.auto.status = "Nessuna radio risponde (" + cands[0].name + "): collegala al cavo e accendila con il volume a metà"
 	}
 }
 
-func (a *App) autoPausedLocked() bool {
-	for _, p := range a.auto.ports {
-		if p.paused {
-			return true
-		}
-	}
-	return a.auto.usb != nil && a.auto.usb.paused
-}
-
-// autoLaunchLocked: avvia la ricerca (o il controllo della presenza) su p in un
-// goroutine; con a.auto.mu già preso
-func (a *App) autoLaunchLocked(p *autoPort, presence bool) {
-	var j *cableJob
-	var err error
-	if presence {
-		j, err = a.startPresence(p.name, p.kind)
-	} else {
-		j, err = a.startIdentify(&identReq{Port: p.name}, true)
-	}
+// autoLaunchLocked: avvia la ricerca su p in un goroutine; con a.auto.mu già preso
+func (a *App) autoLaunchLocked(p *autoPort) {
+	j, err := a.startIdentify(&identReq{Port: p.name}, true)
 	if err != nil {
 		return // un'altra operazione è appena partita: si riprova al prossimo controllo
 	}
-	r := &autoRun{p: p, job: j, presence: presence}
+	r := &autoRun{p: p, job: j}
 	a.auto.run = r
-	if !presence {
-		a.auto.status = "Ricerca della radio su " + p.name + "…"
-	}
 	go a.autoWait(r)
 }
 
-// autoWait: attende la fine della ricerca o del controllo e ne registra l'esito
+// autoWait: attende la fine della ricerca e ne registra l'esito
 func (a *App) autoWait(r *autoRun) {
 	j := r.job
 	for j.isRunning() {
@@ -374,40 +320,10 @@ func (a *App) autoWait(r *autoRun) {
 	if a.auto.run == r {
 		a.auto.run = nil
 	}
-	p := r.p
-	if r.presence {
-		present, _ := res.(bool)
-		switch {
-		case state == "cancelled":
-			p.checkNext = now.Add(autoPresenceEvery)
-		case state == "done" && present:
-			p.miss = 0
-			p.checkNext = now.Add(autoPresenceEvery)
-			if p.falseLoss >= 3 {
-				p.checkNext = now.Add(8 * autoPresenceEvery)
-			}
-			a.auto.quietUntil = now.Add(autoQuiet)
-		default:
-			p.miss++
-			p.checkNext = now.Add(autoPresenceEvery / 2)
-			if p.miss >= autoPresenceMiss {
-				// la radio non risponde più: scollegata, spenta o sostituita
-				a.auto.lostSeq++
-				name := p.kind
-				if a.auto.last != nil && a.auto.last.Port == p.name && a.auto.last.Result != nil {
-					name = a.auto.last.Result.Name
-				}
-				a.auto.lost = &autoLost{Seq: a.auto.lostSeq, Port: p.name, Name: name, When: now.Format("15:04:05")}
-				p.lostKind, p.lostAt = p.kind, now
-				p.done, p.kind, p.miss, p.tries, p.next = false, "", 0, 0, now
-				a.auto.status = "Radio scollegata da " + p.name + ": in attesa di una radio"
-			}
-		}
-		return
-	}
 	if state == "cancelled" {
 		a.auto.quietUntil = now.Add(autoQuiet)
 	}
+	p := r.p
 	if p.gone {
 		return // cavo staccato durante la ricerca: la porta ricomparirà come nuova
 	}
@@ -415,22 +331,15 @@ func (a *App) autoWait(r *autoRun) {
 	ir, _ := res.(*identResult)
 	switch {
 	case state == "done" && ir != nil && ir.Found:
-		again := p.lostKind != "" && p.lostKind == ir.Kind
-		if again && now.Sub(p.lostAt) < 2*autoPresenceEvery {
-			// «scollegata» e ritrovata uguale dopo pochi secondi: forse la radio
-			// non aveva risposto al saluto per un attimo; dalla terza volta il
-			// controllo della presenza si fa più di rado (mai disattivato)
-			p.falseLoss++
+		// radio riconosciuta: la ricerca si ferma su tutte le porte (l'opzione
+		// resta attiva; si riprende con «Identifica Nuova Radio Automaticamente»)
+		for _, x := range a.autoAllLocked() {
+			x.done = true
 		}
-		p.done, p.kind, p.miss = true, ir.Kind, 0
-		p.checkNext = now.Add(autoPresenceEvery)
-		p.lostKind = ""
 		a.auto.seq++
-		a.auto.last = &autoEvent{Seq: a.auto.seq, Port: p.name, Result: ir, When: now.Format("15:04:05"), Again: again}
+		a.auto.last = &autoEvent{Seq: a.auto.seq, Port: p.name, Result: ir, When: now.Format("15:04:05")}
 		a.auto.ident = id
-		a.auto.status = "Radio riconosciuta: " + ir.Name + " (" + p.name + ")"
 	case state == "cancelled":
-		// interrotta dall'utente o da un'altra operazione: si riprova dopo
 		p.next = now.Add(autoRetryFast)
 		p.tries-- // la ricerca non è arrivata in fondo
 	default:
@@ -440,6 +349,20 @@ func (a *App) autoWait(r *autoRun) {
 		}
 		p.next = now.Add(d)
 	}
+}
+
+// autoRescan: nuova ricerca su tutti i cavi collegati (pulsante «Identifica Nuova
+// Radio Automaticamente»); restituisce il numero di porte da cercare
+func (a *App) autoRescan() int {
+	a.auto.mu.Lock()
+	defer a.auto.mu.Unlock()
+	now := time.Now()
+	n := 0
+	for _, p := range a.autoAllLocked() {
+		p.done, p.paused, p.tries, p.next = false, false, 0, now
+		n++
+	}
+	return n
 }
 
 // autoIdentSession: radio riconosciuta dall'esito automatico seq (nil se nel
@@ -453,10 +376,9 @@ func (a *App) autoIdentSession(seq int) *identSession {
 	return a.auto.ident
 }
 
-// yieldAuto: interrompe la ricerca automatica (o il controllo della presenza)
-// in corso, per lasciare il cavo all'operazione chiesta dall'utente; attende al
-// massimo pochi secondi, più la breve pausa che serve alla radio per tornare
-// pronta dopo un saluto interrotto
+// yieldAuto: interrompe la ricerca automatica in corso, per lasciare il cavo
+// all'operazione chiesta dall'utente; attende al massimo pochi secondi, più la
+// breve pausa che serve alla radio per tornare pronta dopo un saluto interrotto
 func (a *App) yieldAuto() {
 	a.mu.Lock()
 	j := a.job
@@ -482,158 +404,18 @@ func (a *App) yieldAuto() {
 	}
 }
 
-// ---------------------------------------------------------------- presenza
-
-// startPresence: controllo della presenza della radio kind sulla porta (lavoro
-// automatico: lascia il posto a qualsiasi operazione dell'utente)
-func (a *App) startPresence(port, kind string) (*cableJob, error) {
-	ctx, cancel := context.WithCancel(context.Background())
-	j := &cableJob{ID: "presenza", Op: "presence", State: "running", cancel: cancel, started: time.Now(), Notes: []string{}, Log: []string{}, Auto: true}
-	a.mu.Lock()
-	if a.job != nil && a.job.isRunning() {
-		a.mu.Unlock()
-		cancel()
-		return nil, errors.New("è già in corso un'operazione con la radio")
-	}
-	a.job = j
-	a.mu.Unlock()
-	go func() {
-		defer cancel()
-		present := false
-		func() {
-			defer func() { _ = recover() }()
-			present = a.runPresence(ctx, port, kind)
-		}()
-		j.mu.Lock()
-		defer j.mu.Unlock()
-		if ctx.Err() != nil {
-			j.State = "cancelled"
-		} else {
-			j.State, j.Result = "done", present
-		}
-	}()
-	return j, nil
-}
-
-// runPresence: la radio kind risponde al saluto iniziale del suo protocollo?
-// Si invia solo l'inizio della lettura (lo stesso della ricerca) e ci si ferma
-// alla prima risposta, senza leggere la memoria.
-func (a *App) runPresence(ctx context.Context, port, kind string) bool {
-	identPortMu.Lock()
-	defer identPortMu.Unlock()
-	plan := a.identPlan(&identReq{Port: port})
-	tried := false
-	for _, pr := range plan {
-		var fn func(ctx context.Context) error
-		switch {
-		case pr.k67 && kind == kindXLC, pr.bt && kind == kindDAT:
-			creq := &cableReq{Op: "read", Radio: kindXLC, Port: port, Baud: pr.baud, Password: a.store.Get().K67Pwd}
-			if pr.bt {
-				creq.Radio, creq.Baud, creq.Password = kindDAT, 0, ""
-			}
-			fn = func(c context.Context) error {
-				_, _, _, e := a.cableRead(c, &cableJob{Notes: []string{}, Log: []string{}}, creq)
-				return e
-			}
-		default:
-			for _, m := range pr.kinds {
-				if m.ID == kind {
-					mm := m
-					fn = func(c context.Context) error {
-						_, _, e := mm.Fam.Download(c, mm, port, func(int, int, string) {})
-						return e
-					}
-				}
-			}
-		}
-		if fn == nil {
-			continue
-		}
-		tried = true
-		if presenceProbe(ctx, fn) {
-			return true
-		}
-		if ctx.Err() != nil {
-			return false
-		}
-	}
-	return !tried // radio non verificabile: si considera ancora collegata
-}
-
-// presenceProbe: esegue fn con la porta controllata e la interrompe appena la
-// radio risponde (true) o dopo autoPresenceWait senza risposta (false)
-func presenceProbe(ctx context.Context, fn func(ctx context.Context) error) bool {
-	st := &probeState{}
-	old := openPortFunc
-	openPortFunc = func(name string, baud int) (Port, error) {
-		p, err := old(name, baud)
-		if err != nil {
-			return nil, err
-		}
-		return probePort{p, st}, nil
-	}
-	defer func() { openPortFunc = old }()
-	pctx, cancel := context.WithTimeout(ctx, autoPresenceWait)
-	defer cancel()
-	done := make(chan struct{})
-	go func() {
-		t := time.NewTicker(20 * time.Millisecond)
-		defer t.Stop()
-		for {
-			select {
-			case <-done:
-				return
-			case <-t.C:
-				if st.answered() {
-					cancel()
-					return
-				}
-			}
-		}
-	}()
-	func() {
-		defer func() { _ = recover() }()
-		_ = fn(pctx)
-	}()
-	close(done)
-	return st.answered()
-}
-
 // ---------------------------------------------------------------- API
 
-// identify/auto: stato (e, con "enabled", attivazione o disattivazione)
+// identify/auto: stato; con "enabled" attivazione o disattivazione, con "stop"
+// interruzione della ricerca, con "rescan" nuova ricerca su tutti i cavi
 func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 	var req struct {
 		Enabled *bool `json:"enabled"`
-		Stop    bool  `json:"stop"`   // interrompe la ricerca in corso (banner «Interrompi»)
-		Resume  bool  `json:"resume"` // riprende le ricerche interrotte
+		Stop    bool  `json:"stop"`   // riquadro: «Interrompi»
+		Rescan  bool  `json:"rescan"` // «Identifica Nuova Radio Automaticamente»
 	}
 	if err := decode(r, &req); err != nil {
 		return nil, err
-	}
-	if req.Stop {
-		// tutte le ricerche in attesa (le radio già riconosciute restano controllate)
-		a.auto.mu.Lock()
-		for _, p := range a.auto.ports {
-			if !p.done {
-				p.paused = true
-			}
-		}
-		if a.auto.usb != nil && !a.auto.usb.done {
-			a.auto.usb.paused = true
-		}
-		a.auto.mu.Unlock()
-		a.yieldAuto()
-	}
-	if req.Resume {
-		a.auto.mu.Lock()
-		for _, p := range a.auto.ports {
-			p.paused = false
-		}
-		if a.auto.usb != nil {
-			a.auto.usb.paused = false
-		}
-		a.auto.mu.Unlock()
 	}
 	if req.Enabled != nil {
 		st := a.store.Get()
@@ -645,27 +427,47 @@ func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 			a.yieldAuto()
 		}
 	}
+	if req.Stop {
+		a.auto.mu.Lock()
+		for _, p := range a.autoAllLocked() {
+			if !p.done {
+				p.paused = true
+			}
+		}
+		a.auto.mu.Unlock()
+		a.yieldAuto()
+	}
+	rescanned := -1
+	if req.Rescan {
+		if !a.autoEnabled() {
+			return nil, errors.New("attiva prima l'identificazione automatica nella scheda «Identifica»")
+		}
+		rescanned = a.autoRescan()
+		a.autoStep(time.Now())
+	}
 	a.auto.mu.Lock()
 	defer a.auto.mu.Unlock()
 	ports := []string{}
-	for n := range a.auto.ports {
-		ports = append(ports, n)
-	}
-	if a.auto.usb != nil {
-		ports = append(ports, "USB")
+	for _, p := range a.autoAllLocked() {
+		ports = append(ports, p.name)
 	}
 	sort.Strings(ports)
-	searching, port := false, ""
-	if r := a.auto.run; r != nil && !r.presence {
-		searching, port = true, r.p.name
+	searching, busy, port := false, false, ""
+	if r := a.auto.run; r != nil {
+		busy, port = true, r.p.name
+		searching = r.job.answered.Load() // una radio ha risposto: riquadro visibile
+	}
+	paused := false
+	for _, p := range a.autoAllLocked() {
+		paused = paused || p.paused
 	}
 	out := map[string]interface{}{"enabled": a.autoEnabled(), "status": a.auto.status, "ports": ports, "searching": searching,
-		"searchPort": port, "seq": a.auto.seq, "lostSeq": a.auto.lostSeq, "paused": a.autoPausedLocked()}
+		"busy": busy, "searchPort": port, "seq": a.auto.seq, "paused": paused}
+	if rescanned >= 0 {
+		out["rescanned"] = rescanned
+	}
 	if a.auto.last != nil {
 		out["last"] = a.auto.last
-	}
-	if a.auto.lost != nil {
-		out["lost"] = a.auto.lost
 	}
 	return out, nil
 }

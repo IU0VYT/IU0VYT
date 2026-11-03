@@ -160,4 +160,41 @@ func TestK5FirmwareUvtools(t *testing.T) {
 		}
 		t.Logf("versione %s: decifratura e %d pacchetti (%d byte) identici a uvtools", c.ver, len(ref.Packets), len(want))
 	}
+	// 4.2: file .bin veri dei costruttori (K5REF_BIN = percorsi separati da «;»,
+	// es. il firmware 2.01.32 della Radtel RT-590 scaricato da radtels.com)
+	for _, f := range strings.Split(os.Getenv("K5REF_BIN"), ";") {
+		if f == "" {
+			continue
+		}
+		packed, err := os.ReadFile(f)
+		if err != nil {
+			t.Fatal(err)
+		}
+		out, err := exec.Command("node", "verifica/k5/k5ref.js", dir, f).Output()
+		if err != nil {
+			t.Fatalf("uvtools: %v", err)
+		}
+		var ref struct {
+			Version  string   `json:"version"`
+			Firmware string   `json:"firmware"`
+			Packets  []string `json:"packets"`
+		}
+		if err := json.Unmarshal(out, &ref); err != nil {
+			t.Fatal(err)
+		}
+		img := analyzeK5(filepath.Base(f), "prova", packed)
+		if !img.Info.Valid || hex.EncodeToString(img.Ver) != ref.Version || hex.EncodeToString(img.Dec) != ref.Firmware {
+			t.Fatalf("%s: analisi o decifratura diversa da uvtools (%+v)", f, img.Info)
+		}
+		e := newK5BootEmu(img.Info.Version[:1] + ".00.06")
+		k5Attach(t, e)
+		if _, err := k5Update(context.Background(), "COM5", img.Ver, img.Dec, func(int, int, string) {}, func(string) {}, func() {}); err != nil {
+			t.Fatal(err)
+		}
+		want, _ := hex.DecodeString(strings.Join(ref.Packets, ""))
+		if !bytes.Equal(e.rx, want) || !bytes.Equal(e.flash[:len(img.Dec)], img.Dec) {
+			t.Fatalf("%s: byte inviati diversi da uvtools", f)
+		}
+		t.Logf("%s (versione %s): decifratura e %d pacchetti identici a uvtools", filepath.Base(f), img.Info.Version, len(ref.Packets))
+	}
 }

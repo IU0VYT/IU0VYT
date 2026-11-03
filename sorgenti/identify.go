@@ -162,7 +162,14 @@ type probeState struct {
 	tx, rx  []byte
 	genuine bool // la radio ha risposto (byte diversi dall'eco di quelli inviati)
 	first   []byte
+	// onAnswer: chiamata alla prima risposta della radio (identificazione
+	// automatica: da lì compare il riquadro «Identificazione Radio In Corso»)
+	onAnswer func()
 }
+
+// identAnswerKey: valore del contesto con la funzione da chiamare quando una radio
+// risponde durante la ricerca (vedi probeState.onAnswer)
+type identAnswerKey struct{}
 
 func (s *probeState) answered() bool {
 	s.mu.Lock()
@@ -191,6 +198,9 @@ func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration
 			s.rx = append(s.rx, b...)
 			if !bytes.Contains(s.tx, s.rx) {
 				s.genuine = true
+				if s.onAnswer != nil {
+					go s.onAnswer()
+				}
 			}
 		}
 		if len(s.first) < 64 {
@@ -205,6 +215,7 @@ func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration
 // identSilentMax il tentativo si interrompe (silent = true).
 func probe(ctx context.Context, fn func(ctx context.Context) error) (st *probeState, silent bool, err error) {
 	st = &probeState{}
+	st.onAnswer, _ = ctx.Value(identAnswerKey{}).(func())
 	old := openPortFunc
 	openPortFunc = func(name string, baud int) (Port, error) {
 		p, err := old(name, baud)
@@ -303,7 +314,7 @@ type identSession struct {
 
 // printable: testo leggibile dei byte (nil se non è testo)
 func identText(b []byte) string {
-	b = bytes.TrimRight(b, "\x00\xff ")
+	b = trimBytes(b, 0x00, 0xFF, ' ')
 	if len(b) == 0 {
 		return ""
 	}
@@ -960,6 +971,7 @@ func (a *App) startIdentify(req *identReq, auto bool) (*cableJob, error) {
 	_, _ = rand.Read(b)
 	ctx, cancel := context.WithCancel(context.Background())
 	j := &cableJob{ID: hex.EncodeToString(b), Op: "identify", State: "running", cancel: cancel, started: time.Now(), Notes: []string{}, Log: []string{}, Auto: auto}
+	ctx = context.WithValue(ctx, identAnswerKey{}, func() { j.answered.Store(true) })
 	a.mu.Lock()
 	if a.job != nil && a.job.isRunning() {
 		a.mu.Unlock()

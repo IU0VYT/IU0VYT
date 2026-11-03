@@ -434,7 +434,7 @@ func (s *uv17Sess) ident() error {
 			if mg.cmd[0] == 'M' && o.modelIDs != nil {
 				// come il programma del costruttore: dopo una breve pausa si leggono
 				// tutti i byte arrivati e si confronta il nome del modello
-				got := string(bytes.TrimRight(readUpTo(s.ctx, s.p, 32, 400*time.Millisecond), "\x00\xff "))
+				got := string(trimBytes(readUpTo(s.ctx, s.p, 32, 400*time.Millisecond), 0x00, 0xFF, ' '))
 				if s.ctx.Err() != nil {
 					return errCancelled
 				}

@@ -183,7 +183,7 @@ func rdtyToneEnc(t genTone) uint16 {
 }
 
 func rdtyName(b []byte) string {
-	n := bytes.IndexAny(b, "\xff\x00")
+	n := indexAnyByte(b, 0xFF, 0x00)
 	if n < 0 {
 		n = len(b)
 	}
@@ -479,7 +479,7 @@ func (s *rdtySess) enter(m *genModel) (string, error) {
 	if ident != rdtyo(m).ident {
 		return ident, rErr("modello errato: la radio si identifica come %q", ident)
 	}
-	ver := strings.TrimRight(string(id[8:12]), "\x00\xff")
+	ver := string(trimBytes(id[8:12], 0x00, 0xFF))
 	s.bank = -1
 	return ident + " " + ver, nil
 }

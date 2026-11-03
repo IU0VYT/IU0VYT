@@ -152,10 +152,15 @@ def json_to_mem(r, n, c):
     if c is None:
         mem.empty = True
         return mem
-    mem.empty = False
-    mem.freq = c["rx"]
     # come l'interfaccia di CHIRP: un campo non modificabile (immutable) non
-    # viene toccato se il valore non cambia
+    # viene toccato se il valore non cambia (canali fissi FRS, PMR, GMRS)
+    fixed = getattr(mem, "immutable", []) or []
+
+    def setf(name, val):
+        if not (name in fixed and getattr(mem, name) == val):
+            setattr(mem, name, val)
+    setf("empty", False)
+    setf("freq", c["rx"])
     if c.get("txOff"):
         dup, off = "off", 0
     elif c["tx"] == c["rx"]:
@@ -167,7 +172,6 @@ def json_to_mem(r, n, c):
         dup, off = "+", c["tx"] - c["rx"]
     else:
         dup, off = "-", c["rx"] - c["tx"]
-    fixed = getattr(mem, "immutable", []) or []
     if not ("duplex" in fixed and mem.duplex == dup):
         mem.duplex = dup
     if off is not None and not ("offset" in fixed and (mem.offset == off or dup == "off")):
@@ -201,8 +205,8 @@ def json_to_mem(r, n, c):
             if not rf.has_rx_dtcs:
                 mem.dtcs = rx[1]
     if c.get("power", -1) >= 0 and rf.valid_power_levels:
-        mem.power = rf.valid_power_levels[c["power"]]
-    mem.mode = c.get("mode") or "FM"
+        setf("power", rf.valid_power_levels[c["power"]])
+    setf("mode", c.get("mode") or "FM")
     mem.skip = "" if c.get("scan", True) else "S"
     mem.name = c.get("name", "")
     return mem

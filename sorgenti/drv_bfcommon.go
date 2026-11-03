@@ -446,7 +446,7 @@ func (f bfcFam) Download(ctx context.Context, m *genModel, port string, prog Pro
 	if err != nil {
 		return nil, "", genFail("Lettura della versione", err)
 	}
-	info := fmt.Sprintf("firmware %q", string(bytes.TrimRight(b1[48:62], "\x00\xff ")))
+	info := fmt.Sprintf("firmware %q", string(trimBytes(b1[48:62], 0x00, 0xFF, ' ')))
 	dropped := b2[15] == 0xFF
 	end := 0x2000
 	if dropped {
@@ -497,7 +497,7 @@ func (f bfcFam) Upload(ctx context.Context, m *genModel, port string, img []byte
 			return "", genFail("Lettura dell'area ausiliaria", err)
 		}
 	}
-	info := fmt.Sprintf("firmware %q", string(bytes.TrimRight(blk[1][48:62], "\x00\xff ")))
+	info := fmt.Sprintf("firmware %q", string(trimBytes(blk[1][48:62], 0x00, 0xFF, ' ')))
 	r1 := append(append([]byte{}, blk[2]...), blk[3][0:32]...)
 	r2, r3 := blk[3][48:64], blk[4][16:64]
 	dropped := blk[5][15] == 0xFF

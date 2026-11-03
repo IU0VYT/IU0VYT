@@ -119,8 +119,11 @@ func randSetVal(rnd *rand.Rand, d *setDef, cur string) (string, bool) {
 		if err != nil {
 			return "", false
 		}
-		if d.Dec > 0 {
+		if d.Dec >= 3 {
 			f += float64(rnd.Intn(11)-5) * math.Pow(10, -float64(d.Dec)) * 100
+		} else if d.Dec > 0 {
+			// es. stazioni FM in MHz con un decimale (TK11: 76-108 MHz): pochi passi
+			f += float64(rnd.Intn(11)-5) * math.Pow(10, -float64(d.Dec))
 		} else {
 			f += float64(rnd.Intn(11) - 5)
 		}
