@@ -133,14 +133,14 @@ func TestIdentifyEachModel(t *testing.T) {
 				}
 				other++
 			}
-			read := a.ident.sess.Base
+			read := j.sess.sess.Base
 			if res.Count != len(packed(genChans(genByID[res.Kind], read))) {
 				t.Errorf("%s: %d canali", m.Name, res.Count)
 			}
-			if b, ok := a.ident.mems[m.ID]; ok && res.Kind != m.ID {
+			if b, ok := j.sess.mems[m.ID]; ok && res.Kind != m.ID {
 				read = b // proposto tra gli altri modelli: si apre con la sua lettura
 			}
-			if _, ok := a.ident.mems[m.ID]; ok || res.Kind == m.ID {
+			if _, ok := j.sess.mems[m.ID]; ok || res.Kind == m.ID {
 				// letta con il driver del modello: stessi canali della radio simulata
 				g1, g2 := genChans(m, read), genChans(m, mem)
 				for i := range g2 {

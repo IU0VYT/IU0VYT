@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "4.2.0"
+const appVersion = "4.3.0"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")

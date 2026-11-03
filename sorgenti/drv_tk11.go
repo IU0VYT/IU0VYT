@@ -365,7 +365,7 @@ func (f tk11Fam) Download(ctx context.Context, m *genModel, port string, prog Pr
 }
 
 func (f tk11Fam) DownloadMeta(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, map[string]interface{}, string, error) {
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return nil, nil, "", err
 	}
@@ -403,7 +403,7 @@ func (f tk11Fam) Upload(ctx context.Context, m *genModel, port string, img []byt
 		return "", fmt.Errorf("immagine della memoria incompleta (%d byte invece di %d)", len(img), tk11MemSize)
 	}
 	img = img[:tk11MemSize]
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return "", err
 	}

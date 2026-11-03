@@ -261,7 +261,7 @@ func k5Update(ctx context.Context, port string, ver, fw []byte, prog Progress, l
 	if len(fw) == 0 || len(fw) > k5FwMax {
 		return 0, fmt.Errorf("dimensione del firmware non valida")
 	}
-	p, err := openPortFunc(port, 38400)
+	p, err := openPort(port, 38400)
 	if err != nil {
 		return 0, err
 	}

@@ -85,19 +85,19 @@ var catalogOther = []catItem{
 	{ID: "rtl-rt-950-pro", Brand: "Radtel", Name: "RT-950 Pro", Type: "analog", Drivers: []string{"bj-9000"},
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
 		Notes: "Stessa radio della Bajeton BJ-9000: canali e impostazioni come nella scheda BJ-9000. Il firmware Radtel si aggiorna con il programma del costruttore."},
-	// 4.1: famiglia MML JC-8810 (mml_jc8810.py)
-	{ID: "rtl-rt-470", Brand: "Radtel", Name: "RT-470", Type: "analog", Drivers: []string{"rt-rt470"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470Radio") + " 256 canali, potenze 10/8/4 W."},
-	{ID: "rtl-rt-470l", Brand: "Radtel", Name: "RT-470L", Type: "analog", Drivers: []string{"rt-rt470l"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470LRadio") + " 256 canali."},
-	{ID: "rtl-rt-470x", Brand: "Radtel", Name: "RT-470X", Type: "analog", Drivers: []string{"rt-rt470x"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470XRadio") + " 256 canali; in banda aerea (118-136 MHz) la radio riceve in AM."},
+	// 4.1: famiglia MML JC-8810 (mml_jc8810.py); 4.3: firmware .kdhx di Radtel
+	{ID: "rtl-rt-470", Brand: "Radtel", Name: "RT-470", Type: "analog", Drivers: []string{"rt-rt470"}, FW: "kdhx",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470Radio") + " 256 canali, potenze 10/8/4 W. " + rtlFwNote},
+	{ID: "rtl-rt-470l", Brand: "Radtel", Name: "RT-470L", Type: "analog", Drivers: []string{"rt-rt470l"}, FW: "kdhx",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470LRadio") + " 256 canali. " + rtlFwNote},
+	{ID: "rtl-rt-470x", Brand: "Radtel", Name: "RT-470X", Type: "analog", Drivers: []string{"rt-rt470x"}, FW: "kdhx",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470XRadio") + " 256 canali; in banda aerea (118-136 MHz) la radio riceve in AM. " + rtlFwNote},
 	{ID: "rtl-rt-470x-plus", Brand: "Radtel", Name: "RT-470X Plus", Aliases: []string{"RT-470X BT", "RT-470X Plus BT"}, Type: "analog", Drivers: []string{"rt-rt470xbt"},
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470XPlusRadio") + " Versione con Bluetooth della RT-470X."},
-	{ID: "rtl-rt-630", Brand: "Radtel", Name: "RT-630", Type: "analog", Drivers: []string{"rt-rt630"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT630Radio") + " 256 canali."},
-	{ID: "rtl-rt-495", Brand: "Radtel", Name: "RT-495", Type: "analog", Drivers: []string{"rt-rt495"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT495Radio") + " 256 canali, piattaforma RT-630."},
+	{ID: "rtl-rt-630", Brand: "Radtel", Name: "RT-630", Type: "analog", Drivers: []string{"rt-rt630"}, FW: "kdhx",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT630Radio") + " 256 canali. " + rtlFwNote},
+	{ID: "rtl-rt-495", Brand: "Radtel", Name: "RT-495", Type: "analog", Drivers: []string{"rt-rt495"}, FW: "kdhx",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT495Radio") + " 256 canali, piattaforma RT-630. " + rtlFwNote},
 	{ID: "hy-hi-8811", Brand: "Hiroyasu", Name: "HI-8811", Type: "analog", Drivers: []string{"hy-hi8811"},
 		Links: []catLink{info("Sito Hiroyasu", hiroWeb)}, Notes: chirpNote("HI8811Radio") + " Piattaforma Radtel RT-470L."},
 	{ID: "as-uv-a37", Brand: "Anysecu", Name: "UV-A37", Type: "analog", Drivers: []string{"as-uva37"}, Notes: chirpNote("UVA37Radio") + " 256 canali."},
@@ -125,15 +125,15 @@ var catalogOther = []catItem{
 	// ------------------------------------------------ TIDRADIO
 	// 4.1: famiglia TD-H8 (tdh8.py)
 	{ID: "tid-td-h8", Brand: "TIDRADIO", Name: "TD-H8", Aliases: []string{"TD-H8 HAM", "TD-H8 GMRS"}, Type: "analog",
-		Drivers: []string{"td-tdh8", "td-tdh8ham", "td-tdh8gmrs", "td-tdh8g3", "td-tdh8g3ham", "td-tdh8g3gmrs"},
-		Links:   []catLink{info("Programmi TIDRADIO", tidDown)},
+		Drivers: []string{"td-tdh8", "td-tdh8ham", "td-tdh8gmrs", "td-tdh8g3", "td-tdh8g3ham", "td-tdh8g3gmrs"}, FW: "tdh",
+		Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: chirpNote("TDH8") + " 199 canali con nome di 8 caratteri. Versioni: base, HAM e GMRS, di seconda e di terza generazione " +
-			"(la radio comunica quale è: se scegli quella sbagliata non viene letta)."},
+			"(la radio comunica quale è: se scegli quella sbagliata non viene letta). " + tdhFwNote},
 	{ID: "tid-td-h3", Brand: "TIDRADIO", Name: "TD-H3", Aliases: []string{"TD-H3 HAM", "TD-H3 GMRS"}, Type: "analog",
-		Drivers: []string{"td-tdh3", "td-tdh3ham", "td-tdh3gmrs"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
-		Notes: chirpNote("TDH3") + " 199 canali con nome di 8 caratteri; versioni base, HAM e GMRS."},
-	{ID: "rtl-rt-730", Brand: "Radtel", Name: "RT-730", Type: "analog", Drivers: []string{"rt-rt730"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT730") + " Piattaforma TIDRADIO TD-H8, 199 canali."},
+		Drivers: []string{"td-tdh3", "td-tdh3ham", "td-tdh3gmrs"}, FW: "tdh", Links: []catLink{info("Programmi TIDRADIO", tidDown)},
+		Notes: chirpNote("TDH3") + " 199 canali con nome di 8 caratteri; versioni base, HAM e GMRS. " + tdhFwNote},
+	{ID: "rtl-rt-730", Brand: "Radtel", Name: "RT-730", Type: "analog", Drivers: []string{"rt-rt730"}, FW: "tdh",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT730") + " Piattaforma TIDRADIO TD-H8, 199 canali. " + tdhFwNote},
 	{ID: "tid-td-h6", Brand: "TIDRADIO", Name: "TD-H6", Type: "analog", Drivers: []string{"td-h6"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: chirpNote("TDH6Radio") + " Piattaforma Radioddity GA-510."},
 
@@ -248,3 +248,14 @@ var catalogOther = []catItem{
 	{ID: "qs-tk11", Brand: "Quansheng", Name: "TK11", Type: "analog", Drivers: []string{"qs-tk11"}, Links: []catLink{info("Download center Quansheng", qsDown)},
 		Notes: chirpNote("TK11") + " 999 canali con nome di 16 caratteri, ricezione da 0,15 a 1160 MHz (AM, SSB e CW restano come sono), tre potenze."},
 }
+
+// rtlFwNote (4.3): firmware .kdhx di Radtel (radtels.com) per RT-470, RT-470L,
+// RT-470X, RT-495 e RT-630
+const rtlFwNote = "Firmware: file .kdhx di Radtel con il caricatore «JJCC Bootloader Pro» (stesso protocollo del «Bootloader Pro» della UV-25 Plus, " +
+	"presentazione automatica della piattaforma JJCC). Modalità manuale: radio accesa tenendo premuti i tasti laterali 2 e 3. La RT-470 ha due schede: " +
+	"il firmware 1.x è solo per la scheda vecchia, il 2.x solo per la nuova (versione nel menu 55): un file sbagliato blocca la radio."
+
+// tdhFwNote (4.3): firmware .BIN di TD-H3, TD-H8 e RT-730
+const tdhFwNote = "Firmware: file .BIN del costruttore con il caricatore comune a TD-H3, TD-H8 e RT-730 (lo stesso dei programmi «H8_IAP» di TIDRADIO e " +
+	"«RT730 Update tool» di Radtel): radio spenta e riaccesa tenendo premuto il PTT. Il caricatore non controlla il modello del firmware: " +
+	"si deve scrivere il modello indicato dal file. Se l'invio si interrompe la radio resta nel caricatore e si ripete l'aggiornamento."

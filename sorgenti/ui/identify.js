@@ -36,10 +36,12 @@ const Identify = {
       <div class="convrow"><button class="btn primary" data-auto>🔄 Abilita identificazione automatica</button>
         <span class="note" data-autost></span></div>
       <div class="note">Con l'identificazione automatica attiva il programma riconosce da solo la radio appena colleghi il cavo di programmazione
-        (con la radio accesa, oppure accendendola dopo) e ne apre la scheda con i canali letti. Si usano solo comandi di lettura e si interrogano solo
-        le porte dei cavi di programmazione. Funziona in qualsiasi scheda: quando una radio collegata risponde compare in basso «Identificazione Radio In Corso».
-        Dopo il riconoscimento la ricerca si ferma; per un'altra radio premi «Identifica Nuova Radio Automaticamente» nella barra in alto
-        (attivo solo quando l'identificazione automatica è attiva). La scelta resta memorizzata anche dopo la chiusura del programma.</div>
+        (con la radio accesa, oppure accendendola dopo: i cavi restano in ascolto) e ne apre la scheda con i canali letti. Con più cavi, su più porte
+        USB, le radio si cercano e si riconoscono <b>insieme</b>, ognuna sul suo cavo. Le radio già riconosciute in passato si provano per prime.
+        Si usano solo comandi di lettura e si interrogano solo le porte dei cavi di programmazione. Funziona in qualsiasi scheda: quando una radio
+        collegata risponde compare in basso «Identificazione Radio In Corso». Dopo il riconoscimento la ricerca su quel cavo si ferma; per un'altra
+        radio premi <b>«Identifica Nuova Radio Automaticamente»</b> nella barra in alto (attivo solo quando l'identificazione automatica è attiva).
+        La scelta resta memorizzata anche dopo la chiusura del programma.</div>
       <h3>2. Ricerca</h3>
       <div class="convrow"><button class="btn primary" data-go>🔎 Identifica la radio</button><button class="btn" data-stop style="display:none">Interrompi</button></div>
       <div data-run style="display:none">
@@ -64,7 +66,7 @@ const Identify = {
     const r = await api('cable/ports', {}, { quiet: true });
     const sel = $('[data-port]', page);
     const cur = sel.value || (r.settings || {}).genPort || '';
-    sel.innerHTML = r.ports.map(p => `<option value="${esc(p.name)}">${esc(p.desc && p.desc !== p.name ? p.desc : p.name)}</option>`).join('') +
+    sel.innerHTML = r.ports.map(p => `<option value="${esc(p.name)}">${esc(portLabel(p))}</option>`).join('') +
       '<option value="USB">USB — radio DMR collegate direttamente (RD-5R, DM-1801, DM-1701)</option>';
     if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
     $('[data-portnote]', page).textContent = r.ports.length ? `Le letture vengono salvate anche in: ${r.backupDir}`
@@ -189,10 +191,12 @@ const AutoIdent = {
     this.st = r;
     if (this.seq === null) this.seq = r.seq; // esiti precedenti all'apertura della pagina: non si ripetono
     this.paint();
-    if (r.last && r.last.seq > this.seq && !this.busy) {
-      this.seq = r.last.seq;
+    // 4.3: più radio (una per cavo) possono essere riconosciute insieme
+    const evs = (r.events || []).filter(e => e.seq > this.seq);
+    if (evs.length && !this.busy) {
+      this.seq = Math.max(...evs.map(e => e.seq));
       this.busy = true;
-      try { await this.found(r.last); } catch (e) { reportError(e); } finally { this.busy = false; }
+      try { await this.found(evs); } catch (e) { reportError(e); } finally { this.busy = false; }
     }
   },
 
@@ -223,7 +227,7 @@ const AutoIdent = {
     if (ban) {
       const show = !!(st && st.enabled && st.searching);
       ban.hidden = !show;
-      if (show) $('.ab-port', ban).textContent = st.searchPort ? `(${st.searchPort})` : '';
+      if (show) $('.ab-port', ban).textContent = (st.answering || []).length ? `(${st.answering.join(', ')})` : '';
     }
     const page = $('#page-ident');
     const btn = page && $('[data-auto]', page);
@@ -233,34 +237,73 @@ const AutoIdent = {
     $('[data-autost]', page).textContent = on ? ('Attiva. ' + (st.status || 'In attesa del collegamento di una radio')) : 'Non attiva.';
   },
 
-  async found(ev) {
-    const r = ev.result;
+  // found: radio riconosciute (una o più insieme). Le schede già aperte non si
+  // toccano: compare l'avviso «Radio già identificata!! Scheda Radio già aperta»
+  // (al plurale con due o più radio); le altre si aprono con i canali letti.
+  async found(evs) {
     const page = $('#page-ident');
     if (Identify.built && !Identify.running) {
-      Identify.result = r;
-      Identify.show(page, r);
+      Identify.result = evs[evs.length - 1].result;
+      Identify.show(page, Identify.result);
     }
-    const kind = r.kind;
-    const old = Views[kind];
-    if (old && old.loaded && !(await old.confirmDiscard())) {
-      toast('Radio riconosciuta: ' + r.name + '. I dati sono nella scheda «Identifica».');
-      return;
+    const already = [], opened = [], kept = [];
+    for (const ev of evs) {
+      const r = ev.result, kind = r.kind;
+      const old = Views[kind];
+      if (old && old.loaded) { already.push(ev); continue; }
+      const res = await api('identify/open', { kind, seq: ev.seq }, { busyText: 'Apertura…' });
+      const v = App.openRadio(kind, false);
+      v.load(res.radio);
+      v.path = '';
+      v.fromRadio = true;
+      v.dirty = true;
+      opened.push(ev);
     }
-    const res = await api('identify/open', { kind, seq: ev.seq }, { busyText: 'Apertura…' });
-    const v = App.openRadio(kind, false);
-    v.load(res.radio);
-    v.path = '';
-    v.fromRadio = true;
-    v.dirty = true;
-    App.onDirty();
-    App.showTab(kind);
-    App.saveSession();
-    const list = (r.fields || []).map(f => f.l + ': ' + f.v);
-    list.push('Canali presenti: ' + r.count);
-    if (r.backup) list.push('Copia della lettura: ' + r.backup);
-    if ((r.others || []).length) list.push('Altri modelli possibili (stesso collegamento): ' + r.others.map(o => o.name).join(', ') + ' — puoi sceglierli nella scheda «Identifica».');
-    list.push('La ricerca automatica ora è ferma: per un\'altra radio premi «Identifica Nuova Radio Automaticamente» nella barra in alto.');
-    await alertDlg('Radio collegata riconosciuta: ' + r.name,
-      `${r.type} — porta ${ev.port}. Ho aperto la sua scheda con i canali letti dalla radio: ricordati di salvarli in un file.`, list);
+    if (opened.length) {
+      App.onDirty();
+      App.showTab(opened[0].result.kind);
+      App.saveSession();
+    } else if (already.length) {
+      App.showTab(already[0].result.kind);
+    }
+    if (already.length) {
+      idBanner(already.length > 1 ? 'Radio già identificate!! Schede radio già aperte' : 'Radio già identificata!! Scheda Radio già aperta',
+        already.map(ev => ev.result.name + ' (' + ev.port + ')').join(' · '));
+    }
+    if (!opened.length) return;
+    const list = [];
+    for (const ev of opened) {
+      const r = ev.result;
+      if (opened.length > 1) list.push('— ' + r.name + ' (' + r.type + ', porta ' + ev.port + ')');
+      for (const f of (r.fields || [])) list.push(f.l + ': ' + f.v);
+      list.push('Canali presenti: ' + r.count);
+      if (r.backup) list.push('Copia della lettura: ' + r.backup);
+      if ((r.others || []).length) list.push('Altri modelli possibili (stesso collegamento): ' + r.others.map(o => o.name).join(', ') + ' — puoi sceglierli nella scheda «Identifica».');
+    }
+    list.push('La ricerca automatica su questi cavi ora è ferma: per un\'altra radio premi «Identifica Nuova Radio Automaticamente» nella barra in alto.');
+    if (opened.length === 1) {
+      const ev = opened[0];
+      await alertDlg('Radio collegata riconosciuta: ' + ev.result.name,
+        `${ev.result.type} — porta ${ev.port}. Ho aperto la sua scheda con i canali letti dalla radio: ricordati di salvarli in un file.`, list);
+    } else {
+      await alertDlg(opened.length + ' radio collegate riconosciute: ' + opened.map(ev => ev.result.name).join(', '),
+        'Ho aperto le loro schede con i canali letti dalle radio: ricordati di salvarli in un file.', list);
+    }
   },
 };
+
+// idBanner (4.3): avviso ben visibile in alto, si chiude da solo dopo alcuni secondi
+function idBanner(title, detail) {
+  let b = $('#idbanner');
+  if (!b) {
+    b = document.createElement('div');
+    b.id = 'idbanner';
+    b.setAttribute('role', 'alert');
+    document.body.appendChild(b);
+  }
+  b.innerHTML = `<b>${esc(title)}</b>${detail ? `<span>${esc(detail)}</span>` : ''}`;
+  b.hidden = false;
+  clearTimeout(idBanner.t);
+  idBanner.t = setTimeout(() => { b.hidden = true; }, 7000);
+  b.onclick = () => { b.hidden = true; };
+}

@@ -409,7 +409,7 @@ func (f tytFam) Match(m *genModel, img []byte) bool { return len(img) == tytMemS
 
 // ---------------------------------------------------------------- protocollo DFU
 
-// Ogni richiesta di controllo passa sul Port (openPortFunc("DFU:0483:DF11")):
+// Ogni richiesta di controllo passa sul Port (openPort("DFU:0483:DF11")):
 // 8 byte (bmRequestType, bRequest, wValue, wIndex, wLength, little endian) e i
 // dati in uscita; risposta: 4 byte (esito, intero con segno: byte trasferiti o
 // errore negativo) e i dati in entrata. Su Windows il Port traduce in richieste
@@ -570,7 +570,7 @@ func (s *dfuSess) reboot() error {
 }
 
 func tytOpen(ctx context.Context, m *genModel) (*dfuSess, string, error) {
-	p, err := openPortFunc(fmt.Sprintf("DFU:%04X:%04X", tytVID, tytPID), 0)
+	p, err := openPort(fmt.Sprintf("DFU:%04X:%04X", tytVID, tytPID), 0)
 	if err != nil {
 		return nil, "", err
 	}

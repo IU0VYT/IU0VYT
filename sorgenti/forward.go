@@ -313,7 +313,7 @@ func (a *App) runForward(ctx context.Context, j *cableJob, req *cableReq) (inter
 				res[k] = v
 			}
 		}
-		resp = genResp{Kind: m.ID, Channels: genChans(m, payload), Def: m.def(), Warnings: []string{}}
+		resp = genResp{Kind: m.ID, Channels: genChans(m, payload), Def: m.def(), Warnings: []string{}, Single: genSingle(m.ID, payload)}
 	} else {
 		// 1. lettura della radio di destinazione = copia di sicurezza
 		j.set("Copia di sicurezza: lettura della radio di destinazione", true)

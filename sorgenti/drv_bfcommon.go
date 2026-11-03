@@ -416,7 +416,7 @@ func (s *bfcSess) readBlock(start, size int, first bool) ([]byte, error) {
 }
 
 func bfcOpen(ctx context.Context, m *genModel, port string) (*bfcSess, error) {
-	p, err := openPortFunc(port, 9600)
+	p, err := openPort(port, 9600)
 	if err != nil {
 		return nil, err
 	}

@@ -46,7 +46,7 @@ func catalogCounts() catCounts {
 			}
 		}
 		switch c.FW {
-		case "anc", "bf", "rh5", "kdhx", "bj9000", "kdh9g", "k5": // come FW_KINDS in ui/gallery.js («link» escluso)
+		case "anc", "bf", "rh5", "kdhx", "bj9000", "kdh9g", "k5", "tdh": // come FW_KINDS in ui/gallery.js («link» escluso)
 			n.Firmware++
 		}
 	}

@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -46,8 +47,10 @@ type cableJob struct {
 	Auto bool `json:"auto"`
 	// answered: durante la ricerca una radio ha risposto (identificazione automatica)
 	answered atomic.Bool
-	cancel   context.CancelFunc
-	started  time.Time
+	// sess: radio riconosciuta dalla ricerca (4.3: una per ricerca, più porte insieme)
+	sess    *identSession
+	cancel  context.CancelFunc
+	started time.Time
 }
 
 func (j *cableJob) set(phase string, canStop bool) {
@@ -125,6 +128,8 @@ func (a *App) apiCablePorts(r *http.Request) (interface{}, error) {
 	if ports == nil {
 		ports = []PortInfo{}
 	}
+	// 4.3: in ordine di numero (COM3, COM6, COM7, COM10…)
+	sort.SliceStable(ports, func(i, j int) bool { return portLess(ports[i].Name, ports[j].Name) })
 	return map[string]interface{}{"ports": ports, "settings": a.store.Get(), "backupDir": a.backupDir()}, nil
 }
 

@@ -387,7 +387,7 @@ func dm5kCheckPwd(b8 []byte) error {
 }
 
 func dm5kOpen(ctx context.Context, port string) (*dm5kLink, error) {
-	p, err := openPortFunc(port, 115200)
+	p, err := openPort(port, 115200)
 	if err != nil {
 		return nil, err
 	}

@@ -465,7 +465,7 @@ func (s *uv17Sess) ident() error {
 func (s *uv17Sess) key() []byte { return []byte(btSymbols[uv17o(s.m).encrsym]) }
 
 func uv17Open(ctx context.Context, m *genModel, port string) (*uv17Sess, error) {
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return nil, err
 	}

@@ -155,7 +155,7 @@ func (h *ancHost) send(payload []byte) error {
 // velocità (la chiusura attende che i byte in uscita siano stati trasmessi).
 func (h *ancHost) reopen(baud int) error {
 	_ = h.p.Close()
-	p, err := openPortFunc(h.name, baud)
+	p, err := openPort(h.name, baud)
 	if err != nil {
 		h.p = nopPort{}
 		return fmt.Errorf("riapertura della porta %s a %d baud non riuscita: %v", h.name, baud, err)
@@ -280,7 +280,7 @@ func ancUpdate(ctx context.Context, port string, fw []byte, o ancOpts, prog Prog
 	if started == nil {
 		started = func() {}
 	}
-	p, err := openPortFunc(port, ancBaudStart)
+	p, err := openPort(port, ancBaudStart)
 	if err != nil {
 		return 0, err
 	}

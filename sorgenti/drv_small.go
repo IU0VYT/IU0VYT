@@ -30,7 +30,7 @@ type rawSess struct {
 }
 
 func rawOpen(ctx context.Context, port string, baud int) (*rawSess, error) {
-	p, err := openPortFunc(port, baud)
+	p, err := openPort(port, baud)
 	if err != nil {
 		return nil, err
 	}

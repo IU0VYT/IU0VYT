@@ -52,6 +52,8 @@ type genResp struct {
 	Channels []*Chan  `json:"channels"`
 	Warnings []string `json:"warnings"`
 	Def      genDef   `json:"def"`
+	// Single (4.3): la radio mostra i canali in un unico elenco (vedi genDivides)
+	Single bool `json:"single,omitempty"`
 }
 
 // genOpen: file .img (anche salvato da CHIRP) per la radio indicata (o riconosciuta)
@@ -75,7 +77,7 @@ func (a *App) genOpen(p string, b []byte, prefer string) (interface{}, error) {
 	a.mu.Lock()
 	a.radios[m.ID] = &radioSession{Path: p, Base: mem, Meta: meta}
 	a.mu.Unlock()
-	return genResp{Kind: m.ID, Path: p, Channels: genChans(m, mem), Warnings: rep.Warnings, Def: m.def()}, nil
+	return genResp{Kind: m.ID, Path: p, Channels: genChans(m, mem), Warnings: rep.Warnings, Def: m.def(), Single: genSingle(m.ID, mem)}, nil
 }
 
 // dimensione minima dell'immagine: deve contenere tutti i canali
@@ -368,7 +370,7 @@ func (a *App) runGenCable(ctx context.Context, j *cableJob, m *genModel, req *ca
 		a.mu.Lock()
 		a.radios[m.ID] = &radioSession{Base: mem, Meta: meta}
 		a.mu.Unlock()
-		resp := genResp{Kind: m.ID, Channels: genChans(m, mem), Def: m.def(), Warnings: []string{}}
+		resp := genResp{Kind: m.ID, Channels: genChans(m, mem), Def: m.def(), Warnings: []string{}, Single: genSingle(m.ID, mem)}
 		return map[string]interface{}{"radio": resp, "backup": bp}, nil
 	}
 	res := map[string]interface{}{}

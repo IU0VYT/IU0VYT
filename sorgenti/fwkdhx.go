@@ -70,6 +70,12 @@ type kdh2Variant struct {
 var (
 	kdhxProto = &kdh2Variant{ID: "kdhx", Hello: []byte("PROGROMH802U"), HelloBaud: 9600, BootBaud: 115200, Reopen: true,
 		Settle: 100 * time.Millisecond, GreetCmd: 0x01, Greet: "BOOTLOADER", ModelAt: -1, WaitEnd: true, MaxPkt: 255}
+	// 4.3: caricatore «JJCC Bootloader Pro» di Radtel (RT-470, RT-470L, RT-470X,
+	// RT-495, RT-630): stesso programma KDH_Bootloader della UV-25 Plus (file
+	// identici per le quattro radio), con il modello MODELTYPE_JJCC8629 nella
+	// presentazione automatica
+	kdhxJJProto = &kdh2Variant{ID: "kdhx", Hello: []byte("PROGROMJJCCU"), HelloBaud: 9600, BootBaud: 115200, Reopen: true,
+		Settle: 100 * time.Millisecond, GreetCmd: 0x01, Greet: "BOOTLOADER", ModelAt: -1, WaitEnd: true, MaxPkt: 255}
 	bj9000Proto = &kdh2Variant{ID: "bj9000", Hello: []byte("PROGRAMBT9000U"), HelloBaud: 115200, BootBaud: 115200,
 		Settle: 80 * time.Millisecond, GreetCmd: 0x0A, Greet: "BOOTLOADER_V3", ModelAt: 992, V3: true, MaxPkt: 65535}
 )
@@ -148,7 +154,7 @@ func (h *kdh2Host) write(b []byte) error {
 // reopen: come il programma originale chiude la porta e la riapre a un'altra velocità
 func (h *kdh2Host) reopen(baud int) error {
 	_ = h.p.Close()
-	p, err := openPortFunc(h.name, baud)
+	p, err := openPort(h.name, baud)
 	if err != nil {
 		h.p = nopPort{}
 		return fmt.Errorf("riapertura della porta %s a %d baud non riuscita: %v", h.name, baud, err)
@@ -341,7 +347,7 @@ func kdh2Update(ctx context.Context, port string, raw []byte, v *kdh2Variant, ma
 	if manual {
 		baud = v.BootBaud
 	}
-	p, err := openPortFunc(port, baud)
+	p, err := openPort(port, baud)
 	if err != nil {
 		return 0, err
 	}
@@ -480,7 +486,7 @@ func kdh9gUpdate(ctx context.Context, port string, raw []byte, manual bool, prog
 	if manual {
 		baud = k9gBaud
 	}
-	p, err := openPortFunc(port, baud)
+	p, err := openPort(port, baud)
 	if err != nil {
 		return 0, err
 	}

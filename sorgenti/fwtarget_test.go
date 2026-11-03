@@ -112,12 +112,12 @@ func TestFwTargets(t *testing.T) {
 	for _, tb := range []struct {
 		kind string
 		tbl  []fwTarget
-	}{{"bf", bfTargets}, {"kdhx", kdhxTargets}} {
+	}{{"bf", bfTargets}, {"kdhx", kdhxTargets}, {"kdhx-radtel", radtelKdhxTargets}, {"tdh", tdhTargets}} {
 		for _, x := range tb.tbl {
 			for _, d := range x.drivers {
 				found := false
 				for _, c := range catalog {
-					if slices.Contains(c.Drivers, d) && (c.FW == "bf" || c.FW == "kdhx") {
+					if slices.Contains(c.Drivers, d) && (c.FW == "bf" || c.FW == "kdhx" || c.FW == "tdh") {
 						found = true
 					}
 				}

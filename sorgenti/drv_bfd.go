@@ -409,7 +409,7 @@ func (f bfdFam) enter(s *pmrSess, m *genModel, write bool) (string, error) {
 }
 
 func pmrOpen(ctx context.Context, port string) (*pmrSess, error) {
-	p, err := openPortFunc(port, 9600)
+	p, err := openPort(port, 9600)
 	if err != nil {
 		return nil, err
 	}

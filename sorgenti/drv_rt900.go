@@ -461,7 +461,7 @@ func (s *rt900Sess) enter() error {
 func (s *rt900Sess) exit() { _ = s.p.Write([]byte{'E'}) }
 
 func rt900Open(ctx context.Context, m *genModel, port string) (*rt900Sess, error) {
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return nil, err
 	}

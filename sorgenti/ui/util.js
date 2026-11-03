@@ -252,3 +252,10 @@ function debounce(fn, ms) {
 }
 
 function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+// portLabel (4.3): «COM6 — USB-SERIAL CH340» (numero della porta in evidenza,
+// senza ripeterlo nella descrizione di Windows)
+function portLabel(p) {
+  const d = String(p.desc || '').replace(new RegExp('\\s*\\(' + String(p.name).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\)\\s*$', 'i'), '').trim();
+  return d && d.toUpperCase() !== String(p.name).toUpperCase() ? `${p.name} — ${d}` : p.name;
+}

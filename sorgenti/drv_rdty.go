@@ -500,7 +500,7 @@ func (s *rdtySess) selBank(addr int) error {
 }
 
 func rdtyOpen(ctx context.Context) (*rdtySess, error) {
-	p, err := openPortFunc(fmt.Sprintf("HID:%04X:%04X", rdtyVID, rdtyPID), 0)
+	p, err := openPort(fmt.Sprintf("HID:%04X:%04X", rdtyVID, rdtyPID), 0)
 	if err != nil {
 		return nil, err
 	}

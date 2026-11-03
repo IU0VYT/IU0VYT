@@ -215,7 +215,7 @@ func k67Open(name string, o *k67Opts) (*k67Session, error) {
 	if baud != 115200 {
 		baud = 19200
 	}
-	p, err := openPortFunc(name, baud)
+	p, err := openPort(name, baud)
 	if err != nil {
 		return nil, err
 	}

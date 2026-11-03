@@ -26,6 +26,7 @@ function genRadioDef(g, fw) {
     hasScan: g.hasScan, zones: g.zones || 0, perZone: g.perZone || 0, first: g.first, narrow: g.narrow, bands: g.bands || [],
     dcs: new Set(g.dcs || []), charset: g.charset || '', noTxOff: g.noTxOff, notes: g.notes || '', generic: true, fw: fw || '', digital: g.digital || '',
     conn: g.conn || '', settings: !!g.settings,
+    divide: g.divide || '', divideAll: g.divideAll || '', divideZones: g.divideZones || '',
   };
 }
 
@@ -45,6 +46,7 @@ function cleanNameFor(d, s) {
 class RadioView {
   constructor(kind, page, def) {
     this.def = def || RADIO_DEF[kind];
+    this.baseDef = this.def; // 4.3: zone originali (la vista può passare all'elenco unico)
     this.kind = kind;
     this.page = page;
     this.loaded = false;
@@ -107,6 +109,8 @@ class RadioView {
           <select data-datver><option value="1.0.8">v1.0.8</option><option value="1.0.9">v1.0.9</option></select></label>
           <label class="note" data-dividebox style="white-space:nowrap;display:none" title="Come nel programma BT-11_CPS v1.0.9 (Channel Divide): canali divisi in 15 zone da 64 oppure tutti i 960 canali in un unico elenco. Cambia anche il modo in cui la radio mostra i canali.">Canali
           <select data-divide><option value="0">in 15 zone da 64</option><option value="1">tutti (960)</option></select></label>` : ''}
+        ${d.generic && d.divide ? `<label class="note" data-dividebox style="white-space:nowrap" title="Come il programma del costruttore: canali divisi in ${d.zones} zone da ${d.perZone} oppure tutti i ${d.slots} canali in un unico elenco. È un'impostazione della radio: cambia anche il modo in cui la radio mostra i canali.">Canali
+          <select data-divide><option value="0">in ${d.zones} zone da ${d.perZone}</option><option value="1">tutti (${d.slots})</option></select></label>` : ''}
         <span class="sep"></span>
         <span class="info" data-info></span>
       </div>
@@ -179,13 +183,15 @@ class RadioView {
     if (dvd) {
       dvd.addEventListener('change', async () => {
         try {
-          const res = await api('radio/settings/set', { kind: this.kind, values: { divide_ch: dvd.value } }, { busyText: 'Applicazione…' });
+          const b = this.baseDef;
+          const values = b.generic ? { [b.divide]: dvd.value === '1' ? b.divideAll : b.divideZones } : { divide_ch: dvd.value };
+          const res = await api('radio/settings/set', { kind: this.kind, values }, { busyText: 'Applicazione…' });
           this.dirty = true;
           App.onDirty();
           this.setLayout(!!res.single);
           this.render();
-          toast(res.single ? 'Canali in un unico elenco (960): salva il file o scrivi nella radio per conservare la scelta.'
-            : 'Canali divisi in 15 zone da 64: salva il file o scrivi nella radio per conservare la scelta.');
+          toast(res.single ? `Canali in un unico elenco (${b.slots}): salva il file o scrivi nella radio per conservare la scelta.`
+            : `Canali divisi in ${b.zones} zone da ${b.perZone}: salva il file o scrivi nella radio per conservare la scelta.`);
         } catch (e) { reportError(e); this.syncDivide(); }
       });
     }
@@ -370,18 +376,19 @@ class RadioView {
   syncDivide() {
     const box = $('[data-dividebox]', this.page), sel = $('[data-divide]', this.page);
     if (!box) return;
-    box.style.display = this.loaded && this.datVer === '1.0.9' ? '' : 'none';
+    box.style.display = this.loaded && (this.baseDef.generic || this.datVer === '1.0.9') ? '' : 'none';
     sel.value = this.single ? '1' : '0';
   }
 
   // Bajeton: canali in 15 zone da 64 oppure in un unico elenco di 960 («tutti i
   // canali» dei file della v1.0.9 di BT-11_CPS, cbB_DivideCH), come il programma originale
   setLayout(single) {
-    if (this.kind !== 'baj') return;
-    const zones = single ? 0 : RADIO_DEF.baj.zones;
+    const base = this.baseDef;
+    if (this.kind !== 'baj' && !(base.generic && base.divide)) return;
+    const zones = single ? 0 : base.zones;
     this.single = !!single;
     if ((this.def.zones || 0) === zones) { this.syncDivide(); return; }
-    this.def = Object.assign({}, RADIO_DEF.baj, { zones, perZone: single ? 0 : RADIO_DEF.baj.perZone });
+    this.def = Object.assign({}, base, { zones, perZone: single ? 0 : base.perZone });
     this.single = !!single;
     this.zone = 0;
     this.build();

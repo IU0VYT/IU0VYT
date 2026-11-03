@@ -547,7 +547,7 @@ func (f uvk5Fam) Download(ctx context.Context, m *genModel, port string, prog Pr
 // DownloadMeta: come Download, con la versione del firmware nei metadati del
 // file .img (uvk5_firmware, come CHIRP)
 func (f uvk5Fam) DownloadMeta(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, map[string]interface{}, string, error) {
-	p, err := openPortFunc(port, 38400)
+	p, err := openPort(port, 38400)
 	if err != nil {
 		return nil, nil, "", err
 	}
@@ -585,7 +585,7 @@ func (f uvk5Fam) Upload(ctx context.Context, m *genModel, port string, img []byt
 	if len(img) < uvk5ProgSize {
 		return "", fmt.Errorf("immagine della memoria incompleta")
 	}
-	p, err := openPortFunc(port, 38400)
+	p, err := openPort(port, 38400)
 	if err != nil {
 		return "", err
 	}

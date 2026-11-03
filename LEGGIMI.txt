@@ -1,11 +1,40 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.2.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.3.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.3.0:
+- IDENTIFICAZIONE AUTOMATICA molto più veloce e completa (vedi "IDENTIFICAZIONE
+  AUTOMATICA"):
+  - un giro completo di prove senza radio dura circa 50 secondi (prima 135);
+  - il programma ascolta di continuo TUTTE le porte dei cavi insieme: riconosce
+    anche una radio collegata spenta e accesa dopo, e più radio collegate a cavi
+    diversi nello stesso momento; ne mostra i dati e ne apre tutte le schede;
+  - le radio già riconosciute (es. K67 Pro, Bajeton 8300, BJ-9000) vengono provate
+    per prime, poi tutte le altre;
+  - se la scheda di una radio riconosciuta è già aperta compare l'avviso "Radio già
+    identificata!! Scheda Radio già aperta" (con più radio: "Radio già
+    identificate!! Schede radio già aperte");
+- scheda Identifica: le porte sono in ordine (COM6, COM7…, poi COM10) e si leggono
+  come "COM6 — USB-SERIAL CH340"; scritta «Identifica Nuova Radio Automaticamente» in
+  grassetto;
+- Bajeton BJ-9000: come la BJ-8300 può usare tutti i 960 canali in un unico elenco,
+  senza zone (scelta "Canali: tutti (960)" nella scheda, impostazione «Divisione dei
+  canali» della radio);
+- AGGIORNAMENTO DEL FIRMWARE per 8 radio in più (vedi "AGGIORNAMENTO DEL FIRMWARE
+  RADTEL RT-470 / RT-495 / RT-630" e "AGGIORNAMENTO DEL FIRMWARE TIDRADIO TD-H3 /
+  TD-H8 E RADTEL RT-730"):
+  - Radtel RT-470, RT-470L, RT-470X, RT-495 e RT-630 con i file .kdhx di Radtel;
+  - TIDRADIO TD-H3, TD-H8 e Radtel RT-730 con i file .BIN del costruttore;
+- schermata Home più compatta: testi dei riquadri più brevi e titolo un po' più
+  piccolo, così in basso si vedono sempre versione, copyright, sito e sorgenti;
+- galleria: una linea spessa separa i modelli compatibili da quelli non compatibili;
+  386 modelli di 27 marche (348 con canali, 302 con impostazioni, 41 con
+  l'aggiornamento del firmware);
+- questo file LEGGIMI: tolta una lunga parte ripetuta per errore nella 4.2.0.
 Novità della 4.2.0:
 - CORRETTO: identificazione automatica. Il riquadro "Identificazione Radio In Corso"
   compariva già all'avvio, anche con il solo cavo e nessuna radio: ora compare solo
@@ -427,6 +456,7 @@ GALLERIA DEI MODELLI
   il programma del costruttore o con programmi liberi: per questi ci sono i link
   ufficiali a programmi, firmware e manuali. N è il numero di modelli (con la ricerca
   e i filtri, quelli mostrati).
+  Dalla 4.3 una linea spessa separa le due parti.
 - In ciascuna parte le radio sono divise per tipologia: Radioamatoriali (VHF/UHF),
   DMR (digitali), GMRS / FRS (USA), PMR446 e radio di uso libero, Per bambini; dentro
   ogni divisione le radio sono separate per marca (prima Baofeng, poi Bajeton, poi le
@@ -702,6 +732,39 @@ AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
   RT590_update_file_v2.01.32.rar e RT600_update_file_v4.00.06.rar, liberi da
   scaricare): stessa procedura (PTT + accensione, torcia accesa). I due file veri sono
   stati provati: decifratura e byte inviati identici al programma uvtools.
+
+AGGIORNAMENTO DEL FIRMWARE RADTEL RT-470 / RT-495 / RT-630 (4.3)
+- Radtel RT-470, RT-470L, RT-470X, RT-495 e RT-630, file .kdhx pubblicati da Radtel
+  (radtels.com, liberi da scaricare, es. "470 serial MFM_V2.13C_20240425.kdhx",
+  "RT470_AllBandTx_V1.27A_20240523.kdhx", "495_NUM_ALLBAND_V0.07_20231207.kdhx",
+  "rt-630 8.33AM137_AMFM.kdhx"), anche dentro l'archivio .rar scaricato.
+- Il programma di Radtel ("New RT470 serial Bootloader Pro", uguale per le quattro
+  radio) è lo stesso "Bootloader Pro" della Baofeng UV-25 Plus con la piattaforma
+  JJCC: stessa procedura, presentazione automatica "PROGROMJJCCU".
+- RT-470: esistono DUE schede elettroniche. Il firmware 1.x è solo per la scheda
+  vecchia (menu 55: FW 1.xx), il 2.x solo per la nuova (FW 2.0 o successivo): Radtel
+  avverte che un file sbagliato blocca la radio. Controlla il menu 55 prima di
+  scegliere il file: il programma mostra per quale scheda è il file e chiede di
+  scrivere il modello per confermare.
+- Modalità automatica (radio accesa) o manuale: radio spenta, accesa tenendo premuti
+  i tasti laterali 2 e 3. I quattro file veri sono stati controllati dal programma
+  e l'invio provato con una radio simulata.
+
+AGGIORNAMENTO DEL FIRMWARE TIDRADIO TD-H3 / TD-H8 E RADTEL RT-730 (4.3)
+- TIDRADIO TD-H3, TD-H8 e Radtel RT-730 (piattaforma TD-H8), file .BIN del
+  costruttore (es. "730Step improvement.BIN" di radtels.com, "H3_240530.BIN").
+- Il caricatore è lo stesso per le tre radio (presentazione identica nei programmi
+  "H8_IAP" di TIDRADIO e "RT730 Update tool" di Radtel; protocollo pubblicato da
+  nicsure, TD-H3-Engineering): 115200 baud, blocchi da 32 byte confermati dalla radio
+  uno per uno.
+- Procedura: collega il cavo alla radio spenta, premi "Avvia aggiornamento" (il
+  programma aspetta 60 secondi) e accendi la radio tenendo premuto il PTT.
+- Il caricatore NON controlla a quale radio è destinato il file (TD-H3, TD-H8 e RT-730
+  hanno firmware diversi): il programma lo ricava dal nome o dal contenuto del file e
+  chiede di scrivere il modello (RT730, TDH3, TDH8). Se l'invio si interrompe la radio
+  resta nel caricatore: riaccendila tenendo premuto il PTT e ripeti.
+- I firmware modificati da terzi (nicsure) sono riconosciuti e segnalati: questo
+  programma, come CHIRP, potrebbe non leggerne più i canali.
 
 AGGIORNAMENTO DEL FIRMWARE BAOFENG
 - Baofeng UV-5RM / UV-5RH (serie con display TFT "330L"), file .BF: protocollo del
@@ -1124,14 +1187,16 @@ IDENTIFICAZIONE DELLA RADIO (3.8)
   scritta. Il numero di serie: nessuna di queste radio lo comunica con il protocollo
   di programmazione (è solo sull'etichetta).
 - "Apri i canali nella scheda della radio": come dopo "Leggi dalla radio".
-- Tempi: senza radio collegata la ricerca completa dura circa 135 secondi (81 tentativi;
-  meno se restringi la ricerca per marca o tipo); una radio
-  che risponde viene trovata appena arriva il suo turno e poi letta.
+- Tempi (4.3): senza radio collegata la ricerca completa dura circa 50 secondi (81
+  tentativi; meno se restringi la ricerca per marca o tipo); prima si provano le radio
+  già riconosciute in passato (le ultime 24), poi quelle con una scheda aperta, poi
+  le altre. Una radio che risponde viene trovata appena arriva il suo turno e poi
+  letta.
 - Se una radio risponde ma la lettura non va a buon fine (es. password, modello
   diverso) le risposte sono elencate nei dettagli. Se la radio resta bloccata in
   modalità di programmazione, spegnila e riaccendila.
 
-IDENTIFICAZIONE AUTOMATICA (4.0, 4.1, 4.2)
+IDENTIFICAZIONE AUTOMATICA (4.0 - 4.3)
 - Nella scheda "🔎 Identifica" premi "🔄 Abilita identificazione automatica". Da quel
   momento, finché il programma è aperto, quando colleghi il cavo di programmazione (o
   una radio DMR via USB) la radio viene cercata da sola, con gli stessi comandi di
@@ -1149,982 +1214,21 @@ IDENTIFICAZIONE AUTOMATICA (4.0, 4.1, 4.2)
   "ℹ Info" e "Aggiornamenti"; è grigio e non si può premere se l'identificazione
   automatica è disattivata). Un cavo collegato al PC dopo (anche lo stesso,
   staccato e ricollegato) viene cercato da solo.
-- Radio spenta o volume al minimo: la ricerca si ripete finché il cavo resta
-  collegato (nei primi minuti ogni pochi secondi, poi ogni 20 secondi), senza il
-  riquadro. Puoi quindi collegare il cavo e accendere la radio dopo.
-- Si cercano solo le porte dei cavi di programmazione (adattatori USB-seriale CH340,
-  Prolific, Silicon Labs, FTDI…), mai porte Bluetooth, modem o le porte seriali di
-  sistema (COM1, COM2).
-- Una ricerca automatica in corso si interrompe da sola quando chiedi un'altra
-  operazione (lettura, scrittura, firmware, inoltro o identificazione manuale).
-- La scelta resta memorizzata anche dopo la chiusura e il riavvio del programma. Per
-  non usarla più torna nella scheda "🔎 Identifica" e premi "⏹ Disattiva
-  identificazione automatica".
-
-DRIVER USB DELLA DM-1701");
-- BTECH DMR-6X2 e DMR-6X2 PRO nella galleria, con "🧭 Aggiornamento guidato…" del
-  firmware: controllo dei file del pacchetto ufficiale (modello, versione, integrità),
-  procedura passo per passo dalle istruzioni BTECH e avvio del programma ufficiale
-  (vedi "BTECH DMR-6X2: AGGIORNAMENTO GUIDATO DEL FIRMWARE");
-- Converti: spiegato meglio che cos'è l'"immagine della radio" che serve come base per
-  i file .img, con il pulsante "📻 Leggi adesso la radio collegata…";
-- CORRETTO: nella scheda Converti i tasti Ctrl+S / Ctrl+O davano un errore;
-- verifiche: la radio simulata della UV-17 / UV-13Pro restituiva le pagine della
-  memoria nell'ordine sbagliato rispetto a CHIRP (solo nelle prove, il programma era
-  già corretto): corretta; le radio simulate non si bloccano più con richieste fuori
-  dalla memoria.
-Novità della 3.7:
-- CORRETTO: scrittura nel K67 Pro che si identifica come «BF-K6» (segnalato con una
-  radio vera: la lettura funzionava, la scrittura si fermava con «la radio collegata
-  è un modello BF-K6»). Come nel programma originale, ogni lettura della radio (anche
-  la copia di sicurezza che precede la scrittura) ricorda il modello letto e la
-  scrittura verso lo stesso modello parte; prima la copia di sicurezza lo dimenticava.
-  Il modello e la banda dell'ultima radio letta restano ricordati anche dopo la
-  chiusura del programma; un file «Nuovo» del K67 prende la banda dell'ultima radio
-  letta, come nel programma originale;
-- CORRETTO: archivio ponti, «☐ Deseleziona tutti» toglie la spunta a tutti i ponti,
-  anche a quelli nascosti dai filtri (prima solo ai visibili, e bisognava azzerare i
-  filtri); la barra in basso indica quanti ponti spuntati sono nascosti dai filtri e
-  «Inoltra alla radio» lo ricorda prima di scrivere;
-- controllati di nuovo tutti i percorsi di scrittura delle altre radio: il problema
-  del K67 dipendeva da un controllo legato a una lettura precedente, che nelle altre
-  radio non c'è (l'identificazione è la stessa in lettura e in scrittura);
-- CONVERTITORE UNIVERSALE (scheda "🔁 Converti", vedi "CONVERTITORE E FORMATI
-  UNIVERSALI"): i canali di qualsiasi file o scheda aperta nel formato di qualsiasi
-  altra radio (K67 .xlc, Bajeton .dat v1.0.8 / v1.0.9, immagini .img di tutte le 103
-  radio gestite con i driver) o nei formati universali (CSV di CHIRP, Excel, CSV);
-- "📥 Importa…" nella scheda di ogni radio: canali da qualsiasi di questi file,
-  adattati alla radio; "Esporta…" → "🔁 Per un'altra radio…";
-- CSV di CHIRP: ora con i codici DCS (anche con polarità e combinazioni diverse in
-  trasmissione e ricezione), canali di sola ricezione, canali DMR e scansione di tutte
-  le radio (prima i DCS andavano persi); letto e scritto in modo identico a CHIRP;
-- nomi troppo lunghi per la radio di destinazione: prima si tolgono gli spazi
-  («PMR CH 12» → «PMRCH12»), così restano distinti;
-- UV-3R: come in CHIRP, in DCS il codice di ricezione vale anche in trasmissione;
-- ricerca nei forum e nei siti di appassionati per le radio non compatibili (vedi
-  "RICERCA PER LE RADIO NON COMPATIBILI").
-Novità della 3.6:
-- IMPOSTAZIONI DELLE RADIO: nuovo pulsante "⚙ Impostazioni…" nella scheda della radio
-  (menu, display, VOX, squelch, TOT, DTMF, tasti, risparmio della batteria…). Ogni
-  voce ha l'icona ⓘ: passando il mouse compare la descrizione, con un clic si apre
-  sotto la voce. Le voci delicate (password, limiti di banda e abilitazione della
-  trasmissione, TOT spento, VOX, reset dal menu, PTT-ID, ripetitore…) hanno l'icona ⚠
-  e un avviso che va confermato prima di applicare. Disponibili per K67 Pro, Bajeton
-  BJ-8300 e BJ-9000 (dai programmi dei costruttori) e per 63 famiglie di radio gestite
-  con i driver di CHIRP: in tutto 190 dei 235 modelli compatibili (vedi "IMPOSTAZIONI
-  DELLE RADIO");
-- radio DMR collegate via USB, con memoria e protocollo dei programmi liberi dmrconfig
-  e qdmr: Baofeng RD-5R, DM-1801 (dispositivo HID, nessun driver da installare) e
-  DM-1701 / Retevis RT84 (modalità DFU, driver USB del costruttore);
-- GT-22 (PMR446) e GT-68 (FRS), ricavate dai programmi del costruttore «GT-22» e
-  «BF_V1_FH» e verificate con il loro codice originale;
-- Bajeton BJ-8300: il programma BT-11_CPS v1.0.9 salva i file .dat in un formato
-  diverso dalla v1.0.8 (e le due versioni non aprono i file dell'altra): ora si aprono
-  entrambi e nella scheda si sceglie per quale versione salvare ("File per BT-11_CPS");
-- BJ-9000: oltre ai canali si scrivono le impostazioni generali;
-- ricerca dei programmi richiesti (GT-22, GT-68, 5RHam, UV-8D / BF-UV8, BJ-98 Plus,
-  DM-5R): per 5RHam, UV-8D / BF-UV8 e BJ-98 Plus i costruttori non pubblicano un
-  programma; il programma della DM-5R («CPS_5R») è un eseguibile nativo, non
-  confrontabile con questo programma: la radio resta non compatibile;
-- in tutto 271 modelli, 235 compatibili.
-Novità della 3.5:
-- galleria dei modelli: dentro ogni tipologia (Radioamatoriali, DMR, GMRS / FRS,
-  PMR446 e uso libero, Per bambini) le radio sono separate tra Baofeng e Bajeton,
-  ognuna con il numero di modelli e in ordine alfabetico;
-- scheda "ℹ Info": collegamento al repository GitHub con sorgenti, rilasci e
-  aggiornamenti (https://github.com/IU0VYT/IU0VYT);
-- radio vendute come PMR446 / uso libero o GMRS che accettano anche le frequenze
-  radioamatoriali (secondo le gamme ricavate dai programmi del costruttore): i ponti
-  si possono scrivere, sia con "Inoltra alla radio" (avviso giallo e pulsante
-  "Scrivi comunque") sia dalla scheda della radio. I ponti fuori dalle gamme della
-  radio restano bloccati;
-- Baofeng DR-1801UV (BF-1801A6), radio DMR: 1024 canali analogici e DMR, ricavata dal
-  programma del costruttore «DR-1801A6» e verificata con il suo codice originale
-  (vedi "RADIO RICAVATE DAI PROGRAMMI DEI COSTRUTTORI");
-- nuovi modelli dalle pagine dei download di baofengradio.com e baofengradio.co.uk:
-  BF-T60 e TR-988UV (programma «T6UV Series CPS»), UV-3R+ (in prova), UV-5RH Pro GPS,
-  GT-3TP Mark III, DM-5R (non compatibile); nuovi nomi alternativi (UV-K5 Plus, UV-28
-  Pro GPS, UV-32 GPS…); in tutto 271 modelli, 230 compatibili;
-- aggiornamento del firmware esteso alle radio con lo stesso caricatore (vedi
-  "AGGIORNAMENTO DEL FIRMWARE BAOFENG"): K5 Plus, UV-5RM Plus, UV-17R, UV-17R Plus,
-  UV-21R, UV-21L, UV-21, BF-T60 / TR-988UV (caricatore KDH della UV-5RM, file .BF) e
-  UV-28 Pro, UV-29 Pro / SW-9, AR-152 Pro, UV-7B, UV-32 (caricatore «Bootloader Pro»
-  della UV-25 Plus, file .kdhx). Il modello è riconosciuto dal nome del file e, se non
-  è quello per cui Baofeng pubblica il firmware, va confermato scrivendolo.
-Novità della 3.4:
-- galleria dei modelli: "MODELLI COMPATIBILI: 224" e "MODELLI NON COMPATIBILI: 41"
-  (il numero si aggiorna con la ricerca e i filtri); in ciascuna parte le radio sono
-  divise per tipologia (Radioamatoriali, DMR, GMRS / FRS, PMR446 e uso libero, Per
-  bambini), con i modelli in ordine alfabetico. Ogni modello ha la sua scheda, anche
-  quando ha la stessa gestione di un altro (es. UV-5RA, GT-3, BF-777S, BF-T18);
-- archivio ponti, "📻 Inoltra alla radio": l'elenco delle radio è diviso per marca e
-  per tipologia e contiene tutte le radio, una per una, in ordine alfabetico;
-- controllo preliminare prima di scrivere i ponti: se la radio scelta non è
-  compatibile con i dati (ponti radioamatoriali su un apparato PMR446 / di uso libero
-  o GMRS, frequenze fuori dalle gamme della radio, ponti solo digitali su una radio
-  solo analogica) compare un avviso e nella radio non viene scritto nulla; si può
-  annullare, scegliere un'altra radio o inviare solo i ponti compatibili. Sulle radio
-  DMR i ponti solo DMR diventano canali DMR (vedi "ARCHIVIO PONTI");
-- radio nuove, dai programmi dei costruttori scaricati dai siti Baofeng, Radioddity e
-  Bajeton (vedi "RADIO RICAVATE DAI PROGRAMMI DEI COSTRUTTORI"):
-    BF-T9 (programma «BF-Ts»), GT-18 PMR446 (programma «BAOFENG GT18 PMR»),
-    Bajeton DM-5000 (radio DMR, programma «BAJETON DM-5000 CPS»), UV-28 Pro
-    (programma «BF-UVs CPS»), AR-152 (separata dalla AR-152 Pro: usa il protocollo
-    della UV-5R), UV-5R III, BF-R5, W31 e, in prova, UV-98 Pro;
-- 77 modelli equivalenti secondo la tabella di CHIRP (es. GT-1, GT-5, GT-5TP,
-  UV-5RAX, BF-F9, UV-10R, UV-B2, P15UV…): ognuno con la sua scheda e la gestione del
-  modello corrispondente;
-- in tutto 265 modelli nella galleria, 224 con canali e frequenze; nuove voci non
-  compatibili: DM-1702, GT-22, GT-68.
-Novità della 3.3:
-- radio nuove, ricavate dai programmi dei costruttori scaricati dai siti Baofeng,
-  Radioddity e Bajeton (vedi "RADIO RICAVATE DAI PROGRAMMI DEI COSTRUTTORI"):
-    serie D Baofeng (PMR446 con canali digitali criptati): BF-V1D, 888SD, 1901D, 889D,
-      V2D, V4D, V5D, V6D, V8D, V9D, V10D, BF-V12D, MRA-1904 / 1904D, 1909D, e le
-      versioni a 30 canali W31D (GMRS) e BF-T20D;
-    BF-T17 / BF-T18, versione PMR446 (99 canali) e FRS (35 canali);
-    DM-32UV (radio DMR, driver di CHIRP) e, in prova, DM-1801 Pro (stesso programma
-      del costruttore della DM-32UV);
-    Bajeton BJ-8200: il costruttore pubblica gli stessi pacchetti (programma e
-      firmware) della BJ-7700, quindi si usano gli stessi driver e lo stesso firmware;
-  in tutto 111 voci nella galleria, 93 con canali e frequenze (la serie D è una sola
-  voce con 13 modelli);
-- canali digitali: nuova colonna "Modo" (Analogico / DMR o Digitale) sulle radio che
-  li hanno; i subtoni valgono solo per i canali analogici e i canali digitali non si
-  copiano sulle radio solo analogiche;
-- archivio ponti: casella di spunta su ogni ponte (le spunte restano salvate),
-  pulsanti "☑ Seleziona tutti" e "☐ Deseleziona tutti" (sui ponti visibili con i
-  filtri) e nuovo pulsante "📻 Inoltra alla radio" al posto di "→ K67", "→ Bajeton" e
-  "→ Altra radio": scrive i ponti spuntati nella radio di destinazione (vedi
-  "ARCHIVIO PONTI");
-- galleria dei modelli: le due parti si chiamano "MODELLI COMPATIBILI" e "MODELLI NON
-  COMPATIBILI".
-Novità della 3.2:
-- schermata iniziale "🏠 Home" a ogni avvio (titolo a neon in stile sala giochi anni
-  '80, funzioni principali, versione, copyright e licenza);
-- le schede "Baofeng K67 Pro" e "Bajeton 8300" non sono più fisse: si aprono dalla
-  galleria come le altre radio e si chiudono con ×;
-- galleria divisa in compatibili / non compatibili e, in ciascuna parte, in due aree
-  Baofeng e Bajeton;
-- radio in più: G11S (Retevis RB27), BF-9700 / BF-S56 Max, UV-21, GMRS-9R, BF-R3,
-  UV-9S, AR888S / TH-888S, BF-777S e, in prova, UV-16, P52UV, UV-E70;
-- ringraziamento a IK2ANE nell'archivio ponti e nella finestra di importazione;
-- nuovi file README.md e CHANGELOG.txt (elenco completo delle modifiche).
-Novità della 3.1.2:
-- corretta la verifica degli aggiornamenti: il server dei file di GitHub rifiutava la
-  richiesta con «501 Not Implemented» (non accetta le richieste "ultimi N byte"). Ora
-  il programma chiede intervalli espliciti e, se un server non accetta richieste
-  parziali, legge il pacchetto intero: in ogni caso dice se il software è aggiornato o
-  propone di scaricare la versione più recente.
-Novità della 3.1.1:
-- aggiornamenti: controllo automatico a ogni avvio e pulsante "🔄 Aggiornamenti" (in
-  alto e nella scheda Info); se è disponibile una versione più recente compare un
-  avviso con "Scarica l'aggiornamento", altrimenti non viene scaricato nulla. Il
-  controllo legge solo il numero di versione pubblicato; l'indirizzo è fisso e non si
-  modifica più dal programma (vedi "SCHEDA INFO E AGGIORNAMENTI");
-- archivi .rar aperti dal programma stesso con un decodificatore libero (rardecode,
-  licenza BSD) al posto di UnRAR, la cui licenza non è compatibile con la GPL;
-- firmware .kdhx, .kdh e .Firmware riconosciuti anche dentro archivi .zip e .rar;
-- licenza GNU GPL v3 resa esplicita: testo ufficiale (LICENSE.txt), autori e licenze
-  dei componenti (AUTORI_E_LICENZE.txt), note di copyright in ogni file sorgente;
-- nota sui marchi: programma indipendente, non affiliato a Baofeng o Bajeton.
-Novità della 3.1 (dai programmi ufficiali scaricati dai siti Baofeng e Bajeton):
-- canali di 15 radio in più (75 modelli della galleria in tutto): UV-25 Plus, AR-152 Pro,
-  UV-29 Pro / SW-9, UV-7B, UV-17R, UV-21R, UV-21L, T22, BF-C2, BF-88ST, BF-88A/E,
-  serie H, GM-15 Pro, Bajeton BJ-7700 (con e senza Bluetooth) e BJ-9000 (vedi "RADIO
-  RICAVATE DAI PROGRAMMI DEI COSTRUTTORI" e "RADIO GESTITE CON I DRIVER DI CHIRP");
-- aggiornamento del firmware anche per UV-25 Plus (.kdhx), UV-9G (.kdh), Bajeton
-  BJ-9000 (.Firmware) e BJ-7700 con Bluetooth (.anc) (vedi "AGGIORNAMENTO DEL
-  FIRMWARE BAOFENG");
-- nuovo indirizzo per la verifica degli aggiornamenti (rilascio GitHub, vedi "SCHEDA
-  INFO E AGGIORNAMENTI").
-Novità della 3.0:
-- nuova scheda "📻 Modelli": galleria di 105 radio Baofeng e Bajeton (97 Baofeng, 8
-  Bajeton) con ricerca, filtri e, per ogni radio, le funzioni disponibili e i link ai
-  programmi e ai manuali ufficiali (vedi "GALLERIA DEI MODELLI");
-- canali e ponti di 59 modelli: oltre a K67 Pro e Bajeton 8300, 57 radio gestite con
-  driver ricavati da CHIRP (lettura e scrittura via cavo, file .img compatibili con
-  CHIRP), tra cui UV-5R e derivate, UV-82, UV-5RM, UV-5RH, UV-17 Pro, UV-21 Pro, UV-25,
-  K5 Plus, K6, UV-5R Mini, UV-9R, UV-9G, BF-888S, BJ-7800 (vedi "RADIO GESTITE CON I
-  DRIVER DI CHIRP");
-- aggiornamento del firmware anche per Bajeton BJ-7800 (.anc, stesso programma della
-  BJ-8300), Baofeng UV-5RM/UV-5RH (.BF) e Baofeng 5RH Pro / K67 Pro (.dat) (vedi
-  "AGGIORNAMENTO DEL FIRMWARE BAOFENG");
-- canali copiabili tra tutte le radio aperte ("Copia in…") e dall'archivio ponti
-  ("→ Altra radio…"); canali di sola ricezione (TX = OFF) dove la radio lo permette.
-Novità della 2.2: il programma si chiama "IU0VYT Flash" (prima "Gestione canali");
-scheda "ℹ Info" con versione, data di compilazione, autore e verifica degli
-aggiornamenti (vedi "SCHEDA INFO E AGGIORNAMENTI").
-Novità della 2.1: aggiornamento del firmware della Bajeton 8300 (BJ-8300).
-Novità della 2.0: lettura e scrittura delle radio con il cavo di programmazione.
-
-AVVIO
-- Fai doppio clic su "IU0VYT Flash.exe". Si apre la schermata iniziale "🏠 Home" e in
-  alto ci sono le schede fisse "🏠 Home", "📻 Modelli", "Archivio ponti" e "ℹ Info";
-  ogni radio scelta dalla galleria (anche Baofeng K67 Pro e Bajeton 8300) si apre in una
-  scheda in più, che si chiude con ×.
-- Aggiornando dalla versione 2.x basta sostituire l'eseguibile: archivio, impostazioni
-  e copie restano dove sono.
-- Aggiornando dalla versione 2.1 o precedenti (GestioneCanali.exe): archivio ponti,
-  impostazioni e copie restano gli stessi (cartella %APPDATA%\GestioneCanaliRadio);
-  il vecchio GestioneCanali.exe si può cancellare.
-- Il programma non ha firma digitale: al primo avvio Windows può mostrare
-  "Windows ha protetto il PC". Clicca "Ulteriori informazioni" e poi "Esegui comunque".
-- La finestra usa il componente WebView2, già presente in Windows 11. Se mancasse,
-  il programma si apre nel browser predefinito e una finestrella permette di chiuderlo.
-- Si può aprire una sola copia del programma alla volta.
-
-COME SI LAVORA
-Con il cavo di programmazione:
-1. "📻 Leggi dalla radio…": i canali della radio compaiono nella tabella.
-2. Modifica i canali; salvali anche in un file (Salva con nome…), per averne copia.
-3. "📻 Scrivi nella radio…".
-Con i file (come nella versione 1.0):
-- Apri un file .xlc (K67 Pro) o .dat (Bajeton 8300) salvato con il programma
-  originale o con questo, modifica, salva (Ctrl+S). I file salvati qui si possono
-  aprire e scrivere anche con il programma originale.
-Quando salvi sopra un file esistente, la versione precedente viene conservata
-accanto con estensione .bak (es. k67.xlc.bak).
-
-GALLERIA DEI MODELLI
-- La scheda "📻 Modelli" mostra tutte le radio Baofeng (catalogo e pagina dei download
-  di baofengradio.com), Bajeton (bajeton.com) e, dalla 4.0, delle altre marche gestite
-  (Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, MaxTalker, Abbree, Intek,
-  Maverick, BTECH, WLN, Zastone, Luiton, TID e, dalla 4.1, Hiroyasu, Talkpod,
-  Anysecu). Cerca per marca o nome, anche
-  alternativo (es. UV-5RA, MINI-5, GT-3TP, UV-K5), e filtra per marca (menu "Tutte
-  le marche"), tipo (radioamatoriali, DMR, GMRS
-  / FRS, PMR446 e uso libero, per bambini), radio con canali via cavo o con firmware.
-- In alto i "MODELLI COMPATIBILI: N", gestiti da questo programma (etichette "Canali"
-  e "Firmware"), in basso i "MODELLI NON COMPATIBILI: N", che si programmano solo con
-  il programma del costruttore o con programmi liberi: per questi ci sono i link
-  ufficiali a programmi, firmware e manuali. N è il numero di modelli (con la ricerca
-  e i filtri, quelli mostrati).
-- In ciascuna parte le radio sono divise per tipologia: Radioamatoriali (VHF/UHF),
-  DMR (digitali), GMRS / FRS (USA), PMR446 e radio di uso libero, Per bambini; dentro
-  ogni divisione le radio sono separate per marca (prima Baofeng, poi Bajeton, poi le
-  altre in ordine alfabetico, con il numero di modelli di ciascuna) e i modelli sono
-  in ordine alfabetico (UV-5R prima di UV-17). Sulla scheda di ogni radio c'è la marca,
-  ognuna con il suo colore (Baofeng in blu, Bajeton in arancione, Quansheng in verde,
-  Retevis in rosso, Radtel in viola…).
-- Ogni modello ha la sua scheda anche quando la gestione è la stessa di un altro: per
-  esempio UV-5R, UV-5RA, UV-5RE, GT-3 usano lo stesso driver, BF-888S e BF-777S pure.
-  La nota della scheda indica i modelli con la stessa gestione. Per i modelli
-  equivalenti indicati dalla tabella di CHIRP (chirp/share/model_alias_map.yaml, es.
-  GT-1 = BF-888, GT-5 = UV-82, UV-10R = BF-F8HP) la nota lo dice: la compatibilità è
-  quella indicata da CHIRP, non dal costruttore.
-- Clic su una radio: si apre la sua scheda dei canali, l'aggiornamento del firmware o
-  la lista dei collegamenti. Se la radio esiste in più versioni (es. UV-5RX3, UV-5R+Pro)
-  scegli la tua: se non è quella giusta la radio non risponde e non viene modificata.
-
-RADIO GESTITE CON I DRIVER DI CHIRP
-- Per 61 modelli il protocollo via cavo e la mappa della memoria sono quelli dei
-  driver di CHIRP (https://chirpmyradio.com), riscritti nel linguaggio di questo
-  programma. Famiglie: UV-5R (UV-5R, F-11, UV-82, UV-82HP, UV-82X3, UV-6, BF-F8HP,
-  UV-5RX3, GT-5R, UV-5G, UV-5G Pro), UV-17 Pro (UV-17Pro, UV-17Pro GPS, UV-21Pro V2,
-  UV-21Pro GPS, UV-25, UV-28 Plus, UV-32, UV-5RM, UV-5RM Plus, K5 Plus, UV-5RH, GM-5RH,
-  GM-21, UV-5G Plus, UV-17R Plus, BF-F8HP Pro, K6/K63, UV-5R Mini, UV-5G Mini),
-  impermeabili (BF-A58, BF-A58S, UV-82WP, GT-3WP, UV-S9X3, UV-5RX, UV-9R, UV-9G, UV-6R,
-  UV-5X3), UV-17 e UV-13 Pro, BF-888S/BF-M4/MP31/BF-1901/1904/1909, UV-B5/B6, BF-T1,
-  BF-T8/U9, UV-3R, BF-V8A, BF-T20FRS, BF-T20, W31E, Bajeton BJ-7800 e (dalla 3.1)
-  Bajeton BJ-7700 (Radtel RT-910 / RT-910 BT), serie H (H-31, H-32, BF-H…: stessa
-  radio della Radioddity GA-510) e GM-15 Pro.
-- Dalla 4.0 anche le radio delle altre marche: famiglia UV-K5 (Quansheng UV-K5, UV-K6,
-  UV-5R Plus, UV-K1, Retevis RA79, MaxTalker TK-6: driver uvk5.py), famiglia T18
-  (Radtel T18, Retevis RT22S, RT20, RB18, RB618, RT68, RT668, RB17, RB617, RB17V,
-  RB85, RB75, RB19, RB19P, RB619, RT47, RT47V, RT647, RB29, RB629, RT15, RB87, H777H,
-  BTECH FRS-B1: radtel_t18.py), famiglia RT22 (Retevis RT22, RT22FRS, RT622, WLN
-  KD-C1, Zastone ZT-X6, Luiton LT-316, TID TD-M8: retevis_rt22.py), famiglia H777
-  (Retevis H777, H777 Plus, Radioddity GA-2S, MaxTalker MT-8S, Maverick RA-100 e
-  RA-425), famiglia GA-510 (Retevis RA685, RA85, Abbree AR-F5, TIDRADIO TD-H6),
-  famiglia UV-17 Pro (MaxTalker P15, MT-5RM, Radioddity GM-30 Plus e GM-30 Pro),
-  famiglia RT-900 (Radtel RT-900, RT-900 BT, RT-920, Radioddity GS-10B), Radioddity
-  GM-30, Retevis RT6 e Intek KT-980HP (famiglia UV-5R).
-- Dalla 4.1: famiglia MML JC-8810 (Radtel RT-470, RT-470L, RT-470X, RT-470X Plus,
-  RT-630, RT-495, Hiroyasu HI-8811, Talkpod A36plus e A36plus 8 W, Anysecu UV-A37,
-  Abbree AR-730: driver mml_jc8810.py; 256 canali, 512 sulle A36plus, nomi di 12
-  caratteri; sulla RT-470X la banda aerea 118-136 MHz è in AM) e famiglia TD-H8
-  (TIDRADIO TD-H8 di seconda e terza generazione, TD-H3, versioni base, HAM e GMRS,
-  Radtel RT-730: driver tdh8.py; 199 canali con nome di 8 caratteri; le frequenze
-  che la versione HAM può solo ricevere sono di sola ricezione; nelle versioni GMRS i
-  canali 1-30 hanno la frequenza fissa).
-- Dalla 4.2: famiglia TYT TH-UV88 (TYT TH-UV88 e TH-UV98, Retevis RT85, RA89, P2 e
-  P62, Explorer QRZ-1: driver th_uv88.py; 200 canali con nome di 10 caratteri, tre
-  potenze; ogni modello ha il suo nome nel protocollo, «UV88», «UV99»…), famiglia
-  Radtel RT-490 (Radtel RT-490, JC-8629 di MMLradio, JJCC e Socotran, Socotran
-  FB-8629, Jianpai 8800 Plus, Boristone 8RS, Abbree AR-869, HamGeek HG-590:
-  radtel_rt490.py; 256 canali con nome di 12 caratteri anche in cinese; i canali in
-  AM restano in AM nella banda aerea; la radio non comunica la marca), famiglia
-  Retevis RT21 (RT21, RT21V, RB17A, RB23, RB26, RB626, RB89, RT76, RT29 UHF e VHF,
-  RT19, RT619, RT40B, RB28B, RB628B, RT86, RT86S, RT86A, Abbree AR-63:
-  retevis_rt21.py; canali senza nome; su RB28B e RT19 i canali 1-22 FRS, su RB628B e
-  RT619 i canali 1-16 PMR446 e su RB17A, RB23, RB26, RT76 e RT40B i canali GMRS hanno
-  la frequenza fissa, come in CHIRP) e Quansheng TK11 (tk11.py; 999 canali con nome di
-  16 caratteri, 0,15-1160 MHz; i canali in AM, SSB e CW restano nel loro modo; dopo la
-  scrittura la radio si riavvia).
-- Quansheng UV-K5 e simili: 200 memorie con nome fino a 10 caratteri, potenze Bassa
-  1,5 W / Media 3 W / Alta 5 W, banda aerea in AM (frequenze arrotondate al passo di
-  8,33 kHz come fa CHIRP), trasmissione su una banda diversa dalla ricezione ammessa.
-  Il firmware comunicato dalla radio (es. "k5_2.01.32") compare nei dettagli della
-  lettura e nell'identificazione. Il programma gestisce solo il firmware originale
-  Quansheng (versioni conosciute da CHIRP): con un firmware modificato (es. egzumer,
-  IJV, F4HWN), che usa la memoria in modo diverso, si ferma senza leggere né scrivere,
-  come CHIRP; in quel caso usa il programma indicato da chi ha scritto il firmware.
-- Si lavora sui canali: "Leggi dalla radio" (oppure apri un file .img, anche salvato
-  con CHIRP), modifica, "Scrivi nella radio" e/o "Salva" (file .img apribile con CHIRP).
-  Le impostazioni della radio sono quelle lette (si modificano con "⚙ Impostazioni…",
-  vedi "IMPOSTAZIONI DELLE RADIO"): per questo non c'è "Nuovo file".
-- Come per le altre radio: copia di sicurezza prima della scrittura (file .img nella
-  cartella copie_radio) e rilettura di verifica dopo.
-- Nomi adattati ai caratteri e alla lunghezza ammessi dalla radio, potenze con i
-  livelli della radio (es. "Alta 5 W"), DCS solo tra i codici della radio, gamme di
-  frequenza controllate. Nella colonna TX "OFF" = canale di sola ricezione.
-- Comportamenti particolari ripresi da CHIRP: UV-5G Mini (canali GMRS 1-30 fissi,
-  8-14 stretti a bassa potenza), GM-21 (limiti GMRS), BJ-7800 (15 zone da 64 canali;
-  canali FM/AM/HF ausiliari non gestiti), UV-5R (numerazione da 0, come la radio),
-  GM-15 Pro (radio GMRS: canali 1-30 fissi, 8-14 e 55-250 solo ricezione, 23-54 ponti
-  GMRS con TX = RX + 5 MHz), serie H (canali 0-127).
-- I driver di CHIRP sono software libero (licenza GNU GPL v3): le parti di questo
-  programma derivate da essi sono distribuite con la stessa licenza e il codice
-  sorgente completo è nella cartella "sorgenti". Grazie agli autori di CHIRP.
-
-RADIO RICAVATE DAI PROGRAMMI DEI COSTRUTTORI (3.1 - 3.6)
-Per queste radio CHIRP non ha un driver: protocollo e memoria sono stati ricavati dal
-codice dei programmi ufficiali scaricati dai siti Baofeng e Bajeton, e confrontati con
-la famiglia di CHIRP che ha la stessa mappa (i file .img si aprono anche con CHIRP,
-con il nome di quel modello).
-- UV-25 Plus, AR-152 Pro, UV-29 Pro / SW-9, UV-7B (programma «BF-UVs CPS»): stessa
-  memoria e stesso protocollo della UV-17 Pro GPS; la radio deve rispondere con il suo
-  modello (es. «UV25PRO», «AR152»), altrimenti lettura e scrittura non partono.
-- UV-17R, UV-21R, UV-21L (programma «T6UV Series CPS»): come la UV-17 Pro.
-- T22 (PMR446, versione PMR del programma): come la W31E di CHIRP, 16 canali.
-- BF-C2 / BF-V2 e BF-88ST (programmi «BF_V1_FH» e «BF-889»): come la BF-888S, 16
-  canali senza nome.
-- BF-88A / BF-88E: il pacchetto del costruttore dice di usare CHIRP come «BF-888»: si
-  usa il driver della BF-888S.
-- Bajeton BJ-9000 (Radtel RT-950 Pro, programma «BJ-9000_CPS» v1.1.1): 960 canali in
-  15 zone da 64, stesso protocollo della BJ-7800 con il controllo del modello; si
-  scrivono canali, nomi e (dalla 3.6) impostazioni generali; VFO, DTMF e APRS con il
-  programma del costruttore. Dalla 3.6 canali e impostazioni sono verificati con il
-  codice originale del programma collegato alla radio simulata.
-- (3.2) BF-9700 / BF-S56 Max: memoria della BF-1909 di CHIRP letta fino a 0x0400.
-- (3.3) Serie D (programma «BF Series CPS», pacchetti «Baofeng_V1D_CPS» e
-  «Baofeng_BF-D_Series_CPS»): stessa memoria della BF-888S (16 canali senza nome; 30
-  per W31D e BF-T20D), con canali analogici o digitali criptati. La radio comunica il
-  proprio modello: se non è quello scelto, lettura e scrittura non partono e il
-  messaggio dice quale modello è collegato. Sulla BF-V12D si usa lo sblocco del
-  programma del costruttore. W31D, BF-T20D e BF-V12D sono anche in CHIRP (driver
-  «Baofeng digital»), che però legge al contrario l'inclusione nella scansione: qui si
-  segue il programma del costruttore.
-- (3.3) BF-T17 / BF-T18 (programmi «T17-T18 PMR446 PRO» e «T17-T18 FRS» v1.2.2): 99
-  canali (PMR446) o 35 (FRS); se sulla radio è impostata la password di lettura e
-  scrittura, toglila prima con il programma del costruttore.
-- (3.3) DM-32UV, radio DMR: driver di CHIRP (ricavato a sua volta dal programma del
-  costruttore v1.60 e provato su una radio vera). Si modificano frequenze, nomi (16
-  caratteri), potenza (1 / 2,5 / 5 W), banda e toni; per i canali DMR contatto,
-  gruppo, slot e color code restano quelli impostati; zone, contatti, liste e
-  impostazioni della radio non si toccano, ma un canale cancellato viene tolto anche
-  dalle zone e dalle liste di scansione. Si scrivono solo le pagine di memoria cambiate,
-  ognuna riletta per controllo. Alcuni cavi con chip CH340 alterano i dati di questa
-  radio: meglio un cavo con chip FTDI o CP2102.
-- (3.3) DM-1801 Pro, in prova: il costruttore pubblica lo stesso programma della
-  DM-32UV (stesso eseguibile, v1.60). Se la radio si identifica con un altro modello il
-  programma si ferma prima di leggere o scrivere.
-- (3.3) Bajeton BJ-8200: stessi pacchetti della BJ-7700 sulla pagina dei download
-  Bajeton (programma «BT-RT910_CPS», firmware BJ7700PRO_….anc): driver e firmware della
-  BJ-7700, con il controllo del modello.
-- (3.4) BF-T9 (programma «BF-Ts» v1.04): 99 canali senza nome, aggancio «PROGRAL»,
-  lettura e scrittura a blocchi di 16 byte. La radio memorizza la propria gamma di
-  frequenze (es. 400-470 MHz, 13 gamme possibili): i canali fuori gamma vengono
-  rifiutati. Verificata con il codice originale del programma collegato alla radio
-  simulata (lettura, scrittura, memoria identica; il programma azzera sempre il bit
-  «beat shift», per un suo errore di lettura).
-- (3.4) GT-18 PMR446 (programma «BAOFENG GT18 PMR» v1.2.1): il programma è lo stesso
-  della T17 PMR446 (stessa classe del protocollo, cambia solo l'aggancio): 99 canali,
-  verificata con il codice originale del programma.
-- (3.4) Bajeton DM-5000, radio DMR (programma «BAJETON DM-5000 CPS», versione
-  250726): 1024 canali da 48 byte, 115200 baud, blocchi da 1 KB con somma di
-  controllo. Si modificano frequenze, nomi (16 caratteri), potenza, scansione, banda
-  e toni dei canali analogici; i canali DMR nuovi prendono i valori predefiniti del
-  programma (primo gruppo, primo contatto, slot 1, color code 0). Un canale nuovo
-  entra nella zona 1 se non è già in una zona; un canale cancellato viene tolto dalle
-  zone. Contatti, gruppi, messaggi e impostazioni non si toccano. Se sulla radio è
-  impostata una password, toglila prima con il programma del costruttore.
-  ATTENZIONE: alcuni antivirus segnalano come pericolosi i pacchetti «DMR R5000 Update
-  Tool» pubblicati per il firmware: questo programma non li usa e non li contiene.
-- (3.4) UV-28 Pro: stesso programma «BF-UVs CPS» delle altre (la radio si identifica
-  come «UV28PRO»).
-- (3.4) AR-152: il programma del costruttore usa l'aggancio della UV-5R e CHIRP la
-  indica come UV-5R; la AR-152 Pro resta una radio diversa. UV-5R III: radio a tre
-  bande, per CHIRP «UV-5RIII» = Radioddity UV-5RX3. BF-R5: programma «BF_480» con il
-  protocollo della BF-888S. W31: il programma del costruttore usa lo stesso protocollo
-  della W31E di CHIRP. UV-98 Pro, in prova: il costruttore pubblica il programma della
-  WP970I, base in CHIRP della famiglia UV-9R / BF-A58 (si usa il driver della UV-9R).
-- (3.5) DR-1801UV (BF-1801A6, chip Auctus A6), radio DMR (programma «DR-1801A6»):
-  1024 canali da 52 byte con nomi di 16 caratteri, analogici e DMR; 9600 baud per la
-  presentazione, poi 115200; la memoria si legge e si scrive per intero con somma di
-  controllo. Si modificano frequenze, nomi, potenza (alta / bassa), banda e toni (CTCSS
-  e DCS, anche non standard come nel programma); un canale cancellato viene tolto
-  anche da zone, liste di scansione e roaming (le zone vuote vengono eliminate), un
-  canale nuovo entra nella prima zona con posto libero (altrimenti in una zona nuova).
-  Come nel programma del costruttore, cancellare un canale non rinumera gli altri.
-  Contatti, gruppi e impostazioni DMR non si toccano. Verificata con il codice
-  ORIGINALE del programma: lettura del file di fabbrica, sei modifiche con memoria
-  identica byte per byte a quella scritta dal programma, lettura e scrittura del
-  programma con la radio simulata uguali a quelle di questo programma.
-- (3.5) BF-T60 / TR-988UV: il costruttore pubblica il programma «T6UV Series CPS»,
-  lo stesso di UV-17R e UV-21R (driver della UV-17R). UV-3R+: in prova con il driver
-  della UV-3R di CHIRP (segnalazione CHIRP n. 239).
-- (3.6) GT-22 (PMR446, programma «GT-22») e GT-68 (FRS, programma «BF_V1_FH» del
-  pacchetto GT-68): stessa classe del protocollo e stessa memoria della BF-888S, 16
-  canali senza nome. La GT-22 scrive sempre i canali a banda stretta e non ha la
-  scansione (come il suo programma). Verificate con il codice originale dei due
-  programmi collegato alla radio simulata.
-- (3.6) RD-5R e DM-1801, radio DMR collegate via USB come dispositivo HID (nessuna
-  porta COM, nessun driver da installare): memoria della famiglia Radioddity GD-77 e
-  protocollo dei programmi liberi dmrconfig (licenza BSD) e qdmr (GPL). 1024 canali
-  analogici e DMR con nomi di 16 caratteri; un canale cancellato viene tolto da zone e
-  liste di scansione, un canale nuovo entra in una zona. Contatti, gruppi e
-  impostazioni DMR non si toccano.
-- (3.6) DM-1701 / Retevis RT84 (famiglia TYT MD-UV380), radio DMR collegata via USB in
-  modalità DFU: serve il driver USB del costruttore (cartella «DM-1701 USB Driver» del
-  pacchetto «DM-1701 CPS»), lo stesso del suo programma; chiudi il programma del
-  costruttore prima di leggere o scrivere. 3000 canali, nome obbligatorio (un canale
-  senza nome diventa «CH n», come in dmrconfig).
-- (3.6) RD-5R, DM-1801 e DM-1701 sono verificate con dmrconfig stesso, compilato con un
-  collegamento verso la radio simulata: canali letti uguali, modifiche con memoria
-  identica byte per byte, lettura e scrittura via USB identiche.
-Ancora non gestite: radio DMR con protocolli non documentati o programmi nativi
-(DM-1702, DM-5R, M20D, DMR-6X2 / 6X2 PRO: per la DMR-6X2 dmrconfig e qdmr hanno una
-mappa scritta per firmware vecchi, non confrontabile con quelli attuali), le PMR
-senza un programma pubblicato (BF-T3, BF-T6…T57, BF-V1…V6A, BF-33C, BF-358…), 5RHam,
-UV-8D / BF-UV8 e BJ-98 Plus: link ai programmi ufficiali nella galleria quando esistono.
-
-IMPOSTAZIONI DELLE RADIO (3.6)
-- Pulsante "⚙ Impostazioni…" nella scheda della radio, dopo aver letto la radio via
-  cavo o aperto un suo file. A sinistra i gruppi (es. "Ricezione e trasmissione",
-  "Display, suoni e tasti", "DTMF"), in alto la ricerca. Ogni voce ha:
-    ⓘ  descrizione della voce (passando il mouse; con un clic resta aperta sotto);
-    ⚠  sulle voci delicate: l'avviso è nella descrizione e, prima di applicare, una
-       finestra riassume gli avvisi e chiede conferma.
-  Le voci cambiate sono evidenziate; "Applica" le scrive nella memoria della scheda
-  (che diventa "modificata"): poi salva il file o scrivi nella radio come per i
-  canali. "Annulla modifiche" torna ai valori letti.
-- Voci delicate: password (accensione, lettura, scrittura), limiti di frequenza e
-  abilitazione della trasmissione per banda, trasmissione disattivata, tempo massimo
-  di trasmissione, VOX, reset e voci del menu, PTT-ID e codici trasmessi, allarme che
-  trasmette, funzione ripetitore, disattivazione a distanza, programmazione Bluetooth,
-  blocco della tastiera.
-- K67 Pro / 5RH Pro (53 voci): dal programma «5RH PRO», metodi ConvertSetting e
-  SettingConvert.
-- Bajeton BJ-8300 (40 voci; 41 nei file della v1.0.9 di BT-11_CPS, con "Divisione dei
-  canali"): finestra «Optional Features» del programma; ogni voce è un numero
-  dell'oggetto salvato nel file .dat, cambiato al suo posto (il file resta identico a
-  quello che salverebbe il programma).
-- Bajeton BJ-9000 (57 voci): finestra «Optional Features» del programma BJ-9000_CPS;
-  si cambiano solo i bit di ogni voce, gli altri byte restano quelli della radio.
-- Radio gestite con i driver di CHIRP (63 famiglie: UV-5R, UV-17 Pro, impermeabili,
-  BF-888S, UV-B5, BF-T1, BJ-7800, BJ-7700, serie H…): la tabella di ogni famiglia è
-  ricavata dal codice di CHIRP (per ogni voce si fa scrivere a CHIRP ogni valore e si
-  guarda quali bit cambiano) e le voci sono tradotte in italiano. Non sono incluse le
-  voci di taratura, di prova o di fabbrica. I testi con caratteri non latini (es. nomi
-  in cinese scritti dal programma del costruttore) si possono solo sostituire.
-- Non ancora disponibili: serie D, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST,
-  BF-9700 / BF-S56 Max, DM-5000, DR-1801UV, RD-5R, DM-1801, DM-1701 e i modelli della famiglia UV-17 Pro che
-  CHIRP non elenca (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B, UV-17R, UV-21R,
-  UV-21L): per queste usa il programma del costruttore.
-
-FILE .DAT DELLA BAJETON BJ-8300 (3.6)
-Il programma BT-11_CPS v1.0.9 salva i canali in un elenco unico di 960 (la v1.0.8 in
-15 zone da 64) e ha una voce in più ("Divisione dei canali"): la v1.0.9 non apre i file
-della v1.0.8 e viceversa. IU0VYT Flash apre entrambi i formati e salva un file nel
-formato con cui è stato aperto. Nella scheda della 8300, "File per BT-11_CPS" sceglie
-la versione: il file aperto viene convertito (canali e impostazioni restano gli
-stessi) e i nuovi file e le letture dalla radio useranno quel formato (predefinito:
-v1.0.8, la versione indicata sulla pagina dei download Bajeton per la 8300).
-Canali in zone o in un unico elenco (3.9.2): come in BT-11_CPS v1.0.9, con i file
-della v1.0.9 la tabella segue l'impostazione "Divisione dei canali" (Channel Divide):
-"in 15 zone da 64" (barra delle zone, numeri 1-64 in ogni zona) oppure "tutti (960)"
-(un unico elenco, numeri 1-960). La scelta è nella barra della scheda ("Canali") e
-in "⚙ Impostazioni"; viene salvata nel file e scritta nella radio, che mostra i
-canali allo stesso modo. Un file nuovo della v1.0.9 parte da "tutti i canali", come
-nel programma originale; una radio letta mantiene la sua scelta. La v1.0.8 non ha
-questa impostazione: i suoi file sono sempre a zone e, scritti nella radio, la
-riportano alle zone.
-
-AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
-- Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus, file .bin pubblicati da Quansheng
-  (es. k5_v2.01.26_publish.bin, k6_v3.00.22_publish.bin). Quansheng protegge i
-  download del suo sito con una password che fornisce il rivenditore.
-- Il file viene controllato (somma CRC16, versione) e decifrato; la versione (es.
-  2.01.26) indica il tipo di radio: 2 = UV-K5, 3 = UV-K5(8) e UV-K6, 4 = UV-5R Plus.
-- Procedura: spegni la radio, collega il cavo, riaccendila tenendo premuto il PTT (la
-  torcia si accende e lo schermo resta spento), poi "Avvia aggiornamento". Prima di
-  scrivere il programma legge la versione del caricatore della radio: se non è del
-  tipo del firmware (es. firmware della UV-K6 su una UV-K5) si ferma e la radio non
-  viene toccata. Canali, impostazioni e taratura non vengono cancellati.
-- Il protocollo del caricatore (pacchetti da 256 byte con conferma) è quello
-  documentato dai programmi liberi k5prog e uvtools, ricavato dal programma di
-  aggiornamento di Quansheng; qui è riscritto da zero e provato con una radio
-  simulata. Le radio con il caricatore più recente (es. UV-K1, UV-K5 V3) non si
-  presentano in questo modo: per quelle serve il programma di Quansheng.
-- Un firmware non di Quansheng (es. egzumer, F4HWN) si può installare, ma poi questo
-  programma (come CHIRP) non legge più i canali della radio.
-- Dalla 4.2 anche Radtel RT-590 / RT-590 Plus (la stessa radio della UV-K5) e RT-600 /
-  RT-600 Plus (della UV-5R Plus) con i file .bin di Radtel (radtels.com, es.
-  RT590_update_file_v2.01.32.rar e RT600_update_file_v4.00.06.rar, liberi da
-  scaricare): stessa procedura (PTT + accensione, torcia accesa). I due file veri sono
-  stati provati: decifratura e byte inviati identici al programma uvtools.
-
-AGGIORNAMENTO DEL FIRMWARE BAOFENG
-- Baofeng UV-5RM / UV-5RH (serie con display TFT "330L"), file .BF: protocollo del
-  programma del costruttore "BF Upgrade Tool for TFT 330L Series" (caricatore KDH
-  V1.0). Due modi, come nell'originale: automatico (radio accesa: viene portata nel
-  caricatore; prima, a scelta, se ne salva una copia dei canali) e manuale (radio
-  accesa tenendo premuto il PTT, schermo spento: anche per una radio che non si
-  avvia). ATTENZIONE: esistono versioni con chip radio diversi (BK4819, AT1846S,
-  FD6818) e i firmware NON sono intercambiabili; il nome del file di solito lo indica
-  (es. 5RH_BK_V0.14_231123.BF). Il programma controlla il file (intestazione, aree,
-  programma ARM valido, parte cifrata coerente) e riconosce i firmware raccolti dalla
-  comunità (impronta SHA-256); Baofeng non li pubblica sul suo sito.
-- Baofeng 5RH Pro (e radio con lo stesso CPS "5RH_PRO", come il K67 Pro), file .dat
-  "BF_5RH": protocollo del programma di aggiornamento del costruttore (Radio.exe).
-  La radio va messa in modalità aggiornamento come indicato dal costruttore; all'inizio
-  dichiara la sua elettronica (V1 = firmware 1.x, V2 = firmware 2.x) e se non è quella
-  del file l'aggiornamento non parte. Dopo la cancellazione della memoria non si può
-  più interrompere.
-- Bajeton BJ-7800: stesso programma ("BinTe ANC Bootloader") e stessi file .anc della
-  BJ-8300 (firmware ufficiale BJ7800_CN_EN_V0.17_20251126.anc, sul Google Drive del
-  costruttore); il modello è riconosciuto dal nome del file. La copia di sicurezza
-  prima dell'aggiornamento è un file .img (driver della BJ-7800).
-- Dalla 3.1, con i protocolli dei programmi di aggiornamento ufficiali (classe
-  «KDH_Bootloader», ricavata dal loro codice):
-    UV-25 Plus, file .kdhx («Baofeng Bootloader Pro»; ufficiale V0.23 del 22/05/2025);
-    UV-9G, file .kdh («Bootloader_BaudRate38400», aggiornamento per trasmettere sul
-      canale 15; ufficiale T52GMRS_M8_V02_231004.kdh);
-    Bajeton BJ-9000, file .Firmware («BJ9000_EnUPDATE»; ufficiale V0.27 del 13/03/2026;
-      la radio controlla anche il modello scritto nel file).
-  Modo automatico (radio accesa) o manuale (radio accesa con i tasti indicati dal
-  costruttore, mostrati nella finestra: UV-25 Plus SK2+SK3, UV-9G tasti 12+13, BJ-9000
-  tasti laterali 3+4). Il file viene controllato (programma ARM valido, modello nel
-  nome, impronta SHA-256 dei firmware ufficiali).
-- Bajeton BJ-7700 con Bluetooth: file .anc come BJ-8300/BJ-7800 (ufficiale
-  BJ7700PRO_V0.06_251124.anc); la radio viene identificata con il protocollo della
-  BJ-7700 e la copia di sicurezza è un file .img.
-- BJ-8200 (3.3): stesso firmware e stesso programma della BJ-7700 con Bluetooth.
-- Dalla 3.5, stesso caricatore per le radio della stessa famiglia (protocolli già
-  verificati sopra con il codice originale; cambia solo la radio di destinazione):
-    file .BF (caricatore KDH V1.0 della UV-5RM): K5 Plus, UV-5RM Plus, UV-17R, UV-17R
-      Plus, UV-21R, UV-21L, UV-21, BF-T60 / TR-988UV. Sono radio del programma «T6UV
-      Series CPS», che gestisce anche la UV-5RH (in CHIRP K5 Plus e UV-5RM Plus sono
-      derivate dalla UV-5RM);
-    file .kdhx (caricatore «Bootloader Pro», codice di piattaforma H802): UV-28 Pro,
-      UV-29 Pro / SW-9, AR-152 Pro, UV-7B, UV-32. Usano lo stesso programma del
-      costruttore della UV-25 Plus («BF-UVs Pro CPS»); il caricatore «Bootloader Pro»
-      è scritto per la piattaforma «BF_H802», lo stesso nome interno del «T6UV Series
-      CPS»: per queste radio la finestra accetta anche i file .kdhx.
-  Baofeng pubblica i firmware solo per UV-25 Plus e UV-9G: per le altre radio servono
-  i file forniti dal costruttore o dal rivenditore. Il modello di destinazione è
-  riconosciuto dal nome del file (es. «UV29Pro_…kdhx», «K5Plus_…BF»): se non è la
-  radio della scheda compare un avviso, e se non è la UV-25 Plus (file .kdhx) o la
-  UV-5RM / UV-5RH (file .BF) per avviare l'aggiornamento bisogna scrivere il modello
-  (es. UV29PRO, K5PLUS; H802 se il nome del file non lo indica). La conferma scritta
-  serve anche quando la radio scelta nella finestra non è quella del file. Un file
-  conosciuto (impronta SHA-256) vale più del nome: il firmware ufficiale della UV-25
-  Plus rinominato resta "per UV-25 Plus". Nella modalità automatica una radio che non
-  risponde alla richiesta di aggiornamento non viene modificata.
-- BJ-7700 senza Bluetooth (file .BTU), DM-32UV, DM-5000, M20D, RD-5R, DM-1801, DM-1701:
-  aggiornamento solo con i programmi del costruttore (link nella galleria). Sono
-  stati controllati di nuovo tutti i pacchetti scaricati: per la DM-32UV
-  l'aggiornamento è dentro il programma nativo del costruttore (protocollo non
-  ricavabile dal codice in modo verificabile), RD-5R e DM-1701 usano programmi USB
-  (DFU / HID) con driver propri, M20D e DM-5000 programmi compressi o segnalati dagli
-  antivirus. Senza un confronto con il codice originale, un aggiornamento sbagliato
-  potrebbe rendere la radio inutilizzabile: per questo non sono gestite.
-
-LETTURA E SCRITTURA VIA CAVO
-- Collega il cavo, accendi la radio, scegli la porta COM del cavo nella finestra
-  (il nome del driver aiuta a riconoscerla, es. "USB-SERIAL CH340 (COM3)").
-  Se la porta non compare, installa il driver del cavo e premi "Aggiorna".
-- Il protocollo è quello dei programmi originali dei costruttori (CPS del K67 Pro,
-  5RH_PRO, e BT-11_CPS della Bajeton), ricavato dal loro codice: stessi comandi,
-  stessa cifratura, stessi controlli, stesse pause.
-    K67 Pro: 19200 baud (la radio può chiedere da sola 115200, come nell'originale),
-             password di programmazione facoltativa (max 8 caratteri).
-    Bajeton 8300: 57600 baud.
-- Prima di scrivere, di serie, il programma legge la radio e ne salva una copia di
-  sicurezza; dopo la scrittura rilegge la radio e confronta i canali. Se la radio si
-  riavvia alla fine della scrittura, la rilettura aspetta e riprova finché la radio
-  risponde di nuovo (fino a 45 secondi, 3.9.2).
-  Copie e letture si trovano in %APPDATA%\GestioneCanaliRadio\copie_radio
-  (si aprono come normali file .xlc/.dat). Se la copia di sicurezza non riesce,
-  non viene scritto nulla.
-- Viene scritta tutta la memoria come fa il programma originale: insieme ai canali
-  anche le impostazioni generali contenute nel file o nella lettura su cui lavori
-  (menu, VFO, zone, DTMF…). Per non cambiarle, parti da una lettura della radio.
-  Sul K67 i primi 128 byte (dati della radio, modello, gamme) non vengono mai
-  sovrascritti: il programma li legge dalla radio, come l'originale.
-- Controlli prima di scrivere (come nell'originale): K67 con banda di frequenza
-  diversa da quella del file o modello "BF-K6" non letto prima → scrittura
-  rifiutata; dati non convertibili → errore prima di collegarsi alla radio.
-- Lettura e copia di sicurezza si possono interrompere; la scrittura no (la radio
-  resterebbe con dati incompleti). Se la scrittura si interrompe (cavo staccato,
-  radio spenta) ripetila: la copia di sicurezza è nella cartella indicata sopra.
-- Dopo una lettura i canali risultano "non ancora salvati in un file".
-- Quando la radio è collegata al PC non usare il programma originale nello stesso
-  momento (la porta COM può essere aperta da un solo programma).
-
-AGGIORNAMENTO DEL FIRMWARE (BAJETON 8300)
-Nella scheda "Bajeton 8300" premi "⬆ Aggiorna firmware…". La finestra ha tre passi.
-1. Firmware
-   - "File sul PC…": scegli il file del firmware (.anc, es. BJ8300_V0.12_20251112.anc)
-     oppure un archivio .zip o .rar che lo contiene, anche con archivi uno dentro
-     l'altro (come il pacchetto del costruttore: .rar con dentro uno .zip con il .anc).
-   - "Da Internet": incolla l'indirizzo del file (.anc, .zip o .rar) e premi "Scarica".
-     Funzionano anche i link di condivisione di un singolo file di Google Drive e di
-     Dropbox. Un link a una CARTELLA di Google Drive non si può scaricare: apri la
-     cartella nel browser e copia il link del file, oppure scaricalo e caricalo dal PC.
-     I firmware scaricati vengono conservati in %APPDATA%\GestioneCanaliRadio\firmware.
-   - Se negli archivi ci sono più firmware, il programma chiede quale usare.
-   - Controlli sul file: formato (firma "JLUFW" dei firmware della radio), decifratura
-     (il file .anc è cifrato: il programma lo decifra come quello originale e controlla
-     che il contenuto sia leggibile), piattaforma uguale a quella del firmware ufficiale
-     della BJ-8300 (YHD15C8_soundbox), nome del file, impronta SHA-256 dei firmware
-     ufficiali conosciuti. Il firmware BJ8300 V0.12 del 12/11/2025 (l'ultimo pubblicato
-     da Bajeton) è riconosciuto come ufficiale. Un file non valido non può essere inviato;
-     un file con segnalazioni (es. piattaforma diversa) richiede una conferma in più.
-2. Radio
-   - Scegli la porta del cavo e lo stato della radio:
-     "Funziona normalmente" (come il pulsante "Update" del programma originale): prima
-       di tutto la radio viene IDENTIFICATA con il protocollo di programmazione della
-       Bajeton 8300 (lo stesso di "Leggi dalla radio") e, di serie, ne viene letta e
-       salvata una copia dei canali e delle impostazioni (Bajeton_prima_del_firmware_….dat
-       in copie_radio). Se la radio non risponde come una Bajeton 8300 l'aggiornamento
-       NON parte e la radio non viene toccata. Poi la radio viene portata in modalità
-       aggiornamento e riceve il firmware.
-       "Identifica la radio" fa solo il controllo, senza aggiornare.
-     "Non si avvia" (modalità di recupero, come il pulsante "Click Here If Your Radio
-       Can't Work"): per una radio rimasta senza firmware valido. La radio non può essere
-       identificata: il programma, come l'originale, aspetta circa 12 secondi che la radio
-       si presenti in modalità aggiornamento. Premi "Avvia aggiornamento" e porta subito
-       la radio in modalità aggiornamento secondo le istruzioni del rivenditore (di solito
-       accendendola con un tasto premuto, spesso il PTT: la procedura non è documentata).
-   - Velocità del trasferimento: 115200 baud (predefinita del programma originale) o 57600.
-3. Conferma
-   - Va sempre spuntato "Confermo che la radio collegata è una Bajeton BJ-8300".
-   - Quando la radio non viene identificata dal programma (modalità di recupero, oppure
-     "salta l'identificazione automatica") bisogna anche scrivere BJ8300 nella casella.
-Durante l'aggiornamento una finestra mostra avanzamento e messaggi. Non spegnere la
-radio e non scollegare il cavo; usa una batteria carica. L'operazione si può
-interrompere solo finché la radio non ha iniziato a rispondere. Alla fine spegni e
-riaccendi la radio e controlla la versione all'accensione; se canali o impostazioni
-fossero cambiati, scrivi nella radio la copia salvata prima dell'aggiornamento.
-Se l'aggiornamento si interrompe: spegni e riaccendi la radio e ripetilo; se la radio
-non si avvia più, ripetilo in modalità di recupero.
-Protocollo: quello del programma del costruttore "BinTe ANC Bootloader" V1.1 (BinTalk),
-ricavato dal suo codice: pacchetti AA 55 con CRC16, 9600 baud, comando di ingresso in
-modalità aggiornamento, passaggio a 10000 baud e poi alla velocità scelta, invio dei
-dati richiesti dalla radio, 5 nuovi tentativi a intervalli di 2 secondi. Il programma
-originale non controlla né il file né il modello della radio: i controlli descritti
-sopra sono aggiunti da questo programma.
-Gli archivi .rar (formati RAR 1.5-5, anche "solidi") sono aperti dal programma con il
-decodificatore libero rardecode (licenza BSD). Non sono supportati gli archivi protetti
-da password e quelli divisi in più parti.
-
-SCHEDA INFO E AGGIORNAMENTI
-- La scheda "ℹ Info" mostra nome, versione, data di compilazione, autore, pagina QRZ,
-  sito del programma (https://iu0vyt.github.io/IU0VYT/, dalla 3.9.3), repository GitHub (https://github.com/IU0VYT/IU0VYT: codice sorgente, rilasci e
-  aggiornamenti), licenza, cartella dei dati e note legali (i collegamenti si aprono
-  nel browser).
-- E-mail (3.9): "✉ Scrivi all'autore" apre il programma di posta del PC con il
-  destinatario già impostato e l'oggetto "IU0VYT Flash x.y". Se non si apre nessun
-  programma: "📋 Copia l'indirizzo" (da incollare nel campo «A» di Gmail, Outlook.com
-  o altra posta del browser) oppure "👁 Mostra l'indirizzo" (come immagine, da
-  ricopiare). L'indirizzo non è scritto nella pagina.
-- Cartella dei dati: archivio dei ponti, impostazioni, copie delle radio. È la
-  cartella %APPDATA%\GestioneCanaliRadio dell'utente di Windows che avvia il
-  programma, calcolata a ogni avvio su quel PC (es. C:\Users\<nome utente>\AppData\
-  Roaming\GestioneCanaliRadio): ogni utente e ogni PC ha la sua. "📂 Apri" la apre in
-  Esplora risorse.
-- Verifica degli aggiornamenti: a ogni avvio, in automatico, e con il pulsante
-  "🔄 Aggiornamenti" in alto (o "🔄 Verifica aggiornamenti" nella scheda Info).
-  Il programma confronta la sua versione con quella pubblicata dall'autore:
-    · se quella in uso è la più recente lo dice e non scarica nulla;
-    · se ne esiste una più recente compare in alto un avviso giallo con
-      "⬇ Scarica l'aggiornamento" (e "Dettagli"); la × lo nasconde fino al
-      prossimo avvio.
-  Il controllo legge solo il numero di versione (pochi KB), non il programma.
-  Senza connessione a Internet il controllo all'avvio non mostra errori.
-- "Scarica l'aggiornamento": scegli dove salvarlo (di solito la cartella Download),
-  il pacchetto .zip viene scaricato e controllato. Poi chiudi il programma, estrai lo
-  zip e sostituisci l'eseguibile: archivio ponti e impostazioni restano dove sono.
-- L'indirizzo da cui si verificano e scaricano gli aggiornamenti è fisso nel programma
-  e non si può modificare: https://github.com/IU0VYT/IU0VYT/releases/latest/download/
-  IU0VYT.Flash.zip (dalla 3.9). GitHub lo rimanda al file IU0VYT.Flash.zip
-  dell'ultimo rilascio pubblicato.
-- Per l'autore, pubblicare una nuova versione: aumentare appVersion (server.go) e la
-  versione in res/risorse.rc, ricompilare, aggiornare versione.txt (righe
-  "versione=x.y" e "compilazione=...") e creare nel repository GitHub (pubblico) un
-  nuovo rilascio, NON pre-release e NON bozza, con allegato il file chiamato
-  esattamente "IU0VYT.Flash.zip": diventa l'"ultimo rilascio" (latest) e i programmi
-  già installati lo trovano da soli. La versione viene letta da versione.txt, oppure
-  dalla riga "Versione x.y" del LEGGIMI.txt.
-- Il sito https://iu0vyt.github.io/IU0VYT/ (cartella docs) si aggiorna da solo: a
-  ogni modifica del ramo main il flusso .github/workflows/sito.yml calcola dal
-  catalogo i conteggi dei modelli (come nella schermata Home) e li pubblica; la
-  versione e il pulsante di download seguono l'ultimo rilascio pubblicato.
-
-TABELLE DEI CANALI
-- Doppio clic, Invio o F2 per modificare una cella; puoi anche iniziare a scrivere.
-  Esc annulla la modifica. Su una riga vuota si comincia scrivendo la frequenza RX.
-- Frequenze in MHz (145.600 oppure 145,600). Lo shift si scrive -0.6, +1.6, +5:
-  il TX viene calcolato. Per un TX in un'altra banda scrivi direttamente la frequenza TX.
-- Toni: subtoni CTCSS standard (67.0 … 254.1) oppure codici DCS: D023N normale,
-  D023I invertito (D023 = normale); vuoto = OFF. "Tono TX" apre il ponte,
-  "Tono RX" è lo squelch a tono in ricezione. Il K67 accetta qualsiasi codice DCS
-  ottale; la Bajeton i 104 codici standard (D023 … D754).
-- Scan: canale incluso o no nella scansione (ora anche sul K67).
-- Modo (solo radio con canali digitali): Analogico oppure DMR / Digitale. Sui canali
-  digitali i subtoni non si usano e restano le impostazioni digitali della radio.
-- Selezione: clic, Maiusc+clic (intervallo), Ctrl+clic (aggiungi), Ctrl+A (tutti).
-- Spunte (3.9.3): casella a sinistra di ogni canale (Maiusc+clic spunta un intervallo,
-  la barra spaziatrice le righe selezionate); la casella in testa alla colonna spunta
-  i canali visibili, "☑ Seleziona tutti" / "☐ Deseleziona tutti" tutti i canali della
-  radio. "📻 Inoltra ad altra radio" e "→ Archivio" usano i canali spuntati oppure, se
-  non ce ne sono, quelli selezionati. Le spunte seguono il canale quando lo sposti o
-  lo modifichi; non vengono salvate nel file.
-- Pulsanti e tasti: Aggiungi; Inserisci riga (Ins); Cancella (Canc);
-  Elimina e compatta (Maiusc+Canc); Sposta su/giù (Alt+↑ / Alt+↓);
-  Ordina (per frequenza, nome, tono: se hai selezionato più canali ordina solo quelli);
-  Compatta (toglie i vuoti); Copia/Taglia/Incolla (Ctrl+C/X/V); Annulla/Ripeti (Ctrl+Z/Y).
-  Il tasto destro sulla tabella apre un menu con le stesse operazioni.
-- Incollando su posizioni occupate il programma chiede se sovrascrivere, inserire
-  spostando in basso o usare solo le posizioni libere.
-- Bajeton 8300: 15 zone da 64 canali. Scegli la zona dalla barra sopra la tabella,
-  "Tutte" per vederle insieme; "Sposta in zona" sposta i canali selezionati.
-- K67 Pro: 640 canali. Le gamme di frequenza della radio sono lette dal file:
-  le frequenze fuori gamma sono evidenziate in rosso.
-
-COPIA TRA LE DUE RADIO
-Copia nella prima scheda e Incolla nell'altra (dalla 3.9.3 "Copia in…" è diventato
-"📻 Inoltra ad altra radio", che scrive direttamente nella radio collegata: vedi
-"INOLTRO AD ALTRA RADIO") adatta i canali con la logica del convertitore e mostra gli
-avvisi:
-- nomi: max 16 caratteri sul K67, 12 sulla Bajeton (abbreviazioni M. S. D. e
-  numero finale conservato, es. "CAMPOLUNGHINO 3" → "CAMPOLUNGH 3");
-- potenza: la Media della Bajeton diventa Alta sul K67;
-- toni DCS: trasferiti se la radio di destinazione ha quel codice, altrimenti OFF
-  con avviso;
-- frequenze fuori dalle gamme del K67.
-Nella finestra di inserimento scegli la zona (Bajeton), la posizione di partenza e
-se usare solo le posizioni libere o sovrascrivere.
-
-INOLTRO AD ALTRA RADIO (3.9.3)
-"📻 Inoltra ad altra radio" (nella scheda di ogni radio e nel menu del tasto destro)
-scrive i canali scelti direttamente in un'altra radio collegata con il cavo:
-1) spunta i canali (casella a sinistra; "☑ Seleziona tutti" per tutti i canali della
-   radio): se non ne hai spuntati si usano quelli selezionati con il clic;
-2) scegli marca e modello della radio di destinazione dai due menu a tendina (i
-   modelli sono divisi per tipologia) e dove mettere i canali: nelle posizioni
-   libere (i canali già presenti nella radio restano) oppure al posto di tutti i
-   canali della radio;
-3) conferma che il modello è quello giusto e che la radio è collegata al cavo e
-   accesa;
-4) controllo di compatibilità, come per l'archivio ponti: frequenze dentro le gamme
-   della radio, nessun canale radioamatoriale su un apparato PMR446 / GMRS (avviso
-   giallo se la radio accetta comunque quelle frequenze), nessun canale DMR su una
-   radio solo analogica. Puoi annullare, scegliere un'altra radio o inviare solo i
-   canali compatibili;
-5) scegli la porta del cavo e premi "Inoltra e scrivi". Il programma legge la radio e
-   ne salva una copia di sicurezza (cartella "copie_radio", file "..._prima_dell_
-   inoltro_..."), adatta i canali alla radio (nomi, caratteri, toni, potenze, canali
-   di sola ricezione o digitali, posizioni bloccate come i canali GMRS fissi), li
-   scrive e rilegge la radio per verificarli.
-Le impostazioni della radio (menu, VFO, tasti…) restano quelle lette dalla radio:
-cambiano solo i canali. Se mancano posizioni libere o nessun canale si può usare, il
-programma si ferma prima della scrittura e nella radio non viene scritto nulla.
-Alla fine la finestra indica le posizioni usate e gli adattamenti; se la scheda
-della radio di destinazione non era aperta, "Mostra i canali della radio" la apre
-con i canali come sono ora nella radio.
-
-COSA VIENE CONSERVATO
-Il programma modifica solo ciò che cambi. Un file aperto e salvato senza modifiche
-resta identico byte per byte. I dati che il programma non interpreta (altri byte del
-record K67, i campi segnalazione/PTT ID/busy lock/ecc. della Bajeton) restano invariati
-e seguono il canale quando lo sposti o lo copi nella stessa radio. Le impostazioni
-generali delle radio cambiano solo con "⚙ Impostazioni…" (e solo le voci che modifichi).
-K67: quando aggiungi o cancelli canali, le liste delle zone, i canali A/B e il canale
-di emergenza vengono aggiornati come fa il programma originale (le zone non si
-modificano da qui).
-
-CORREZIONE DI UN ERRORE DELLA VERSIONE 1.0 (K67 Pro)
-Analizzando il programma originale si è scoperto che il file .xlc ha due tabelle di
-bit per canale ("posizione occupata" e "in scansione"). La versione 1.0 usava tabelle
-sbagliate: un canale aggiunto in una posizione che era VUOTA poteva risultare
-invisibile alla radio e al programma originale (modifiche e cancellazioni di canali
-esistenti invece erano corrette). Se hai salvato file .xlc con la 1.0 aggiungendo
-canali in posizioni vuote, aprili con questa versione: le posizioni interessate
-vengono segnalate e basta reinserire quei canali (oppure ripeti l'aggiunta).
-
-ARCHIVIO PONTI
-- È condiviso da tutte le radio e si salva da solo, sul PC, in:
-  %APPDATA%\GestioneCanaliRadio\archivio_ponti.json (copia di sicurezza: .bak)
-- "Importa…": da Internet (indirizzo preimpostato https://www.ik2ane.it/pontixls.xls,
-  modificabile; gli indirizzi usati vengono ricordati) oppure da file .xls, .xlsx, .csv.
-  Riconosce l'elenco di IK2ANE (foglio "ponti"), i CSV di CHIRP, i file esportati da
-  questo programma e fogli generici con intestazioni come Frequenza, Shift, Tono, Nome,
-  Località, Regione, Provincia, Tipo, Rete.
-- Valori irregolari interpretati con buon senso e segnalati (righe gialle con ⚠):
-    "+5.0MHz", "-600 kHz"         → shift normali
-    "+1.362,5 MHz"                → 1,3625 MHz (segnalato)
-    "79,7" "123"                  → 79.7 / 123.0
-    "77.0-141.3" "110.9/162.2 loc"→ usato il primo tono, gli altri indicati nell'avviso
-    "82.2" (non standard)         → 82.5, segnalato
-    "CC1" (color code DMR)        → nessun subtono, annotato nelle note
-    "DCS023", "1750", "DG-ID:10"  → annotati/segnalati
-    "input" / "output"            → isofrequenza, segnalato
-  Il valore originale resta visibile nel pannello di dettaglio. Le righe senza una
-  frequenza valida (es. i segnaposto 9999999 e le righe di testo finali) non sono
-  importabili: sono elencate nella finestra, non scartate in silenzio.
-- Dal file di IK2ANE vengono letti anche i colori della legenda: ponti non più attivi,
-  momentaneamente non in funzione, non H24, tono non regionale, shift non standard.
-- Filtri (in importazione, in esportazione e nell'archivio): banda (VHF/UHF/Altre),
-  tipo (Analogico, EchoLink, SvxLink, DMR, C4FM, D-Star, NXDN, Multimodo, HotSpot,
-  Transponder, Winlink), stato, regione, provincia, rete, testo libero, solo righe con
-  avvisi; più la spunta riga per riga. In importazione i filtri partono da "solo ponti
-  utilizzabili in analogico, esclusi i non attivi": puoi cambiarli.
-- Nome del canale: modello a scelta con {LOC} {SIGLA} {NOMINATIVO} {PROV}
-  (es. "{NOMINATIVO} {LOC}" → "IR0XX M.ALTO"). "Rigenera nomi…" lo riapplica.
-- Ponti già presenti (stessa frequenza, TX, località e sigla): puoi aggiungere solo i
-  nuovi, aggiornare quelli presenti (il nome che hai dato resta) o sostituire tutto.
-- Spunta i ponti che vuoi mettere nella radio: casella a sinistra di ogni riga (la
-  barra spaziatrice spunta le righe selezionate), oppure "☑ Seleziona tutti" e
-  "☐ Deseleziona tutti", che valgono per i ponti visibili con i filtri attuali. Le
-  spunte restano salvate nell'archivio, anche alla chiusura del programma.
-- "📻 Inoltra alla radio" scrive nella radio i ponti spuntati (se non ce ne sono,
-  quelli selezionati con il clic):
-    · se è già stata scelta una radio (quella indicata nella barra azzurra "Radio di
-      destinazione", cioè l'ultima usata o l'ultima scheda radio aperta) compare una
-      finestra con il modello e la richiesta di conferma ("Conferma e scrivi", oppure
-      "Scegli un'altra radio…");
-    · altrimenti si apre l'elenco di tutte le radio compatibili, con la ricerca: diviso
-      per marca (Baofeng, Bajeton) e per tipologia, con ogni modello elencato da solo
-      in ordine alfabetico (tra parentesi la gestione usata, es. "UV-5RA (gestione:
-      Baofeng UV-5R)", o la versione, se la radio ne ha più d'una).
-  Prima di scrivere, il programma controlla che i ponti siano compatibili con la radio
-  scelta:
-    · frequenze di ricezione e trasmissione dentro le gamme della radio;
-    · nessun ponte radioamatoriale su un apparato PMR446 / di uso libero (solo
-      446,0-446,2 MHz) o GMRS / FRS (solo 462,55-467,725 MHz);
-    · nessun ponte solo digitale (DMR, C4FM, D-Star, NXDN) su una radio solo
-      analogica; sulle radio DMR (DM-32UV, DM-1801 Pro, DM-5000) i ponti solo DMR
-      diventano canali DMR.
-  Eccezione: alcune radio vendute come PMR446 / uso libero o GMRS accettano anche le
-  frequenze radioamatoriali (le gamme del driver sono quelle del programma del
-  costruttore, es. BF-T17 PMR446 400-480 MHz). Per i ponti dentro quelle gamme compare
-  un avviso giallo con "Scrivi comunque i N ponti": la scrittura è permessa (anche dalla
-  scheda della radio, incollando o inserendo i ponti). Rispetta le norme: in Italia
-  trasmettere sulle frequenze radioamatoriali richiede la licenza e un apparato PMR446
-  omologato non va usato fuori dai suoi canali.
-  Se non ci sono problemi i ponti vengono inviati; altrimenti compare un avviso ("Hai
-  scelto un dispositivo non compatibile con i dati che stai cercando di inviare alla
-  radio") con l'elenco dei problemi e nella radio non viene scritto nulla: puoi
-  annullare, scegliere un'altra radio o, se una parte dei ponti è compatibile,
-  inviare solo quella.
-  Poi si apre la solita finestra di inserimento (posizione di partenza, solo posizioni
-  libere o sovrascrittura, adattamenti per la radio); se la radio non è ancora stata
-  letta il programma propone di leggerla via cavo o di aprirne un file. "Cambia
-  radio…" nella barra azzurra cambia la destinazione.
-- "Copia" copia i ponti spuntati (o selezionati) per incollarli in una radio (Ctrl+V).
-- "🗑 Elimina" (3.9.3) toglie dall'archivio i ponti spuntati, anche quelli nascosti dai
-  filtri (la conferma dice quanti), oppure, se non ce ne sono, quelli selezionati con
-  il clic; il tasto Canc elimina le righe selezionate. "🗑 Elimina tutti" svuota
-  l'archivio. Entrambi chiedono conferma e si annullano con ↶ (Ctrl+Z) finché il
-  programma resta aperto; per ricaricare l'elenco di IK2ANE usa "⬇ Importa…".
-- "Segna come verificati" toglie gli avvisi dopo il controllo (restano nelle note).
-
-CONVERTITORE E FORMATI UNIVERSALI (3.7)
-- Scheda "🔁 Converti": 1) scegli il file di partenza o una scheda aperta; 2) scegli il
-  formato di destinazione (cerca per nome); 3) "Converti e salva…". Dopo la
-  conversione l'elenco mostra tutti gli adattamenti (nomi accorciati, potenze, toni
-  non disponibili, canali fuori gamma o esclusi) e "Apri nella scheda della radio"
-  apre il file prodotto.
-- File di partenza: .xlc (K67), .dat (Bajeton, v1.0.8 o v1.0.9), immagini .img di
-  qualsiasi radio compatibile (anche salvate da CHIRP: il modello è riconosciuto dai
-  dati del file), CSV di CHIRP (anche con righe di commento), tabelle Excel o CSV
-  (esportate da qui, dall'archivio ponti o scritte a mano: serve una colonna con la
-  frequenza, es. «RX (MHz)», «Frequenza» o «Frequency»; facoltative nome, TX, shift,
-  toni, potenza, larghezza, scan, solo RX, digitale).
-- Destinazioni: CSV di CHIRP (formato universale, si apre con CHIRP per qualsiasi
-  radio), Excel .xlsx, CSV per Excel, file .xlc del K67, .dat della Bajeton per la
-  v1.0.8 o la v1.0.9 di BT-11_CPS, immagine .img di ognuna delle radio gestite con i
-  driver. I canali restano nella stessa posizione se la radio ce l'ha (oppure
-  "compatta i canali"); quelli in più vanno nelle prime posizioni libere, gli altri
-  sono esclusi e segnalati. Le posizioni bloccate di alcune radio (es. canali GMRS
-  fissi della GM-15 Pro) restano quelle della radio.
-- Per l'immagine .img di una radio serve un'immagine di quella stessa radio, cioè la
-  copia completa della sua memoria (la scheda aperta dopo "Leggi dalla radio" o
-  "Apri…", oppure un file .img salvato prima da qui o da CHIRP; dalla 3.8 anche con
-  "📻 Leggi adesso la radio collegata…" direttamente dal convertitore): l'immagine
-  contiene impostazioni e taratura della radio, che non si possono inventare, e
-  scriverne una "vuota" danneggerebbe la radio. Per K67 e Bajeton si può partire
-  anche dalle impostazioni predefinite dei programmi dei costruttori.
-- "📥 Importa…" (scheda di ogni radio) e "Esporta…" → "🔁 Per un'altra radio…" usano
-  lo stesso convertitore.
-
-IDENTIFICAZIONE DELLA RADIO (3.8)
-- Scheda "🔎 Identifica": scegli la porta del cavo (o "USB" per le radio DMR con il cavo
-  USB diretto: RD-5R, DM-1801, DM-1701) e premi "Identifica la radio". Si può
-  restringere la ricerca per marca o tipo (analogiche / DMR): è più veloce.
-- Il programma prova uno dopo l'altro i protocolli di LETTURA (prima K67 Pro e Bajeton
-  BJ-8300, poi le radio dei driver, cominciando da quelle con una scheda aperta). I
-  modelli che iniziano il collegamento nello stesso modo sono provati una volta sola
-  (38 tentativi per le 100 radio via cavo; dalla 4.1, 60 tentativi per tutte le radio
-  via cavo). Quando una radio risponde viene letta per
-  intero, come con "Leggi dalla radio", e una copia della lettura viene salvata nella
-  cartella delle copie (copie_radio).
-- Il modello si riconosce dal contenuto della memoria, come fa CHIRP con i file. Molte
-  radio però usano lo stesso protocollo e la stessa memoria senza scrivere da nessuna
-  parte il proprio nome (es. le radio della famiglia UV-17Pro, le PMR della famiglia
-  BF-888S): in quel caso il programma lo dice ("Modello non distinguibile via cavo") e
-  fa scegliere il modello giusto prima di aprire i canali.
-- Si vedono: marca e modello, tipo (analogica FM o DMR, PMR446, GMRS), gamme di
-  frequenza, numero di memorie, collegamento usato, firmware o identificativo
-  comunicato dalla radio (es. UV-5R "BFB297", BJ-8300 "BT-11U V1.00", DM-32UV
-  firmware, K67 "5RH-PRO" o "BF-K6"), testo inviato dalla radio durante il
-  collegamento, canali presenti; per RD-5R, DM-1801 e DM-1701 anche ID DMR, nome della
-  radio, data dell'ultima programmazione e (DM-1701) versione del programma che l'ha
-  scritta. Il numero di serie: nessuna di queste radio lo comunica con il protocollo
-  di programmazione (è solo sull'etichetta).
-- "Apri i canali nella scheda della radio": come dopo "Leggi dalla radio".
-- Tempi: senza radio collegata la ricerca completa dura circa 135 secondi (81 tentativi;
-  meno se restringi la ricerca per marca o tipo); una radio
-  che risponde viene trovata appena arriva il suo turno e poi letta.
-- Se una radio risponde ma la lettura non va a buon fine (es. password, modello
-  diverso) le risposte sono elencate nei dettagli. Se la radio resta bloccata in
-  modalità di programmazione, spegnila e riaccendila.
-
-IDENTIFICAZIONE AUTOMATICA (4.0, 4.1)
-- Nella scheda "🔎 Identifica" premi "🔄 Abilita identificazione automatica". Da quel
-  momento, finché il programma è aperto, ogni volta che colleghi il cavo di
-  programmazione (o una radio DMR via USB) la radio viene cercata da sola, con gli
-  stessi comandi di sola LETTURA di "Identifica la radio": nella radio non si scrive
-  nulla.
-- Funziona in qualsiasi scheda del programma. Durante la ricerca compare in basso il
-  riquadro "Identificazione Radio In Corso. Attendere prego." (con "Interrompi").
-- Quando la radio è riconosciuta compaiono i suoi dati (anche in una finestra) e si
-  apre la sua scheda con i canali letti; se nella scheda c'erano modifiche non salvate
-  il programma chiede prima di sostituirle.
-- Dalla 4.1, finché la radio resta collegata il programma ne controlla ogni pochi
-  secondi la presenza, con il solo saluto iniziale del suo protocollo (lo stesso con
-  cui comincia la ricerca, senza leggere né scrivere la memoria). Se la radio non
-  risponde più (cavo staccato dalla radio, radio spenta, radio cambiata) lo segnala
-  e la ricerca riparte da sola: la radio collegata dopo viene riconosciuta, anche se
-  è la stessa. Se stacchi il cavo dal PC la porta viene cercata di nuovo appena la
-  ricolleghi, anche durante una ricerca.
-- Radio spenta o volume al minimo: la ricerca si ripete finché il cavo resta
-  collegato (nei primi minuti ogni pochi secondi, poi ogni 20 secondi). Puoi quindi
-  collegare il cavo e accendere la radio dopo.
+- Dalla 4.3 il programma ASCOLTA DI CONTINUO tutte le porte dei cavi collegati, ognuna
+  per conto suo e tutte insieme: radio spenta o volume al minimo non fermano la
+  ricerca, che ricomincia subito (senza il riquadro) finché il cavo resta collegato.
+  Puoi quindi collegare il cavo e accendere la radio dopo: viene riconosciuta appena
+  risponde. Una radio che risponde ma non è tra quelle gestite viene riprovata ogni
+  30 secondi.
+- Più radio collegate a cavi diversi (es. COM6 e COM7) vengono cercate nello stesso
+  momento: per ciascuna compaiono i dati e si apre la scheda; se la scheda è già
+  aperta compare l'avviso "Radio già identificata!! Scheda Radio già aperta" (con
+  più radio "Radio già identificate!! Schede radio già aperte"). Dopo il
+  riconoscimento solo la porta di quella radio si ferma: le altre restano in ascolto.
+- Le radio riconosciute vengono ricordate (anche dopo il riavvio): le ricerche
+  successive le provano per prime, e durante la ricerca le riprovano ogni 8
+  tentativi, così una radio già usata (es. K67 Pro, Bajeton 8300, BJ-9000) si
+  riconosce in pochi secondi.
 - Si cercano solo le porte dei cavi di programmazione (adattatori USB-seriale CH340,
   Prolific, Silicon Labs, FTDI…), mai porte Bluetooth, modem o le porte seriali di
   sistema (COM1, COM2).

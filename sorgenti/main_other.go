@@ -116,6 +116,7 @@ func setupEmulatedRadios() {
 	// (cambi di velocità durante l'aggiornamento).
 	kdhx, bj9k, k9g := newKdh2Emu(kdhxProto, nil, false), newKdh2Emu(bj9000Proto, nil, false), newK9gEmu(nil, false)
 	var kdh *kdhEmu
+	var tdh *tdhEmu
 	var rh5 *rh5Emu
 	listPortsFunc = func() []PortInfo {
 		l := []PortInfo{{"COM3", "USB-SERIAL CH340 (COM3) - K67 simulata"}, {"COM4", "Prolific USB-to-Serial (COM4) - Bajeton simulata"}, {"COM5", "Porta senza radio (COM5)"},
@@ -125,7 +126,7 @@ func setupEmulatedRadios() {
 		}
 		return append(l, PortInfo{"COM8", "USB-SERIAL CH340 (COM8) - UV-5RM simulata (firmware)"}, PortInfo{"COM9", "USB-SERIAL CH340 (COM9) - 5RH Pro simulata (firmware)"},
 			PortInfo{"COM10", "USB-SERIAL CH340 (COM10) - UV-25 Plus simulata (firmware)"}, PortInfo{"COM11", "USB-SERIAL CH340 (COM11) - BJ-9000 simulata (firmware)"},
-			PortInfo{"COM12", "USB-SERIAL CH340 (COM12) - UV-9G simulata (firmware)"})
+			PortInfo{"COM12", "USB-SERIAL CH340 (COM12) - UV-9G simulata (firmware)"}, PortInfo{"COM13", "USB-SERIAL CH340 (COM13) - RT-730 simulata nel caricatore (firmware)"})
 	}
 	openPortFunc = func(name string, baud int) (Port, error) {
 		a, b := newPipe()
@@ -159,6 +160,10 @@ func setupEmulatedRadios() {
 			go bj9k.serve(b, baud)
 		case "COM12":
 			go k9g.serve(b, baud)
+		case "COM13":
+			// 4.3: RT-730 / TD-H8 accesa con il PTT premuto (caricatore)
+			tdh = &tdhEmu{hello: tdhHello, state: "wait", window: 500 * time.Millisecond}
+			go tdh.serve(b, baud)
 		case "COM5":
 		default:
 			return nil, fmt.Errorf("impossibile aprire la porta %s: porta inesistente", name)

@@ -355,7 +355,7 @@ func thuv88Sum(b []byte) byte {
 }
 
 func (f thuv88Fam) Download(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, string, error) {
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return nil, "", err
 	}
@@ -398,7 +398,7 @@ func (f thuv88Fam) Upload(ctx context.Context, m *genModel, port string, img []b
 	if len(img) < thuv88MemSize {
 		return "", fmt.Errorf("immagine della memoria incompleta (%d byte invece di %d)", len(img), thuv88MemSize)
 	}
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return "", err
 	}

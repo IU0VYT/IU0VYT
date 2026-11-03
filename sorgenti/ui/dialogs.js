@@ -386,7 +386,7 @@ const Dialogs = {
         }
         const last = k67 ? settings.k67Port : view.def.generic ? settings.genPort : settings.bajPort;
         const cur = sel.value || last;
-        sel.innerHTML = r.ports.map(p => `<option value="${esc(p.name)}">${esc(p.desc && p.desc !== p.name ? p.desc : p.name)}</option>`).join('');
+        sel.innerHTML = r.ports.map(p => `<option value="${esc(p.name)}">${esc(portLabel(p))}</option>`).join('');
         if (r.ports.some(p => p.name === cur)) sel.value = cur;
         $('[data-portnote]', el).textContent = r.ports.length ? `Copie di sicurezza e letture vengono salvate in: ${r.backupDir}`
           : 'Nessuna porta seriale trovata: collega il cavo e verifica che il driver (es. CH340 o Prolific) sia installato, poi premi Aggiorna.';
@@ -750,6 +750,12 @@ const Dialogs = {
         <li><b>UV-K5, UV-K5(8), UV-K6, UV-5R Plus</b> (file <b>.bin</b> di Quansheng): spegni la radio, riaccendila tenendo premuto il PTT (torcia accesa,
           schermo spento) e avvia l'aggiornamento. Se il firmware non è per il tipo di caricatore della radio, la radio non viene toccata.</li>
       </ul>
+      <h4>Aggiornamento del firmware Radtel e TIDRADIO (4.3)</h4><ul>
+        <li><b>Radtel RT-470, RT-470L, RT-470X, RT-495, RT-630</b> (file <b>.kdhx</b> di Radtel): caricatore «JJCC Bootloader Pro», come la UV-25 Plus; in manuale
+          accendi la radio tenendo premuti i tasti laterali 2 e 3. RT-470: firmware 1.x solo per la scheda vecchia, 2.x solo per la nuova (menu 55).</li>
+        <li><b>TIDRADIO TD-H3, TD-H8, Radtel RT-730</b> (file <b>.BIN</b>): avvia l'aggiornamento e accendi la radio tenendo premuto il PTT. Il caricatore non
+          controlla il modello: scrivi quello indicato dal file.</li>
+      </ul>
       <h4>Aggiornamento del firmware (Bajeton BJ-8300 e BJ-7800)</h4><ul>
         <li>La BJ-7800 usa lo stesso programma di aggiornamento della BJ-8300 (file <b>.anc</b>, es. BJ7800_CN_EN_V0.17_20251126.anc): si aggiorna allo stesso modo,
           dalla sua scheda o dalla galleria dei modelli. Il modello è riconosciuto dal nome del file.</li>
@@ -774,10 +780,12 @@ const Dialogs = {
       <h4>Identifica la radio</h4><ul>
         <li>Scheda «🔎 Identifica»: scegli la porta del cavo (o «USB» per RD-5R, DM-1801, DM-1701) e premi «Identifica la radio». Il programma prova i protocolli
           di lettura di tutte le radio che conosce, legge quella che risponde e mostra marca, modello, tipo, gamme, firmware o identificativo, canali e, per le
-          radio DMR USB, ID DMR e nome. Nessun dato viene scritto nella radio. Senza radio la ricerca completa dura circa 135 secondi.</li>
-        <li><b>Identificazione automatica</b> («🔄 Abilita identificazione automatica», scelta ricordata): in qualsiasi scheda, quando colleghi il cavo la radio viene
-          riconosciuta e si apre la sua scheda; quando una radio collegata risponde compare in basso «Identificazione Radio In Corso». Dopo il riconoscimento la
-          ricerca si ferma: per un'altra radio premi «🔎 Identifica Nuova Radio Automaticamente» nella barra in alto (grigio se la funzione è disattivata).</li>
+          radio DMR USB, ID DMR e nome. Nessun dato viene scritto nella radio. Senza radio la ricerca completa dura circa 50 secondi; le radio già riconosciute in passato si provano per prime.</li>
+        <li><b>Identificazione automatica</b> («🔄 Abilita identificazione automatica», scelta ricordata): in qualsiasi scheda il programma ascolta di continuo tutte le porte dei cavi:
+          riconosce la radio anche se la accendi dopo, e più radio su cavi diversi insieme, e apre le loro schede (se una scheda è già aperta compare «Radio già
+          identificata!! Scheda Radio già aperta»). Quando una radio collegata risponde compare in basso «Identificazione Radio In Corso». Dopo il riconoscimento
+          la porta di quella radio si ferma: per un'altra radio sullo stesso cavo premi «🔎 Identifica Nuova Radio Automaticamente» nella barra in alto (grigio se la
+          funzione è disattivata).</li>
         <li>Se più modelli hanno lo stesso protocollo e la stessa memoria, scegli il tuo dall'elenco prima di aprire i canali.</li>
         <li>DM-1701: nella finestra «Leggi dalla radio» lo stato del driver USB, «Installa il driver USB…» (pacchetto del costruttore) o WinUSB con Zadig.</li>
         <li>BTECH DMR-6X2 / PRO: nella galleria «🧭 Aggiornamento guidato…» controlla i file del firmware ufficiale e guida passo per passo il programma BTECH.</li>

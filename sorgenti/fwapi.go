@@ -84,7 +84,7 @@ func (a *App) fwResult() (interface{}, error) {
 	s.exp = nil
 	cands := exp.found
 	if len(cands) == 0 {
-		msg := "nell'archivio non c'è nessun file firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5)"
+		msg := "nell'archivio non c'è nessun file firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5, .BIN di TD-H3/TD-H8/RT-730)"
 		if len(skipped) > 0 {
 			msg += " (" + strings.Join(skipped, "; ") + ")"
 		}
@@ -136,6 +136,8 @@ func (a *App) fwSelect(i int, skipped []string) (interface{}, error) {
 		img = analyzeKDH9G(c.Name, c.Where, c.data)
 	case fwK5:
 		img = analyzeK5(c.Name, c.Where, c.data)
+	case fwTDH:
+		img = analyzeTDH(c.Name, c.Where, c.data)
 	default:
 		img = analyzeANC(c.Name, c.Where, c.data)
 	}
@@ -387,6 +389,17 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 			return fmt.Errorf("conferma che la radio collegata è una %s ed è nel caricatore", img.Info.Target)
 		}
 		return nil
+	case "tdh":
+		if req.Mode != "manual" {
+			return errors.New("modalità sconosciuta")
+		}
+		if !req.ConfirmModel {
+			return fmt.Errorf("conferma che la radio collegata è una %s ed è nel caricatore", img.Info.Target)
+		}
+		if normModel(req.ConfirmText) != img.Info.Confirm {
+			return fmt.Errorf("il caricatore non controlla il modello del firmware che riceve: scrivi %s nella casella di conferma", img.Info.Confirm)
+		}
+		return nil
 	case "rh5":
 		if req.Mode != "update" {
 			return errors.New("modalità sconosciuta")
@@ -451,6 +464,8 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 		return a.runFirmwareKDH2(ctx, j, req, img)
 	case "k5":
 		return a.runFirmwareK5(ctx, j, req, img)
+	case "tdh":
+		return a.runFirmwareTDH(ctx, j, req, img)
 	}
 	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
 	j.logf("Firmware: %s (%s, SHA-256 %s…)", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16])
@@ -693,7 +708,7 @@ func kdh2NeedTyped(kind, mode string) bool {
 
 // kdh2Manual: istruzioni del costruttore per portare la radio nel caricatore
 var kdh2Manual = map[string]string{
-	"kdhx":   "radio spenta: tieni premuti SK2 e SK3 (i due tasti sotto il PTT) e accendila; l'indicatore diventa verde (procedura di Baofeng per la UV-25 Plus; per le altre radio segui le istruzioni fornite con il firmware)",
+	"kdhx":   "radio spenta: tieni premuti SK2 e SK3 (i due tasti sotto il PTT; sulle Radtel i tasti laterali 2 e 3) e accendila; l'indicatore diventa verde (procedura di Baofeng per la UV-25 Plus e di Radtel per RT-470, RT-495 e RT-630; per le altre radio segui le istruzioni fornite con il firmware)",
 	"bj9000": "radio spenta: tieni premuti i tasti laterali 3 e 4 e accendila; compare la schermata «Update»",
 	"kdh9g":  "radio spenta: tieni premuti i tasti 12 e 13 e accendila; si accende la torcia",
 }
@@ -741,7 +756,11 @@ func (a *App) runFirmwareKDH2(ctx context.Context, j *cableJob, req *fwStartReq,
 	case "bj9000":
 		sent, err = kdh2Update(ctx, req.Port, img.Raw, bj9000Proto, manual, j.prog, logf, fwStarted(j, &started))
 	default:
-		sent, err = kdh2Update(ctx, req.Port, img.Raw, kdhxProto, manual, j.prog, logf, fwStarted(j, &started))
+		proto := kdhxProto
+		if img.Info.Platform == "JJCC" {
+			proto = kdhxJJProto // Radtel RT-470 / RT-495 / RT-630
+		}
+		sent, err = kdh2Update(ctx, req.Port, img.Raw, proto, manual, j.prog, logf, fwStarted(j, &started))
 	}
 	res["sent"] = sent
 	if err == errCancelled && !started {
@@ -787,5 +806,30 @@ func (a *App) runFirmwareK5(ctx context.Context, j *cableJob, req *fwStartReq, i
 	}
 	res["seconds"] = int(time.Since(t0).Seconds())
 	j.note("Firmware %s inviato: %s in %d secondi. Spegni e riaccendi la radio: all'accensione mostra la nuova versione.", img.Info.Version, fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
+	return res, nil
+}
+
+// runFirmwareTDH: TIDRADIO TD-H3 / TD-H8 e Radtel RT-730 nel caricatore (fwtdh.go)
+func (a *App) runFirmwareTDH(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
+	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
+	j.logf("Firmware: %s (%s, SHA-256 %s…) per %s", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16], img.Info.Target)
+	j.set("In attesa della radio nel caricatore", true)
+	started := false
+	t0 := time.Now()
+	sent, err := tdhUpdate(ctx, req.Port, img.Dec, j.prog, func(s string) { j.logf("%s", s) },
+		func() { fwStarted(j, &started)(); j.set("Aggiornamento del firmware", false) })
+	res["sent"] = sent
+	if err == errCancelled && !started {
+		return nil, err
+	}
+	if err != nil {
+		if !started {
+			return nil, fmt.Errorf("aggiornamento non avviato, la radio non è stata modificata: %v", err)
+		}
+		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati): la radio resta nel caricatore. Spegnila, riaccendila tenendo premuto il PTT "+
+			"e ripeti l'aggiornamento (%v)", fmtBytes(int(sent)), err)
+	}
+	res["seconds"] = int(time.Since(t0).Seconds())
+	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
 	return res, nil
 }

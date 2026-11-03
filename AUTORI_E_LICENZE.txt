@@ -87,6 +87,18 @@ https://github.com/egzumer/uvtools). fwk5.go è scritto da zero sulla base di qu
 documentazione, per l'interoperabilità; nessun codice di quei programmi è incluso nel
 pacchetto. verifica/k5/k5ref.js, usato solo per le prove, carica il codice di uvtools
 dalla cartella indicata da chi esegue la verifica. Grazie a SQ5BPF e a egzumer.
+
+AGGIORNAMENTO DEL FIRMWARE DI TIDRADIO TD-H3 / TD-H8 E RADTEL RT-730 (4.3)
+Il protocollo del caricatore è documentato da nicsure nel progetto TD-H3-Engineering
+(https://github.com/nicsure/TD-H3-Engineering, firmware_flash_protocol.txt, con la
+cattura delle porte del programma del costruttore) e usato dal suo programma TID
+Station; la stessa presentazione di 36 byte si trova nei programmi del costruttore
+«H8_IAP» (TIDRADIO) e «RT730 Update tool» (Radtel). fwtdh.go è scritto da zero sulla
+base di quella documentazione, per l'interoperabilità; nessun codice di quei
+programmi è incluso nel pacchetto. Grazie a nicsure.
+I firmware .kdhx delle Radtel RT-470 / RT-495 / RT-630 usano lo stesso protocollo del
+«Bootloader Pro» della UV-25 Plus (fwkdhx.go), con la piattaforma JJCC indicata dal
+programma di Radtel «New RT470 serial Bootloader Pro».
 Le modifiche rispetto ai file originali di CHIRP (riscrittura in Go, solo canali,
 adattamento all'interfaccia di IU0VYT Flash) sono descritte in testa a ciascun file
 e in CHANGELOG.txt, con le date delle versioni.

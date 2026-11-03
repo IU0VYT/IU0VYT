@@ -512,6 +512,39 @@ type genDef struct {
 	Conn    string     `json:"conn,omitempty"`
 	// Settings: impostazioni della radio modificabili (finestra «Impostazioni»)
 	Settings bool `json:"settings,omitempty"`
+	// Divide (4.3): impostazione della radio che sceglie tra canali in zone e un
+	// unico elenco (come «Canali» della Bajeton 8300); DivideAll / DivideZon:
+	// valori dell'impostazione per l'elenco unico e per le zone
+	Divide    string `json:"divide,omitempty"`
+	DivideAll string `json:"divideAll,omitempty"`
+	DivideZon string `json:"divideZones,omitempty"`
+}
+
+// genDivides (4.3): radio con le zone che hanno la scelta «tutti i canali in un
+// unico elenco» tra le impostazioni (chiave, valore per le zone, valore per
+// l'elenco unico: i codici delle scelte, come nella finestra «Impostazioni»;
+// BJ-9000: byte 0x26, 0 = «Zone (15 × 64)», 1 = «Tutti i canali (960)»)
+var genDivides = map[string][3]string{
+	"bj-9000": {"divide_ch", "0", "1"},
+}
+
+// genSingle: la radio (memoria img) mostra tutti i canali in un unico elenco?
+func genSingle(kind string, img []byte) bool {
+	dv, ok := genDivides[kind]
+	if !ok || img == nil {
+		return false
+	}
+	t := settingsFor(kind, img)
+	if t == nil {
+		return false
+	}
+	for i := range t.Settings {
+		if t.Settings[i].Key == dv[0] {
+			v, err := readSetting(&t.Settings[i], img)
+			return err == nil && v == dv[2]
+		}
+	}
+	return false
 }
 
 func (m *genModel) def() genDef {
@@ -520,6 +553,9 @@ func (m *genModel) def() genDef {
 		NoTxOff: m.NoTxOff, Zones: m.Zones, Vendor: m.Vendor, Model: m.Model, Digital: m.Digital, Conn: m.Conn, Settings: settingsAvailable(m.ID)}
 	if m.Zones > 0 {
 		d.PerZone = m.Slots / m.Zones
+	}
+	if dv, ok := genDivides[m.ID]; ok && d.Settings {
+		d.Divide, d.DivideZon, d.DivideAll = dv[0], dv[1], dv[2]
 	}
 	for _, c := range m.DCS {
 		d.DCS = append(d.DCS, fmt.Sprintf("D%03dN", c), fmt.Sprintf("D%03dI", c))

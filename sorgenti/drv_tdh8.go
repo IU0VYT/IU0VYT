@@ -379,7 +379,7 @@ func (s *tdh8Sess) read(a int) ([]byte, error) {
 
 func (f tdh8Fam) Download(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, string, error) {
 	o := tdh8o(m)
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return nil, "", err
 	}
@@ -411,7 +411,7 @@ func (f tdh8Fam) Upload(ctx context.Context, m *genModel, port string, img []byt
 	if len(img) < end {
 		return "", fmt.Errorf("immagine della memoria incompleta (%d byte invece di %d)", len(img), end)
 	}
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return "", err
 	}

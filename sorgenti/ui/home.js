@@ -41,7 +41,6 @@ const Home = {
     const nFw = App.catalog.filter(c => FW_KINDS.includes(c.fw)).length;
     const nAll = App.catalog.length;
     const nBrands = catalogBrands().length;
-    const brandsShort = catalogBrands().slice(0, 5).join(', ') + (nBrands > 5 ? '…' : '');
     // zero barrato, come nei nominativi radioamatoriali
     const letters = (s, cls) => [...s].map((ch, i) => `<span class="${cls}" style="--i:${i}">${ch === '0' ? 'Ø' : esc(ch)}</span>`).join('');
     page.innerHTML = `<div class="home">
@@ -55,21 +54,20 @@ const Home = {
         ${brandMarquee(catalogBrands(), 'home')}
         <button class="home-start" data-go="gal">▶ PRESS START</button>
         <div class="home-cards">
-          <button class="home-card" data-go="gal"><b>📻 ${nChan} radio</b><span>Canali e frequenze letti e scritti via cavo, file compatibili con CHIRP. Galleria di ${nAll} modelli di ${nBrands} marche (${esc(brandsShort)}) con programmi e manuali ufficiali.</span></button>
-          <button class="home-card" data-go="ident"><b>🔎 Identifica</b><span>Collega una radio: il programma la riconosce da solo e mostra marca, modello, firmware e le altre informazioni che comunica.</span></button>
-          <button class="home-card" data-go="arch"><b>📡 Ponti radio</b><span>Archivio dei ponti italiani (elenco gratuito di IK2ANE), filtri, nomi automatici e inserimento nelle radio.</span></button>
-          <button class="home-card" data-go="gal-fw"><b>⬆ Firmware</b><span>Aggiornamento del firmware di ${nFw} modelli con i protocolli dei programmi ufficiali, con controllo del file e copia di sicurezza.</span></button>
-          <button class="home-card" data-go="info"><b>🔄 Aggiornamenti</b><span>Il programma controlla da solo a ogni avvio se esiste una versione più recente.</span></button>
+          <button class="home-card" data-go="gal"><b>📻 ${nChan} radio</b><span>Canali via cavo e file CHIRP. Galleria di ${nAll} modelli, ${nBrands} marche.</span></button>
+          <button class="home-card" data-go="ident"><b>🔎 Identifica</b><span>Riconosce da sé la radio collegata, anche più radio insieme.</span></button>
+          <button class="home-card" data-go="arch"><b>📡 Ponti radio</b><span>Ponti italiani (IK2ANE) da inserire nelle radio.</span></button>
+          <button class="home-card" data-go="gal-fw"><b>⬆ Firmware</b><span>Aggiornamento di ${nFw} modelli, con controllo del file.</span></button>
+          <button class="home-card" data-go="info"><b>🔄 Aggiornamenti</b><span>Nuove versioni controllate a ogni avvio.</span></button>
         </div>
         <div class="home-meta">
-          <div>Versione <b>${esc(d.version || '')}</b>${d.buildDate && d.buildDate !== 'non indicata' ? ` · compilata il ${esc(d.buildDate)}` : ''}</div>
-          <div>Copyright © 2026 ${esc(d.author)}</div>
+          <div>Versione <b>${esc(d.version || '')}</b>${d.buildDate && d.buildDate !== 'non indicata' ? ` · compilata il ${esc(d.buildDate)}` : ''} · Copyright © 2026 ${esc(d.author)}</div>
           <div>Software libero: ${esc(d.license || '')} — senza alcuna garanzia</div>
           <div class="home-links">
             <span>🌐 Sito web: <a href="#" data-link="${esc(d.site || SITE_URL)}">${esc(d.site || SITE_URL)}</a></span>
             <span>💻 Sorgenti: <a href="#" data-link="${esc(d.repo || REPO_URL)}">${esc(d.repo || REPO_URL)}</a></span>
           </div>
-          <div class="home-small">Programma indipendente, non affiliato ai costruttori delle radio (${esc(catalogBrands().join(', '))}). I marchi appartengono ai rispettivi titolari.</div>
+          <div class="home-small">Programma indipendente, non affiliato ai costruttori delle radio. I marchi appartengono ai rispettivi titolari.</div>
         </div>
       </div>
     </div>`;

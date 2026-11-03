@@ -821,7 +821,7 @@ func (l *dm32Link) scan(start, end int, prog func(i int)) (map[byte][]int, []int
 }
 
 func dm32Open(ctx context.Context, port string) (*dm32Link, error) {
-	p, err := openPortFunc(port, 115200)
+	p, err := openPort(port, 115200)
 	if err != nil {
 		return nil, err
 	}

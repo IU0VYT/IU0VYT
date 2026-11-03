@@ -3,6 +3,50 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.3.0 (03/11/2026)
+------------------
+- Identificazione per porta (identify.go): registro probeReg al posto dello scambio
+  globale di openPortFunc (i driver aprono con openPort, che avvolge la porta della
+  prova solo per la sua chiave; HID:/DFU: = «USB»), blocco per porta
+  (identPortLock), sessione per ricerca (cableJob.sess). Tempi: identFirstWait 350 ms,
+  identSilentMax 700 ms, identPause 1 s: giro completo senza radio 47 s misurati (81
+  tentativi; prima 135 s).
+- Radio conosciute: Settings.KnownRadios (ultime 24, la più recente per prima);
+  identPlan mette per primi i loro tentativi, poi quelli delle schede aperte, poi gli
+  altri (dentro un tentativo l'ordine dei modelli resta quello della 4.2: riordinarlo
+  cambiava le memorie rilette e scambiava per es. Retevis RT22 per Baofeng T22, visto
+  da TestIdentifyEachModel); nelle ricerche automatiche identInterleaveKnown le
+  riprova ogni 8 tentativi (al massimo 4).
+- autoident.go: una ricerca per porta, tutte in parallelo (autoPort.run); ascolto
+  continuo (autoRetryFast 300 ms; radio che risponde ma non riconosciuta: 30 s);
+  dopo il riconoscimento solo quella porta è «done»; ricerche automatiche fuori da
+  a.job (registro live, interrotte da yieldAuto); identify/auto restituisce events,
+  answering, searchPorts, searching. Porte in ordine numerico (portLess/comNumber,
+  anche in cable/ports).
+- ui/identify.js: più radio per giro (events), avviso idBanner «Radio già
+  identificata!! Scheda Radio già aperta» / «Radio già identificate!! Schede radio
+  già aperte»; portLabel (util.js) «COM6 — descrizione» in Identifica, firmware e
+  finestre del cavo; «Identifica Nuova Radio Automaticamente» in grassetto.
+- BJ-9000: genDef.divide/divideAll/divideZones e genSingle (drv.go, genapi.go,
+  settings.go), scelta «Canali: in 15 zone da 64 / tutti (960)» nella scheda
+  (radio.js), con l'impostazione divide_ch (byte 0x26); TestBJ9000Divide.
+- Firmware Radtel .kdhx (fwkdhx.go, fwkdhx_fw.go): kdhxJJProto (presentazione
+  PROGROMJJCCU del «JJCC Bootloader Pro», MODELTYPE_JJCC8629), analyzeRadtelKDHX con
+  le destinazioni RT-470/470L/470X, RT-495, RT-630, avviso scheda vecchia (1.x) /
+  nuova (2.x) della RT-470, 4 file veri conosciuti; catalogo FW «kdhx» per le 5 radio
+  (nota rtlFwNote, esclusa la nota della famiglia H802). fwradtel_test.go (anche con
+  RADTEL_FW = cartella dei .rar di radtels.com).
+- Firmware TD-H3 / TD-H8 / RT-730 (fwtdh.go, nuovo): tipo «tdh» (.BIN 8051 con LJMP
+  iniziale, 10-64 KB), presentazione A0 EE 74 71 07 74 + 30 × 55, blocchi A1/A2 da 32
+  byte con somma, conferma A3; radio simulata fwemu_tdh_other.go (COM13 nelle prove
+  dell'interfaccia); fwtdh_test.go (blocchi della cattura di nicsure, TDH_FW = file
+  veri). Catalogo FW «tdh» per TD-H8, TD-H3 e RT-730.
+- ui: Home più compatta (home.js, style.css, anche per finestre basse), linea
+  .galdivider nella galleria, firmware.js con il pannello «tdh» e i testi Radtel.
+- LEGGIMI.txt: tolta la parte ripetuta (righe 1164-2136 della 4.2.0, copia delle
+  sezioni precedenti inserita per errore).
+
+
 4.2.0 (03/11/2026)
 ------------------
 - Identificazione automatica (autoident.go riscritto di nuovo): niente più controlli

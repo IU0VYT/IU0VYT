@@ -45,10 +45,13 @@ import (
 )
 
 var (
-	identFirstWait = 700 * time.Millisecond  // attesa massima di ogni lettura prima della prima risposta
-	identSilentMax = 2500 * time.Millisecond // tentativo abbandonato se la radio tace
-	identPause     = 1200 * time.Millisecond // pausa dopo un tentativo a cui la radio ha risposto
-	identPortMu    sync.Mutex                // openPortFunc viene sostituita durante l'identificazione
+	// 4.3: attese più brevi (le radio rispondono al saluto in poche decine di
+	// millisecondi): la ricerca completa senza radio passa da circa 135 a meno di
+	// 60 secondi; una radio che ha risposto continua con le attese normali
+	identFirstWait = 350 * time.Millisecond  // attesa massima di ogni lettura prima della prima risposta
+	identSilentMax = 700 * time.Millisecond  // tentativo abbandonato se la radio tace
+	identPause     = 1000 * time.Millisecond // pausa dopo un tentativo a cui la radio ha risposto
+	identPortMu    sync.Mutex                // solo per i test: prove in sequenza
 )
 
 // ---------------------------------------------------------------- radio finta muta
@@ -97,7 +100,8 @@ const identSilentName = "\x00IDENT:"
 
 // identTranscripts: velocità e primi byte inviati dal driver di ogni modello
 // collegato via cavo a una radio che non risponde (chiave del «saluto»). Si
-// calcolano una volta sola, tutti insieme; va chiamata con identPortMu.
+// calcolano una volta sola, tutti insieme (4.3: con le porte simulate di probeReg,
+// senza sostituire openPortFunc, anche mentre altre porte sono in ricerca).
 func identTranscripts() map[string]string {
 	identTxOnce.Do(func() {
 		keys := map[string]string{}
@@ -110,17 +114,18 @@ func identTranscripts() map[string]string {
 				bufs[m.ID] = &bytes.Buffer{}
 			}
 		}
-		old := openPortFunc
-		openPortFunc = func(name string, baud int) (Port, error) {
-			if !strings.HasPrefix(name, identSilentName) {
-				return old(name, baud)
-			}
+		probeReg.Lock()
+		probeReg.silent = func(name string, baud int) (Port, error) {
 			tx := bufs[strings.TrimPrefix(name, identSilentName)]
+			if tx == nil {
+				return nil, errors.New("porta sconosciuta")
+			}
 			mu.Lock()
 			fmt.Fprintf(tx, "<%d>", baud)
 			mu.Unlock()
 			return &silentPort{tx: tx, max: identTxMax, mu: &mu}, nil
 		}
+		probeReg.Unlock()
 		var wg sync.WaitGroup
 		for _, m := range list {
 			wg.Add(1)
@@ -133,7 +138,9 @@ func identTranscripts() map[string]string {
 			}(m)
 		}
 		wg.Wait()
-		openPortFunc = old
+		probeReg.Lock()
+		probeReg.silent = nil
+		probeReg.Unlock()
 		for _, m := range list {
 			mu.Lock()
 			b := bufs[m.ID].Bytes()
@@ -211,20 +218,100 @@ func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration
 	return err
 }
 
+// 4.3: porte controllate registrate per nome (prima l'identificazione sostituiva
+// openPortFunc, quindi si poteva cercare una sola porta alla volta). I driver
+// aprono le porte con openPort: se sulla porta è in corso un tentativo di
+// identificazione, la porta aperta è quella controllata.
+var probeReg struct {
+	sync.Mutex
+	m      map[string]*probeState
+	silent func(name string, baud int) (Port, error) // trascrizioni dei saluti (identTranscripts)
+}
+
+// probeKey: le radio DMR via USB si aprono come «HID:…» o «DFU:…», cercate come «USB»
+func probeKey(name string) string {
+	if strings.HasPrefix(name, "HID:") || strings.HasPrefix(name, "DFU:") {
+		return "USB"
+	}
+	return strings.ToUpper(name)
+}
+
+// openPort: apertura di una porta da parte dei driver (vedi probeReg)
+func openPort(name string, baud int) (Port, error) {
+	probeReg.Lock()
+	silent, st := probeReg.silent, probeReg.m[probeKey(name)]
+	probeReg.Unlock()
+	if strings.HasPrefix(name, identSilentName) && silent != nil {
+		return silent(name, baud)
+	}
+	p, err := openPortFunc(name, baud)
+	if err != nil || st == nil {
+		return p, err
+	}
+	return probePort{p, st}, nil
+}
+
+// rememberRadio (4.3): il modello riconosciuto va in testa all'elenco delle radio
+// note (al massimo identKnownMax): le ricerche successive cominciano da lì
+const identKnownMax = 24
+
+var rememberMu sync.Mutex // più porte possono riconoscere una radio nello stesso momento
+
+func (a *App) rememberRadio(kind string) {
+	rememberMu.Lock()
+	defer rememberMu.Unlock()
+	st := a.store.Get()
+	list := []string{kind}
+	for _, k := range st.KnownRadios {
+		if k != kind && len(list) < identKnownMax {
+			list = append(list, k)
+		}
+	}
+	if strings.Join(list, ",") == strings.Join(st.KnownRadios, ",") {
+		return
+	}
+	st.KnownRadios = list
+	_ = a.store.SaveSettings(st)
+}
+
+// identPortLock: una sola ricerca alla volta per porta (porte diverse in parallelo)
+var identPorts struct {
+	sync.Mutex
+	m map[string]*sync.Mutex
+}
+
+func identPortLock(port string) *sync.Mutex {
+	identPorts.Lock()
+	defer identPorts.Unlock()
+	if identPorts.m == nil {
+		identPorts.m = map[string]*sync.Mutex{}
+	}
+	k := probeKey(port)
+	if identPorts.m[k] == nil {
+		identPorts.m[k] = &sync.Mutex{}
+	}
+	return identPorts.m[k]
+}
+
 // probe: esegue fn con la porta controllata; se la radio non risponde entro
 // identSilentMax il tentativo si interrompe (silent = true).
-func probe(ctx context.Context, fn func(ctx context.Context) error) (st *probeState, silent bool, err error) {
+func probe(ctx context.Context, port string, fn func(ctx context.Context) error) (st *probeState, silent bool, err error) {
 	st = &probeState{}
 	st.onAnswer, _ = ctx.Value(identAnswerKey{}).(func())
-	old := openPortFunc
-	openPortFunc = func(name string, baud int) (Port, error) {
-		p, err := old(name, baud)
-		if err != nil {
-			return nil, err
-		}
-		return probePort{p, st}, nil
+	key := probeKey(port)
+	probeReg.Lock()
+	if probeReg.m == nil {
+		probeReg.m = map[string]*probeState{}
 	}
-	defer func() { openPortFunc = old }()
+	probeReg.m[key] = st
+	probeReg.Unlock()
+	defer func() {
+		probeReg.Lock()
+		if probeReg.m[key] == st {
+			delete(probeReg.m, key)
+		}
+		probeReg.Unlock()
+	}()
 	pctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 	stop := make(chan struct{})
@@ -620,9 +707,6 @@ func (a *App) identPlan(req *identReq) []identProbe {
 			g.kinds = append(g.kinds, m)
 		}
 	}
-	sort.SliceStable(order, func(i, j int) bool {
-		return open[groups[order[i]].kinds[0].ID] && !open[groups[order[j]].kinds[0].ID]
-	})
 	for _, k := range order {
 		g := groups[k]
 		g.name = g.kinds[0].Name
@@ -634,12 +718,50 @@ func (a *App) identPlan(req *identReq) []identProbe {
 		}
 		out = append(out, *g)
 	}
+	// 4.3: prima le radio già riconosciute (le più recenti prima), poi quelle con
+	// una scheda aperta, poi le altre nell'ordine solito
+	known := map[string]int{}
+	for i, k := range a.store.Get().KnownRadios {
+		if _, ok := known[k]; !ok {
+			known[k] = i
+		}
+	}
+	rank := func(kind string) int {
+		if i, ok := known[kind]; ok {
+			return i
+		}
+		if open[kind] {
+			return 1000
+		}
+		return 2000
+	}
+	probeRank := func(p identProbe) int {
+		switch {
+		case p.k67:
+			return rank(kindXLC)
+		case p.bt:
+			return rank(kindDAT)
+		}
+		r := 2000
+		for _, m := range p.kinds {
+			r = min(r, rank(m.ID))
+		}
+		return r
+	}
+	// dentro un gruppo (stesso saluto) l'ordine resta quello solito, con prima le
+	// schede aperte come nella 4.2: le radio conosciute spostano solo il gruppo.
+	// Riordinarle anche qui cambierebbe quali memorie del gruppo si rileggono
+	// (al massimo identMaxRereads) e una radio con la memoria di un altro modello
+	// del gruppo (es. Retevis RT22 dopo una Baofeng T22 conosciuta) verrebbe
+	// scambiata per quello
+	sort.SliceStable(out, func(i, j int) bool { return probeRank(out[i]) < probeRank(out[j]) })
 	return out
 }
 
 func (a *App) runIdentify(ctx context.Context, j *cableJob, req *identReq) (*identResult, error) {
-	identPortMu.Lock()
-	defer identPortMu.Unlock()
+	l := identPortLock(req.Port)
+	l.Lock()
+	defer l.Unlock()
 	start := time.Now()
 	res := &identResult{Fields: []identField{}, Others: []identOther{}, Answers: []string{}}
 	j.set("Preparazione dei protocolli", true)
@@ -647,7 +769,54 @@ func (a *App) runIdentify(ctx context.Context, j *cableJob, req *identReq) (*ide
 	if len(plan) == 0 {
 		return nil, errors.New("nessuna radio corrisponde alla ricerca")
 	}
-	return a.identRun(ctx, j, req, plan, start, res)
+	if j.Auto {
+		plan = identInterleaveKnown(plan, a.knownProbes(plan))
+	}
+	res.Tried = 0
+	res, err := a.identRun(ctx, j, req, plan, start, res)
+	return res, err
+}
+
+// identKnownEvery: nella ricerca automatica (ascolto continuo) le radio già
+// riconosciute in passato si riprovano dopo ogni identKnownEvery tentativi: una di
+// queste, accesa dopo il cavo, si trova in pochi secondi anche a metà giro
+const identKnownEvery = 8
+
+// knownProbes: i primi tentativi del piano che contengono radio già riconosciute
+func (a *App) knownProbes(plan []identProbe) int {
+	known := map[string]bool{}
+	for _, k := range a.store.Get().KnownRadios {
+		known[k] = true
+	}
+	n := 0
+	for _, p := range plan {
+		hit := (p.k67 && known[kindXLC]) || (p.bt && known[kindDAT])
+		for _, m := range p.kinds {
+			hit = hit || known[m.ID]
+		}
+		if !hit {
+			break
+		}
+		n++
+	}
+	return n
+}
+
+// identInterleaveKnown: i primi n tentativi (radio note) ripetuti ogni
+// identKnownEvery tentativi degli altri
+func identInterleaveKnown(plan []identProbe, n int) []identProbe {
+	if n == 0 || n >= len(plan) {
+		return plan
+	}
+	n = min(n, 4)
+	out := append([]identProbe{}, plan[:n]...)
+	for i, p := range plan[n:] {
+		if i > 0 && i%identKnownEvery == 0 {
+			out = append(out, plan[:n]...)
+		}
+		out = append(out, p)
+	}
+	return out
 }
 
 func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []identProbe, start time.Time, res *identResult) (*identResult, error) {
@@ -674,7 +843,7 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 			var file []byte
 			var info interface{}
 			var k6 bool
-			st, silent, err := probe(ctx, func(pctx context.Context) error {
+			st, silent, err := probe(ctx, req.Port, func(pctx context.Context) error {
 				var e error
 				file, info, k6, e = a.cableRead(pctx, j, creq)
 				if e == nil {
@@ -698,15 +867,14 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 			if bp, err := a.saveBackup(kind, file, "identificata"); err == nil {
 				res.Backup = bp
 			}
-			a.mu.Lock()
-			a.ident = &identSession{kind: kind, kinds: []string{kind}, sess: &radioSession{Base: file, K6: k6}}
-			a.mu.Unlock()
+			j.sess = &identSession{kind: kind, kinds: []string{kind}, sess: &radioSession{Base: file, K6: k6}}
+			a.rememberRadio(kind)
 			return res, nil
 		default:
 			readWith := func(m *genModel) (mem []byte, note string, st *probeState, silent bool, err error) {
 				j.set(fmt.Sprintf("Ricerca della radio (%d di %d)", i+1, len(plan)), true)
 				j.prog(i, len(plan), "Provo: "+m.Name)
-				st, silent, err = probe(ctx, func(pctx context.Context) error {
+				st, silent, err = probe(ctx, req.Port, func(pctx context.Context) error {
 					var e error
 					mem, note, e = m.Fam.Download(pctx, m, req.Port, func(done, total int, msg string) {
 						j.mu.Lock()
@@ -838,13 +1006,12 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 				if bp, err := a.saveGenBackup(best, mem, nil, "identificata"); err == nil {
 					res.Backup = bp
 				}
-				a.mu.Lock()
 				kinds := []string{best.ID}
 				for _, o := range res.Others {
 					kinds = append(kinds, o.Kind)
 				}
-				a.ident = &identSession{kind: best.ID, kinds: kinds, sess: &radioSession{Base: mem}, mems: mems}
-				a.mu.Unlock()
+				j.sess = &identSession{kind: best.ID, kinds: kinds, sess: &radioSession{Base: mem}, mems: mems}
+				a.rememberRadio(best.ID)
 				return res, nil
 			}
 		}
@@ -978,14 +1145,16 @@ func (a *App) startIdentify(req *identReq, auto bool) (*cableJob, error) {
 		cancel()
 		return nil, errors.New("è già in corso un'operazione con la radio")
 	}
-	a.job = j
 	if !auto {
-		// una ricerca automatica non cancella la radio identificata prima (ancora da
-		// aprire nella scheda «Identifica» o dall'identificazione automatica): la
-		// sostituisce solo se trova una radio
+		// 4.3: le ricerche automatiche (una per porta, anche insieme) non sono
+		// «l'operazione in corso» della finestra del cavo
+		a.job = j
 		a.ident = nil
 	}
 	a.mu.Unlock()
+	if auto {
+		a.auto.liveAdd(j, true)
+	}
 	if !auto && !strings.EqualFold(req.Port, "USB") {
 		st := a.store.Get()
 		st.GenPort = req.Port
@@ -993,6 +1162,9 @@ func (a *App) startIdentify(req *identReq, auto bool) (*cableJob, error) {
 	}
 	go func() {
 		defer cancel()
+		if auto {
+			defer a.auto.liveAdd(j, false)
+		}
 		var res *identResult
 		var err error
 		func() {
@@ -1003,6 +1175,11 @@ func (a *App) startIdentify(req *identReq, auto bool) (*cableJob, error) {
 			}()
 			res, err = a.runIdentify(ctx, j, req)
 		}()
+		if err == nil && !auto && j.sess != nil {
+			a.mu.Lock() // prima di j.mu (stesso ordine di autoStep)
+			a.ident = j.sess
+			a.mu.Unlock()
+		}
 		j.mu.Lock()
 		defer j.mu.Unlock()
 		switch {
@@ -1058,7 +1235,7 @@ func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 		a.mu.Lock()
 		a.radios[kind] = &radioSession{Base: mem}
 		a.mu.Unlock()
-		return map[string]interface{}{"radio": genResp{Kind: m.ID, Channels: genChans(m, mem), Def: m.def(), Warnings: []string{}}}, nil
+		return map[string]interface{}{"radio": genResp{Kind: m.ID, Channels: genChans(m, mem), Def: m.def(), Warnings: []string{}, Single: genSingle(m.ID, mem)}}, nil
 	}
 	rep := &Report{}
 	kind, chs, err := readRadio(id.sess.Base, rep)

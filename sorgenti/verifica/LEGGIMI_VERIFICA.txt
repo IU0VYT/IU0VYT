@@ -225,6 +225,20 @@ famiglia RT21) le modifiche di prova cambiano toni, scansione e, dove CHIRP lo
 permette, potenza, banda e trasmissione (chirpFixedEdits); chirpref.py non tocca i
 campi immutabili che non cambiano, come l'interfaccia di CHIRP.
 
+FIRMWARE RADTEL .KDHX E TD-H3 / TD-H8 / RT-730 (4.3)
+TestRadtelKdhxAnalyze/Emu e TestTdhHello/Emu/Analyze provano il riconoscimento dei
+file e l'invio con le radio simulate (presentazione JJCC del «Bootloader Pro»;
+caricatore TD-H8 con i blocchi della cattura pubblicata da nicsure). Con i file veri
+(non distribuiti):
+     RADTEL_FW=cartella dei .rar di radtels.com go test -mod=vendor -run TestRadtelKdhxReal -v .
+     TDH_FW=cartella dei .BIN go test -mod=vendor -run TestTdhReal -v .
+
+IDENTIFICAZIONE AUTOMATICA (4.3)
+TestAutoIdentConnect simula tre radio su porte diverse (UV-5R, UV-K5, RT-490):
+ascolto continuo senza radio, radio accesa dopo, radio conosciute provate per
+prime, due cavi riconosciuti insieme. Con -race:
+     go test -mod=vendor -race -run 'TestAutoIdent' -v .
+
 SITO: RIQUADRO DELLE MARCHE (cartella "sito", 4.1)
 Il riquadro «PLAYER SELECT» di docs/index.html si rigenera dal catalogo:
      IU0VYT_ELENCO_MARCHE=/tmp/marche.txt go test -mod=vendor -run TestSitoMarche .

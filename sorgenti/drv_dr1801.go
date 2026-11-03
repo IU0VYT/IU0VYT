@@ -662,7 +662,7 @@ func (l *drLink) open(baud int) error {
 	if l.p != nil {
 		l.p.Close()
 	}
-	p, err := openPortFunc(l.port, baud)
+	p, err := openPort(l.port, baud)
 	if err != nil {
 		return err
 	}

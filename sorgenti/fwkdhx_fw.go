@@ -11,7 +11,9 @@ package main
 // UV-25 Plus (.kdhx), Bajeton BJ-9000 (.Firmware) e UV-9G (.kdh).
 
 import (
+	"crypto/sha256"
 	"encoding/binary"
+	"encoding/hex"
 	"path"
 	"regexp"
 	"strings"
@@ -87,8 +89,42 @@ var kdhxTargets = []fwTarget{
 	{[]string{"5RMPLUS"}, "Baofeng UV-5RM Plus", "5RMPLUS", []string{"bf-uv5rmplus"}},
 }
 
+// radtelKdhxTargets (4.3): firmware .kdhx di Radtel per il caricatore «JJCC
+// Bootloader Pro» (file pubblicati su radtels.com); l'ordine conta
+var radtelKdhxTargets = []fwTarget{
+	{[]string{"RT495", "495NUM"}, "Radtel RT-495", "RT495", []string{"rt-rt495"}},
+	{[]string{"RT630"}, "Radtel RT-630", "RT630", []string{"rt-rt630"}},
+	{[]string{"470SERIAL", "RT470"}, "Radtel RT-470 / RT-470L / RT-470X", "RT470", []string{"rt-rt470", "rt-rt470l", "rt-rt470x"}},
+}
+
+// fwKnownRadtel: file .kdhx di Radtel scaricati da radtels.com e provati (4.3)
+var fwKnownRadtel = map[string]string{
+	"98290d76b7963cd7f225807f8dbe48d3f899c1a25e65fe803fef50494704fea4": "RT-470 / RT-470L / RT-470X scheda nuova (FW 2.x), V2.13C del 25/04/2024 (470 serial MFM_V2.13C_20240425.kdhx)",
+	"daf267d76d7fae95941d37fefd66cac01810255ab62ce4c423267a1e53a2f6e4": "RT-470 10 W scheda vecchia (FW 1.x), V1.27A del 23/05/2024 (RT470_AllBandTx_V1.27A_20240523.kdhx)",
+	"6b24b01a152bdf27c60e3ef9838bf31f9b2257813bd680c842c67825e7897d5b": "RT-495, V0.07 del 07/12/2023 (495_NUM_ALLBAND_V0.07_20231207.kdhx)",
+	"507bb9060c2c609e7a9fb009209870d8bcf05ba37f94ae215f121a9c50736fe4": "RT-630, banda aerea 137 MHz, passo 8,33 kHz e AM/FM (rt-630 8.33AM137_AMFM.kdhx)",
+}
+
+// radtelKdhx: il file .kdhx è un firmware di Radtel (caricatore «JJCC»)? Un
+// file conosciuto vale più del nome; altrimenti decide il nome (quelli della
+// famiglia Baofeng, UV-xx o H802, restano alla UV-25 Plus)
+func radtelKdhx(name string, raw []byte) *fwTarget {
+	sum := sha256.Sum256(raw)
+	if k, ok := fwKnownRadtel[hex.EncodeToString(sum[:])]; ok {
+		return fwTargetFromName(radtelKdhxTargets, strings.Fields(k)[0])
+	}
+	base := normModel(strings.TrimSuffix(path.Base(name), path.Ext(name)))
+	if strings.Contains(base, "UV") || strings.Contains(base, "H802") || strings.Contains(base, "BF") {
+		return nil
+	}
+	return fwTargetFromName(radtelKdhxTargets, name)
+}
+
 // analyzeKDHX controlla un firmware .kdhx (caricatore «Bootloader Pro»).
 func analyzeKDHX(name, origin string, raw []byte) *fwImage {
+	if rt := radtelKdhx(name, raw); rt != nil {
+		return analyzeRadtelKDHX(name, origin, raw, rt)
+	}
 	img, info, add := newInfo("kdhx", "radio Baofeng con caricatore «Bootloader Pro» (H802)", "H802", name, origin, raw)
 	t := fwTargetFromName(kdhxTargets, name)
 	uv25 := t != nil && t.confirm == "UV25PLUS"
@@ -214,6 +250,67 @@ func analyzeKDH9G(name, origin string, raw []byte) *fwImage {
 	add("warn", "Il caricatore della UV-9G non controlla il modello della radio né il contenuto del file: un firmware sbagliato la rende inutilizzabile. Usa solo il file pubblicato da Baofeng per la UV-9G")
 	info.Warnings = true
 	knownKDH2(info, add)
+	info.Valid = true
+	return img
+}
+
+// analyzeRadtelKDHX (4.3): firmware .kdhx di Radtel. Stessi controlli del file
+// della UV-25 Plus; il caricatore è il «JJCC Bootloader Pro» (presentazione
+// automatica PROGROMJJCCU). La RT-470 ha due schede diverse: il firmware 1.x è
+// solo per la scheda vecchia, il 2.x solo per la nuova (Radtel: un firmware
+// sbagliato blocca la radio), quindi si chiede di confermare il tipo di scheda.
+func analyzeRadtelKDHX(name, origin string, raw []byte, t *fwTarget) *fwImage {
+	img, info, add := newInfo("kdhx", t.target+" (caricatore «JJCC Bootloader Pro» di Radtel)", "JJCC", name, origin, raw)
+	info.Platform = "JJCC"
+	info.Target, info.Confirm, info.Models = t.target, t.confirm, t.drivers
+	info.Typed = true
+	if len(raw) < 8*kdhPkt || len(raw) > 255*kdhPkt {
+		add("bad", "Dimensione non plausibile per un firmware .kdhx (%s; il caricatore accetta al massimo 255 KB)", fmtBytes(len(raw)))
+		return img
+	}
+	sp, rv, ok := armVectors(raw, 48)
+	if !ok {
+		add("bad", "L'inizio del file non è un programma valido per queste radio (tabella dei vettori non coerente): non è un firmware .kdhx utilizzabile")
+		return img
+	}
+	add("ok", "Programma per microcontrollore ARM caricato dopo il caricatore (avvio a 0x%08X, stack a 0x%08X)", rv&^1, sp)
+	if len(raw) > 4*kdhPkt {
+		a, b := countBXLR(bfCrypt(raw)[2*kdhPkt:]), countBXLR(raw[2*kdhPkt:])
+		if a > b {
+			add("ok", "Parte cifrata coerente: dopo la decifratura contiene codice ARM riconoscibile")
+		} else {
+			add("warn", "La parte cifrata non contiene codice riconoscibile dopo la decifratura: file forse danneggiato")
+			info.Warnings = true
+		}
+	}
+	nameVersionDate(info, name)
+	known, isKnown := fwKnownRadtel[info.SHA256]
+	if i := strings.LastIndex(known, "("); isKnown && info.Version == "" && i > 0 {
+		nameVersionDate(info, strings.TrimSuffix(known[i+1:], ")")) // file conosciuto ma rinominato
+	}
+	if t.confirm == "RT470" {
+		v := strings.TrimPrefix(info.Version, "V")
+		switch {
+		case strings.HasPrefix(v, "1"):
+			info.Hw = "scheda vecchia (firmware 1.x)"
+			add("warn", "Firmware %s per la RT-470 con la scheda VECCHIA (menu 55: FW 1.xx). Su una radio con la scheda nuova (FW 2.0 o successivo) la blocca: controlla il menu 55 prima di continuare", info.Version)
+		case strings.HasPrefix(v, "2"):
+			info.Hw = "scheda nuova (firmware 2.x)"
+			add("warn", "Firmware %s per la RT-470 / RT-470L / RT-470X con la scheda NUOVA (menu 55: FW 2.0 o successivo). Su una radio con la scheda vecchia (FW 1.xx) la blocca: controlla il menu 55 prima di continuare", info.Version)
+		default:
+			add("bad", "Dal nome del file non si capisce se il firmware è per la scheda vecchia (1.x) o nuova (2.x) della RT-470: usa il file con il nome originale di Radtel")
+			return img
+		}
+		info.Warnings = true
+	}
+	add("warn", "Nella modalità automatica la radio controlla solo il codice della piattaforma (JJCC); nella modalità manuale (radio accesa tenendo premuti i tasti laterali 2 e 3) il caricatore non fa controlli: usa solo il firmware della tua radio")
+	info.Warnings = true
+	if isKnown {
+		info.Known = known
+		add("ok", "File conosciuto: %s", known)
+	} else {
+		add("warn", "File non presente nell'elenco dei firmware di Radtel conosciuti da questo programma")
+	}
 	info.Valid = true
 	return img
 }

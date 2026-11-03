@@ -584,7 +584,7 @@ func (s *uv5rSess) auxFromRadio() (version, a1, a2, a3 []byte, dropped bool, err
 }
 
 func uv5rOpen(ctx context.Context, m *genModel, port string) (*uv5rSess, error) {
-	p, err := openPortFunc(port, m.Baud)
+	p, err := openPort(port, m.Baud)
 	if err != nil {
 		return nil, err
 	}

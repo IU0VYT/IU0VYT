@@ -411,7 +411,7 @@ func (s *h777Sess) enterWith(m *genModel, cmd []byte) ([]byte, error) {
 }
 
 func h777Open(ctx context.Context, port string) (*h777Sess, error) {
-	p, err := openPortFunc(port, 9600)
+	p, err := openPort(port, 9600)
 	if err != nil {
 		return nil, err
 	}

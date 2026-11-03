@@ -17,16 +17,17 @@ const TYPE_GROUP = {
 };
 // ordine alfabetico «naturale» (UV-5R prima di UV-17)
 const byModelName = (a, b) => a.name.localeCompare(b.name, 'it', { numeric: true, sensitivity: 'base' }) || a.brand.localeCompare(b.brand);
-const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin' };
+const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin', tdh: 'firmware .BIN' };
 const FW_KINDS = Object.keys(FW_LABEL);
 const FW_DESC = {
   anc: 'file .anc del costruttore (protocollo del programma «BinTe ANC Bootloader»)',
   bf: 'file .BF (caricatore KDH, programma «BF Upgrade Tool for TFT 330L Series»; anche file .kdhx forniti dal costruttore)',
   rh5: 'file .dat «BF_5RH» (programma di aggiornamento della 5RH Pro)',
-  kdhx: 'file .kdhx (programma «Baofeng Bootloader Pro» del costruttore, piattaforma H802)',
+  kdhx: 'file .kdhx (programma «Bootloader Pro» del costruttore: piattaforma H802 di Baofeng, JJCC di Radtel)',
   bj9000: 'file .Firmware (programma «BJ9000_EnUPDATE» del costruttore)',
   kdh9g: 'file .kdh (programma «Bootloader_BaudRate38400» del costruttore)',
   k5: 'file .bin di Quansheng (caricatore della UV-K5: radio accesa tenendo premuto il PTT)',
+  tdh: 'file .BIN del costruttore (caricatore di TD-H3, TD-H8 e RT-730: radio accesa tenendo premuto il PTT)',
 };
 
 // colore di ogni marca (icone e riquadri della galleria); le marche non
@@ -167,7 +168,7 @@ const Gallery = {
     const sec = (title, note, items, cls) => `<section class="galsecbox ${cls}"><h3 class="galsec">${esc(title)}: ${items.length}</h3>
       ${note ? `<p class="note galnote">${note}</p>` : ''}${items.length ? groups(items) : '<p class="note galnote">Nessun modello con i filtri attuali.</p>'}</section>`;
     body.innerHTML = list.length ? sec('MODELLI COMPATIBILI', 'Canali e ponti via cavo o con i file .img; dove indicato, anche aggiornamento del firmware. Ogni modello ha la sua scheda, anche quando la gestione è la stessa di un altro.', withDrv, 'ok') +
-      sec('MODELLI NON COMPATIBILI', 'Si programmano solo con il programma del costruttore (protocollo non documentato) o con programmi liberi: qui trovi i collegamenti ai programmi e ai manuali ufficiali e, dove esistono, ai programmi liberi alternativi.', without, 'no')
+      '<hr class="galdivider" aria-hidden="true">' + sec('MODELLI NON COMPATIBILI', 'Si programmano solo con il programma del costruttore (protocollo non documentato) o con programmi liberi: qui trovi i collegamenti ai programmi e ai manuali ufficiali e, dove esistono, ai programmi liberi alternativi.', without, 'no')
       : '<div class="welcome"><h2>Nessun modello trovato</h2><p>Prova a cambiare la ricerca o i filtri.</p></div>';
     $$('.galcard', body).forEach(b => b.onclick = () => this.detail(App.catalog.find(c => c.id === b.dataset.id)));
   },

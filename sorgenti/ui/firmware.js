@@ -36,23 +36,24 @@ const Firmware = {
   },
 
   // ------------------------------------------------------------ finestra principale
-  // expect: tipo di firmware della radio da cui si apre la finestra ('anc' | 'bf' | 'rh5' | 'kdhx' | 'bj9000' | 'kdh9g' | 'k5'), radioKind: scheda d'origine
+  // expect: tipo di firmware della radio da cui si apre la finestra ('anc' | 'bf' | 'rh5' | 'kdhx' | 'bj9000' | 'kdh9g' | 'k5' | 'tdh'), radioKind: scheda d'origine
   open(expect, radioKind) {
     const TARGET = { anc: 'Bajeton BJ-8300 / BJ-7800 / BJ-7700', bf: 'Baofeng UV-5RM / UV-5RH e radio con lo stesso caricatore', rh5: 'Baofeng 5RH Pro / K67 Pro',
-      kdhx: 'Baofeng UV-25 Plus e radio con il caricatore «Bootloader Pro»', bj9000: 'Bajeton BJ-9000', kdh9g: 'Baofeng UV-9G',
-      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus' };
+      kdhx: 'Baofeng UV-25 Plus, Radtel RT-470 / RT-495 / RT-630 e radio con il caricatore «Bootloader Pro»', bj9000: 'Bajeton BJ-9000', kdh9g: 'Baofeng UV-9G',
+      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus', tdh: 'TIDRADIO TD-H3 / TD-H8 o Radtel RT-730' };
     const PROTO = {
       anc: 'quello del programma originale «BinTe ANC Bootloader» V1.1',
       bf: 'quello del programma originale «BF Upgrade Tool for TFT 330L Series» (KDH Bootloader V1.0)',
       rh5: 'quello del programma originale di aggiornamento della 5RH Pro (Radio.exe)',
-      kdhx: 'quello del programma originale «Baofeng Bootloader Pro»',
+      kdhx: 'quello del programma originale «Baofeng Bootloader Pro» (per le Radtel «JJCC Bootloader Pro», stesso programma con la piattaforma JJCC)',
       bj9000: 'quello del programma originale «BJ9000_EnUPDATE» (BJ9000_UPDATE_V02)',
       kdh9g: 'quello del programma originale «Bootloader_BaudRate38400» della UV-9G',
       k5: 'quello del caricatore della UV-K5 documentato dai programmi liberi k5prog e uvtools, riscritto da zero',
+      tdh: 'quello dei programmi originali «H8_IAP» di TIDRADIO e «RT730 Update tool» di Radtel (documentato da nicsure, TD-H3-Engineering), riscritto da zero',
     };
     // caricatori KDH recenti: istruzioni del costruttore e velocità
     const BOOT = {
-      kdhx: { manual: 'radio spenta: tieni premuti <b>SK2 e SK3</b> (i due tasti sotto il PTT) e accendila; l\'indicatore diventa verde. È la procedura indicata da Baofeng per la UV-25 Plus (per le altre radio segui le istruzioni fornite con il firmware)',
+      kdhx: { manual: 'radio spenta: tieni premuti <b>SK2 e SK3</b> (i due tasti sotto il PTT; sulle Radtel RT-470 / RT-495 / RT-630 i <b>tasti laterali 2 e 3</b>) e accendila; l\'indicatore diventa verde. È la procedura indicata da Baofeng per la UV-25 Plus e da Radtel (per le altre radio segui le istruzioni fornite con il firmware)',
         auto: 'la radio accesa viene portata nel caricatore dal programma (pulsante «自动升级»); prima 9600 baud, poi 115200', speed: 'Velocità come nel programma originale: 9600 baud per la richiesta, 115200 per il firmware.' },
       bj9000: { manual: 'radio spenta: tieni premuti i <b>tasti laterali 3 e 4</b> e accendila; compare la schermata «Update» (pulsante «Flashing Mode»)',
         auto: 'la radio accesa viene portata nel caricatore dal programma (pulsante «Upgrade Mode»)', speed: 'Velocità fissa 115200 baud, come nel programma originale. La radio controlla che il firmware sia per il suo modello prima di cancellare la memoria.' },
@@ -83,8 +84,9 @@ const Firmware = {
           <button class="btn" data-down>🌐 Scarica</button></div>
         <p class="note" style="margin-top:-4px">Firmware riconosciuti: <b>.anc</b> delle Bajeton BJ-8300, BJ-7800 e BJ-7700 con Bluetooth (es. BJ8300_V0.12_20251112.anc, BJ7700PRO_V0.06_251124.anc),
           <b>.Firmware</b> della Bajeton BJ-9000 (BJ9000_V0.27_260313.Firmware), <b>.BF</b> delle Baofeng UV-5RM/UV-5RH (es. 5RH_BK_V0.14_231123.BF), <b>.dat</b> della Baofeng 5RH Pro
-          (es. BF_5RH_501_v2_0_9.dat), <b>.kdhx</b> della UV-25 Plus (UV25Pro_NRF_401+_V0.23_250522.kdhx), <b>.kdh</b> della UV-9G (T52GMRS_M8_V02_231004.kdh)
-          e <b>.bin</b> delle Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus (es. k5_v2.01.26_publish.bin).
+          (es. BF_5RH_501_v2_0_9.dat), <b>.kdhx</b> della UV-25 Plus (UV25Pro_NRF_401+_V0.23_250522.kdhx) e delle Radtel RT-470 / RT-495 / RT-630, <b>.kdh</b> della UV-9G (T52GMRS_M8_V02_231004.kdh)
+          <b>.bin</b> delle Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus (es. k5_v2.01.26_publish.bin)
+          e <b>.BIN</b> di TIDRADIO TD-H3 / TD-H8 e Radtel RT-730 (es. 730Step improvement.BIN).
           Possono essere anche dentro archivi <b>.zip</b> o <b>.rar</b>, pure uno dentro l'altro.</p>
         <div data-fwcard class="fwcard" style="display:none"></div>
 
@@ -157,6 +159,15 @@ const Firmware = {
           <p class="note">Velocità fissa 38400 baud. Le radio più recenti con un altro caricatore (es. UV-K1, UV-K5 V3) non si presentano così:
             per quelle usa il programma di Quansheng.</p>
         </div>
+        <div data-panel="tdh" style="display:none">
+          <div class="fwbox"><b>Porta la radio nel caricatore</b> (procedura di TIDRADIO e Radtel):
+            <ol><li>Collega il cavo di programmazione alla radio spenta.</li>
+            <li>Premi «Avvia aggiornamento»: il programma aspetta la radio per 60 secondi.</li>
+            <li>Accendi la radio <b>tenendo premuto il PTT</b>: l'invio comincia da solo.</li></ol>
+            Il caricatore non controlla il modello del firmware (TD-H3, TD-H8 e RT-730 hanno file diversi): per questo si deve scrivere il modello.
+            Se l'invio si interrompe la radio resta nel caricatore: riaccendila tenendo premuto il PTT e ripeti l'aggiornamento.</div>
+          <p class="note">Velocità fissa 115200 baud, blocchi da 32 byte confermati dalla radio uno per uno.</p>
+        </div>
 
         <h4 class="fwh"><span class="num">3</span> Conferma</h4>
         <div data-warnok style="display:none" class="row"><label><input type="checkbox" data-acceptwarn> <b>Ho letto le segnalazioni sul firmware</b> e voglio usarlo comunque</label></div>
@@ -202,7 +213,7 @@ const Firmware = {
     };
 
     const needTyped = () => (kind() === 'anc' && (mode() === 'recovery' || $('[data-skip]', el).checked)) ||
-      kind() === 'kdh9g' || (kind() === 'kdhx' && btmode() === 'manual') || !!(fw && fw.typed) || otherModel();
+      kind() === 'kdh9g' || kind() === 'tdh' || (kind() === 'kdhx' && btmode() === 'manual') || !!(fw && fw.typed) || otherModel();
     // radio scelta nella finestra diversa da quelle a cui è destinato il file
     const otherModel = () => {
       if (!fw || !fw.models || !fw.models.length) return false;
@@ -226,7 +237,7 @@ const Firmware = {
       $('[data-btmanbox]', el).style.display = btmode() === 'manual' ? '' : 'none';
       $('[data-warnok]', el).style.display = fw && fw.warnings ? '' : 'none';
       $('[data-proto]', el).textContent = PROTO[k] || 'quello del programma originale del costruttore';
-      $('[data-protohow]', el).textContent = k === 'k5' ? '' : ', ricavato dal suo codice';
+      $('[data-protohow]', el).textContent = k === 'k5' || k === 'tdh' ? '' : ', ricavato dal suo codice';
       const target = fw ? fw.target : TARGET[k];
       $('[data-conftext]', el).textContent = k === 'kdh9g'
         ? `Confermo che la radio collegata è una ${target}: il suo caricatore non controlla il firmware che riceve.`
@@ -234,9 +245,11 @@ const Firmware = {
         ? `Confermo che la radio collegata è una ${target}${fw && fw.platform ? ' con chip radio ' + fw.platform : ''} e che questo firmware è quello adatto.`
         : k === 'k5'
         ? `Confermo che la radio collegata è una ${target} ed è nel caricatore (accesa tenendo premuto il PTT).`
+        : k === 'tdh'
+        ? `Confermo che la radio collegata è una ${target}: dopo l'avvio la accenderò tenendo premuto il PTT.`
         : target ? `Confermo che la radio collegata è una ${target}.` : 'Confermo il modello della radio collegata.';
-      const want = (fw && fw.confirm) || 'BJ8300';
-      $('[data-typelabel]', el).textContent = 'Scrivi ' + want;
+      const want = (fw && fw.confirm) || (k === 'anc' || !k ? 'BJ8300' : '');
+      $('[data-typelabel]', el).textContent = want ? 'Scrivi ' + want : 'Scrivi il modello indicato dal file';
       const typedOk = !needTyped() || $('[data-typed]', el).value.toUpperCase().replace(/[\s\-_.]/g, '') === want;
       const ok = fw && fw.valid && sel.value && $('[data-confirm]', el).checked && typedOk && (!fw.warnings || $('[data-acceptwarn]', el).checked);
       $('[data-ok]', el).disabled = !ok || running;
@@ -298,7 +311,7 @@ const Firmware = {
       const r = await api('cable/ports', {}, { quiet: true });
       settings = r.settings || {};
       const cur = sel.value || (kind() === 'anc' ? settings.bajPort : kind() === 'rh5' ? settings.k67Port || settings.genPort : settings.genPort) || settings.bajPort;
-      sel.innerHTML = r.ports.map(p => `<option value="${esc(p.name)}">${esc(p.desc && p.desc !== p.name ? p.desc : p.name)}</option>`).join('');
+      sel.innerHTML = r.ports.map(p => `<option value="${esc(p.name)}">${esc(portLabel(p))}</option>`).join('');
       if (r.ports.some(p => p.name === cur)) sel.value = cur;
       if (!r.ports.length) sel.innerHTML = '<option value="">nessuna porta trovata: collega il cavo e premi Aggiorna</option>';
       refresh();
@@ -427,6 +440,9 @@ const Firmware = {
       } else if (k === 'k5') {
         req = Object.assign(base, { mode: 'manual' });
         how = 'La radio deve essere nel caricatore (spenta e riaccesa tenendo premuto il PTT: torcia accesa, schermo spento).\n';
+      } else if (k === 'tdh') {
+        req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value });
+        how = 'Dopo l\'avvio spegni la radio e riaccendila tenendo premuto il PTT (il programma la aspetta per 60 secondi).\n';
       } else if (k === 'rh5') {
         req = Object.assign(base, { mode: 'update', baud: +$('[data-rhbaud]', el).value });
         how = 'La radio deve essere già in modalità aggiornamento.\n';

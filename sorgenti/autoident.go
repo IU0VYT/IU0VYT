@@ -10,27 +10,31 @@ package main
 // Identificazione automatica (4.0, scheda «Identifica», pulsante «Abilita
 // identificazione automatica»; la scelta resta salvata nelle impostazioni).
 //
-// Regole (4.2, come richiesto):
+// Regole (4.3):
 //   - con l'opzione attiva il programma, in qualsiasi scheda ci si trovi,
 //     controlla ogni secondo le porte dei cavi di programmazione e i dispositivi
-//     USB delle radio DMR, anche mentre una ricerca è in corso;
-//   - un cavo appena collegato (porta nuova) avvia la ricerca della radio, con gli
-//     stessi comandi di sola lettura della scheda «Identifica». Se nessuna radio
-//     risponde la ricerca si ripete in silenzio (la radio può essere accesa dopo);
-//   - il riquadro «Identificazione Radio In Corso» compare solo quando una radio
-//     risponde davvero (byte ricevuti che non sono l'eco del cavo) e sparisce
-//     quando la radio è riconosciuta o la ricerca finisce senza riconoscerla: con
-//     il cavo senza radio non compare;
-//   - quando la radio è riconosciuta l'interfaccia ne mostra i dati e apre la sua
-//     scheda; subito dopo la ricerca si ferma (l'opzione resta attiva): nessuna
-//     porta viene più interrogata finché non si preme «Identifica Nuova Radio
-//     Automaticamente» (barra in alto) o non si collega un altro cavo;
+//     USB delle radio DMR;
+//   - ogni cavo ha la sua ricerca, indipendente dalle altre: più cavi (più radio)
+//     si cercano INSIEME, ognuno sulla sua porta;
+//   - su un cavo senza radio (o con la radio spenta) la ricerca si ripete subito,
+//     di continuo e in silenzio: una radio accesa dopo viene trovata al giro
+//     successivo (le radio già riconosciute in passato si provano per prime,
+//     vedi identPlan e Settings.KnownRadios);
+//   - il riquadro «Identificazione Radio In Corso» compare solo mentre una radio
+//     risponde davvero (byte che non sono l'eco del cavo) e sparisce quando è
+//     riconosciuta o non viene riconosciuta;
+//   - quando una radio è riconosciuta l'interfaccia ne mostra i dati e apre la sua
+//     scheda (o avvisa che la scheda è già aperta); la ricerca su QUEL cavo si
+//     ferma (l'opzione resta attiva) finché non si preme «Identifica Nuova Radio
+//     Automaticamente» o non si ricollega il cavo; gli altri cavi continuano;
+//   - una radio che risponde ma non viene riconosciuta (modello non gestito) si
+//     riprova solo ogni autoRetryUnknown, per non far lampeggiare il riquadro;
 //   - si interrogano solo le porte dei cavi di programmazione (adattatori
 //     USB-seriale CH340, Prolific, Silicon Labs, FTDI…), mai porte Bluetooth,
-//     modem o porte seriali di sistema; gli adattatori noti hanno la precedenza;
-//   - una ricerca automatica lascia sempre il posto alle operazioni chieste
+//     modem o porte seriali di sistema;
+//   - le ricerche automatiche lasciano sempre il posto alle operazioni chieste
 //     dall'utente (yieldAuto): lettura, scrittura, firmware, inoltro e ricerca
-//     manuale la interrompono subito.
+//     manuale le interrompono subito.
 
 import (
 	"errors"
@@ -42,12 +46,12 @@ import (
 )
 
 var (
-	autoTick      = time.Second             // controllo di porte e dispositivi
-	autoSettle    = 1500 * time.Millisecond // attesa dopo il collegamento del cavo
-	autoRetryFast = 3 * time.Second         // pausa tra le ricerche nei primi minuti
-	autoRetrySlow = 20 * time.Second        // pausa tra le ricerche dopo autoFastTries
-	autoFastTries = 8
-	autoQuiet     = 1500 * time.Millisecond // pausa dopo un saluto interrotto (la radio torna pronta)
+	autoTick         = time.Second             // controllo di porte e dispositivi
+	autoSettle       = 1500 * time.Millisecond // attesa dopo il collegamento del cavo
+	autoRetryFast    = 300 * time.Millisecond  // 4.3: pausa tra due giri di ricerca (ascolto continuo)
+	autoRetryUnknown = 30 * time.Second        // radio che risponde ma non è riconosciuta
+	autoQuiet        = 1500 * time.Millisecond // pausa dopo un saluto interrotto (la radio torna pronta)
+	autoEventsMax    = 16                      // esiti ricordati per l'interfaccia
 	// usbRadioPresentFunc: c'è un dispositivo USB di una radio DMR conosciuta
 	// (impostata dalla versione Windows)
 	usbRadioPresentFunc = func() bool { return false }
@@ -58,9 +62,11 @@ type autoPort struct {
 	strong     bool // adattatore USB-seriale riconosciuto dal nome
 	next       time.Time
 	tries      int
-	done       bool // ricerca ferma (radio riconosciuta qui o altrove)
+	done       bool // ricerca ferma (radio riconosciuta su questa porta)
 	paused     bool // ricerca interrotta dall'utente («Interrompi»)
 	gone       bool // porta sparita (cavo staccato dal PC)
+	unknown    bool // l'ultima ricerca ha avuto risposte ma nessun modello riconosciuto
+	run        *autoRun
 }
 
 // autoEvent: esito dell'ultima ricerca automatica che ha trovato la radio
@@ -82,12 +88,28 @@ type autoIdent struct {
 	usbWas     bool
 	usb        *autoPort
 	seq        int
-	last       *autoEvent
-	ident      *identSession // radio dell'ultimo esito (per identify/open con "seq")
+	events     []*autoEvent          // ultimi esiti (radio riconosciute), il più recente per ultimo
+	sessions   map[int]*identSession // radio di ogni esito (identify/open con "seq")
 	status     string
-	run        *autoRun
 	quietUntil time.Time
 	stop       chan struct{}
+	// live: tutte le ricerche automatiche in corso (con un mutex proprio: si
+	// aggiorna da startIdentify, chiamata con mu già preso)
+	liveMu sync.Mutex
+	live   map[*cableJob]bool
+}
+
+func (x *autoIdent) liveAdd(j *cableJob, on bool) {
+	x.liveMu.Lock()
+	defer x.liveMu.Unlock()
+	if x.live == nil {
+		x.live = map[*cableJob]bool{}
+	}
+	if on {
+		x.live[j] = true
+	} else {
+		delete(x.live, j)
+	}
 }
 
 // cableLikePort: la porta è quella di un adattatore USB-seriale (cavo di
@@ -171,8 +193,8 @@ func (a *App) autoAllLocked() []*autoPort {
 	return all
 }
 
-// autoStep: un controllo di porte e dispositivi; avvia al massimo una ricerca,
-// senza aspettarne la fine
+// autoStep: un controllo di porte e dispositivi; avvia le ricerche delle porte
+// pronte (una per porta, in parallelo) senza aspettarne la fine
 func (a *App) autoStep(now time.Time) {
 	if !a.autoEnabled() {
 		a.auto.mu.Lock()
@@ -207,6 +229,9 @@ func (a *App) autoStep(now time.Time) {
 	for n, p := range a.auto.ports {
 		if !seen[n] {
 			p.gone = true
+			if p.run != nil && p.run.job.cancel != nil {
+				p.run.job.cancel()
+			}
 			delete(a.auto.ports, n) // cavo staccato dal PC
 		}
 	}
@@ -215,80 +240,98 @@ func (a *App) autoStep(now time.Time) {
 	}
 	if !usb && a.auto.usb != nil {
 		a.auto.usb.gone = true
+		if r := a.auto.usb.run; r != nil && r.job.cancel != nil {
+			r.job.cancel()
+		}
 		a.auto.usb = nil
 	}
 	a.auto.usbWas = usb
 
-	// ricerche da fare: prima le porte appena collegate, poi gli adattatori
-	// noti, poi la più vecchia
-	var cands []*autoPort
+	// ricerche: una per porta, tutte insieme
+	quiet := now.Before(a.auto.quietUntil)
 	for _, p := range a.autoAllLocked() {
-		if !p.done && !p.paused {
-			cands = append(cands, p)
-		}
-	}
-	sort.Slice(cands, func(i, j int) bool {
-		x, y := cands[i], cands[j]
-		if (x.tries == 0) != (y.tries == 0) {
-			return x.tries == 0
-		}
-		if x.strong != y.strong {
-			return x.strong
-		}
-		return x.next.Before(y.next)
-	})
-	var due *autoPort
-	for _, p := range cands {
-		if !p.next.After(now) {
-			due = p
-			break
-		}
-	}
-	if r := a.auto.run; r != nil {
-		// cavo staccato dal PC durante la ricerca, oppure un cavo appena collegato
-		// mentre si ripete la ricerca su un'altra porta: si interrompe
-		if r.p.gone || (due != nil && due != r.p && due.tries == 0 && r.p.tries > 0) {
-			if r.job.cancel != nil {
-				r.job.cancel()
+		if r := p.run; r != nil {
+			if p.gone && r.job.cancel != nil {
+				r.job.cancel() // cavo staccato durante la ricerca
 			}
+			continue
 		}
-		a.autoStatusLocked(cands, due)
-		return
+		if p.done || p.paused || p.gone || p.next.After(now) || userBusy || quiet {
+			continue
+		}
+		a.autoLaunchLocked(p)
 	}
-	if !userBusy && due != nil {
-		a.autoLaunchLocked(due)
-	}
-	a.autoStatusLocked(cands, due)
+	a.autoStatusLocked()
 }
 
-func (a *App) autoStatusLocked(cands []*autoPort, due *autoPort) {
-	if r := a.auto.run; r != nil {
-		if r.job.answered.Load() {
-			a.auto.status = "Una radio risponde su " + r.p.name + ": identificazione in corso…"
-		} else {
-			a.auto.status = "Controllo del cavo su " + r.p.name + " (nessuna radio ha ancora risposto)"
-		}
-		return
-	}
+func (a *App) autoStatusLocked() {
 	all := a.autoAllLocked()
-	done, paused := false, false
+	sort.Slice(all, func(i, j int) bool { return portLess(all[i].name, all[j].name) })
+	var answering, listening, found, unknown, paused []string
 	for _, p := range all {
-		done = done || p.done
-		paused = paused || p.paused
+		switch {
+		case p.run != nil && p.run.job.answered.Load():
+			answering = append(answering, p.name)
+		case p.run != nil:
+			listening = append(listening, p.name)
+		case p.done:
+			found = append(found, p.name)
+		case p.paused:
+			paused = append(paused, p.name)
+		case p.unknown:
+			unknown = append(unknown, p.name)
+		default:
+			listening = append(listening, p.name)
+		}
 	}
-	switch {
-	case len(all) == 0:
-		a.auto.status = "In attesa del collegamento del cavo di programmazione"
-	case len(cands) == 0 && done && a.auto.last != nil:
-		a.auto.status = "Radio riconosciuta: " + a.auto.last.Result.Name + " (" + a.auto.last.Port +
-			"). Ricerca ferma: per un'altra radio premi «Identifica Nuova Radio Automaticamente»"
-	case len(cands) == 0 && paused:
-		a.auto.status = "Ricerca interrotta: premi «Identifica Nuova Radio Automaticamente» o ricollega il cavo"
-	case len(cands) == 0:
-		a.auto.status = "Ricerca ferma: per cercare una radio premi «Identifica Nuova Radio Automaticamente»"
-	case due == nil:
-		a.auto.status = "Nessuna radio risponde (" + cands[0].name + "): collegala al cavo e accendila con il volume a metà"
+	var parts []string
+	if len(answering) > 0 {
+		parts = append(parts, "Una radio risponde su "+strings.Join(answering, ", ")+": identificazione in corso…")
 	}
+	if len(listening) > 0 {
+		parts = append(parts, "In ascolto su "+strings.Join(listening, ", ")+" (collega la radio e accendila, anche dopo il cavo)")
+	}
+	if len(unknown) > 0 {
+		parts = append(parts, "Su "+strings.Join(unknown, ", ")+" una radio risponde ma non è tra i modelli conosciuti")
+	}
+	if len(found) > 0 {
+		parts = append(parts, "Radio riconosciuta su "+strings.Join(found, ", ")+": per un'altra radio premi «Identifica Nuova Radio Automaticamente»")
+	}
+	if len(paused) > 0 {
+		parts = append(parts, "Ricerca interrotta su "+strings.Join(paused, ", "))
+	}
+	if len(all) == 0 {
+		parts = append(parts, "In attesa del collegamento del cavo di programmazione")
+	}
+	a.auto.status = strings.Join(parts, ". ")
+}
+
+// portLess: COM2 prima di COM10 (ordine numerico delle porte)
+func portLess(x, y string) bool {
+	nx, okx := comNumber(x)
+	ny, oky := comNumber(y)
+	if okx && oky && nx != ny {
+		return nx < ny
+	}
+	if okx != oky {
+		return okx
+	}
+	return x < y
+}
+
+func comNumber(s string) (int, bool) {
+	u := strings.ToUpper(s)
+	if !strings.HasPrefix(u, "COM") {
+		return 0, false
+	}
+	n := 0
+	for _, c := range u[3:] {
+		if c < '0' || c > '9' {
+			return 0, false
+		}
+		n = n*10 + int(c-'0')
+	}
+	return n, len(u) > 3
 }
 
 // autoLaunchLocked: avvia la ricerca su p in un goroutine; con a.auto.mu già preso
@@ -298,7 +341,7 @@ func (a *App) autoLaunchLocked(p *autoPort) {
 		return // un'altra operazione è appena partita: si riprova al prossimo controllo
 	}
 	r := &autoRun{p: p, job: j}
-	a.auto.run = r
+	p.run = r
 	go a.autoWait(r)
 }
 
@@ -311,19 +354,18 @@ func (a *App) autoWait(r *autoRun) {
 	j.mu.Lock()
 	state, res := j.State, j.Result
 	j.mu.Unlock()
-	a.mu.Lock()
-	id := a.ident
-	a.mu.Unlock()
 	now := time.Now()
 	a.auto.mu.Lock()
 	defer a.auto.mu.Unlock()
-	if a.auto.run == r {
-		a.auto.run = nil
+	p := r.p
+	if p.run == r {
+		p.run = nil
 	}
 	if state == "cancelled" {
-		a.auto.quietUntil = now.Add(autoQuiet)
+		if q := now.Add(autoQuiet); q.After(a.auto.quietUntil) {
+			a.auto.quietUntil = q
+		}
 	}
-	p := r.p
 	if p.gone {
 		return // cavo staccato durante la ricerca: la porta ricomparirà come nuova
 	}
@@ -331,24 +373,33 @@ func (a *App) autoWait(r *autoRun) {
 	ir, _ := res.(*identResult)
 	switch {
 	case state == "done" && ir != nil && ir.Found:
-		// radio riconosciuta: la ricerca si ferma su tutte le porte (l'opzione
-		// resta attiva; si riprende con «Identifica Nuova Radio Automaticamente»)
-		for _, x := range a.autoAllLocked() {
-			x.done = true
-		}
+		// radio riconosciuta: la ricerca su questa porta si ferma (l'opzione resta
+		// attiva; si riprende con «Identifica Nuova Radio Automaticamente»)
+		p.done, p.unknown = true, false
 		a.auto.seq++
-		a.auto.last = &autoEvent{Seq: a.auto.seq, Port: p.name, Result: ir, When: now.Format("15:04:05")}
-		a.auto.ident = id
-	case state == "cancelled":
-		p.next = now.Add(autoRetryFast)
-		p.tries-- // la ricerca non è arrivata in fondo
-	default:
-		d := autoRetryFast
-		if p.tries >= autoFastTries {
-			d = autoRetrySlow
+		ev := &autoEvent{Seq: a.auto.seq, Port: p.name, Result: ir, When: now.Format("15:04:05")}
+		a.auto.events = append(a.auto.events, ev)
+		if a.auto.sessions == nil {
+			a.auto.sessions = map[int]*identSession{}
 		}
-		p.next = now.Add(d)
+		a.auto.sessions[ev.Seq] = j.sess
+		for len(a.auto.events) > autoEventsMax {
+			delete(a.auto.sessions, a.auto.events[0].Seq)
+			a.auto.events = a.auto.events[1:]
+		}
+	case state == "cancelled":
+		p.next = now.Add(autoQuiet)
+		p.tries-- // la ricerca non è arrivata in fondo
+	case j.answered.Load() || (ir != nil && len(ir.Answers) > 0):
+		// una radio ha risposto ma non è stata riconosciuta
+		p.unknown = true
+		p.next = now.Add(autoRetryUnknown)
+	default:
+		// nessuna risposta: si ascolta di nuovo subito (la radio può essere accesa dopo)
+		p.unknown = false
+		p.next = now.Add(autoRetryFast)
 	}
+	a.autoStatusLocked()
 }
 
 // autoRescan: nuova ricerca su tutti i cavi collegati (pulsante «Identifica Nuova
@@ -359,7 +410,7 @@ func (a *App) autoRescan() int {
 	now := time.Now()
 	n := 0
 	for _, p := range a.autoAllLocked() {
-		p.done, p.paused, p.tries, p.next = false, false, 0, now
+		p.done, p.paused, p.unknown, p.tries, p.next = false, false, false, 0, now
 		n++
 	}
 	return n
@@ -370,33 +421,35 @@ func (a *App) autoRescan() int {
 func (a *App) autoIdentSession(seq int) *identSession {
 	a.auto.mu.Lock()
 	defer a.auto.mu.Unlock()
-	if a.auto.last == nil || a.auto.last.Seq != seq {
-		return nil
-	}
-	return a.auto.ident
+	return a.auto.sessions[seq]
 }
 
 // yieldAuto: interrompe la ricerca automatica in corso, per lasciare il cavo
 // all'operazione chiesta dall'utente; attende al massimo pochi secondi, più la
 // breve pausa che serve alla radio per tornare pronta dopo un saluto interrotto
 func (a *App) yieldAuto() {
-	a.mu.Lock()
-	j := a.job
-	a.mu.Unlock()
-	if j != nil && j.Auto && j.isRunning() {
+	var runs []*cableJob
+	a.auto.liveMu.Lock()
+	for j := range a.auto.live {
+		runs = append(runs, j)
+	}
+	a.auto.liveMu.Unlock()
+	for _, j := range runs {
 		if j.cancel != nil {
 			j.cancel()
 		}
+	}
+	for _, j := range runs {
 		for i := 0; i < 80 && j.isRunning(); i++ {
 			time.Sleep(50 * time.Millisecond)
 		}
-		a.auto.mu.Lock()
+	}
+	a.auto.mu.Lock()
+	if len(runs) > 0 {
 		if q := time.Now().Add(autoQuiet); q.After(a.auto.quietUntil) {
 			a.auto.quietUntil = q
 		}
-		a.auto.mu.Unlock()
 	}
-	a.auto.mu.Lock()
 	wait := time.Until(a.auto.quietUntil)
 	a.auto.mu.Unlock()
 	if wait > 0 && wait <= 2*autoQuiet {
@@ -447,27 +500,36 @@ func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 	}
 	a.auto.mu.Lock()
 	defer a.auto.mu.Unlock()
-	ports := []string{}
-	for _, p := range a.autoAllLocked() {
-		ports = append(ports, p.name)
-	}
-	sort.Strings(ports)
-	searching, busy, port := false, false, ""
-	if r := a.auto.run; r != nil {
-		busy, port = true, r.p.name
-		searching = r.job.answered.Load() // una radio ha risposto: riquadro visibile
-	}
+	a.autoStatusLocked()
+	all := a.autoAllLocked()
+	sort.Slice(all, func(i, j int) bool { return portLess(all[i].name, all[j].name) })
+	ports, searchPorts, answering := []string{}, []string{}, []string{}
 	paused := false
-	for _, p := range a.autoAllLocked() {
+	for _, p := range all {
+		ports = append(ports, p.name)
 		paused = paused || p.paused
+		if p.run != nil {
+			searchPorts = append(searchPorts, p.name)
+			if p.run.job.answered.Load() {
+				answering = append(answering, p.name) // una radio ha risposto: riquadro visibile
+			}
+		}
 	}
-	out := map[string]interface{}{"enabled": a.autoEnabled(), "status": a.auto.status, "ports": ports, "searching": searching,
-		"busy": busy, "searchPort": port, "seq": a.auto.seq, "paused": paused}
+	events := a.auto.events
+	if events == nil {
+		events = []*autoEvent{}
+	}
+	out := map[string]interface{}{"enabled": a.autoEnabled(), "status": a.auto.status, "ports": ports,
+		"searching": len(answering) > 0, "answering": answering, "busy": len(searchPorts) > 0, "searchPorts": searchPorts,
+		"seq": a.auto.seq, "paused": paused, "events": events}
+	if len(searchPorts) > 0 {
+		out["searchPort"] = searchPorts[0]
+	}
 	if rescanned >= 0 {
 		out["rescanned"] = rescanned
 	}
-	if a.auto.last != nil {
-		out["last"] = a.auto.last
+	if n := len(a.auto.events); n > 0 {
+		out["last"] = a.auto.events[n-1]
 	}
 	return out, nil
 }

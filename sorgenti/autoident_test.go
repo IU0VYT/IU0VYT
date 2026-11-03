@@ -10,6 +10,7 @@
 package main
 
 import (
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -37,49 +38,55 @@ func TestAutoIdentCablePorts(t *testing.T) {
 	}
 }
 
-// Regole della 4.2: cavo senza radio = ricerche silenziose (nessun riquadro);
-// radio collegata = riquadro mentre la radio risponde, poi riconosciuta; dopo il
-// riconoscimento la ricerca si ferma (anche se la radio viene cambiata) finché non
-// si preme «Identifica Nuova Radio Automaticamente» o non si collega un altro cavo.
+// Regole della 4.3: cavo senza radio = ascolto continuo e silenzioso (nessun
+// riquadro); radio accesa dopo = trovata al giro successivo, riquadro mentre
+// risponde; dopo il riconoscimento la ricerca su quel cavo si ferma finché non si
+// preme «Identifica Nuova Radio Automaticamente»; più cavi con più radio si
+// cercano e si riconoscono insieme.
 func TestAutoIdentConnect(t *testing.T) {
 	identFast(t)
-	// 4.2: 81 tentativi per ricerca; le radio simulate rispondono subito, quindi
-	// attese più brevi di identFast (altrimenti due ricerche senza radio
-	// richiedono più di due minuti)
-	identFirstWait, identSilentMax = 80*time.Millisecond, 300*time.Millisecond
-	oldS, oldF, oldSl, oldL, oldQ := autoSettle, autoRetryFast, autoRetrySlow, listPortsFunc, autoQuiet
-	autoSettle, autoRetryFast, autoRetrySlow, autoQuiet = 10*time.Millisecond, 20*time.Millisecond, 20*time.Millisecond, 10*time.Millisecond
+	// le radio simulate rispondono subito: attese brevi (81 tentativi per giro)
+	identFirstWait, identSilentMax = 80*time.Millisecond, 250*time.Millisecond
+	oldS, oldF, oldU, oldL, oldQ := autoSettle, autoRetryFast, autoRetryUnknown, listPortsFunc, autoQuiet
+	autoSettle, autoRetryFast, autoQuiet = 10*time.Millisecond, 20*time.Millisecond, 10*time.Millisecond
 	t.Cleanup(func() {
-		autoSettle, autoRetryFast, autoRetrySlow, listPortsFunc, autoQuiet = oldS, oldF, oldSl, oldL, oldQ
+		autoSettle, autoRetryFast, autoRetryUnknown, listPortsFunc, autoQuiet = oldS, oldF, oldU, oldL, oldQ
 	})
 
 	type radio struct {
 		m   *genModel
 		mem []byte
 	}
-	mk := func(id string) radio {
+	mk := func(id string) *radio {
 		m := genByID[id]
 		mem := identModelBase(t, m)
 		if mem == nil {
 			t.Skip("manca l'immagine di prova di CHIRP (CHIRP_DIR)")
 		}
-		return radio{m, mem}
+		return &radio{m, mem}
 	}
-	uv5r, k5 := mk("bf-uv5r"), mk("qs-uvk5")
-	var cur atomic.Value // radio collegata al cavo (nil: nessuna)
-	cur.Store((*radio)(nil))
+	uv5r, k5, rt490 := mk("bf-uv5r"), mk("qs-uvk5"), mk("rtl-rt490")
+	// radio collegata a ogni cavo (nessuna: cavo senza radio o radio spenta)
+	var rmu sync.Mutex
+	onPort := map[string]*radio{}
+	plug := func(port string, r *radio) { rmu.Lock(); onPort[port] = r; rmu.Unlock() }
 	var mu sync.Mutex
 	ports := []PortInfo{}
 	listPortsFunc = func() []PortInfo { mu.Lock(); defer mu.Unlock(); return append([]PortInfo{}, ports...) }
 	setPorts := func(p ...PortInfo) { mu.Lock(); ports = p; mu.Unlock() }
 	old := openPortFunc
 	t.Cleanup(func() { openPortFunc = old })
-	identAttachRaw(func(p Port) {
-		if r := cur.Load().(*radio); r != nil {
-			genEmuFor(r.m, append([]byte{}, r.mem...)).serve(p)
+	openPortFunc = func(name string, baud int) (Port, error) {
+		x, y := newPipe()
+		x.baud = baud
+		rmu.Lock()
+		r := onPort[strings.ToUpper(name)]
+		rmu.Unlock()
+		if r != nil {
+			go genEmuFor(r.m, append([]byte{}, r.mem...)).serve(y)
 		}
-	}, "")
-	plug := func(r *radio) { cur.Store(r) }
+		return x, nil
+	}
 
 	c := newAPIClient(t)
 	a := c.app
@@ -101,9 +108,20 @@ func TestAutoIdentConnect(t *testing.T) {
 		}
 		return -1
 	}
-	waitFor := func(what string, max time.Duration, cond func() bool) {
+	event := func(port string) *autoEvent {
+		a.auto.mu.Lock()
+		defer a.auto.mu.Unlock()
+		for k := len(a.auto.events) - 1; k >= 0; k-- {
+			if a.auto.events[k].Port == port {
+				return a.auto.events[k]
+			}
+		}
+		return nil
+	}
+	waitFor := func(what string, max time.Duration, cond func() bool) time.Duration {
 		t.Helper()
-		end := time.Now().Add(max)
+		t0 := time.Now()
+		end := t0.Add(max)
 		for !cond() {
 			if time.Now().After(end) {
 				t.Fatalf("%s: tempo scaduto (stato %q)", what, a.auto.status)
@@ -112,27 +130,29 @@ func TestAutoIdentConnect(t *testing.T) {
 			state()
 			time.Sleep(20 * time.Millisecond)
 		}
+		return time.Since(t0)
 	}
 	cable := PortInfo{"COM6", "USB-SERIAL CH340 (COM6)"}
 
 	// opzione disattivata: nessuna ricerca; «Identifica Nuova Radio» rifiutato
 	setPorts(cable, PortInfo{"COM1", "Porta di comunicazione (COM1)"})
-	plug(&uv5r)
+	plug("COM6", uv5r)
 	for i := 0; i < 5; i++ {
 		a.autoStep(time.Now())
 		time.Sleep(20 * time.Millisecond)
 	}
-	if seq() != 0 || a.auto.run != nil {
+	if seq() != 0 || len(c.must("identify/auto", nil)["searchPorts"].([]interface{})) != 0 {
 		t.Fatal("ricerca con l'opzione disattivata")
 	}
 	if _, err := c.call("identify/auto", map[string]interface{}{"rescan": true}); err == nil {
 		t.Fatal("nuova ricerca accettata con l'opzione disattivata")
 	}
 
-	// attivata, cavo senza radio: ricerche silenziose, nessun riquadro
-	plug(nil)
+	// attivata, cavo con la radio spenta: ascolto continuo, nessun riquadro
+	plug("COM6", nil)
 	c.must("identify/auto", map[string]interface{}{"enabled": true})
-	waitFor("ricerche senza radio", 150*time.Second, func() bool { return tries("COM6") >= 2 })
+	d := waitFor("ricerche senza radio", 150*time.Second, func() bool { return tries("COM6") >= 2 })
+	t.Logf("due giri di ascolto senza radio in %v", d.Round(time.Millisecond))
 	if banner.Load() {
 		t.Fatal("riquadro visibile senza nessuna radio collegata")
 	}
@@ -140,20 +160,24 @@ func TestAutoIdentConnect(t *testing.T) {
 		t.Fatal("COM1 interrogata")
 	}
 
-	// radio collegata: riquadro, poi radio riconosciuta e ricerca ferma
-	plug(&uv5r)
-	waitFor("radio riconosciuta", 90*time.Second, func() bool { return seq() == 1 })
+	// radio accesa dopo il cavo: riquadro, poi radio riconosciuta e ricerca ferma
+	plug("COM6", uv5r)
+	d = waitFor("radio accesa dopo il cavo", 90*time.Second, func() bool { return seq() == 1 })
+	t.Logf("radio accesa dopo il cavo riconosciuta in %v", d.Round(time.Millisecond))
 	if !banner.Load() {
 		t.Fatal("riquadro mai visibile con la radio collegata")
 	}
-	if a.auto.last.Result.Kind != "bf-uv5r" || a.auto.last.Port != "COM6" {
-		t.Fatalf("radio riconosciuta: %+v", a.auto.last)
+	if ev := event("COM6"); ev == nil || ev.Result.Kind != "bf-uv5r" {
+		t.Fatalf("radio riconosciuta: %+v", ev)
+	}
+	if k := a.store.Get().KnownRadios; len(k) == 0 || k[0] != "bf-uv5r" {
+		t.Fatalf("radio non ricordata: %v", k)
 	}
 	if st := state(); st["searching"] == true || st["busy"] == true {
 		t.Fatal("ricerca ancora in corso dopo il riconoscimento")
 	}
 	// radio cambiata con il cavo nel PC: nessuna nuova ricerca
-	plug(&k5)
+	plug("COM6", k5)
 	n := tries("COM6")
 	time0 := time.Now()
 	waitFor("pausa", 10*time.Second, func() bool { return time.Since(time0) > time.Second })
@@ -167,16 +191,42 @@ func TestAutoIdentConnect(t *testing.T) {
 		t.Fatalf("nuova ricerca: %v", r)
 	}
 	waitFor("nuova radio", 120*time.Second, func() bool { return seq() == 2 })
-	if a.auto.last.Result.Kind != "qs-uvk5" || !banner.Load() {
-		t.Fatalf("nuova radio: %+v", a.auto.last)
+	if ev := event("COM6"); ev.Result.Kind != "qs-uvk5" || !banner.Load() {
+		t.Fatalf("nuova radio: %+v", ev)
+	}
+	// la radio riconosciuta prima ora si prova per prima: la ricerca è più breve
+	plug("COM6", uv5r)
+	c.must("identify/auto", map[string]interface{}{"rescan": true})
+	d = waitFor("radio già nota", 60*time.Second, func() bool { return seq() == 3 })
+	t.Logf("radio già riconosciuta in passato trovata in %v", d.Round(time.Millisecond))
+	if ev := event("COM6"); ev.Result.Kind != "bf-uv5r" || ev.Result.Tried > 3 {
+		t.Fatalf("radio nota non provata per prima: %+v (tentativi %d)", ev, ev.Result.Tried)
 	}
 
-	// un altro cavo collegato dopo il riconoscimento: viene cercato
-	setPorts(cable, PortInfo{"COM9", "Prolific USB-to-Serial Comm Port (COM9)"})
-	plug(&uv5r)
-	waitFor("cavo nuovo", 90*time.Second, func() bool { return seq() == 3 })
-	if a.auto.last.Port != "COM9" {
-		t.Fatalf("cavo nuovo: %+v", a.auto.last)
+	// due cavi nuovi con due radio, collegati insieme: riconosciute insieme
+	setPorts(cable, PortInfo{"COM9", "Prolific USB-to-Serial Comm Port (COM9)"}, PortInfo{"COM10", "USB-SERIAL CH340 (COM10)"})
+	plug("COM9", k5)
+	plug("COM10", rt490)
+	parallel := false
+	waitFor("due cavi", 120*time.Second, func() bool {
+		if sp, _ := c.must("identify/auto", nil)["searchPorts"].([]interface{}); len(sp) == 2 {
+			parallel = true
+		}
+		return seq() == 5
+	})
+	if !parallel {
+		t.Fatal("le due porte non sono state cercate insieme")
+	}
+	if e9, e10 := event("COM9"), event("COM10"); e9 == nil || e10 == nil || e9.Result.Kind != "qs-uvk5" || e10.Result.Kind != "rtl-rt490" {
+		t.Fatalf("due cavi: %+v %+v", e9, e10)
+	}
+	for _, sq := range []int{4, 5} {
+		if a.autoIdentSession(sq) == nil {
+			t.Fatalf("radio dell'esito %d non apribile", sq)
+		}
+	}
+	if st := state(); len(st["events"].([]interface{})) != 5 {
+		t.Fatalf("esiti: %v", st["events"])
 	}
 
 	// disattivazione: stato azzerato

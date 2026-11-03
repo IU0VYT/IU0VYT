@@ -42,8 +42,11 @@ type Settings struct {
 	GenPort     string `json:"genPort"` // radio gestite con i driver di CHIRP
 	CableBackup bool   `json:"cableBackup"`
 	// identificazione automatica della radio al collegamento (4.0, scheda «Identifica»)
-	AutoIdent   bool `json:"autoIdent"`
-	CableVerify bool `json:"cableVerify"`
+	AutoIdent bool `json:"autoIdent"`
+	// KnownRadios (4.3): modelli riconosciuti dall'identificazione, il più recente
+	// per primo: le ricerche successive cominciano da questi
+	KnownRadios []string `json:"knownRadios,omitempty"`
+	CableVerify bool     `json:"cableVerify"`
 	// aggiornamento del firmware della Bajeton
 	FwURL      string `json:"fwURL"`
 	FwBaud     int    `json:"fwBaud"`

@@ -102,7 +102,7 @@ func rh5Update(ctx context.Context, port string, raw []byte, baud int, prog Prog
 	img := make([]byte, rh5Max) // come l'originale: memoria di 512 KB azzerata
 	copy(img, raw)
 	blocks := int((size + rh5Block - 1) / rh5Block)
-	p, err := openPortFunc(port, baud)
+	p, err := openPort(port, baud)
 	if err != nil {
 		return 0, err
 	}

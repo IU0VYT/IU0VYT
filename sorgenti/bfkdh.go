@@ -282,7 +282,7 @@ func kdhUpdate(ctx context.Context, port string, raw []byte, o kdhOpts, prog Pro
 	if total <= 0 {
 		total = 1
 	}
-	p, err := openPortFunc(port, kdhBaud)
+	p, err := openPort(port, kdhBaud)
 	if err != nil {
 		return 0, err
 	}

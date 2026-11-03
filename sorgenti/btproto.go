@@ -149,7 +149,7 @@ func printable(b []byte) string {
 }
 
 func btOpenSession(ctx context.Context, port string) (*btSession, error) {
-	p, err := openPortFunc(port, 57600)
+	p, err := openPort(port, 57600)
 	if err != nil {
 		return nil, err
 	}
