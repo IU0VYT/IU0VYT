@@ -1,11 +1,34 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.3.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.4.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.4.0:
+- CORRETTO: identificazione automatica. Il riquadro "Identificazione Radio In Corso"
+  poteva comparire anche senza nessuna radio collegata: i disturbi della linea di un
+  cavo senza radio (o con la radio spenta) e l'eco dei comandi inviati sembravano una
+  radio che risponde. Ora compare solo per il cavo a cui è collegata una radio che
+  risponde davvero: con due cavi e una sola radio (es. COM6 senza radio e COM7 con la
+  radio, o il contrario) solo per la porta della radio. Senza radio il giro delle
+  prove è anche più veloce;
+- il pulsante giallo si chiama "🔎 Identifica Radio" ed è in alto a destra, accanto a
+  "Aggiornamenti"; con molte schede aperte si restringe da solo (fino alla sola lente)
+  per lasciare spazio alle schede;
+- scheda Identifica: spiegazioni più brevi e chiare;
+- schermata Home: tornano le descrizioni dei riquadri della 4.2; in basso restano
+  visibili copyright, sito web e sorgenti (anche a 1280×720);
+- AGGIORNAMENTO DEL FIRMWARE anche per le Retevis RA79 V3 e RA89 (vedi
+  "AGGIORNAMENTO DEL FIRMWARE RETEVIS"):
+  - RA79 V3 (e UV-K5 V3 / UV-K1 di Quansheng, caricatore 7.x) con i file .bin di
+    Retevis (es. "RA79 V3.bin", 7.00.16);
+  - RA89 con i file .bin di Retevis (es. "Eng_RA89_Upadat_20250524_B91.38.bin"), con
+    il protocollo del programma di Retevis "RA89-update-software", confrontato byte
+    per byte con il suo codice;
+- galleria: 386 modelli di 27 marche (348 con canali, 302 con impostazioni, 43 con
+  l'aggiornamento del firmware).
 Novità della 4.3.0:
 - IDENTIFICAZIONE AUTOMATICA molto più veloce e completa (vedi "IDENTIFICAZIONE
   AUTOMATICA"):
@@ -19,7 +42,7 @@ Novità della 4.3.0:
     identificata!! Scheda Radio già aperta" (con più radio: "Radio già
     identificate!! Schede radio già aperte");
 - scheda Identifica: le porte sono in ordine (COM6, COM7…, poi COM10) e si leggono
-  come "COM6 — USB-SERIAL CH340"; scritta «Identifica Nuova Radio Automaticamente» in
+  come "COM6 — USB-SERIAL CH340"; nome del pulsante dell'identificazione automatica in
   grassetto;
 - Bajeton BJ-9000: come la BJ-8300 può usare tutti i 960 canali in un unico elenco,
   senza zone (scelta "Canali: tutti (960)" nella scheda, impostazione «Divisione dei
@@ -723,8 +746,8 @@ AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
 - Il protocollo del caricatore (pacchetti da 256 byte con conferma) è quello
   documentato dai programmi liberi k5prog e uvtools, ricavato dal programma di
   aggiornamento di Quansheng; qui è riscritto da zero e provato con una radio
-  simulata. Le radio con il caricatore più recente (es. UV-K1, UV-K5 V3) non si
-  presentano in questo modo: per quelle serve il programma di Quansheng.
+  simulata. Dalla 4.4 anche le radio con il caricatore 7.x (UV-K5 V3, UV-K1, Retevis
+  RA79 V3): vedi "AGGIORNAMENTO DEL FIRMWARE RETEVIS".
 - Un firmware non di Quansheng (es. egzumer, F4HWN) si può installare, ma poi questo
   programma (come CHIRP) non legge più i canali della radio.
 - Dalla 4.2 anche Radtel RT-590 / RT-590 Plus (la stessa radio della UV-K5) e RT-600 /
@@ -765,6 +788,31 @@ AGGIORNAMENTO DEL FIRMWARE TIDRADIO TD-H3 / TD-H8 E RADTEL RT-730 (4.3)
   resta nel caricatore: riaccendila tenendo premuto il PTT e ripeti.
 - I firmware modificati da terzi (nicsure) sono riconosciuti e segnalati: questo
   programma, come CHIRP, potrebbe non leggerne più i canali.
+
+AGGIORNAMENTO DEL FIRMWARE RETEVIS (4.4)
+- Retevis RA79 V3 (e Quansheng UV-K5 V3 e UV-K1, microcontrollore PY32F071, caricatore
+  7.x): file .bin di Retevis nel formato di Quansheng (es. "RA79 V3.bin", versione
+  7.00.16). Procedura come per la UV-K5: radio spenta, riaccesa tenendo premuto il
+  PTT, poi "Avvia aggiornamento". Il caricatore 7.x non controlla il firmware: lo fa
+  il programma, che lo invia solo se il caricatore ha la stessa versione principale
+  (firmware 7.00.xx solo su caricatore 7.00.xx; le UV-K1 hanno 7.02 o 7.03) e rifiuta
+  le radio con il caricatore della UV-K5 classica (2.x e 5.x: un altro
+  microcontrollore). Protocollo come pubblicato da quansheng_toolkit e Multi-UVTools,
+  riscritto da zero e provato con una radio simulata e con il file vero.
+- Retevis RA89: file .bin di Retevis (es. "Eng_RA89_Upadat_20250524_B91.38.bin",
+  versione B91.38 del 24/05/2025). Protocollo del programma di Retevis
+  "RA89-update-software" ("TH8600-UpDAta Soft" 2.3): 57600 baud, blocchi da 128 byte
+  confermati uno per uno. Il codice originale del programma è stato fatto girare con
+  una radio simulata: i comandi inviati sono identici byte per byte (846 passi con il
+  file vero, a 57600 e a 115200 baud, e anche in caso di errore della radio).
+- RA89: porta prima la radio in modalità di aggiornamento come indicato da Retevis
+  (per la RT85 Retevis indica: radio accesa tenendo premuti PTT e P1, indicatore
+  verde). Il file è cifrato e la radio non controlla il modello: si deve scrivere RA89
+  per confermare. ATTENZIONE (Retevis): se l'aggiornamento si interrompe NON
+  accendere la radio normalmente, ma ripeti subito l'aggiornamento.
+- I firmware Retevis si scaricano da retevis.com (pagina Firmware). Le altre radio
+  Retevis della galleria non hanno ancora l'aggiornamento: RT85 usa file .hex e un
+  programma con due modelli (5 W e 10 W) da verificare.
 
 AGGIORNAMENTO DEL FIRMWARE BAOFENG
 - Baofeng UV-5RM / UV-5RH (serie con display TFT "330L"), file .BF: protocollo del
@@ -1196,23 +1244,26 @@ IDENTIFICAZIONE DELLA RADIO (3.8)
   diverso) le risposte sono elencate nei dettagli. Se la radio resta bloccata in
   modalità di programmazione, spegnila e riaccendila.
 
-IDENTIFICAZIONE AUTOMATICA (4.0 - 4.3)
+IDENTIFICAZIONE AUTOMATICA (4.0 - 4.4)
 - Nella scheda "🔎 Identifica" premi "🔄 Abilita identificazione automatica". Da quel
   momento, finché il programma è aperto, quando colleghi il cavo di programmazione (o
   una radio DMR via USB) la radio viene cercata da sola, con gli stessi comandi di
   sola LETTURA di "Identifica la radio": nella radio non si scrive nulla.
 - Funziona in qualsiasi scheda del programma. Il riquadro "Identificazione Radio In
   Corso. Attendere prego." (con "Interrompi") compare in basso solo quando una radio
-  collegata al cavo risponde davvero (dalla 4.2: non più per il solo cavo, senza
-  radio) e sparisce quando la radio è riconosciuta o la ricerca finisce.
+  collegata al cavo risponde davvero e sparisce quando la radio è riconosciuta o la
+  ricerca finisce. Dalla 4.4 non bastano i disturbi della linea (0x00, 0xFF e simili,
+  tipici di un cavo senza radio o con la radio spenta) né l'eco dei comandi inviati,
+  anche se arriva in ritardo: servono almeno 4 byte veri o due risposte distinte. Con
+  più cavi il riquadro indica solo le porte con una radio che risponde.
 - Quando la radio è riconosciuta compaiono i suoi dati (anche in una finestra) e si
   apre la sua scheda con i canali letti; se nella scheda c'erano modifiche non salvate
   il programma chiede prima di sostituirle.
 - Dalla 4.2, dopo il riconoscimento la ricerca si FERMA (la funzione resta attiva):
   per cercare un'altra radio sullo stesso cavo premi il pulsante giallo
-  "🔎 Identifica Nuova Radio Automaticamente" nella barra in alto (tra la scheda
-  "ℹ Info" e "Aggiornamenti"; è grigio e non si può premere se l'identificazione
-  automatica è disattivata). Un cavo collegato al PC dopo (anche lo stesso,
+  "🔎 Identifica Radio" in alto a destra, accanto ad "Aggiornamenti" (dalla 4.4; è
+  grigio e non si può premere se l'identificazione automatica è disattivata; con molte
+  schede aperte si restringe fino alla sola lente). Un cavo collegato al PC dopo (anche lo stesso,
   staccato e ricollegato) viene cercato da solo.
 - Dalla 4.3 il programma ASCOLTA DI CONTINUO tutte le porte dei cavi collegati, ognuna
   per conto suo e tutte insieme: radio spenta o volume al minimo non fermano la

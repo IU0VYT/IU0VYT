@@ -3,6 +3,43 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.4.0 (04/11/2026)
+------------------
+- Riquadro «Identificazione Radio In Corso» (identify.go): risposta «sicura» separata
+  dalla risposta che fa proseguire il tentativo. Si contano solo i byte che non sono
+  disturbi della linea (lineNoise: 0x00, 0xFF, trame incomplete) e non sono l'eco
+  di quanto inviato, anche ritardata dal tentativo precedente (identSent, ultimi
+  512 byte, anche con byte persi: isSubsequence); servono 4 byte o due letture. Il
+  tentativo prosegue con un byte «pulito» diverso dall'eco del tentativo stesso
+  (prima bastava un byte qualsiasi: con un cavo senza radio i disturbi facevano
+  durare ogni tentativo e comparire il riquadro). autoident.go: radio sconosciuta
+  (nuovi tentativi ogni 30 s) solo con risposta sicura. TestAutoIdentBanner: due cavi
+  con disturbi ed eco ritardata, nessun riquadro; radio su COM7 e poi su COM6,
+  riquadro solo per quella porta.
+- ui: «🔎 Identifica Radio» (index.html, style.css) a destra accanto ad
+  «Aggiornamenti», si restringe per primo (flex-shrink 1000, fino alla lente) quando
+  le schede non entrano; scheda Identifica (identify.js) con testi brevi; Home
+  (home.js) con i testi dei riquadri della 4.2 e riquadri più larghi (style.css) per
+  vedere in basso copyright, sito e sorgenti anche a 1280×720 e 1024×700.
+- Firmware con il caricatore 7.x (fwk5.go): UV-K5 V3, UV-K1, Retevis RA79 V3
+  (k5v3Update: presentazione 0x0530 con la versione del caricatore, blocchi 0x0519
+  con ora, numero e totale, conferma 0x051A con l'esito, tre nuovi tentativi;
+  controllo della famiglia del caricatore fatto dal programma; firmware fino a
+  96 KB con avvio PY32F071); radio simulata k5v3BootEmu (fwk5_emu_other.go, COM15
+  nelle prove dell'interfaccia); fwk5v3_test.go anche con il file vero «RA79 V3.bin».
+  Catalogo: Retevis RA79 con FW «k5».
+- Firmware della Retevis RA89 (fwth8600.go, nuovo, tipo «th8600»): protocollo del
+  programma «RA89-update-software» («TH8600-UpDAta Soft» 2.3) ricavato dal suo
+  codice; verifica/ra89 (nuovo): il codice originale (Form1) fatto girare su .NET 8
+  con un sostituto di System.Windows.Forms e la porta simulata; TestDiffTH8600:
+  stesse righe del file e stessi 846 comandi a 57600 e 115200 baud con il file vero,
+  stessa fermata con un errore della radio. Radio simulata fwemu_th8600_other.go
+  (COM14). Catalogo: Retevis RA89 con FW «th8600». anc/ports/SerialPort.cs: proprietà
+  Encoding.
+- Test che usano le radio simulate (fwradtel_test.go, fwtdh_test.go) con
+  //go:build !windows: su Windows non si compilavano.
+
+
 4.3.0 (03/11/2026)
 ------------------
 - Identificazione per porta (identify.go): registro probeReg al posto dello scambio

@@ -65,7 +65,7 @@ type fwCheck struct {
 }
 
 type fwInfo struct {
-	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730)
+	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730) | th8600 (Retevis RA89)
 	Target   string    `json:"target"` // radio a cui è destinato
 	Confirm  string    `json:"confirm"`
 	Hw       string    `json:"hw,omitempty"`
@@ -232,6 +232,7 @@ const (
 	fwKDH9G  // Baofeng UV-9G (.kdh)
 	fwK5     // Quansheng UV-K5 / UV-K6 / UV-5R Plus (.bin, 4.1)
 	fwTDH    // TIDRADIO TD-H3 / TD-H8, Radtel RT-730 (.BIN, 4.3)
+	fwTH8600 // Retevis RA89 (.bin, 4.4)
 )
 
 func sniffKind(name string, b []byte) fwKind {
@@ -257,6 +258,9 @@ func sniffKind(name string, b []byte) fwKind {
 		}
 		if tdhPlausible(b) {
 			return fwTDH
+		}
+		if thFile(name) {
+			return fwTH8600
 		}
 	}
 	if bytes.HasPrefix(b, []byte("BaoFeng")) && len(b) > rh5Head && string(b[16:22]) == "BF_5RH" {
@@ -315,7 +319,7 @@ func (e *fwExpander) run() error {
 		it := e.queue[0]
 		e.queue = e.queue[1:]
 		switch sniffKind(it.Name, it.Data) {
-		case fwANC, fwBF, fwRH5, fwKDHX, fwBJ9000, fwKDH9G, fwK5, fwTDH:
+		case fwANC, fwBF, fwRH5, fwKDHX, fwBJ9000, fwKDH9G, fwK5, fwTDH, fwTH8600:
 			e.found = append(e.found, fwCandidate{Name: it.Name, Where: it.Where, Size: len(it.Data), data: it.Data})
 		case fwZIP:
 			if it.Depth >= fwMaxDepth {
@@ -343,7 +347,7 @@ func (e *fwExpander) run() error {
 			}
 		default:
 			if it.Depth == 0 {
-				return fmt.Errorf("«%s» non è un firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5, .BIN di TD-H3/TD-H8/RT-730) né un archivio .zip o .rar", it.Name)
+				return fmt.Errorf("«%s» non è un firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5 e della RA89, .BIN di TD-H3/TD-H8/RT-730) né un archivio .zip o .rar", it.Name)
 			}
 		}
 	}

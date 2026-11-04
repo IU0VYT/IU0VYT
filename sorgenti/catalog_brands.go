@@ -56,8 +56,11 @@ var catalogOther = []catItem{
 	{ID: "qs-uv-k1", Brand: "Quansheng", Name: "UV-K1", Type: "analog", Drivers: []string{"qs-uvk1"},
 		Links: []catLink{info("Download center Quansheng", qsDown)},
 		Notes: chirpNote("UVK1Radio") + " Solo canali (CHIRP non gestisce ancora le impostazioni) e solo con il firmware 7.03."},
-	{ID: "rt-ra79", Brand: "Retevis", Name: "RA79", Type: "analog", Drivers: []string{"rt-ra79"},
-		Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: "È una Quansheng UV-K5. " + chirpNote("RA79Radio")},
+	{ID: "rt-ra79", Brand: "Retevis", Name: "RA79", Type: "analog", Drivers: []string{"rt-ra79"}, FW: "k5",
+		Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: "È una Quansheng UV-K5. " + chirpNote("RA79Radio") +
+			" Firmware: file .bin di Retevis nel formato di Quansheng (es. «RA79 V3.bin», versione 7.00.16 per la RA79 V3, con il caricatore 7.x della " +
+			"UV-K5 V3): radio spenta e riaccesa tenendo premuto il PTT. Il programma legge la versione del caricatore e invia il firmware solo se è " +
+			"della stessa famiglia (le RA79 con il caricatore della UV-K5 classica rifiutano i file 7.x)."},
 	{ID: "mt-tk6", Brand: "MaxTalker", Name: "TK-6", Type: "analog", Drivers: []string{"mt-tk6"}, Notes: "È una Quansheng UV-K5. " + chirpNote("MaxTalkerTK6")},
 
 	// ------------------------------------------------ Radtel
@@ -202,8 +205,11 @@ var catalogOther = []catItem{
 		Notes: chirpNote("THUV98Radio") + " Piattaforma della TH-UV88 (protocollo «UV98»)."},
 	{ID: "rtv-rt85", Brand: "Retevis", Name: "RT85", Type: "analog", Drivers: []string{"rt-rt85"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
 		Notes: "È la TYT TH-UV88. " + chirpNote("RT85")},
-	{ID: "rtv-ra89", Brand: "Retevis", Name: "RA89", Type: "analog", Drivers: []string{"rt-ra89"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
-		Notes: chirpNote("RA89") + " Piattaforma della TYT TH-UV88 (protocollo «UV99»)."},
+	{ID: "rtv-ra89", Brand: "Retevis", Name: "RA89", Type: "analog", Drivers: []string{"rt-ra89"}, FW: "th8600", Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: chirpNote("RA89") + " Piattaforma della TYT TH-UV88 (protocollo «UV99»). Firmware: file .bin di Retevis (es. " +
+			"«Eng_RA89_Upadat_20250524_B91.38.bin») con il protocollo del programma «RA89-update-software» («TH8600-UpDAta Soft» 2.3): la radio " +
+			"va prima portata in modalità di aggiornamento come indicato da Retevis. Se l'invio si interrompe non accendere la radio normalmente: " +
+			"ripeti subito l'aggiornamento."},
 	{ID: "rtv-p2", Brand: "Retevis", Name: "P2", Type: "analog", Drivers: []string{"rt-p2"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
 		Notes: chirpNote("P2") + " Radio senza display, piattaforma della TYT TH-UV88."},
 	{ID: "rtv-p62", Brand: "Retevis", Name: "P62", Type: "analog", Drivers: []string{"rt-p62"}, Links: []catLink{info("Programmi Retevis", rtvDown)},

@@ -96,6 +96,19 @@ Station; la stessa presentazione di 36 byte si trova nei programmi del costrutto
 «H8_IAP» (TIDRADIO) e «RT730 Update tool» (Radtel). fwtdh.go è scritto da zero sulla
 base di quella documentazione, per l'interoperabilità; nessun codice di quei
 programmi è incluso nel pacchetto. Grazie a nicsure.
+AGGIORNAMENTO DEL FIRMWARE CON IL CARICATORE 7.x (UV-K5 V3, UV-K1, RA79 V3) (4.4)
+Il protocollo è descritto e usato dai programmi liberi quansheng_toolkit (Copyright
+2026 knoinok, licenza Apache 2.0, https://github.com/knoinok/quansheng_toolkit,
+kradio/dfu.py) e Multi-UVTools (spm81, https://github.com/armel/Multi-UVTools,
+js/flash-k1.js). fwk5.go (k5v3Update) è scritto da zero sulla base di quella
+documentazione; nessun codice di quei programmi è incluso nel pacchetto.
+
+AGGIORNAMENTO DEL FIRMWARE DELLA RETEVIS RA89 (4.4)
+Protocollo ricavato, per l'interoperabilità, dal programma di Retevis
+«RA89-update-software» («TH8600-UpDAta Soft» 2.3); il programma non è incluso nel
+pacchetto. verifica/ra89, usato solo per le prove, carica l'eseguibile indicato da chi
+esegue la verifica.
+
 I firmware .kdhx delle Radtel RT-470 / RT-495 / RT-630 usano lo stesso protocollo del
 «Bootloader Pro» della UV-25 Plus (fwkdhx.go), con la piattaforma JJCC indicata dal
 programma di Radtel «New RT470 serial Bootloader Pro».

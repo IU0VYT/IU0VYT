@@ -126,7 +126,8 @@ func setupEmulatedRadios() {
 		}
 		return append(l, PortInfo{"COM8", "USB-SERIAL CH340 (COM8) - UV-5RM simulata (firmware)"}, PortInfo{"COM9", "USB-SERIAL CH340 (COM9) - 5RH Pro simulata (firmware)"},
 			PortInfo{"COM10", "USB-SERIAL CH340 (COM10) - UV-25 Plus simulata (firmware)"}, PortInfo{"COM11", "USB-SERIAL CH340 (COM11) - BJ-9000 simulata (firmware)"},
-			PortInfo{"COM12", "USB-SERIAL CH340 (COM12) - UV-9G simulata (firmware)"}, PortInfo{"COM13", "USB-SERIAL CH340 (COM13) - RT-730 simulata nel caricatore (firmware)"})
+			PortInfo{"COM12", "USB-SERIAL CH340 (COM12) - UV-9G simulata (firmware)"}, PortInfo{"COM13", "USB-SERIAL CH340 (COM13) - RT-730 simulata nel caricatore (firmware)"},
+			PortInfo{"COM14", "USB-SERIAL CH340 (COM14) - RA89 simulata in aggiornamento (firmware)"}, PortInfo{"COM15", "USB-SERIAL CH340 (COM15) - RA79 V3 simulata nel caricatore (firmware)"})
 	}
 	openPortFunc = func(name string, baud int) (Port, error) {
 		a, b := newPipe()
@@ -160,6 +161,12 @@ func setupEmulatedRadios() {
 			go bj9k.serve(b, baud)
 		case "COM12":
 			go k9g.serve(b, baud)
+		case "COM14":
+			// 4.4: Retevis RA89 in modalità di aggiornamento
+			go newThEmu(thHelloRA89).serve(b, baud)
+		case "COM15":
+			// 4.4: Retevis RA79 V3 (caricatore 7.00.07) accesa con il PTT premuto
+			go newK5v3BootEmu("7.00.07").serve(b)
 		case "COM13":
 			// 4.3: RT-730 / TD-H8 accesa con il PTT premuto (caricatore)
 			tdh = &tdhEmu{hello: tdhHello, state: "wait", window: 500 * time.Millisecond}

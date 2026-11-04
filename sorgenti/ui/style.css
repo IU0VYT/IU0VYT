@@ -492,14 +492,18 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .autobanner .btn.small:hover { background: #fff; }
 @keyframes abblink { to { visibility: hidden; } }
 
-/* 4.2: «Identifica Nuova Radio Automaticamente» nella barra in alto (attivo solo con
-   l'identificazione automatica attiva) */
-#topbar .btn.autonew { flex: none; font-weight: 800; font-size: 12.5px; padding: 5px 10px; color: #10142a; background: #ffd54a; border: 2px solid #ffd54a;
+/* 4.2: pulsante dell'identificazione automatica nella barra in alto (attivo solo con
+   l'identificazione automatica attiva). 4.4: «Identifica Radio», a destra accanto a
+   «Aggiornamenti»; quando le schede aperte non entrano si restringe per primo (fino
+   alla sola lente), poi scorrono le schede */
+#topbar .btn.autonew { flex: 0 1000 auto; min-width: 40px; overflow: hidden; text-overflow: ellipsis;
+  font-weight: 800; font-size: 12.5px; padding: 5px 10px; color: #10142a; background: #ffd54a; border: 2px solid #ffd54a;
   box-shadow: 0 0 0 2px rgba(255,213,74,.25), 0 0 12px rgba(255,213,74,.45); white-space: nowrap; }
+#topbar .btn.autonew .an-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#topbar .btn.ghost, #topbar .brand { flex: none; }
 #topbar .btn.autonew:hover:not(:disabled) { background: #fff3c4; border-color: #fff3c4; }
 #topbar .btn.autonew:disabled { color: #8a93a6; background: #3a4356; border-color: #4a5468; box-shadow: none; cursor: not-allowed; opacity: 1; }
-/* finestre strette: il testo va su due righe, le schede scorrono */
-@media (max-width: 1320px) { #topbar .btn.autonew { font-size: 11.5px; padding: 3px 8px; white-space: normal; max-width: 172px; line-height: 1.15; text-align: center; } }
+
 
 /* 4.3: avviso «Radio già identificata!! Scheda Radio già aperta» */
 #idbanner { position: fixed; top: 62px; left: 50%; transform: translateX(-50%); z-index: 3000; max-width: min(720px, calc(100vw - 32px));
@@ -514,7 +518,10 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 
 /* 4.3: Home più compatta: titolo un po' più piccolo e riquadri brevi, così in basso
    restano visibili copyright, sito web e sorgenti */
-.home-inner { padding: 22px 22px 20px; }
+.home-inner { padding: 22px 22px 20px; max-width: 1200px; }
+/* 4.4: testi dei riquadri come nella 4.2; riquadri più larghi (meno righe), così in
+   basso restano visibili copyright, sito web e sorgenti */
+.home-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .neon-top { font-size: clamp(44px, 8.2vw, 96px); }
 .neon-bottom { margin-top: 4px; font-size: clamp(38px, 6.8vw, 82px); }
 .home-tag { margin: 10px 0 16px; }
@@ -534,4 +541,14 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
   .hb-home { margin-bottom: 10px; }
   .home-cards { margin: 12px 0 10px; }
   .home-meta { line-height: 1.45; }
+}
+@media (max-height: 720px) {
+  .home-inner { padding-top: 8px; padding-bottom: 6px; }
+  .home-cards { margin: 8px 0 6px; }
+}
+/* finestre strette (fino a 1150 px): sempre cinque riquadri in una riga */
+@media (max-width: 1150px) {
+  .home-cards { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  .home-card { padding: 8px 9px; }
+  .home-card span { font-size: 11.5px; line-height: 1.3; }
 }

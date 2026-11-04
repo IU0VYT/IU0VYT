@@ -60,6 +60,7 @@ namespace System.IO.Ports
 		public int WriteTimeout { get; set; } = -1;
 		public bool IsOpen => open;
 		public int ReceivedBytesThreshold { get; set; } = 1;
+		public System.Text.Encoding Encoding { get; set; } = System.Text.Encoding.ASCII;
 		// eventi come la porta vera: chiamati dal filo di lettura, uno alla volta
 		public event SerialDataReceivedEventHandler DataReceived;
 #pragma warning disable 67

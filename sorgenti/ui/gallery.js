@@ -17,7 +17,7 @@ const TYPE_GROUP = {
 };
 // ordine alfabetico «naturale» (UV-5R prima di UV-17)
 const byModelName = (a, b) => a.name.localeCompare(b.name, 'it', { numeric: true, sensitivity: 'base' }) || a.brand.localeCompare(b.brand);
-const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin', tdh: 'firmware .BIN' };
+const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin', tdh: 'firmware .BIN', th8600: 'firmware .bin' };
 const FW_KINDS = Object.keys(FW_LABEL);
 const FW_DESC = {
   anc: 'file .anc del costruttore (protocollo del programma «BinTe ANC Bootloader»)',
@@ -26,8 +26,9 @@ const FW_DESC = {
   kdhx: 'file .kdhx (programma «Bootloader Pro» del costruttore: piattaforma H802 di Baofeng, JJCC di Radtel)',
   bj9000: 'file .Firmware (programma «BJ9000_EnUPDATE» del costruttore)',
   kdh9g: 'file .kdh (programma «Bootloader_BaudRate38400» del costruttore)',
-  k5: 'file .bin di Quansheng (caricatore della UV-K5: radio accesa tenendo premuto il PTT)',
+  k5: 'file .bin di Quansheng o di Retevis (caricatore della UV-K5 o 7.x della UV-K5 V3: radio accesa tenendo premuto il PTT)',
   tdh: 'file .BIN del costruttore (caricatore di TD-H3, TD-H8 e RT-730: radio accesa tenendo premuto il PTT)',
+  th8600: 'file .bin di Retevis (programma «RA89-update-software»: radio in modalità di aggiornamento)',
 };
 
 // colore di ogni marca (icone e riquadri della galleria); le marche non

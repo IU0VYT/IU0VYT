@@ -19,6 +19,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -121,4 +122,124 @@ func k5EmuFrame(ctx context.Context, p Port) ([]byte, []byte, error) {
 		return nil, nil, fmt.Errorf("CRC o chiusura del pacchetto non validi")
 	}
 	return dec[:n], append(h, d...), nil
+}
+
+// k5v3BootEmu (4.4): caricatore 7.x (UV-K5 V3, UV-K1, Retevis RA79 V3) simulato
+// come descritto da quansheng_toolkit e Multi-UVTools: annuncio 0x0518 finché il
+// PC non risponde tre volte con 0x0530 e le prime 4 lettere della versione del
+// caricatore; poi blocchi 0x0519 (ora, numero, totale, 4 zeri, 256 byte) con la
+// conferma 0x051A (ora, numero, esito).
+type k5v3BootEmu struct {
+	mu     sync.Mutex
+	bl     string
+	flash  []byte
+	pages  int
+	hs     int
+	errs   []string
+	nakAt  int // blocco (da 0) a cui rispondere una volta con un errore (-1: mai)
+	silent int // blocco (da 0) a cui non rispondere più (-1: mai)
+	done   bool
+}
+
+func newK5v3BootEmu(bl string) *k5v3BootEmu {
+	return &k5v3BootEmu{bl: bl, nakAt: -1, silent: -1}
+}
+
+func (e *k5v3BootEmu) beacon() []byte {
+	b := []byte{0x18, 0x05, 0x20, 0x00}
+	b = append(b, bytes.Repeat([]byte{0x5A}, 16)...)
+	v := make([]byte, 16)
+	copy(v, e.bl)
+	return append(b, v...)
+}
+
+func (e *k5v3BootEmu) fail(f string, a ...interface{}) {
+	e.mu.Lock()
+	e.errs = append(e.errs, fmt.Sprintf(f, a...))
+	e.mu.Unlock()
+}
+
+func (e *k5v3BootEmu) serve(p Port) error {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	var wmu sync.Mutex
+	write := func(b []byte) { wmu.Lock(); p.Write(k5BootPacket(b)); wmu.Unlock() }
+	var announce atomic.Bool
+	announce.Store(true)
+	go func() {
+		t := time.NewTicker(30 * time.Millisecond)
+		defer t.Stop()
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-t.C:
+				if announce.Load() {
+					write(e.beacon())
+				}
+			}
+		}
+	}()
+	var ts uint32
+	next := 0
+	nakDone := false
+	for {
+		f, _, err := k5EmuFrame(ctx, p)
+		if err != nil {
+			return nil
+		}
+		switch {
+		case len(f) >= 8 && f[0] == 0x30 && f[1] == 0x05:
+			if string(f[4:8]) != e.bl[:4] {
+				e.fail("presentazione %q invece di %q", f[4:8], e.bl[:4])
+				continue
+			}
+			e.mu.Lock()
+			e.hs++
+			if e.hs >= 3 {
+				announce.Store(false)
+			}
+			e.mu.Unlock()
+		case len(f) >= 16+0x100 && f[0] == 0x19 && f[1] == 0x05:
+			e.mu.Lock()
+			hs := e.hs
+			e.mu.Unlock()
+			if hs < 3 {
+				e.fail("blocco prima della presentazione")
+				continue
+			}
+			t := binary.LittleEndian.Uint32(f[4:])
+			idx := int(binary.LittleEndian.Uint16(f[8:]))
+			tot := int(binary.LittleEndian.Uint16(f[10:]))
+			if next == 0 {
+				ts = t
+			}
+			if t != ts || !bytes.Equal(f[12:16], make([]byte, 4)) || binary.LittleEndian.Uint16(f[2:]) != 0x010C {
+				e.fail("intestazione del blocco %d % X", idx, f[:16])
+			}
+			if e.silent >= 0 && idx >= e.silent {
+				continue
+			}
+			code := uint16(0)
+			if idx == e.nakAt && !nakDone {
+				nakDone, code = true, 1
+			} else if idx != next {
+				e.fail("blocco %d invece di %d", idx, next)
+				code = 2
+			} else {
+				e.mu.Lock()
+				e.flash = append(e.flash, f[16:16+0x100]...)
+				e.pages, e.done = idx+1, idx+1 == tot
+				e.mu.Unlock()
+				next++
+			}
+			r := []byte{0x1a, 0x05, 0x08, 0x00, 0, 0, 0, 0, 0, 0, 0, 0}
+			binary.LittleEndian.PutUint32(r[4:], t)
+			binary.LittleEndian.PutUint16(r[8:], uint16(idx))
+			binary.LittleEndian.PutUint16(r[10:], code)
+			write(r)
+		default:
+			e.fail("comando inatteso % X", f[:min(4, len(f))])
+		}
+	}
 }

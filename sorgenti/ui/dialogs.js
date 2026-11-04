@@ -756,6 +756,12 @@ const Dialogs = {
         <li><b>TIDRADIO TD-H3, TD-H8, Radtel RT-730</b> (file <b>.BIN</b>): avvia l'aggiornamento e accendi la radio tenendo premuto il PTT. Il caricatore non
           controlla il modello: scrivi quello indicato dal file.</li>
       </ul>
+      <h4>Aggiornamento del firmware Retevis (4.4)</h4><ul>
+        <li><b>RA79 V3</b> (file <b>.bin</b> di Retevis, caricatore 7.x come UV-K5 V3 e UV-K1): radio spenta e riaccesa tenendo premuto il PTT; il programma
+          invia il firmware solo se il caricatore è della stessa famiglia (es. 7.00).</li>
+        <li><b>RA89</b> (file <b>.bin</b> di Retevis): radio in modalità di aggiornamento come indicato da Retevis, poi «Avvia aggiornamento». Se l'invio si
+          interrompe non accendere la radio normalmente: ripeti subito l'aggiornamento.</li>
+      </ul>
       <h4>Aggiornamento del firmware (Bajeton BJ-8300 e BJ-7800)</h4><ul>
         <li>La BJ-7800 usa lo stesso programma di aggiornamento della BJ-8300 (file <b>.anc</b>, es. BJ7800_CN_EN_V0.17_20251126.anc): si aggiorna allo stesso modo,
           dalla sua scheda o dalla galleria dei modelli. Il modello è riconosciuto dal nome del file.</li>
@@ -783,9 +789,9 @@ const Dialogs = {
           radio DMR USB, ID DMR e nome. Nessun dato viene scritto nella radio. Senza radio la ricerca completa dura circa 50 secondi; le radio già riconosciute in passato si provano per prime.</li>
         <li><b>Identificazione automatica</b> («🔄 Abilita identificazione automatica», scelta ricordata): in qualsiasi scheda il programma ascolta di continuo tutte le porte dei cavi:
           riconosce la radio anche se la accendi dopo, e più radio su cavi diversi insieme, e apre le loro schede (se una scheda è già aperta compare «Radio già
-          identificata!! Scheda Radio già aperta»). Quando una radio collegata risponde compare in basso «Identificazione Radio In Corso». Dopo il riconoscimento
-          la porta di quella radio si ferma: per un'altra radio sullo stesso cavo premi «🔎 Identifica Nuova Radio Automaticamente» nella barra in alto (grigio se la
-          funzione è disattivata).</li>
+          identificata!! Scheda Radio già aperta»). Il riquadro «Identificazione Radio In Corso» compare solo per il cavo a cui è collegata una radio che risponde (mai per un
+          cavo senza radio). Dopo il riconoscimento la porta di quella radio si ferma: per un'altra radio sullo stesso cavo premi «🔎 Identifica Radio» in alto a
+          destra, accanto ad «Aggiornamenti» (grigio se la funzione è disattivata; con molte schede aperte si restringe alla sola lente).</li>
         <li>Se più modelli hanno lo stesso protocollo e la stessa memoria, scegli il tuo dall'elenco prima di aprire i canali.</li>
         <li>DM-1701: nella finestra «Leggi dalla radio» lo stato del driver USB, «Installa il driver USB…» (pacchetto del costruttore) o WinUSB con Zadig.</li>
         <li>BTECH DMR-6X2 / PRO: nella galleria «🧭 Aggiornamento guidato…» controlla i file del firmware ufficiale e guida passo per passo il programma BTECH.</li>

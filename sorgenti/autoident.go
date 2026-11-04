@@ -25,8 +25,8 @@ package main
 //     riconosciuta o non viene riconosciuta;
 //   - quando una radio è riconosciuta l'interfaccia ne mostra i dati e apre la sua
 //     scheda (o avvisa che la scheda è già aperta); la ricerca su QUEL cavo si
-//     ferma (l'opzione resta attiva) finché non si preme «Identifica Nuova Radio
-//     Automaticamente» o non si ricollega il cavo; gli altri cavi continuano;
+//     ferma (l'opzione resta attiva) finché non si preme «Identifica Radio» o non
+//     si ricollega il cavo; gli altri cavi continuano;
 //   - una radio che risponde ma non viene riconosciuta (modello non gestito) si
 //     riprova solo ogni autoRetryUnknown, per non far lampeggiare il riquadro;
 //   - si interrogano solo le porte dei cavi di programmazione (adattatori
@@ -295,7 +295,7 @@ func (a *App) autoStatusLocked() {
 		parts = append(parts, "Su "+strings.Join(unknown, ", ")+" una radio risponde ma non è tra i modelli conosciuti")
 	}
 	if len(found) > 0 {
-		parts = append(parts, "Radio riconosciuta su "+strings.Join(found, ", ")+": per un'altra radio premi «Identifica Nuova Radio Automaticamente»")
+		parts = append(parts, "Radio riconosciuta su "+strings.Join(found, ", ")+": per un'altra radio premi «Identifica Radio»")
 	}
 	if len(paused) > 0 {
 		parts = append(parts, "Ricerca interrotta su "+strings.Join(paused, ", "))
@@ -374,7 +374,7 @@ func (a *App) autoWait(r *autoRun) {
 	switch {
 	case state == "done" && ir != nil && ir.Found:
 		// radio riconosciuta: la ricerca su questa porta si ferma (l'opzione resta
-		// attiva; si riprende con «Identifica Nuova Radio Automaticamente»)
+		// attiva; si riprende con «Identifica Radio»)
 		p.done, p.unknown = true, false
 		a.auto.seq++
 		ev := &autoEvent{Seq: a.auto.seq, Port: p.name, Result: ir, When: now.Format("15:04:05")}
@@ -390,8 +390,10 @@ func (a *App) autoWait(r *autoRun) {
 	case state == "cancelled":
 		p.next = now.Add(autoQuiet)
 		p.tries-- // la ricerca non è arrivata in fondo
-	case j.answered.Load() || (ir != nil && len(ir.Answers) > 0):
-		// una radio ha risposto ma non è stata riconosciuta
+	case j.answered.Load():
+		// una radio ha risposto davvero (vedi probeState.sure) ma non è stata
+		// riconosciuta. 4.4: non basta una risposta qualsiasi dei driver (Answers):
+		// i disturbi di un cavo senza radio sembravano una radio sconosciuta
 		p.unknown = true
 		p.next = now.Add(autoRetryUnknown)
 	default:
@@ -402,8 +404,8 @@ func (a *App) autoWait(r *autoRun) {
 	a.autoStatusLocked()
 }
 
-// autoRescan: nuova ricerca su tutti i cavi collegati (pulsante «Identifica Nuova
-// Radio Automaticamente»); restituisce il numero di porte da cercare
+// autoRescan: nuova ricerca su tutti i cavi collegati (pulsante «Identifica
+// Radio»); restituisce il numero di porte da cercare
 func (a *App) autoRescan() int {
 	a.auto.mu.Lock()
 	defer a.auto.mu.Unlock()
@@ -465,7 +467,7 @@ func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 	var req struct {
 		Enabled *bool `json:"enabled"`
 		Stop    bool  `json:"stop"`   // riquadro: «Interrompi»
-		Rescan  bool  `json:"rescan"` // «Identifica Nuova Radio Automaticamente»
+		Rescan  bool  `json:"rescan"` // «Identifica Radio»
 	}
 	if err := decode(r, &req); err != nil {
 		return nil, err

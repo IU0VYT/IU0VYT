@@ -21,9 +21,8 @@ const Identify = {
     this.built = true;
     page.innerHTML = `<div class="infopage"><div class="infocard convcard">
       <div class="infohead"><div style="font-size:44px">🔎</div><div><h1>Identifica la radio</h1>
-        <div class="note">Collega la radio al PC e accendila: il programma prova uno dopo l'altro i protocolli di <b>lettura</b> di tutte le radio
-        che conosce finché una risponde, poi la legge e mostra marca, modello, tipo, firmware e le altre informazioni che la radio comunica.
-        <b>Nessun dato viene scritto nella radio.</b></div></div></div>
+        <div class="note">Riconosce la radio collegata e ne mostra marca, modello, tipo e firmware. Usa solo comandi di lettura:
+        <b>nella radio non viene scritto nulla.</b></div></div></div>
       <h3>1. Collegamento</h3>
       <div class="convrow"><label class="l">Porta</label><select data-port style="min-width:330px"></select>
         <button class="btn" data-refresh title="Cerca di nuovo le porte (dopo aver collegato il cavo)">🔄 Aggiorna</button></div>
@@ -31,17 +30,18 @@ const Identify = {
       <div class="convrow"><label class="l">Cerca tra</label>
         <select data-brand><option value="">tutte le marche</option>${catalogBrands().filter(b => App.catalog.some(c => c.brand === b && (c.drivers || []).length)).map(b => `<option>${esc(b)}</option>`).join('')}</select>
         <select data-family><option value="">radio analogiche e DMR</option><option value="analog">solo radio analogiche</option><option value="dmr">solo radio DMR</option></select>
-        <span class="note">restringere la ricerca la rende più veloce</span></div>
+        <span class="note">meno radio = ricerca più veloce</span></div>
       <h3>Identificazione automatica</h3>
       <div class="convrow"><button class="btn primary" data-auto>🔄 Abilita identificazione automatica</button>
         <span class="note" data-autost></span></div>
-      <div class="note">Con l'identificazione automatica attiva il programma riconosce da solo la radio appena colleghi il cavo di programmazione
-        (con la radio accesa, oppure accendendola dopo: i cavi restano in ascolto) e ne apre la scheda con i canali letti. Con più cavi, su più porte
-        USB, le radio si cercano e si riconoscono <b>insieme</b>, ognuna sul suo cavo. Le radio già riconosciute in passato si provano per prime.
-        Si usano solo comandi di lettura e si interrogano solo le porte dei cavi di programmazione. Funziona in qualsiasi scheda: quando una radio
-        collegata risponde compare in basso «Identificazione Radio In Corso». Dopo il riconoscimento la ricerca su quel cavo si ferma; per un'altra
-        radio premi <b>«Identifica Nuova Radio Automaticamente»</b> nella barra in alto (attivo solo quando l'identificazione automatica è attiva).
-        La scelta resta memorizzata anche dopo la chiusura del programma.</div>
+      <ul class="note idlist">
+        <li>Collega il cavo: la radio viene riconosciuta da sola, anche se la accendi dopo, e si apre la sua scheda con i canali letti.</li>
+        <li>Più cavi: ogni radio viene cercata sul suo cavo, tutte insieme.</li>
+        <li>Le radio già riconosciute si provano per prime.</li>
+        <li>Mentre una radio risponde compare in basso «Identificazione Radio In Corso».</li>
+        <li>Per un'altra radio sullo stesso cavo premi <b>«🔎 Identifica Radio»</b> in alto a destra.</li>
+        <li>La scelta resta memorizzata.</li>
+      </ul>
       <h3>2. Ricerca</h3>
       <div class="convrow"><button class="btn primary" data-go>🔎 Identifica la radio</button><button class="btn" data-stop style="display:none">Interrompi</button></div>
       <div data-run style="display:none">
@@ -50,9 +50,9 @@ const Identify = {
         <div class="note" data-msg style="margin-top:6px"></div>
       </div>
       <div data-res></div>
-      <p class="note" style="margin-top:14px">Se la radio non viene trovata: controlla che sia accesa con il volume a metà, che lo spinotto del cavo sia
-      inserito fino in fondo e che la porta sia quella del cavo; alcune radio (UV-17, UV-13Pro, GM-15 Pro) vanno accese <b>dopo</b> aver collegato il cavo.
-      Le radio DMR con il cavo USB diretto (RD-5R, DM-1801, DM-1701) si cercano scegliendo la porta «USB».</p>
+      <p class="note" style="margin-top:14px"><b>Radio non trovata?</b> Accendila con il volume a metà, inserisci lo spinotto fino in fondo e
+      controlla la porta. UV-17, UV-13Pro e GM-15 Pro vanno accese <b>dopo</b> aver collegato il cavo. Radio DMR con cavo USB diretto
+      (RD-5R, DM-1801, DM-1701): porta «USB».</p>
     </div></div>`;
     $('[data-refresh]', page).onclick = () => this.loadPorts(page).catch(reportError);
     $('[data-go]', page).onclick = () => this.start(page).catch(reportError);
@@ -169,9 +169,8 @@ const Identify = {
 // scheda «Identifica»; il riquadro «Identificazione Radio In Corso» compare solo
 // quando una radio collegata risponde e sparisce quando è riconosciuta o la
 // ricerca finisce. Quando il programma riconosce una radio ne mostra i dati e apre
-// la sua scheda, poi la ricerca si ferma: il pulsante «Identifica Nuova Radio
-// Automaticamente» della barra in alto (attivo solo con l'opzione attiva) la fa
-// ripartire.
+// la sua scheda, poi la ricerca su quel cavo si ferma: il pulsante «Identifica
+// Radio» della barra in alto (attivo solo con l'opzione attiva) la fa ripartire.
 const AutoIdent = {
   st: null,
   seq: null, // ultimo esito già mostrato
@@ -179,7 +178,7 @@ const AutoIdent = {
 
   start() {
     const stop = $('#autobanner-stop');
-    if (stop) stop.onclick = () => this.tick({ stop: true }).then(() => toast('Ricerca interrotta. Per riprenderla premi «Identifica Nuova Radio Automaticamente».')).catch(reportError);
+    if (stop) stop.onclick = () => this.tick({ stop: true }).then(() => toast('Ricerca interrotta. Per riprenderla premi «Identifica Radio».')).catch(reportError);
     const nb = $('#btn-autonew');
     if (nb) nb.onclick = () => this.rescan().catch(reportError);
     const tick = () => this.tick().catch(() => {}).finally(() => setTimeout(tick, 1500));
@@ -200,7 +199,7 @@ const AutoIdent = {
     }
   },
 
-  // «Identifica Nuova Radio Automaticamente»: nuova ricerca su tutti i cavi
+  // «Identifica Radio»: nuova ricerca su tutti i cavi
   async rescan() {
     if (!(this.st && this.st.enabled)) return;
     await this.tick({ rescan: true });
@@ -280,7 +279,7 @@ const AutoIdent = {
       if (r.backup) list.push('Copia della lettura: ' + r.backup);
       if ((r.others || []).length) list.push('Altri modelli possibili (stesso collegamento): ' + r.others.map(o => o.name).join(', ') + ' — puoi sceglierli nella scheda «Identifica».');
     }
-    list.push('La ricerca automatica su questi cavi ora è ferma: per un\'altra radio premi «Identifica Nuova Radio Automaticamente» nella barra in alto.');
+    list.push('La ricerca automatica su questi cavi ora è ferma: per un\'altra radio premi «Identifica Radio» in alto a destra.');
     if (opened.length === 1) {
       const ev = opened[0];
       await alertDlg('Radio collegata riconosciuta: ' + ev.result.name,

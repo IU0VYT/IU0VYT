@@ -233,6 +233,21 @@ caricatore TD-H8 con i blocchi della cattura pubblicata da nicsure). Con i file 
      RADTEL_FW=cartella dei .rar di radtels.com go test -mod=vendor -run TestRadtelKdhxReal -v .
      TDH_FW=cartella dei .BIN go test -mod=vendor -run TestTdhReal -v .
 
+FIRMWARE RETEVIS (cartella "ra89", 4.4)
+Il programma .NET 8 "ra89/harness" carica l'eseguibile del costruttore
+«RA89-update-software.exe» (classe FlaUPDataProject.Form1, con il sostituto di
+System.Windows.Forms in "ra89/winforms") collegato alla radio simulata:
+     cd verifica/ra89/harness && dotnet build -c Release -o /tmp/ra89h
+     RETEVIS_FW=cartella con il .bin della RA89 e «RA79 V3.bin» \
+     RA89_HARNESS=/tmp/ra89h/ra89_harness.dll RA89_EXE=percorso/RA89-update-software.exe \
+       go test -mod=vendor -run 'TestDiffTH8600|TestTH8600|TestK5v3' -v .
+TestDiffTH8600 confronta le righe preparate dal file e i comandi inviati (57600 e
+115200 baud, e con un errore della radio al blocco 10).
+
+IDENTIFICAZIONE AUTOMATICA (4.3, 4.4)
+TestAutoIdentBanner (4.4): due cavi con disturbi della linea ed eco ritardata, senza
+radio: il riquadro non compare mai; poi la radio su una porta sola: il riquadro solo
+per quella porta.
 IDENTIFICAZIONE AUTOMATICA (4.3)
 TestAutoIdentConnect simula tre radio su porte diverse (UV-5R, UV-K5, RT-490):
 ascolto continuo senza radio, radio accesa dopo, radio conosciute provate per

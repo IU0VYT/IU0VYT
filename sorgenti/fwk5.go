@@ -49,7 +49,23 @@ const (
 	k5FwVerLen = 16
 	k5FwMax    = 0xEFFF // firmware (senza versione) al massimo; da 0xF000 il caricatore
 	k5FwBlock  = 0x100
+	// 4.4: radio con il caricatore 7.x (UV-K5 V3, UV-K1, Retevis RA79 V3:
+	// microcontrollore PY32F071, programma da 0x08002800): firmware più grande
+	k5v3FwMax = 0x18000
 )
+
+// fwKnownK5v3: file del costruttore per il caricatore 7.x provati (4.4)
+var fwKnownK5v3 = map[string]string{
+	"939f1cae8e26e10c748283e35bdc0e5ab06e24f87f2c35e33932099a6891d9cf": "Retevis RA79 V3, firmware 7.00.16 (RA79 V3.bin, retevis.com)",
+}
+
+// k5MaxFor: dimensione massima del firmware per il tipo di caricatore
+func k5MaxFor(c byte) int {
+	if c == '7' {
+		return k5v3FwMax
+	}
+	return k5FwMax
+}
 
 // chiave XOR dei file .bin di Quansheng (128 byte)
 var k5FwKey = []byte{
@@ -130,6 +146,8 @@ func k5Family(c byte) string {
 		return "UV-K5(8) / UV-K6"
 	case '4':
 		return "UV-5R Plus"
+	case '7':
+		return "UV-K5 V3 / UV-K1 / Retevis RA79 V3"
 	case '*':
 		return "qualsiasi (versione «*»)"
 	}
@@ -154,14 +172,24 @@ func analyzeK5(name, origin string, raw []byte) *fwImage {
 		add("bad", "Versione del firmware non leggibile: non è un firmware della UV-K5")
 		return img
 	}
-	if len(fw) > k5FwMax {
-		add("bad", "Firmware troppo grande (%s): il caricatore accetta al massimo %s", fmtBytes(len(fw)), fmtBytes(k5FwMax))
+	if len(fw) > k5MaxFor(vs[0]) {
+		add("bad", "Firmware troppo grande (%s): il caricatore accetta al massimo %s", fmtBytes(len(fw)), fmtBytes(k5MaxFor(vs[0])))
 		return img
+	}
+	if vs[0] == '7' {
+		// caricatore 7.x: programma per PY32F071 (stack in RAM, avvio dopo il
+		// caricatore a 0x08002800)
+		sp, rv := binary.LittleEndian.Uint32(fw), binary.LittleEndian.Uint32(fw[4:])
+		if sp>>16 != 0x2000 || rv&^0xFFFF != 0x08000000 || rv&^1 < 0x08002800 {
+			add("bad", "Il contenuto del file non è un programma per le radio con il caricatore 7.x (avvio a 0x%08X): non è un firmware utilizzabile", rv)
+			return img
+		}
+		add("ok", "Programma per il microcontrollore PY32F071 (avvio a 0x%08X, dopo il caricatore)", rv&^1)
 	}
 	info.Version = vs
 	fam := k5Family(vs[0])
 	if fam == "" {
-		add("warn", "Versione «%s»: tipo di radio non riconosciuto (2 = UV-K5, 3 = UV-K5(8)/UV-K6, 4 = UV-5R Plus)", vs)
+		add("warn", "Versione «%s»: tipo di radio non riconosciuto (2 = UV-K5, 3 = UV-K5(8)/UV-K6, 4 = UV-5R Plus, 7 = UV-K5 V3 / UV-K1)", vs)
 		info.Warnings = true
 	} else {
 		info.Target = "Quansheng " + fam
@@ -173,16 +201,27 @@ func analyzeK5(name, origin string, raw []byte) *fwImage {
 		add("ok", "Firmware versione %s per %s (%s, %d blocchi da 256 byte)", vs, fam, fmtBytes(len(fw)), (len(fw)+k5FwBlock-1)/k5FwBlock)
 	}
 	low := strings.ToLower(name)
-	if !strings.Contains(low, "publish") && !strings.Contains(low, "k5") && !strings.Contains(low, "k6") && !strings.Contains(low, "5r") {
+	if !strings.Contains(low, "publish") && !strings.Contains(low, "k5") && !strings.Contains(low, "k6") && !strings.Contains(low, "5r") &&
+		!strings.Contains(low, "k1") && !strings.Contains(low, "ra79") {
 		add("warn", "Il nome del file non è quello dei firmware di Quansheng (es. k5_v2.01.26_publish.bin): verifica che sia quello giusto")
 		info.Warnings = true
 	}
 	add("ok", "Prima dell'invio il programma controlla che il caricatore della radio sia del tipo indicato dalla versione: altrimenti la radio non viene toccata")
+	if vs[0] == '7' {
+		add("ok", "Caricatore 7.x: il firmware %s va solo sulle radio con il caricatore %s.xx (es. UV-K5 V3 e Retevis RA79 V3: 7.00; UV-K1: 7.02 e 7.03); le UV-K5 con il caricatore 2.x o 5.x vengono rifiutate", vs, vs[:min(4, len(vs))])
+	}
+	if k, ok := fwKnownK5v3[info.SHA256]; ok {
+		info.Known = k
+		add("ok", "File conosciuto: %s", k)
+	}
 	add("warn", "Con un firmware non di Quansheng (es. egzumer, F4HWN) la radio funziona, ma questo programma (come CHIRP) non ne legge più i canali")
 	info.Warnings = true
 	img.Dec = fw
 	info.Hw = "caricatore " + strings.TrimSuffix(fam, " (versione «*»)")
 	img.Info.Models = []string{"qs-uvk5"}
+	if vs[0] == '7' {
+		img.Info.Models = []string{"rt-ra79", "qs-uvk1"}
+	}
 	img.Ver = ver
 	info.Valid = true
 	return img
@@ -258,7 +297,7 @@ var (
 // k5Update invia il firmware alla radio nel caricatore. started è chiamata
 // prima del primo blocco (da lì la radio va riaggiornata se si interrompe).
 func k5Update(ctx context.Context, port string, ver, fw []byte, prog Progress, logf func(string), started func()) (int64, error) {
-	if len(fw) == 0 || len(fw) > k5FwMax {
+	if len(fw) == 0 || len(ver) == 0 || len(fw) > k5MaxFor(ver[0]) {
 		return 0, fmt.Errorf("dimensione del firmware non valida")
 	}
 	p, err := openPort(port, 38400)
@@ -286,6 +325,9 @@ func k5Update(ctx context.Context, port string, ver, fw []byte, prog Progress, l
 	}
 	bl := k5BootVersion(beacon)
 	logf(fmt.Sprintf("Caricatore della radio: versione %s", bl))
+	if ver[0] == '7' || strings.HasPrefix(bl, "7") {
+		return k5v3Update(ctx, p, bl, ver, fw, prog, logf, started)
+	}
 	v := make([]byte, k5FwVerLen)
 	copy(v, ver)
 	if err := p.Write(k5BootPacket(append([]byte{0x30, 0x05, k5FwVerLen, 0x00}, v...))); err != nil {
@@ -349,4 +391,115 @@ func k5Update(ctx context.Context, port string, ver, fw []byte, prog Progress, l
 	prog(len(fw), len(fw), "Firmware inviato")
 	logf(fmt.Sprintf("Firmware inviato: %d blocchi", (len(fw)+k5FwBlock-1)/k5FwBlock))
 	return sent, nil
+}
+
+// ---------------------------------------------------------------- caricatore 7.x
+
+// k5v3Update (4.4): radio con il caricatore 7.x (UV-K5 V3, UV-K1, Retevis RA79 V3).
+// Stessi pacchetti della UV-K5 ma, dopo l'annuncio 0x0518, il PC risponde tre
+// volte con 0x0530 e le prime 4 lettere della versione del CARICATORE (non del
+// firmware) e il caricatore non controlla il firmware: il controllo lo fa qui il
+// programma (firmware 7.00.xx solo su caricatore 7.00.xx, ecc.; caricatori 2.x e
+// 5.x delle UV-K5 V1/V2 rifiutati: firmware di un altro microcontrollore). Blocchi
+// 0x0519: ora (4 byte), numero del blocco e numero dei blocchi (2 + 2 byte), 4
+// byte a zero, 256 byte; conferma 0x051A con il numero del blocco e l'esito.
+// Protocollo come pubblicato da quansheng_toolkit (kradio/dfu.py) e Multi-UVTools
+// (js/flash-k1.js), riscritto da zero.
+var k5v3Rounds = 3
+
+func k5v3Update(ctx context.Context, p Port, bl string, ver, fw []byte, prog Progress, logf func(string), started func()) (int64, error) {
+	vs := k5VerString(ver)
+	if bl == "" {
+		return 0, rErr("la radio non ha comunicato la versione del caricatore: la radio non è stata modificata")
+	}
+	switch {
+	case !strings.HasPrefix(bl, "7"):
+		return 0, rErr("il firmware %s è per le radio con il caricatore 7.x (UV-K5 V3, UV-K1, RA79 V3), ma il caricatore di questa radio è il %s (UV-K5 / UV-K6 / UV-5R Plus, altro microcontrollore): non è per questa radio. La radio non è stata modificata",
+			vs, bl)
+	case len(vs) < 4 || vs[0] != '7':
+		return 0, rErr("il caricatore di questa radio è il %s (UV-K5 V3 / UV-K1): il firmware %s non è per questa radio. La radio non è stata modificata", bl, vs)
+	case len(bl) < 4 || bl[:4] != vs[:4]:
+		return 0, rErr("il firmware %s è per le radio con il caricatore %s.xx, ma quello di questa radio è il %s: non è per questa radio. La radio non è stata modificata", vs, vs[:4], bl)
+	}
+	// presentazione: una risposta a ciascuno dei prossimi annunci
+	b4 := make([]byte, 4)
+	copy(b4, bl)
+	sent := 0
+	end := time.Now().Add(5 * time.Second)
+	for sent < k5v3Rounds {
+		if ctx.Err() != nil {
+			return 0, errCancelled
+		}
+		if time.Now().After(end) {
+			return 0, rErr("la radio non ha accettato la presentazione del caricatore (%d di %d): la radio non è stata modificata", sent, k5v3Rounds)
+		}
+		f, err := k5ReadFrame(ctx, p, time.Second)
+		if err == errCancelled {
+			return 0, err
+		}
+		if err != nil || len(f) < 2 || f[0] != 0x18 || f[1] != 0x05 {
+			continue
+		}
+		if err := p.Write(k5BootPacket(append([]byte{0x30, 0x05, 0x04, 0x00}, b4...))); err != nil {
+			return 0, err
+		}
+		sent++
+	}
+	// annunci rimasti in arrivo
+	for {
+		if _, err := k5ReadFrame(ctx, p, 200*time.Millisecond); err != nil {
+			if err == errCancelled {
+				return 0, err
+			}
+			break
+		}
+	}
+	n := (len(fw) + k5FwBlock - 1) / k5FwBlock
+	ts := uint32(time.Now().Unix())
+	started()
+	var done int64
+	for i := 0; i < n; i++ {
+		prog(i*k5FwBlock, len(fw), "Invio del firmware…")
+		cmd := make([]byte, 16+k5FwBlock)
+		copy(cmd, []byte{0x19, 0x05, 0x0C, 0x01})
+		binary.LittleEndian.PutUint32(cmd[4:], ts)
+		binary.LittleEndian.PutUint16(cmd[8:], uint16(i))
+		binary.LittleEndian.PutUint16(cmd[10:], uint16(n))
+		copy(cmd[16:], fw[i*k5FwBlock:min((i+1)*k5FwBlock, len(fw))])
+		ok := false
+		for try := 0; try <= 3 && !ok; try++ {
+			if ctx.Err() != nil {
+				return done, errCancelled
+			}
+			if try > 0 {
+				logf(fmt.Sprintf("Blocco %d di %d: nuovo tentativo (%d)", i+1, n, try))
+			}
+			if err := p.Write(k5BootPacket(cmd)); err != nil {
+				return done, err
+			}
+			bend := time.Now().Add(k5BlockWait)
+			for time.Now().Before(bend) {
+				f, err := k5ReadFrame(ctx, p, time.Until(bend))
+				if err == errCancelled {
+					return done, err
+				}
+				if err != nil || len(f) < 12 || f[0] != 0x1A || f[1] != 0x05 || int(binary.LittleEndian.Uint16(f[8:])) != i {
+					continue
+				}
+				if e := binary.LittleEndian.Uint16(f[10:]); e != 0 {
+					logf(fmt.Sprintf("Blocco %d di %d: errore 0x%04X della radio", i+1, n, e))
+					break
+				}
+				ok = true
+				break
+			}
+		}
+		if !ok {
+			return done, rErr("la radio non ha confermato il blocco %d di %d", i+1, n)
+		}
+		done = int64(min((i+1)*k5FwBlock, len(fw)))
+	}
+	prog(len(fw), len(fw), "Firmware inviato")
+	logf(fmt.Sprintf("Firmware inviato: %d blocchi da 256 byte, tutti confermati dalla radio", n))
+	return done, nil
 }

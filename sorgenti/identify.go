@@ -166,12 +166,99 @@ type probePort struct {
 
 type probeState struct {
 	mu      sync.Mutex
-	tx, rx  []byte
-	genuine bool // la radio ha risposto (byte diversi dall'eco di quelli inviati)
+	key     string // porta (vedi probeKey)
+	tx      []byte
+	genuine bool // la radio ha risposto (byte «puliti» diversi dall'eco di quelli inviati)
 	first   []byte
-	// onAnswer: chiamata alla prima risposta della radio (identificazione
-	// automatica: da lì compare il riquadro «Identificazione Radio In Corso»)
-	onAnswer func()
+	// 4.4: risposta SICURA di una radio, per il riquadro «Identificazione Radio In
+	// Corso»: byte che non sono disturbi della linea (0x00, 0xFF e simili, per es.
+	// cavo senza radio o con la radio spenta) né l'eco di quanto inviato, anche nei
+	// tentativi precedenti sulla stessa porta; almeno identSureBytes byte o due
+	// letture distinte (es. conferma 0x06 e poi l'identificativo)
+	clean    []byte
+	hits     int
+	sure     bool
+	onAnswer func() // chiamata una volta, quando la risposta è sicura
+}
+
+var identSureHook func(key string, clean, echo []byte) // solo per le prove
+
+// identSureBytes: byte «puliti» che bastano da soli per una risposta sicura
+const identSureBytes = 4
+
+// lineNoise: byte tipici dei disturbi di una linea seriale senza nulla collegato
+// (riposo, interruzione, trame incomplete: solo uni o solo zeri a gruppi)
+func lineNoise(b byte) bool {
+	switch b {
+	case 0x00, 0xFF, 0x80, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC, 0xFE, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F, 0x7F:
+		return true
+	}
+	return false
+}
+
+func cleanBytes(b []byte) []byte {
+	var out []byte
+	for _, c := range b {
+		if !lineNoise(c) {
+			out = append(out, c)
+		}
+	}
+	return out
+}
+
+// identSent: ultimi byte inviati su ogni porta durante le ricerche (eco ritardata
+// di un tentativo precedente, letta all'inizio del successivo)
+var identSent struct {
+	sync.Mutex
+	m map[string][]byte
+}
+
+const identSentMax = 2048
+
+func identSentAdd(key string, b []byte) {
+	identSent.Lock()
+	defer identSent.Unlock()
+	if identSent.m == nil {
+		identSent.m = map[string][]byte{}
+	}
+	h := append(identSent.m[key], b...)
+	if len(h) > identSentMax {
+		h = append([]byte{}, h[len(h)-identSentMax:]...)
+	}
+	identSent.m[key] = h
+}
+
+// identEchoTail: byte inviati alla fine del tentativo precedente che possono
+// tornare come eco ritardata all'inizio del successivo
+const identEchoTail = 512
+
+func identSentTail(key string, n int) []byte {
+	h := identSentGet(key)
+	return h[max(0, len(h)-n):]
+}
+
+// isSubsequence: tutti i byte di a compaiono in b nello stesso ordine
+func isSubsequence(a, b []byte) bool {
+	i := 0
+	for _, c := range b {
+		if i < len(a) && a[i] == c {
+			i++
+		}
+	}
+	return i == len(a)
+}
+
+func identSentGet(key string) []byte {
+	identSent.Lock()
+	defer identSent.Unlock()
+	return append([]byte{}, identSent.m[key]...)
+}
+
+// radioSure: la radio ha risposto davvero (vedi probeState.sure)
+func (s *probeState) radioSure() bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.sure
 }
 
 // identAnswerKey: valore del contesto con la funzione da chiamare quando una radio
@@ -189,7 +276,9 @@ func (p probePort) Write(b []byte) error {
 	if len(p.st.tx) < 4096 {
 		p.st.tx = append(p.st.tx, b...)
 	}
+	key := p.st.key
 	p.st.mu.Unlock()
+	identSentAdd(key, b)
 	return p.Port.Write(b)
 }
 
@@ -201,12 +290,31 @@ func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration
 	if err == nil {
 		s := p.st
 		s.mu.Lock()
-		if !s.genuine {
-			s.rx = append(s.rx, b...)
-			if !bytes.Contains(s.tx, s.rx) {
-				s.genuine = true
-				if s.onAnswer != nil {
-					go s.onAnswer()
+		// 4.4: si considerano solo i byte che non sono disturbi della linea e non
+		// sono l'eco di quanto inviato (anche nei tentativi precedenti): prima
+		// bastava un byte qualsiasi diverso dall'eco, e con un cavo senza radio i
+		// disturbi facevano durare ogni tentativo come con una radio
+		if c := cleanBytes(b); !s.sure && len(c) > 0 {
+			s.clean = append(s.clean, c...)
+			s.hits++
+			// per proseguire il tentativo conta l'eco di questo tentativo (come prima
+			// della 4.4); quella dei precedenti solo per il riquadro: altrimenti una
+			// conferma 0x06 già inviata da un altro tentativo sembrerebbe un'eco
+			if !bytes.Contains(cleanBytes(s.tx), s.clean) {
+				s.genuine = true // la radio ha risposto: il tentativo prosegue
+				echo := cleanBytes(append(identSentGet(s.key), s.tx...))
+				// eco con dei byte persi (es. letture scartate dai driver): i byte
+				// ricevuti compaiono, nello stesso ordine, tra quelli inviati in
+				// questo tentativo o alla fine del precedente
+				recent := cleanBytes(append(identSentTail(s.key, identEchoTail), s.tx...))
+				if !bytes.Contains(echo, s.clean) && !isSubsequence(s.clean, recent) && (len(s.clean) >= identSureBytes || s.hits >= 2) {
+					if identSureHook != nil {
+						identSureHook(s.key, s.clean, echo)
+					}
+					s.sure = true // risposta sicura: riquadro visibile
+					if s.onAnswer != nil {
+						go s.onAnswer()
+					}
 				}
 			}
 		}
@@ -296,9 +404,9 @@ func identPortLock(port string) *sync.Mutex {
 // probe: esegue fn con la porta controllata; se la radio non risponde entro
 // identSilentMax il tentativo si interrompe (silent = true).
 func probe(ctx context.Context, port string, fn func(ctx context.Context) error) (st *probeState, silent bool, err error) {
-	st = &probeState{}
-	st.onAnswer, _ = ctx.Value(identAnswerKey{}).(func())
 	key := probeKey(port)
+	st = &probeState{key: key}
+	st.onAnswer, _ = ctx.Value(identAnswerKey{}).(func())
 	probeReg.Lock()
 	if probeReg.m == nil {
 		probeReg.m = map[string]*probeState{}

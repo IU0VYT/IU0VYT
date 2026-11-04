@@ -84,7 +84,7 @@ func (a *App) fwResult() (interface{}, error) {
 	s.exp = nil
 	cands := exp.found
 	if len(cands) == 0 {
-		msg := "nell'archivio non c'è nessun file firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5, .BIN di TD-H3/TD-H8/RT-730)"
+		msg := "nell'archivio non c'è nessun file firmware riconosciuto (.anc, .BF, .dat, .kdhx, .kdh, .Firmware, .bin della UV-K5 e della RA89, .BIN di TD-H3/TD-H8/RT-730)"
 		if len(skipped) > 0 {
 			msg += " (" + strings.Join(skipped, "; ") + ")"
 		}
@@ -138,6 +138,8 @@ func (a *App) fwSelect(i int, skipped []string) (interface{}, error) {
 		img = analyzeK5(c.Name, c.Where, c.data)
 	case fwTDH:
 		img = analyzeTDH(c.Name, c.Where, c.data)
+	case fwTH8600:
+		img = analyzeTH8600(c.Name, c.Where, c.data)
 	default:
 		img = analyzeANC(c.Name, c.Where, c.data)
 	}
@@ -389,7 +391,7 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 			return fmt.Errorf("conferma che la radio collegata è una %s ed è nel caricatore", img.Info.Target)
 		}
 		return nil
-	case "tdh":
+	case "tdh", "th8600":
 		if req.Mode != "manual" {
 			return errors.New("modalità sconosciuta")
 		}
@@ -466,6 +468,8 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 		return a.runFirmwareK5(ctx, j, req, img)
 	case "tdh":
 		return a.runFirmwareTDH(ctx, j, req, img)
+	case "th8600":
+		return a.runFirmwareTH8600(ctx, j, req, img)
 	}
 	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
 	j.logf("Firmware: %s (%s, SHA-256 %s…)", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16])
@@ -828,6 +832,31 @@ func (a *App) runFirmwareTDH(ctx context.Context, j *cableJob, req *fwStartReq, 
 		}
 		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati): la radio resta nel caricatore. Spegnila, riaccendila tenendo premuto il PTT "+
 			"e ripeti l'aggiornamento (%v)", fmtBytes(int(sent)), err)
+	}
+	res["seconds"] = int(time.Since(t0).Seconds())
+	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
+	return res, nil
+}
+
+// runFirmwareTH8600: Retevis RA89 in modalità di aggiornamento (fwth8600.go)
+func (a *App) runFirmwareTH8600(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
+	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
+	j.logf("Firmware: %s (%s, SHA-256 %s…) per %s", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16], img.Info.Target)
+	j.set("Presentazione alla radio", true)
+	started := false
+	t0 := time.Now()
+	sent, err := thUpdate(ctx, req.Port, img.Dec, thHelloRA89, j.prog, func(s string) { j.logf("%s", s) },
+		func() { fwStarted(j, &started)(); j.set("Aggiornamento del firmware", false) })
+	res["sent"] = sent
+	if err == errCancelled && !started {
+		return nil, err
+	}
+	if err != nil {
+		if !started {
+			return nil, fmt.Errorf("aggiornamento non avviato, la radio non è stata modificata: %v", err)
+		}
+		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati). NON accendere la radio normalmente: riportala in modalità di "+
+			"aggiornamento come indicato da Retevis e ripeti subito l'aggiornamento (%v)", fmtBytes(int(sent)), err)
 	}
 	res["seconds"] = int(time.Since(t0).Seconds())
 	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
