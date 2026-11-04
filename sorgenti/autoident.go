@@ -187,6 +187,8 @@ func (a *App) autoAllLocked() []*autoPort {
 	for _, p := range a.auto.ports {
 		all = append(all, p)
 	}
+	// 4.5: in ordine progressivo (COM1, COM2, COM3…): anche le ricerche partono così
+	sort.Slice(all, func(i, j int) bool { return portLess(all[i].name, all[j].name) })
 	if a.auto.usb != nil {
 		all = append(all, a.auto.usb)
 	}
@@ -306,17 +308,84 @@ func (a *App) autoStatusLocked() {
 	a.auto.status = strings.Join(parts, ". ")
 }
 
-// portLess: COM2 prima di COM10 (ordine numerico delle porte)
+// portLess (4.5): ordine progressivo delle porte, su ogni sistema: COM1, COM2,
+// COM3, COM4… COM10 (Windows), /dev/ttyUSB0… /dev/ttyUSB10 (Linux),
+// /dev/cu.usbserial-110… (macOS). I nomi si confrontano a pezzi: le lettere
+// senza distinguere maiuscole e minuscole, i numeri per valore; prima le porte
+// COM, poi le altre
 func portLess(x, y string) bool {
-	nx, okx := comNumber(x)
-	ny, oky := comNumber(y)
-	if okx && oky && nx != ny {
-		return nx < ny
-	}
+	_, okx := comNumber(x)
+	_, oky := comNumber(y)
 	if okx != oky {
 		return okx
 	}
+	if c := natCompare(x, y); c != 0 {
+		return c < 0
+	}
 	return x < y
+}
+
+// natCompare: confronto «naturale» (a2 prima di a10)
+func natCompare(x, y string) int {
+	i, j := 0, 0
+	for i < len(x) && j < len(y) {
+		dx, dy := isDigit(x[i]), isDigit(y[j])
+		if dx && dy {
+			si, sj := i, j
+			for i < len(x) && isDigit(x[i]) {
+				i++
+			}
+			for j < len(y) && isDigit(y[j]) {
+				j++
+			}
+			a, b := strings.TrimLeft(x[si:i], "0"), strings.TrimLeft(y[sj:j], "0")
+			if len(a) != len(b) {
+				if len(a) < len(b) {
+					return -1
+				}
+				return 1
+			}
+			if a != b {
+				if a < b {
+					return -1
+				}
+				return 1
+			}
+			continue
+		}
+		cx, cy := lowerASCII(x[i]), lowerASCII(y[j])
+		if dx != dy {
+			// un numero viene prima delle lettere (COM1 prima di COMA)
+			if dx {
+				return -1
+			}
+			return 1
+		}
+		if cx != cy {
+			if cx < cy {
+				return -1
+			}
+			return 1
+		}
+		i++
+		j++
+	}
+	switch {
+	case len(x)-i < len(y)-j:
+		return -1
+	case len(x)-i > len(y)-j:
+		return 1
+	}
+	return 0
+}
+
+func isDigit(c byte) bool { return c >= '0' && c <= '9' }
+
+func lowerASCII(c byte) byte {
+	if c >= 'A' && c <= 'Z' {
+		return c + 'a' - 'A'
+	}
+	return c
 }
 
 func comNumber(s string) (int, bool) {

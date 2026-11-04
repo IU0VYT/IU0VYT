@@ -40,7 +40,7 @@ const Firmware = {
   open(expect, radioKind) {
     const TARGET = { anc: 'Bajeton BJ-8300 / BJ-7800 / BJ-7700', bf: 'Baofeng UV-5RM / UV-5RH e radio con lo stesso caricatore', rh5: 'Baofeng 5RH Pro / K67 Pro',
       kdhx: 'Baofeng UV-25 Plus, Radtel RT-470 / RT-495 / RT-630 e radio con il caricatore «Bootloader Pro»', bj9000: 'Bajeton BJ-9000', kdh9g: 'Baofeng UV-9G',
-      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus / UV-K5 V3, Retevis RA79', th8600: 'Retevis RA89', tdh: 'TIDRADIO TD-H3 / TD-H8 o Radtel RT-730' };
+      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus / UV-K5 V3, Retevis RA79', th8600: 'Retevis RA89 / RT85', tdh: 'TIDRADIO TD-H3 / TD-H8 o Radtel RT-730' };
     const PROTO = {
       anc: 'quello del programma originale «BinTe ANC Bootloader» V1.1',
       bf: 'quello del programma originale «BF Upgrade Tool for TFT 330L Series» (KDH Bootloader V1.0)',
@@ -50,6 +50,7 @@ const Firmware = {
       kdh9g: 'quello del programma originale «Bootloader_BaudRate38400» della UV-9G',
       k5: 'quello del caricatore della UV-K5 documentato dai programmi liberi k5prog e uvtools, riscritto da zero',
       th8600: 'quello del programma originale «RA89-update-software» di Retevis («TH8600-UpDAta Soft» 2.3)',
+      th8600rt85: 'quello del programma originale «RT85 10W_5W_UpData» di Retevis («TH8600-UpDAta Soft» 2.1)',
       tdh: 'quello dei programmi originali «H8_IAP» di TIDRADIO e «RT730 Update tool» di Radtel (documentato da nicsure, TD-H3-Engineering), riscritto da zero',
     };
     // caricatori KDH recenti: istruzioni del costruttore e velocità
@@ -87,7 +88,7 @@ const Firmware = {
           <b>.Firmware</b> della Bajeton BJ-9000 (BJ9000_V0.27_260313.Firmware), <b>.BF</b> delle Baofeng UV-5RM/UV-5RH (es. 5RH_BK_V0.14_231123.BF), <b>.dat</b> della Baofeng 5RH Pro
           (es. BF_5RH_501_v2_0_9.dat), <b>.kdhx</b> della UV-25 Plus (UV25Pro_NRF_401+_V0.23_250522.kdhx) e delle Radtel RT-470 / RT-495 / RT-630, <b>.kdh</b> della UV-9G (T52GMRS_M8_V02_231004.kdh)
           <b>.bin</b> delle Quansheng UV-K5, UV-K5(8), UV-K6, UV-5R Plus e UV-K5 V3 e della Retevis RA79 (es. k5_v2.01.26_publish.bin, RA79 V3.bin),
-          <b>.bin</b> della Retevis RA89 (Eng_RA89_Upadat_20250524_B91.38.bin)
+          <b>.bin</b> della Retevis RA89 (Eng_RA89_Upadat_20250524_B91.38.bin), <b>.hex</b> della Retevis RT85 (RT85-Firmware-V1.53.hex)
           e <b>.BIN</b> di TIDRADIO TD-H3 / TD-H8 e Radtel RT-730 (es. 730Step improvement.BIN).
           Possono essere anche dentro archivi <b>.zip</b> o <b>.rar</b>, pure uno dentro l'altro.</p>
         <div data-fwcard class="fwcard" style="display:none"></div>
@@ -163,12 +164,22 @@ const Firmware = {
             riscritto da zero e provato con una radio simulata.</p>
         </div>
         <div data-panel="th8600" style="display:none">
-          <div class="fwbox"><b>Porta la radio in modalità di aggiornamento</b> come indicato da Retevis (radio spenta, accesa tenendo premuti i tasti
+          <div class="fwbox" data-th="ra89"><b>Porta la radio in modalità di aggiornamento</b> come indicato da Retevis (radio spenta, accesa tenendo premuti i tasti
             indicati: l'indicatore diventa verde), collega il cavo e premi «Avvia aggiornamento».
             Il file è cifrato e la radio non controlla il modello: per questo si deve scrivere il modello.
             <b>Se l'invio si interrompe non accendere la radio normalmente</b> (Retevis avverte che si blocca): lasciala in modalità di aggiornamento
             e ripeti subito l'aggiornamento.</div>
-          <p class="note">Velocità 57600 baud, blocchi da 128 byte confermati dalla radio uno per uno, come nel programma di Retevis
+          <div class="fwbox" data-th="rt85" style="display:none"><b>Porta la radio in modalità di aggiornamento</b> (procedura di Retevis):
+            <ol><li>Radio spenta: tieni premuti <b>PTT e P1</b> e accendila; l'indicatore diventa <b>verde</b>.</li>
+            <li>Collega il cavo, scegli la potenza della tua RT85 e premi «Avvia aggiornamento».</li></ol>
+            Il file è cifrato e la radio non controlla il modello: per questo si deve scrivere il modello.
+            <b>Se l'invio si interrompe non accendere la radio</b> (Retevis avverte che si blocca per sempre): lasciala in modalità di aggiornamento
+            e ripeti subito l'aggiornamento.</div>
+          <div class="row" data-th="rt85" style="display:none"><label class="l">Potenza della RT85</label>
+            <select data-thpower><option value="">— scegli —</option><option value="5W">5 W</option><option value="10W">10 W</option></select>
+            <span class="note">come nel programma di Retevis («5W» / «10W»): la radio risponde solo alla scelta giusta, altrimenti non viene toccata.
+              La RT85 descritta sul sito di Retevis è da 5 W (come la TYT TH-UV88).</span></div>
+          <p class="note" data-thnote>Velocità 57600 baud, blocchi da 128 byte confermati dalla radio uno per uno, come nel programma di Retevis
             (confrontato byte per byte con il suo codice).</p>
         </div>
         <div data-panel="tdh" style="display:none">
@@ -248,7 +259,11 @@ const Firmware = {
       $('[data-btbackup]', el).style.display = btmode() === 'auto' && +($('[data-btbackup]', el).dataset.n || 0) ? '' : 'none';
       $('[data-btmanbox]', el).style.display = btmode() === 'manual' ? '' : 'none';
       $('[data-warnok]', el).style.display = fw && fw.warnings ? '' : 'none';
-      $('[data-proto]', el).textContent = PROTO[k] || 'quello del programma originale del costruttore';
+      const rt85 = k === 'th8600' && !!(fw && fw.power);
+      $$('[data-th]', el).forEach(x => x.style.display = (x.dataset.th === 'rt85') === rt85 ? '' : 'none');
+      $('[data-thnote]', el).textContent = 'Velocità 57600 baud, blocchi da ' + (rt85 ? '64 byte (4 righe del file .hex con la loro somma)' : '128 byte') +
+        ' confermati dalla radio uno per uno, come nel programma di Retevis (confrontato byte per byte con il suo codice).';
+      $('[data-proto]', el).textContent = (rt85 ? PROTO.th8600rt85 : PROTO[k]) || 'quello del programma originale del costruttore';
       $('[data-protohow]', el).textContent = k === 'k5' || k === 'tdh' ? '' : ', ricavato dal suo codice';
       const target = fw ? fw.target : TARGET[k];
       $('[data-conftext]', el).textContent = k === 'kdh9g'
@@ -260,12 +275,13 @@ const Firmware = {
         : k === 'tdh'
         ? `Confermo che la radio collegata è una ${target}: dopo l'avvio la accenderò tenendo premuto il PTT.`
         : k === 'th8600'
-        ? `Confermo che la radio collegata è una ${target} ed è in modalità di aggiornamento.`
+        ? `Confermo che la radio collegata è una ${target}${rt85 && $('[data-thpower]', el).value ? ' da ' + $('[data-thpower]', el).value.replace('W', ' W') : ''} ed è in modalità di aggiornamento.`
         : target ? `Confermo che la radio collegata è una ${target}.` : 'Confermo il modello della radio collegata.';
       const want = (fw && fw.confirm) || (k === 'anc' || !k ? 'BJ8300' : '');
       $('[data-typelabel]', el).textContent = want ? 'Scrivi ' + want : 'Scrivi il modello indicato dal file';
       const typedOk = !needTyped() || $('[data-typed]', el).value.toUpperCase().replace(/[\s\-_.]/g, '') === want;
-      const ok = fw && fw.valid && sel.value && $('[data-confirm]', el).checked && typedOk && (!fw.warnings || $('[data-acceptwarn]', el).checked);
+      const ok = fw && fw.valid && sel.value && $('[data-confirm]', el).checked && typedOk && (!fw.warnings || $('[data-acceptwarn]', el).checked) &&
+        (!rt85 || !!$('[data-thpower]', el).value);
       $('[data-ok]', el).disabled = !ok || running;
       $('[data-ident]', el).disabled = !sel.value || running;
     };
@@ -299,6 +315,7 @@ const Firmware = {
       $('[data-acceptwarn]', el).checked = false;
       $('[data-confirm]', el).checked = false;
       $('[data-typed]', el).value = '';
+      $('[data-thpower]', el).value = '';
       refresh();
       // copia di sicurezza: la radio indicata dal file, se non si è partiti da una scheda
       const pre = (fw.models || []).find(id => id === radioKind) || (fw.models || [])[0];
@@ -455,8 +472,9 @@ const Firmware = {
         req = Object.assign(base, { mode: 'manual' });
         how = 'La radio deve essere nel caricatore (spenta e riaccesa tenendo premuto il PTT: torcia accesa, schermo spento).\n';
       } else if (k === 'th8600') {
-        req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value });
-        how = 'La radio deve essere già in modalità di aggiornamento (indicatore verde). Se l\'invio si interrompe non accenderla normalmente: ripeti subito l\'aggiornamento.\n';
+        req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value, power: fw.power ? $('[data-thpower]', el).value : '' });
+        how = (fw.power ? `Potenza scelta: ${req.power.replace('W', ' W')}. La radio deve essere già in modalità di aggiornamento (accesa tenendo premuti PTT e P1: indicatore verde).`
+          : 'La radio deve essere già in modalità di aggiornamento (indicatore verde).') + ' Se l\'invio si interrompe non accenderla normalmente: ripeti subito l\'aggiornamento.\n';
       } else if (k === 'tdh') {
         req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value });
         how = 'Dopo l\'avvio spegni la radio e riaccendila tenendo premuto il PTT (il programma la aspetta per 60 secondi).\n';

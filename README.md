@@ -1,6 +1,6 @@
 # IU0VYT Flash
 
-**Versione 4.4.0** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
+**Versione 4.5.0** · Windows · interfaccia in italiano · un solo file eseguibile, nessuna installazione
 
 Programma per radioamatori e utenti di ricetrasmettitori di **27 marche** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek): legge e scrive canali, frequenze e impostazioni via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.
 
@@ -15,7 +15,7 @@ Programma per radioamatori e utenti di ricetrasmettitori di **27 marche** (**Bao
 - **Convertitore universale**: i canali di qualsiasi radio o file (K67 `.xlc`, Bajeton `.dat`, immagini `.img` anche di CHIRP, CSV di CHIRP, Excel/CSV) nel formato di qualsiasi altra radio, adattati alle sue regole.
 - **Galleria di 386 modelli** di 27 marche, divisi tra compatibili e non compatibili, per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca, filtri e collegamenti ai programmi e ai manuali ufficiali.
 - **Archivio dei ponti radio** basato sull'elenco aggiornato di [IK2ANE](https://www.ik2ane.it), con filtri e inserimento nelle radio, con il controllo della compatibilità tra ponti e radio prima della scrittura.
-- **Aggiornamento del firmware** di 43 modelli (anche le Quansheng UV-K5, UV-K6 e UV-5R Plus, le Radtel RT-590 e RT-600 con i file .bin di Quansheng e di Radtel, le Radtel RT-470, RT-470L, RT-470X, RT-495 e RT-630 con i file .kdhx di Radtel le TIDRADIO TD-H3, TD-H8 e Radtel RT-730 con i file .BIN del costruttore e le Retevis RA79 V3 e RA89 con i file .bin di Retevis), con controllo del file e copia di sicurezza della radio; aggiornamento guidato con il programma ufficiale per BTECH DMR-6X2 e DMR-6X2 PRO.
+- **Aggiornamento del firmware** di 44 modelli (anche le Quansheng UV-K5, UV-K6 e UV-5R Plus, le Radtel RT-590 e RT-600 con i file .bin di Quansheng e di Radtel, le Radtel RT-470, RT-470L, RT-470X, RT-495 e RT-630 con i file .kdhx di Radtel le TIDRADIO TD-H3, TD-H8 e Radtel RT-730 con i file .BIN del costruttore le Retevis RA79 V3 e RA89 con i file .bin e la Retevis RT85 con i file .hex di Retevis), con controllo del file e copia di sicurezza della radio; aggiornamento guidato con il programma ufficiale per BTECH DMR-6X2 e DMR-6X2 PRO.
 - **Copia di sicurezza** automatica prima di ogni scrittura e verifica dopo.
 - **Verifica degli aggiornamenti** del programma a ogni avvio.
 

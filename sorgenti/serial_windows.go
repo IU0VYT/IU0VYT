@@ -13,7 +13,6 @@ import (
 	"context"
 	"fmt"
 	"sort"
-	"strconv"
 	"strings"
 	"syscall"
 	"time"
@@ -152,11 +151,7 @@ func listWinPorts() []PortInfo {
 	for n, d := range names {
 		out = append(out, PortInfo{Name: n, Desc: d})
 	}
-	sort.Slice(out, func(i, j int) bool {
-		a, _ := strconv.Atoi(strings.TrimPrefix(out[i].Name, "COM"))
-		b, _ := strconv.Atoi(strings.TrimPrefix(out[j].Name, "COM"))
-		return a < b
-	})
+	sort.Slice(out, func(i, j int) bool { return portLess(out[i].Name, out[j].Name) })
 	return out
 }
 

@@ -71,7 +71,7 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 @media (max-width: 720px) { .nav { display: none; } }
 
 /* ---------- schermata iniziale (come la Home del programma) */
-.hero { position: relative; overflow: hidden; text-align: center; padding: 64px 0 120px;
+.hero { position: relative; overflow: hidden; text-align: center; padding: 30px 0 120px;
   background: radial-gradient(ellipse at 50% 35%, #2a0b52 0%, #12052e 45%, #07021a 80%); }
 .sky { position: absolute; inset: 0; pointer-events: none; }
 .sun { position: absolute; left: 50%; top: 12%; width: min(380px, 80vw); aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%;
@@ -89,11 +89,11 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 .neon span { display: block; }
 /* testo per motori di ricerca e lettori di schermo, non visibile */
 .vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.neon-top { font-size: clamp(50px, 12vw, 124px); font-style: italic; color: #a8ffb8;
+.neon-top { font-size: clamp(50px, min(12vw, 14vh), 124px); font-style: italic; color: #a8ffb8;
   /* verde neon «Matrix» (3.9.2): #00ff41 con alone #008f11 */
   text-shadow: 0 0 2px #eaffec, 0 0 7px #00ff41, 0 0 16px #00ff41, 0 0 32px #00e03a, 0 0 60px #00b32e, 0 0 104px #008f11; }
 .neon-top i { display: inline-block; font-style: inherit; animation: flicker 6s infinite; animation-delay: calc(var(--i) * .37s); }
-.neon-bottom { margin-top: 6px; font-size: clamp(44px, 10vw, 106px); font-style: italic; transform: skewX(-8deg);
+.neon-bottom { margin-top: 6px; font-size: clamp(44px, min(10vw, 12vh), 106px); font-style: italic; transform: skewX(-8deg);
   background: linear-gradient(to bottom, #e9ffff 0%, #7df3ff 38%, #1a8cff 52%, #ffffff 54%, #b6f7ff 75%, #3dc8ff 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   filter: drop-shadow(0 0 6px rgba(0,229,255,.85)) drop-shadow(0 0 18px rgba(0,170,255,.7)) drop-shadow(0 4px 0 #3b0a6b); }
@@ -108,6 +108,20 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 @keyframes blink { to { visibility: hidden; } }
 .hero-ver { margin-top: 18px; font: 13px var(--mono); color: var(--muted); letter-spacing: .08em; }
 .hero-ver b { color: #fff; }
+/* 4.5: schermi bassi (portatili, zoom del sistema al 125%): titolo più in alto e
+   spazi più stretti, così sotto «PRESS START» il numero di versione resta visibile */
+@media (max-height: 820px) and (min-width: 721px) {
+  .hero { padding-top: 18px; }
+  .tag { margin: 12px 0 8px; }
+  .lead { margin-bottom: 20px; }
+  .hero-ver { margin-top: 12px; }
+}
+@media (max-height: 680px) and (min-width: 721px) {
+  .hero { padding-top: 12px; }
+  .tag { margin: 8px 0 6px; }
+  .lead { font-size: 16px; margin-bottom: 14px; }
+  .hero-ver { margin-top: 8px; }
+}
 
 /* ---------- sezioni */
 section { padding: 72px 0; position: relative; }
@@ -133,8 +147,6 @@ h2 { margin: 0 0 8px; text-align: center; font: 900 clamp(26px, 5vw, 38px)/1.1 "
   padding: 12px 14px; font: 12.5px/1.5 var(--mono); color: var(--ink2); overflow-wrap: anywhere; }
 .hash b { color: var(--yellow); }
 .req { margin-top: 16px; font-size: 13.5px; color: var(--muted); }
-.notes { margin-top: 20px; text-align: left; font-size: 14px; color: var(--ink2); white-space: pre-line; }
-.notes:empty { display: none; }
 
 /* ---------- contatori */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0 auto 40px; max-width: 860px; }
@@ -199,10 +211,10 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
 
 /* ---------- testo leggibile su schermi stretti */
 .nw { white-space: nowrap; }
-.lead, .sub, .card p, .level p, .box li, .req, .notes, footer div { text-wrap: pretty; }
+.lead, .sub, .card p, .level p, .box li, .req, footer div { text-wrap: pretty; }
 h2, .tag { text-wrap: balance; }
 @media (max-width: 720px) {
-  .hero { padding: 48px 0 100px; }
+  .hero { padding: 26px 0 100px; }
   .lead { font-size: 16px; margin-bottom: 26px; }
   .lead br { display: none; } /* a capo voluti solo su schermi larghi */
   .tag { font-size: 12px; letter-spacing: .2em; line-height: 1.7; }
@@ -276,7 +288,6 @@ h2, .tag { text-wrap: balance; }
         <a href="https://github.com/IU0VYT/IU0VYT/releases">Versioni precedenti</a>
         <a href="https://github.com/IU0VYT/IU0VYT">Codice sorgente</a>
       </div>
-      <div class="notes" id="dl-body"></div>
       <div class="hash" id="dl-hash" hidden>
         <b>SHA-256</b> <span id="dl-sha"></span><br>
         Per controllare che il file sia integro, in Windows apri il Prompt dei comandi nella cartella del file e scrivi
@@ -296,7 +307,7 @@ h2, .tag { text-wrap: balance; }
       <div class="stat"><b data-n="radio">348</b><span>Radio programmabili</span></div>
       <div class="stat"><b data-n="impostazioni">302</b><span>Con impostazioni</span></div>
       <div class="stat"><b data-n="galleria">386</b><span>Modelli in galleria</span></div>
-      <div class="stat"><b data-n="firmware">43</b><span>Firmware aggiornabili</span></div>
+      <div class="stat"><b data-n="firmware">44</b><span>Firmware aggiornabili</span></div>
     </div>
     <div class="cards">
       <article class="card"><span class="ico" aria-hidden="true">📻</span><h3>Canali e frequenze</h3><p>Lettura e scrittura via cavo di <span data-n="radio">348</span> modelli, comprese radio PMR digitali e DMR anche via USB. File <code>.img</code> compatibili con CHIRP e i file originali del K67 Pro (<code>.xlc</code>) e della Bajeton 8300 (<code>.dat</code>).</p></article>
@@ -304,7 +315,7 @@ h2, .tag { text-wrap: balance; }
       <article class="card"><span class="ico" aria-hidden="true">🔎</span><h3>Identifica la radio</h3><p>Collega la radio: il programma la riconosce e mostra marca, modello, firmware e, per le DMR, ID e nome. Con l'identificazione automatica basta collegare il cavo: il programma ascolta tutte le porte, riconosce anche più radio insieme e quelle accese dopo, e apre le loro schede; per un'altra radio c'è il pulsante «Identifica Radio». Senza scrivere nulla nella radio.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🔁</span><h3>Convertitore universale</h3><p>I canali di qualsiasi radio o file (K67, Bajeton, immagini CHIRP, CSV di CHIRP, Excel) nel formato di qualsiasi altra radio, adattati alle sue regole.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">📡</span><h3>Ponti radio italiani</h3><p>Archivio basato sull'elenco aggiornato di IK2ANE, con filtri, nomi automatici, controllo della compatibilità e inserimento diretto nelle radio.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">⬆️</span><h3>Aggiornamento firmware</h3><p>Firmware di <span data-n="firmware">43</span> modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza; compresi i .bin delle Quansheng UV-K5, UV-K6 e UV-5R Plus e delle Radtel RT-590 e RT-600, i .kdhx delle Radtel RT-470, RT-495 e RT-630 e i .BIN di TIDRADIO TD-H3, TD-H8 e Radtel RT-730 e i .bin delle Retevis RA79 V3 e RA89; procedura guidata per BTECH DMR-6X2.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">⬆️</span><h3>Aggiornamento firmware</h3><p>Firmware di <span data-n="firmware">44</span> modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza; compresi i .bin delle Quansheng UV-K5, UV-K6 e UV-5R Plus e delle Radtel RT-590 e RT-600, i .kdhx delle Radtel RT-470, RT-495 e RT-630 e i .BIN di TIDRADIO TD-H3, TD-H8 e Radtel RT-730 e i .bin delle Retevis RA79 V3 e RA89 e i .hex della Retevis RT85; procedura guidata per BTECH DMR-6X2.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🖼️</span><h3>Galleria dei modelli</h3><p><span data-n="galleria">386</span> radio di <span data-n="marche">27</span> marche divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🛡️</span><h3>Copia di sicurezza</h3><p>Prima di ogni scrittura il programma salva il contenuto della radio e dopo verifica che i dati siano stati scritti correttamente.</p></article>
       <article class="card"><span class="ico" aria-hidden="true">🔄</span><h3>Sempre aggiornato</h3><p>A ogni avvio il programma controlla se c'è una versione più recente e la scarica da questa stessa pagina dei rilasci.</p></article>
@@ -422,12 +433,6 @@ h2, .tag { text-wrap: balance; }
       var sha = (a && a.digest && /^sha256:/.test(a.digest)) ? a.digest.slice(7) : '';
       if (!sha && rel.body) { var m = rel.body.match(/\b[a-f0-9]{64}\b/i); if (m) sha = m[0].toLowerCase(); }
       if (sha) { document.getElementById('dl-sha').textContent = sha; document.getElementById('dl-hash').hidden = false; }
-      if (rel.body) {
-        var txt = rel.body.replace(/\r/g, '').replace(/^\s*sha256:.*$/gim, '').replace(/\*\*Full Changelog\*\*.*$/gim, '')
-          .replace(/^Full Changelog:.*$/gim, '').replace(/^\s*[-*] .*$/gm, '') // elenchi puntati non mostrati
-          .replace(/\n{3,}/g, '\n\n').trim();
-        document.getElementById('dl-body').textContent = txt; // testo semplice, nessun HTML
-      }
     })
     .catch(function () {
       // 2) in alternativa il numero di versione dal file versione.txt del repository;

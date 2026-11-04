@@ -103,11 +103,12 @@ kradio/dfu.py) e Multi-UVTools (spm81, https://github.com/armel/Multi-UVTools,
 js/flash-k1.js). fwk5.go (k5v3Update) è scritto da zero sulla base di quella
 documentazione; nessun codice di quei programmi è incluso nel pacchetto.
 
-AGGIORNAMENTO DEL FIRMWARE DELLA RETEVIS RA89 (4.4)
-Protocollo ricavato, per l'interoperabilità, dal programma di Retevis
-«RA89-update-software» («TH8600-UpDAta Soft» 2.3); il programma non è incluso nel
-pacchetto. verifica/ra89, usato solo per le prove, carica l'eseguibile indicato da chi
-esegue la verifica.
+AGGIORNAMENTO DEL FIRMWARE DELLE RETEVIS RA89 (4.4) E RT85 (4.5)
+Protocollo ricavato, per l'interoperabilità, dai programmi di Retevis
+«RA89-update-software» («TH8600-UpDAta Soft» 2.3) e «RT85 10W_5W_UpData»
+(«TH8600-UpDAta Soft» 2.1, retevis.com); i programmi non sono inclusi nel pacchetto.
+verifica/ra89, usato solo per le prove, carica l'eseguibile indicato da chi esegue la
+verifica.
 
 I firmware .kdhx delle Radtel RT-470 / RT-495 / RT-630 usano lo stesso protocollo del
 «Bootloader Pro» della UV-25 Plus (fwkdhx.go), con la piattaforma JJCC indicata dal

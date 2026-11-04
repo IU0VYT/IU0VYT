@@ -9,14 +9,16 @@
 
 package main
 
-// Radio simulata in modalità di aggiornamento per il programma della RA89
-// («TH8600-UpDAta Soft»): registra i comandi ricevuti per il confronto con il
-// programma originale (verifica/ra89).
+// Radio simulata in modalità di aggiornamento per i programmi della RA89 e della
+// RT85 («TH8600-UpDAta Soft»): risponde alla presentazione del suo modello
+// ripetendola, come si aspettano i programmi; registra i comandi ricevuti per il
+// confronto con i programmi originali (verifica/ra89).
 
 import (
 	"bytes"
 	"fmt"
 	"sync"
+	"time"
 )
 
 type thEmu struct {
@@ -30,11 +32,32 @@ type thEmu struct {
 	quiet  int    // blocco (da 1) a cui non rispondere (0: mai)
 	wrong  bool   // radio di un altro modello: nessuna risposta alla presentazione
 	blocks int
+	// 4.5: pausa tra l'apertura o l'ultima risposta e ogni comando (per il
+	// confronto delle pause dei programmi originali), con il tipo del comando
+	gaps []thGap
+	last time.Time
+	// latency: tempo di risposta della radio (0: subito). Nelle prove con i
+	// programmi originali 2 ms, come una radio vera: i programmi impostano la soglia
+	// dell'evento DataReceived (3 byte) subito DOPO l'invio, e una risposta
+	// istantanea della porta simulata può arrivare prima (il programma la legge a
+	// metà e si ferma con «Communication failed»)
+	latency time.Duration
+}
+
+type thGap struct {
+	what string // aa (AA ..), blocco, fine
+	d    time.Duration
 }
 
 func newThEmu(hello byte) *thEmu { return &thEmu{hello: hello, state: "wait"} }
 
 func (e *thEmu) note(f string, a ...interface{}) { e.log = append(e.log, fmt.Sprintf(f, a...)) }
+
+func (e *thEmu) gapList() []thGap {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]thGap{}, e.gaps...)
+}
 
 func (e *thEmu) snapshot() ([]string, []string, string, []byte) {
 	e.mu.Lock()
@@ -45,6 +68,7 @@ func (e *thEmu) snapshot() ([]string, []string, string, []byte) {
 func (e *thEmu) serve(p Port, baud int) {
 	e.mu.Lock()
 	e.note("apertura %d", baud)
+	e.last = time.Now()
 	e.mu.Unlock()
 	for {
 		h, err := emuRead(p, 2)
@@ -52,6 +76,14 @@ func (e *thEmu) serve(p Port, baud int) {
 			return
 		}
 		e.mu.Lock()
+		gap := thGap{"aa", time.Since(e.last)}
+		if h[0] == 0x55 {
+			gap.what = "blocco"
+			if h[1] == 0 {
+				gap.what = "fine"
+			}
+		}
+		e.gaps = append(e.gaps, gap)
 		var reply []byte
 		switch {
 		case h[0] == 0xAA:
@@ -72,7 +104,7 @@ func (e *thEmu) serve(p Port, baud int) {
 			e.note("% X", cmd)
 			switch {
 			case bytes.Equal(cmd, []byte{0xAA, e.hello, 0xEF}) && e.state == "wait" && !e.wrong:
-				e.state, reply = "start", []byte{0xAA, 0x01, 0xEF}
+				e.state, reply = "start", []byte{0xAA, e.hello, 0xEF} // la radio ripete la presentazione
 			case bytes.Equal(cmd, []byte{0xAA, 0x10, 0x00, 0x00, 0xEF}) && e.state == "start":
 				e.state, reply = "data", []byte{0xAA, 0x11, 0xEF}
 			case bytes.Equal(cmd, []byte{0xAA, 0xFF, 0xEF}) && e.state == "end":
@@ -126,7 +158,13 @@ func (e *thEmu) serve(p Port, baud int) {
 		}
 		e.mu.Unlock()
 		if reply != nil {
+			if e.latency > 0 {
+				time.Sleep(e.latency)
+			}
 			_ = p.Write(reply)
+			e.mu.Lock()
+			e.last = time.Now()
+			e.mu.Unlock()
 		}
 	}
 }

@@ -203,8 +203,10 @@ var catalogOther = []catItem{
 		Notes: chirpNote("THUV88Radio") + " 200 canali con nome di 10 caratteri, tre potenze (5, 2,5 e 0,5 W)."},
 	{ID: "tyt-th-uv98", Brand: "TYT", Name: "TH-UV98", Type: "analog", Drivers: []string{"tyt-thuv98"}, Links: []catLink{info("Sito TYT", tytWeb)},
 		Notes: chirpNote("THUV98Radio") + " Piattaforma della TH-UV88 (protocollo «UV98»)."},
-	{ID: "rtv-rt85", Brand: "Retevis", Name: "RT85", Type: "analog", Drivers: []string{"rt-rt85"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
-		Notes: "È la TYT TH-UV88. " + chirpNote("RT85")},
+	{ID: "rtv-rt85", Brand: "Retevis", Name: "RT85", Type: "analog", Drivers: []string{"rt-rt85"}, FW: "th8600", Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: "È la TYT TH-UV88. " + chirpNote("RT85") + " Firmware: file .hex di Retevis (es. «RT85-Firmware-V1.53.hex») con il protocollo del " +
+			"programma «RT85 10W_5W_UpData» («TH8600-UpDAta Soft» 2.1): radio spenta e accesa tenendo premuti PTT e P1 (indicatore verde), poi la " +
+			"scelta della potenza (5 W o 10 W) come nel programma di Retevis. Se l'invio si interrompe non accendere la radio: ripeti subito l'aggiornamento."},
 	{ID: "rtv-ra89", Brand: "Retevis", Name: "RA89", Type: "analog", Drivers: []string{"rt-ra89"}, FW: "th8600", Links: []catLink{info("Programmi Retevis", rtvDown)},
 		Notes: chirpNote("RA89") + " Piattaforma della TYT TH-UV88 (protocollo «UV99»). Firmware: file .bin di Retevis (es. " +
 			"«Eng_RA89_Upadat_20250524_B91.38.bin») con il protocollo del programma «RA89-update-software» («TH8600-UpDAta Soft» 2.3): la radio " +

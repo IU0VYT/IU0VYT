@@ -86,6 +86,13 @@ namespace System.Windows.Forms
 		public ObjectCollection Items { get; } = new ObjectCollection();
 		public ComboBoxStyle DropDownStyle { get; set; }
 		public object SelectedItem => SelectedIndex >= 0 && SelectedIndex < Items.Count ? Items[SelectedIndex] : null;
+		// come in Windows Forms: cambiare la scelta (anche dal programma) chiama i gestori
+		int sel = -1;
+		public override int SelectedIndex
+		{
+			get => sel;
+			set { if (value != sel) { sel = value; SelectedIndexChanged?.Invoke(this, EventArgs.Empty); } }
+		}
 		public event EventHandler SelectedIndexChanged;
 	}
 	public class CommonDialog { public DialogResult ShowDialog() => DialogResult.OK; }

@@ -65,7 +65,7 @@ type fwCheck struct {
 }
 
 type fwInfo struct {
-	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730) | th8600 (Retevis RA89)
+	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730) | th8600 (Retevis RA89 / RT85)
 	Target   string    `json:"target"` // radio a cui è destinato
 	Confirm  string    `json:"confirm"`
 	Hw       string    `json:"hw,omitempty"`
@@ -87,6 +87,8 @@ type fwInfo struct {
 	Typed bool `json:"typed,omitempty"`
 	// Models: driver delle radio a cui il file è destinato (dal nome del file)
 	Models []string `json:"models,omitempty"`
+	// Power: si deve scegliere la potenza della radio (Retevis RT85: 5 W o 10 W)
+	Power bool `json:"power,omitempty"`
 }
 
 type fwImage struct {
@@ -232,7 +234,7 @@ const (
 	fwKDH9G  // Baofeng UV-9G (.kdh)
 	fwK5     // Quansheng UV-K5 / UV-K6 / UV-5R Plus (.bin, 4.1)
 	fwTDH    // TIDRADIO TD-H3 / TD-H8, Radtel RT-730 (.BIN, 4.3)
-	fwTH8600 // Retevis RA89 (.bin, 4.4)
+	fwTH8600 // Retevis RA89 (.bin, 4.4) e RT85 (.hex, 4.5)
 )
 
 func sniffKind(name string, b []byte) fwKind {
@@ -259,6 +261,10 @@ func sniffKind(name string, b []byte) fwKind {
 		if tdhPlausible(b) {
 			return fwTDH
 		}
+		if thFile(name) {
+			return fwTH8600
+		}
+	case ".hex":
 		if thFile(name) {
 			return fwTH8600
 		}
@@ -303,7 +309,7 @@ type fwExpander struct {
 // fwWanted: file da estrarre dagli archivi (firmware conosciuti e altri archivi)
 func fwWanted(name string) bool {
 	switch strings.ToLower(path.Ext(name)) {
-	case ".anc", ".bf", ".dat", ".kdhx", ".kdh", ".firmware", ".btf", ".bin", ".zip", ".rar":
+	case ".anc", ".bf", ".dat", ".kdhx", ".kdh", ".firmware", ".btf", ".bin", ".hex", ".zip", ".rar":
 		return true
 	}
 	return false

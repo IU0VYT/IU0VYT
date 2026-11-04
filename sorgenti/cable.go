@@ -128,7 +128,7 @@ func (a *App) apiCablePorts(r *http.Request) (interface{}, error) {
 	if ports == nil {
 		ports = []PortInfo{}
 	}
-	// 4.3: in ordine di numero (COM3, COM6, COM7, COM10…)
+	// in ordine progressivo (COM1, COM2, COM3… COM10; ttyUSB0… ttyUSB10), vedi portLess
 	sort.SliceStable(ports, func(i, j int) bool { return portLess(ports[i].Name, ports[j].Name) })
 	return map[string]interface{}{"ports": ports, "settings": a.store.Get(), "backupDir": a.backupDir()}, nil
 }

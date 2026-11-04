@@ -1,11 +1,36 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.4.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.5.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.5.0:
+- AGGIORNAMENTO DEL FIRMWARE anche per la Retevis RT85 con i file .hex di Retevis
+  (es. "RT85-Firmware-V1.53.hex"), con il protocollo del programma di Retevis
+  "RT85 10W_5W_UpData": radio spenta e accesa tenendo premuti PTT e P1 (indicatore
+  verde), poi la scelta della potenza (5 W o 10 W, come nel programma di Retevis).
+  Il codice originale del programma è stato fatto girare con una radio simulata: i
+  blocchi preparati dal file e i comandi inviati sono identici byte per byte (vedi
+  "AGGIORNAMENTO DEL FIRMWARE RETEVIS");
+- CORRETTO: aggiornamento del firmware della Retevis RA89. La 4.4 aspettava dalla
+  radio la risposta sbagliata alla presentazione ("AA 01 EF" invece di "AA 09 EF"):
+  con una RA89 vera l'aggiornamento non partiva (la radio non veniva toccata). Anche
+  le pause prima di ogni invio ora sono quelle del programma di Retevis (2 ms a 57600
+  baud, 22 ms a 115200);
+- porte dei cavi sempre in ordine progressivo, su ogni sistema: COM1, COM2, COM3,
+  COM4… COM10 (su Linux /dev/ttyUSB0… /dev/ttyUSB10). Anche l'identificazione
+  automatica avvia le ricerche in questo ordine;
+- scheda Identifica: "Le radio già identificate in passato vengono riconosciute più
+  velocemente";
+- scheda Converti: "Scegli un file Baofeng, Bajeton, .img di tutte le altre marche di
+  radio (anche salvate con CHIRP), CSV di CHIRP, tabelle Excel o CSV";
+- sito web: tolto il testo delle note della versione sotto il pulsante di download;
+  titolo più in alto, così il numero di versione sotto "PRESS START" si vede intero
+  anche sugli schermi bassi (portatili);
+- galleria: 386 modelli di 27 marche (348 con canali, 302 con impostazioni, 44 con
+  l'aggiornamento del firmware).
 Novità della 4.4.0:
 - CORRETTO: identificazione automatica. Il riquadro "Identificazione Radio In Corso"
   poteva comparire anche senza nessuna radio collegata: i disturbi della linea di un
@@ -789,7 +814,7 @@ AGGIORNAMENTO DEL FIRMWARE TIDRADIO TD-H3 / TD-H8 E RADTEL RT-730 (4.3)
 - I firmware modificati da terzi (nicsure) sono riconosciuti e segnalati: questo
   programma, come CHIRP, potrebbe non leggerne più i canali.
 
-AGGIORNAMENTO DEL FIRMWARE RETEVIS (4.4)
+AGGIORNAMENTO DEL FIRMWARE RETEVIS (4.4, 4.5)
 - Retevis RA79 V3 (e Quansheng UV-K5 V3 e UV-K1, microcontrollore PY32F071, caricatore
   7.x): file .bin di Retevis nel formato di Quansheng (es. "RA79 V3.bin", versione
   7.00.16). Procedura come per la UV-K5: radio spenta, riaccesa tenendo premuto il
@@ -804,15 +829,37 @@ AGGIORNAMENTO DEL FIRMWARE RETEVIS (4.4)
   "RA89-update-software" ("TH8600-UpDAta Soft" 2.3): 57600 baud, blocchi da 128 byte
   confermati uno per uno. Il codice originale del programma è stato fatto girare con
   una radio simulata: i comandi inviati sono identici byte per byte (846 passi con il
-  file vero, a 57600 e a 115200 baud, e anche in caso di errore della radio).
-- RA89: porta prima la radio in modalità di aggiornamento come indicato da Retevis
-  (per la RT85 Retevis indica: radio accesa tenendo premuti PTT e P1, indicatore
-  verde). Il file è cifrato e la radio non controlla il modello: si deve scrivere RA89
-  per confermare. ATTENZIONE (Retevis): se l'aggiornamento si interrompe NON
-  accendere la radio normalmente, ma ripeti subito l'aggiornamento.
+  file vero, a 57600 e a 115200 baud, e anche in caso di errore della radio), con le
+  stesse pause.
+- RA89: porta prima la radio in modalità di aggiornamento come indicato da Retevis.
+  Il file è cifrato e la radio non controlla il modello: si deve scrivere RA89 per
+  confermare. ATTENZIONE (Retevis): se l'aggiornamento si interrompe NON accendere la
+  radio normalmente, ma ripeti subito l'aggiornamento.
+- RA89, correzione della 4.5: nella 4.4 il programma aspettava dalla radio "AA 01 EF"
+  dopo la presentazione "AA 09 EF", mentre il programma di Retevis (scegliendo la
+  RA89) aspetta "AA 09 EF": con una radio vera l'aggiornamento della 4.4 si fermava
+  subito con "la radio non è in modalità di aggiornamento", senza scrivere nulla. La
+  prova della 4.4 non faceva girare la parte del programma di Retevis che imposta la
+  risposta attesa (la scelta del modello nella finestra); ora sì.
+- Retevis RT85 (4.5): file .hex di Retevis (es. "RT85-Firmware-V1.53.hex"). Protocollo
+  del programma di Retevis "RT85 10W_5W_UpData" ("TH8600-UpDAta Soft" 2.1), lo stesso
+  della RA89 con pause più brevi: dal file .hex (non è un firmware in chiaro: è
+  cifrato) il programma prepara blocchi con i dati di 4 righe (64 byte) e la loro
+  somma; 1024 blocchi per il file 1.53. Il codice originale è stato fatto girare con
+  una radio simulata: blocchi e comandi identici byte per byte, a 57600 e 115200 baud,
+  con 5 W e con 10 W, e anche in caso di errore della radio.
+- RT85, procedura di Retevis: radio spenta, accesa tenendo premuti PTT e P1:
+  l'indicatore diventa verde. Collega il cavo, scegli la potenza della radio e premi
+  "Avvia aggiornamento". La potenza si sceglie come nel programma di Retevis ("5W" o
+  "10W"): la radio risponde solo alla presentazione del suo modello, altrimenti il
+  programma si ferma subito senza scrivere nulla (allora prova l'altra scelta). La
+  RT85 descritta sul sito di Retevis è da 5 W (come la TYT TH-UV88). Si deve anche
+  scrivere RT85 per confermare.
+- RT85, ATTENZIONE (Retevis): se l'aggiornamento si interrompe NON accendere la radio
+  (il microcontrollore si blocca per sempre): lasciala in modalità di aggiornamento e
+  ripeti subito l'aggiornamento.
 - I firmware Retevis si scaricano da retevis.com (pagina Firmware). Le altre radio
-  Retevis della galleria non hanno ancora l'aggiornamento: RT85 usa file .hex e un
-  programma con due modelli (5 W e 10 W) da verificare.
+  Retevis della galleria non hanno firmware pubblicati da Retevis.
 
 AGGIORNAMENTO DEL FIRMWARE BAOFENG
 - Baofeng UV-5RM / UV-5RH (serie con display TFT "330L"), file .BF: protocollo del

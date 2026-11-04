@@ -3,6 +3,50 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.5.0 (04/11/2026)
+------------------
+- Firmware della Retevis RT85 (fwth8600.go, tipo «th8600»): protocollo del programma
+  «RT85 10W_5W_UpData» («TH8600-UpDAta Soft» 2.1) ricavato dal suo codice. thProfile
+  con le pause dei due programmi (RA89: 600/100/100/20/300/80 ms, attesa 2,5 s; RT85:
+  300/100/50/5/20/50 ms, attesa 1,5 s); thHexBlocks prepara i blocchi dal file .hex
+  come FileDataDetailPro (dati di 4 righe e la loro somma, alla riga di fine la somma
+  della riga in corso; solo righe di dati continue da 0 e la riga di fine; le somme
+  delle righe dei file di Retevis non sono quelle dell'Intel HEX e, come nel
+  programma, non si usano); presentazione «AA 01 EF» (5 W) o «AA 09 EF» (10 W),
+  scelta nella finestra (fwStartReq.Power, fwInfo.Power). sniffKind e fwWanted: .hex
+  con RT85 nel nome. Catalogo: Retevis RT85 con FW «th8600» (44 modelli con il
+  firmware). ui/firmware.js: procedura PTT + P1, scelta della potenza, testi;
+  gallery.js, dialogs.js. Radio simulata RT85 5 W su COM16.
+- CORRETTO (RA89, 4.4): risposta alla presentazione. Il programma di Retevis imposta
+  la risposta attesa scegliendo il modello (comboBox1_SelectedIndexChanged: RA89
+  «AA 09 EF»), la 4.4 aspettava «AA 01 EF» (valore del costruttore della finestra):
+  con una radio vera l'aggiornamento si fermava alla presentazione, senza scrivere.
+  Ora la risposta è la presentazione stessa, come nei due programmi. Pausa prima di
+  ogni invio come nel programma (comboBox3_SelectedIndexChanged e
+  ChgCurBaudRatePro): 2 ms a 57600 baud, 22 ms a 115200 (prima 17 e 20).
+- verifica/ra89: il sostituto di ComboBox chiama SelectedIndexChanged quando cambia
+  la scelta (come Windows Forms) e l'harness collega i gestori delle scelte «radio» e
+  «velocità» come InitializeComponent: è la parte che nella 4.4 mancava. Anche RT85
+  (senza GiDataLeg e GetFileDataPro). Radio simulata (fwemu_th8600_other.go): ripete
+  la presentazione del suo modello e registra le pause. TestDiffTH8600 con RT85_EXE:
+  risposta attesa, righe preparate, comandi e pause identici al programma originale
+  (RA89 a 57600 e 115200 baud; RT85 con 5 W e 10 W alle due velocità), stessa fermata
+  con un errore della radio e con una radio di un altro modello.
+- Porte (autoident.go): portLess con confronto «naturale» per ogni sistema (COM1,
+  COM2… COM10; /dev/ttyUSB2 prima di /dev/ttyUSB10; nomi di macOS), usato anche da
+  listWinPorts (serial_windows.go); autoAllLocked in ordine progressivo, così anche le
+  ricerche dell'identificazione automatica partono dalla prima porta.
+  TestPortOrder, TestPortOrderAuto.
+- ui: identify.js «Le radio già identificate in passato vengono riconosciute più
+  velocemente»; converter.js «Scegli un file Baofeng, Bajeton, .img di tutte le altre
+  marche di radio (anche salvate con CHIRP), CSV di CHIRP, tabelle Excel o CSV».
+- Sito (docs/index.html): tolte le note della versione (#dl-body); schermata iniziale
+  con meno spazio sopra il titolo (e più compatta sugli schermi bassi): il numero di
+  versione sotto «PRESS START» è visibile per intero da 1280×720 a 1920×1080 e su
+  1366×657 (portatile con il browser). 44 modelli con il firmware; RT85 nel riquadro
+  dell'aggiornamento del firmware.
+
+
 4.4.0 (04/11/2026)
 ------------------
 - Riquadro «Identificazione Radio In Corso» (identify.go): risposta «sicura» separata

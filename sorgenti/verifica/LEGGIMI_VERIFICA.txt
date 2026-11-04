@@ -233,16 +233,25 @@ caricatore TD-H8 con i blocchi della cattura pubblicata da nicsure). Con i file 
      RADTEL_FW=cartella dei .rar di radtels.com go test -mod=vendor -run TestRadtelKdhxReal -v .
      TDH_FW=cartella dei .BIN go test -mod=vendor -run TestTdhReal -v .
 
-FIRMWARE RETEVIS (cartella "ra89", 4.4)
+FIRMWARE RETEVIS (cartella "ra89", 4.4, 4.5)
 Il programma .NET 8 "ra89/harness" carica l'eseguibile del costruttore
-«RA89-update-software.exe» (classe FlaUPDataProject.Form1, con il sostituto di
-System.Windows.Forms in "ra89/winforms") collegato alla radio simulata:
+«RA89-update-software.exe» o «RT85 10W_5W_UpData.exe» (classe FlaUPDataProject.Form1,
+con il sostituto di System.Windows.Forms in "ra89/winforms") collegato alla radio
+simulata. Dalla 4.5 collega anche i gestori delle scelte «radio» e «velocità» come
+la finestra originale (impostano la risposta attesa dalla radio e la pausa prima di
+ogni invio):
      cd verifica/ra89/harness && dotnet build -c Release -o /tmp/ra89h
-     RETEVIS_FW=cartella con il .bin della RA89 e «RA79 V3.bin» \
+     RETEVIS_FW=cartella con il .bin della RA89, il .hex della RT85 e «RA79 V3.bin» \
      RA89_HARNESS=/tmp/ra89h/ra89_harness.dll RA89_EXE=percorso/RA89-update-software.exe \
+     RT85_EXE="percorso/RT85 10W_5W_UpData.exe" \
        go test -mod=vendor -run 'TestDiffTH8600|TestTH8600|TestK5v3' -v .
-TestDiffTH8600 confronta le righe preparate dal file e i comandi inviati (57600 e
-115200 baud, e con un errore della radio al blocco 10).
+TestDiffTH8600 confronta la risposta attesa dalla radio, le righe preparate dal file,
+i comandi inviati e le pause (57600 e 115200 baud; RT85 con 5 W e con 10 W), la
+fermata con un errore della radio al blocco 10 e con una radio di un altro modello.
+
+PORTE IN ORDINE PROGRESSIVO (4.5)
+TestPortOrder (COM1… COM10, /dev/ttyUSB0… /dev/ttyUSB10, nomi di macOS) e
+TestPortOrderAuto (elenco delle porte e ordine delle ricerche automatiche).
 
 IDENTIFICAZIONE AUTOMATICA (4.3, 4.4)
 TestAutoIdentBanner (4.4): due cavi con disturbi della linea ed eco ritardata, senza

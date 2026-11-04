@@ -756,11 +756,14 @@ const Dialogs = {
         <li><b>TIDRADIO TD-H3, TD-H8, Radtel RT-730</b> (file <b>.BIN</b>): avvia l'aggiornamento e accendi la radio tenendo premuto il PTT. Il caricatore non
           controlla il modello: scrivi quello indicato dal file.</li>
       </ul>
-      <h4>Aggiornamento del firmware Retevis (4.4)</h4><ul>
+      <h4>Aggiornamento del firmware Retevis (4.4 e 4.5)</h4><ul>
         <li><b>RA79 V3</b> (file <b>.bin</b> di Retevis, caricatore 7.x come UV-K5 V3 e UV-K1): radio spenta e riaccesa tenendo premuto il PTT; il programma
           invia il firmware solo se il caricatore è della stessa famiglia (es. 7.00).</li>
         <li><b>RA89</b> (file <b>.bin</b> di Retevis): radio in modalità di aggiornamento come indicato da Retevis, poi «Avvia aggiornamento». Se l'invio si
           interrompe non accendere la radio normalmente: ripeti subito l'aggiornamento.</li>
+        <li><b>RT85</b> (file <b>.hex</b> di Retevis, 4.5): radio spenta e accesa tenendo premuti PTT e P1 (indicatore verde); scegli la potenza della radio
+          (5 W o 10 W, come nel programma di Retevis) e premi «Avvia aggiornamento». Se l'invio si interrompe non accendere la radio: ripeti subito
+          l'aggiornamento.</li>
       </ul>
       <h4>Aggiornamento del firmware (Bajeton BJ-8300 e BJ-7800)</h4><ul>
         <li>La BJ-7800 usa lo stesso programma di aggiornamento della BJ-8300 (file <b>.anc</b>, es. BJ7800_CN_EN_V0.17_20251126.anc): si aggiorna allo stesso modo,

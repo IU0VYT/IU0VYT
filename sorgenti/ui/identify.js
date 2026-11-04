@@ -37,7 +37,7 @@ const Identify = {
       <ul class="note idlist">
         <li>Collega il cavo: la radio viene riconosciuta da sola, anche se la accendi dopo, e si apre la sua scheda con i canali letti.</li>
         <li>Più cavi: ogni radio viene cercata sul suo cavo, tutte insieme.</li>
-        <li>Le radio già riconosciute si provano per prime.</li>
+        <li>Le radio già identificate in passato vengono riconosciute più velocemente.</li>
         <li>Mentre una radio risponde compare in basso «Identificazione Radio In Corso».</li>
         <li>Per un'altra radio sullo stesso cavo premi <b>«🔎 Identifica Radio»</b> in alto a destra.</li>
         <li>La scelta resta memorizzata.</li>

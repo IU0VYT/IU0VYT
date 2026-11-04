@@ -5,19 +5,23 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 
-// Fa girare il codice ORIGINALE del programma di aggiornamento della Retevis RA89
-// («RA89-update-software.exe», «TH8600-UpDAta Soft» Ver 2.3 20230621; classe
-// FlaUPDataProject.Form1, caricata direttamente dal suo eseguibile, senza
-// decompilarla) collegato alla radio simulata.
-//   ra89_harness <RA89-update-software.exe> <firmware> <host:porta> [modello] [velocità] [lines]
-// modello: indice della scelta «radio» del programma (0 UV88, 1 UV98, 2 RT45P,
-// 3 RA89, quella proposta all'avvio); velocità: 57600 (proposta) o 115200.
+// Fa girare il codice ORIGINALE dei programmi di aggiornamento della Retevis RA89
+// («RA89-update-software.exe», «TH8600-UpDAta Soft» Ver 2.3 20230621) e della
+// Retevis RT85 («RT85 10W_5W_UpData.exe», Ver 2.1 20200701): classe
+// FlaUPDataProject.Form1, caricata direttamente dall'eseguibile, senza
+// decompilarla, collegata alla radio simulata.
+//   ra89_harness <programma.exe> <firmware> <host:porta> [modello] [velocità] [lines]
+// modello: indice della scelta «radio» del programma (RA89: 0 UV88, 1 UV98,
+// 2 RT45P, 3 RA89, quella proposta all'avvio; RT85: 0 5W, 1 10W, quella proposta);
+// velocità: 57600 (proposta) o 115200.
 // «lines» stampa le righe che il programma prepara dal file (WriteDataBuf),
 // senza collegarsi alla radio.
 // Il modulo non viene costruito (il costruttore disegna la finestra): i campi
-// sono impostati con i valori del costruttore e di InitializeComponent/Form1_Load
-// (filo a due conduttori: radioButton4; ritardo 20 ms: textBox2), poi si chiama
-// EnterWriteModPro come il pulsante «Aggiorna».
+// sono impostati con i valori del costruttore e di InitializeComponent (filo a due
+// conduttori: radioButton4; textBox2 «20»), i gestori delle scelte «radio» e
+// «velocità» sono collegati come in InitializeComponent (4.5: impostano la
+// risposta attesa dalla radio e il ritardo), poi Form1_Load e il pulsante
+// «Aggiorna» (EnterWriteModPro).
 using System;
 using System.IO.Ports;
 using System.Reflection;
@@ -65,7 +69,7 @@ static class Program
 		Set("GbCommDelay", 5);
 		Set("RxBuffer", new byte[200]);
 		Set("GiSendStr", "");
-		Set("GiDataLeg", 128);
+		if (fT.GetField("GiDataLeg", All) != null) Set("GiDataLeg", 128); // solo RA89
 		Set("CommunicationStep", 0);
 		Set("GbReadMod", true);
 		Set("GbFirComEn", true);
@@ -85,13 +89,16 @@ static class Program
 		sp.DataReceived += (SerialDataReceivedEventHandler)fT.GetMethod("serialPort1_DataReceived", All).CreateDelegate(typeof(SerialDataReceivedEventHandler), f);
 		((TextBox)Get("textBox2")).Text = "20";
 		((RadioButton)Get("radioButton4")).Checked = true;
+		var cb1 = (ComboBox)Get("comboBox1");
+		var cb2 = (ComboBox)Get("comboBox2");
+		var cb3 = (ComboBox)Get("comboBox3");
+		// gestori collegati da InitializeComponent
+		cb1.SelectedIndexChanged += (EventHandler)fT.GetMethod("comboBox1_SelectedIndexChanged", All).CreateDelegate(typeof(EventHandler), f);
+		cb3.SelectedIndexChanged += (EventHandler)fT.GetMethod("comboBox3_SelectedIndexChanged", All).CreateDelegate(typeof(EventHandler), f);
 		// Form1_Load (senza la ricerca delle porte)
 		Set("OnlyOneLine", ((RadioButton)Get("radioButton3")).Checked);
 		Call("SetRadioKindPro");
 		Call("SetBaudRateKindPro");
-		var cb1 = (ComboBox)Get("comboBox1");
-		var cb2 = (ComboBox)Get("comboBox2");
-		var cb3 = (ComboBox)Get("comboBox3");
 		cb2.Items.Add("COM9");
 		cb2.SelectedIndex = 0;
 		if (a.Length > 3) cb1.SelectedIndex = int.Parse(a[3]);
@@ -99,12 +106,13 @@ static class Program
 		Call("TimerResPro");
 		Set("RadioType", cb1.SelectedIndex);
 		// OpenFile + FileOk
-		Set("typekind", cb1.SelectedIndex);
+		if (fT.GetField("typekind", All) != null) Set("typekind", cb1.SelectedIndex);
 		((OpenFileDialog)Get("openFileDialog1")).FileName = a[1];
 		Call("openFileDialog1_FileOk", null, null);
 		if (a.Length > 5 && a[5] == "lines")
 		{
-			Call("GetFileDataPro");
+			if (fT.GetMethod("GetFileDataPro", All) != null) Call("GetFileDataPro"); // RA89 (.bin); RT85: già in FileOk
+			Console.Error.WriteLine("RISPOSTA " + BitConverter.ToString((byte[])Get("ConAckIapMod")) + " RITARDO " + ((TextBox)Get("textBox2")).Text);
 			foreach (var l in (string[])Get("WriteDataBuf")) Console.WriteLine("RIGA " + l);
 			return 0;
 		}

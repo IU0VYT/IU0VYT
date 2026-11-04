@@ -40,7 +40,7 @@ const Converter = {
         larghezza vengono adattati alle regole della radio di destinazione, con l'elenco delle modifiche.</div></div></div>
       <h3>1. Canali di partenza</h3>
       <div class="convrow"><button class="btn primary" data-open>📂 Scegli un file…</button>
-        <span class="note">K67 (.xlc), Bajeton (.dat v1.0.8 o v1.0.9), immagini .img di tutte le radio (anche salvate con CHIRP), CSV di CHIRP, tabelle Excel o CSV</span></div>
+        <span class="note">Scegli un file Baofeng, Bajeton, .img di tutte le altre marche di radio (anche salvate con CHIRP), CSV di CHIRP, tabelle Excel o CSV</span></div>
       ${loaded.length ? `<div class="convrow"><span>oppure i canali di una scheda aperta:</span>
         <select data-tab><option value="">—</option>${loaded.map(v => `<option value="${esc(v.kind)}" ${s && s.fromTab === v.kind ? 'selected' : ''}>${esc(v.def.name)} (${v.chans.filter(Boolean).length} canali)</option>`).join('')}</select></div>` : ''}
       <div class="convsrc" data-src>${s ? `<b>${esc(s.desc)}</b>${s.fromTab ? '' : ' — ' + esc(s.name)}: <b>${n}</b> ${n === 1 ? 'canale' : 'canali'}

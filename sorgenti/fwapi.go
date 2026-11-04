@@ -321,6 +321,7 @@ type fwStartReq struct {
 	ConfirmModel   bool   `json:"confirmModel"`
 	ConfirmText    string `json:"confirmText"`
 	AcceptWarnings bool   `json:"acceptWarnings"`
+	Power          string `json:"power"` // th8600 RT85: 5W | 10W
 }
 
 func normModel(s string) string {
@@ -400,6 +401,9 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 		}
 		if normModel(req.ConfirmText) != img.Info.Confirm {
 			return fmt.Errorf("il caricatore non controlla il modello del firmware che riceve: scrivi %s nella casella di conferma", img.Info.Confirm)
+		}
+		if img.Info.Power && req.Power != "5W" && req.Power != "10W" {
+			return errors.New("scegli la potenza della radio (5 W o 10 W)")
 		}
 		return nil
 	case "rh5":
@@ -838,14 +842,25 @@ func (a *App) runFirmwareTDH(ctx context.Context, j *cableJob, req *fwStartReq, 
 	return res, nil
 }
 
-// runFirmwareTH8600: Retevis RA89 in modalità di aggiornamento (fwth8600.go)
+// runFirmwareTH8600: Retevis RA89 o RT85 in modalità di aggiornamento (fwth8600.go)
 func (a *App) runFirmwareTH8600(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
 	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
-	j.logf("Firmware: %s (%s, SHA-256 %s…) per %s", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16], img.Info.Target)
+	blocks, err := thFwBlocks(img)
+	if err != nil {
+		return nil, err
+	}
+	pr, hello, who := thRA89, byte(thHelloRA89), img.Info.Target
+	if img.Info.Power {
+		pr, hello, who = thRT85, thHelloRT85_5W, img.Info.Target+" 5 W"
+		if req.Power == "10W" {
+			hello, who = thHelloRT85_10, img.Info.Target+" 10 W"
+		}
+	}
+	j.logf("Firmware: %s (%s, SHA-256 %s…) per %s", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16], who)
 	j.set("Presentazione alla radio", true)
 	started := false
 	t0 := time.Now()
-	sent, err := thUpdate(ctx, req.Port, img.Dec, thHelloRA89, j.prog, func(s string) { j.logf("%s", s) },
+	sent, err := thUpdate(ctx, req.Port, pr, hello, blocks, j.prog, func(s string) { j.logf("%s", s) },
 		func() { fwStarted(j, &started)(); j.set("Aggiornamento del firmware", false) })
 	res["sent"] = sent
 	if err == errCancelled && !started {
