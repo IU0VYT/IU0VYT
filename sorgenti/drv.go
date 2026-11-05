@@ -411,6 +411,10 @@ func makeImg(m *genModel, mem []byte, old map[string]interface{}) []byte {
 	meta["vendor"] = m.Vendor
 	meta["model"] = m.Model
 	meta["variant"] = m.Variant
+	// 4.6: versione della radio con la memoria dei canali che dipende dal firmware
+	if n := genLayoutOf(m); n != 0 {
+		meta["iu0vyt_channels"] = n
+	}
 	if _, ok := meta["chirp_version"]; !ok {
 		meta["chirp_version"] = "IU0VYT-Flash-" + appVersion
 	}
@@ -439,8 +443,51 @@ func makeImg(m *genModel, mem []byte, old map[string]interface{}) []byte {
 	return out
 }
 
+// genPickLayout (4.6): versioni della stessa radio con memorie dei canali diverse
+// secondo il firmware (BJ-9000 / Radtel RT-950 Pro: 960 o 990 canali): modello
+// adatto alla memoria letta e spiegazione da mostrare ("" se non serve).
+func genPickLayout(m *genModel, mem []byte) (*genModel, string) {
+	if o, ok := m.Opt.(*rt900Opt); ok && o.layout != 0 {
+		return rt950PickLayout(m, mem)
+	}
+	return m, ""
+}
+
+// genLayoutOf (4.6): canali della versione della radio (0 se il modello non ha versioni)
+func genLayoutOf(m *genModel) int {
+	if o, ok := m.Opt.(*rt900Opt); ok {
+		return o.layout
+	}
+	return 0
+}
+
 // detectGen riconosce il modello di un file .img (metadati di CHIRP o contenuto).
 func detectGen(b []byte, prefer string) (*genModel, []byte, map[string]interface{}, error) {
+	m, mem, meta, err := detectGen0(b, prefer)
+	if err != nil || genLayoutOf(m) == 0 {
+		return m, mem, meta, err
+	}
+	// 4.6: versione della radio (960 o 990 canali) scritta nel file da questo
+	// programma, altrimenti riconosciuta dai dati, altrimenti quella della scheda
+	if n, ok := meta["iu0vyt_channels"].(float64); ok {
+		for _, o := range genModels {
+			if o.RClass == m.RClass && genLayoutOf(o) == int(n) {
+				return o, mem, meta, nil
+			}
+		}
+	}
+	if m2, _ := genPickLayout(m, mem); m2 != m {
+		return m2, mem, meta, nil
+	}
+	if l, _ := rt950Layout(mem); l == 0 {
+		if p, ok := genByID[prefer]; ok && p.RClass == m.RClass && genLayoutOf(p) != 0 {
+			return p, mem, meta, nil
+		}
+	}
+	return m, mem, meta, nil
+}
+
+func detectGen0(b []byte, prefer string) (*genModel, []byte, map[string]interface{}, error) {
 	mem, meta := splitImg(b)
 	if meta != nil {
 		rc, _ := meta["rclass"].(string)
@@ -523,9 +570,12 @@ type genDef struct {
 // genDivides (4.3): radio con le zone che hanno la scelta «tutti i canali in un
 // unico elenco» tra le impostazioni (chiave, valore per le zone, valore per
 // l'elenco unico: i codici delle scelte, come nella finestra «Impostazioni»;
-// BJ-9000: byte 0x26, 0 = «Zone (15 × 64)», 1 = «Tutti i canali (960)»)
+// BJ-9000: byte 0x26, 0 = «Zone (10 × 99)» o «Zone (15 × 64)», 1 = «Tutti i
+// canali (990)» o «(960)» secondo la versione del firmware)
 var genDivides = map[string][3]string{
-	"bj-9000": {"divide_ch", "0", "1"},
+	"bj-9000":     {"divide_ch", "0", "1"},
+	"bj-9000-960": {"divide_ch", "0", "1"},
+	"rtl-rt950":   {"divide_ch", "0", "1"},
 }
 
 // genSingle: la radio (memoria img) mostra tutti i canali in un unico elenco?

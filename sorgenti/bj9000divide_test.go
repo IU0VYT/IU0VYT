@@ -12,19 +12,25 @@ import "testing"
 // 4.3: BJ-9000 con «Divisione dei canali» = tutti i canali (960 senza zone),
 // come la BJ-8300
 func TestBJ9000Divide(t *testing.T) {
-	d := genByID["bj-9000"].def()
+	for kind, all := range map[string]string{"bj-9000": "Tutti i canali (990)", "bj-9000-960": "Tutti i canali (960)"} {
+		testBJ9000Divide(t, kind, all)
+	}
+}
+
+func testBJ9000Divide(t *testing.T, kind, all string) {
+	d := genByID[kind].def()
 	if d.Divide != "divide_ch" || d.DivideAll == "" || d.DivideZon == "" {
 		t.Fatalf("definizione senza la scelta della divisione: %+v", d)
 	}
 	img := make([]byte, 0xD300)
-	tb := settingsFor("bj-9000", img)
+	tb := settingsFor(kind, img)
 	var sd *setDef
 	for i := range tb.Settings {
 		if tb.Settings[i].Key == "divide_ch" {
 			sd = &tb.Settings[i]
 		}
 	}
-	if sd != nil && (len(sd.ItOpts) != 2 || sd.ItOpts[1] != "Tutti i canali (960)" || sd.Options[1] != d.DivideAll) {
+	if sd != nil && (len(sd.ItOpts) != 2 || sd.ItOpts[1] != all || sd.Options[1] != d.DivideAll) {
 		t.Fatalf("scelte della divisione: %q %q", sd.Options, sd.ItOpts)
 	}
 	if sd == nil {
@@ -37,7 +43,7 @@ func TestBJ9000Divide(t *testing.T) {
 		if err := writeSetting(sd, img, c.v); err != nil {
 			t.Fatal(err)
 		}
-		if got := genSingle("bj-9000", img); got != c.want {
+		if got := genSingle(kind, img); got != c.want {
 			t.Fatalf("divide_ch=%s: tutti i canali %v", c.v, got)
 		}
 	}

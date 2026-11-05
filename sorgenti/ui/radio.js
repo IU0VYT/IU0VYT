@@ -61,7 +61,29 @@ class RadioView {
     // canali spuntati (3.9.3): si ricordano gli oggetti canale, così la spunta segue il
     // canale quando viene spostato, ordinato o compattato
     this.chk = new WeakSet();
+    this.card = '';
     this.build();
+    // 4.6: nome della radio scelta l'ultima volta tra quelle con questa gestione
+    const dc = App.defaultCard ? App.defaultCard(kind) : null;
+    if (dc) this.setCard(dc.id, false);
+  }
+
+  // 4.6: radio della galleria (scheda del catalogo) di cui la scheda porta il nome;
+  // save: la scelta si ricorda (anche per l'identificazione)
+  setCard(id, save) {
+    const c = App.cardsFor(this.kind).find(x => x.id === id);
+    if (!c) return;
+    this.card = id;
+    const name = App.cardLabel(c, this.kind);
+    this.def = Object.assign({}, this.def, { name });
+    this.baseDef = Object.assign({}, this.baseDef, { name });
+    App.retitle(this.kind);
+    if (save && App.init && App.init.settings) {
+      App.init.settings.modelCards = Object.assign({}, App.init.settings.modelCards || {}, { [this.kind]: id });
+      api('radio/card', { kind: this.kind, card: id }, { quiet: true }).catch(() => {});
+    }
+    if (this.grid) this.render();
+    App.saveSession();
   }
 
   // ------------------------------------------------------------ spunte (3.9.3)
@@ -283,7 +305,8 @@ class RadioView {
     const info = $('[data-info]', this.page);
     if (this.loaded) {
       info.innerHTML = this.path ? `File: <b>${esc(this.path)}</b>${this.dirty ? ' — <span style="color:#b26a00">modificato, non salvato</span>' : ''}`
-        : this.fromRadio ? `<b>Canali letti dalla radio</b> <span style="color:#b26a00">(non ancora salvati in un file)</span>` : `<b>Nuovo file</b> (non ancora salvato)`;
+        : this.fromRadio ? `<b>Canali della radio</b> ${this.dirty ? '<span style="color:#b26a00">— modificati, non ancora scritti nella radio né salvati in un file</span>' : '(gli stessi della radio; non ancora salvati in un file)'}`
+        : `<b>Nuovo file</b> (non ancora salvato)`;
     } else info.textContent = 'Nessun file aperto';
     $$('[data-edit] .btn', this.page).forEach(b => b.disabled = !this.loaded);
     $$('[data-a="save"],[data-a="saveas"],[data-a="cwrite"]', this.page).forEach(b => b.disabled = !this.loaded);
@@ -485,7 +508,8 @@ class RadioView {
     if (!(await this.confirmDiscard())) return;
     const r = await api('radio/new', { radio: this.kind });
     this.load(r);
-    this.dirty = true;
+    // 4.6: un file nuovo non contiene ancora nulla da perdere
+    this.dirty = false;
     App.onDirty();
     this.render();
   }
@@ -509,13 +533,23 @@ class RadioView {
     if (!(await this.confirmDiscard())) return;
     const r = await Dialogs.cable(this, 'read');
     if (!r || !r.radio) return;
-    this.load(r.radio);
-    // dati letti dalla radio: non ancora salvati in un file
-    this.path = '';
-    this.fromRadio = true;
-    this.dirty = true;
+    // 4.6: la radio letta è l'altra versione della stessa radio (es. RT-950 Pro con
+    // il firmware fino a 0.23 o dalla 0.24): i canali vanno nella sua scheda
+    let v = this;
+    if (r.radio.kind && r.radio.kind !== this.kind) {
+      v = App.openRadio(r.radio.kind, false, this.card || '');
+      if (!(await v.confirmDiscard())) return;
+      toast(`La radio letta è una ${v.def.name}: canali aperti nella sua scheda.`);
+    }
+    v.load(r.radio);
+    // dati letti dalla radio: non ancora salvati in un file, ma sono nella radio
+    // (4.6: nessun avviso di dati non salvati finché non si modificano)
+    v.path = '';
+    v.fromRadio = true;
+    v.dirty = false;
     App.onDirty();
-    this.render();
+    if (v !== this) App.showTab(v.kind);
+    v.render();
     App.saveSession();
   }
 
@@ -874,7 +908,7 @@ class RadioView {
   }
 
   sessionData() {
-    return { loaded: this.loaded, path: this.path, chans: this.chans, bands: this.bands, dirty: this.dirty, zone: this.zone, fromRadio: !!this.fromRadio, single: !!this.single, datVer: this.datVer || '' };
+    return { loaded: this.loaded, path: this.path, chans: this.chans, bands: this.bands, dirty: this.dirty, zone: this.zone, fromRadio: !!this.fromRadio, single: !!this.single, datVer: this.datVer || '', card: this.card || '' };
   }
   restore(s) {
     if (!s || !s.loaded) return;

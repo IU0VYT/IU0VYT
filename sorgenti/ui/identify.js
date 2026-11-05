@@ -131,9 +131,9 @@ const Identify = {
     }
     const others = r.others || [];
     const choose = others.length ? `<div class="convbase"><p>${r.ambiguous
-      ? '<b>Modello non distinguibile via cavo:</b> questi modelli usano lo stesso collegamento e la stessa memoria e la radio non dice quale dei due è. Scegli il tuo:'
+      ? '<b>Scegli la tua radio:</b> queste radio hanno lo stesso collegamento e la stessa memoria e via cavo non si distinguono. Il programma ricorderà la scelta per le prossime volte:'
       : 'Altri modelli compatibili con la memoria letta (stesso collegamento):'}</p>
-      <select data-kind><option value="${esc(r.kind)}">${esc(r.name)}</option>${others.map(o => `<option value="${esc(o.kind)}">${esc(o.name)}</option>`).join('')}</select></div>` : '';
+      <select data-kind><option value="${esc(r.kind + (r.card ? '#' + r.card : ''))}">${esc(r.name)}</option>${others.map(o => `<option value="${esc(o.kind)}">${esc(o.name)}</option>`).join('')}</select></div>` : '';
     box.innerHTML = `<div class="infores ok"><span style="font-size:18px">✔ <b>${esc(r.name)}</b></span><br>${esc(r.type)} — trovata in ${r.seconds} s dopo ${r.tried} ${r.tried === 1 ? 'tentativo' : 'tentativi'}.</div>
       <table class="infotab" style="margin-top:10px">${(r.fields || []).map(f => `<tr><th>${esc(f.l)}</th><td>${esc(f.v)}</td></tr>`).join('')}
         <tr><th>Canali presenti</th><td>${r.count}</td></tr>
@@ -148,19 +148,21 @@ const Identify = {
     const r = this.result;
     if (!r || !r.found) return;
     const ks = $('[data-kind]', page);
-    const kind = ks ? ks.value : r.kind;
+    // 4.6: «gestione#radio» (radio con la stessa gestione e un altro nome)
+    const choice = ks ? ks.value : (r.kind + (r.card ? '#' + r.card : ''));
+    const kind = choice.split('#')[0];
     const old = Views[kind];
     if (old && old.loaded && !(await old.confirmDiscard())) return;
-    const res = await api('identify/open', { kind }, { busyText: 'Apertura…' });
-    const v = App.openRadio(kind, false);
+    const res = await api('identify/open', { kind: choice }, { busyText: 'Apertura…' });
+    const v = App.openRadio(kind, false, res.card || choice.split('#')[1] || '');
     v.load(res.radio);
     v.path = '';
     v.fromRadio = true;
-    v.dirty = true;
+    v.dirty = false; // 4.6: i canali sono nella radio
     App.onDirty();
     App.showTab(kind);
     App.saveSession();
-    toast('Canali letti dalla radio: ricordati di salvarli in un file.');
+    toast('Canali letti dalla radio: se vuoi conservarne una copia salvali in un file.');
   },
 };
 
@@ -247,15 +249,27 @@ const AutoIdent = {
     }
     const already = [], opened = [], kept = [];
     for (const ev of evs) {
-      const r = ev.result, kind = r.kind;
+      const r = ev.result;
+      // 4.6: radio che via cavo non si distinguono (stessa gestione, nomi diversi):
+      // si chiede quale sia, la prima volta; poi il programma la ricorda
+      let choice = r.kind + (r.card ? '#' + r.card : '');
+      if (r.ambiguous && (r.others || []).length) {
+        const c = await pickModelDlg(r, ev.port);
+        if (!c) continue;
+        choice = c;
+      }
+      const kind = choice.split('#')[0];
       const old = Views[kind];
       if (old && old.loaded) { already.push(ev); continue; }
-      const res = await api('identify/open', { kind, seq: ev.seq }, { busyText: 'Apertura…' });
-      const v = App.openRadio(kind, false);
+      const res = await api('identify/open', { kind: choice, seq: ev.seq }, { busyText: 'Apertura…' });
+      const v = App.openRadio(kind, false, res.card || choice.split('#')[1] || '');
+      r.kind = kind;
+      r.name = v.def.name;
+      for (const f of (r.fields || [])) if (f.l === 'Marca e modello') f.v = r.name;
       v.load(res.radio);
       v.path = '';
       v.fromRadio = true;
-      v.dirty = true;
+      v.dirty = false; // 4.6: i canali sono nella radio
       opened.push(ev);
     }
     if (opened.length) {
@@ -277,19 +291,39 @@ const AutoIdent = {
       for (const f of (r.fields || [])) list.push(f.l + ': ' + f.v);
       list.push('Canali presenti: ' + r.count);
       if (r.backup) list.push('Copia della lettura: ' + r.backup);
-      if ((r.others || []).length) list.push('Altri modelli possibili (stesso collegamento): ' + r.others.map(o => o.name).join(', ') + ' — puoi sceglierli nella scheda «Identifica».');
+      if ((r.others || []).length) {
+        const ns = r.others.map(o => o.name).filter(n => n !== r.name);
+        if (ns.length) list.push('Altre radio con la stessa gestione: ' + (ns.length > 10 ? ns.slice(0, 10).join(', ') + ` e altre ${ns.length - 10}` : ns.join(', ')) +
+          ' — puoi sceglierle nella scheda «Identifica» o dalla galleria.');
+      }
     }
     list.push('La ricerca automatica su questi cavi ora è ferma: per un\'altra radio premi «Identifica Radio» in alto a destra.');
     if (opened.length === 1) {
       const ev = opened[0];
       await alertDlg('Radio collegata riconosciuta: ' + ev.result.name,
-        `${ev.result.type} — porta ${ev.port}. Ho aperto la sua scheda con i canali letti dalla radio: ricordati di salvarli in un file.`, list);
+        `${ev.result.type} — porta ${ev.port}. Ho aperto la sua scheda con i canali letti dalla radio: se vuoi conservarne una copia salvali in un file.`, list);
     } else {
       await alertDlg(opened.length + ' radio collegate riconosciute: ' + opened.map(ev => ev.result.name).join(', '),
-        'Ho aperto le loro schede con i canali letti dalle radio: ricordati di salvarli in un file.', list);
+        'Ho aperto le loro schede con i canali letti dalle radio: se vuoi conservarne una copia salvali in un file.', list);
     }
   },
 };
+
+// pickModelDlg (4.6): scelta della radio collegata tra quelle che via cavo non si
+// distinguono; restituisce «gestione#radio» (o null se si annulla)
+function pickModelDlg(r, port) {
+  return new Promise(resolve => {
+    const first = r.kind + (r.card ? '#' + r.card : '');
+    const opts = [{ kind: first, name: r.name }].concat(r.others || []);
+    const m = openModal(`<div class="dialog mid"><header>📻 Quale radio hai collegato${port ? ' alla porta ' + esc(port) : ''}?</header><div class="body">
+      <p>La radio collegata ha risposto come <b>${esc(r.name)}</b>, ma queste radio hanno lo stesso collegamento e la stessa memoria e via cavo
+      non si distinguono. Scegli la tua: il programma la ricorderà per le prossime volte (puoi cambiarla dalla scheda «Identifica» o dalla galleria).</p>
+      <div class="row"><label class="l">Radio</label><select data-pick style="min-width:320px">${opts.map(o => `<option value="${esc(o.kind)}">${esc(o.name)}</option>`).join('')}</select></div>
+      </div><footer><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>Apri i canali</button></footer></div>`);
+    $('[data-no]', m.el).onclick = () => { m.close(); resolve(null); };
+    $('[data-ok]', m.el).onclick = () => { const v = $('[data-pick]', m.el).value; m.close(); resolve(v); };
+  });
+}
 
 // idBanner (4.3): avviso ben visibile in alto, si chiude da solo dopo alcuni secondi
 function idBanner(title, detail) {

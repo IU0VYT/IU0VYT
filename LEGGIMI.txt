@@ -1,11 +1,53 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.5.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.6.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.6.0:
+- CORRETTO: Radtel RT-950 Pro / Bajeton BJ-9000 con il firmware recente. Dal firmware
+  0.24 (dicembre 2025, programma del costruttore v1.2.1 e successivi) la radio ha 990
+  canali (10 zone da 99, oppure un unico elenco di 990); prima ne aveva 960 (15 zone
+  da 64, oppure un unico elenco di 960). Il programma ora gestisce le due versioni e
+  le riconosce dai dati letti: canali oltre il 960 → firmware 0.24 e successivi; dati
+  che non sono canali dopo il canale 960, o una zona attiva oltre la decima →
+  firmware fino a 0.23. La lettura apre i canali nella scheda giusta, qualunque sia
+  la scheda da cui si legge. La radio non comunica la versione del firmware: se i dati
+  non bastano (radio con pochi canali) si usa la scheda scelta e una nota dice come
+  controllare la versione sulla radio. I canali 961-990 si scrivono solo se cambiano,
+  dopo averli riletti dalla radio: se la radio in quell'area ha dati che non sono
+  canali (firmware fino a 0.23) non si scrive nulla. Con la copia di sicurezza
+  attiva, se la radio collegata è dell'altra versione la scrittura non parte. Canali
+  e impostazioni sono verificati con il codice originale dei programmi Radtel v1.2.0
+  (960 canali) e v1.3.3 (990 canali); con la v1.3.3 il byte delle opzioni del canale
+  segue il programma (bit della modulazione, senza il bit sempre a 1 delle versioni
+  precedenti) (vedi "RADTEL RT-950 PRO E BAJETON BJ-9000");
+- NUOVA: Radtel RT-950 (senza «Pro», programma «BT-9000_CPS»): la radio si presenta
+  come «BT-9000», 960 canali (15 zone da 64, anche con il firmware V0.29) o un unico
+  elenco; canali e impostazioni generali verificati con il codice originale del
+  programma v1.3.0;
+- CORRETTO: nome della radio. Radio diverse con la stessa gestione (es. Radtel RT-950
+  Pro e Bajeton BJ-9000, Baofeng K67 Pro e 5RH Pro, Radtel RT-910 e Bajeton
+  BJ-7700) via cavo rispondono allo stesso modo, ma il programma le chiamava tutte con
+  il nome di una sola. Ora la scheda, la lettura, la scrittura, l'identificazione e i
+  nomi dei file di copia portano il nome della radio scelta: quella aperta dalla
+  galleria o scelta all'identificazione, che il programma ricorda. Alla prima
+  identificazione di una di queste radio il programma chiede quale sia (con
+  l'identificazione automatica compare una finestra di scelta);
+- CORRETTO: avviso di dati non salvati alla chiusura. Dopo una lettura dalla radio,
+  una scrittura nella radio o un inoltro, i canali della scheda sono nella radio: il
+  programma non avvisa più di modifiche non salvate finché non si modifica qualcosa;
+- Radtel RT-920: i 990 canali si mostrano in 10 zone da 99, come sulla radio (il
+  driver di CHIRP è per il firmware V0.18; con un firmware precedente alla V0.17,
+  960 canali, aggiorna prima la radio);
+- NUOVE RADIO dal driver di CHIRP, riscritte e verificate come le altre (lettura,
+  scrittura e byte scambiati con la radio identici a CHIRP): SenhaiX 8800, Radioddity
+  GS-5B, Cignus XTR-5, Anysecu AC-580 (famiglia della SenhaiX 8800: 128 canali, banda
+  aerea in AM), TID TD-UV68 (la TIDRADIO TD-H8 con un altro nome);
+- galleria: 392 modelli di 29 marche (354 con canali, 303 con impostazioni, 44 con
+  l'aggiornamento del firmware).
 Novità della 4.5.0:
 - AGGIORNAMENTO DEL FIRMWARE anche per la Retevis RT85 con i file .hex di Retevis
   (es. "RT85-Firmware-V1.53.hex"), con il protocollo del programma di Retevis
@@ -607,11 +649,45 @@ con il nome di quel modello).
   canali senza nome.
 - BF-88A / BF-88E: il pacchetto del costruttore dice di usare CHIRP come «BF-888»: si
   usa il driver della BF-888S.
-- Bajeton BJ-9000 (Radtel RT-950 Pro, programma «BJ-9000_CPS» v1.1.1): 960 canali in
-  15 zone da 64, stesso protocollo della BJ-7800 con il controllo del modello; si
-  scrivono canali, nomi e (dalla 3.6) impostazioni generali; VFO, DTMF e APRS con il
-  programma del costruttore. Dalla 3.6 canali e impostazioni sono verificati con il
-  codice originale del programma collegato alla radio simulata.
+- Bajeton BJ-9000 e Radtel RT-950 Pro (programmi «BJ-9000_CPS» e «RT-950PRO_CPS»):
+  stesso protocollo della BJ-7800 con il controllo del modello; si scrivono canali,
+  nomi e (dalla 3.6) impostazioni generali; VFO, DTMF e APRS con il programma del
+  costruttore. Dalla 4.6 due versioni secondo il firmware (vedi "RADTEL RT-950 PRO E
+  BAJETON BJ-9000"). Canali e impostazioni sono verificati con il codice originale dei
+  programmi collegati alla radio simulata.
+- (4.6) Radtel RT-950 (senza «Pro», programma «BT-9000_CPS»): la radio risponde
+  «BT-9000»; 960 canali in 15 zone da 64 o in un unico elenco, stesse impostazioni
+  della BJ-9000 con il firmware fino a 0.23.
+
+RADTEL RT-950 PRO E BAJETON BJ-9000 (4.6)
+- Sono due radio diverse con la stessa elettronica e lo stesso protocollo: via cavo
+  rispondono allo stesso modo ("RT-950"), quindi il programma usa il nome della radio
+  scelta dalla galleria o all'identificazione (e lo ricorda).
+- Firmware fino a 0.23 (programmi del costruttore fino a v1.2.0): 960 canali, 15 zone
+  da 64 canali (zona 1: canali 1-64, zona 2: 65-128, …), oppure un unico elenco di
+  960 canali. Nella galleria: "firmware fino a 0.23: 960 canali".
+- Firmware 0.24 e successivi (programmi v1.2.1 e successivi): 990 canali, 10 zone da 99
+  (zona 1: canali 1-99, zona 2: 100-198, …), oppure un unico elenco di 990 canali. Nella
+  galleria: "firmware 0.24 e successivi: 990 canali".
+- In entrambe le versioni i canali sono gli stessi nei due modi di visualizzazione:
+  cambia solo come la radio li mostra (impostazione "Divisione dei canali").
+- Riconoscimento: la radio non comunica la versione del firmware. Il programma legge
+  sempre la memoria fino al canale 990 (lettura innocua anche con il firmware
+  precedente, come fa il programma v1.2.1) e guarda i dati: un canale oltre il 960 →
+  0.24 e successivi; dati che non sono canali dopo il canale 960, o una zona attiva
+  oltre la decima → fino a 0.23. Se i dati non bastano si usa la scheda da cui si
+  legge e una nota spiega come controllare la versione sul menu della radio.
+- Scrittura: i canali 1-960 e le impostazioni generali; i canali 961-990 solo se
+  cambiano, dopo averli riletti dalla radio nella stessa sessione. Se in quell'area
+  la radio ha dati che non sono canali la scrittura si ferma prima di scrivere
+  qualsiasi cosa. Con la copia di sicurezza attiva, se la radio collegata è dell'altra
+  versione la scrittura non parte (la copia resta salvata).
+- I file .img salvati da questa versione ricordano la versione della radio; quelli
+  salvati prima si aprono nella versione riconosciuta dai dati o, se non si capisce,
+  in quella della scheda (dalla galleria: 0.24 e successivi).
+- Con il programma v1.3.3 il byte delle opzioni del canale ha la modulazione su due
+  bit (0 FM, 1 AM) e non più il bit "trasmissione abilitata" sempre a 1: per il
+  firmware 0.24 e successivi il programma scrive come la v1.3.3.
 - (3.2) BF-9700 / BF-S56 Max: memoria della BF-1909 di CHIRP letta fino a 0x0400.
 - (3.3) Serie D (programma «BF Series CPS», pacchetti «Baofeng_V1D_CPS» e
   «Baofeng_BF-D_Series_CPS»): stessa memoria della BF-888S (16 canali senza nome; 30
@@ -726,8 +802,10 @@ IMPOSTAZIONI DELLE RADIO (3.6)
   canali"): finestra «Optional Features» del programma; ogni voce è un numero
   dell'oggetto salvato nel file .dat, cambiato al suo posto (il file resta identico a
   quello che salverebbe il programma).
-- Bajeton BJ-9000 (57 voci): finestra «Optional Features» del programma BJ-9000_CPS;
-  si cambiano solo i bit di ogni voce, gli altri byte restano quelli della radio.
+- Bajeton BJ-9000, Radtel RT-950 Pro e RT-950 (57 voci): finestra «Optional Features»
+  dei programmi del costruttore; si cambiano solo i bit di ogni voce, gli altri byte
+  restano quelli della radio. Le zone attive delle bande sono 10 o 15 secondo la
+  versione del firmware.
 - Radio gestite con i driver di CHIRP (63 famiglie: UV-5R, UV-17 Pro, impermeabili,
   BF-888S, UV-B5, BF-T1, BJ-7800, BJ-7700, serie H…): la tabella di ogni famiglia è
   ricavata dal codice di CHIRP (per ogni voce si fa scrivere a CHIRP ogni valore e si
@@ -1540,6 +1618,26 @@ Novità della 3.8, stesse verifiche:
 - DMR-6X2: controllo dei file su tutti i file dei pacchetti ufficiali 2.21b e 1.21e
   (firmware, icone, scheda APRS) e su file danneggiati (dati troncati, modello
   scambiato, inizio del firmware errato, file mancante).
+Novità della 4.6, stesse verifiche:
+- RT-950 Pro / BJ-9000: il codice ORIGINALE dei programmi Radtel RT-950PRO_CPS v1.2.0
+  (960 canali) e v1.3.3 (990 canali) e Radtel RT-950 BT-9000_CPS v1.3.0 è stato fatto
+  girare con la radio simulata: canali scritti qui (anche i canali 961, 980 e 990),
+  letti e riscritti dal programma: memoria identica; 57 impostazioni lette uguali e
+  456 modifiche in 8 combinazioni con bit identici per ognuna delle tre radio;
+  riconoscimento della versione del firmware dai dati, scelta della scheda, file .img
+  con e senza l'indicazione della versione; scrittura dei canali 961-990 in una radio
+  simulata con l'area vuota e con dati che non sono canali (nessun byte scritto);
+- dall'interfaccia (Chromium automatico, radio simulata RT-950 Pro con firmware 0.24):
+  scheda "960 canali" aperta dalla galleria, lettura → canali aperti nella scheda
+  "990 canali" con il nome Radtel RT-950 Pro, nessun avviso di dati non salvati;
+  modifica → avviso; scrittura con copia e verifica → nessun avviso; identificazione
+  → "Radtel RT-950 Pro" (scelta ricordata);
+- nomi delle radio con la stessa gestione (RT-950 Pro / BJ-9000, K67 Pro / 5RH Pro):
+  prima identificazione con la scelta, poi il nome ricordato;
+- SenhaiX 8800, Radioddity GS-5B, Cignus XTR-5, Anysecu AC-580, TID TD-UV68: canali
+  letti come CHIRP, immagini scritte identiche a quelle di CHIRP, byte scambiati con la
+  radio simulata identici a CHIRP (TD-UV68: scrittura confrontata con la TD-H8, perché
+  in CHIRP quella della TD-UV68 si ferma con un errore).
 Anche queste parti NON sono state provate con radio vere.
 
 LIMITI

@@ -42,7 +42,10 @@ const Dialogs = {
       const drv = (c.drivers || []).filter(d => d === 'k67' || d === 'baj' || App.defs[d]);
       for (const d of drv) {
         const def = RADIO_DEF[d] || App.defs[d];
-        const version = drv.length > 1 ? def.name.replace(/^(Baofeng|Bajeton|Radioddity)\s+/, '').replace(new RegExp('^' + c.brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s+'), '') : '';
+        // 4.6: versione = precisazione tra parentesi del nome della gestione (es.
+        // «firmware 0.24 e successivi: 990 canali»), senza il nome di un'altra marca
+        const qv = /\(([^()]*)\)\s*$/.exec(def.name);
+        const version = drv.length > 1 ? (qv ? qv[1] : def.name.replace(/^(Baofeng|Bajeton|Radioddity)\s+/, '').replace(new RegExp('^' + c.brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s+'), '')) : '';
         const key = c.brand + '|' + c.name + '|' + d;
         if (seen.has(key)) continue;
         seen.add(key);
@@ -83,7 +86,7 @@ const Dialogs = {
         $$('[data-i]', list).forEach(b => b.onclick = () => {
           const r = its[+b.dataset.i];
           m.close();
-          res({ kind: r.kind, label: r.brand + ' ' + r.name + (r.version ? ' (' + r.version + ')' : ''), type: r.type });
+          res({ kind: r.kind, label: r.brand + ' ' + r.name + (r.version ? ' (' + r.version + ')' : ''), type: r.type, card: r.id });
         });
       };
       $('[data-q]', m.el).addEventListener('input', draw);
@@ -127,11 +130,11 @@ const Dialogs = {
       const target = { kind: pick.kind, def: App.radioDef(pick.kind), chans: send };
       return Dialogs.cable(target, 'forward', { label: pick.label, mode: pick.mode, from: src.def.name, how, adopt,
         onShow: res => {
-          const v = App.openRadio(pick.kind);
+          const v = App.openRadio(pick.kind, false, pick.card || '');
           v.load(res.radio);
           v.path = '';
           v.fromRadio = true;
-          v.dirty = true;
+          v.dirty = false; // 4.6: sono i canali appena scritti nella radio
           v.setSel(res.placed || [], (res.placed || [])[0]);
           if (v.def.zones && res.placed && res.placed.length) v.zone = Math.floor(res.placed[0] / v.def.perZone);
           App.onDirty();
@@ -139,7 +142,7 @@ const Dialogs = {
           v.render();
           v.grid.ensureVisible();
           App.saveSession();
-          toast('Canali della radio dopo l\'inoltro: ricordati di salvarli in un file.');
+          toast('Canali della radio dopo l\'inoltro: se vuoi conservarne una copia salvali in un file.');
         } });
     }
   },
@@ -188,7 +191,7 @@ const Dialogs = {
         if (ms.value === '') return;
         const r = its[+ms.value];
         m.close();
-        res({ kind: r.kind, brand: r.brand, type: r.type, mode: $('input[name=fwmode]:checked', el).value,
+        res({ kind: r.kind, brand: r.brand, type: r.type, mode: $('input[name=fwmode]:checked', el).value, card: r.id,
           label: r.brand + ' ' + r.name + (r.version ? ' (' + r.version + ')' : '') });
       };
     });
@@ -448,12 +451,20 @@ const Dialogs = {
               sb.onclick = () => { close(); fw.onShow(r); };
             }
           } else if (write) {
+            // 4.6: i canali della scheda ora sono nella radio: chiudendo il programma
+            // non si perde nulla (l'avviso torna alla prossima modifica)
+            if (view instanceof RadioView && view.loaded) {
+              view.dirty = false;
+              App.onDirty();
+              view.render();
+              App.saveSession();
+            }
             const v = st.result && st.result.verified;
             fin.innerHTML = st.result && st.result.verifyNoRead ? '✅ <b>Scrittura completata.</b> ⚠ La rilettura di verifica non è riuscita (la radio non era pronta dopo la scrittura): vedi le segnalazioni.'
               : v === false ? '⚠ <b>Scrittura completata, ma la verifica ha trovato differenze</b>: controlla le segnalazioni.'
               : '✅ <b>Scrittura completata.</b> ' + (v ? 'I canali riletti dalla radio corrispondono.' : '') + ' Puoi spegnere e riaccendere la radio.';
           } else {
-            fin.innerHTML = '✅ <b>Lettura completata.</b> I canali sono nella tabella: ricordati di salvarli in un file.';
+            fin.innerHTML = '✅ <b>Lettura completata.</b> I canali sono nella tabella: se vuoi conservarne una copia salvali in un file.';
           }
           $('[data-phase]', el).textContent = 'Operazione completata';
         } else {
@@ -470,7 +481,7 @@ const Dialogs = {
         $('[data-ok]', el).style.display = ok ? 'none' : '';
         $('[data-ok]', el).textContent = 'Riprova';
         $('[data-ok]', el).disabled = false;
-        if (ok && !write && (!st.notes || st.notes.length <= 1) && !(st.result.radio.warnings || []).length) { close(); toast('Canali letti dalla radio: ricordati di salvarli in un file.'); return; }
+        if (ok && !write && (!st.notes || st.notes.length <= 1) && !(st.result.radio.warnings || []).length) { close(); toast('Canali letti dalla radio: se vuoi conservarne una copia salvali in un file.'); return; }
         if (ok && !write && st.result.radio.warnings && st.result.radio.warnings.length) setNotes((st.notes || []).concat(st.result.radio.warnings));
       };
       const poll = async () => {

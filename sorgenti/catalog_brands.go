@@ -84,10 +84,20 @@ var catalogOther = []catItem{
 		Drivers: []string{"bj-7700", "bj-7700nbt"}, Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
 		Notes: "Stessa radio della Bajeton BJ-7700: driver di CHIRP RT910BT (versione Bluetooth) e RT910."},
 	{ID: "rtl-rt-920", Brand: "Radtel", Name: "RT-920", Type: "analog", Drivers: []string{"rt-rt920"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT920") + " 990 canali (i canali ausiliari FM/AM/HF non sono gestiti)."},
-	{ID: "rtl-rt-950-pro", Brand: "Radtel", Name: "RT-950 Pro", Type: "analog", Drivers: []string{"bj-9000"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT920") + " 990 canali in 10 zone da 99 (i canali ausiliari FM/AM/HF non sono gestiti). " +
+			"Il driver di CHIRP è scritto per il firmware V0.18: dalla V0.17 (dicembre 2025) la radio ha 10 zone da 99 canali, prima 960 canali in 15 zone da 64 " +
+			"(programma del costruttore fino a v1.1.2). Con un firmware precedente alla V0.17 aggiorna prima la radio."},
+	{ID: "rtl-rt-950", Brand: "Radtel", Name: "RT-950", Type: "analog", Drivers: []string{"rtl-rt950"},
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
-		Notes: "Stessa radio della Bajeton BJ-9000: canali e impostazioni come nella scheda BJ-9000. Il firmware Radtel si aggiorna con il programma del costruttore."},
+		Notes: "4.6: la RT-950 (senza «Pro»), con il programma del costruttore «BT-9000_CPS»: la radio si presenta come «BT-9000», quindi non si " +
+			"confonde con la RT-950 Pro. 960 canali (15 zone da 64, anche con il firmware V0.29) oppure un unico elenco; canali e impostazioni generali " +
+			"verificati con il codice originale del programma v1.3.0. Il firmware Radtel si aggiorna con il programma del costruttore."},
+	{ID: "rtl-rt-950-pro", Brand: "Radtel", Name: "RT-950 Pro", Type: "analog", Drivers: []string{"bj-9000", "bj-9000-960"},
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: "Stessa elettronica e stessa gestione della Bajeton BJ-9000, ma è un'altra radio: la scheda e l'identificazione la chiamano RT-950 Pro. " +
+			"Due versioni secondo il firmware: fino a 0.23 960 canali (15 zone da 64, programma Radtel RT-950PRO_CPS fino a v1.2.0), dalla 0.24 990 canali " +
+			"(10 zone da 99, programma v1.2.1 e successivi; verificato con il codice della v1.3.3). La lettura riconosce la versione dai dati della radio e apre la scheda " +
+			"giusta; la versione del firmware si vede anche sulla radio. Il firmware Radtel si aggiorna con il programma del costruttore."},
 	// 4.1: famiglia MML JC-8810 (mml_jc8810.py); 4.3: firmware .kdhx di Radtel
 	{ID: "rtl-rt-470", Brand: "Radtel", Name: "RT-470", Type: "analog", Drivers: []string{"rt-rt470"}, FW: "kdhx",
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470Radio") + " 256 canali, potenze 10/8/4 W. " + rtlFwNote},
@@ -139,6 +149,20 @@ var catalogOther = []catItem{
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT730") + " Piattaforma TIDRADIO TD-H8, 199 canali. " + tdhFwNote},
 	{ID: "tid-td-h6", Brand: "TIDRADIO", Name: "TD-H6", Type: "analog", Drivers: []string{"td-h6"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: chirpNote("TDH6Radio") + " Piattaforma Radioddity GA-510."},
+	// 4.6: TID TD-UV68 (la TD-H8 con un altro nome)
+	{ID: "tid-td-uv68", Brand: "TID", Name: "TD-UV68", Type: "analog", Drivers: []string{"td-uv68"},
+		Notes: chirpNote("UV68") + " Piattaforma TIDRADIO TD-H8, 199 canali. Scrittura verificata con il protocollo della TD-H8 " +
+			"(in CHIRP la scrittura di questo modello si ferma con un errore interno)."},
+
+	// ------------------------------------------------ SenhaiX, Cignus, Anysecu (4.6: famiglia SenhaiX 8800)
+	{ID: "shx-8800", Brand: "SenhaiX", Name: "8800", Aliases: []string{"SHX-8800", "SHX8800"}, Type: "analog", Drivers: []string{"shx-8800"},
+		Notes: chirpNote("Senhaix8800Radio") + " 128 canali (0-127), potenze 5/1 W, banda aerea 108-136 MHz in ricezione AM; piattaforma Radioddity GA-510."},
+	{ID: "rdd-gs-5b", Brand: "Radioddity", Name: "GS-5B", Type: "analog", Drivers: []string{"rd-gs5b"}, Links: []catLink{info("Download center Radioddity", rddDown)},
+		Notes: chirpNote("RadioddityGS5BRadio") + " Stessa radio della SenhaiX 8800: 128 canali, banda aerea in AM."},
+	{ID: "cg-xtr-5", Brand: "Cignus", Name: "XTR-5", Type: "analog", Drivers: []string{"cg-xtr5"},
+		Notes: chirpNote("CignusXTR5Radio") + " Stessa radio della SenhaiX 8800: 128 canali, banda aerea in AM."},
+	{ID: "as-ac-580", Brand: "Anysecu", Name: "AC-580", Type: "analog", Drivers: []string{"as-ac580"},
+		Notes: chirpNote("AnysecuAC580Radio") + " Stessa radio della SenhaiX 8800: 128 canali, banda aerea in AM."},
 
 	// ------------------------------------------------ Abbree, MaxTalker, Intek, Maverick
 	{ID: "ab-ar-f5", Brand: "Abbree", Name: "AR-F5", Type: "analog", Drivers: []string{"ab-arf5"}, Notes: chirpNote("AbbreeARF5Radio") + " Canali 1-128, piattaforma GA-510."},

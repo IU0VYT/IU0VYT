@@ -491,6 +491,8 @@ func init() {
 	h3HamRx := mhz(18, 107.999, 108, 136, 149.99, 419.99, 451, 600)
 	list := []v{
 		{"td-tdh8", "TIDRADIO", "TD-H8", "TDH8", "TIDRADIO TD-H8", tdH8, "P31183\xff\xff", 0x1eef, 0x1A08, h8p, h8v, mhz(136, 175, 400, 521), nil, false, false},
+		// 4.6: TID TD-UV68 (classe UV68 di tdh8.py: la TD-H8 con un altro nome)
+		{"td-uv68", "TID", "TD-UV68", "UV68", "TID TD-UV68", tdH8, "P31183\xff\xff", 0x1eef, 0x1A08, h8p, h8v, mhz(136, 175, 400, 521), nil, false, false},
 		{"td-tdh8ham", "TIDRADIO", "TD-H8-HAM", "TDH8_HAM", "TIDRADIO TD-H8 HAM", tdH8, "P31185\xff\xff", 0x1eef, 0x1A08, h8p, h8v, hamTx,
 			mhz(136, 143.999, 149.000001, 174, 400, 419.999, 451.000001, 521), false, false},
 		{"td-tdh8gmrs", "TIDRADIO", "TD-H8-GMRS", "TDH8_GMRS", "TIDRADIO TD-H8 GMRS", tdH8, "P31184\xff\xff", 0x1eef, 0x1A08, h8gp, h8gv, gmrsTx, nil, true, false},

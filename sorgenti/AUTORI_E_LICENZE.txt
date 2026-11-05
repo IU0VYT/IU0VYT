@@ -31,7 +31,7 @@ dei canali) e il formato dei file .img derivano da CHIRP (https://chirpmyradio.c
 https://github.com/kk7ds/chirp), software libero distribuito con la GNU General
 Public License (versione 2 o successiva, oppure 3 o successiva, secondo il file).
 Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
-01/11/2026). Autori indicati nei file di CHIRP usati:
+01/11/2026; le radio aggiunte nella 4.6 con la revisione ba67ff4 del 04/11/2026). Autori indicati nei file di CHIRP usati:
 
   chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
   drivers/uv5r.py                           Copyright 2012 Dan Smith
@@ -109,6 +109,16 @@ Protocollo ricavato, per l'interoperabilità, dai programmi di Retevis
 («TH8600-UpDAta Soft» 2.1, retevis.com); i programmi non sono inclusi nel pacchetto.
 verifica/ra89, usato solo per le prove, carica l'eseguibile indicato da chi esegue la
 verifica.
+
+RADTEL RT-950 PRO, BAJETON BJ-9000 E RADTEL RT-950 (4.6)
+Memoria dei canali e impostazioni ricavate, per l'interoperabilità, dal codice dei
+programmi del costruttore (Radtel RT-950PRO_CPS v1.1.1, v1.2.0, v1.2.1, v1.3.3 e
+RT-950_EnCPS «BT-9000_CPS» v1.3.0, radtels.com; Bajeton BJ-9000_CPS v1.1.1) e dalle
+note dei firmware Radtel; i programmi non sono inclusi nel pacchetto. Sono state
+consultate anche le note pubblicate da JA van Hernen (PE1HVH) per il suo driver di
+CHIRP della RT-950 Pro (https://github.com/pe1hvh/chirp_radtel_rt950pro, licenza MIT;
+risposta della radio al comando «F» uguale con il firmware 0.18 e 0.29) e nella
+segnalazione 12180 di CHIRP: nessun codice di quei progetti è incluso.
 
 I firmware .kdhx delle Radtel RT-470 / RT-495 / RT-630 usano lo stesso protocollo del
 «Bootloader Pro» della UV-25 Plus (fwkdhx.go), con la piattaforma JJCC indicata dal

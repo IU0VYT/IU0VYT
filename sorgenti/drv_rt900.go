@@ -89,6 +89,34 @@ struct {
 } memory[%d];
 `
 
+// 4.6: Radtel RT-950 Pro / BJ-9000 con il firmware 0.24 e successivi, come lo
+// scrive il programma del costruttore v1.3.3: nel byte 15 i bit 1-0 sono la
+// modulazione in ricezione (0 FM, 1 AM; Channel.RxModulation = byte & 3), senza
+// il bit «trasmissione abilitata» sempre a 1 dei programmi precedenti.
+const rt950Format990 = `
+struct {
+  lbcd rxfreq[4];
+  lbcd txfreq[4];
+  ul16 rxtone;
+  ul16 txtone;
+  u8 unknown1:4,
+     scode:4;
+  u8 unknown2:6,
+     pttid:2;
+  u8 scramble:6,
+     txpower:2;
+  u8 learning:1,
+     narrow:1,
+     encrypt:2,
+     bcl:1,
+     scan:1,
+     rxmod:2;
+  ul24 code;
+  u8 code_flag;
+  char name[12];
+} memory[%d];
+`
+
 type rt900Opt struct {
 	magic   []byte
 	fp1     [][]byte // risposta al comando 'F' (nil: non controllata)
@@ -106,6 +134,15 @@ type rt900Opt struct {
 	// l'identificativo non c'è il secondo identificativo né il pacchetto "SEND",
 	// e i dati non sono cifrati
 	plain bool
+	// 4.6 (BJ-9000 / Radtel RT-950 Pro): area dei canali scritta solo quando
+	// cambia, dopo averla riletta dalla radio nella stessa sessione (canali
+	// 961-990 del firmware 0.24 e successivi, 0x7800-0x7BFF)
+	hi [2]int
+	// layout (4.6): canali della generazione di firmware (960 o 990); le due
+	// versioni della stessa radio sono modelli distinti (vedi rt950PickLayout)
+	layout int
+	// rxmod (4.6): modulazione in ricezione su due bit (rt950Format990)
+	rxmod bool
 }
 
 func (o *rt900Opt) blk() int {
@@ -183,8 +220,14 @@ func init() {
 		{"rd-gs10b", "Radioddity", "GS-10B", "RadioddityGS10B", "Radioddity GS-10B", 256, mkO("PROGRAMBT80U", 0x2000)},
 		{"rt-rt920", "Radtel", "RT-920", "RT920", "Radtel RT-920", 990, mkO("PROGRAMBT11U", 0x7BC0, [2]int{0xB000, 0xB400}, [2]int{0xC000, 0xC400}, [2]int{0xC800, 0xC8A0})},
 	} {
+		zones := 0
+		if v.id == "rt-rt920" {
+			// 4.6: firmware V0.17 e successivi (quello del driver di CHIRP, V0.18):
+			// 10 zone da 99 canali, come le mostra la radio
+			zones = 10
+		}
 		genRegister(&genModel{ID: v.id, Vendor: v.vendor, Model: v.model, RClass: v.rclass,
-			Name: v.name, Slots: v.slots, First: 1, NameMax: 12,
+			Name: v.name, Slots: v.slots, First: 1, NameMax: 12, Zones: zones,
 			Charset: charsetAlnum + "`~!@#$%^&*()-=_+[]\\{}|;':\",./<>?",
 			Powers:  []genPower{{"Alta 8 W", 8, 0}, {"Media 4 W", 4, 1}, {"Bassa 1 W", 1, 2}},
 			Bands:   []band{{18000000, 1000000000}}, Narrow: true, HasScan: true,
@@ -194,32 +237,202 @@ func init() {
 }
 
 func init() {
-	// BJ-9000 = Radtel RT-950 Pro (programma del costruttore «BT-RT950PRO_CPS» v1.1.1):
-	// 115200 baud, "PROGRAMBT9000U", 'F' (16 byte), 'M' → "RT-950", blocchi da 128 byte.
-	// Si scrivono solo i canali (0x0000-0x77FF): le altre aree restano quelle della radio.
+	// BJ-9000 = Radtel RT-950 Pro (programmi del costruttore «BT-RT950PRO_CPS»,
+	// per la Bajeton «BJ-9000_CPS»): 115200 baud, "PROGRAMBT9000U", 'F' (16 byte),
+	// 'M' → "RT-950", blocchi da 128 byte.
+	//
+	// 4.6: due generazioni di firmware con memorie dei canali diverse. Il firmware
+	// Radtel V0.24 (dicembre 2025) è passato da 15 zone da 64 canali a 10 zone da 99
+	// e il programma del costruttore v1.2.1 da Channel[960] (0x0000-0x77FF) a
+	// Channel[990] (0x0000-0x7BBF); stessi record di 32 byte, stesse impostazioni
+	// (verificato confrontando il codice dei programmi v1.1.1, v1.2.0, v1.2.1 e
+	// v1.3.3). In entrambe la scelta «Channel Divide» (byte 0x9026) mostra i canali
+	// in zone o in un unico elenco (960 o 990). La radio non comunica la versione del
+	// firmware (risposte a 'F' e 'M' identiche con il firmware 0.18 e 0.29): la
+	// versione si riconosce dai dati (rt950Layout), altrimenti si chiede.
+	// Si legge sempre fino a 0x7BFF, come il programma v1.2.1 (lettura innocua anche
+	// con il firmware precedente); si scrivono i canali (0x0000-0x77FF), i canali
+	// 961-990 solo se cambiano e dopo averli riletti dalla radio, e le impostazioni
+	// generali (blocco 0x9000, rileggendo dalla radio i byte non modificati qui).
+	reads := [][2]int{{0x0000, 0x7C00}, {0x8000, 0x8080}, {0x9000, 0x9080}, {0xA000, 0xA180}, {0xB000, 0xB100}, {0xD000, 0xD300}}
+	mk := func(layout int) *rt900Opt {
+		o := &rt900Opt{
+			magic:   []byte("PROGRAMBT9000U"),
+			crypt:   append([]byte("SEND \x01\x01"), make([]byte, 18)...),
+			model:   "RT-950",
+			block:   0x80,
+			reads:   reads,
+			ranges:  [][2]int{{0x0000, 0x7800}, {0x9000, 0x9080}},
+			memsize: 0xD300,
+			airband: band{108000000, 136975000},
+			format:  rt950Format,
+			txen:    true,
+			layout:  layout,
+		}
+		if layout == 990 {
+			o.hi = [2]int{0x7800, 0x7C00}
+			o.format, o.txen, o.rxmod = rt950Format990, false, true
+		}
+		return o
+	}
+	common := "Accendi la radio con il cavo collegato. Canali e impostazioni generali (finestra «Optional Features») come nel programma del costruttore; " +
+		"VFO, DTMF e APRS restano quelli della radio. Non compatibile con CHIRP. "
+	genRegister(&genModel{ID: "bj-9000", Vendor: "Bajeton", Model: "BJ-9000", RClass: "RT950Pro", NoChirp: true,
+		Name: "Bajeton BJ-9000 (firmware 0.24 e successivi: 990 canali)", Slots: 990, First: 1, NameMax: 12, Zones: 10,
+		Charset: charsetAlnum + "`~!@#$%^&*()-=_+[]\\{}|;':\",./<>?",
+		Powers:  []genPower{{"Alta 8 W", 8, 0}, {"Media 4 W", 4, 1}, {"Bassa 1 W", 1, 2}},
+		Bands:   []band{{18000000, 1000000000}}, Narrow: true, HasScan: true,
+		DCS: uv5rDTCS, Baud: 115200, Fam: rt900Fam{}, Opt: mk(990),
+		Notes: common + "Firmware 0.24 e successivi (programma del costruttore v1.2.1 e successivi): canali 1-990 = 10 zone da 99, " +
+			"oppure un unico elenco di 990 canali (impostazione «Divisione dei canali»). I canali 961-990 si scrivono solo se cambiano, " +
+			"dopo aver controllato che la radio li abbia."},
+		&genModel{ID: "bj-9000-960", Vendor: "Bajeton", Model: "BJ-9000", RClass: "RT950Pro", NoChirp: true,
+			Name: "Bajeton BJ-9000 (firmware fino a 0.23: 960 canali)", Slots: 960, First: 1, NameMax: 12, Zones: 15,
+			Charset: charsetAlnum + "`~!@#$%^&*()-=_+[]\\{}|;':\",./<>?",
+			Powers:  []genPower{{"Alta 8 W", 8, 0}, {"Media 4 W", 4, 1}, {"Bassa 1 W", 1, 2}},
+			Bands:   []band{{18000000, 1000000000}}, Narrow: true, HasScan: true,
+			DCS: uv5rDTCS, Baud: 115200, Fam: rt900Fam{}, Opt: mk(960),
+			Notes: common + "Firmware fino a 0.23 (programma del costruttore fino a v1.2.0): canali 1-960 = 15 zone da 64, " +
+				"oppure un unico elenco di 960 canali (impostazione «Divisione dei canali»)."})
+}
+
+func init() {
+	// 4.6: Radtel RT-950 (senza «Pro»): programma del costruttore «BT-9000_CPS»
+	// (RT-950_EnCPS v1.1.4-v1.3.0), stesso codice dei programmi della RT-950 Pro fino
+	// alla v1.2.0 (canali, impostazioni, cifratura) ma la radio risponde a 'M' con
+	// "BT-9000" e la memoria ha meno aree: canali 0x0000-0x77FF (960, 15 zone da 64,
+	// anche con il firmware V0.29), VFO 0x8000, impostazioni 0x9000, DTMF 0xA000,
+	// modulazione 0xB000-0xB07F. Si scrivono i canali e le impostazioni generali.
 	o := &rt900Opt{
-		magic: []byte("PROGRAMBT9000U"),
-		crypt: append([]byte("SEND \x01\x01"), make([]byte, 18)...),
-		model: "RT-950",
-		block: 0x80,
-		reads: [][2]int{{0x0000, 0x7800}, {0x8000, 0x8080}, {0x9000, 0x9080}, {0xA000, 0xA180}, {0xB000, 0xB100}, {0xD000, 0xD300}},
-		// canali e impostazioni (blocco 0x9000, come lo scrive BJ-9000_CPS; si
-		// riscrivono i byte letti dalla radio, con le sole modifiche fatte qui)
+		magic:   []byte("PROGRAMBT9000U"),
+		crypt:   append([]byte("SEND \x01\x01"), make([]byte, 18)...),
+		model:   "BT-9000",
+		block:   0x80,
+		reads:   [][2]int{{0x0000, 0x7800}, {0x8000, 0x8080}, {0x9000, 0x9080}, {0xA000, 0xA180}, {0xB000, 0xB080}},
 		ranges:  [][2]int{{0x0000, 0x7800}, {0x9000, 0x9080}},
-		memsize: 0xD300,
+		memsize: 0xB080,
 		airband: band{108000000, 136975000},
 		format:  rt950Format,
 		txen:    true,
 	}
-	genRegister(&genModel{ID: "bj-9000", Vendor: "Bajeton", Model: "BJ-9000", RClass: "RT950Pro", NoChirp: true,
-		Name: "Bajeton BJ-9000", Slots: 960, First: 1, NameMax: 12, Zones: 15,
+	genRegister(&genModel{ID: "rtl-rt950", Vendor: "Radtel", Model: "RT-950", RClass: "RT950", NoChirp: true,
+		Name: "Radtel RT-950", Slots: 960, First: 1, NameMax: 12, Zones: 15,
 		Charset: charsetAlnum + "`~!@#$%^&*()-=_+[]\\{}|;':\",./<>?",
 		Powers:  []genPower{{"Alta 8 W", 8, 0}, {"Media 4 W", 4, 1}, {"Bassa 1 W", 1, 2}},
 		Bands:   []band{{18000000, 1000000000}}, Narrow: true, HasScan: true,
 		DCS: uv5rDTCS, Baud: 115200, Fam: rt900Fam{}, Opt: o,
-		Notes: "Accendi la radio con il cavo collegato. Canali 1-960 = 15 zone da 64. " +
-			"Ricavato dal programma del costruttore «BJ-9000_CPS» v1.1.1 (la BJ-9000 è la Radtel RT-950 Pro): " +
-			"si scrivono i canali e le impostazioni generali (finestra «Optional Features»); VFO, DTMF e APRS restano quelli della radio. Non compatibile con CHIRP."})
+		Notes: "Accendi la radio con il cavo collegato. Canali 1-960 = 15 zone da 64, oppure un unico elenco di 960 canali (impostazione " +
+			"«Divisione dei canali»). Canali e impostazioni generali come nel programma del costruttore «BT-9000_CPS» v1.3.0; VFO, DTMF e APRS " +
+			"restano quelli della radio. Non compatibile con CHIRP."})
+}
+
+// rt950Siblings: le due versioni (960 e 990 canali) della stessa radio
+func rt950Siblings(m *genModel) (m960, m990 *genModel) {
+	o, ok := m.Opt.(*rt900Opt)
+	if !ok || o.layout == 0 {
+		return nil, nil
+	}
+	return genByID["bj-9000-960"], genByID["bj-9000"]
+}
+
+// rt950RecPlausible: il record di 32 byte è un canale (frequenze BCD valide)?
+func rt950RecPlausible(r []byte) bool {
+	bcd := func(b []byte) (int64, bool) {
+		var v int64
+		for k := len(b) - 1; k >= 0; k-- {
+			hi, lo := b[k]>>4, b[k]&0x0F
+			if hi > 9 || lo > 9 {
+				return 0, false
+			}
+			v = v*100 + int64(hi)*10 + int64(lo)
+		}
+		return v * 10, true
+	}
+	rx, ok := bcd(r[0:4])
+	if !ok || rx < 18000000 || rx > 1000000000 {
+		return false
+	}
+	if bytes.Equal(r[4:8], []byte{0xFF, 0xFF, 0xFF, 0xFF}) {
+		return true
+	}
+	tx, ok := bcd(r[4:8])
+	return ok && tx >= 18000000 && tx <= 1000000000
+}
+
+// rt950Layout (4.6): generazione del firmware riconosciuta dai dati letti dalla
+// radio: 990 (0.24 e successivi), 960 (fino a 0.23) o 0 se i dati non bastano.
+//   - dopo il canale 960 (0x7800-0x7BBF) il firmware 0.24 tiene i canali 961-990:
+//     un record che è un canale dice 990; dati che non sono canali (il firmware
+//     precedente usa quest'area per altro) dicono 960;
+//   - zona attiva di una banda (0x902D-0x902F) oltre la decima: 960.
+func rt950Layout(mem []byte) (int, string) {
+	if len(mem) < 0x9080 {
+		return 0, ""
+	}
+	ch, junk := rt950HiCount(mem[0x7800:0x7BC0])
+	switch {
+	case junk > 0 && ch == 0:
+		return 960, "dopo il canale 960 la memoria contiene dati che non sono canali"
+	case ch > 0 && junk == 0:
+		if ch == 1 {
+			return 990, "la radio ha un canale oltre il 960"
+		}
+		return 990, fmt.Sprintf("la radio ha %d canali oltre il 960", ch)
+	}
+	for k := 0; k < 3; k++ {
+		if z := mem[0x902D+k]; z != 0xFF && z&0x0F >= 10 {
+			return 960, fmt.Sprintf("la zona attiva della banda %c è la %d", 'A'+k, z&0x0F+1)
+		}
+	}
+	return 0, ""
+}
+
+// rt950HiCount: record dell'area dei canali 961-990 che sono canali e che non lo sono
+func rt950HiCount(area []byte) (ch, junk int) {
+	for a := 0; a+32 <= len(area); a += 32 {
+		r := area[a : a+32]
+		// posizione vuota: solo 0xFF (o 0x00, come un record azzerato)
+		clean := true
+		for _, b := range r {
+			clean = clean && (b == 0xFF || b == 0x00)
+		}
+		if clean {
+			continue
+		}
+		if r[0] != 0xFF && rt950RecPlausible(r) {
+			ch++
+		} else {
+			junk++
+		}
+	}
+	return ch, junk
+}
+
+// rt950PickLayout (4.6): versione della radio (960 o 990 canali) per la memoria
+// letta: quella riconosciuta dai dati, altrimenti quella proposta (m).
+func rt950PickLayout(m *genModel, mem []byte) (*genModel, string) {
+	m960, m990 := rt950Siblings(m)
+	if m960 == nil {
+		return m, ""
+	}
+	l, why := rt950Layout(mem)
+	switch l {
+	case 990:
+		if m != m990 {
+			return m990, "Firmware 0.24 o successivo (" + why + "): canali gestiti come 10 zone da 99 (990 canali)."
+		}
+		return m, ""
+	case 960:
+		if m != m960 {
+			return m960, "Firmware fino a 0.23 (" + why + "): canali gestiti come 15 zone da 64 (960 canali)."
+		}
+		return m, ""
+	}
+	o := rt900o(m)
+	return m, fmt.Sprintf("Dai dati della radio non si capisce la versione del firmware: canali gestiti come %s. "+
+		"Controlla la versione sulla radio (menu: informazioni sulla radio): con il firmware fino a 0.23 i canali sono 960 (15 zone da 64), "+
+		"dalla 0.24 sono 990 (10 zone da 99). Se non corrisponde, apri la scheda dell'altra versione dalla galleria e rileggi la radio.",
+		map[int]string{960: "firmware fino a 0.23 (960 canali, 15 zone da 64)", 990: "firmware 0.24 e successivi (990 canali, 10 zone da 99)"}[o.layout])
 }
 
 // rt900Identify: ingresso in programmazione e uscita (identificazione della radio)
@@ -319,7 +532,12 @@ func (f rt900Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		if v := r.F("code").Int(img); v != 0xFFFFFF {
 			code = v & 0x7FFFFF
 		}
-		oldAM, oldRx = r.F("am_modulation").Bool(img), r.F("rxfreq").Int(img)*10
+		if o.rxmod {
+			oldAM = r.F("rxmod").Int(img) == 1
+		} else {
+			oldAM = r.F("am_modulation").Bool(img)
+		}
+		oldRx = r.F("rxfreq").Int(img) * 10
 	}
 	raw := append(bytes.Repeat([]byte{0}, 16), bytes.Repeat([]byte{0xFF}, 16)...)
 	r.SetRaw(img, raw)
@@ -338,7 +556,11 @@ func (f rt900Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	// AM: obbligatoria in banda aerea; altrimenti si conserva quella del
 	// canale se la frequenza non cambia (es. canali CB in AM)
 	am := (c.Rx >= o.airband.Lo && c.Rx <= o.airband.Hi) || (oldAM && oldRx == c.Rx)
-	r.F("am_modulation").SetBool(img, am)
+	if o.rxmod {
+		r.F("rxmod").SetBool(img, am)
+	} else {
+		r.F("am_modulation").SetBool(img, am)
+	}
 	if o.txen {
 		r.F("txen").SetInt(img, 1)
 	}
@@ -553,8 +775,43 @@ func (f rt900Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 	}
 	key := []byte(btSymbols[1])
 	bs := o.blk()
+	ranges := o.ranges
+	if o.hi[1] > 0 {
+		// 4.6: canali 961-990 (firmware 0.24 e successivi): si rileggono dalla radio e
+		// si scrivono solo se cambiano; se la radio in quell'area ha dati che non
+		// sono canali (firmware fino a 0.23) non si scrive nulla
+		cur := make([]byte, 0, o.hi[1]-o.hi[0])
+		for a := o.hi[0]; a < o.hi[1]; a += bs {
+			prog(0, total, "Controllo dei canali 961-990…")
+			cmd := []byte{'R', byte(a >> 8), byte(a), byte(bs)}
+			if err := s.p.Write(cmd); err != nil {
+				return "", err
+			}
+			d, err := s.recv(4 + bs)
+			if err == nil && !bytes.Equal(d[:4], cmd) {
+				err = rErr("risposta inattesa")
+			}
+			if err != nil {
+				s.exit()
+				return "", genFail(fmt.Sprintf("Lettura (0x%04X)", a), err)
+			}
+			blk := append([]byte{}, d[4:]...)
+			btCrypt(blk, key)
+			cur = append(cur, blk...)
+		}
+		want := img[o.hi[0]:o.hi[1]]
+		if !bytes.Equal(cur, want) {
+			if _, junk := rt950HiCount(cur[:0x3C0]); junk > 0 {
+				s.exit()
+				return "", rErr("nella radio, dopo il canale 960, ci sono dati che non sono canali: la radio sembra avere il firmware fino a 0.23 (960 canali). " +
+					"Nessun dato è stato scritto. Usa la scheda della versione con 960 canali, oppure aggiorna il firmware della radio")
+			}
+			ranges = append([][2]int{ranges[0], o.hi}, ranges[1:]...)
+			total += o.hi[1] - o.hi[0]
+		}
+	}
 	done := 0
-	for _, r := range o.ranges {
+	for _, r := range ranges {
 		for a := r[0]; a < r[1]; a += bs {
 			prog(done, total, "Scrittura…")
 			blk := append([]byte{}, img[a:a+bs]...)

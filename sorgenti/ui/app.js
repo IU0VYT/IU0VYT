@@ -43,6 +43,34 @@ Object.assign(App, {
     return genRadioDef(g, item && item.fw);
   },
 
+  // 4.6: nomi esatti delle radio. Più radio della galleria possono avere la stessa
+  // gestione (es. Radtel RT-950 Pro e Bajeton BJ-9000): la scheda porta il nome
+  // della radio scelta (dalla galleria, dall'identificazione o l'ultima volta)
+  cardsFor(kind) { return (App.catalog || []).filter(c => (c.drivers || []).includes(kind)); },
+  baseName(kind) { return RADIO_DEF[kind] ? (kind === 'baj' ? 'Bajeton BJ-8300' : RADIO_DEF[kind].name) : (App.defs[kind] ? App.defs[kind].name : kind); },
+  cardLabel(c, kind) {
+    let n = ((c.brand || '') + ' ' + (c.name || '')).trim();
+    if ((c.drivers || []).length > 1) {
+      const m = /\(([^()]*)\)\s*$/.exec(App.baseName(kind));
+      if (m && !n.toLowerCase().includes(m[1].toLowerCase())) n += ' (' + m[1] + ')';
+    }
+    return n;
+  },
+  defaultCard(kind) {
+    const cs = App.cardsFor(kind);
+    const id = ((App.init && App.init.settings && App.init.settings.modelCards) || {})[kind];
+    const norm = s => s.toLowerCase().replace(/[\s\-\/.]/g, '');
+    return cs.find(c => c.id === id) || (cs.length === 1 ? cs[0] : null) ||
+      cs.find(c => norm(App.baseName(kind)).startsWith(norm(c.brand + c.name))) || null;
+  },
+  retitle(kind) {
+    const v = Views[kind], tab = $(`.tab[data-tab="${kind}"]`);
+    if (!v || !tab) return;
+    tab.title = v.def.name;
+    const t = tab.firstChild;
+    if (t && t.nodeType === 3) t.nodeValue = v.def.name.replace(/^(Baofeng|Bajeton) /, '') + ' ';
+  },
+
   // linguetta della scheda di una radio (creata quando la radio si apre dalla galleria)
   radioTab(kind) {
     if ($(`.tab[data-tab="${kind}"]`)) return;
@@ -52,15 +80,21 @@ Object.assign(App, {
     tab.onclick = (e) => { if (e.target.classList.contains('x')) { e.stopPropagation(); App.closeRadio(kind).catch(reportError); } else App.showTab(kind); };
   },
 
-  // apre (o mostra) la scheda di una radio generica
-  openRadio(kind, show) {
-    if (Views[kind]) { if (show) App.showTab(kind); return Views[kind]; }
+  // apre (o mostra) la scheda di una radio generica; card (4.6): radio della
+  // galleria di cui la scheda porta il nome
+  openRadio(kind, show, card) {
+    if (Views[kind]) {
+      if (card) Views[kind].setCard(card, true);
+      if (show) App.showTab(kind);
+      return Views[kind];
+    }
     const def = App.radioDef(kind);
     if (!def) throw new Error('Radio sconosciuta: ' + kind);
-    App.radioTab(kind);
     const page = h(`<section class="page" id="page-${esc(kind)}"></section>`);
     $('main').appendChild(page);
     Views[kind] = new RadioView(kind, page, def);
+    if (card) Views[kind].setCard(card, true);
+    App.radioTab(kind);
     if (show) App.showTab(kind);
     return Views[kind];
   },
@@ -155,9 +189,10 @@ async function start() {
     const s = JSON.parse(sessionStorage.getItem('work-' + TOKEN) || 'null');
     if (s) {
       Views.k67.restore(s.k67); Views.baj.restore(s.baj);
+      for (const k of ['k67', 'baj']) if (s[k] && s[k].card) Views[k].setCard(s[k].card, false);
       for (const k of ['k67', 'baj']) if (Views[k].loaded) App.radioTab(k);
       for (const [k, d] of Object.entries(s.gen || {})) {
-        if (App.defs[k] && d && d.loaded) App.openRadio(k).restore(d);
+        if (App.defs[k] && d && d.loaded) App.openRadio(k, false, d.card || '').restore(d);
       }
       App.onDirty();
     }

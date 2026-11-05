@@ -73,11 +73,13 @@ var catalog = []catItem{
 			{"fw", "Firmware BJ7800_CN_EN_V0.17_20251126.anc e BinTe ANC Bootloader (Google Drive Bajeton)", gd + "drive/folders/1VpGx-Actyg_fi-GzeMg1rXhaf5VlEHQm"},
 			{"info", "Pagina dei download Bajeton", bjDown}},
 		Notes: "960 canali in 15 zone da 64 (driver di CHIRP, scritto per il firmware V0.15P; i canali FM/AM/HF ausiliari non sono gestiti). Il firmware si aggiorna come quello della BJ-8300 (stesso programma «BinTe ANC Bootloader», file .anc)."},
-	{ID: "bj-9000", Brand: "Bajeton", Name: "BJ-9000", Aliases: []string{"BJ9000 GPS APRS", "RT-950 Pro"}, Type: "analog", Drivers: []string{"bj-9000"}, FW: "bj9000",
+	{ID: "bj-9000", Brand: "Bajeton", Name: "BJ-9000", Aliases: []string{"BJ9000 GPS APRS"}, Type: "analog", Drivers: []string{"bj-9000", "bj-9000-960"}, FW: "bj9000",
 		Links: []catLink{{"cps", "Programma BJ-9000_CPS v1.1.1 (Google Drive Bajeton)", gd + "drive/folders/1jJh1gEOniEV3Ud0ODhcH1JeKueAzq4Vm"},
 			{"fw", "Firmware BJ9000_V0.27_260313 e programma BJ9000_EnUPDATE (Google Drive Bajeton)", gd + "drive/folders/1DF17RtchbKreT_QEAsQkON3qauP0gUp-"},
 			{"info", "Pagina dei download Bajeton", bjDown}},
-		Notes: "È la Radtel RT-950 Pro. Canali (960 in 15 zone) e impostazioni generali secondo il programma del costruttore BJ-9000_CPS v1.1.1 (VFO, DTMF e APRS con il programma del costruttore). " +
+		Notes: "Stessa elettronica e stessa gestione della Radtel RT-950 Pro, ma è un'altra radio: la scheda e l'identificazione la chiamano BJ-9000. " +
+			"Due versioni secondo il firmware: fino a 0.23 960 canali (15 zone da 64), dalla 0.24 990 canali (10 zone da 99); la lettura riconosce la versione dai dati " +
+			"della radio e apre la scheda giusta. Canali e impostazioni generali come nei programmi del costruttore (VFO, DTMF e APRS con il programma del costruttore). " +
 			"Firmware .Firmware con il protocollo del programma «BJ9000_EnUPDATE» (la radio controlla il modello prima di aggiornarsi)."},
 	{ID: "bj-8200", Brand: "Bajeton", Name: "BJ-8200", Type: "analog", Drivers: []string{"bj-7700", "bj-7700nbt"}, FW: "anc",
 		Links: []catLink{{"fw", "Programma BJ-7700_EnCPS e firmware — versione con Bluetooth (stesso pacchetto della BJ-7700)", gd + "file/d/1ngQoWCWzLFUfmDSW1JLDcqKwQWxfz_Ph/view"},

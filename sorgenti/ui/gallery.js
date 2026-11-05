@@ -38,7 +38,7 @@ const BRAND_COLOR = {
   TIDRADIO: '#1098ad', TID: '#0b7285', BTECH: '#495057', Abbree: '#5f3dc4', MaxTalker: '#2b8a3e', Intek: '#a61e4d', Maverick: '#364fc7',
   WLN: '#e67700', Zastone: '#087f5b', Luiton: '#862e9c', Hiroyasu: '#b02a8f', Anysecu: '#1971c2', Talkpod: '#5c940d',
   TYT: '#c92a2a', Explorer: '#2f9e44', MMLradio: '#9c36b5', JJCC: '#e8590c', Socotran: '#3b5bdb', Jianpai: '#0c8599',
-  Boristone: '#a0522d', HamGeek: '#f08c00',
+  Boristone: '#a0522d', HamGeek: '#f08c00', SenhaiX: '#1864ab', Cignus: '#5c7cfa',
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];
@@ -194,8 +194,8 @@ const Gallery = {
         ${c.notes ? `<p>${esc(c.notes)}</p>` : ''}
         ${!drivers.length ? `<p class="note">${esc(App.noDriver)}</p>` : ''}</div></div>
       ${drivers.length ? `<h4 class="fwh">Canali e ponti</h4>
-        ${drivers.length > 1 ? '<p class="note">Questa radio esiste in più versioni: scegli quella giusta. Se non è quella, la radio non risponde alla lettura e non viene modificata.</p>' : ''}
-        <div class="galacts">${drivers.map(d => `<div class="galact"><button class="btn primary" data-open="${esc(d)}">📻 ${esc(d === 'k67' || d === 'baj' ? 'Vai alla scheda ' + RADIO_DEF[d].name : 'Apri la scheda ' + (App.defs[d] ? App.defs[d].name : d))}</button>
+        ${drivers.length > 1 ? '<p class="note">Questa radio esiste in più versioni: scegli quella giusta. Se non è quella, la radio non risponde alla lettura e non viene modificata, oppure il programma lo riconosce dai dati letti e apre la scheda giusta.</p>' : ''}
+        <div class="galacts">${drivers.map(d => `<div class="galact"><button class="btn primary" data-open="${esc(d)}">📻 ${esc((d === 'k67' || d === 'baj' ? 'Vai alla scheda ' : 'Apri la scheda ') + App.cardLabel(c, d))}</button>
           <span class="note">${esc(this.driverLine(d))}</span></div>`).join('')}</div>` : ''}
       ${c.guide === '6x2' ? `<h4 class="fwh">Firmware</h4><div class="galact"><button class="btn" data-guide>🧭 Aggiornamento guidato…</button>
         <span class="note">controllo dei file del pacchetto ufficiale, procedura passo per passo e avvio del programma BTECH</span></div>` : ''}
@@ -210,7 +210,8 @@ const Gallery = {
       m.close();
       const k = b.dataset.open;
       try {
-        if (Views[k]) App.showTab(k); else App.openRadio(k, true);
+        // 4.6: la scheda porta il nome di questa radio (e la scelta si ricorda)
+        if (Views[k]) { Views[k].setCard(c.id, true); App.radioTab(k); App.showTab(k); } else App.openRadio(k, true, c.id);
       } catch (e) { reportError(e); }
     });
     const gb = $('[data-guide]', el);

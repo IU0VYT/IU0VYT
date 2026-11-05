@@ -18,6 +18,7 @@ package main
 
 import (
 	"encoding/hex"
+	"fmt"
 	"strconv"
 )
 
@@ -44,10 +45,13 @@ func bj9kSideOpts(n int) []string {
 		"Invio beacon APRS", "PTT della banda C"}[:n]
 }
 
-var bj9kSetDefs = func() []bj9kSetDef {
+// bj9kSetDefsFor (4.6): impostazioni per la versione della radio con nz zone
+// (firmware 0.24 e successivi: 10 zone da 99 canali; fino a 0.23: 15 zone da 64)
+func bj9kSetDefsFor(nz int) []bj9kSetDef {
 	g1, g2, g3, g4 := "Ricezione e trasmissione", "Bande, zone e modalità", "Display, suoni e tasti", "DTMF, allarme, APRS e funzioni remote"
 	bands := []string{"Nome", "Frequenza", "Numero del canale"}
-	zones := strNums(15, 1, 1, "")
+	zones := strNums(nz, 1, 1, "")
+	per := map[int]int{10: 99, 15: 64}[nz]
 	d := []bj9kSetDef{
 		{field: "SQL", off: 0, opts: append([]string{"OFF"}, strNums(9, 1, 1, "")...), group: g1},
 		{field: "SaveMode", off: 1, opts: []string{"OFF", "Normale", "Super", "Profondo"}, group: g3},
@@ -95,7 +99,7 @@ var bj9kSetDefs = func() []bj9kSetDef {
 		{field: "RTone", off: 30, opts: []string{"1000 Hz", "1450 Hz", "1750 Hz", "2100 Hz"}, group: g1},
 		{field: "TimerMenuQuit", off: 0x21, opts: strNums(11, 5, 5, " s"), group: g3},
 		{field: "WeatherCH", off: 0x25, opts: strNums(10, 1, 1, ""), group: g2},
-		{field: "DivideCH", off: 0x26, opts: []string{"Zone (15 × 64)", "Tutti i canali (960)"}, group: g2},
+		{field: "DivideCH", off: 0x26, opts: []string{fmt.Sprintf("Zone (%d × %d)", nz, per), fmt.Sprintf("Tutti i canali (%d)", nz*per)}, group: g2},
 		{field: "SubaudioScanSave", off: 0x27, opts: []string{"Ricezione e trasmissione", "Solo ricezione", "Solo trasmissione"}, key: "qt_scan_save", group: g2,
 			label: "Salvataggio del tono trovato con la scansione", desc: "Dove salvare il tono CTCSS/DCS trovato con la scansione dei toni: in ricezione e trasmissione, solo in ricezione o solo in trasmissione."},
 		{field: "KeySide1", off: 0x29, opts: bj9kSideOpts(8), key: "pf1_short", group: g3, label: "Tasto laterale 1 (pressione breve)", desc: "Funzione del tasto laterale 1 premuto brevemente."},
@@ -142,11 +146,18 @@ var bj9kSetDefs = func() []bj9kSetDef {
 		}
 	}
 	return d
-}()
+}
 
-var bj9kSettings = func() *setTable {
-	t := &setTable{Class: "BJ-9000", Size: 0x9080, Source: "programma BJ-9000_CPS del costruttore (finestra «Optional Features»)"}
-	for _, b := range bj9kSetDefs {
+// impostazioni della versione con 990 canali (firmware 0.24 e successivi) e con 960
+var bj9kSetDefs, bj9kSetDefs960 = bj9kSetDefsFor(10), bj9kSetDefsFor(15)
+
+var bj9kSettings, bj9kSettings960 = bj9kTable(bj9kSetDefs,
+	"programmi del costruttore BJ-9000_CPS / RT-950PRO_CPS v1.2.1 e successivi (finestra «Optional Features»)"),
+	bj9kTable(bj9kSetDefs960, "programmi del costruttore BJ-9000_CPS / RT-950PRO_CPS fino a v1.2.0 (finestra «Optional Features»)")
+
+func bj9kTable(defs []bj9kSetDef, src string) *setTable {
+	t := &setTable{Class: "BJ-9000", Size: 0x9080, Source: src}
+	for _, b := range defs {
 		sh := 0
 		for b.mask>>sh&1 == 0 {
 			sh++
@@ -175,14 +186,17 @@ var bj9kSettings = func() *setTable {
 		t.Settings = append(t.Settings, sd)
 	}
 	return t
-}()
+}
 
 func init() {
 	settingsProviders = append(settingsProviders, settingsProvider{
-		has: func(kind string) bool { return kind == "bj-9000" },
+		has: func(kind string) bool { return kind == "bj-9000" || kind == "bj-9000-960" || kind == "rtl-rt950" },
 		get: func(kind string, img []byte) *setTable {
 			if len(img) < bj9kSettings.Size {
 				return nil
+			}
+			if kind == "bj-9000-960" || kind == "rtl-rt950" {
+				return bj9kSettings960
 			}
 			return bj9kSettings
 		},

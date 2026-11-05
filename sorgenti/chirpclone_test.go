@@ -46,6 +46,12 @@ func emuFor(m *genModel, img []byte) genEmu {
 	return nil
 }
 
+// 4.6: classi di CHIRP con cui confrontare il collegamento quando quella del
+// modello non lo permette. UV68 (TID TD-UV68, la TD-H8 con un altro nome): in CHIRP
+// la scrittura si ferma con un errore interno (il modello non è tra quelli di cui
+// _get_radio_firmware_version legge la versione), quindi si confronta con la TD-H8
+var chirpCloneClass = map[string]string{"td-uv68": "TDH8"}
+
 // sessione di CHIRP con la radio simulata: byte ricevuti dalla radio
 func chirpSession(t *testing.T, m *genModel, e genEmu, op, file string) []byte {
 	var rec *recPort
@@ -61,7 +67,11 @@ func chirpSession(t *testing.T, m *genModel, e genEmu, op, file string) []byte {
 		return err
 	})
 	defer stop()
-	chirpRef(t, "clone", m.RClass, addr, op, file)
+	rc := m.RClass
+	if c, ok := chirpCloneClass[m.ID]; ok {
+		rc = c
+	}
+	chirpRef(t, "clone", rc, addr, op, file)
 	done := make(chan struct{})
 	go func() { wg.Wait(); close(done) }()
 	select {

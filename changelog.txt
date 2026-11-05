@@ -3,6 +3,54 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.6.0 (05/11/2026)
+------------------
+- BJ-9000 / Radtel RT-950 Pro, due versioni secondo il firmware (drv_rt900.go):
+  «bj-9000» = firmware 0.24 e successivi, 990 canali (Channel[990], 0x0000-0x7BBF,
+  10 zone da 99) e «bj-9000-960» = firmware fino a 0.23, 960 canali (0x0000-0x77FF,
+  15 zone da 64), come i programmi del costruttore fino a v1.2.0 e da v1.2.1
+  (confrontati v1.1.1, v1.2.0, v1.2.1, v1.3.3: stessi record e stesse impostazioni,
+  cambia il numero dei canali; nella v1.3.3 il byte 15 ha RxModulation = byte & 3 e
+  non più EnableTx: rt950Format990). Lettura fino a 0x7BFF per entrambe;
+  rt950Layout riconosce la versione dai dati (canali oltre il 960 → 990; record che
+  non sono canali → 960; zona attiva 0x902D-0x902F oltre la decima → 960),
+  genPickLayout la applica alla lettura (genapi.go: i canali vanno nella scheda
+  della versione riconosciuta), all'identificazione e all'apertura dei file
+  (metadato iu0vyt_channels in makeImg; detectGen). Upload: canali 961-990 (o.hi)
+  riletti nella stessa sessione e scritti solo se cambiano; con dati che non sono
+  canali nessuna scrittura. Con la copia di sicurezza, radio dell'altra versione →
+  scrittura rifiutata. Impostazioni (settings_bj9000.go): bj9kSetDefsFor(10/15),
+  «Divisione dei canali» con 990/960, zone attive 10/15; genDivides per le due
+  versioni.
+- Radtel RT-950 (senza Pro, «rtl-rt950»): programma «BT-9000_CPS» v1.1.4-v1.3.0,
+  stesso codice della RT-950 Pro fino a v1.2.0 con strModelCode "BT-9000" e aree
+  0x0000-0x77FF, 0x8000, 0x9000, 0xA000, 0xB000-0xB07F; 960 canali (15 zone).
+- verifica/bt11 (bj9000_test.go): TestBJ9000CPS e TestSettingsBJ9000CPS per tre
+  programmi (BJ9000_CPS ≤ v1.2.0, BJ9000_CPS990 ≥ v1.2.1, RT950_CPS), anche con i
+  canali 961, 980 e 990; nomi delle proprietà rinominate nei programmi più recenti
+  (CurWorkZone*, MenuExitTime). rt950layout_test.go: riconoscimento, file, scrittura
+  dei canali 961-990 nella radio simulata con l'area vuota e con dati di servizio.
+- Nomi esatti delle radio (modelnames.go): Settings.ModelCards (scheda → radio della
+  galleria scelta), identCardNames (nome della radio scelta, scelte «kind#scheda»
+  per le altre radio con la stessa gestione, esito ambiguo senza una scelta
+  precedente), identify/open con «kind#scheda», radio/card; nomi dei file di copia e
+  dei file proposti (radioFileBase). ui: RadioView.setCard, App.cardsFor/cardLabel/
+  defaultCard/retitle, openRadio(kind, show, card), galleria e inoltro con la radio
+  scelta, pickModelDlg nell'identificazione automatica. TestModelNames.
+- Avviso di dati non salvati (ui): dopo la lettura dalla radio, l'apertura
+  dall'identificazione, la scrittura nella radio e l'inoltro la scheda non è più
+  «modificata»; file nuovo vuoto non modificato. Testi dei promemoria.
+- Lettura in una scheda di un'altra versione della radio (ui/radio.js cableRead): i
+  canali si aprono nella scheda della versione letta.
+- Radtel RT-920: 10 zone da 99 nella vista (firmware V0.17 e successivi; il driver
+  di CHIRP è per la V0.18); nota sul firmware precedente (960 canali).
+- Nuove radio da CHIRP: SenhaiX 8800, Radioddity GS-5B, Cignus XTR-5, Anysecu AC-580
+  (Senhaix8800Radio di ga510.py: «PROGROMSHXU», potenze 5/1 W, banda aerea, bit
+  allow_tx come set_memory), TID TD-UV68 (UV68 di tdh8.py). chirpclone_test.go:
+  chirpCloneClass (UV68 confrontata con TDH8: in CHIRP la sua scrittura si ferma).
+- Catalogo: 392 modelli di 29 marche (354 con canali, 303 con impostazioni).
+
+
 4.5.0 (04/11/2026)
 ------------------
 - Firmware della Retevis RT85 (fwth8600.go, tipo «th8600»): protocollo del programma

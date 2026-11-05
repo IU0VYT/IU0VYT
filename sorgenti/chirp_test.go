@@ -90,6 +90,10 @@ var chirpTestImage = map[string]string{
 	"hg-hg590":    "Radtel_RT-490.img",
 	// 4.2: Retevis RT21V, stessa memoria della RT21
 	"rt-rt21v": "Retevis_RT21.img",
+	// 4.6: radio con la memoria della SenhaiX 8800 senza un'immagine propria
+	"cg-xtr5":  "SenhaiX_8800.img",
+	"as-ac580": "SenhaiX_8800.img",
+	"td-uv68":  "TIDRADIO_TD-H8.img",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {

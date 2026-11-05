@@ -46,7 +46,10 @@ type Settings struct {
 	// KnownRadios (4.3): modelli riconosciuti dall'identificazione, il più recente
 	// per primo: le ricerche successive cominciano da questi
 	KnownRadios []string `json:"knownRadios,omitempty"`
-	CableVerify bool     `json:"cableVerify"`
+	// ModelCards (4.6): per ogni scheda (gestione) la radio della galleria scelta
+	// l'ultima volta, con il suo nome (es. «bj-9000» → Radtel RT-950 Pro)
+	ModelCards  map[string]string `json:"modelCards,omitempty"`
+	CableVerify bool              `json:"cableVerify"`
 	// aggiornamento del firmware della Bajeton
 	FwURL      string `json:"fwURL"`
 	FwBaud     int    `json:"fwBaud"`

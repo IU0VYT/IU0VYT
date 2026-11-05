@@ -90,6 +90,15 @@ func genMinSize(m *genModel) int {
 
 var reBadFileChar = regexp.MustCompile(`[^A-Za-z0-9._-]+`)
 
+// radioFileBase (4.6): nome dei file della radio: quello della radio scelta tra le
+// radio con la stessa gestione (es. Radtel_RT-950_Pro invece di Bajeton_BJ-9000)
+func (a *App) radioFileBase(m *genModel) string {
+	if c, sure := a.kindCard(m.ID); sure {
+		return strings.Trim(reBadFileChar.ReplaceAllString(c.Brand+"_"+c.Name, "_"), "_")
+	}
+	return genFileBase(m)
+}
+
 func genFileBase(m *genModel) string {
 	return strings.Trim(reBadFileChar.ReplaceAllString(m.Vendor+"_"+m.Model, "_"), "_")
 }
@@ -110,7 +119,7 @@ func (a *App) genSave(kind string, chs []*Chan, saveAs bool, path string) (inter
 		p = sess.Path
 	}
 	if p == "" {
-		suggest := genFileBase(m) + ".img"
+		suggest := a.radioFileBase(m) + ".img"
 		if sess.Path != "" {
 			suggest = sess.Path
 		} else if a.store.Get().LastDir != "" {
@@ -225,7 +234,7 @@ func genAdapt(c *Chan, m *genModel, label string, rep *Report) *Chan {
 // ---------------------------------------------------------------- cavo
 
 func (a *App) saveGenBackup(m *genModel, mem []byte, meta map[string]interface{}, what string) (string, error) {
-	p := filepath.Join(a.backupDir(), fmt.Sprintf("%s_%s_%s.img", genFileBase(m), what, time.Now().Format("2006-01-02_15-04-05")))
+	p := filepath.Join(a.backupDir(), fmt.Sprintf("%s_%s_%s.img", a.radioFileBase(m), what, time.Now().Format("2006-01-02_15-04-05")))
 	return p, os.WriteFile(p, makeImg(m, mem, meta), 0o644)
 }
 
@@ -363,6 +372,14 @@ func (a *App) runGenCable(ctx context.Context, j *cableJob, m *genModel, req *ca
 		if err != nil {
 			return nil, err
 		}
+		// 4.6: versione della radio adatta alla memoria letta (es. BJ-9000 / RT-950
+		// Pro con 960 o 990 canali): i canali si aprono nella sua scheda
+		if m2, why := genPickLayout(m, mem); m2 != m || why != "" {
+			if why != "" {
+				j.note("%s", why)
+			}
+			m = m2
+		}
 		bp, berr := a.saveGenBackup(m, mem, meta, "letta")
 		if berr == nil {
 			j.note("Copia della lettura salvata in %s", bp)
@@ -378,6 +395,12 @@ func (a *App) runGenCable(ctx context.Context, j *cableJob, m *genModel, req *ca
 		mem, err := read("Copia di sicurezza: lettura della radio")
 		if err != nil {
 			return nil, fmt.Errorf("copia di sicurezza non riuscita, nessun dato è stato scritto. %v", err)
+		}
+		// 4.6: la radio ha l'altra versione della memoria dei canali (960 o 990)?
+		if m2, _ := genPickLayout(m, mem); m2 != m {
+			bp, _ := a.saveGenBackup(m2, mem, meta, "prima_della_scrittura")
+			return nil, fmt.Errorf("la radio collegata ha il %s, ma questa scheda è per il %s: i canali finirebbero in posizioni diverse. "+
+				"Nessun dato è stato scritto (copia della radio in %s). Rileggi la radio: i canali si apriranno nella scheda giusta", nameQualifier(m2.Name), nameQualifier(m.Name), bp)
 		}
 		bp, err := a.saveGenBackup(m, mem, meta, "prima_della_scrittura")
 		if err != nil {

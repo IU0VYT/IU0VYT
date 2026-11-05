@@ -61,6 +61,9 @@ type ga510Opt struct {
 	magic   []byte
 	memsize int // area letta
 	wsize   int // area scritta
+	// allowTx (4.6, SenhaiX 8800): il bit «trasmissione permessa» del canale
+	// segue il TX disabilitato, come in set_memory di ga510.py
+	allowTx bool
 }
 
 type ga510Fam struct{}
@@ -94,6 +97,23 @@ func init() {
 	add("ab-arf5", "Abbree", "AR-F5", "AbbreeARF5Radio", "Abbree AR-F5", 1, wltu, []genPower{{"Alta 5 W", 5, 0}, {"Bassa 1 W", 1, 2}, {"Media 2 W", 2, 1}})
 	genByID["ab-arf5"].Bands = []band{{136000000, 174000000}, {200000000, 300000000}, {300000000, 400000000}, {400000000, 520000000}}
 	add("td-h6", "TIDRADIO", "TD-H6", "TDH6Radio", "TIDRADIO TD-H6", 0, bfhu, []genPower{{"Alta 10 W", 10, 0}, {"Bassa 1 W", 1, 2}, {"Media 5 W", 5, 1}})
+
+	// 4.6: SenhaiX 8800 e le radio con la stessa memoria (classe Senhaix8800Radio di
+	// ga510.py e derivate): comando di aggancio «PROGROMSHXU», due potenze, canali
+	// 0-127, banda aerea 108-136 MHz in ricezione AM
+	shx := &ga510Opt{magic: []byte("PROGROMSHXU"), memsize: 0x1C40, wsize: 0x1C20, allowTx: true}
+	for _, v := range []struct{ id, vendor, model, rclass string }{
+		{"shx-8800", "SenhaiX", "8800", "Senhaix8800Radio"},
+		{"rd-gs5b", "Radioddity", "GS-5B", "RadioddityGS5BRadio"},
+		{"cg-xtr5", "Cignus", "XTR-5", "CignusXTR5Radio"},
+		{"as-ac580", "Anysecu", "AC-580", "AnysecuAC580Radio"},
+	} {
+		add(v.id, v.vendor, v.model, v.rclass, v.vendor+" "+v.model, 0, shx, []genPower{{"Alta 5 W", 5, 0}, {"Bassa 1 W", 1, 2}})
+		m := genByID[v.id]
+		m.Bands = []band{{108000000, 136000000}, {136000000, 174000000}, {400000000, 480000000}}
+		m.Notes = "Accendi la radio con il cavo collegato. Canali 0-127; in banda aerea (108-136 MHz) la radio riceve in AM. " +
+			"Driver di CHIRP della SenhaiX 8800 (famiglia Radioddity GA-510)."
+	}
 }
 
 func ga510o(m *genModel) *ga510Opt { return m.Opt.(*ga510Opt) }
@@ -176,6 +196,9 @@ func (f ga510Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		name = name[:10]
 	}
 	n.F("name").SetStr(img, name, ' ')
+	if ga510o(m).allowTx {
+		r.F("allow_tx").SetBool(img, !c.TxOff)
+	}
 	r.F("rxfreq").SetInt(img, c.Rx/10)
 	if c.TxOff {
 		r.F("txfreq").Fill(img, 0xFF)

@@ -35,6 +35,7 @@ import (
 
 // radio simulata per il programma del costruttore
 type bj9kCPSEmu struct {
+	model string // risposta a 'M' ("" = "RT-950")
 	mu    sync.Mutex
 	mem   []byte // 0x0000-0xD2FF
 	aprs  []byte // area APRS (128 byte, comandi 'T' e 'X')
@@ -57,7 +58,11 @@ func (e *bj9kCPSEmu) serve(p Port) error {
 	if b, err := emuRead(p, 1); err != nil || b[0] != 'M' {
 		return errors.New("M atteso")
 	}
-	p.Write([]byte("RT-950      "))
+	md := e.model
+	if md == "" {
+		md = "RT-950"
+	}
+	p.Write([]byte(fmt.Sprintf("%-12s", md)))
 	pk, err := emuRead(p, 25)
 	if err != nil {
 		return err
@@ -117,19 +122,48 @@ func (e *bj9kCPSEmu) serve(p Port) error {
 	}
 }
 
-func bj9kEnv(t *testing.T) (string, string) {
-	h, exe := os.Getenv("BT11_HARNESS"), os.Getenv("BJ9000_CPS")
-	if h == "" || exe == "" {
-		t.Skip("BT11_HARNESS o BJ9000_CPS non impostati")
+// 4.6: versioni della radio e programmi del costruttore con cui si confrontano:
+// BJ9000_CPS = programma fino a v1.2.0 (960 canali, es. BJ-9000_CPS v1.1.1 o
+// RT-950PRO_CPS v1.2.0), BJ9000_CPS990 = programma v1.2.1 o successivo (990 canali,
+// es. RT-950PRO_CPS v1.3.3)
+type bj9kGen struct {
+	env, kind string
+	chEnd     int // fine dei canali nella memoria
+}
+
+// modello comunicato dalla radio simulata per il programma del costruttore
+var bj9kEmuModel string
+
+var bj9kGens = []bj9kGen{{"BJ9000_CPS", "bj-9000-960", 0x7800}, {"BJ9000_CPS990", "bj-9000", 0x7BC0},
+	// Radtel RT-950 (senza «Pro»): programma «BT-9000_CPS» (RT-950_EnCPS v1.3.0)
+	{"RT950_CPS", "rtl-rt950", 0x7800}}
+
+func bj9kEach(t *testing.T, fn func(t *testing.T, h, exe string, g bj9kGen)) {
+	h := os.Getenv("BT11_HARNESS")
+	if h == "" {
+		t.Skip("BT11_HARNESS non impostata")
 	}
-	return h, exe
+	ran := false
+	for _, g := range bj9kGens {
+		exe := os.Getenv(g.env)
+		if exe == "" {
+			continue
+		}
+		ran = true
+		g := g
+		bj9kEmuModel = rt900o(genByID[g.kind]).model
+		t.Run(g.kind, func(t *testing.T) { fn(t, h, exe, g) })
+	}
+	if !ran {
+		t.Skip("BJ9000_CPS e BJ9000_CPS990 non impostati")
+	}
 }
 
 // bj9kCPS: il programma legge la memoria mem (read) o scrive il file dat in una
 // radio con memoria iniziale mem (write); restituisce file letto e memoria finale
 func bj9kCPS(t *testing.T, h, exe, op string, mem, dat []byte) ([]byte, []byte) {
 	t.Helper()
-	e := &bj9kCPSEmu{mem: append([]byte{}, mem...), aprs: bytes.Repeat([]byte{0xFF}, 128)}
+	e := &bj9kCPSEmu{model: bj9kEmuModel, mem: append([]byte{}, mem...), aprs: bytes.Repeat([]byte{0xFF}, 128)}
 	addr, stop := serveHarnessFn(func(p Port, _ int) { _ = e.serve(p) })
 	defer stop()
 	f := filepath.Join(t.TempDir(), "radio.dat")
@@ -155,13 +189,26 @@ func bj9kBase(t *testing.T, h, exe string) []byte {
 	return mem
 }
 
-func TestBJ9000CPS(t *testing.T) {
-	h, exe := bj9kEnv(t)
-	m := genByID["bj-9000"]
+func TestBJ9000CPS(t *testing.T) { bj9kEach(t, testBJ9000CPS) }
+
+func testBJ9000CPS(t *testing.T, h, exe string, g bj9kGen) {
+	m := genByID[g.kind]
 	base := bj9kBase(t, h, exe)
 	chs := genChans(m, base)
+	var any *Chan
 	for _, e := range chirpEdits(m, base) {
 		chs[e.N] = e.Chan
+		if e.Chan != nil {
+			any = e.Chan
+		}
+	}
+	if m.Slots == 990 {
+		// canali oltre il 960 (solo con il firmware 0.24 e successivi)
+		for _, n := range []int{960, 979, 989} {
+			c := *any
+			c.Name = fmt.Sprintf("CH%d", n+1)
+			chs[n] = &c
+		}
 	}
 	ours, err := genWrite(m, base, chs, &Report{})
 	if err != nil {
@@ -169,8 +216,11 @@ func TestBJ9000CPS(t *testing.T) {
 	}
 	dat, _ := bj9kCPS(t, h, exe, "read", ours, nil)
 	_, mem := bj9kCPS(t, h, exe, "write", bytes.Repeat([]byte{0xFF}, 0xD300), dat)
-	if !bytes.Equal(mem[:0x7800], ours[:0x7800]) {
-		t.Fatalf("canali riscritti dal programma diversi: %s", diffRanges(ours[:0x7800], mem[:0x7800]))
+	if !bytes.Equal(mem[:g.chEnd], ours[:g.chEnd]) {
+		t.Fatalf("canali riscritti dal programma diversi: %s", diffRanges(ours[:g.chEnd], mem[:g.chEnd]))
+	}
+	if l, why := rt950Layout(ours); g.chEnd == 0x7BC0 && genGet(m, ours, 989) != nil && l != 990 {
+		t.Fatalf("memoria con il canale 990 non riconosciuta come firmware 0.24 (%d %s)", l, why)
 	}
 	n := 0
 	for _, c := range chs {
@@ -181,9 +231,10 @@ func TestBJ9000CPS(t *testing.T) {
 	t.Logf("%d canali scritti qui, letti e riscritti dal programma del costruttore: memoria dei canali identica", n)
 }
 
-func TestSettingsBJ9000CPS(t *testing.T) {
-	h, exe := bj9kEnv(t)
-	tb := settingsFor("bj-9000", make([]byte, 0xD300))
+func TestSettingsBJ9000CPS(t *testing.T) { bj9kEach(t, testSettingsBJ9000CPS) }
+
+func testSettingsBJ9000CPS(t *testing.T, h, exe string, g bj9kGen) {
+	tb := settingsFor(g.kind, make([]byte, 0xD300))
 	seen := map[string]bool{}
 	for _, d := range tb.Settings {
 		if d.Key == "" || d.ItLabel == "" || d.ItDesc == "" || seen[d.Key] {
@@ -220,6 +271,18 @@ func TestSettingsBJ9000CPS(t *testing.T) {
 			return "0"
 		}
 		return v
+	}
+	// 4.6: alcune proprietà hanno un altro nome nei programmi più recenti
+	alias := map[string]string{"CbB_CurWorkAreaA": "CbB_CurWorkZoneA", "CbB_CurWorkAreaB": "CbB_CurWorkZoneB",
+		"CbB_CurWorkAreaC": "CbB_CurWorkZoneC", "CbB_TimerMenuQuit": "CbB_MenuExitTime"}
+	{
+		dat, _ := bj9kCPS(t, h, exe, "read", base, nil)
+		pm := props(dat)
+		for k, p := range prop {
+			if _, ok := pm[p]; !ok && pm[alias[p]] != "" {
+				prop[k] = alias[p]
+			}
+		}
 	}
 	check := func(img []byte, what string) {
 		dat, _ := bj9kCPS(t, h, exe, "read", img, nil)
@@ -277,7 +340,7 @@ func TestSettingsBJ9000CPS(t *testing.T) {
 			t.Fatalf("giro %d: bit diversi: %s", r, diff)
 		}
 		// i canali non cambiano
-		if !bytes.Equal(mine[:0x7800], theirs[:0x7800]) {
+		if !bytes.Equal(mine[:g.chEnd], theirs[:g.chEnd]) {
 			t.Fatalf("giro %d: canali diversi", r)
 		}
 		if r == 0 {

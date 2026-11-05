@@ -484,10 +484,12 @@ type identResult struct {
 	Tried   int          `json:"tried"`   // protocolli provati
 	// Ambiguous: la radio ha la memoria di più modelli che non si distinguono
 	// via cavo (stesso protocollo, nessun segno del modello nella memoria)
-	Ambiguous bool   `json:"ambiguous"`
-	Seconds   int    `json:"seconds"`
-	Backup    string `json:"backup"`
-	Count     int    `json:"count"` // canali presenti
+	Ambiguous bool `json:"ambiguous"`
+	// Card (4.6): radio della galleria (scheda del catalogo) con il nome mostrato
+	Card    string `json:"card,omitempty"`
+	Seconds int    `json:"seconds"`
+	Backup  string `json:"backup"`
+	Count   int    `json:"count"` // canali presenti
 }
 
 func (r *identResult) add(l, f string, a ...interface{}) {
@@ -882,6 +884,18 @@ func (a *App) runIdentify(ctx context.Context, j *cableJob, req *identReq) (*ide
 	}
 	res.Tried = 0
 	res, err := a.identRun(ctx, j, req, plan, start, res)
+	if err == nil {
+		// 4.6: nome esatto della radio (e delle altre con la stessa gestione)
+		a.identCardNames(res)
+		if res != nil && res.Found && j.sess != nil {
+			kinds := []string{res.Kind}
+			for _, o := range res.Others {
+				k, _ := splitKindCard(o.Kind)
+				kinds = append(kinds, k)
+			}
+			j.sess.kinds = append(j.sess.kinds, kinds...)
+		}
+	}
 	return res, err
 }
 
@@ -1096,6 +1110,22 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 					// nessun modello riconosce la memoria: quello che l'ha letta
 					best = m
 					mem, note, st = reads[0].mem, reads[0].note, reads[0].st
+				}
+				// 4.6: versione della radio adatta alla memoria letta (BJ-9000 / RT-950
+				// Pro con 960 o 990 canali); se i dati la dicono, l'altra non si propone
+				if genLayoutOf(best) != 0 {
+					b2, why := genPickLayout(best, mem)
+					if l, _ := rt950Layout(mem); l != 0 {
+						var keep []*genModel
+						for _, o := range possible {
+							if genLayoutOf(o) == 0 || genLayoutOf(o) == l {
+								keep = append(keep, o)
+							}
+						}
+						possible = keep
+					}
+					best = b2
+					note = strings.TrimSpace(note + " " + why)
 				}
 				// memoria letta per ogni modello proposto (quella del suo tipo)
 				mems := map[string][]byte{best.ID: mem}
@@ -1322,16 +1352,24 @@ func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 		return nil, errors.New("nessuna radio identificata da aprire")
 	}
 	kind := id.kind
-	if req.Kind != "" {
+	// 4.6: «kind#scheda»: radio scelta tra quelle con la stessa gestione
+	reqKind, card := splitKindCard(req.Kind)
+	if reqKind != "" {
 		ok := false
 		for _, k := range id.kinds {
-			ok = ok || k == req.Kind
+			ok = ok || k == reqKind
 		}
 		if !ok {
 			return nil, errors.New("modello non compatibile con la radio identificata")
 		}
-		kind = req.Kind
+		kind = reqKind
 	}
+	if card == "" {
+		if c, sure := a.kindCard(kind); sure {
+			card = c.ID
+		}
+	}
+	a.rememberCard(kind, card)
 	if m, ok := genByID[kind]; ok {
 		mem := id.sess.Base
 		if b, ok := id.mems[kind]; ok {
@@ -1343,7 +1381,7 @@ func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 		a.mu.Lock()
 		a.radios[kind] = &radioSession{Base: mem}
 		a.mu.Unlock()
-		return map[string]interface{}{"radio": genResp{Kind: m.ID, Channels: genChans(m, mem), Def: m.def(), Warnings: []string{}, Single: genSingle(m.ID, mem)}}, nil
+		return map[string]interface{}{"radio": genResp{Kind: m.ID, Channels: genChans(m, mem), Def: m.def(), Warnings: []string{}, Single: genSingle(m.ID, mem)}, "card": card}, nil
 	}
 	rep := &Report{}
 	kind, chs, err := readRadio(id.sess.Base, rep)
@@ -1359,5 +1397,5 @@ func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 	} else {
 		resp.DatVer, resp.Single = datVer(id.sess.Base), datSingleList(id.sess.Base)
 	}
-	return map[string]interface{}{"radio": resp}, nil
+	return map[string]interface{}{"radio": resp, "card": card}, nil
 }
