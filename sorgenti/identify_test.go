@@ -31,8 +31,70 @@ import (
 
 func identFast(t *testing.T) {
 	f, s, p := identFirstWait, identSilentMax, identPause
+	l, l9 := identSpontListen, identSpontListen9600
 	identFirstWait, identSilentMax, identPause = 150*time.Millisecond, 900*time.Millisecond, 50*time.Millisecond
-	t.Cleanup(func() { identFirstWait, identSilentMax, identPause = f, s, p })
+	// ascolto più lungo dell'attesa massima del tentativo, come con i tempi veri
+	// (1 s e 0,7 s): il tentativo deve proseguire lo stesso
+	identSpontListen, identSpontListen9600 = 1000*time.Millisecond, 1000*time.Millisecond
+	identSpontReset()
+	t.Cleanup(func() {
+		identFirstWait, identSilentMax, identPause = f, s, p
+		identSpontListen, identSpontListen9600 = l, l9
+		identSpontReset()
+	})
+}
+
+func identSpontReset() {
+	identSpont.Lock()
+	identSpont.m = nil
+	identSpont.Unlock()
+}
+
+// 4.7: radio che trasmette da sola (come il caricatore delle Bajeton in modalità
+// aggiornamento, che si presenta con 0x01 a 9600 baud, o una radio che manda
+// messaggi periodici): quei byte non contano come risposta, la ricerca finisce
+// come con una porta senza radio e l'esito lo dice
+func TestIdentifySpontaneous(t *testing.T) {
+	identFast(t)
+	for _, beacon := range [][]byte{{0x01}, []byte("\xAB\xCD\x08\x00\x02\x05\x30\x31")} {
+		beacon := beacon
+		t.Run(fmt.Sprintf("%x", beacon), func(t *testing.T) {
+			identSpontReset()
+			c := newAPIClient(t)
+			identAttach(t, func(p Port) {
+				done := make(chan struct{})
+				go func() {
+					tk := time.NewTicker(100 * time.Millisecond)
+					defer tk.Stop()
+					for {
+						select {
+						case <-done:
+							return
+						case <-tk.C:
+							if p.Write(beacon) != nil {
+								return
+							}
+						}
+					}
+				}()
+				b := make([]byte, 1)
+				for p.ReadFull(context.Background(), b, time.Hour) == nil {
+				}
+				close(done)
+			}, "")
+			t0 := time.Now()
+			c.must("identify/start", map[string]string{"port": "COM9"})
+			st := identWait(c)
+			res, _ := st["result"].(map[string]interface{})
+			if st["state"] != "done" || res == nil || res["found"] == true || res["spont"] != true {
+				t.Fatalf("esito: %v %v", st["state"], res)
+			}
+			if n, _ := res["answers"].([]interface{}); len(n) > 3 {
+				t.Fatalf("la trasmissione spontanea è stata presa per risposta da %d modelli: %v", len(n), n[:3])
+			}
+			t.Logf("%d tentativi in %v", int(res["tried"].(float64)), time.Since(t0).Round(time.Second))
+		})
+	}
 }
 
 // radio simulata su ogni porta (e sui dispositivi USB del modello)

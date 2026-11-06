@@ -217,6 +217,11 @@ func genWrite(m *genModel, base []byte, chs []*Chan, rep *Report) ([]byte, error
 			}
 		}
 	}
+	// 4.7: correzioni dei canali non modificati (es. bit «trasmissione abilitata»
+	// della RT-950 Pro / BJ-9000, vedi rt900Fam.Finish)
+	if f, ok := m.Fam.(interface{ Finish(m *genModel, img []byte) }); ok {
+		f.Finish(m, out)
+	}
 	return out, nil
 }
 

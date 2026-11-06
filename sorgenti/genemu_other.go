@@ -481,12 +481,12 @@ func (uv17lFam) emu(m *genModel, img []byte) genEmu {
 	e := &uv17lEmu{m: m, pages: map[int][]byte{}, num: map[int]byte{}}
 	e.n = (o.memsize + 0x1000 - 0x1FFF + 0xFFF) / 0x1000
 	// pagine in ordine sparso (come dopo l'usura), le altre libere
-	phys := []int{3, 1, 7, 2, 9, 5, 4, 11, 6}
+	phys := []int{3, 1, 7, 2, 9, 5, 4, 11, 6, 13}
 	for k := 1; k <= e.n; k++ {
 		e.num[k] = 0xFF
 		e.pages[k] = bytes.Repeat([]byte{0xFF}, 0x1000)
 	}
-	for bi, bn := range uv17BlockOrder {
+	for bi, bn := range o.rblocks() {
 		p := phys[bi]
 		e.num[p] = byte(bn/10)<<4 | byte(bn%10)
 		if (bi+1)*0x1000 <= len(img) {
@@ -500,7 +500,7 @@ func (e *uv17lEmu) image() []byte {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	var out []byte
-	for _, bn := range uv17BlockOrder {
+	for _, bn := range e.m.Opt.(*uv17lOpt).rblocks() {
 		for k := 1; k <= e.n; k++ {
 			if e.num[k] == byte(bn/10)<<4|byte(bn%10) {
 				out = append(out, e.pages[k]...)
@@ -523,20 +523,22 @@ func (e *uv17lEmu) serve(p Port) error {
 		p.Write(resp)
 		return nil
 	}
-	if err := expect([]byte("PSEARCH"), uv17lFingerprint); err != nil {
+	if err := expect([]byte("PSEARCH"), o.fp()); err != nil {
 		return err
 	}
-	for _, mg := range uv17lMagics {
+	for _, mg := range o.mg() {
 		if err := expect(mg.cmd, bytes.Repeat([]byte{0x06}, mg.resp)); err != nil {
 			return err
 		}
 	}
-	ms := make([]byte, 11)
-	binary.LittleEndian.PutUint32(ms[7:], uint32(o.memsize))
-	if err := expect(uv17lMemsizeCmd, ms); err != nil {
-		return err
+	if !o.noMemsize {
+		ms := make([]byte, 11)
+		binary.LittleEndian.PutUint32(ms[7:], uint32(o.memsize))
+		if err := expect(uv17lMemsizeCmd, ms); err != nil {
+			return err
+		}
 	}
-	for _, mg := range uv17lMagics2 {
+	for _, mg := range o.mg2() {
 		if err := expect(mg.cmd, bytes.Repeat([]byte{0x06}, mg.resp)); err != nil {
 			return err
 		}
@@ -590,10 +592,11 @@ func (e *uv17lEmu) serve(p Port) error {
 type uvb5Emu struct {
 	mu  sync.Mutex
 	img []byte // 0x1030 (intestazione + memoria)
+	th  bool   // TYT TH-350
 }
 
 func (uvb5Fam) emu(m *genModel, img []byte) genEmu {
-	e := &uvb5Emu{img: append([]byte{}, img...)}
+	e := &uvb5Emu{img: append([]byte{}, img...), th: uvb5o(m).th350}
 	if len(e.img) < 0x1030 {
 		e.img = append(e.img, bytes.Repeat([]byte{0xFF}, 0x1030-len(e.img))...)
 	}
@@ -608,7 +611,11 @@ func (e *uvb5Emu) image() []byte {
 }
 
 func (e *uvb5Emu) serve(p Port) error {
-	if got, err := emuRead(p, 8); err != nil || string(got) != "\x05PROGRAM" {
+	hello := "\x05PROGRAM"
+	if e.th {
+		hello = "\x05TROGRAM"
+	}
+	if got, err := emuRead(p, 8); err != nil || string(got) != hello {
 		return fmt.Errorf("comando di programmazione atteso")
 	}
 	p.Write([]byte{0x06})
@@ -636,6 +643,9 @@ func (e *uvb5Emu) serve(p Port) error {
 			d := append([]byte{}, e.img[0x30+a:0x30+a+n]...)
 			e.mu.Unlock()
 			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
+			if e.th {
+				continue // TH-350: nessuna conferma dei blocchi letti
+			}
 			if b, err := emuByte(p); err != nil || b != 0x06 {
 				return fmt.Errorf("conferma attesa")
 			}
@@ -787,6 +797,20 @@ func (e *rbEmu) serve(p Port) error {
 	if e.sp.enterAck != 0 {
 		p.Write([]byte{e.sp.enterAck})
 	} else {
+		p.Write([]byte{0x06})
+	}
+	if e.sp.pwStep {
+		// Retevis RT18: password di programmazione (6 byte, come a 0x03B0)
+		if b, err := one(); err != nil || b != 0x05 {
+			return fmt.Errorf("0x05 atteso")
+		}
+		e.mu.Lock()
+		pw := append([]byte{}, e.img[0x03B0:0x03B6]...)
+		e.mu.Unlock()
+		p.Write(pw)
+		if b, err := one(); err != nil || b != 0x06 {
+			return fmt.Errorf("0x06 atteso dopo la password")
+		}
 		p.Write([]byte{0x06})
 	}
 	exit := e.sp.exitCmd()

@@ -126,14 +126,17 @@ const Identify = {
       <ul class="warnlist">${r.answers.map(a => '<li>' + esc(a) + '</li>').join('')}</ul></details>` : '';
     if (!r.found) {
       box.innerHTML = `<div class="infores bad">Nessuna radio riconosciuta dopo ${r.tried} tentativi (${r.seconds} s).
-        ${(r.answers || []).length ? 'La radio ha risposto, ma con nessuno dei protocolli la lettura è andata a buon fine: vedi i dettagli.' : 'La radio non ha risposto a nessun protocollo.'}</div>${answers}`;
+        ${(r.answers || []).length ? 'La radio ha risposto, ma con nessuno dei protocolli la lettura è andata a buon fine: vedi i dettagli.' : 'La radio non ha risposto a nessun protocollo.'}
+        ${r.spont ? '<br><b>La radio trasmette dati da sola, senza che il programma le chieda nulla:</b> di solito vuol dire che è in modalità aggiornamento firmware (accesa tenendo premuti dei tasti). Spegnila e riaccendila normalmente per leggere i canali, oppure usa la scheda «Firmware» se vuoi aggiornarla.' : ''}</div>${answers}`;
       return;
     }
     const others = r.others || [];
     const choose = others.length ? `<div class="convbase"><p>${r.ambiguous
       ? '<b>Scegli la tua radio:</b> queste radio hanno lo stesso collegamento e la stessa memoria e via cavo non si distinguono. Il programma ricorderà la scelta per le prossime volte:'
       : 'Altri modelli compatibili con la memoria letta (stesso collegamento):'}</p>
-      <select data-kind><option value="${esc(r.kind + (r.card ? '#' + r.card : ''))}">${esc(r.name)}</option>${others.map(o => `<option value="${esc(o.kind)}">${esc(o.name)}</option>`).join('')}</select></div>` : '';
+      ${candidatesHtml(r)}
+      <select data-kind><option value="${esc(r.kind + (r.card ? '#' + r.card : ''))}">${esc(r.name)}</option>${others.map(o => `<option value="${esc(o.kind)}">${esc(o.name)}</option>`).join('')}</select>
+      ${r.fwHint ? `<p class="note" style="margin-top:6px">ℹ ${esc(r.fwHint)}</p>` : ''}</div>` : '';
     box.innerHTML = `<div class="infores ok"><span style="font-size:18px">✔ <b>${esc(r.name)}</b></span><br>${esc(r.type)} — trovata in ${r.seconds} s dopo ${r.tried} ${r.tried === 1 ? 'tentativo' : 'tentativi'}.</div>
       <table class="infotab" style="margin-top:10px">${(r.fields || []).map(f => `<tr><th>${esc(f.l)}</th><td>${esc(f.v)}</td></tr>`).join('')}
         <tr><th>Canali presenti</th><td>${r.count}</td></tr>
@@ -197,7 +200,9 @@ const AutoIdent = {
     if (evs.length && !this.busy) {
       this.seq = Math.max(...evs.map(e => e.seq));
       this.busy = true;
-      try { await this.found(evs); } catch (e) { reportError(e); } finally { this.busy = false; }
+      // 4.7: senza attendere: mentre le finestre aspettano una risposta lo stato
+      // della ricerca continua ad aggiornarsi (prima restava fermo)
+      this.found(evs).catch(reportError).finally(() => { this.busy = false; });
     }
   },
 
@@ -260,7 +265,11 @@ const AutoIdent = {
       }
       const kind = choice.split('#')[0];
       const old = Views[kind];
-      if (old && old.loaded) { already.push(ev); continue; }
+      // 4.7: «già aperta» solo se la sua linguetta c'è davvero: le schede K67 Pro e
+      // Bajeton 8300 chiuse restano in memoria (prima risultavano ancora aperte)
+      const tabOpen = !!$(`.tab[data-tab="${kind}"]`);
+      if (old && old.loaded && tabOpen) { already.push(ev); continue; }
+      if (old && old.loaded && old.dirty && !(await old.confirmDiscard())) continue;
       const res = await api('identify/open', { kind: choice, seq: ev.seq }, { busyText: 'Apertura…' });
       const v = App.openRadio(kind, false, res.card || choice.split('#')[1] || '');
       r.kind = kind;
@@ -295,6 +304,7 @@ const AutoIdent = {
         const ns = r.others.map(o => o.name).filter(n => n !== r.name);
         if (ns.length) list.push('Altre radio con la stessa gestione: ' + (ns.length > 10 ? ns.slice(0, 10).join(', ') + ` e altre ${ns.length - 10}` : ns.join(', ')) +
           ' — puoi sceglierle nella scheda «Identifica» o dalla galleria.');
+        if (r.fwHint) list.push(r.fwHint);
       }
     }
     list.push('La ricerca automatica su questi cavi ora è ferma: per un\'altra radio premi «Identifica Radio» in alto a destra.');
@@ -309,6 +319,13 @@ const AutoIdent = {
   },
 };
 
+// candidatesHtml (4.7): elenco di tutte le radio che possono essere quella collegata
+function candidatesHtml(r) {
+  const names = [r.name].concat((r.others || []).map(o => o.name)).filter((n, i, a) => n && a.indexOf(n) === i);
+  if (names.length < 2) return '';
+  return `<p style="margin:4px 0"><b>Radio possibili (${names.length}):</b> ${names.map(esc).join(' · ')}</p>`;
+}
+
 // pickModelDlg (4.6): scelta della radio collegata tra quelle che via cavo non si
 // distinguono; restituisce «gestione#radio» (o null se si annulla)
 function pickModelDlg(r, port) {
@@ -318,7 +335,9 @@ function pickModelDlg(r, port) {
     const m = openModal(`<div class="dialog mid"><header>📻 Quale radio hai collegato${port ? ' alla porta ' + esc(port) : ''}?</header><div class="body">
       <p>La radio collegata ha risposto come <b>${esc(r.name)}</b>, ma queste radio hanno lo stesso collegamento e la stessa memoria e via cavo
       non si distinguono. Scegli la tua: il programma la ricorderà per le prossime volte (puoi cambiarla dalla scheda «Identifica» o dalla galleria).</p>
+      ${candidatesHtml(r)}
       <div class="row"><label class="l">Radio</label><select data-pick style="min-width:320px">${opts.map(o => `<option value="${esc(o.kind)}">${esc(o.name)}</option>`).join('')}</select></div>
+      ${r.fwHint ? `<p class="note">ℹ ${esc(r.fwHint)}</p>` : ''}
       </div><footer><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>Apri i canali</button></footer></div>`);
     $('[data-no]', m.el).onclick = () => { m.close(); resolve(null); };
     $('[data-ok]', m.el).onclick = () => { const v = $('[data-pick]', m.el).value; m.close(); resolve(v); };

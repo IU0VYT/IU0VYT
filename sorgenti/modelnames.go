@@ -209,6 +209,21 @@ func (a *App) identCardNames(r *identResult) {
 	if !sure && len(cards) > 1 {
 		r.Ambiguous = true
 	}
+	if len(others) > 0 {
+		r.FwHint = identFwHint(r.Kind)
+	}
+}
+
+// identFwHint (4.7): dove vedere sulla radio la versione del firmware, per
+// distinguere le radio con la stessa gestione (o la versione con 960/990 canali)
+func identFwHint(kind string) string {
+	switch kind {
+	case "bj-9000", "bj-9000-960", "rtl-rt950":
+		return "Versione del firmware: sulla radio premi MENU e apri la voce «About» (informazioni): compare «Software Ver 0.xx». " +
+			"Fino alla 0.23 la radio ha 960 canali (15 zone da 64), dalla 0.24 990 canali (10 zone da 99)."
+	}
+	return "Versione del firmware: di solito compare per un attimo all'accensione, oppure nel menu della radio alla voce «Version», «Info» o «About» " +
+		"(vedi il manuale). Il modello esatto è scritto sull'etichetta sotto la batteria."
 }
 
 // splitKindCard: «kind#scheda» → kind, scheda

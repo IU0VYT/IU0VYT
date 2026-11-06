@@ -179,6 +179,25 @@ type probeState struct {
 	hits     int
 	sure     bool
 	onAnswer func() // chiamata una volta, quando la risposta è sicura
+	// spont (4.7): byte che la radio trasmette da sola (vedi identSpontSample)
+	spont []byte
+	// listened (4.7): tempo passato ad ascoltare la porta (identSpontSample), che
+	// non conta nell'attesa massima del tentativo (identSilentMax); listenFrom:
+	// inizio dell'ascolto in corso
+	listened   time.Duration
+	listenFrom time.Time
+	ctx        context.Context // tentativo (l'ascolto si interrompe con la ricerca)
+}
+
+// silence: tempo del tentativo senza l'ascolto della porta
+func (s *probeState) silence(start time.Time) time.Duration {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	d := time.Since(start) - s.listened
+	if !s.listenFrom.IsZero() {
+		d -= time.Since(s.listenFrom)
+	}
+	return d
 }
 
 var identSureHook func(key string, clean, echo []byte) // solo per le prove
@@ -287,6 +306,14 @@ func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration
 		timeout = identFirstWait
 	}
 	err := p.Port.ReadFull(ctx, b, timeout)
+	if err == nil && len(p.st.spont) > 0 {
+		// 4.7: byte uguali a quelli che la radio trasmette da sola (vedi
+		// identSpontSample): per il driver è come se la radio tacesse
+		cyc := append(append([]byte{}, p.st.spont...), p.st.spont...)
+		if bytes.Contains(cyc, b) || (identBeacon(p.st.spont) && identBeacon(b) && b[0] == p.st.spont[0]) {
+			return errTimeout
+		}
+	}
 	if err == nil {
 		s := p.st
 		s.mu.Lock()
@@ -294,7 +321,15 @@ func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration
 		// sono l'eco di quanto inviato (anche nei tentativi precedenti): prima
 		// bastava un byte qualsiasi diverso dall'eco, e con un cavo senza radio i
 		// disturbi facevano durare ogni tentativo come con una radio
-		if c := cleanBytes(b); !s.sure && len(c) > 0 {
+		c := cleanBytes(b)
+		if len(s.spont) > 0 && len(c) > 0 {
+			// 4.7: byte uguali a quelli che la radio trasmette da sola: non sono una risposta
+			cyc := cleanBytes(append(append([]byte{}, s.spont...), s.spont...))
+			if bytes.Contains(cyc, c) || isSubsequence(c, cyc) {
+				c = nil
+			}
+		}
+		if !s.sure && len(c) > 0 {
 			s.clean = append(s.clean, c...)
 			s.hits++
 			// per proseguire il tentativo conta l'eco di questo tentativo (come prima
@@ -356,7 +391,112 @@ func openPort(name string, baud int) (Port, error) {
 	if err != nil || st == nil {
 		return p, err
 	}
+	// 4.7: radio che trasmette da sola (es. in modalità aggiornamento firmware, con
+	// i suoi messaggi periodici): prima del tentativo si ascolta la porta senza
+	// inviare nulla; quei byte non contano come risposta della radio, così ogni
+	// tentativo finisce presto come con una porta senza radio (prima ogni modello
+	// sembrava rispondere e la ricerca durava alcuni minuti)
+	st.mu.Lock()
+	st.listenFrom = time.Now()
+	st.mu.Unlock()
+	sp := identSpontSample(st.ctx, probeKey(name), baud, p)
+	st.mu.Lock()
+	st.spont = sp
+	st.listened += time.Since(st.listenFrom) // il tempo d'ascolto non conta come silenzio della radio
+	st.listenFrom = time.Time{}
+	st.mu.Unlock()
 	return probePort{p, st}, nil
+}
+
+// identSpont: byte trasmessi dalla radio senza che le sia stato inviato nulla,
+// per porta e velocità (validi identSpontTTL)
+var identSpont struct {
+	sync.Mutex
+	m map[string]identSpontRec
+}
+
+type identSpontRec struct {
+	at   time.Time
+	data []byte
+}
+
+var (
+	identSpontTTL = time.Minute
+	// ascolto: abbastanza per i messaggi periodici più lenti (il caricatore delle
+	// Bajeton si presenta ogni 0,7 s); una volta al minuto per velocità
+	identSpontListen     = time.Second
+	identSpontListen9600 = time.Second
+)
+
+// identSpontSample: ascolto della porta appena aperta (una volta al minuto per
+// velocità); i byte che non sono disturbi della linea si ricordano. Se la radio
+// tace si torna subito (al massimo identSpontListen)
+func identSpontSample(ctx context.Context, key string, baud int, p Port) []byte {
+	k := fmt.Sprintf("%s|%d", key, baud)
+	identSpont.Lock()
+	if r, ok := identSpont.m[k]; ok && time.Since(r.at) < identSpontTTL {
+		identSpont.Unlock()
+		return r.data
+	}
+	identSpont.Unlock()
+	var got []byte
+	buf := make([]byte, 1)
+	listen := identSpontListen
+	if baud == 9600 {
+		listen = identSpontListen9600
+	}
+	end := time.Now().Add(listen)
+	for len(got) < 512 {
+		left := time.Until(end)
+		if left <= 0 {
+			break
+		}
+		if err := p.ReadFull(ctx, buf, left); err != nil {
+			break
+		}
+		got = append(got, buf[0])
+	}
+	if ctx.Err() != nil {
+		return nil // ricerca interrotta: ascolto incompleto, non si ricorda
+	}
+	c := got
+	if len(cleanBytes(got)) < identSureBytes && !identBeacon(got) {
+		c = nil // qualche disturbo isolato: non è una trasmissione
+	}
+	_ = p.Purge()
+	identSpont.Lock()
+	if identSpont.m == nil {
+		identSpont.m = map[string]identSpontRec{}
+	}
+	identSpont.m[k] = identSpontRec{time.Now(), c}
+	identSpont.Unlock()
+	return c
+}
+
+// identBeacon: un byte ripetuto (es. 0x01 del caricatore delle Bajeton in modalità
+// aggiornamento, ogni 0,7 s a 9600 baud)
+func identBeacon(b []byte) bool {
+	if len(b) == 0 {
+		return false
+	}
+	for _, c := range b {
+		if c != b[0] || c == 0x00 || c == 0xFF {
+			return false
+		}
+	}
+	return true
+}
+
+// identSpontSeen: la porta ha trasmesso da sola di recente (a una velocità qualsiasi)
+func identSpontSeen(key string) bool {
+	identSpont.Lock()
+	defer identSpont.Unlock()
+	for k, r := range identSpont.m {
+		if strings.HasPrefix(k, key+"|") && len(r.data) > 0 && time.Since(r.at) < identSpontTTL {
+			return true
+		}
+	}
+	return false
 }
 
 // rememberRadio (4.3): il modello riconosciuto va in testa all'elenco delle radio
@@ -405,7 +545,9 @@ func identPortLock(port string) *sync.Mutex {
 // identSilentMax il tentativo si interrompe (silent = true).
 func probe(ctx context.Context, port string, fn func(ctx context.Context) error) (st *probeState, silent bool, err error) {
 	key := probeKey(port)
-	st = &probeState{key: key}
+	pctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+	st = &probeState{key: key, ctx: pctx}
 	st.onAnswer, _ = ctx.Value(identAnswerKey{}).(func())
 	probeReg.Lock()
 	if probeReg.m == nil {
@@ -420,22 +562,33 @@ func probe(ctx context.Context, port string, fn func(ctx context.Context) error)
 		}
 		probeReg.Unlock()
 	}()
-	pctx, cancel := context.WithCancel(ctx)
-	defer cancel()
 	stop := make(chan struct{})
 	timedOut := false
 	var tmu sync.Mutex
 	silentMax := identSilentMax
 	go func() {
-		select {
-		case <-time.After(silentMax):
-			if !st.answered() {
-				tmu.Lock()
-				timedOut = true
-				tmu.Unlock()
-				cancel()
+		start := time.Now()
+		wait := silentMax
+		for {
+			select {
+			case <-time.After(wait):
+				// 4.7: l'ascolto della porta prima del tentativo non è silenzio della
+				// radio (con un ascolto più lungo di identSilentMax il tentativo si
+				// chiuderebbe prima di inviare il saluto)
+				if d := st.silence(start); d < silentMax {
+					wait = max(silentMax-d, 20*time.Millisecond)
+					continue
+				}
+				if !st.answered() {
+					tmu.Lock()
+					timedOut = true
+					tmu.Unlock()
+					cancel()
+				}
+				return
+			case <-stop:
+				return
 			}
-		case <-stop:
 		}
 	}()
 	func() {
@@ -486,7 +639,13 @@ type identResult struct {
 	// via cavo (stesso protocollo, nessun segno del modello nella memoria)
 	Ambiguous bool `json:"ambiguous"`
 	// Card (4.6): radio della galleria (scheda del catalogo) con il nome mostrato
-	Card    string `json:"card,omitempty"`
+	Card string `json:"card,omitempty"`
+	// Spont (4.7): nessuna radio riconosciuta, ma la radio trasmetteva da sola
+	// (tipico della modalità aggiornamento firmware)
+	Spont bool `json:"spont,omitempty"`
+	// FwHint (4.7): dove vedere sulla radio la versione del firmware (radio con
+	// la stessa gestione)
+	FwHint  string `json:"fwHint,omitempty"`
 	Seconds int    `json:"seconds"`
 	Backup  string `json:"backup"`
 	Count   int    `json:"count"` // canali presenti
@@ -843,6 +1002,9 @@ func (a *App) identPlan(req *identReq) []identProbe {
 		if open[kind] {
 			return 1000
 		}
+		if identPopular[kind] {
+			return 1500
+		}
 		return 2000
 	}
 	probeRank := func(p identProbe) int {
@@ -866,6 +1028,15 @@ func (a *App) identPlan(req *identReq) []identProbe {
 	// scambiata per quello
 	sort.SliceStable(out, func(i, j int) bool { return probeRank(out[i]) < probeRank(out[j]) })
 	return out
+}
+
+// identPopular (4.7): radio molto diffuse, provate prima delle altre alla prima
+// identificazione (prima la Quansheng UV-K5, ultima del giro, arrivava dopo circa
+// un minuto). Si sposta solo il gruppo, come per le radio già riconosciute
+var identPopular = map[string]bool{
+	kindXLC: true, kindDAT: true, // K67 Pro e BJ-8300 restano le prime
+	"qs-uvk5": true, "bf-uv17pro": true, "bf-uv17progps": true, "bf-uv17": true,
+	"bj-9000": true, "td-tdh8": true, "bj-7800": true, "bj-7700": true, "bf-uv5r": true, "bf-888s": true,
 }
 
 func (a *App) runIdentify(ctx context.Context, j *cableJob, req *identReq) (*identResult, error) {
@@ -1155,6 +1326,8 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 		}
 	}
 	res.Seconds = int(time.Since(start).Seconds())
+	// 4.7: la radio trasmetteva da sola (es. in modalità aggiornamento firmware)
+	res.Spont = identSpontSeen(probeKey(req.Port))
 	return res, nil
 }
 

@@ -1,11 +1,54 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.6.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.7.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.7.0:
+- CORRETTO: identificazione automatica bloccata o molto lenta. Una radio accesa in
+  modalità aggiornamento del firmware (o un cavo che riceve dati da solo) trasmette
+  messaggi periodici: prima sembrava rispondere a ogni modello e la ricerca durava
+  diversi minuti. Ora il programma ascolta la porta prima di provare (1 secondo, una
+  volta al minuto) e quei messaggi non contano come risposta: la ricerca finisce in
+  meno di un minuto e la scheda Identifica spiega che la radio è probabilmente in
+  modalità aggiornamento. Anche l'interfaccia non si blocca più mentre partono le
+  ricerche, e le radio più diffuse si provano per prime;
+- CORRETTO: «Scheda Radio già aperta» per una scheda chiusa in precedenza (K67 Pro,
+  Bajeton 8300): ora la scheda conta come aperta solo se c'è davvero;
+- radio con la stessa gestione (es. RT-950 Pro / BJ-9000 / HI-UV850 Pro): la finestra
+  e la scheda Identifica elencano tutte le radio possibili, con il menu per scegliere
+  e una breve indicazione su dove vedere la versione del firmware sulla radio;
+- CORRETTO: Radtel RT-950 Pro / Bajeton BJ-9000 con il firmware fino a 0.23 e la
+  memoria vuota dopo il canale 960. I dati non bastano a riconoscere la versione e la
+  radio veniva aperta nella scheda da 990 canali, che scriveva i canali modificati
+  senza il bit «trasmissione abilitata» (come il programma Radtel v1.3.3, fatto per
+  il firmware recente): con il firmware vecchio quei canali potevano non trasmettere.
+  Ora il bit si scrive sempre a 1, con tutte e due le versioni, come i programmi
+  Radtel fino alla v1.2.x (anche la v1.2.1 per i 990 canali); la v1.3.3 lo ignora,
+  quindi va bene con ogni firmware. Alla scrittura il bit viene rimesso anche nei
+  canali 1-960 che ne erano privi (scritti dalla 4.6 o dal programma v1.3.x); dopo
+  il canale 960 non si tocca nulla che non sia stato modificato (vedi "RADTEL RT-950
+  PRO E BAJETON BJ-9000");
+- Bajeton BJ-9000: verificate le versioni reali pubblicate da Bajeton (firmware V0.22,
+  V0.27, V0.29; programma BJ-9000_CPS v1.1.1 da 960 canali e v1.3.3 da 990). Il
+  firmware V0.29 della BJ-9000 è identico, byte per byte, a quello della Radtel RT-950
+  Pro, e il programma v1.3.3 è quello di Radtel con un altro nome. Canali e
+  impostazioni sono verificati anche con il codice dei due programmi Bajeton;
+- AGGIORNAMENTO DEL FIRMWARE anche per Radtel RT-950 Pro, Radtel RT-950 e Hiroyasu
+  HI-UV850 Pro (file .BTF, stesso caricatore della BJ-9000: il programma riconosce la
+  radio dal codice del modello nel file) e per Radtel RT-920 e RT-910B (file .anc,
+  stesso protocollo di BJ-7800 e BJ-7700); i firmware ufficiali conosciuti sono
+  riconosciuti dall'impronta (vedi "AGGIORNAMENTO DEL FIRMWARE RADTEL RT-950 PRO,
+  RT-950, RT-920 E RT-910B");
+- NUOVE RADIO dal driver di CHIRP, riscritte e verificate come le altre (lettura,
+  scrittura e byte scambiati con la radio identici a CHIRP, impostazioni comprese):
+  Radtel RT-620, Radioddity GA-510 V2, TYT TH-350, Retevis RT18, Retevis RB627B
+  (PMR446); in galleria anche Hiroyasu HI-UV850 Pro. Impostazioni anche per SenhaiX
+  8800, Radioddity GS-5B, Cignus XTR-5 e Anysecu AC-580;
+- galleria: 398 modelli di 29 marche (360 con canali, 313 con impostazioni, 50 con
+  l'aggiornamento del firmware).
 Novità della 4.6.0:
 - CORRETTO: Radtel RT-950 Pro / Bajeton BJ-9000 con il firmware recente. Dal firmware
   0.24 (dicembre 2025, programma del costruttore v1.2.1 e successivi) la radio ha 990
@@ -685,9 +728,20 @@ RADTEL RT-950 PRO E BAJETON BJ-9000 (4.6)
 - I file .img salvati da questa versione ricordano la versione della radio; quelli
   salvati prima si aprono nella versione riconosciuta dai dati o, se non si capisce,
   in quella della scheda (dalla galleria: 0.24 e successivi).
-- Con il programma v1.3.3 il byte delle opzioni del canale ha la modulazione su due
-  bit (0 FM, 1 AM) e non più il bit "trasmissione abilitata" sempre a 1: per il
-  firmware 0.24 e successivi il programma scrive come la v1.3.3.
+- Byte delle opzioni del canale (4.7): bit 0 = modulazione (0 FM, 1 AM), bit 1 =
+  "trasmissione abilitata", che i programmi Radtel fino alla v1.2.x (anche la v1.2.1
+  da 990 canali) scrivono sempre a 1. La v1.3.3 legge solo il bit 0 e riscrive il
+  bit 1 a 0. Il programma lo scrive sempre a 1, con tutte e due le versioni (con il
+  firmware fino a 0.23 un canale senza quel bit potrebbe non trasmettere; al firmware
+  recente non cambia nulla) e lo rimette nei canali 1-960 che ne sono privi.
+- Versione del firmware sulla radio: MENU, voce "About" (informazioni): compare
+  "Software Ver 0.xx".
+- Versioni pubblicate (novembre 2026): Radtel RT-950 Pro V0.15-V0.29 (programma
+  RT-950PRO_CPS fino a v1.3.3); Bajeton BJ-9000 V0.22 (novembre 2025), V0.27 (marzo
+  2026) e V0.29 (giugno 2026, identico a quello Radtel), programma BJ-9000_CPS v1.1.1
+  (960 canali, da usare con il firmware fino a 0.23) e v1.3.3 (990 canali). La
+  Hiroyasu HI-UV850 Pro è la stessa radio (il programma Radtel v1.3.3 ne ha la
+  versione).
 - (3.2) BF-9700 / BF-S56 Max: memoria della BF-1909 di CHIRP letta fino a 0x0400.
 - (3.3) Serie D (programma «BF Series CPS», pacchetti «Baofeng_V1D_CPS» e
   «Baofeng_BF-D_Series_CPS»): stessa memoria della BF-888S (16 canali senza nome; 30
@@ -834,6 +888,25 @@ canali allo stesso modo. Un file nuovo della v1.0.9 parte da "tutti i canali", c
 nel programma originale; una radio letta mantiene la sua scelta. La v1.0.8 non ha
 questa impostazione: i suoi file sono sempre a zone e, scritti nella radio, la
 riportano alle zone.
+
+AGGIORNAMENTO DEL FIRMWARE RADTEL RT-950 PRO, RT-950, RT-920 E RT-910B (4.7)
+- RT-950 Pro, BJ-9000, HI-UV850 Pro e RT-950: file .BTF (o .Firmware) con lo stesso
+  caricatore e lo stesso protocollo del programma "RT-950_EnUPDATE" di Radtel, uguale
+  al "BJ9000_EnUPDATE" di Bajeton tranne il titolo della finestra. Nel file c'è il
+  codice del modello ("RT-950" per RT-950 Pro / BJ-9000 / HI-UV850 Pro, "BT-9000" per
+  la RT-950 senza "Pro"): la radio lo controlla e rifiuta un firmware non suo prima
+  di cancellare la memoria; il programma lo mostra e chiede la conferma scritta se la
+  radio scelta è un'altra. Modalità manuale: radio spenta, tieni premuti i tasti
+  laterali 3 e 4 e accendila (schermata "Update").
+- RT-920 e RT-910B (con Bluetooth): file .anc del programma "Radtel ANC Bootloader
+  V1.2", stesso protocollo del "BinTe ANC Bootloader" di Bajeton (confrontato il
+  codice: stessi comandi, velocità e attese). La RT-920 è la BJ-7800 e la RT-910B la
+  BJ-7700: identificazione e copia di sicurezza come per quelle radio (la copia della
+  RT-920 con il suo driver). Il programma Radtel chiede anche un'autorizzazione via
+  internet, che qui non serve. Il firmware .BTU della RT-910 senza Bluetooth usa un
+  altro programma e non è gestito.
+- Impronte conosciute: RT-950 Pro V0.15-V0.29, RT-950 V0.27 e V0.29, BJ-9000 V0.22,
+  V0.27 e V0.29, RT-920 V0.13-V0.18, RT-910B V0.14.
 
 AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
 - Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus, file .bin pubblicati da Quansheng
@@ -1369,7 +1442,7 @@ IDENTIFICAZIONE DELLA RADIO (3.8)
   diverso) le risposte sono elencate nei dettagli. Se la radio resta bloccata in
   modalità di programmazione, spegnila e riaccendila.
 
-IDENTIFICAZIONE AUTOMATICA (4.0 - 4.4)
+IDENTIFICAZIONE AUTOMATICA (4.0 - 4.7)
 - Nella scheda "🔎 Identifica" premi "🔄 Abilita identificazione automatica". Da quel
   momento, finché il programma è aperto, quando colleghi il cavo di programmazione (o
   una radio DMR via USB) la radio viene cercata da sola, con gli stessi comandi di
@@ -1413,6 +1486,15 @@ IDENTIFICAZIONE AUTOMATICA (4.0 - 4.4)
 - La scelta resta memorizzata anche dopo la chiusura e il riavvio del programma. Per
   non usarla più torna nella scheda "🔎 Identifica" e premi "⏹ Disattiva
   identificazione automatica".
+- (4.7) Prima di provare i modelli il programma ascolta la porta per 1 secondo (una
+  volta al minuto per porta e velocità). Una radio in modalità aggiornamento del
+  firmware trasmette da sola dei messaggi periodici: quei byte non contano come
+  risposta, quindi la ricerca finisce presto e la scheda Identifica avvisa che la
+  radio è probabilmente in modalità aggiornamento (spegnila e riaccendila
+  normalmente, oppure usa la scheda Firmware).
+- (4.7) Ordine dei tentativi: le radio già riconosciute, quelle con una scheda
+  aperta, poi le più diffuse (K67 Pro, BJ-8300, BJ-7800 / RT-920, BJ-7700 / RT-900,
+  BJ-9000 / RT-950 Pro, TD-H8, UV-17 / UV-17Pro, UV-K5, UV-5R, BF-888S), poi le altre.
 
 DRIVER USB DELLA DM-1701 (3.8)
 - La DM-1701 (e la Retevis RT84) si collega via USB in modalità DFU (dispositivo

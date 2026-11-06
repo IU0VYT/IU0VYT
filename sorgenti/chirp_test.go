@@ -94,6 +94,8 @@ var chirpTestImage = map[string]string{
 	"cg-xtr5":  "SenhaiX_8800.img",
 	"as-ac580": "SenhaiX_8800.img",
 	"td-uv68":  "TIDRADIO_TD-H8.img",
+	// 4.7
+	"rd-ga510v2": "Radioddity_GA-510_V2.img",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {

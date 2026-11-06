@@ -89,33 +89,13 @@ struct {
 } memory[%d];
 `
 
-// 4.6: Radtel RT-950 Pro / BJ-9000 con il firmware 0.24 e successivi, come lo
-// scrive il programma del costruttore v1.3.3: nel byte 15 i bit 1-0 sono la
-// modulazione in ricezione (0 FM, 1 AM; Channel.RxModulation = byte & 3), senza
-// il bit «trasmissione abilitata» sempre a 1 dei programmi precedenti.
-const rt950Format990 = `
-struct {
-  lbcd rxfreq[4];
-  lbcd txfreq[4];
-  ul16 rxtone;
-  ul16 txtone;
-  u8 unknown1:4,
-     scode:4;
-  u8 unknown2:6,
-     pttid:2;
-  u8 scramble:6,
-     txpower:2;
-  u8 learning:1,
-     narrow:1,
-     encrypt:2,
-     bcl:1,
-     scan:1,
-     rxmod:2;
-  ul24 code;
-  u8 code_flag;
-  char name[12];
-} memory[%d];
-`
+// 4.7: il byte 15 si scrive come i programmi del costruttore fino alla v1.2.x
+// (bit 1 sempre a 1) con tutti i firmware. La v1.3.3 legge la modulazione come
+// (byte & 3) % 2, cioè solo il bit 0, e il bit 1 lo ignora (lo riscrive a 0); i
+// programmi precedenti, anche la v1.2.1 per il firmware 0.24 e successivi, lo
+// scrivono sempre a 1. Con il bit a 1 il canale va bene per ogni versione del
+// firmware; senza (come scriveva la 4.6 nella scheda da 990 canali) una radio con
+// il firmware fino a 0.23 potrebbe non trasmettere su quel canale.
 
 type rt900Opt struct {
 	magic   []byte
@@ -141,8 +121,6 @@ type rt900Opt struct {
 	// layout (4.6): canali della generazione di firmware (960 o 990); le due
 	// versioni della stessa radio sono modelli distinti (vedi rt950PickLayout)
 	layout int
-	// rxmod (4.6): modulazione in ricezione su due bit (rt950Format990)
-	rxmod bool
 }
 
 func (o *rt900Opt) blk() int {
@@ -271,7 +249,6 @@ func init() {
 		}
 		if layout == 990 {
 			o.hi = [2]int{0x7800, 0x7C00}
-			o.format, o.txen, o.rxmod = rt950Format990, false, true
 		}
 		return o
 	}
@@ -477,6 +454,46 @@ func (f rt900Fam) PutRec(m *genModel, img []byte, i int, raw []byte) { f.rec(m, 
 
 func (f rt900Fam) Match(m *genModel, img []byte) bool { return false }
 
+// Finish (4.7): RT-950 Pro / BJ-9000 / RT-950: il bit 1 del byte 15 («trasmissione
+// abilitata» per i programmi fino alla v1.2.x, ignorato dalla v1.3.3) si mette a 1
+// in tutti i canali presenti, anche in quelli non modificati: ripara i canali
+// scritti senza il bit (4.6 nella scheda da 990 canali, programma v1.3.x) che con
+// il firmware fino a 0.23 potrebbero non trasmettere. Per il firmware recente non
+// cambia nulla (la v1.3.3 legge solo il bit 0, la modulazione).
+func (f rt900Fam) Finish(m *genModel, img []byte) {
+	o := rt900o(m)
+	if !o.txen || o.format != rt950Format {
+		return
+	}
+	// solo i canali 1-960: dopo il 960 una radio con il firmware fino a 0.23 può
+	// avere altri dati, che non si toccano (i canali 961-990 modificati hanno già
+	// il bit, vedi Set)
+	for i := 0; i < min(m.Slots, 960); i++ {
+		r := f.rec(m, i)
+		if len(img) < r.Off+r.Size || !rt950RecUsed(r.Raw(img)) {
+			continue
+		}
+		r.F("txen").SetInt(img, 1)
+	}
+}
+
+// rt950RecUsed: record di canale presente (frequenza di ricezione valida in BCD)
+func rt950RecUsed(raw []byte) bool {
+	if len(raw) < 4 {
+		return false
+	}
+	empty := true
+	for _, b := range raw[:4] {
+		if b != 0xFF && b != 0x00 {
+			empty = false
+		}
+		if b&0x0F > 9 || b>>4 > 9 {
+			return false
+		}
+	}
+	return !empty
+}
+
 func (f rt900Fam) Get(m *genModel, img []byte, i int) *Chan {
 	r := f.rec(m, i)
 	if r.Raw(img)[0] == 0xFF {
@@ -532,11 +549,7 @@ func (f rt900Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		if v := r.F("code").Int(img); v != 0xFFFFFF {
 			code = v & 0x7FFFFF
 		}
-		if o.rxmod {
-			oldAM = r.F("rxmod").Int(img) == 1
-		} else {
-			oldAM = r.F("am_modulation").Bool(img)
-		}
+		oldAM = r.F("am_modulation").Bool(img)
 		oldRx = r.F("rxfreq").Int(img) * 10
 	}
 	raw := append(bytes.Repeat([]byte{0}, 16), bytes.Repeat([]byte{0xFF}, 16)...)
@@ -556,11 +569,7 @@ func (f rt900Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	// AM: obbligatoria in banda aerea; altrimenti si conserva quella del
 	// canale se la frequenza non cambia (es. canali CB in AM)
 	am := (c.Rx >= o.airband.Lo && c.Rx <= o.airband.Hi) || (oldAM && oldRx == c.Rx)
-	if o.rxmod {
-		r.F("rxmod").SetBool(img, am)
-	} else {
-		r.F("am_modulation").SetBool(img, am)
-	}
+	r.F("am_modulation").SetBool(img, am)
 	if o.txen {
 		r.F("txen").SetInt(img, 1)
 	}

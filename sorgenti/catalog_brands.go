@@ -81,23 +81,30 @@ var catalogOther = []catItem{
 	{ID: "rtl-rt-900-bt", Brand: "Radtel", Name: "RT-900 BT", Aliases: []string{"RT-900 Bluetooth"}, Type: "analog", Drivers: []string{"rt-rt900bt"},
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT900BT") + " 999 canali."},
 	{ID: "rtl-rt-910", Brand: "Radtel", Name: "RT-910 / RT-910B", Aliases: []string{"RT-910", "RT-910B", "RT-910 BT"}, Models: []string{"RT-910", "RT-910B"}, Type: "analog",
-		Drivers: []string{"bj-7700", "bj-7700nbt"}, Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
-		Notes: "Stessa radio della Bajeton BJ-7700: driver di CHIRP RT910BT (versione Bluetooth) e RT910."},
-	{ID: "rtl-rt-920", Brand: "Radtel", Name: "RT-920", Type: "analog", Drivers: []string{"rt-rt920"},
+		Drivers: []string{"bj-7700", "bj-7700nbt"}, FW: "anc", Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: "Stessa radio della Bajeton BJ-7700: driver di CHIRP RT910BT (versione Bluetooth) e RT910. " +
+			"4.7: il firmware .anc della RT-910B (con Bluetooth, es. RT_910B_V0.14_250808.anc) si aggiorna come quello della BJ-7700 (programma «Radtel ANC Bootloader», " +
+			"stesso protocollo del «BinTe ANC Bootloader»); il firmware .BTU della RT-910 senza Bluetooth usa un altro programma e non è gestito."},
+	{ID: "rtl-rt-920", Brand: "Radtel", Name: "RT-920", Type: "analog", Drivers: []string{"rt-rt920"}, FW: "anc",
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT920") + " 990 canali in 10 zone da 99 (i canali ausiliari FM/AM/HF non sono gestiti). " +
 			"Il driver di CHIRP è scritto per il firmware V0.18: dalla V0.17 (dicembre 2025) la radio ha 10 zone da 99 canali, prima 960 canali in 15 zone da 64 " +
-			"(programma del costruttore fino a v1.1.2). Con un firmware precedente alla V0.17 aggiorna prima la radio."},
-	{ID: "rtl-rt-950", Brand: "Radtel", Name: "RT-950", Type: "analog", Drivers: []string{"rtl-rt950"},
+			"(programma del costruttore fino a v1.1.2). Con un firmware precedente alla V0.17 aggiorna prima la radio: 4.7, il firmware .anc di Radtel (es. RT920_V0.18_260310.anc) " +
+			"si aggiorna da qui come quello della Bajeton BJ-7800 (stessa radio, stesso protocollo del programma «Radtel ANC Bootloader»)."},
+	{ID: "rtl-rt-620", Brand: "Radtel", Name: "RT-620", Type: "analog", Drivers: []string{"rtl-rt620"}, Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: chirpNote("RT620") + " 4.7: 999 canali (protocollo della Baofeng UV-17), potenze 10/5/1 W, banda aerea 108-136 MHz; la pagina di taratura si legge " +
+			"e si conserva nelle copie, ma non si scrive (come CHIRP)."},
+	{ID: "rtl-rt-950", Brand: "Radtel", Name: "RT-950", Type: "analog", Drivers: []string{"rtl-rt950"}, FW: "bj9000",
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
 		Notes: "4.6: la RT-950 (senza «Pro»), con il programma del costruttore «BT-9000_CPS»: la radio si presenta come «BT-9000», quindi non si " +
 			"confonde con la RT-950 Pro. 960 canali (15 zone da 64, anche con il firmware V0.29) oppure un unico elenco; canali e impostazioni generali " +
-			"verificati con il codice originale del programma v1.3.0. Il firmware Radtel si aggiorna con il programma del costruttore."},
-	{ID: "rtl-rt-950-pro", Brand: "Radtel", Name: "RT-950 Pro", Type: "analog", Drivers: []string{"bj-9000", "bj-9000-960"},
+			"verificati con il codice originale del programma v1.3.0. 4.7: il firmware .BTF di Radtel si aggiorna da qui con il protocollo del programma «RT-950_EnUPDATE» " +
+			"(lo stesso della BJ-9000; il file della RT-950 ha il codice «BT-9000» e la radio rifiuta quello della Pro)."},
+	{ID: "rtl-rt-950-pro", Brand: "Radtel", Name: "RT-950 Pro", Type: "analog", Drivers: []string{"bj-9000", "bj-9000-960"}, FW: "bj9000",
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
 		Notes: "Stessa elettronica e stessa gestione della Bajeton BJ-9000, ma è un'altra radio: la scheda e l'identificazione la chiamano RT-950 Pro. " +
 			"Due versioni secondo il firmware: fino a 0.23 960 canali (15 zone da 64, programma Radtel RT-950PRO_CPS fino a v1.2.0), dalla 0.24 990 canali " +
 			"(10 zone da 99, programma v1.2.1 e successivi; verificato con il codice della v1.3.3). La lettura riconosce la versione dai dati della radio e apre la scheda " +
-			"giusta; la versione del firmware si vede anche sulla radio. Il firmware Radtel si aggiorna con il programma del costruttore."},
+			"giusta. 4.7: il firmware .BTF di Radtel si aggiorna da qui con il protocollo del programma «RT-950_EnUPDATE» (uguale a «BJ9000_EnUPDATE» della Bajeton)."},
 	// 4.1: famiglia MML JC-8810 (mml_jc8810.py); 4.3: firmware .kdhx di Radtel
 	{ID: "rtl-rt-470", Brand: "Radtel", Name: "RT-470", Type: "analog", Drivers: []string{"rt-rt470"}, FW: "kdhx",
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT470Radio") + " 256 canali, potenze 10/8/4 W. " + rtlFwNote},
@@ -113,6 +120,13 @@ var catalogOther = []catItem{
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT495Radio") + " 256 canali, piattaforma RT-630. " + rtlFwNote},
 	{ID: "hy-hi-8811", Brand: "Hiroyasu", Name: "HI-8811", Type: "analog", Drivers: []string{"hy-hi8811"},
 		Links: []catLink{info("Sito Hiroyasu", hiroWeb)}, Notes: chirpNote("HI8811Radio") + " Piattaforma Radtel RT-470L."},
+	// 4.7: il programma Radtel «RT-950PRO_CPS» v1.3.3 ha tra le sue versioni anche la
+	// «HIROYASU-HI-UV850PRO_EnCPS» (e la «BJ-9000_CPS» della Bajeton): stessa radio
+	{ID: "hy-hi-uv850-pro", Brand: "Hiroyasu", Name: "HI-UV850 Pro", Aliases: []string{"HI-UV850Pro", "HIUV850PRO"}, Type: "analog",
+		Drivers: []string{"bj-9000", "bj-9000-960"}, FW: "bj9000", Links: []catLink{info("Sito Hiroyasu", hiroWeb)},
+		Notes: "Stessa radio della Radtel RT-950 Pro e della Bajeton BJ-9000: il programma del costruttore «RT-950PRO_CPS» v1.3.3 ha una versione per la HI-UV850 Pro " +
+			"(«HIROYASU-HI-UV850PRO_EnCPS»), identica nel codice. 990 canali in 10 zone da 99 con il firmware recente (960 in 15 zone da 64 con quello fino a 0.23). " +
+			"Firmware .BTF con il codice del modello «RT-950», come la RT-950 Pro."},
 	{ID: "as-uv-a37", Brand: "Anysecu", Name: "UV-A37", Type: "analog", Drivers: []string{"as-uva37"}, Notes: chirpNote("UVA37Radio") + " 256 canali."},
 	{ID: "tp-a36plus", Brand: "Talkpod", Name: "A36plus", Aliases: []string{"A36 Plus"}, Type: "analog", Drivers: []string{"tp-a36plus"},
 		Notes: chirpNote("A36plusRadio") + " 512 canali (firmware 1.22 o successivo)."},
@@ -133,7 +147,9 @@ var catalogOther = []catItem{
 	{ID: "rdd-ga-2s", Brand: "Radioddity", Name: "GA-2S", Type: "pmr", Drivers: []string{"rd-ga2s"}, Links: []catLink{info("Download center Radioddity", rddDown)},
 		Notes: chirpNote("ROGA2SRadio") + " 16 canali senza nome (piattaforma della BF-888S)."},
 	{ID: "rdd-ga-510", Brand: "Radioddity", Name: "GA-510", Type: "analog", Drivers: []string{"bf-hseries"}, Links: []catLink{info("Download center Radioddity", rddDown)},
-		Notes: "Stessa radio della serie Baofeng H: driver di CHIRP della GA-510 (prima versione, 9600 baud). La GA-510 V2 (57600 baud) non è ancora gestita."},
+		Notes: "Stessa radio della serie Baofeng H: driver di CHIRP della GA-510 (prima versione, 9600 baud). Per la GA-510 V2 (57600 baud) c'è la sua scheda."},
+	{ID: "rdd-ga-510-v2", Brand: "Radioddity", Name: "GA-510 V2", Type: "analog", Drivers: []string{"rd-ga510v2"}, Links: []catLink{info("Download center Radioddity", rddDown)},
+		Notes: chirpNote("RadioddityGA510v2") + " 4.7: seconda versione della GA-510 (protocollo della Baofeng UV-17, 57600 baud): 128 canali, potenze 10/5/1 W."},
 
 	// ------------------------------------------------ TIDRADIO
 	// 4.1: famiglia TD-H8 (tdh8.py)
@@ -196,6 +212,11 @@ var catalogOther = []catItem{
 		Notes: chirpNote("RT622") + " Versione PMR446 della RT22."},
 	{ID: "rtv-rt22s", Brand: "Retevis", Name: "RT22S", Type: "gmrs", Drivers: []string{"rt-rt22s"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT22SRadio") + fixedNote("FRS")},
 	{ID: "rtv-rt20", Brand: "Retevis", Name: "RT20", Type: "pmr", Drivers: []string{"rt-rt20"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT20Radio")},
+	{ID: "rtv-rb627b", Brand: "Retevis", Name: "RB627B", Type: "pmr", Drivers: []string{"rt-rb627b"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: chirpNote("RetevisRB627B") + fixedNote("PMR446") + " 4.7: 16 canali con nomi di 6 caratteri."},
+	{ID: "rtv-rt18", Brand: "Retevis", Name: "RT18", Type: "pmr", Drivers: []string{"rt-rt18"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
+		Notes: chirpNote("RT18Radio") + " 4.7: 16 canali UHF 400-470 MHz; la password di programmazione resta quella della radio (si legge e si riscrive com'è). " +
+			"Il driver di CHIRP è sperimentale: i canali sono verificati dai suoi autori su una radio vera, le impostazioni generali (quelle della T18) non ancora."},
 	{ID: "rtv-rt15", Brand: "Retevis", Name: "RT15", Type: "pmr", Drivers: []string{"rt-rt15"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT15Radio")},
 	{ID: "rtv-rt47", Brand: "Retevis", Name: "RT47", Type: "gmrs", Drivers: []string{"rt-rt47"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT47Radio") + fixedNote("FRS")},
 	{ID: "rtv-rt47v", Brand: "Retevis", Name: "RT47V", Type: "gmrs", Drivers: []string{"rt-rt47v"}, Links: []catLink{info("Programmi Retevis", rtvDown)}, Notes: chirpNote("RT47VRadio") + fixedNote("MURS")},
@@ -223,6 +244,8 @@ var catalogOther = []catItem{
 	{ID: "lt-lt-316", Brand: "Luiton", Name: "LT-316", Type: "pmr", Drivers: []string{"lt-lt316"}, Notes: "È la Retevis RT22. " + chirpNote("LT316")},
 	{ID: "tid-td-m8", Brand: "TID", Name: "TD-M8", Type: "pmr", Drivers: []string{"tid-tdm8"}, Notes: "È la Retevis RT22. " + chirpNote("TDM8")},
 	// ------------------------------------------------ 4.2: famiglia TYT TH-UV88 (th_uv88.py)
+	{ID: "tyt-th-350", Brand: "TYT", Name: "TH-350", Type: "analog", Drivers: []string{"tyt-th350"}, Links: []catLink{info("Sito TYT", tytWeb)},
+		Notes: chirpNote("Th350Radio") + " 4.7: tribanda (VHF, 220 MHz, UHF), 128 canali, nomi di 5 caratteri. Il driver di CHIRP è indicato come sperimentale dai suoi autori: tieni sempre la copia della lettura."},
 	{ID: "tyt-th-uv88", Brand: "TYT", Name: "TH-UV88", Type: "analog", Drivers: []string{"tyt-thuv88"}, Links: []catLink{info("Sito TYT", tytWeb)},
 		Notes: chirpNote("THUV88Radio") + " 200 canali con nome di 10 caratteri, tre potenze (5, 2,5 e 0,5 W)."},
 	{ID: "tyt-th-uv98", Brand: "TYT", Name: "TH-UV98", Type: "analog", Drivers: []string{"tyt-thuv98"}, Links: []catLink{info("Sito TYT", tytWeb)},

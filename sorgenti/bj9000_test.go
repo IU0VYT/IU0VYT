@@ -135,6 +135,8 @@ type bj9kGen struct {
 var bj9kEmuModel string
 
 var bj9kGens = []bj9kGen{{"BJ9000_CPS", "bj-9000-960", 0x7800}, {"BJ9000_CPS990", "bj-9000", 0x7BC0},
+	// 4.7: RT-950PRO_CPS v1.2.1 (primo con 990 canali) e BJ-9000_CPS v1.3.3 di Bajeton
+	{"BJ9000_CPS121", "bj-9000", 0x7BC0}, {"BJ9000_CPSBJ", "bj-9000", 0x7BC0}, {"BJ9000_CPSBJ111", "bj-9000-960", 0x7800},
 	// Radtel RT-950 (senza «Pro»): programma «BT-9000_CPS» (RT-950_EnCPS v1.3.0)
 	{"RT950_CPS", "rtl-rt950", 0x7800}}
 
@@ -152,7 +154,7 @@ func bj9kEach(t *testing.T, fn func(t *testing.T, h, exe string, g bj9kGen)) {
 		ran = true
 		g := g
 		bj9kEmuModel = rt900o(genByID[g.kind]).model
-		t.Run(g.kind, func(t *testing.T) { fn(t, h, exe, g) })
+		t.Run(g.env+"_"+g.kind, func(t *testing.T) { fn(t, h, exe, g) })
 	}
 	if !ran {
 		t.Skip("BJ9000_CPS e BJ9000_CPS990 non impostati")
@@ -216,8 +218,21 @@ func testBJ9000CPS(t *testing.T, h, exe string, g bj9kGen) {
 	}
 	dat, _ := bj9kCPS(t, h, exe, "read", ours, nil)
 	_, mem := bj9kCPS(t, h, exe, "write", bytes.Repeat([]byte{0xFF}, 0xD300), dat)
+	// 4.7: qui il bit 1 del byte 15 è sempre a 1 (come i programmi fino alla v1.2.x);
+	// la v1.3.x lo ignora in lettura e lo riscrive a 0: il confronto lo esclude
+	cleared := 0
 	if !bytes.Equal(mem[:g.chEnd], ours[:g.chEnd]) {
-		t.Fatalf("canali riscritti dal programma diversi: %s", diffRanges(ours[:g.chEnd], mem[:g.chEnd]))
+		a, b := append([]byte{}, ours[:g.chEnd]...), append([]byte{}, mem[:g.chEnd]...)
+		for i := 0; i+32 <= g.chEnd; i += 32 {
+			if rt950RecUsed(a[i:i+32]) && a[i+15]&0x02 != 0 && b[i+15]&0x02 == 0 {
+				cleared++
+				b[i+15] |= 0x02
+			}
+		}
+		if !bytes.Equal(a, b) {
+			t.Fatalf("canali riscritti dal programma diversi: %s", diffRanges(a, b))
+		}
+		t.Logf("il programma ha riscritto a 0 il bit 1 del byte 15 in %d canali (v1.3.x), il resto è identico", cleared)
 	}
 	if l, why := rt950Layout(ours); g.chEnd == 0x7BC0 && genGet(m, ours, 989) != nil && l != 990 {
 		t.Fatalf("memoria con il canale 990 non riconosciuta come firmware 0.24 (%d %s)", l, why)

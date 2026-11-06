@@ -1,2 +1,2 @@
-versione=4.6.0
-compilazione=2026-11-05T21:15
+versione=4.7.0
+compilazione=2026-11-06T03:30

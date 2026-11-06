@@ -40,6 +40,10 @@ func TestModelNames(t *testing.T) {
 	if !found {
 		t.Fatalf("la Radtel RT-950 Pro non è tra le scelte: %+v", r.Others)
 	}
+	// 4.7: istruzioni per vedere la versione del firmware sulla radio
+	if !strings.Contains(r.FwHint, "About") || !strings.Contains(r.FwHint, "0.24") {
+		t.Fatalf("istruzioni sulla versione del firmware: %q", r.FwHint)
+	}
 	// scelta la RT-950 Pro: da qui in poi si chiama così
 	a.rememberCard("bj-9000", "rtl-rt-950-pro")
 	r = res("bj-9000")

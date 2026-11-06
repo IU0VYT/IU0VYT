@@ -74,8 +74,11 @@ var catalog = []catItem{
 			{"info", "Pagina dei download Bajeton", bjDown}},
 		Notes: "960 canali in 15 zone da 64 (driver di CHIRP, scritto per il firmware V0.15P; i canali FM/AM/HF ausiliari non sono gestiti). Il firmware si aggiorna come quello della BJ-8300 (stesso programma «BinTe ANC Bootloader», file .anc)."},
 	{ID: "bj-9000", Brand: "Bajeton", Name: "BJ-9000", Aliases: []string{"BJ9000 GPS APRS"}, Type: "analog", Drivers: []string{"bj-9000", "bj-9000-960"}, FW: "bj9000",
-		Links: []catLink{{"cps", "Programma BJ-9000_CPS v1.1.1 (Google Drive Bajeton)", gd + "drive/folders/1jJh1gEOniEV3Ud0ODhcH1JeKueAzq4Vm"},
+		Links: []catLink{{"cps", "Programma BJ-9000_CPS v1.3.3 per il firmware 0.24 e successivi (990 canali; Google Drive Bajeton, dal sito bajeton.cn)", gd + "file/d/1dqpa8bwWMtHE1yixudcAEZl-erRpYYWC/view"},
+			{"fw", "Firmware BJ9000_V0.29_260617 (Google Drive Bajeton, dal sito bajeton.cn)", gd + "file/d/1A_185ILQ4pUI3jHsIiovcu2Fj-uXEmpq/view"},
+			{"cps", "Programma BJ-9000_CPS v1.1.1 (960 canali, per il firmware fino a 0.23; Google Drive Bajeton)", gd + "drive/folders/1jJh1gEOniEV3Ud0ODhcH1JeKueAzq4Vm"},
 			{"fw", "Firmware BJ9000_V0.27_260313 e programma BJ9000_EnUPDATE (Google Drive Bajeton)", gd + "drive/folders/1DF17RtchbKreT_QEAsQkON3qauP0gUp-"},
+			{"info", "Pagina dei download Bajeton (bajeton.cn)", "https://bajeton.cn/pages/download"},
 			{"info", "Pagina dei download Bajeton", bjDown}},
 		Notes: "Stessa elettronica e stessa gestione della Radtel RT-950 Pro, ma è un'altra radio: la scheda e l'identificazione la chiamano BJ-9000. " +
 			"Due versioni secondo il firmware: fino a 0.23 960 canali (15 zone da 64), dalla 0.24 990 canali (10 zone da 99); la lettura riconosce la versione dai dati " +

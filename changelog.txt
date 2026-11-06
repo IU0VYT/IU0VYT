@@ -3,6 +3,78 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.7.0 (06/11/2026)
+------------------
+- Identificazione automatica (identify.go, autoident.go):
+  - ascolto della porta appena aperta (identSpontSample, 1 s per porta e velocità,
+    ricordato per un minuto): i byte che la radio trasmette da sola (messaggi
+    periodici delle radio in modalità aggiornamento, es. 0x01 ogni 0,7 s del
+    caricatore delle Bajeton) non contano come risposta (probePort.ReadFull,
+    controllo «genuine»); con una radio così ogni tentativo finisce presto (prima
+    ogni modello sembrava rispondere e la ricerca durava minuti; COM6 simulata: da
+    183 s a 46 s); esito «spont» con la spiegazione nella scheda Identifica;
+  - il tempo d'ascolto non conta nell'attesa massima del tentativo
+    (probeState.listened/listenFrom, probe): senza, ogni primo tentativo per
+    velocità veniva chiuso prima del saluto e nessuna radio era riconosciuta;
+  - l'ascolto si interrompe con la ricerca (contesto del tentativo);
+  - autoStep non tiene più il proprio lucchetto mentre avvia le ricerche
+    (autoLaunch, autoEnabledLocked): niente rallentamenti dell'interfaccia;
+  - prima le radio molto diffuse (identPopular: K67 Pro, BJ-8300, BJ-7800/RT-920,
+    BJ-7700/RT-900, BJ-9000/RT-950 Pro, TD-H8, UV-17/UV-17Pro, UV-K5, UV-5R,
+    BF-888S): solo il gruppo si sposta, come per le radio già riconosciute;
+  - ui/identify.js: «scheda già aperta» solo se la linguetta c'è davvero (prima una
+    scheda K67 o Bajeton chiusa risultava ancora aperta); found() senza bloccare il
+    ciclo di aggiornamento.
+- Radio con la stessa gestione (modelnames.go, ui/identify.js): elenco di tutte le
+  radio possibili nel riquadro e nella finestra di scelta, menu a tendina, e
+  istruzioni per vedere la versione del firmware sulla radio (identResult.FwHint,
+  identFwHint: per BJ-9000 / RT-950 Pro MENU → «About», «Software Ver 0.xx»).
+- BJ-9000 / Radtel RT-950 Pro / RT-950, byte 15 dei canali (drv_rt900.go): bit 1
+  («trasmissione abilitata» dei programmi fino alla v1.2.x) sempre a 1, con tutte
+  e due le versioni: la v1.3.3 legge la modulazione come (byte & 3) % 2 (solo il
+  bit 0) e ignora il bit 1; la v1.2.1 (990 canali) lo scrive a 1. Tolto
+  rt950Format990 (la 4.6 lo scriveva a 0 nella scheda da 990 canali: con il
+  firmware fino a 0.23 il canale poteva non trasmettere). rt900Fam.Finish (chiamata
+  da genWrite) rimette il bit nei canali 1-960 presenti che ne sono privi; i dati
+  dopo il canale 960 non si toccano. TestRT950TxBit; TestBJ9000CPS con i programmi
+  v1.2.0, v1.2.1, v1.3.3 di Radtel e v1.1.1, v1.3.3 di Bajeton (il confronto con la
+  v1.3.x esclude il bit 1, che quel programma riscrive a 0).
+- Bajeton BJ-9000: firmware V0.22 (05/11/2025), V0.27 (13/03/2026) e V0.29
+  (17/06/2026, identico byte per byte a RT_950Pro_V0.29_260617.BTF di Radtel);
+  programma BJ-9000_CPS v1.1.1 (960 canali) e v1.3.3 (il programma RT-950PRO_CPS
+  v1.3.3 con l'indice di marca VersionBranch = 2; nella stessa tabella anche
+  «HIROYASU-HI-UV850PRO_EnCPS» e «TP-900_EnCPS»). Collegamenti in galleria.
+- Firmware (fwkdhx_fw.go, ancfw.go, fwapi.go):
+  - .BTF/.Firmware con il caricatore della BJ-9000 anche per Radtel RT-950 Pro e
+    RT-950 («RT-950_EnUPDATE» = «BJ9000_EnUPDATE» tranne il titolo): radio dal
+    codice del modello all'offset 992 («RT-950» = BJ-9000 / RT-950 Pro / HI-UV850
+    Pro, «BT-9000» = RT-950), Info.Models, conferma scritta se la radio scelta è
+    un'altra; impronte di 15 firmware Radtel/Bajeton;
+  - .anc di Radtel RT-920 (= BJ-7800) e RT-910B (= BJ-7700): programma «Radtel ANC
+    Bootloader V1.2», stesso protocollo del «BinTe ANC Bootloader» (confrontato il
+    codice); fwInfo.Family/ancFamily per il protocollo di identificazione e la copia
+    (RT-920 con il driver della RT-920); impronte di 6 firmware;
+  - TestAnalyzeRadtel950, TestRadtel950RealFirmware (RT950_FW: 22 file veri).
+- Nuove radio da CHIRP (verificate con lettura, scrittura e byte scambiati identici
+  a CHIRP, impostazioni comprese):
+  - Retevis RT18 (retevis_rt18.py: famiglia T18 con il passo della password 0x05,
+    attesa di 150 ms prima del saluto; rbSpec.pwStep/preDelay e radio simulata);
+  - Retevis RB627B (PMR446, bf_t8.py: bft8Opt.n/pmr, canali fissi come CHIRP, Locked);
+  - Radtel RT-620 e Radioddity GA-510 V2 (famiglia UV-17 di baofeng_uv17.py:
+    uv17lOpt con pagine, comandi, identificativo e record propri; RT-620 con la
+    pagina di taratura solo letta, modi NFM/FM/WFM, passo e compander; GA-510 V2
+    con 128 canali); verifica/chirp/chirpref.py: la GA-510 V2 si riconosce con
+    detect_from_serial della GA-510, come in CHIRP;
+  - TYT TH-350 (th350.py: famiglia UV-B5 con uvb5Opt: «TROGRAM», toni in due byte,
+    nessuna conferma dei blocchi letti, 128 canali).
+  - impostazioni da CHIRP anche per SenhaiX 8800, Radioddity GS-5B, Cignus XTR-5,
+    Anysecu AC-580 (aggiunte nella 4.6 senza impostazioni).
+- Galleria: Hiroyasu HI-UV850 Pro (stessa radio della RT-950 Pro); RT-950 Pro,
+  RT-950, RT-920 e RT-910 con l'aggiornamento del firmware.
+- Catalogo: 398 modelli di 29 marche (360 con canali, 313 con impostazioni, 50 con
+  l'aggiornamento del firmware).
+
+
 4.6.0 (05/11/2026)
 ------------------
 - BJ-9000 / Radtel RT-950 Pro, due versioni secondo il firmware (drv_rt900.go):

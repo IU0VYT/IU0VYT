@@ -4,7 +4,8 @@
 // Software libero: GNU General Public License versione 3 o successiva, SENZA
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
-// Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: uvb5.py, bf_t1.py, bf_t8.py, baofeng_uv3r.py, radtel_t18.py, retevis_rt22.py.
+// Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver: uvb5.py, bf_t1.py, bf_t8.py, baofeng_uv3r.py, radtel_t18.py, retevis_rt22.py,
+// retevis_rt18.py e th350.py (4.7).
 // Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
 // ottobre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
@@ -17,6 +18,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"time"
@@ -136,9 +138,66 @@ struct {
 } names[99];
 `
 
+// 4.7: TYT TH-350 (th350.py di CHIRP, classe derivata dalla UV-B5): 128 canali,
+// toni in due byte (cifre decimali scritte come esadecimali), nessun passo
+const th350Format = `
+struct memory {
+  lbcd freq[4];
+  lbcd offset[4];
+  u8 unknown1:2,
+     txpol:1,
+     rxpol:1,
+     compander:1,
+     scrambler:1,
+     unknown2:2;
+  u8 rxtoneb;
+  u8 rxtonea;
+  u8 txtoneb;
+  u8 txtonea;
+  u8 pttid:1,
+     scanadd:1,
+     isnarrow:1,
+     bcl:1,
+     highpower:1,
+     revfreq:1,
+     duplex:2;
+  u8 unknown[2];
+};
+
+#seekto 0x0000;
+char ident[32];
+u8 blank[16];
+struct memory vfo1;
+struct memory channels[128];
+#seekto 0x0840;
+struct memory vfo3;
+struct memory vfo2;
+
+#seekto 0x09D0;
+u16 fm_presets[16];
+
+#seekto 0x0A30;
+struct {
+  u8 name[5];
+} names[128];
+`
+
 const uvb5Charset = "0123456789- ABCDEFGHIJKLMNOPQRSTUVWXYZ/_+*"
 
 type uvb5Fam struct{}
+
+// uvb5Opt (4.7): varianti della famiglia; nil = Baofeng UV-B5 / UV-B6
+type uvb5Opt struct {
+	th350  bool   // TYT TH-350: formato, toni, saluto «TROGRAM», nessuna conferma dei blocchi letti
+	header string // intestazione dell'immagine (48 byte con gli zeri)
+}
+
+func uvb5o(m *genModel) *uvb5Opt {
+	if o, ok := m.Opt.(*uvb5Opt); ok {
+		return o
+	}
+	return &uvb5Opt{header: "KT511 Radio Program data v1.08\x00\x00"}
+}
 
 func init() {
 	genRegister(&genModel{ID: "bf-uvb5", Vendor: "Baofeng", Model: "UV-B5", RClass: "BaofengUVB5", Name: "Baofeng UV-B5 / UV-B6",
@@ -146,27 +205,75 @@ func init() {
 		Bands:  []band{{130000000, 175000000}, {220000000, 269000000}, {400000000, 520000000}},
 		Narrow: true, HasScan: true, NoTxOff: true, DCS: dtcsCodes, Baud: 9600, Fam: uvb5Fam{},
 		Notes: "Accendi la radio su un canale libero."})
+	genRegister(&genModel{ID: "tyt-th350", Vendor: "TYT", Model: "TH-350", RClass: "Th350Radio", Name: "TYT TH-350",
+		Slots: 128, First: 1, NameMax: 5, Charset: uvb5Charset, Powers: []genPower{{"Bassa 1 W", 1, 2}, {"Alta 5 W", 5, 0}},
+		Bands:  []band{{130000000, 175000000}, {220000000, 269000000}, {400000000, 520000000}},
+		Narrow: true, HasScan: true, NoTxOff: true, DCS: dtcsCodes, Baud: 9600, Fam: uvb5Fam{},
+		Opt:   &uvb5Opt{th350: true, header: "TRI350 Radio Program data v1.08\x00"},
+		Notes: "Accendi la radio su un canale libero. Driver di CHIRP dichiarato sperimentale dai suoi autori: tieni una copia della lettura."})
 }
 
-func (uvb5Fam) mem() *bwEl                 { return bwMust(uvb5Format) }
-func (f uvb5Fam) layout(m *genModel) *bwEl { return f.mem() }
-func (f uvb5Fam) recs(i int) (*bwEl, *bwEl) {
-	r := f.mem()
+func (uvb5Fam) mem(m *genModel) *bwEl {
+	if uvb5o(m).th350 {
+		return bwMust(th350Format)
+	}
+	return bwMust(uvb5Format)
+}
+func (f uvb5Fam) layout(m *genModel) *bwEl { return f.mem(m) }
+func (f uvb5Fam) recs(m *genModel, i int) (*bwEl, *bwEl) {
+	r := f.mem(m)
 	return r.F("channels").I(i), r.F("names").I(i).F("name")
 }
 func (f uvb5Fam) Match(m *genModel, img []byte) bool {
-	return bytes.HasPrefix(img, []byte("KT511 Radio Program data")) && len(img) == 0x1030
+	h := uvb5o(m).header
+	return bytes.HasPrefix(img, []byte(h[:24])) && len(img) == 0x1030
 }
 
 func (f uvb5Fam) Rec(m *genModel, img []byte, i int) []byte {
-	a, b := f.recs(i)
+	a, b := f.recs(m, i)
 	return append(append([]byte{}, a.Raw(img)...), b.Raw(img)...)
 }
 
 func (f uvb5Fam) PutRec(m *genModel, img []byte, i int, raw []byte) {
-	a, b := f.recs(i)
+	a, b := f.recs(m, i)
 	a.SetRaw(img, raw[:16])
 	b.SetRaw(img, raw[16:])
+}
+
+// th350ToneDec: toni della TH-350 (_decode_tone di th350.py)
+func th350ToneDec(a, b int64) string {
+	switch {
+	case a == 0xFF:
+		return ""
+	case a >= 0x80:
+		pold := a / 16
+		if pold != 0x8 && pold != 0xC {
+			return ""
+		}
+		code := (a%16)*100 + b/16*10 + b%16
+		return genTone{Mode: "DTCS", Code: int(code), Inv: pold == 0xC}.String()
+	}
+	// 107.2 → 0x10 0x72
+	return fmtTone(int(a/16*1000 + a%16*100 + b/16*10 + b%16))
+}
+
+// th350ToneEnc: come _encode_tone di th350.py (stessi calcoli in virgola mobile)
+func th350ToneEnc(t genTone) (int64, int64) {
+	switch t.Mode {
+	case "Tone":
+		val := float64(t.Hz10) / 10
+		a := int64(math.Floor(val/100))*16 + int64(math.Mod(math.Floor(val/10), 10))
+		b := int64(math.Floor(math.Mod(val, 10)))*16 + int64(math.Mod(math.Floor(val*10), 10))
+		return a, b
+	case "DTCS":
+		a := int64(0x80)
+		if t.Inv {
+			a = 0xC0
+		}
+		v := int64(t.Code)
+		return a + v/100, (v/10)%10*16 + v%10
+	}
+	return 0xFF, 0xFF
 }
 
 func uvb5ToneDec(v int64, pol bool) string {
@@ -180,7 +287,7 @@ func uvb5ToneDec(v int64, pol bool) string {
 }
 
 func (f uvb5Fam) Get(m *genModel, img []byte, i int) *Chan {
-	r, nam := f.recs(i)
+	r, nam := f.recs(m, i)
 	if r.F("freq").Raw(img)[0] == 0xFF {
 		return nil
 	}
@@ -194,8 +301,13 @@ func (f uvb5Fam) Get(m *genModel, img []byte, i int) *Chan {
 	default:
 		c.Tx = c.Rx
 	}
-	c.TxTone = uvb5ToneDec(r.F("txtone").Int(img), r.F("txpol").Bool(img))
-	c.RxTone = uvb5ToneDec(r.F("rxtone").Int(img), r.F("rxpol").Bool(img))
+	if uvb5o(m).th350 {
+		c.TxTone = th350ToneDec(r.F("txtonea").Int(img), r.F("txtoneb").Int(img))
+		c.RxTone = th350ToneDec(r.F("rxtonea").Int(img), r.F("rxtoneb").Int(img))
+	} else {
+		c.TxTone = uvb5ToneDec(r.F("txtone").Int(img), r.F("txpol").Bool(img))
+		c.RxTone = uvb5ToneDec(r.F("rxtone").Int(img), r.F("rxpol").Bool(img))
+	}
 	c.Narrow = r.F("isnarrow").Bool(img)
 	c.Scan = r.F("scanadd").Bool(img)
 	c.Power = m.powerSem(int(r.F("highpower").Int(img)))
@@ -211,7 +323,7 @@ func (f uvb5Fam) Get(m *genModel, img []byte, i int) *Chan {
 }
 
 func (f uvb5Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
-	r, nam := f.recs(i)
+	r, nam := f.recs(m, i)
 	if c == nil {
 		r.Fill(img, 0xFF)
 		return nil
@@ -251,6 +363,13 @@ func (f uvb5Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		if err != nil {
 			return err
 		}
+		if uvb5o(m).th350 {
+			// TH-350: la polarità è nel tono (i bit txpol/rxpol non si toccano)
+			a, b := th350ToneEnc(t)
+			r.F(x.tone+"a").SetInt(img, a)
+			r.F(x.tone+"b").SetInt(img, b)
+			continue
+		}
 		v, inv, err := idxToneEnc(t, dtcsCodes)
 		if err != nil {
 			return err
@@ -279,8 +398,12 @@ func (f uvb5Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	return nil
 }
 
-func (s *rawSess) uvb5Ident() error {
-	if err := s.send([]byte("\x05PROGRAM")); err != nil {
+func (s *rawSess) uvb5Ident(m *genModel) error {
+	hello := "\x05PROGRAM"
+	if uvb5o(m).th350 {
+		hello = "\x05TROGRAM"
+	}
+	if err := s.send([]byte(hello)); err != nil {
 		return err
 	}
 	saw, ok := false, false
@@ -327,10 +450,11 @@ func (f uvb5Fam) Download(ctx context.Context, m *genModel, port string, prog Pr
 	}
 	defer s.p.Close()
 	prog(0, 0x1000, "Collegamento con la radio…")
-	if err := s.uvb5Ident(); err != nil {
+	if err := s.uvb5Ident(m); err != nil {
 		return nil, "", genFail("Identificazione", err)
 	}
-	data := append([]byte("KT511 Radio Program data v1.08\x00\x00"), make([]byte, 16)...)
+	data := append([]byte(uvb5o(m).header), make([]byte, 16)...)
+	th := uvb5o(m).th350
 	var first []byte
 	for a := 0; a < 0x1000; a += 16 {
 		if ctx.Err() != nil {
@@ -347,6 +471,10 @@ func (f uvb5Fam) Download(ctx context.Context, m *genModel, port string, prog Pr
 		}
 		if !bytes.Equal(res[1:4], fr[1:4]) {
 			return nil, "", rErr("risposta non valida per l'indirizzo 0x%04X", a)
+		}
+		if th {
+			data = append(data, res[4:]...) // TH-350: nessuna conferma dopo ogni blocco
+			continue
 		}
 		if err := s.send([]byte{0x06}); err != nil {
 			return nil, "", err
@@ -373,7 +501,7 @@ func (f uvb5Fam) Upload(ctx context.Context, m *genModel, port string, img []byt
 	}
 	defer s.p.Close()
 	prog(0, 0x1000, "Collegamento con la radio…")
-	if err := s.uvb5Ident(); err != nil {
+	if err := s.uvb5Ident(m); err != nil {
 		return "", genFail("Identificazione", err)
 	}
 	data := img[0x30:]
@@ -683,6 +811,11 @@ struct {
 } memory[99];
 `
 
+// bft8FormatN (4.7): canali come in CHIRP (MEM_FORMAT % _upper)
+func bft8FormatN(n int) string {
+	return strings.Replace(bft8Format, "memory[99]", fmt.Sprintf("memory[%d]", n), 1)
+}
+
 // nomi dei canali (Retevis RB27 e simili, MEM_FORMAT_PT2 di bf_t8.py)
 const bft8NamesFormat = `
 #seekto 0x0D00;
@@ -699,6 +832,10 @@ type bft8Opt struct {
 	spec  *rbSpec
 	names bool  // nomi da 6 caratteri a 0x0D00 (RB27)
 	dcs   []int // codici DCS nell'ordine della radio
+	// 4.7: n: canali (_upper; 0 = 99); pmr: canali PMR446 a frequenza fissa
+	// (RetevisRB627B di bf_t8.py)
+	n   int
+	pmr bool
 }
 
 func init() {
@@ -718,6 +855,14 @@ func init() {
 		Opt: &bft8Opt{spec: rb27Spec, names: true, dcs: rb27dcs},
 		Notes: "Baofeng G11S = Retevis RB27 (equivalenza indicata da CHIRP): driver della RB27 di CHIRP; " +
 			"nei file .img compare come Retevis RB27."})
+	// 4.7: Retevis RB627B (PMR446, classe RetevisRB627B di bf_t8.py): 16 canali
+	// a frequenza fissa, nomi di 6 caratteri, 0,5 W
+	genRegister(&genModel{ID: "rt-rb627b", Vendor: "Retevis", Model: "RB627B", RClass: "RetevisRB627B", Name: "Retevis RB627B (PMR446)",
+		Slots: 16, First: 1, NameMax: 6, Charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-",
+		Powers: []genPower{{"Alta 0,5 W", 0.5, 0}, {"Bassa 0,5 W", 0.499, 2}},
+		Bands:  []band{{400000000, 520000000}}, Narrow: true, HasScan: true, DCS: rb27dcs, Baud: 9600, Fam: bft8Fam{},
+		Opt:   &bft8Opt{spec: rb27Spec, names: true, dcs: rb27dcs, n: 16, pmr: true},
+		Notes: "PMR446: i 16 canali hanno le frequenze fisse PMR446 (come in CHIRP); si possono cambiare nome, toni e scansione."})
 }
 
 func bft8o(m *genModel) *bft8Opt {
@@ -727,28 +872,42 @@ func bft8o(m *genModel) *bft8Opt {
 	return &bft8Opt{spec: bft8Spec, dcs: dtcsCodes}
 }
 
-func (bft8Fam) mem() *bwEl { return bwMust(bft8Format) }
+func bft8Fmt(m *genModel) string {
+	if n := bft8o(m).n; n > 0 {
+		return bft8FormatN(n)
+	}
+	return bft8Format
+}
+
+func bft8NamesFmt(m *genModel) string {
+	if n := bft8o(m).n; n > 0 {
+		return strings.Replace(bft8NamesFormat, "names[99]", fmt.Sprintf("names[%d]", n), 1)
+	}
+	return bft8NamesFormat
+}
+
+func (bft8Fam) mem(m *genModel) *bwEl { return bwMust(bft8Fmt(m)) }
 func (f bft8Fam) layout(m *genModel) *bwEl {
 	if bft8o(m).names {
-		return bwMust(bft8Format + bft8NamesFormat)
+		return bwMust(bft8Fmt(m) + bft8NamesFmt(m))
 	}
-	return f.mem()
+	return f.mem(m)
 }
-func (f bft8Fam) rec(i int) *bwEl { return f.mem().F("memory").I(i) }
-func (f bft8Fam) name(i int) *bwEl {
-	return bwMust(bft8Format + bft8NamesFormat).F("names").I(i).F("name")
+func (f bft8Fam) rec(m *genModel, i int) *bwEl { return f.mem(m).F("memory").I(i) }
+func (f bft8Fam) name(m *genModel, i int) *bwEl {
+	return bwMust(bft8Fmt(m) + bft8NamesFmt(m)).F("names").I(i).F("name")
 }
 func (f bft8Fam) Rec(m *genModel, img []byte, i int) []byte {
-	r := append([]byte{}, f.rec(i).Raw(img)...)
+	r := append([]byte{}, f.rec(m, i).Raw(img)...)
 	if bft8o(m).names {
-		r = append(r, f.name(i).Raw(img)...)
+		r = append(r, f.name(m, i).Raw(img)...)
 	}
 	return r
 }
 func (f bft8Fam) PutRec(m *genModel, img []byte, i int, raw []byte) {
-	f.rec(i).SetRaw(img, raw[:16])
+	f.rec(m, i).SetRaw(img, raw[:16])
 	if bft8o(m).names && len(raw) >= 22 {
-		f.name(i).SetRaw(img, raw[16:22])
+		f.name(m, i).SetRaw(img, raw[16:22])
 	}
 }
 func (f bft8Fam) Match(m *genModel, img []byte) bool { return false }
@@ -768,7 +927,7 @@ func bft8ToneDec(mode, v int64, dcs []int) string {
 }
 
 func (f bft8Fam) Get(m *genModel, img []byte, i int) *Chan {
-	r := f.rec(i)
+	r := f.rec(m, i)
 	rx := r.F("rxfreq").Int(img) * 10
 	if rx == 0 || bytes.Equal(r.F("rxfreq").Raw(img), []byte{0xFF, 0xFF, 0xFF, 0xFF}) {
 		return nil
@@ -786,10 +945,20 @@ func (f bft8Fam) Get(m *genModel, img []byte, i int) *Chan {
 	c.RxTone = bft8ToneDec(r.F("rx_tmode").Int(img), r.F("rx_tone").Int(img), o.dcs)
 	lp := int(r.F("lowpower").Int(img))
 	c.Power = m.powerSem(lp)
+	if o.pmr && t18In(t18PMR, rx) {
+		// 4.7 (RB627B): canale PMR446 fisso, come lo mostra CHIRP
+		if n := i + 1; n <= 16 {
+			c.Rx = t18PMR[n-1]
+		}
+		c.Tx, c.TxOff, c.Narrow = c.Rx, false, true
+		if len(m.Powers) > 1 {
+			c.Power = m.Powers[1].Sem
+		}
+	}
 	if o.names {
 		// come CHIRP: 0xFF (anche in mezzo al nome) = spazio, spazi finali tolti
 		nb := []byte{}
-		for _, b := range f.name(i).Raw(img) {
+		for _, b := range f.name(m, i).Raw(img) {
 			if b == 0xFF {
 				b = ' '
 			}
@@ -801,12 +970,12 @@ func (f bft8Fam) Get(m *genModel, img []byte, i int) *Chan {
 }
 
 func (f bft8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
-	r := f.rec(i)
+	r := f.rec(m, i)
 	o := bft8o(m)
 	if c == nil {
 		r.Fill(img, 0xFF)
 		if o.names {
-			f.name(i).Fill(img, 0xFF)
+			f.name(m, i).Fill(img, 0xFF)
 		}
 		return nil
 	}
@@ -814,7 +983,7 @@ func (f bft8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	if o.names {
 		nb := bytes.Repeat([]byte{0xFF}, 6)
 		copy(nb, c.Name)
-		f.name(i).SetRaw(img, nb)
+		f.name(m, i).SetRaw(img, nb)
 	}
 	r.F("rxfreq").SetInt(img, c.Rx/10)
 	if c.TxOff {
@@ -856,6 +1025,37 @@ func (f bft8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	return nil
 }
 
+// lockedSlotImg (4.7, RB627B): canale PMR446 fisso (escluso dalle prove di scrittura)
+func (f bft8Fam) lockedSlotImg(m *genModel, img []byte, i int) bool {
+	c := f.Get(m, img, i)
+	return c != nil && bft8o(m).pmr && t18In(t18PMR, c.Rx)
+}
+
+// Locked (4.7, RB627B): i canali PMR446 non si cancellano e non cambiano
+// frequenza, banda e potenza (campi non modificabili di CHIRP)
+func (f bft8Fam) Locked(m *genModel, i int, old, want *Chan) error {
+	if !bft8o(m).pmr {
+		return nil
+	}
+	if want != nil && t18In(t18PMR, want.Rx) && i < 16 && want.Rx != t18PMR[i] {
+		return fmt.Errorf("nella posizione %d della %s la frequenza %s MHz non è ammessa (canali PMR446 fissi)", i+1, m.Name, fmtMHz(want.Rx))
+	}
+	if old == nil || !t18In(t18PMR, old.Rx) {
+		return nil
+	}
+	switch {
+	case want == nil:
+		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: non si può cancellare", i+1, m.Name)
+	case want.Rx != old.Rx || want.Tx != old.Tx || want.TxOff != old.TxOff:
+		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: frequenza non modificabile", i+1, m.Name)
+	case want.Narrow != old.Narrow:
+		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: sempre a banda stretta", i+1, m.Name)
+	case want.Power != old.Power:
+		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: potenza non modificabile", i+1, m.Name)
+	}
+	return nil
+}
+
 // protocollo comune a BF-T8 e simili: comando, identificativo, blocchi 'R'/'W' con conferma, 'E'
 type rbSpec struct {
 	exit          []byte // comando di uscita ("E"; "b" sulle radio tipo T18; vuoto: nessun comando)
@@ -882,6 +1082,11 @@ type rbSpec struct {
 	wblock     int
 	noAckFirst bool
 	ackReads   int
+	// 4.7 (Retevis RT18, retevis_rt18.py di CHIRP): preDelay: attesa prima del
+	// saluto (come il programma del costruttore); pwStep: dopo l'ingresso il comando
+	// 0x05 restituisce i 6 byte della password di programmazione, confermati con 0x06
+	preDelay time.Duration
+	pwStep   bool
 }
 
 // rbSend: invia e, con i cavi che restituiscono i byte inviati, li scarta
@@ -898,6 +1103,11 @@ func (s *rawSess) rbSend(sp *rbSpec, b []byte) error {
 func (s *rawSess) rbEnter(sp *rbSpec) error {
 	ok := false
 	got := false
+	if sp.preDelay > 0 {
+		if err := sleepCtx(s.ctx, sp.preDelay); err != nil {
+			return err
+		}
+	}
 	if sp.ackReads > 0 {
 		if err := s.rbSend(sp, sp.magic); err != nil {
 			return err
@@ -969,7 +1179,28 @@ func (s *rawSess) rbEnter(sp *rbSpec) error {
 		}
 		return rErr("la radio ha rifiutato la modalità di programmazione")
 	}
+	if sp.pwStep {
+		// la password (o 6 × 0xFF) è anche nella memoria (0x03B0): qui si legge e
+		// basta, come fa CHIRP
+		if err := s.rbSend(sp, []byte{0x05}); err != nil {
+			return err
+		}
+		if pw := readUpTo(s.ctx, s.p, 6, sp.to); len(pw) != 6 {
+			return rErr("la radio non ha risposto al passo della password")
+		}
+		if err := s.rbSend(sp, []byte{0x06}); err != nil {
+			return err
+		}
+		if b := readUpTo(s.ctx, s.p, 1, sp.to); len(b) != 1 || b[0] != 0x06 {
+			return rErr("conferma mancante dopo il passo della password")
+		}
+	}
 	return nil
+}
+
+func rt18Spec(sp *rbSpec) *rbSpec {
+	sp.preDelay, sp.pwStep = 150*time.Millisecond, true
+	return sp
 }
 
 func (sp *rbSpec) exitCmd() []byte {
@@ -1513,6 +1744,9 @@ func init() {
 				power: "rw", reset: 0x09, extras: []string{"bcl"}}},
 		{"rt-t18", "Radtel", "T18", "T18Radio", "Radtel T18", 16, []genPower{{"Unica", 0.5, 0}}, uhf,
 			t18Opt{spec: spec("1ROGRAM", smp("\x00\x00"), 8, true, "b", false, 0x03F0, all), reset: 0xF9, extras: append([]string{"bcl"}, sc...)}},
+		// 4.7: Retevis RT18 (retevis_rt18.py): la potenza è nell'ordine di CHIRP (bit a 1 = bassa)
+		{"rt-rt18", "Retevis", "RT18", "RT18Radio", "Retevis RT18", 16, []genPower{{"Bassa 0,5 W", 0.5, 2}, {"Alta 2 W", 2, 0}}, uhf,
+			withSpec(t18("", sc...), rt18Spec(spec("JSOGRAP", [][]byte{{0x06}}, 8, false, "b", false, 0x03F0, all)))},
 		{"rt-rt20", "Retevis", "RT20", "RT20Radio", "Retevis RT20", 16, pmr(2, 0.5), uhf,
 			withSpec(t18("", sc...), spec("8AOGRAM", smp("\x02"), 8, true, "b", false, 0x03F0, all))},
 		{"rt-rt22s", "Retevis", "RT22S", "RT22SRadio", "Retevis RT22S", 22, pmr(2, 0.5), uhf,

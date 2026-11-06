@@ -57,6 +57,14 @@ var fwKnown = map[string]string{
 	"4952585480cab69c035804e748e512405763abedee966e795b25885e303cf52d": "Firmware ufficiale Bajeton BJ-8300 V0.12 del 12/11/2025 (BJ8300_V0.12_20251112.anc)",
 	"1509800ac1e6b88d8fe028acc8239c5df696c208ab1be7e5a5a3626c872f5a41": "Firmware ufficiale Bajeton BJ-7800 V0.17 del 26/11/2025 (BJ7800_CN_EN_V0.17_20251126.anc)",
 	"db74b6c4d497712c0f2db67a66b939b9c21f336bba1976354edf1e26c4ba6aba": "Firmware ufficiale Bajeton BJ-7700 con Bluetooth V0.06 del 24/11/2025 (BJ7700PRO_V0.06_251124.anc)",
+	// 4.7: firmware Radtel per le stesse radio (programma «Radtel ANC Bootloader V1.2»,
+	// stesso protocollo del «BinTe ANC Bootloader»)
+	"17c14b4470a902b82e8fc8ec1a2c40753c3fbf3e74106fa51d8b0b8008114097": "Firmware ufficiale Radtel RT-920 V0.13 del 18/08/2025 (RT920_V0.13_250818.anc)",
+	"e7adb5a3b36093cf5af2b44e1e4ed68512e3b9d14d0b98384cfd3a12cd7e2c76": "Firmware ufficiale Radtel RT-920 V0.15 del 19/09/2025 (RT920_V0.15_250919.anc)",
+	"30caa62a3248a28a32902415819ef78b294bf6f217caabd35456100a8e5e06ba": "Firmware ufficiale Radtel RT-920 V0.16 del 24/10/2025 (RT920_V0.16_251024.anc)",
+	"5d86e18894035f6a90a6da1994c938a2e8f6d03232affca446600018ebfd8767": "Firmware ufficiale Radtel RT-920 V0.17 del 09/12/2025 (RT920_V0.17_251209.anc: 10 zone da 99 canali)",
+	"4f99e6ca78f95fe734ccc16c52cd51df1f93dbaca6ad18b23753dddbca836896": "Firmware ufficiale Radtel RT-920 V0.18 del 10/03/2026 (RT920_V0.18_260310.anc)",
+	"56a5d5e7e9acc721f265d0d30c428b1521d54fac0c3c233705edb4c4452ad571": "Firmware ufficiale Radtel RT-910B (con Bluetooth) V0.14 del 08/08/2025 (RT_910B_V0.14_250808.anc)",
 }
 
 type fwCheck struct {
@@ -89,6 +97,21 @@ type fwInfo struct {
 	Models []string `json:"models,omitempty"`
 	// Power: si deve scegliere la potenza della radio (Retevis RT85: 5 W o 10 W)
 	Power bool `json:"power,omitempty"`
+	// Family (4.7, file .anc): radio Bajeton con la stessa elettronica e lo stesso
+	// protocollo (BJ8300, BJ7800, BJ7700); vuota = Confirm. La Radtel RT-920 è la
+	// BJ-7800, la RT-910B la BJ-7700
+	Family string `json:"-"`
+}
+
+// ancFamily: radio Bajeton di riferimento di un firmware .anc (vedi fwInfo.Family)
+func ancFamily(img *fwImage) string {
+	if img == nil {
+		return ""
+	}
+	if img.Info.Family != "" {
+		return img.Info.Family
+	}
+	return img.Info.Confirm
 }
 
 type fwImage struct {
@@ -99,10 +122,12 @@ type fwImage struct {
 }
 
 var (
-	reModel   = regexp.MustCompile(`(?i)BJ[-_ ]?(8300|7800|7700)`)
-	reVersion = regexp.MustCompile(`(?i)(?:^|[_\- ])V(\d+(?:\.\d+)+)`)
-	reDate    = regexp.MustCompile(`(?:^|[_\- ])(20\d{2})(\d{2})(\d{2})(?:$|[_\-. ])`)
-	rePlat    = regexp.MustCompile(`[A-Za-z0-9]{3,24}_soundbox`)
+	reModel = regexp.MustCompile(`(?i)BJ[-_ ]?(8300|7800|7700)`)
+	// 4.7: firmware Radtel delle stesse radio (RT920_V0.18_260310.anc, RT_910B_V0.14_250808.anc)
+	reRadtelANC = regexp.MustCompile(`(?i)(?:^|[^A-Z0-9])RT[-_ ]?(920|910[-_ ]?B|910[-_ ]?ANC)`)
+	reVersion   = regexp.MustCompile(`(?i)(?:^|[_\- ])V(\d+(?:\.\d+)+)`)
+	reDate      = regexp.MustCompile(`(?:^|[_\- ])(20\d{2})(\d{2})(\d{2})(?:$|[_\-. ])`)
+	rePlat      = regexp.MustCompile(`[A-Za-z0-9]{3,24}_soundbox`)
 )
 
 // analyzeANC controlla un file .anc e lo prepara per l'invio.
@@ -112,11 +137,22 @@ func analyzeANC(name, origin string, raw []byte) *fwImage {
 	if m := reModel.FindStringSubmatch(strings.TrimSuffix(name, path.Ext(name))); m != nil {
 		model = m[1]
 	}
+	radtel := ""
+	if m := reRadtelANC.FindStringSubmatch(strings.TrimSuffix(name, path.Ext(name))); m != nil && !reModel.MatchString(name) {
+		radtel = strings.ToUpper(m[1][:3])
+		model = map[string]string{"920": "7800", "910": "7700"}[radtel]
+	}
 	switch model {
 	case "7800":
 		info.Target, info.Confirm = "Bajeton BJ-7800", "BJ7800"
 	case "7700":
 		info.Target, info.Confirm = "Bajeton BJ-7700 (con Bluetooth)", "BJ7700"
+	}
+	switch radtel {
+	case "920":
+		info.Target, info.Confirm, info.Family = "Radtel RT-920 (stessa radio della Bajeton BJ-7800)", "RT920", "BJ7800"
+	case "910":
+		info.Target, info.Confirm, info.Family = "Radtel RT-910B con Bluetooth (stessa radio della Bajeton BJ-7700)", "RT910", "BJ7700"
 	}
 	sum := sha256.Sum256(raw)
 	info.SHA256 = hex.EncodeToString(sum[:])
@@ -172,7 +208,7 @@ func analyzeANC(name, origin string, raw []byte) *fwImage {
 		warn = true
 	}
 	base := strings.TrimSuffix(name, path.Ext(name))
-	if reModel.MatchString(base) {
+	if reModel.MatchString(base) || radtel != "" {
 		add("ok", "Il nome del file indica la %s", info.Target)
 	} else {
 		add("warn", "Il nome del file non indica la radio (atteso ad es. «BJ8300_V0.12_20251112.anc», «BJ7800_CN_EN_V0.17_20251126.anc» o «BJ7700PRO_V0.06_251124.anc»): considerato per la BJ-8300")

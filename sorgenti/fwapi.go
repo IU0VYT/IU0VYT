@@ -287,7 +287,7 @@ func (a *App) apiFwIdentify(r *http.Request) (interface{}, error) {
 		a.fw.mu.Unlock()
 		var rid, proto string
 		var err error
-		if img != nil && img.Info.Confirm == "BJ7700" {
+		if ancFamily(img) == "BJ7700" {
 			proto = "BJ-7700 (Radtel RT-910)"
 			err, rid = rt900Identify(ctx, genByID["bj-7700"], req.Port), "PROGRAMBT80U"
 		} else {
@@ -482,10 +482,10 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 		var info btInfo
 		var err error
 		proto := "il protocollo di programmazione BT-11 di BJ-8300/BJ-7800"
-		if img.Info.Confirm == "BJ7700" {
+		if ancFamily(img) == "BJ7700" {
 			proto = "il protocollo di programmazione della BJ-7700 (Radtel RT-910)"
 		}
-		if img.Info.Confirm == "BJ7700" {
+		if ancFamily(img) == "BJ7700" {
 			// BJ-7700: protocollo della RT-910 («PROGRAMBT80U»), anche per la copia
 			m := genByID["bj-7700"]
 			if req.Backup {
@@ -506,9 +506,12 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 				err = rt900Identify(ctx, m, req.Port)
 			}
 			info.ID = "PROGRAMBT80U"
-		} else if req.Backup && img.Info.Confirm == "BJ7800" {
+		} else if req.Backup && ancFamily(img) == "BJ7800" {
 			// BJ-7800: stesso protocollo di identificazione, memoria diversa: copia con il driver della BJ-7800
 			m := genByID["bj-7800"]
+			if img.Info.Confirm == "RT920" {
+				m = genByID["rt-rt920"] // 4.7: stessa radio, memoria letta con il driver della RT-920
+			}
 			j.logf("Identificazione della radio (protocollo BT-11)…")
 			if info, err = btIdentify(ctx, req.Port, j.prog); err == nil {
 				select {
@@ -516,7 +519,7 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 					return nil, errCancelled
 				case <-time.After(1500 * time.Millisecond):
 				}
-				j.logf("Lettura della radio con il driver della BJ-7800 (copia di sicurezza)…")
+				j.logf("Lettura della radio con il driver della %s (copia di sicurezza)…", m.Name)
 				mem, _, err2 := m.Fam.Download(ctx, m, req.Port, j.prog)
 				if err2 == errCancelled {
 					return nil, err2

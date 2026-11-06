@@ -22,6 +22,21 @@ import (
 var fwKnownKDH2 = map[string]string{
 	"ff199d6b56ac4833d01925de20f897fa5f58f558c510088adf5f1e293f0e95a5": "UV-25 Plus, V0.23 del 22/05/2025 (UV25Pro_NRF_401+_V0.23_250522.kdhx, pubblicato da Baofeng)",
 	"cbaad8d2ca956f481d2e9524f102d0281a19da1d74cb6cb048d9e4ee549c263d": "BJ-9000, V0.27 del 13/03/2026 (BJ9000_V0.27_260313.Firmware, pubblicato da Bajeton)",
+	// 4.7: altri firmware di BJ-9000, Radtel RT-950 Pro e Radtel RT-950 (stesso caricatore)
+	"41b7a9edc59beb21d22a4320b9e75da215b9c13db1114a365609544df996e836": "BJ-9000, V0.22 del 05/11/2025 (BJ_9000_V0.22_251105.BTF, pubblicato da Bajeton: 960 canali)",
+	"53226024c9b4a782c85556a120afa5e690c132a85bf4048e59d2d193e5eaf272": "BJ-9000 / RT-950 Pro, V0.29 del 17/06/2026 (BJ9000_V0.29_260617.BTF di Bajeton, identico a RT_950Pro_V0.29_260617.BTF di Radtel: 990 canali)",
+	"fc8f7c2b60d58a21505dea88bf6e2a637e5147e67236f2efc738a528fd5ad640": "RT-950 Pro, V0.15 del 08/09/2025 (RT_950Pro_V0.15_250908.BTF, pubblicato da Radtel)",
+	"aacca8fd2024c58f3d76b25f3c5d9748b7dce81dc41a8eb35510691913519757": "RT-950 Pro, V0.18 del 19/09/2025 (RT_950Pro_V0.18_250919.BTF, pubblicato da Radtel)",
+	"8a9a5d2be94800084b5245d2c5375e0d627908cca22d3d13623d92f6b3dcfa21": "RT-950 Pro, V0.19 del 30/09/2025 (RT_950Pro_V0.19_250930.BTF, pubblicato da Radtel: 960 canali o 15 zone da 64)",
+	"c63b8b316c3aff0c46000a503b13e2d5a7e27b8becb9e57796c4e1d9a8f21cfe": "RT-950 Pro, V0.20 del 11/10/2025 (RT_950Pro_V0.20_251011.BTF, pubblicato da Radtel: 960 canali)",
+	"faece86cbbde21e87f1671e5d873c8bd4827713ce4f9e96df500a757df070e06": "RT-950 Pro, V0.21 del 13/10/2025 (RT_950Pro_V0.21_251013.BTF, pubblicato da Radtel: 960 canali)",
+	"fd1e1d03ab556dc97c032577ace1f456c56778985fba042a1ccb099abc54c0ea": "RT-950 Pro, V0.22 del 04/11/2025 (RT_950Pro_V0.22_251104.BTF, pubblicato da Radtel: 960 canali)",
+	"c9aa7f79d09e4faf545d9f15e694310f90f2d9f5e397a8d03c8f13bd46ef447f": "RT-950 Pro, V0.23 del 14/11/2025 (RT_950Pro_V0.23_251114.BTF, pubblicato da Radtel: 960 canali)",
+	"559acaf496f32fd5b055bdafce05c9c39c6b8f283ccc9fc06be5a0320e111ff0": "RT-950 Pro, V0.24 del 01/12/2025 (RT_950Pro_V0.24_251201.BTF, pubblicato da Radtel: 990 canali, 10 zone da 99)",
+	"80930bc375db04d2367c0823d77f0a0b32ca9d6d2b81709a7a01f826f981c5f7": "RT-950 Pro, V0.26 del 26/12/2025 (RT_950Pro_V0.26_251226.BTF, pubblicato da Radtel: 990 canali)",
+	"33109a62b4c803800a0aef2ea81df246c274838fb46d41ea90111c9f9ade227e": "RT-950 Pro, V0.27 del 03/02/2026 (RT_950Pro_V0.27_260203.BTF, pubblicato da Radtel: 990 canali)",
+	"575ef44184bcd1ee098ae41960b7ce1576b33b4482a7236be65d1a50951d9a64": "RT-950, V0.27 del 11/10/2025 (RT_950_V0.27_251011.BTF, pubblicato da Radtel)",
+	"daf691bc3b7593ec5b16fa66ba6b6228fe95640d24d8a9ca880a3b3199db8df3": "RT-950, V0.29 del 04/11/2025 (RT_950_V0.29_251104.BTF, pubblicato da Radtel)",
 	"c873df7d189b51b692eee266725c8d732081cf21060243b3b335337b0cd1717e": "UV-9G, V02 del 04/10/2023 (T52GMRS_M8_V02_231004.kdh, pubblicato da Baofeng: trasmissione sul canale 15)",
 }
 
@@ -223,11 +238,31 @@ func analyzeBJ9000(name, origin string, raw []byte) *fwImage {
 	}
 	info.Hw = "modello «" + model + "»"
 	add("ok", "Codice del modello nel firmware: «%s». La radio lo confronta con il proprio e, se è diverso, rifiuta l'aggiornamento prima di cancellare la memoria", model)
-	nameVersionDate(info, name)
-	if !strings.Contains(strings.ToUpper(name), "9000") {
-		add("warn", "Il nome del file non indica la BJ-9000: verifica che sia il firmware giusto")
-		info.Warnings = true
+	// 4.7: stesso caricatore e stesso protocollo per Bajeton BJ-9000, Radtel RT-950
+	// Pro (programma «RT-950_EnUPDATE», uguale a «BJ9000_EnUPDATE» tranne il titolo)
+	// e Radtel RT-950; il codice del modello distingue le radio
+	up := strings.ToUpper(name)
+	switch model {
+	case "RT-950":
+		info.Target, info.Confirm = "Bajeton BJ-9000 / Radtel RT-950 Pro", "BJ9000"
+		info.Models = []string{"bj-9000", "bj-9000-960"}
+		if !strings.Contains(up, "9000") && !strings.Contains(up, "950") {
+			add("warn", "Il nome del file non indica la BJ-9000 né la RT-950 Pro: verifica che sia il firmware giusto")
+			info.Warnings = true
+		}
+	case "BT-9000":
+		info.Target, info.Confirm = "Radtel RT-950 (senza «Pro»)", "RT950"
+		info.Models = []string{"rtl-rt950"}
+		add("ok", "Firmware della Radtel RT-950 (senza «Pro»): una BJ-9000 o una RT-950 Pro lo rifiutano")
+		if strings.Contains(up, "PRO") || strings.Contains(up, "BJ") {
+			add("warn", "Il nome del file indica un'altra radio, ma il codice del modello è quello della RT-950 senza «Pro»: verifica che sia il firmware giusto")
+			info.Warnings = true
+		}
+	default:
+		add("warn", "Codice del modello «%s» diverso da quelli di BJ-9000 / RT-950 Pro («RT-950») e RT-950 («BT-9000»): la radio rifiuterà il file se non è il suo", model)
+		info.Warnings, info.Typed = true, true
 	}
+	nameVersionDate(info, name)
 	knownKDH2(info, add)
 	info.Valid = true
 	return img

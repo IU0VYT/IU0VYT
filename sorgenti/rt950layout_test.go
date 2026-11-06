@@ -179,3 +179,58 @@ func TestRT950WriteHigh(t *testing.T) {
 		t.Fatalf("canale 990 non letto: %+v", c)
 	}
 }
+
+// 4.7: bit 1 del byte 15 («trasmissione abilitata» fino al programma v1.2.x)
+// sempre a 1 nei canali scritti, con le due versioni, e riparato nei canali 1-960
+// non modificati che ne sono privi (scritti dalla 4.6 nella scheda da 990 canali
+// o dal programma v1.3.x); la modulazione AM (bit 0) resta com'è
+func TestRT950TxBit(t *testing.T) {
+	for _, id := range []string{"bj-9000", "bj-9000-960", "rtl-rt950"} {
+		m := genByID[id]
+		base := rt950Blank()
+		rt950Chan(t, m, base, 0, 145500000, "VECCHIO")
+		rt950Chan(t, m, base, 1, 27125000, "CB AM")
+		base[0*32+15] &^= 0x02 // canale come lo scriveva la 4.6 (990 canali)
+		base[1*32+15] = base[1*32+15]&^0x03 | 0x01
+		if id == "bj-9000" {
+			// dopo il canale 960: dati senza il bit, non modificati
+			rt950Chan(t, m, base, 970, 433500000, "ALTO")
+			base[970*32+15] &^= 0x02
+		}
+		chs := genChans(m, base)
+		if c := chs[1]; c == nil {
+			t.Fatalf("%s: canale AM non letto", id)
+		}
+		chs[5] = &Chan{Rx: 446006250, Tx: 446006250, Name: "NUOVO", Power: m.Powers[0].Sem}
+		out, err := genWrite(m, base, chs, &Report{})
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, i := range []int{0, 1, 5} {
+			if out[i*32+15]&0x02 == 0 {
+				t.Errorf("%s: canale %d senza il bit «trasmissione abilitata» (%02X)", id, i+1, out[i*32+15])
+			}
+		}
+		if out[1*32+15]&0x01 != 1 || out[0*32+15]&0x01 != 0 {
+			t.Errorf("%s: modulazione cambiata (%02X %02X)", id, out[15], out[32+15])
+		}
+		if id == "bj-9000" && out[970*32+15] != base[970*32+15] {
+			t.Errorf("canale 971 modificato senza che fosse cambiato")
+		}
+		// a parte il bit, i canali non modificati restano identici
+		for i := 0; i < 960; i++ {
+			if i == 5 {
+				continue
+			}
+			a, b := append([]byte{}, base[i*32:i*32+32]...), append([]byte{}, out[i*32:i*32+32]...)
+			a[15] |= 0x02
+			b[15] |= 0x02
+			if !bytes.Equal(a, b) && base[i*32] != 0xFF {
+				t.Errorf("%s: canale %d cambiato: %x → %x", id, i+1, base[i*32:i*32+32], out[i*32:i*32+32])
+			}
+		}
+		if !bytes.Equal(out[960*32:], base[960*32:]) && id != "bj-9000" {
+			t.Errorf("%s: memoria dopo i canali cambiata", id)
+		}
+	}
+}

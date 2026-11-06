@@ -363,7 +363,14 @@ def main():
             r = cls(pipe)
             r.status_fn = lambda s: None
             mod = sys.modules[cls.__module__]
-            if mod.__name__.endswith("ga510") and hasattr(mod, "start_program"):
+            det = getattr(cls, "_DETECTED_BY", None)
+            if mod.__name__.endswith("ga510") and det is not None and det is not cls:
+                # 4.7: GA-510 V2 (famiglia UV-17): riconosciuta da detect_from_serial
+                # della GA-510, che entra in programmazione; poi la lettura
+                rc = det.detect_from_serial(pipe)
+                r = rc(pipe)
+                r.status_fn = lambda s: None
+            elif mod.__name__.endswith("ga510") and hasattr(mod, "start_program") and hasattr(r, "_magic"):
                 # ga510.py: l'ingresso in programmazione è fatto da
                 # detect_from_serial (scelta del modello in CHIRP), non da sync_in
                 mod.start_program(r)

@@ -66,6 +66,7 @@ type autoPort struct {
 	paused     bool // ricerca interrotta dall'utente («Interrompi»)
 	gone       bool // porta sparita (cavo staccato dal PC)
 	unknown    bool // l'ultima ricerca ha avuto risposte ma nessun modello riconosciuto
+	launching  bool // 4.7: ricerca in partenza (vedi autoLaunch)
 	run        *autoRun
 }
 
@@ -213,7 +214,6 @@ func (a *App) autoStep(now time.Time) {
 	a.mu.Unlock()
 
 	a.auto.mu.Lock()
-	defer a.auto.mu.Unlock()
 	if a.auto.ports == nil {
 		a.auto.ports = map[string]*autoPort{}
 	}
@@ -251,6 +251,7 @@ func (a *App) autoStep(now time.Time) {
 
 	// ricerche: una per porta, tutte insieme
 	quiet := now.Before(a.auto.quietUntil)
+	var launch []*autoPort
 	for _, p := range a.autoAllLocked() {
 		if r := p.run; r != nil {
 			if p.gone && r.job.cancel != nil {
@@ -258,12 +259,20 @@ func (a *App) autoStep(now time.Time) {
 			}
 			continue
 		}
-		if p.done || p.paused || p.gone || p.next.After(now) || userBusy || quiet {
+		if p.launching || p.done || p.paused || p.gone || p.next.After(now) || userBusy || quiet {
 			continue
 		}
-		a.autoLaunchLocked(p)
+		p.launching = true
+		launch = append(launch, p)
 	}
 	a.autoStatusLocked()
+	a.auto.mu.Unlock()
+	// 4.7: le ricerche partono senza tenere bloccato lo stato dell'identificazione
+	// automatica (prima, se l'avvio aspettava, si fermava anche l'aggiornamento
+	// dell'interfaccia, che lo chiede ogni secondo e mezzo)
+	for _, p := range launch {
+		a.autoLaunch(p)
+	}
 }
 
 func (a *App) autoStatusLocked() {
@@ -403,16 +412,30 @@ func comNumber(s string) (int, bool) {
 	return n, len(u) > 3
 }
 
-// autoLaunchLocked: avvia la ricerca su p in un goroutine; con a.auto.mu già preso
-func (a *App) autoLaunchLocked(p *autoPort) {
+// autoLaunch: avvia la ricerca su p in un goroutine (senza a.auto.mu)
+func (a *App) autoLaunch(p *autoPort) {
 	j, err := a.startIdentify(&identReq{Port: p.name}, true)
+	a.auto.mu.Lock()
+	defer a.auto.mu.Unlock()
+	p.launching = false
 	if err != nil {
 		return // un'altra operazione è appena partita: si riprova al prossimo controllo
+	}
+	if p.gone || p.paused || !a.autoEnabledLocked() {
+		// cavo staccato, ricerca interrotta o opzione disattivata nel frattempo
+		if j.cancel != nil {
+			j.cancel()
+		}
+		return
 	}
 	r := &autoRun{p: p, job: j}
 	p.run = r
 	go a.autoWait(r)
+	a.autoStatusLocked()
 }
+
+// autoEnabledLocked: come autoEnabled (le impostazioni hanno un loro blocco)
+func (a *App) autoEnabledLocked() bool { return a.autoEnabled() }
 
 // autoWait: attende la fine della ricerca e ne registra l'esito
 func (a *App) autoWait(r *autoRun) {
