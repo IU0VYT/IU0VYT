@@ -91,7 +91,10 @@ def tones(mem, rf=None):
     if mem.tmode == "Tone":
         tx = "%.1f" % mem.rtone
     elif mem.tmode == "TSQL":
-        tx = rx = "%.1f" % mem.ctone
+        # radio senza tono di ricezione separato (has_ctone falso): in CHIRP
+        # il tono del TSQL è rtone
+        t = mem.ctone if (rf is None or rf.has_ctone) else mem.rtone
+        tx = rx = "%.1f" % t
     elif mem.tmode == "DTCS":
         tx = dcs(mem.dtcs, pol[0])
         rx = dcs(mem.dtcs, pol[1])
@@ -364,7 +367,11 @@ def main():
             r.status_fn = lambda s: None
             mod = sys.modules[cls.__module__]
             det = getattr(cls, "_DETECTED_BY", None)
-            if mod.__name__.endswith("ga510") and det is not None and det is not cls:
+            if det is not None and det is not cls and hasattr(det, "detect_from_serial") and (
+                    mod.__name__.endswith("ga510") or mod.__name__.endswith("retevis_h777v4")):
+                # 4.7 GA-510 V2, 4.8 Retevis H777 V4: classe riconosciuta da
+                # detect_from_serial di un'altra classe (come l'interfaccia di
+                # CHIRP), che entra in programmazione; poi la lettura
                 # 4.7: GA-510 V2 (famiglia UV-17): riconosciuta da detect_from_serial
                 # della GA-510, che entra in programmazione; poi la lettura
                 rc = det.detect_from_serial(pipe)

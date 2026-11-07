@@ -39,7 +39,9 @@ Object.assign(App, {
     if (RADIO_DEF[kind]) return RADIO_DEF[kind];
     const g = App.defs[kind];
     if (!g) return null;
-    const item = App.catalog.find(c => (c.drivers || []).includes(kind));
+    // 4.8: prima la scheda della galleria in cui la radio è il driver principale
+    // (es. RT-910 senza Bluetooth: firmware .BTU, non quello .anc della BJ-8200)
+    const item = App.catalog.find(c => (c.drivers || [])[0] === kind) || App.catalog.find(c => (c.drivers || []).includes(kind));
     return genRadioDef(g, item && item.fw);
   },
 

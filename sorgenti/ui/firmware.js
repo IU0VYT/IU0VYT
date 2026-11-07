@@ -36,11 +36,12 @@ const Firmware = {
   },
 
   // ------------------------------------------------------------ finestra principale
-  // expect: tipo di firmware della radio da cui si apre la finestra ('anc' | 'bf' | 'rh5' | 'kdhx' | 'bj9000' | 'kdh9g' | 'k5' | 'tdh' | 'th8600'), radioKind: scheda d'origine
+  // expect: tipo di firmware della radio da cui si apre la finestra ('anc' | 'bf' | 'rh5' | 'kdhx' | 'bj9000' | 'kdh9g' | 'k5' | 'tdh' | 'th8600' | 'btu'), radioKind: scheda d'origine
   open(expect, radioKind) {
     const TARGET = { anc: 'Bajeton BJ-8300 / BJ-7800 / BJ-7700', bf: 'Baofeng UV-5RM / UV-5RH e radio con lo stesso caricatore', rh5: 'Baofeng 5RH Pro / K67 Pro',
       kdhx: 'Baofeng UV-25 Plus, Radtel RT-470 / RT-495 / RT-630 e radio con il caricatore «Bootloader Pro»', bj9000: 'Bajeton BJ-9000', kdh9g: 'Baofeng UV-9G',
-      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus / UV-K5 V3, Retevis RA79', th8600: 'Retevis RA89 / RT85', tdh: 'TIDRADIO TD-H3 / TD-H8 o Radtel RT-730' };
+      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus / UV-K5 V3, Retevis RA79', th8600: 'Retevis RA89 / RT85', tdh: 'TIDRADIO TD-H3 / TD-H8 o Radtel RT-730',
+      btu: 'Radtel RT-910 / RT-900 e Bajeton BJ-7700 senza Bluetooth' };
     const PROTO = {
       anc: 'quello del programma originale «BinTe ANC Bootloader» V1.1',
       bf: 'quello del programma originale «BF Upgrade Tool for TFT 330L Series» (KDH Bootloader V1.0)',
@@ -48,6 +49,7 @@ const Firmware = {
       kdhx: 'quello del programma originale «Baofeng Bootloader Pro» (per le Radtel «JJCC Bootloader Pro», stesso programma con la piattaforma JJCC)',
       bj9000: 'quello del programma originale «BJ9000_EnUPDATE» (BJ9000_UPDATE_V02)',
       kdh9g: 'quello del programma originale «Bootloader_BaudRate38400» della UV-9G',
+      btu: 'quello del programma originale «Radtel Bootload Tools» (caricatore KDH V1.0, presentazione «PROGRAMBT80U»)',
       k5: 'quello del caricatore della UV-K5 documentato dai programmi liberi k5prog e uvtools, riscritto da zero',
       th8600: 'quello del programma originale «RA89-update-software» di Retevis («TH8600-UpDAta Soft» 2.3)',
       th8600rt85: 'quello del programma originale «RT85 10W_5W_UpData» di Retevis («TH8600-UpDAta Soft» 2.1)',
@@ -61,6 +63,10 @@ const Firmware = {
         auto: 'la radio accesa viene portata nel caricatore dal programma (pulsante «Upgrade Mode»)', speed: 'Velocità fissa 115200 baud, come nel programma originale. La radio controlla che il firmware sia per il suo modello prima di cancellare la memoria.' },
       kdh9g: { manual: 'radio spenta: tieni premuti i <b>tasti 12 e 13</b> e accendila; si accende la torcia. È la procedura indicata da Baofeng',
         auto: 'la radio accesa viene portata nel caricatore dal programma (prima 9600 baud, poi 38400)', speed: 'Velocità come nel programma originale: 38400 baud per il firmware.' },
+      btu: { manual: 'radio spenta: tieni premuti i <b>due tasti laterali</b> (sotto il PTT) e accendila: il display mostra «UPDATE» (pulsante «Update» con la scritta nera del programma originale). ' +
+          'Secondo Radtel, se la radio non riparte dopo un aggiornamento: ripeti così; se non basta togli la batteria per 10 minuti e riprova',
+        auto: 'la radio accesa viene portata nel caricatore dal programma (pulsante «Update» con la scritta rossa); prima 57600 baud, poi 115200',
+        speed: 'Velocità come nel programma originale: 57600 baud per la richiesta, 115200 per il firmware. Il caricatore non controlla il modello: serve la conferma scritta.' },
     };
     const isBoot = k => !!BOOT[k];
     // radio per la copia di sicurezza: .BF e .kdhx insieme (stesse famiglie di radio)
@@ -89,7 +95,8 @@ const Firmware = {
           (es. BF_5RH_501_v2_0_9.dat), <b>.kdhx</b> della UV-25 Plus (UV25Pro_NRF_401+_V0.23_250522.kdhx) e delle Radtel RT-470 / RT-495 / RT-630, <b>.kdh</b> della UV-9G (T52GMRS_M8_V02_231004.kdh)
           <b>.bin</b> delle Quansheng UV-K5, UV-K5(8), UV-K6, UV-5R Plus e UV-K5 V3 e della Retevis RA79 (es. k5_v2.01.26_publish.bin, RA79 V3.bin),
           <b>.bin</b> della Retevis RA89 (Eng_RA89_Upadat_20250524_B91.38.bin), <b>.hex</b> della Retevis RT85 (RT85-Firmware-V1.53.hex)
-          e <b>.BIN</b> di TIDRADIO TD-H3 / TD-H8 e Radtel RT-730 (es. 730Step improvement.BIN).
+          <b>.BIN</b> di TIDRADIO TD-H3 / TD-H8 e Radtel RT-730 (es. 730Step improvement.BIN)
+          e <b>.BTU</b> delle Radtel RT-910 e RT-900 e della Bajeton BJ-7700 senza Bluetooth (es. RT910_H1.00G_V0.11_260305.BTU).
           Possono essere anche dentro archivi <b>.zip</b> o <b>.rar</b>, pure uno dentro l'altro.</p>
         <div data-fwcard class="fwcard" style="display:none"></div>
 
@@ -236,7 +243,7 @@ const Firmware = {
     };
 
     const needTyped = () => (kind() === 'anc' && (mode() === 'recovery' || $('[data-skip]', el).checked)) ||
-      kind() === 'kdh9g' || kind() === 'tdh' || kind() === 'th8600' || (kind() === 'kdhx' && btmode() === 'manual') || !!(fw && fw.typed) || otherModel();
+      kind() === 'kdh9g' || kind() === 'btu' || kind() === 'tdh' || kind() === 'th8600' || (kind() === 'kdhx' && btmode() === 'manual') || !!(fw && fw.typed) || otherModel();
     // radio scelta nella finestra diversa da quelle a cui è destinato il file
     const otherModel = () => {
       if (!fw || !fw.models || !fw.models.length) return false;
@@ -266,8 +273,8 @@ const Firmware = {
       $('[data-proto]', el).textContent = (rt85 ? PROTO.th8600rt85 : PROTO[k]) || 'quello del programma originale del costruttore';
       $('[data-protohow]', el).textContent = k === 'k5' || k === 'tdh' ? '' : ', ricavato dal suo codice';
       const target = fw ? fw.target : TARGET[k];
-      $('[data-conftext]', el).textContent = k === 'kdh9g'
-        ? `Confermo che la radio collegata è una ${target}: il suo caricatore non controlla il firmware che riceve.`
+      $('[data-conftext]', el).textContent = k === 'kdh9g' || k === 'btu'
+        ? `Confermo che la radio collegata è una ${target}${fw && fw.hw ? ' (' + fw.hw + ')' : ''}: il suo caricatore non controlla il firmware che riceve.`
         : k === 'bf'
         ? `Confermo che la radio collegata è una ${target}${fw && fw.platform ? ' con chip radio ' + fw.platform : ''} e che questo firmware è quello adatto.`
         : k === 'k5'

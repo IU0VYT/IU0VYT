@@ -329,7 +329,7 @@ func (s *h777Sess) read(n int, to time.Duration) ([]byte, error) {
 }
 
 // h777V4Idents: identificativi della Retevis H777 V4 (retevis_h777v4.py), che ha
-// un'altra memoria e non è gestita
+// un'altra memoria (4.8: scheda propria, drv_h777v4.go)
 var h777V4Idents = [][]byte{bytes.Repeat([]byte{0}, 6), bytes.Repeat([]byte{0xFF}, 6)}
 
 func (s *h777Sess) enter(m *genModel) ([]byte, error) {
@@ -343,7 +343,7 @@ func (s *h777Sess) enter(m *genModel) ([]byte, error) {
 	}
 	for _, id := range h777V4Idents {
 		if bytes.HasPrefix(ident, id) {
-			return ident, rErr("la radio è una %s V4 (nuova versione, memoria diversa): non ancora gestita", m.Name)
+			return ident, rErr("la radio è una %s V4 (nuova versione, memoria diversa): usa la scheda «Retevis H777 V4 (nuova versione)»", m.Name)
 		}
 	}
 	if ident != nil {

@@ -3,6 +3,51 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.8.0 (06/11/2026)
+------------------
+- Firmware .BTU (btufw.go, bfkdh.go, fwapi.go, ui/firmware.js): Radtel RT-910 e RT-900
+  senza Bluetooth, Bajeton BJ-7700 senza Bluetooth, protocollo di «Radtel Bootload
+  Tools» (classe BootHelper): kdhOpts con presentazione «PROGRAMBT80U» a 57600 baud,
+  riapertura della porta a 115200, attesa della conferma finale; file a un'area
+  (byte 0 = 1, i byte 5-15 non sono lunghezze). analyzeBTU: radio dal nome del file,
+  indirizzo del firmware dalla tabella dei vettori (0x08003000, 0x08001000 per
+  l'elettronica precedente della RT-900), elettronica dal nome, 10 impronte
+  conosciute, conferma scritta sempre. Riconoscimento anche senza estensione.
+  Radio simulata (kdhEmu: presentazione, velocità per stato, pacchetti completati
+  con FF) e prove con i 10 firmware veri (fwbtu_test.go, BTU_FW).
+- Galleria: RT-910 (bj-7700nbt, .BTU) e RT-910B (bj-7700, .anc) in due schede; nuova
+  scheda Bajeton BJ-7700 senza Bluetooth; RT-900 con .BTU. ui/app.js: la scheda
+  della radio prende il firmware dalla voce della galleria in cui è il driver
+  principale; ui/radio.js: pulsante «Aggiorna firmware» per tutti i tipi di firmware.
+- Radtel RT-900 (drv_rt900.go): canali 513-999 (0x4000-0x7CFF) riletti e scritti solo
+  se cambiano, rifiuto se l'area contiene altri dati (firmware fino a V1.09P, 512
+  canali; confrontati i programmi «RT900_512 CPS» v1.0.0 e v1.0.2); rt900hi_test.go.
+  La prova con CHIRP confronta la memoria finale (la sequenza è diversa di proposito).
+- Nuove famiglie dai driver di CHIRP (revisione 0a9e92c): drv_wouxun.go (protocollo
+  di wouxun_common.py, TH-UV3R, TH-UV3R-25), drv_kyd.go (NC-630A, IP-620),
+  drv_tyt48.go (TH-UVF1, TH-UVF8D), drv_ksun.go (M6), drv_puxing.go (PX-777, PX-2R),
+  drv_boblov.go (X3 Plus, eco dei dati), drv_hguv98.go (HG-UV98), drv_r2.go (R2,
+  RT24, RT24V, H777S), drv_rt1.go (RT1), drv_h777v4.go (H777 V4, RT21H),
+  drv_tguv2p.go (TG-UV2+), drv_fd268.go (Feidaxin, 9 modelli); radio simulate in
+  genemu_wouxun_other.go; impostazioni in settings_chirp.json (TG-UV2+ senza il
+  blocco della tastiera, che CHIRP rifiuta con doppio ascolto attivo).
+- Prove con CHIRP: chirpref.py, TSQL delle radio senza tono di ricezione separato
+  (rtone) e riconoscimento con detect_from_serial della classe che riconosce (H777
+  V4); chirpclone_test.go, driver di CHIRP non utilizzabili via cavo con Python 3
+  (kyd, kyd_IP620, PX-2R, X3 Plus, RT21H, fd268): lettura e scrittura provate solo con
+  la radio simulata; chirp_test.go, le modifiche non ammesse da CHIRP valgono anche
+  per l'ultimo canale.
+- Porta seriale di Windows: parità pari e due bit di stop (setEvenParity,
+  setTwoStopBits).
+- TH-UVF8D: saluto ripetuto fino a 3 volte; senza, nell'identificazione automatica
+  la radio finiva nel gruppo della BF-888S (stesso «\x02PROGRAM») e la sua risposta
+  «PG» sembrava l'eco del cavo, quindi non veniva mai riconosciuta. identify_test.go:
+  IDENT_MODEL per provare un solo modello.
+- Convertitore (genAdapt): limiti della memoria della radio (metodo fit della
+  famiglia): KSUN M6 frequenze al passo di 500 Hz, Retevis RT21H canali con
+  frequenze non memorizzabili esclusi, Puxing toni ridotti a quelli ammessi; con
+  avviso.
+
 4.7.0 (06/11/2026)
 ------------------
 - Identificazione automatica (identify.go, autoident.go):

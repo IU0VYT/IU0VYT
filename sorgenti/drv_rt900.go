@@ -118,9 +118,29 @@ type rt900Opt struct {
 	// cambia, dopo averla riletta dalla radio nella stessa sessione (canali
 	// 961-990 del firmware 0.24 e successivi, 0x7800-0x7BFF)
 	hi [2]int
+	// 4.8 (Radtel RT-900): canali dell'area hi (hiFirst-esimo in poi), byte dei
+	// record di canale controllati nell'area (0 = 0x3C0, canali 961-990) e
+	// messaggio quando nella radio l'area contiene altri dati
+	hiFirst, hiRecs int
+	hiJunk          string
 	// layout (4.6): canali della generazione di firmware (960 o 990); le due
 	// versioni della stessa radio sono modelli distinti (vedi rt950PickLayout)
 	layout int
+}
+
+// hiFrom / hiLen: primo canale dell'area hi e byte dei suoi record di canale
+func (o *rt900Opt) hiFrom() int {
+	if o.hiFirst == 0 {
+		return 961
+	}
+	return o.hiFirst
+}
+
+func (o *rt900Opt) hiLen() int {
+	if o.hiRecs == 0 {
+		return 0x3C0
+	}
+	return o.hiRecs
 }
 
 func (o *rt900Opt) blk() int {
@@ -199,6 +219,21 @@ func init() {
 		{"rt-rt920", "Radtel", "RT-920", "RT920", "Radtel RT-920", 990, mkO("PROGRAMBT11U", 0x7BC0, [2]int{0xB000, 0xB400}, [2]int{0xC000, 0xC400}, [2]int{0xC800, 0xC8A0})},
 	} {
 		zones := 0
+		notes := "Accendi la radio con il cavo collegato, su un canale libero. Driver di CHIRP della famiglia Radtel RT-900."
+		if v.id == "rt-rt900" {
+			// 4.8: il firmware fino a V1.09P ha 512 canali (0x0000-0x3FFF) e il
+			// programma del costruttore «RT900_512_CPS» v1.0.0 legge e scrive solo
+			// quelli; dalla V1.14P (programma v1.0.2) i canali sono 999 (fino a
+			// 0x7CDF), come nel driver di CHIRP. I canali 513-999 si rileggono dalla
+			// radio e si scrivono solo se cambiano; se nella radio quell'area contiene
+			// altri dati non si scrive nulla
+			v.o.ranges = append([][2]int{{0x0000, 0x4000}}, v.o.ranges[1:]...)
+			v.o.hi, v.o.hiFirst, v.o.hiRecs = [2]int{0x4000, 0x7D00}, 513, 0x7CE0-0x4000 // blocchi da 0x40 come CHIRP (fino a 0x7CFF)
+			v.o.hiJunk = "nella radio, dopo il canale 512, ci sono dati che non sono canali: la radio sembra avere un firmware precedente alla V1.14P (512 canali). " +
+				"Nessun dato è stato scritto. Usa solo i canali 1-512, oppure aggiorna il firmware della radio alla V1.14P (elettronica H3.01)"
+			notes += " Canali 513-999 solo con il firmware V1.14P e successivi (prima 512 canali): si scrivono solo se li modifichi, dopo aver controllato che nella radio " +
+				"quell'area contenga canali o sia vuota. Con il firmware V1.14P i canali hanno la modulazione AM per canale (modalità AM/NAM) come nel programma del costruttore v1.0.2."
+		}
 		if v.id == "rt-rt920" {
 			// 4.6: firmware V0.17 e successivi (quello del driver di CHIRP, V0.18):
 			// 10 zone da 99 canali, come le mostra la radio
@@ -210,7 +245,7 @@ func init() {
 			Powers:  []genPower{{"Alta 8 W", 8, 0}, {"Media 4 W", 4, 1}, {"Bassa 1 W", 1, 2}},
 			Bands:   []band{{18000000, 1000000000}}, Narrow: true, HasScan: true,
 			DCS: uv5rDTCS, Baud: 57600, Fam: rt900Fam{}, Opt: v.o,
-			Notes: "Accendi la radio con il cavo collegato, su un canale libero. Driver di CHIRP della famiglia Radtel RT-900."})
+			Notes: notes})
 	}
 }
 
@@ -383,6 +418,22 @@ func rt950HiCount(area []byte) (ch, junk int) {
 		}
 	}
 	return ch, junk
+}
+
+// rt900HiJunk (4.8, RT-900): record che non sono canali né posizioni vuote (un
+// record che inizia con 0xFF è vuoto per il driver di CHIRP, come in Get)
+func rt900HiJunk(area []byte) (junk int) {
+	for a := 0; a+32 <= len(area); a += 32 {
+		r := area[a : a+32]
+		clean := true
+		for _, b := range r {
+			clean = clean && (b == 0xFF || b == 0x00)
+		}
+		if !clean && r[0] != 0xFF && !rt950RecPlausible(r) {
+			junk++
+		}
+	}
+	return junk
 }
 
 // rt950PickLayout (4.6): versione della radio (960 o 990 canali) per la memoria
@@ -791,7 +842,7 @@ func (f rt900Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 		// sono canali (firmware fino a 0.23) non si scrive nulla
 		cur := make([]byte, 0, o.hi[1]-o.hi[0])
 		for a := o.hi[0]; a < o.hi[1]; a += bs {
-			prog(0, total, "Controllo dei canali 961-990…")
+			prog(0, total, fmt.Sprintf("Controllo dei canali %d-%d…", o.hiFrom(), o.hiFrom()+o.hiLen()/32-1))
 			cmd := []byte{'R', byte(a >> 8), byte(a), byte(bs)}
 			if err := s.p.Write(cmd); err != nil {
 				return "", err
@@ -810,8 +861,15 @@ func (f rt900Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 		}
 		want := img[o.hi[0]:o.hi[1]]
 		if !bytes.Equal(cur, want) {
-			if _, junk := rt950HiCount(cur[:0x3C0]); junk > 0 {
+			_, junk := rt950HiCount(cur[:o.hiLen()])
+			if o.hiFirst != 0 {
+				junk = rt900HiJunk(cur[:o.hiLen()])
+			}
+			if junk > 0 {
 				s.exit()
+				if o.hiJunk != "" {
+					return "", rErr("%s", o.hiJunk)
+				}
 				return "", rErr("nella radio, dopo il canale 960, ci sono dati che non sono canali: la radio sembra avere il firmware fino a 0.23 (960 canali). " +
 					"Nessun dato è stato scritto. Usa la scheda della versione con 960 canali, oppure aggiorna il firmware della radio")
 			}

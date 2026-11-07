@@ -15,6 +15,9 @@ const RADIO_DEF = {
 };
 
 // definizione di una radio gestita con i driver di CHIRP (dalla risposta di /api/catalog)
+// estensione dei file di firmware per tipo (pulsante «Aggiorna firmware» della scheda)
+const FW_EXT = { anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh', k5: '.bin', tdh: '.BIN', th8600: '.bin / .hex', btu: '.BTU' };
+
 function genRadioDef(g, fw) {
   const powers = [], labels = {};
   for (const p of g.powerLevels || []) {
@@ -125,7 +128,7 @@ class RadioView {
         <span class="sep"></span>
         <button class="btn primary" data-a="cread" title="Legge i canali dalla radio collegata con il cavo di programmazione">📻 Leggi dalla radio…</button>
         <button class="btn primary" data-a="cwrite" title="Scrive i canali di questa tabella nella radio collegata con il cavo">📻 Scrivi nella radio…</button>
-        ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw] ? `<button class="btn" data-a="firmware" title="Aggiorna il firmware della radio (file ${({ anc: '.anc', bf: '.BF', rh5: '.dat', kdhx: '.kdhx', bj9000: '.Firmware', kdh9g: '.kdh' })[d.fw]}, anche dentro archivi .zip o .rar, dal PC o da Internet)">⬆ Aggiorna firmware…</button>` : ''}
+        ${FW_EXT[d.fw] ? `<button class="btn" data-a="firmware" title="Aggiorna il firmware della radio (file ${FW_EXT[d.fw]}, anche dentro archivi .zip o .rar, dal PC o da Internet)">⬆ Aggiorna firmware…</button>` : ''}
         ${d.settings ? '<button class="btn" data-a="settings" title="Impostazioni della radio (menu, display, VOX, DTMF…), con la descrizione di ogni voce">⚙ Impostazioni…</button>' : ''}
         ${this.kind === 'baj' ? `<label class="note" style="white-space:nowrap" title="Il programma Bajeton BT-11_CPS v1.0.9 salva i file .dat in un formato diverso dalla v1.0.8 e le due versioni non aprono i file dell'altra. Scegli la versione installata sul tuo PC: il file aperto viene convertito (canali e impostazioni restano gli stessi) e i nuovi file e le letture dalla radio useranno questo formato.">File per BT-11_CPS
           <select data-datver><option value="1.0.8">v1.0.8</option><option value="1.0.9">v1.0.9</option></select></label>

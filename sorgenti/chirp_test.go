@@ -56,8 +56,9 @@ func chirpRef(t *testing.T, args ...string) []byte {
 
 // immagine di prova per il modello: quella di CHIRP del modello, o della famiglia
 var chirpTestImage = map[string]string{
-	"bf-v8a":  "Radtel_T18.img",
-	"bf-g11s": "Retevis_RB27.img",
+	"rt-h777v4": "Retevis_H777_V4.img", // 4.8: variante V4 (nome del file con la variante)
+	"bf-v8a":    "Radtel_T18.img",
+	"bf-g11s":   "Retevis_RB27.img",
 	// stessa memoria e stesso protocollo della versione FRS
 	"rt-h777h-pmr": "Retevis_H777H_FRS.img",
 	// stessa radio della Retevis RT22 con un altro marchio (classi di CHIRP senza immagine)
@@ -369,10 +370,17 @@ func chirpEdits(m *genModel, img []byte) []struct {
 	if _, ok := m.Fam.(interface {
 		lockedSlotImg(*genModel, []byte, int) bool
 	}); !ok || !locked(m.Slots-1) {
+		last := &Chan{Rx: uhf, Tx: uhf - 1600000, TxTone: "151.4", Power: pw(0), Scan: true, Name: name("LAST")}
+		// 4.8: anche qui le modifiche che CHIRP non ammette (es. KSUN M6: solo «split»)
+		if ci, ok := m.Fam.(interface {
+			chirpInvalid(*genModel, *Chan) bool
+		}); ok && ci.chirpInvalid(m, last) {
+			last.Tx = uhf
+		}
 		out = append(out, struct {
 			N    int
 			Chan *Chan
-		}{m.Slots - 1, &Chan{Rx: uhf, Tx: uhf - 1600000, TxTone: "151.4", Power: pw(0), Scan: true, Name: name("LAST")}})
+		}{m.Slots - 1, last})
 	}
 	// posizioni in sola ricezione (es. GM-15 Pro): stesso canale senza TX
 	if ro, ok := m.Fam.(interface{ rxOnlySlot(*genModel, int) bool }); ok {

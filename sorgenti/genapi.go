@@ -228,6 +228,20 @@ func genAdapt(c *Chan, m *genModel, label string, rep *Report) *Chan {
 	if !m.inBands(n.Rx) {
 		rep.warn("%s: %s MHz fuori dalle gamme della radio", label, fmtMHz(n.Rx))
 	}
+	// 4.8: limiti della memoria della radio (es. passo di 500 Hz della KSUN M6,
+	// frequenze a 24 bit della Retevis RT21H)
+	if f, ok := m.Fam.(interface {
+		fit(m *genModel, c *Chan) (keep bool, why string)
+	}); ok {
+		keep, why := f.fit(m, &n)
+		if !keep {
+			rep.warn("%s: %s: canale non copiato", label, why)
+			return nil
+		}
+		if why != "" {
+			rep.warn("%s: %s", label, why)
+		}
+	}
 	return &n
 }
 

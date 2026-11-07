@@ -73,7 +73,7 @@ type fwCheck struct {
 }
 
 type fwInfo struct {
-	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730) | th8600 (Retevis RA89 / RT85)
+	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730) | th8600 (Retevis RA89 / RT85) | btu (RT-910 / RT-900 senza Bluetooth)
 	Target   string    `json:"target"` // radio a cui è destinato
 	Confirm  string    `json:"confirm"`
 	Hw       string    `json:"hw,omitempty"`
@@ -271,6 +271,7 @@ const (
 	fwK5     // Quansheng UV-K5 / UV-K6 / UV-5R Plus (.bin, 4.1)
 	fwTDH    // TIDRADIO TD-H3 / TD-H8, Radtel RT-730 (.BIN, 4.3)
 	fwTH8600 // Retevis RA89 (.bin, 4.4) e RT85 (.hex, 4.5)
+	fwBTU    // Radtel RT-910 / RT-900 e Bajeton BJ-7700 senza Bluetooth (.BTU, 4.8)
 )
 
 func sniffKind(name string, b []byte) fwKind {
@@ -290,6 +291,8 @@ func sniffKind(name string, b []byte) fwKind {
 		return fwKDH9G
 	case ".firmware", ".btf":
 		return fwBJ9000
+	case ".btu":
+		return fwBTU
 	case ".bin":
 		if k5IsPacked(b) {
 			return fwK5
@@ -310,6 +313,10 @@ func sniffKind(name string, b []byte) fwKind {
 	}
 	if ext == ".bf" || (len(b) > kdhHdr+kdhPkt && b[0] == 2 && kdhHdr+be32(b[1:5])+be32(b[5:9]) == int64(len(b))) {
 		return fwBF
+	}
+	// 4.8: .BTU con un altro nome: un'area, lunghezza esatta, programma ARM in chiaro
+	if len(b) > kdhHdr+kdhPkt && b[0] == 1 && kdhHdr+be32(b[1:5]) == int64(len(b)) && b[kdhHdr+3] == 0x20 && b[kdhHdr+7] == 0x08 {
+		return fwBTU
 	}
 	if len(b) > 1024 && bytes.Contains(b[len(b)-min(len(b), 256):], []byte("JLUFW")) {
 		return fwANC
@@ -361,7 +368,7 @@ func (e *fwExpander) run() error {
 		it := e.queue[0]
 		e.queue = e.queue[1:]
 		switch sniffKind(it.Name, it.Data) {
-		case fwANC, fwBF, fwRH5, fwKDHX, fwBJ9000, fwKDH9G, fwK5, fwTDH, fwTH8600:
+		case fwANC, fwBF, fwRH5, fwKDHX, fwBJ9000, fwKDH9G, fwK5, fwTDH, fwTH8600, fwBTU:
 			e.found = append(e.found, fwCandidate{Name: it.Name, Where: it.Where, Size: len(it.Data), data: it.Data})
 		case fwZIP:
 			if it.Depth >= fwMaxDepth {

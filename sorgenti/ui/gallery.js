@@ -17,7 +17,7 @@ const TYPE_GROUP = {
 };
 // ordine alfabetico «naturale» (UV-5R prima di UV-17)
 const byModelName = (a, b) => a.name.localeCompare(b.name, 'it', { numeric: true, sensitivity: 'base' }) || a.brand.localeCompare(b.brand);
-const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin', tdh: 'firmware .BIN', th8600: 'firmware .bin / .hex' };
+const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin', tdh: 'firmware .BIN', th8600: 'firmware .bin / .hex', btu: 'firmware .BTU' };
 const FW_KINDS = Object.keys(FW_LABEL);
 const FW_DESC = {
   anc: 'file .anc del costruttore (protocollo del programma «BinTe ANC Bootloader»)',
@@ -29,6 +29,7 @@ const FW_DESC = {
   k5: 'file .bin di Quansheng o di Retevis (caricatore della UV-K5 o 7.x della UV-K5 V3: radio accesa tenendo premuto il PTT)',
   tdh: 'file .BIN del costruttore (caricatore di TD-H3, TD-H8 e RT-730: radio accesa tenendo premuto il PTT)',
   th8600: 'file .bin (RA89) o .hex (RT85) di Retevis (programmi «TH8600-UpDAta Soft»: radio in modalità di aggiornamento)',
+  btu: 'file .BTU di Radtel o Bajeton (programma «Radtel Bootload Tools» del costruttore: radio accesa normalmente o tenendo premuti i due tasti laterali)',
 };
 
 // colore di ogni marca (icone e riquadri della galleria); le marche non
@@ -39,6 +40,7 @@ const BRAND_COLOR = {
   WLN: '#e67700', Zastone: '#087f5b', Luiton: '#862e9c', Hiroyasu: '#b02a8f', Anysecu: '#1971c2', Talkpod: '#5c940d',
   TYT: '#c92a2a', Explorer: '#2f9e44', MMLradio: '#9c36b5', JJCC: '#e8590c', Socotran: '#3b5bdb', Jianpai: '#0c8599',
   Boristone: '#a0522d', HamGeek: '#f08c00', SenhaiX: '#1864ab', Cignus: '#5c7cfa',
+  Puxing: '#2f9e44', Feidaxin: '#c92a2a', KYD: '#1971c2', KSUN: '#e8590c', Lanchonlh: '#6741d9', Boblov: '#0b7285',
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];

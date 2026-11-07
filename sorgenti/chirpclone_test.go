@@ -52,6 +52,16 @@ func emuFor(m *genModel, img []byte) genEmu {
 // _get_radio_firmware_version legge la versione), quindi si confronta con la TD-H8
 var chirpCloneClass = map[string]string{"td-uv68": "TDH8"}
 
+// 4.8: driver di CHIRP la cui lettura/scrittura via cavo non funziona con Python 3
+// (kyd.py, kyd_IP620.py: struct.pack(">cHb", 'R', …) con una stringa, confronti
+// tra byte e stringhe; puxing.py, PX-2R: la scrittura unisce stringhe e byte;
+// boblov_x3plus.py: comandi come stringhe; retevis_h777v4.py, RT21H: la lettura
+// non entra in programmazione perché la classe risulta già «riconosciuta»;
+// fd268.py: confronti tra byte e stringhe). Qui si prova solo questo programma con la radio
+// simulata: immagine letta uguale alla memoria della radio, memoria finale
+// uguale all'immagine scritta
+var chirpCloneBroken = map[string]bool{"NC630aRadio": true, "IP620Radio": true, "Puxing2RRadio": true, "BoblovX3Plus": true, "RT21HRadio": true, "FD268ARadio": true, "FD268BRadio": true, "FD288BRadio": true}
+
 // sessione di CHIRP con la radio simulata: byte ricevuti dalla radio
 func chirpSession(t *testing.T, m *genModel, e genEmu, op, file string) []byte {
 	var rec *recPort
@@ -121,6 +131,34 @@ func TestChirpClone(t *testing.T) {
 			if emuFor(m, img) == nil {
 				t.Skip("nessuna radio simulata per questa famiglia")
 			}
+			if chirpCloneBroken[m.RClass] {
+				e := emuFor(m, img)
+				var got []byte
+				goSession(t, m, e, func() error {
+					var err error
+					got, _, err = m.Fam.Download(context.Background(), m, "EMU", func(int, int, string) {})
+					return err
+				})
+				if want := e.image(); !bytes.Equal(got, want) {
+					t.Fatalf("lettura: immagine diversa dalla memoria della radio: %s", diffRanges(want, got))
+				}
+				mod := append([]byte{}, got...)
+				for _, ed := range chirpEdits(m, mod) {
+					if err := m.Fam.Set(m, mod, ed.N, ed.Chan); err != nil {
+						t.Fatal(err)
+					}
+				}
+				u := emuFor(m, img)
+				goSession(t, m, u, func() error {
+					_, err := m.Fam.Upload(context.Background(), m, "EMU", mod, func(int, int, string) {})
+					return err
+				})
+				if fin := u.image(); !bytes.Equal(fin[:len(mod)], mod) {
+					t.Errorf("scrittura: memoria finale diversa dall'immagine scritta: %s", diffRanges(mod, fin))
+				}
+				t.Logf("lettura e scrittura verificate solo con la radio simulata (driver di CHIRP non utilizzabile via cavo con Python 3)")
+				return
+			}
 			// ---- lettura
 			eC, eG := emuFor(m, img), emuFor(m, img)
 			outC := filepath.Join(tmp, m.ID+"_dl.img")
@@ -158,7 +196,14 @@ func TestChirpClone(t *testing.T) {
 				_, err := m.Fam.Upload(context.Background(), m, "EMU", mod, func(int, int, string) {})
 				return err
 			})
-			if !bytes.Equal(recC, recG) {
+			// 4.8, Radtel RT-900: i canali 513-999 si rileggono e si scrivono solo se
+			// cambiano (firmware da 512 canali, vedi rt900hi_test.go): la sequenza è
+			// diversa da CHIRP di proposito, la memoria finale deve essere identica
+			hiOwn := false
+			if _, ok := m.Fam.(rt900Fam); ok && rt900o(m).hiFirst != 0 {
+				hiOwn = true
+			}
+			if !hiOwn && !bytes.Equal(recC, recG) {
 				t.Errorf("scrittura: byte inviati alla radio diversi da CHIRP (%d / %d byte): %s", len(recC), len(recG), diffRanges(recC, recG))
 			}
 			if !bytes.Equal(uC.image(), uG.image()) {

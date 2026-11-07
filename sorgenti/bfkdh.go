@@ -63,6 +63,21 @@ func kdhPack(cmd, arg byte, data []byte) []byte {
 
 type kdhOpts struct {
 	Manual bool // radio già nel caricatore (accesa tenendo premuto il PTT)
+	// 4.8: «Radtel Bootload Tools» (file .BTU di RT-910 e RT-900 senza Bluetooth):
+	// stesso caricatore con un'altra presentazione, inviata a HelloBaud; dopo
+	// "UPDATE" la porta si riapre a 115200 baud (Reopen); conferma della fine
+	// attesa (WaitEnd). Vuoti = caricatore Baofeng della serie TFT 330L
+	Hello     string
+	HelloBaud int
+	Reopen    bool
+	WaitEnd   bool
+}
+
+func (o kdhOpts) hello() string {
+	if o.Hello != "" {
+		return o.Hello
+	}
+	return kdhHandshke
 }
 
 type kdhHost struct {
@@ -220,8 +235,8 @@ func (h *kdhHost) wait06(d time.Duration) error {
 }
 
 // handshake della sequenza automatica (HandShake_0)
-func (h *kdhHost) handshake() error {
-	hs := []byte(kdhHandshke)
+func (h *kdhHost) handshake(o kdhOpts) error {
+	hs := []byte(o.hello())
 	if err := h.write(hs); err != nil {
 		return err
 	}
@@ -277,22 +292,43 @@ func kdhUpdate(ctx context.Context, port string, raw []byte, o kdhOpts, prog Pro
 		return 0, errors.New("file del firmware troppo corto")
 	}
 	s1, s2 := be32(raw[1:5]), be32(raw[5:9])
+	if raw[0] == 1 {
+		s2 = 0 // file a un'area sola (.BTU): i byte 5-8 non sono una lunghezza
+	}
 	t1, t2 := int((s1+kdhPkt-1)/kdhPkt), int((s2+kdhPkt-1)/kdhPkt)
 	total := t1 + t2
 	if total <= 0 {
 		total = 1
 	}
-	p, err := openPort(port, kdhBaud)
+	baud := kdhBaud
+	if !o.Manual && o.HelloBaud != 0 {
+		baud = o.HelloBaud
+	}
+	p, err := openPort(port, baud)
 	if err != nil {
 		return 0, err
 	}
-	defer p.Close()
 	h := &kdhHost{ctx: ctx, p: p, logf: logf, onStart: started}
+	defer func() { _ = h.p.Close() }()
 	prog(0, total, "Collegamento con la radio…")
 	if !o.Manual {
-		logf("Richiesta di aggiornamento alla radio accesa…")
-		if err := h.handshake(); err != nil {
+		logf(fmt.Sprintf("Richiesta di aggiornamento alla radio accesa (%d baud)…", baud))
+		if err := h.handshake(o); err != nil {
 			return 0, err
+		}
+		if o.Reopen && baud != kdhBaud {
+			// come l'originale: la porta si chiude e si riapre a 115200 baud
+			_ = h.p.Close()
+			np, err := openPort(port, kdhBaud)
+			if err != nil {
+				return 0, err
+			}
+			h.p = np
+			select {
+			case <-ctx.Done():
+				return 0, errCancelled
+			case <-time.After(20 * time.Millisecond):
+			}
 		}
 		logf("Avvio del caricatore della radio…")
 		if err := h.exchange(kdhPack(0x42, 0, nil)); err != nil {
@@ -311,7 +347,7 @@ func kdhUpdate(ctx context.Context, port string, raw []byte, o kdhOpts, prog Pro
 	pos, region2, num, done := int64(kdhHdr), false, byte(0), 0
 	var sent int64
 	for {
-		if !region2 && pos >= s1+kdhHdr && pos < s1+kdhHdr+kdhPkt {
+		if !region2 && s2 > 0 && pos >= s1+kdhHdr && pos < s1+kdhHdr+kdhPkt {
 			region2 = true
 			pos = s1 + kdhHdr
 			logf(fmt.Sprintf("Invio dell'area 2: %d pacchetti", t2))
@@ -341,6 +377,17 @@ func kdhUpdate(ctx context.Context, port string, raw []byte, o kdhOpts, prog Pro
 		num++
 		done++
 		sent += n
+	}
+	if o.WaitEnd {
+		if err := h.exchange(kdhPack(0x45, 0, nil)); err != nil {
+			if err == errTimeout {
+				return sent, rErr("il firmware è stato inviato tutto, ma la radio non ha confermato la fine dell'aggiornamento")
+			}
+			return sent, err
+		}
+		logf("La radio ha confermato la fine dell'aggiornamento")
+		prog(total, total, "Aggiornamento completato")
+		return sent, nil
 	}
 	if err := h.p.Write(kdhPack(0x45, 0, nil)); err != nil {
 		return sent, err

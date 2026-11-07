@@ -138,6 +138,8 @@ func (a *App) fwSelect(i int, skipped []string) (interface{}, error) {
 		img = analyzeK5(c.Name, c.Where, c.data)
 	case fwTDH:
 		img = analyzeTDH(c.Name, c.Where, c.data)
+	case fwBTU:
+		img = analyzeBTU(c.Name, c.Where, c.data)
 	case fwTH8600:
 		img = analyzeTH8600(c.Name, c.Where, c.data)
 	default:
@@ -368,7 +370,7 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 			}
 		}
 		return nil
-	case "kdhx", "bj9000", "kdh9g":
+	case "kdhx", "bj9000", "kdh9g", "btu":
 		if req.Mode != "auto" && req.Mode != "manual" {
 			return errors.New("modalità sconosciuta")
 		}
@@ -466,7 +468,7 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 		return a.runFirmwareBF(ctx, j, req, img)
 	case "rh5":
 		return a.runFirmwareRH5(ctx, j, req, img)
-	case "kdhx", "bj9000", "kdh9g":
+	case "kdhx", "bj9000", "kdh9g", "btu":
 		return a.runFirmwareKDH2(ctx, j, req, img)
 	case "k5":
 		return a.runFirmwareK5(ctx, j, req, img)
@@ -714,7 +716,7 @@ func fwOtherModel(req *fwStartReq, img *fwImage) bool {
 // (UV-9G sempre; caricatore «Bootloader Pro» nella modalità manuale, senza il
 // codice H802; sempre se il firmware non è quello della UV-25 Plus: fwInfo.Typed)
 func kdh2NeedTyped(kind, mode string) bool {
-	return kind == "kdh9g" || (kind == "kdhx" && mode == "manual")
+	return kind == "kdh9g" || kind == "btu" || (kind == "kdhx" && mode == "manual")
 }
 
 // kdh2Manual: istruzioni del costruttore per portare la radio nel caricatore
@@ -722,6 +724,7 @@ var kdh2Manual = map[string]string{
 	"kdhx":   "radio spenta: tieni premuti SK2 e SK3 (i due tasti sotto il PTT; sulle Radtel i tasti laterali 2 e 3) e accendila; l'indicatore diventa verde (procedura di Baofeng per la UV-25 Plus e di Radtel per RT-470, RT-495 e RT-630; per le altre radio segui le istruzioni fornite con il firmware)",
 	"bj9000": "radio spenta: tieni premuti i tasti laterali 3 e 4 e accendila; compare la schermata «Update»",
 	"kdh9g":  "radio spenta: tieni premuti i tasti 12 e 13 e accendila; si accende la torcia",
+	"btu":    "radio spenta: tieni premuti i due tasti laterali sotto il PTT e accendila, il display mostra «UPDATE» (procedura di Radtel per RT-900 e RT-910; se non basta, togli la batteria per 10 minuti e riprova)",
 }
 
 func (a *App) runFirmwareKDH2(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
@@ -766,6 +769,10 @@ func (a *App) runFirmwareKDH2(ctx context.Context, j *cableJob, req *fwStartReq,
 		sent, err = kdh9gUpdate(ctx, req.Port, img.Raw, manual, j.prog, logf, fwStarted(j, &started))
 	case "bj9000":
 		sent, err = kdh2Update(ctx, req.Port, img.Raw, bj9000Proto, manual, j.prog, logf, fwStarted(j, &started))
+	case "btu":
+		o := btuOpts
+		o.Manual = manual
+		sent, err = kdhUpdate(ctx, req.Port, img.Raw, o, j.prog, logf, fwStarted(j, &started))
 	default:
 		proto := kdhxProto
 		if img.Info.Platform == "JJCC" {

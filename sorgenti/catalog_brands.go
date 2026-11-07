@@ -76,15 +76,21 @@ var catalogOther = []catItem{
 		Notes: "È la Quansheng UV-5R Plus: canali e impostazioni con il driver di CHIRP della UV-K5 (firmware originale 4.00.xx). " +
 			"Firmware: il file .bin di Radtel (es. «5RPLUS_v4.00.06_publish.bin», in RT600_update_file_v4.00.06.rar) con il caricatore " +
 			"della radio (accesa tenendo premuto il PTT)."},
-	{ID: "rtl-rt-900", Brand: "Radtel", Name: "RT-900", Type: "analog", Drivers: []string{"rt-rt900"},
-		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT900") + " 999 canali."},
+	{ID: "rtl-rt-900", Brand: "Radtel", Name: "RT-900", Aliases: []string{"RT-900 senza Bluetooth"}, Type: "analog", Drivers: []string{"rt-rt900"}, FW: "btu",
+		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT900") + " 999 canali (firmware V1.14P). " + rt900FwNote},
 	{ID: "rtl-rt-900-bt", Brand: "Radtel", Name: "RT-900 BT", Aliases: []string{"RT-900 Bluetooth"}, Type: "analog", Drivers: []string{"rt-rt900bt"},
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT900BT") + " 999 canali."},
-	{ID: "rtl-rt-910", Brand: "Radtel", Name: "RT-910 / RT-910B", Aliases: []string{"RT-910", "RT-910B", "RT-910 BT"}, Models: []string{"RT-910", "RT-910B"}, Type: "analog",
-		Drivers: []string{"bj-7700", "bj-7700nbt"}, FW: "anc", Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
-		Notes: "Stessa radio della Bajeton BJ-7700: driver di CHIRP RT910BT (versione Bluetooth) e RT910. " +
-			"4.7: il firmware .anc della RT-910B (con Bluetooth, es. RT_910B_V0.14_250808.anc) si aggiorna come quello della BJ-7700 (programma «Radtel ANC Bootloader», " +
-			"stesso protocollo del «BinTe ANC Bootloader»); il firmware .BTU della RT-910 senza Bluetooth usa un altro programma e non è gestito."},
+	// 4.8: RT-910 (senza Bluetooth, firmware .BTU) e RT-910B (con Bluetooth, firmware
+	// .anc) in due schede: hanno firmware, caricatori e driver diversi
+	{ID: "rtl-rt-910", Brand: "Radtel", Name: "RT-910", Aliases: []string{"RT-910 senza Bluetooth", "BJ-7700 senza Bluetooth"}, Type: "analog",
+		Drivers: []string{"bj-7700nbt"}, FW: "btu", Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: "Versione senza Bluetooth, stessa radio della Bajeton BJ-7700 senza Bluetooth: driver di CHIRP RT910 (firmware V0.11). " +
+			"4.8: firmware .BTU (es. RT910_H1.00G_V0.11_260305.BTU) con il protocollo del programma «Radtel Bootload Tools». " + rt910FwNote},
+	{ID: "rtl-rt-910--rt-910b", Brand: "Radtel", Name: "RT-910B", Aliases: []string{"RT-910 BT", "RT-910 Bluetooth"}, Type: "analog",
+		Drivers: []string{"bj-7700"}, FW: "anc", Links: []catLink{info("Programmi e firmware Radtel", rtlDown)},
+		Notes: "Versione con Bluetooth, stessa radio della Bajeton BJ-7700: driver di CHIRP RT910BT. " +
+			"4.7: il firmware .anc (es. RT_910B_V0.14_250808.anc) si aggiorna come quello della BJ-7700 (programma «Radtel ANC Bootloader», " +
+			"stesso protocollo del «BinTe ANC Bootloader»). Il firmware .BTU è per la RT-910 senza Bluetooth: i due tipi non sono intercambiabili."},
 	{ID: "rtl-rt-920", Brand: "Radtel", Name: "RT-920", Type: "analog", Drivers: []string{"rt-rt920"}, FW: "anc",
 		Links: []catLink{info("Programmi e firmware Radtel", rtlDown)}, Notes: chirpNote("RT920") + " 990 canali in 10 zone da 99 (i canali ausiliari FM/AM/HF non sono gestiti). " +
 			"Il driver di CHIRP è scritto per il firmware V0.18: dalla V0.17 (dicembre 2025) la radio ha 10 zone da 99 canali, prima 960 canali in 15 zone da 64 " +
@@ -314,3 +320,12 @@ const rtlFwNote = "Firmware: file .kdhx di Radtel con il caricatore «JJCC Bootl
 const tdhFwNote = "Firmware: file .BIN del costruttore con il caricatore comune a TD-H3, TD-H8 e RT-730 (lo stesso dei programmi «H8_IAP» di TIDRADIO e " +
 	"«RT730 Update tool» di Radtel): radio spenta e riaccesa tenendo premuto il PTT. Il caricatore non controlla il modello del firmware: " +
 	"si deve scrivere il modello indicato dal file. Se l'invio si interrompe la radio resta nel caricatore e si ripete l'aggiornamento."
+
+// 4.8: firmware .BTU (btufw.go)
+const (
+	btuNote = "Il caricatore non controlla il modello del firmware (RT-900 e RT-910 usano lo stesso programma): si deve scrivere il modello indicato dal nome del file. " +
+		"Modalità manuale: radio spenta, tieni premuti i due tasti laterali e accendila (il display mostra «UPDATE»)."
+	rt910FwNote = "Firmware per due elettroniche: H1.00 (V0.07-V0.09) e H1.00G (V0.10, V0.11 con 15 zone da 64 canali); il nome del file indica quella a cui è destinato. " + btuNote
+	rt900FwNote = "4.8: firmware .BTU con il protocollo del programma «Radtel Bootload Tools». Radtel indica la V1.14P (999 canali, prima 512) solo per l'elettronica H3.01, " +
+		"che si vede nel menu 47; i firmware «OPEN» V1.05P e V1.09P partono dallo stesso indirizzo, la V1.04P è per l'elettronica precedente e non è intercambiabile. " + btuNote
+)

@@ -38,6 +38,23 @@ var errTimeout = errors.New("la radio non risponde")
 // openPortFunc apre una porta seriale 8N1 con DTR e RTS attivi, come i
 // programmi originali. Impostata dalla versione Windows; nei test viene
 // sostituita con un collegamento simulato.
+// setEvenParity (4.8): parità pari sulle porte che la permettono (porta seriale
+// di Windows); le radio simulate dei test non la usano
+func setEvenParity(p Port) error {
+	if x, ok := p.(interface{ SetEvenParity(bool) error }); ok {
+		return x.SetEvenParity(true)
+	}
+	return nil
+}
+
+// setTwoStopBits (4.8): due bit di stop sulle porte che li permettono
+func setTwoStopBits(p Port) error {
+	if x, ok := p.(interface{ SetTwoStopBits(bool) error }); ok {
+		return x.SetTwoStopBits(true)
+	}
+	return nil
+}
+
 var openPortFunc = func(name string, baud int) (Port, error) {
 	return nil, fmt.Errorf("porte seriali non disponibili su questo sistema")
 }

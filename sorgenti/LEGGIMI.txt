@@ -1,11 +1,37 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.7.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.8.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.8.0:
+- AGGIORNAMENTO DEL FIRMWARE .BTU per Radtel RT-910 e RT-900 senza Bluetooth e
+  Bajeton BJ-7700 senza Bluetooth, con il protocollo del programma «Radtel Bootload
+  Tools» (lo stesso caricatore della Baofeng UV-5RM, presentazione «PROGRAMBT80U»).
+  Il caricatore non controlla il modello: il programma riconosce la radio e
+  l'elettronica dal nome del file e dall'impronta e chiede sempre la conferma
+  scritta (vedi "AGGIORNAMENTO DEL FIRMWARE .BTU"). In galleria RT-910 (senza
+  Bluetooth, .BTU) e RT-910B (con Bluetooth, .anc) ora hanno due schede, come
+  BJ-7700 e BJ-7700 senza Bluetooth: ognuna con il suo firmware;
+- CORRETTO: Radtel RT-900 senza Bluetooth con il firmware fino a V1.09P (512 canali).
+  Il driver di CHIRP scrive sempre 999 canali; il programma del costruttore per il
+  firmware da 512 canali non tocca l'area dopo il canale 512. Ora i canali 513-999 si
+  rileggono dalla radio e si scrivono solo se cambiano; se nella radio quell'area
+  contiene altri dati non si scrive nulla;
+- NUOVE RADIO dai driver di CHIRP, riscritte e verificate come le altre (lettura,
+  scrittura, byte scambiati con la radio e impostazioni identici a CHIRP): TYT
+  TH-UV3R, TH-UV3R-25, TH-UVF1, TH-UVF8D; KYD NC-630A e IP-620 (Argut A-36); KSUN M6;
+  Puxing PX-777 e PX-2R; Boblov X3 Plus; Lanchonlh HG-UV98; Radioddity R2; Retevis
+  RT24, RT24V, H777S, RT1, H777 V4 (la nuova versione della H777) e RT21H; Quansheng
+  TG-UV2+; Feidaxin FD-268A, FD-268B, FD-288A, FD-288B, FD-150A, FD-160A, FD-450A,
+  FD-460A e FD-460UH. Per KYD, Puxing PX-2R, Boblov, Retevis RT21H e Feidaxin la
+  lettura via cavo di CHIRP non funziona con Python 3: il protocollo è quello dei loro
+  driver, provato con la radio simulata (da verificare con una radio vera);
+- porta seriale: parità pari (HG-UV98) e due bit di stop (TG-UV2+), come in CHIRP;
+- galleria: 427 modelli di 35 marche (389 con canali, 332 con impostazioni, 52 con
+  l'aggiornamento del firmware).
 Novità della 4.7.0:
 - CORRETTO: identificazione automatica bloccata o molto lenta. Una radio accesa in
   modalità aggiornamento del firmware (o un cavo che riceve dati da solo) trasmette
@@ -652,6 +678,16 @@ RADIO GESTITE CON I DRIVER DI CHIRP
   la frequenza fissa, come in CHIRP) e Quansheng TK11 (tk11.py; 999 canali con nome di
   16 caratteri, 0,15-1160 MHz; i canali in AM, SSB e CW restano nel loro modo; dopo la
   scrittura la radio si riavvia).
+- Dalla 4.8: TYT TH-UV3R e TH-UV3R-25 (th_uv3r.py, th_uv3r25.py), TH-UVF1 (thuv1f.py)
+  e TH-UVF8D (th_uvf8d.py); KYD NC-630A (kyd.py) e IP-620 (kyd_IP620.py); KSUN M6
+  (ksun_m6.py, frequenze a passi di 500 Hz); Puxing PX-777 e PX-2R (puxing.py; la
+  gamma del PX-777 è quella scritta nella radio); Boblov X3 Plus (boblov_x3plus.py,
+  radio da casco: come in CHIRP la potenza non si cambia); Lanchonlh HG-UV98
+  (hg_uv98.py, parità pari); Radioddity R2, Retevis RT24, RT24V e H777S
+  (radioddity_r2.py); Retevis RT1 (retevis_rt1.py, versioni VHF e UHF); Retevis H777
+  V4 e RT21H (retevis_h777v4.py: la scheda della H777 riconosce la V4 e indica la sua
+  scheda); Quansheng TG-UV2+ (tg_uv2p.py, due bit di stop, canali 0-199); Feidaxin
+  FD-268A/B, FD-288A/B, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH (fd268.py).
 - Quansheng UV-K5 e simili: 200 memorie con nome fino a 10 caratteri, potenze Bassa
   1,5 W / Media 3 W / Alta 5 W, banda aerea in AM (frequenze arrotondate al passo di
   8,33 kHz come fa CHIRP), trasmissione su una banda diversa dalla ricezione ammessa.
@@ -903,10 +939,30 @@ AGGIORNAMENTO DEL FIRMWARE RADTEL RT-950 PRO, RT-950, RT-920 E RT-910B (4.7)
   codice: stessi comandi, velocità e attese). La RT-920 è la BJ-7800 e la RT-910B la
   BJ-7700: identificazione e copia di sicurezza come per quelle radio (la copia della
   RT-920 con il suo driver). Il programma Radtel chiede anche un'autorizzazione via
-  internet, che qui non serve. Il firmware .BTU della RT-910 senza Bluetooth usa un
-  altro programma e non è gestito.
+  internet, che qui non serve. Il firmware .BTU della RT-910 senza Bluetooth si
+  aggiorna dalla 4.8 (vedi "AGGIORNAMENTO DEL FIRMWARE .BTU").
 - Impronte conosciute: RT-950 Pro V0.15-V0.29, RT-950 V0.27 e V0.29, BJ-9000 V0.22,
   V0.27 e V0.29, RT-920 V0.13-V0.18, RT-910B V0.14.
+
+AGGIORNAMENTO DEL FIRMWARE .BTU (4.8)
+- Radtel RT-910 e RT-900 senza Bluetooth, Bajeton BJ-7700 senza Bluetooth: file .BTU
+  del programma «Radtel Bootload Tools» (lo stesso per RT-900 e RT-910). Modalità
+  automatica: la radio accesa riceve «PROGRAMBT80U» a 57600 baud, poi la porta passa a
+  115200 baud per il caricatore. Modalità manuale (anche per una radio che non si
+  avvia): radio spenta, tieni premuti i due tasti laterali sotto il PTT e accendila,
+  il display mostra «UPDATE» (nel programma Radtel è il pulsante «Update» con la
+  scritta nera). Secondo Radtel, se la radio non riparte: ripeti così, e se non basta
+  togli la batteria per 10 minuti.
+- Il caricatore NON controlla il modello del firmware: il programma lo ricava dal
+  nome del file (RT910…, RT900…, BJ7700…) e chiede sempre di scriverlo. RT-910:
+  elettronica H1.00 (V0.07-V0.09) e H1.00G (V0.10, V0.11 con 15 zone da 64 canali).
+  RT-900: la V1.14P (999 canali) è per l'elettronica H3.01 (menu 47); la V1.04P è per
+  l'elettronica precedente (firmware da 0x08001000) e non è intercambiabile con le
+  «OPEN» V1.05P-V1.14P. La copia di sicurezza usa lo stesso protocollo su RT-900,
+  RT-910 e BJ-7700 con e senza Bluetooth: conferma che la radio è di questa famiglia,
+  non quale modello sia.
+- Impronte conosciute: RT-910 V0.07-V0.11, RT-900 V1.04P, V1.05P, V1.09P e V1.14P,
+  BJ-7700 senza Bluetooth V1.07 (5 W).
 
 AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
 - Quansheng UV-K5, UV-K5(8), UV-K6 e UV-5R Plus, file .bin pubblicati da Quansheng

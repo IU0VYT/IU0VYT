@@ -31,7 +31,7 @@ type catItem struct {
 	Aliases []string  `json:"aliases,omitempty"`
 	Type    string    `json:"type"` // analog | gmrs | pmr | dmr | kids
 	Drivers []string  `json:"drivers,omitempty"`
-	FW      string    `json:"fw,omitempty"` // anc | bf | rh5 | kdhx | bj9000 | kdh9g | k5 | link
+	FW      string    `json:"fw,omitempty"` // anc | bf | rh5 | kdhx | bj9000 | kdh9g | k5 | tdh | th8600 | btu | link
 	Links   []catLink `json:"links,omitempty"`
 	Notes   string    `json:"notes,omitempty"`
 	Guide   string    `json:"guide,omitempty"` // aggiornamento guidato con il programma ufficiale ("6x2")
@@ -90,14 +90,21 @@ var catalog = []catItem{
 			{"info", "Pagina dei download Bajeton", bjDown}},
 		Notes: "Per la BJ-8200 il costruttore pubblica esattamente gli stessi pacchetti della BJ-7700 (programma «BT-RT910_CPS», firmware BJ7700PRO_….anc): " +
 			"si usano gli stessi driver (Radtel RT-910 / RT-910 BT). Se la radio si identifica in modo diverso il programma si ferma senza scrivere. " +
+			"Firmware: .anc per la versione con Bluetooth; per quella senza Bluetooth il pacchetto contiene il file .BTU della BJ-7700, che si aggiorna dalla stessa finestra (4.8). " +
 			"Il costruttore avverte: il pacchetto per la versione con Bluetooth può danneggiare quella senza, e viceversa."},
-	{ID: "bj-7700", Brand: "Bajeton", Name: "BJ-7700", Aliases: []string{"RT-910", "RT-910 BT"}, Type: "analog", Drivers: []string{"bj-7700", "bj-7700nbt"}, FW: "anc",
+	{ID: "bj-7700", Brand: "Bajeton", Name: "BJ-7700", Aliases: []string{"RT-910 BT", "RT-910B", "BJ-7700 Bluetooth"}, Type: "analog", Drivers: []string{"bj-7700"}, FW: "anc",
 		Links: []catLink{{"fw", "Programma BJ-7700_EnCPS v1.0.2 e firmware — versione con Bluetooth", gd + "file/d/1ngQoWCWzLFUfmDSW1JLDcqKwQWxfz_Ph/view"},
 			{"fw", "Programma BJ-7700_EnCPS v1.0.2 e firmware — versione senza Bluetooth", gd + "file/d/14pLUetAJkNEECAuUJHYkgBM7EYvL2S2s/view"},
 			{"info", "Pagina dei download Bajeton", bjDown}},
-		Notes: "È la Radtel RT-910 (il programma del costruttore è il «BT-RT910_CPS»): canali con i driver di CHIRP RT-910 BT / RT-910. " +
-			"Firmware: solo per la versione con Bluetooth (BJ7700PRO_….anc, stesso programma «BinTe ANC Bootloader» della BJ-8300). " +
-			"Il firmware della versione senza Bluetooth (.BTU) richiede un programma che il costruttore non pubblica. Il costruttore avverte: i pacchetti delle due versioni non sono intercambiabili."},
+		Notes: "Versione con Bluetooth: è la Radtel RT-910B (il programma del costruttore è il «BT-RT910_CPS»), canali con il driver di CHIRP RT-910 BT. " +
+			"Firmware .anc (BJ7700PRO_….anc, stesso programma «BinTe ANC Bootloader» della BJ-8300). La versione senza Bluetooth ha una scheda a parte (firmware .BTU). " +
+			"Il costruttore avverte: i pacchetti delle due versioni non sono intercambiabili."},
+	{ID: "bj-7700-nbt", Brand: "Bajeton", Name: "BJ-7700 senza Bluetooth", Aliases: []string{"BJ-7700 5W", "RT-910"}, Type: "analog", Drivers: []string{"bj-7700nbt"}, FW: "btu",
+		Links: []catLink{{"fw", "Programma BJ-7700_EnCPS v1.0.2 e firmware — versione senza Bluetooth", gd + "file/d/14pLUetAJkNEECAuUJHYkgBM7EYvL2S2s/view"},
+			{"info", "Pagina dei download Bajeton", bjDown}},
+		Notes: "È la Radtel RT-910 senza Bluetooth: canali con il driver di CHIRP RT-910 (firmware V0.11). " +
+			"4.8: firmware .BTU (es. BJ7700_5W_V1.07_251103.BTU, nel pacchetto «BJ7700 NO BT» di Bajeton) con il protocollo del programma «Radtel Bootload Tools» " +
+			"di Radtel (Bajeton non mette il programma nel pacchetto). " + rt910FwNote},
 	{ID: "bj-98plus", Brand: "Bajeton", Name: "BJ-98 Plus", Aliases: []string{"BJ98 Plus", "UV-98 Plus"}, Type: "analog",
 		Links: []catLink{{"info", "Pagina dei download Bajeton", bjDown}},
 		Notes: "Nessun programma pubblicato sulla pagina dei download del costruttore."},
@@ -534,6 +541,8 @@ var fwFamily = map[string]string{
 func init() {
 	// 4.0: radio delle altre marche (catalog_brands.go)
 	catalog = append(catalog, catalogOther...)
+	// 4.8: radio aggiunte da CHIRP (catalog_48.go)
+	catalog = append(catalog, catalog48...)
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

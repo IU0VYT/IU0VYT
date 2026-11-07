@@ -135,7 +135,20 @@ func TestUniversalAllTargets(t *testing.T) {
 				if i < len(baseChs) && baseChs[i] != nil && baseChs[i].Rx == c.Rx {
 					continue
 				}
-				if !rx[c.Rx] {
+				// 4.8: frequenze arrotondate al passo della radio (es. 500 Hz della KSUN M6)
+				near := false
+				if gm := genByID[tg.ID]; gm != nil {
+					_, near = gm.Fam.(interface {
+						fit(m *genModel, c *Chan) (bool, string)
+					})
+				}
+				if near {
+					near = false
+					for f := range rx {
+						near = near || (f-c.Rx <= 250 && c.Rx-f <= 250)
+					}
+				}
+				if !rx[c.Rx] && !near {
 					t.Fatalf("%s -> %s: canale %+v non presente nella sorgente", sname, tg.ID, *c)
 				}
 			}

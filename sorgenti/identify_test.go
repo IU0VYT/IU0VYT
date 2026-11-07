@@ -139,7 +139,11 @@ func TestIdentifyEachModel(t *testing.T) {
 	identFast(t)
 	a := newApp(mustStore(t))
 	n, other := 0, 0
+	only := os.Getenv("IDENT_MODEL") // 4.8: un solo modello (prove mirate)
 	for _, m := range genModels {
+		if only != "" && m.ID != only {
+			continue
+		}
 		mem := identModelBase(t, m)
 		if mem == nil {
 			t.Logf("%s: nessuna immagine di prova", m.Name)
@@ -175,7 +179,7 @@ func TestIdentifyEachModel(t *testing.T) {
 				&identResult{Fields: []identField{}, Others: []identOther{}, Answers: []string{}})
 			identPortMu.Unlock()
 			if err != nil || !res.Found {
-				t.Fatalf("%s: non identificata: %v %v", m.Name, err, res.Answers)
+				t.Fatalf("%s: non identificata: %v %v\n%s", m.Name, err, res.Answers, strings.Join(j.Log, "\n"))
 			}
 			n++
 			if res.Kind != m.ID {
@@ -218,7 +222,7 @@ func TestIdentifyEachModel(t *testing.T) {
 		}()
 	}
 	t.Logf("%d modelli identificati (%d come modello con la stessa memoria)", n, other)
-	if n < 20 {
+	if n < 20 && only == "" {
 		t.Fatalf("troppo pochi modelli provati: %d", n)
 	}
 }

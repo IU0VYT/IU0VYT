@@ -41,6 +41,13 @@ type kdhEmu struct {
 	hsDrop  int          // presentazioni ignorate
 	silent  bool
 	cur     Port
+	curBaud int
+	// 4.8, «Radtel Bootload Tools» (.BTU): presentazione e velocità della radio
+	// accesa (vuote = caricatore della UV-5RM: kdhHandshke a 115200 baud) e
+	// pacchetti completati con FF
+	hello     string
+	helloBaud int
+	padFF     bool
 }
 
 func newKdhEmu(raw []byte, manual bool) *kdhEmu {
@@ -70,9 +77,17 @@ func (e *kdhEmu) reply(cmd, arg byte, badCRC bool) {
 
 func (e *kdhEmu) serve(p Port, baud int) error {
 	e.mu.Lock()
-	e.cur = p
-	if baud != kdhBaud {
-		e.fail("velocità %d", baud)
+	e.cur, e.curBaud = p, baud
+	want := kdhBaud
+	if (e.state == "app" || e.state == "upd") && e.helloBaud != 0 {
+		want = e.helloBaud
+	}
+	if baud != want {
+		e.fail("velocità %d nello stato %s (attesa %d)", baud, e.state, want)
+	}
+	hello := kdhHandshke
+	if e.hello != "" {
+		hello = e.hello
 	}
 	e.mu.Unlock()
 	var win []byte
@@ -91,7 +106,7 @@ func (e *kdhEmu) serve(p Port, baud int) error {
 			}
 			e.mu.Lock()
 			switch {
-			case st == "app" && bytes.HasSuffix(win, []byte(kdhHandshke)):
+			case st == "app" && bytes.HasSuffix(win, []byte(hello)):
 				win = nil
 				e.note("presentazione")
 				if e.hsDrop > 0 || e.silent {
@@ -169,6 +184,9 @@ func (e *kdhEmu) handle(cmd, arg byte, data []byte) {
 			e.reply(cmd, 0xE5, false)
 			return
 		}
+		if e.curBaud != kdhBaud {
+			e.fail("avvio del caricatore a %d baud", e.curBaud)
+		}
 		e.state = "boot"
 		e.reply(cmd, 6, false)
 		return
@@ -228,6 +246,19 @@ func (e *kdhEmu) check() {
 		return // prove dell'interfaccia: file non noto
 	}
 	s1, s2 := int(be32(e.raw[1:5])), int(be32(e.raw[5:9]))
+	if e.raw[0] == 1 {
+		s2 = 0
+	}
+	if e.padFF {
+		for _, r := range [][]byte{pastLen(e.r1, s1), pastLen(e.r2, s2)} {
+			for _, c := range r {
+				if c != 0xFF {
+					e.fail("ultimo pacchetto non completato con FF")
+					break
+				}
+			}
+		}
+	}
 	if len(e.r1)/kdhPkt != e.n1 || len(e.r2)/kdhPkt != e.n2 {
 		e.fail("pacchetti ricevuti %d+%d, annunciati %d+%d", len(e.r1)/kdhPkt, len(e.r2)/kdhPkt, e.n1, e.n2)
 	}
@@ -237,6 +268,13 @@ func (e *kdhEmu) check() {
 	if len(e.r2) < s2 || !bytes.Equal(e.r2[:s2], e.raw[16+s1:16+s1+s2]) {
 		e.fail("area 2 diversa dal file")
 	}
+}
+
+func pastLen(b []byte, n int) []byte {
+	if n >= len(b) {
+		return nil
+	}
+	return b[n:]
 }
 
 func kdhEmuPorts(e *kdhEmu) func(string, int) (Port, error) {

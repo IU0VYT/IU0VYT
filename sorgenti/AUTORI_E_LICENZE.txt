@@ -31,7 +31,8 @@ dei canali) e il formato dei file .img derivano da CHIRP (https://chirpmyradio.c
 https://github.com/kk7ds/chirp), software libero distribuito con la GNU General
 Public License (versione 2 o successiva, oppure 3 o successiva, secondo il file).
 Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
-01/11/2026; le radio aggiunte nella 4.6 e nella 4.7 con la revisione ba67ff4 del 04/11/2026). Autori indicati nei file di CHIRP usati:
+01/11/2026; le radio aggiunte nella 4.6 e nella 4.7 con la revisione ba67ff4 del 04/11/2026, quelle
+della 4.8 con la revisione 0a9e92c del 06/11/2026). Autori indicati nei file di CHIRP usati:
 
   chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
   drivers/uv5r.py                           Copyright 2012 Dan Smith
@@ -76,6 +77,24 @@ Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
                                             (GPL v2 o succ.; usato come riferimento
                                             per W31D, BF-T20D e BF-V12D: codici dei
                                             modelli e sblocco della BF-V12D)
+  4.8:
+  drivers/wouxun_common.py                  Copyright 2012 Filippi Marco IZ3GME (GPL v3)
+  drivers/th_uv3r.py                        Copyright 2011 Dan Smith (GPL v3)
+  drivers/th_uv3r25.py                      Copyright 2015 Eric Allen (GPL v3)
+  drivers/thuv1f.py                         Copyright 2012 Dan Smith
+  drivers/th_uvf8d.py                       Copyright 2013 Dan Smith (GPL v3)
+  drivers/kyd.py                            Copyright 2014 Jim Unroe, Dan Smith
+  drivers/kyd_IP620.py                      Copyright 2015 Lepik.stv
+  drivers/ksun_m6.py                        Copyright 2012 Dan Smith; 2024 Yuri D'Elia
+  drivers/puxing.py                         Copyright 2011 Dan Smith (GPL v3)
+  drivers/boblov_x3plus.py                  Copyright 2018 Robert C Jennings
+  drivers/hg_uv98.py                        Copyright 2022 Masen Furer KF7HVM
+                                            (con KG7KMV e Bartłomiej Zieliński)
+  drivers/radioddity_r2.py                  Copyright 2018 Klaus Ruebsam DG5EAU
+  drivers/retevis_rt1.py                    Copyright 2016 Jim Unroe
+  drivers/retevis_h777v4.py                 Copyright 2025 Jim Unroe
+  drivers/tg_uv2p.py                        Copyright 2013 Dan Smith
+  drivers/fd268.py                          Copyright 2015 Pavel Milanes CO7WT
 
 File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
@@ -129,6 +148,16 @@ consultate anche le note pubblicate da JA van Hernen (PE1HVH) per il suo driver 
 CHIRP della RT-950 Pro (https://github.com/pe1hvh/chirp_radtel_rt950pro, licenza MIT;
 risposta della radio al comando «F» uguale con il firmware 0.18 e 0.29) e nella
 segnalazione 12180 di CHIRP: nessun codice di quei progetti è incluso.
+
+FIRMWARE .BTU (4.8)
+I firmware .BTU di Radtel RT-910 e RT-900 senza Bluetooth e Bajeton BJ-7700 senza
+Bluetooth si inviano con il protocollo del programma «Radtel Bootload Tools» (Radtel,
+radtels.com), ricavato dal suo codice per l'interoperabilità: è lo stesso caricatore
+KDH V1.0 della Baofeng UV-5RM (bfkdh.go), con la presentazione «PROGRAMBT80U». I
+firmware (Radtel radtels.com, Bajeton bajeton.com) sono riconosciuti solo
+dall'impronta SHA-256; per la RT-900 sono stati confrontati anche i programmi del
+costruttore «RT900_512 CPS» v1.0.0 e v1.0.2 (512 e 999 canali). Nessun programma o
+firmware è incluso nel pacchetto.
 
 I firmware .kdhx delle Radtel RT-470 / RT-495 / RT-630 usano lo stesso protocollo del
 «Bootloader Pro» della UV-25 Plus (fwkdhx.go), con la piattaforma JJCC indicata dal

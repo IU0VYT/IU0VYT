@@ -23,8 +23,11 @@ import (
 )
 
 type winPort struct {
-	h    windows.Handle
-	name string
+	h     windows.Handle
+	name  string
+	baud  int
+	even  bool // 4.8: parità pari (Lanchonlh HG-UV98)
+	stop2 bool // 4.8: due bit di stop (Quansheng TG-UV2+)
 }
 
 func init() {
@@ -71,16 +74,36 @@ func (p *winPort) SetBaud(baud int) error {
 	if err := windows.GetCommState(p.h, &dcb); err != nil {
 		return fmt.Errorf("lettura impostazioni della porta %s non riuscita: %v", p.name, err)
 	}
+	p.baud = baud
 	dcb.BaudRate = uint32(baud)
 	dcb.ByteSize = 8
 	dcb.Parity = windows.NOPARITY
+	if p.even {
+		dcb.Parity = windows.EVENPARITY
+		dcb.Flags |= 0x0002 // fParity: controllo della parità
+	}
 	dcb.StopBits = windows.ONESTOPBIT
+	if p.stop2 {
+		dcb.StopBits = windows.TWOSTOPBITS
+	}
 	// binario, DTR e RTS attivi, nessun controllo di flusso (come SerialPort .NET)
 	dcb.Flags = 0x0001 | windows.DTR_CONTROL_ENABLE | windows.RTS_CONTROL_ENABLE
 	if err := windows.SetCommState(p.h, &dcb); err != nil {
 		return fmt.Errorf("impostazione della porta %s a %d baud non riuscita: %v", p.name, baud, err)
 	}
 	return nil
+}
+
+// SetEvenParity (4.8): parità pari, come pipe.parity = "E" di CHIRP
+func (p *winPort) SetEvenParity(on bool) error {
+	p.even = on
+	return p.SetBaud(p.baud)
+}
+
+// SetTwoStopBits (4.8): due bit di stop, come pipe.stopbits = STOPBITS_TWO di CHIRP
+func (p *winPort) SetTwoStopBits(on bool) error {
+	p.stop2 = on
+	return p.SetBaud(p.baud)
 }
 
 func (p *winPort) Write(b []byte) error {
