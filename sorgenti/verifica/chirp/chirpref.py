@@ -48,6 +48,11 @@ for m in pkgutil.iter_modules(chirp.drivers.__path__):
     except Exception:
         pass
 
+# 4.9: driver esterni (CHIRP_EXTRA, vedi chirpextra.py)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import chirpextra  # noqa: E402
+chirpextra.load_extra(directory)
+
 MAGIC = chirp_common.CloneModeRadio.MAGIC
 
 
@@ -128,7 +133,8 @@ def mem_to_json(r, mem):
     t, rxt = tones(mem, rf)
     levels = [str(p) for p in rf.valid_power_levels]
     power = levels.index(str(mem.power)) if mem.power is not None and str(mem.power) in levels else -1
-    return {"rx": mem.freq, "tx": tx, "txOff": txoff, "txTone": t, "rxTone": rxt,
+    # 4.9: int(): retevis_ha1g.py lascia in mem.freq il campo della memoria
+    return {"rx": int(mem.freq), "tx": int(tx), "txOff": txoff, "txTone": t, "rxTone": rxt,
             "power": power, "mode": mem.mode, "scan": mem.skip != "S", "name": mem.name}
 
 
@@ -158,6 +164,16 @@ def json_to_mem(r, n, c):
     # come l'interfaccia di CHIRP: un campo non modificabile (immutable) non
     # viene toccato se il valore non cambia (canali fissi FRS, PMR, GMRS)
     fixed = getattr(mem, "immutable", []) or []
+    # 4.9: radio che ridefiniscono check_set_memory_immutable_policy (es. Retevis
+    # RB17P, BTECH GMRS-V2: nessun campo bloccato): come un canale incollato o
+    # importato nell'interfaccia di CHIRP, i campi si impostano liberamente e poi
+    # decide la regola della radio
+    pol = getattr(type(r), "check_set_memory_immutable_policy", None)
+    if fixed and pol is not None and type(r).__module__.split(".")[-1] in ("gmrsv2", "retevis_rb17p"):
+        existing = mem.dupe()
+        mem.__dict__["immutable"] = []
+        fixed = []
+        r._chirpref_existing = existing
 
     def setf(name, val):
         if not (name in fixed and getattr(mem, name) == val):
@@ -351,10 +367,26 @@ def main():
                     r.erase_memory(e["n"])
                     continue
                 mem = json_to_mem(r, e["n"], e["chan"])
+                ex0 = r.__dict__.pop("_chirpref_existing", None)
+                if ex0 is not None:
+                    r.check_set_memory_immutable_policy(ex0, mem)
                 msgs = [m for m in r.validate_memory(mem) if isinstance(m, chirp_common.ValidationError)]
                 if msgs:
                     errs.append([e["n"], [str(m) for m in msgs]])
+                scr = None
+                if type(r).__module__.endswith("retevis_rt87") and not mem.empty and mem.extra:
+                    # 4.9: retevis_rt87.py scrive lo scrambler aumentato di 1 a ogni
+                    # modifica (confronta un RadioSetting con una stringa): IU0VYT
+                    # Flash lo conserva, e qui si corregge il difetto di CHIRP
+                    scr = int(r._memobj.channels[e["n"] - 1].scrambler)
                 r.set_memory(mem)
+                if scr is not None:
+                    r._memobj.channels[e["n"] - 1].scrambler = scr
+                if type(r).__module__.endswith("anytone_ht") and not mem.empty and mem.duplex != "off":
+                    # 4.9: anytone_ht.py non toglie mai «tx_off»: un canale messo
+                    # in sola ricezione non torna più a trasmettere. IU0VYT Flash
+                    # lo toglie, e qui si corregge il difetto di CHIRP
+                    r._memobj.memory[e["n"]].tx_off = False
             except Exception as ex:
                 errs.append([e["n"], ["%s: %s" % (type(ex).__name__, ex)]])
         open(sys.argv[5], "wb").write(raw_mmap(r))
@@ -368,7 +400,8 @@ def main():
             mod = sys.modules[cls.__module__]
             det = getattr(cls, "_DETECTED_BY", None)
             if det is not None and det is not cls and hasattr(det, "detect_from_serial") and (
-                    mod.__name__.endswith("ga510") or mod.__name__.endswith("retevis_h777v4")):
+                    mod.__name__.endswith("ga510") or mod.__name__.endswith("retevis_h777v4")
+                    or mod.__name__.endswith("tdm11")):
                 # 4.7 GA-510 V2, 4.8 Retevis H777 V4: classe riconosciuta da
                 # detect_from_serial di un'altra classe (come l'interfaccia di
                 # CHIRP), che entra in programmazione; poi la lettura
@@ -393,8 +426,22 @@ def main():
             open(sys.argv[5], "wb").write(raw_mmap(r))
         else:
             r = load(cls, sys.argv[5])
+            # 4.9: metadati del file (alcuni driver scrivono solo un'immagine
+            # letta dalla radio: TYT UVL-15W)
+            raw = open(sys.argv[5], "rb").read()
+            if MAGIC in raw:
+                import base64
+                try:
+                    r.metadata = json.loads(base64.b64decode(raw[raw.index(MAGIC) + len(MAGIC):]))
+                except Exception:
+                    pass
             r.set_pipe(pipe) if hasattr(r, "set_pipe") else setattr(r, "pipe", pipe)
             r.status_fn = lambda s: None
+            if hasattr(r, "_encode_current_time") and hasattr(r._memobj, "progtime"):
+                # 4.9 tdm11.py: CHIRP scrive data e ora in un punto sbagliato
+                # della memoria; IU0VYT Flash non le scrive: per il confronto
+                # si lasciano i byte come sono
+                r._encode_current_time = lambda: [int(x) for x in r._memobj.progtime.time]
             r.sync_out()
         pipe.close()
         print(json.dumps({"ok": True}))

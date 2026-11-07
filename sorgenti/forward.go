@@ -41,19 +41,15 @@ func planForward(kind string, cur, src []*Chan, mode string, mem []byte, bands [
 	m := genByID[kind]
 	final := append([]*Chan{}, cur...)
 	// posizioni che la radio non permette di cambiare (es. canali GMRS fissi)
-	var lk interface {
-		Locked(m *genModel, i int, old, want *Chan) error
-	}
+	var lk func(i int, old, want *Chan) error
 	if m != nil {
-		lk, _ = m.Fam.(interface {
-			Locked(m *genModel, i int, old, want *Chan) error
-		})
+		lk = genLockedFn(m, mem)
 	}
 	fits := func(i int, c *Chan) bool {
 		if m == nil {
 			return true
 		}
-		if lk != nil && lk.Locked(m, i, genGet(m, mem, i), c) != nil {
+		if lk != nil && lk(i, genGet(m, mem, i), c) != nil {
 			return false
 		}
 		return c == nil || genValidate(m, c, i) == nil

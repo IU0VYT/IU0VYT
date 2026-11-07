@@ -63,6 +63,37 @@ struct {
 } names[128];
 `
 
+// 4.9: Baojie BJ-UV55
+const uv5rFormatBJ55 = `
+#seekto 0x0008;
+struct {
+  lbcd rxfreq[4];
+  lbcd txfreq[4];
+  ul16 rxtone;
+  ul16 txtone;
+  u8 unused1:3,
+     isuhf:1,
+     scode:4;
+  u8 unknown1:7,
+     txtoneicon:1;
+  u8 mailicon:3,
+     unknown2:4,
+     lowpower:1;
+  u8 unknown3:1,
+     wide:1,
+     unknown4:2,
+     bcl:1,
+     scan:1,
+     pttid:2;
+} memory[128];
+
+#seekto 0x1008;
+struct {
+  char name[6];
+  u8 unknown2[10];
+} names[128];
+`
+
 const (
 	uv5rCharset       = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890!@#$%^&*()+-=[]:\";'<>?,./"
 	charsetASCII      = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
@@ -117,6 +148,9 @@ type uv5rOpt struct {
 	bands     []band // gamme fisse (se diverse da quelle calcolate)
 	airAM     bool   // UV-5G Pro: AM in 108-136 MHz
 	gt5r      bool   // GT-5R: trasmissione solo nelle bande radioamatoriali
+	// 4.9: Baojie BJ-UV55 (bjuv55.py): nomi di 6 caratteri, potenza su un bit,
+	// indicatori «UHF» e «tono» del canale, versione del firmware a 0x1938
+	bj55 bool
 }
 
 type uv5rFam struct{}
@@ -189,15 +223,28 @@ func init() {
 	o5gr.idents, o5gr.match = [][]byte{uv5rModelUV5G}, false
 	uv5g := mk("bf-uv5g", "Radioddity", "UV-5G", "RadioddityUV5GRadio", "Baofeng UV-5G (GMRS)", o5gr, uv5rPow2, uv5rCharset, 0)
 
-	genRegister(uv5r, uv5gpro, f11, uv82, uv82x3, uv6, f8hp, uv82hp, uv5rx3, gt5r, uv5g, kt980)
+	// 4.9: Baojie BJ-UV55 (BaojieBJUV55Radio di bjuv55.py)
+	obj := std
+	obj.idents, obj.basetype, obj.bj55 = [][]byte{{0x50, 0xBB, 0xDD, 0x55, 0x63, 0x98, 0x4D}}, []string{"BJ55"}, true
+	bj55 := mk("bj-uv55", "Baojie", "BJ-UV55", "BaojieBJUV55Radio", "Baojie BJ-UV55", obj, uv5rPow2, uv5rCharset, 0)
+	bj55.NameMax = 6
+
+	genRegister(uv5r, uv5gpro, f11, uv82, uv82x3, uv6, f8hp, uv82hp, uv5rx3, gt5r, uv5g, kt980, bj55)
 }
 
 func uv5ro(m *genModel) *uv5rOpt { return m.Opt.(*uv5rOpt) }
 
 func (uv5rFam) mem() *bwEl { return bwMust(uv5rFormat) }
 
+func (f uv5rFam) memOf(m *genModel) *bwEl {
+	if m != nil && uv5ro(m).bj55 {
+		return bwMust(uv5rFormatBJ55)
+	}
+	return f.mem()
+}
+
 func (f uv5rFam) recs(m *genModel, i int) (*bwEl, *bwEl) {
-	r := f.mem()
+	r := f.memOf(m)
 	return r.F("memory").I(i), r.F("names").I(i)
 }
 
@@ -213,11 +260,15 @@ func (f uv5rFam) PutRec(m *genModel, img []byte, i int, raw []byte) {
 }
 
 // versione del firmware scritta nell'immagine
-func uv5rImgVersion(img []byte) []byte {
-	if len(img) < uv5rFwVerStop {
+func uv5rImgVersion(m *genModel, img []byte) []byte {
+	a, b := uv5rFwVerStart, uv5rFwVerStop
+	if m != nil && uv5ro(m).bj55 {
+		a, b = 0x1938, 0x193E // 4.9: Baojie BJ-UV55
+	}
+	if len(img) < b {
 		return nil
 	}
-	return img[uv5rFwVerStart:uv5rFwVerStop]
+	return img[a:b]
 }
 
 func uv5rIsOrigTag(tag []byte) (bool, error) {
@@ -238,7 +289,7 @@ func (f uv5rFam) isOrig(m *genModel, img []byte) bool {
 	if uv5ro(m).neverOrig {
 		return false
 	}
-	o, _ := uv5rIsOrigTag(uv5rImgVersion(img))
+	o, _ := uv5rIsOrigTag(uv5rImgVersion(m, img))
 	return o
 }
 
@@ -332,9 +383,29 @@ func (f uv5rFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	if c == nil {
 		mem.Fill(img, 0xFF)
 		nam.Fill(img, 0xFF)
+		if uv5ro(m).bj55 {
+			// come bjuv55.py, anche cancellando
+			mem.F("isuhf").SetBool(img, false)
+			mem.F("txtoneicon").SetBool(img, false)
+		}
 		return nil
 	}
 	wasEmpty := mem.Raw(img)[0] == 0xFF
+	// 4.9 BJ-UV55: scostamento del canale com'era (CHIRP lo conserva per il
+	// simplex; canale nuovo: quello predefinito di CHIRP, 600 kHz)
+	oldOff := int64(600000)
+	if old := f.Get(m, img, i); old != nil {
+		switch d := old.Tx - old.Rx; {
+		case old.TxOff || d == 0:
+			oldOff = 0
+		case d > 70000000 || d < -70000000:
+			oldOff = old.Tx
+		case d > 0:
+			oldOff = d
+		default:
+			oldOff = -d
+		}
+	}
 	var bcl, scode, pttid int64
 	if !wasEmpty {
 		bcl, scode, pttid = mem.F("bcl").Int(img), mem.F("scode").Int(img), mem.F("pttid").Int(img)
@@ -356,7 +427,7 @@ func (f uv5rFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	}
 	name := c.Name
 	nf := nam.F("name")
-	for k := 0; k < 7; k++ {
+	for k := 0; k < len(nf.Raw(img)); k++ {
 		if k < len(name) {
 			img[nf.Off+k] = name[k]
 		} else {
@@ -373,6 +444,24 @@ func (f uv5rFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		mem.F("scode").SetInt(img, scode)
 		mem.F("pttid").SetInt(img, pttid)
 	}
+	if uv5ro(m).bj55 {
+		// come bjuv55.py: «UHF» se freq - scostamento > 400 MHz (lo scostamento
+		// è quello di CHIRP: per «split» la frequenza TX), «tono» con Tone o TSQL
+		off := int64(0)
+		switch d := c.Tx - c.Rx; {
+		case c.TxOff:
+		case d == 0:
+			off = oldOff
+		case d > 70000000 || d < -70000000:
+			off = c.Tx
+		case d > 0:
+			off = d
+		default:
+			off = -d
+		}
+		mem.F("isuhf").SetBool(img, c.Rx-off > 400000000)
+		mem.F("txtoneicon").SetBool(img, tt.Mode == "Tone" && (rt.Mode == "" || rt.Mode == "Tone" && rt.Hz10 == tt.Hz10))
+	}
 	return nil
 }
 
@@ -385,7 +474,7 @@ func (f uv5rFam) Match(m *genModel, img []byte) bool {
 	case uv5rFullSizeModel:
 		return bytes.HasPrefix(img[0x1948:0x1950], []byte(m.Model))
 	case uv5rFullSize:
-		rid := img[uv5rFwVerStart:uv5rFwVerStop]
+		rid := uv5rImgVersion(m, img)
 		for _, t := range o.basetype {
 			if bytes.Contains(rid, []byte(t)) {
 				return true
@@ -622,6 +711,15 @@ func (f uv5rFam) Download(ctx context.Context, m *genModel, port string, prog Pr
 		if _, err := s.readBlock(0, 0x40, true); err != nil {
 			return nil, info, genFail("Lettura", err)
 		}
+	} else if o.bj55 {
+		// 4.9: Baojie BJ-UV55: versione nel blocco 0x1FF0 (come bjuv55.py; la
+		// lettura di CHIRP poi si interrompe per un difetto, qui continua senza
+		// la correzione del «byte perso», che questa radio non ha)
+		b, err := s.readBlock(0x1FF0, 0x40, true)
+		if err != nil {
+			return nil, info, genFail("Lettura della versione", err)
+		}
+		info += fmt.Sprintf(", firmware %q", string(trimBytes(b[0:6], 0x00, 0xFF, ' ')))
 	} else {
 		var ver []byte
 		if ver, dropped, err = s.radioVersion(); err != nil {
@@ -707,11 +805,21 @@ func (f uv5rFam) Upload(ctx context.Context, m *genModel, port string, img []byt
 	type rng struct{ a, b int }
 	mainR := []rng{{0x0008, 0x0CF8}, {0x0D08, 0x0DF8}, {0x0E08, 0x1808}}
 	var auxR []rng
-	if o.aux {
+	if o.bj55 {
+		// 4.9: Baojie BJ-UV55 (bjuv55.py): versione dal blocco 0x1FF0, poi tutta la
+		// memoria principale e tutta l'area ausiliaria
 		if len(img) < uv5rFullSize {
 			return info, fmt.Errorf("immagine senza l'area ausiliaria: leggi prima la radio")
 		}
-		imgOrig, err := uv5rIsOrigTag(uv5rImgVersion(img))
+		if _, err := s.readBlock(0x1FF0, 0x40, true); err != nil {
+			return info, genFail("Lettura della versione", err)
+		}
+		mainR, auxR = []rng{{0x0008, 0x1808}}, []rng{{0x1EC0, 0x2000}}
+	} else if o.aux {
+		if len(img) < uv5rFullSize {
+			return info, fmt.Errorf("immagine senza l'area ausiliaria: leggi prima la radio")
+		}
+		imgOrig, err := uv5rIsOrigTag(uv5rImgVersion(m, img))
 		if o.neverOrig {
 			imgOrig, err = false, nil
 		}
@@ -777,4 +885,4 @@ func (f uv5rFam) Upload(ctx context.Context, m *genModel, port string, img []byt
 	return info, nil
 }
 
-func (f uv5rFam) layout(m *genModel) *bwEl { return f.mem() }
+func (f uv5rFam) layout(m *genModel) *bwEl { return f.memOf(m) }

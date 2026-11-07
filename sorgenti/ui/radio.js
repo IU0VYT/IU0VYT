@@ -40,7 +40,10 @@ function cleanNameFor(d, s) {
   let n = asciiName(s);
   if (d.charset) {
     if (!/[a-z]/.test(d.charset)) n = n.toUpperCase();
-    n = Array.from(n).map(c => d.charset.includes(c) ? c : ' ').join('').replace(/\s+$/, '');
+    // 4.9: senza lo spazio tra i caratteri della radio si usa «-» (Wouxun KG-UVD1P…)
+    const rep = d.charset.includes(' ') ? ' ' : (d.charset.includes('-') ? '-' : '');
+    if (rep !== ' ') n = n.replace(/\s+$/, '');
+    n = Array.from(n).map(c => d.charset.includes(c) ? c : rep).join('').replace(/\s+$/, '');
   }
   if (d.nameMax && n.length > d.nameMax) n = n.slice(0, d.nameMax);
   return n;

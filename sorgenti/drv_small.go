@@ -190,7 +190,20 @@ type uvb5Fam struct{}
 type uvb5Opt struct {
 	th350  bool   // TYT TH-350: formato, toni, saluto «TROGRAM», nessuna conferma dei blocchi letti
 	header string // intestazione dell'immagine (48 byte con gli zeri)
+	us     bool   // 4.9: TH-350 US (Th350USRadio): nomi di 8 caratteri a 0x0930
 }
+
+// th350USFormat (4.9): come th350Format, con i nomi di 8 caratteri a 0x0930
+var th350USFormat = strings.Replace(th350Format, `#seekto 0x09D0;
+u16 fm_presets[16];
+
+#seekto 0x0A30;
+struct {
+  u8 name[5];
+} names[128];`, `#seekto 0x0930;
+struct {
+  u8 name[8];
+} names[128];`, 1)
 
 func uvb5o(m *genModel) *uvb5Opt {
 	if o, ok := m.Opt.(*uvb5Opt); ok {
@@ -211,9 +224,20 @@ func init() {
 		Narrow: true, HasScan: true, NoTxOff: true, DCS: dtcsCodes, Baud: 9600, Fam: uvb5Fam{},
 		Opt:   &uvb5Opt{th350: true, header: "TRI350 Radio Program data v1.08\x00"},
 		Notes: "Accendi la radio su un canale libero. Driver di CHIRP dichiarato sperimentale dai suoi autori: tieni una copia della lettura."})
+	// 4.9: TYT TH-350 versione USA (Th350USRadio): nomi di 8 caratteri
+	genRegister(&genModel{ID: "tyt-th350us", Vendor: "TYT", Model: "TH-350", Variant: "US", RClass: "Th350USRadio", Name: "TYT TH-350 (versione USA, nomi di 8 caratteri)",
+		Slots: 128, First: 1, NameMax: 8, Charset: uvb5Charset, Powers: []genPower{{"Bassa 1 W", 1, 2}, {"Alta 5 W", 5, 0}},
+		Bands:  []band{{130000000, 175000000}, {220000000, 269000000}, {400000000, 520000000}},
+		Narrow: true, HasScan: true, NoTxOff: true, DCS: dtcsCodes, Baud: 9600, Fam: uvb5Fam{},
+		Opt: &uvb5Opt{th350: true, us: true, header: "TRI350 Radio Program data v1.08\x00"},
+		Notes: "Versione USA con i nomi dei canali di 8 caratteri. Accendi la radio su un canale libero. Driver di CHIRP dichiarato " +
+			"sperimentale dai suoi autori: tieni una copia della lettura."})
 }
 
 func (uvb5Fam) mem(m *genModel) *bwEl {
+	if uvb5o(m).us {
+		return bwMust(th350USFormat)
+	}
 	if uvb5o(m).th350 {
 		return bwMust(th350Format)
 	}
@@ -384,7 +408,7 @@ func (f uvb5Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	r.F("revfreq").SetInt(img, keep[1])
 	r.F("pttid").SetInt(img, keep[2])
 	r.F("compander").SetInt(img, keep[3])
-	for k := 0; k < 5; k++ {
+	for k := 0; k < m.NameMax; k++ {
 		if k < len(c.Name) {
 			x := strings.IndexByte(uvb5Charset, c.Name[k])
 			if x < 0 {
@@ -836,6 +860,23 @@ type bft8Opt struct {
 	// (RetevisRB627B di bf_t8.py)
 	n   int
 	pmr bool
+	// 4.9: frs: canali FRS a frequenza fissa (Retevis RT16, RB27B, BTECH FRS-A1);
+	// murs: canali MURS (Retevis RB27V)
+	frs, murs bool
+}
+
+// bft8Fixed (4.9): frequenze fisse della radio (PMR446, FRS o MURS) e posizioni
+// in cui valgono
+func (o *bft8Opt) fixed() ([]int64, int) {
+	switch {
+	case o.pmr:
+		return t18PMR, 16
+	case o.frs:
+		return t18FRS, 22
+	case o.murs:
+		return t18MURS, 5
+	}
+	return nil, 0
 }
 
 func init() {
@@ -863,7 +904,35 @@ func init() {
 		Bands:  []band{{400000000, 520000000}}, Narrow: true, HasScan: true, DCS: rb27dcs, Baud: 9600, Fam: bft8Fam{},
 		Opt:   &bft8Opt{spec: rb27Spec, names: true, dcs: rb27dcs, n: 16, pmr: true},
 		Notes: "PMR446: i 16 canali hanno le frequenze fisse PMR446 (come in CHIRP); si possono cambiare nome, toni e scansione."})
+	// 4.9: Retevis RT16 (FRS, senza nomi), RB27B (FRS) e RB27V (MURS), BTECH
+	// FRS-A1 (classi di bf_t8.py)
+	frsNote := "Radio FRS (USA): i 22 canali hanno le frequenze FRS fisse (come in CHIRP); i canali 8-14 sono a bassa potenza."
+	genRegister(&genModel{ID: "rt-rt16", Vendor: "Retevis", Model: "RT16", RClass: "RetevisRT16", Name: "Retevis RT16 (FRS)",
+		Slots: 22, First: 1, NameMax: 0, Powers: []genPower{{"Alta 2 W", 2, 0}, {"Bassa 0,5 W", 0.5, 2}},
+		Bands: []band{{400000000, 470000000}}, Narrow: true, HasScan: false, DCS: dtcsCodes, Baud: 9600, Fam: bft8Fam{},
+		Opt: &bft8Opt{spec: bft8Spec, dcs: dtcsCodes, n: 22, frs: true}, Notes: frsNote})
+	genRegister(&genModel{ID: "rt-rb27b", Vendor: "Retevis", Model: "RB27B", RClass: "RetevisRB27B", Name: "Retevis RB27B (FRS)",
+		Slots: 22, First: 1, NameMax: 6, Charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-",
+		Powers: []genPower{{"Alta 2 W", 2, 0}, {"Bassa 0,5 W", 0.5, 2}},
+		Bands:  []band{{400000000, 520000000}}, Narrow: true, HasScan: true, DCS: rb27dcs, Baud: 9600, Fam: bft8Fam{},
+		Opt: &bft8Opt{spec: rb27Spec, names: true, dcs: rb27dcs, n: 22, frs: true}, Notes: frsNote})
+	genRegister(&genModel{ID: "rt-rb27v", Vendor: "Retevis", Model: "RB27V", RClass: "RetevisRB27V", Name: "Retevis RB27V (MURS)",
+		Slots: 5, First: 1, NameMax: 6, Charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-",
+		Powers: []genPower{{"Alta 2 W", 2, 0}, {"Bassa 0,5 W", 0.5, 2}},
+		Bands:  []band{{136000000, 174000000}}, Narrow: true, HasScan: true, DCS: rb27dcs, Baud: 9600, Fam: bft8Fam{},
+		Opt:   &bft8Opt{spec: rb27Spec, names: true, dcs: rb27dcs, n: 5, murs: true},
+		Notes: "Radio MURS (USA): i 5 canali hanno le frequenze MURS fisse (come in CHIRP); i canali 1-3 sono a banda stretta."})
+	genRegister(&genModel{ID: "bt-frsa1", Vendor: "BTECH", Model: "FRS-A1", RClass: "FRSA1Radio", Name: "BTECH FRS-A1 (FRS)",
+		Slots: 22, First: 1, NameMax: 6, Charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-",
+		Powers: []genPower{{"Alta 2 W", 2, 0}, {"Bassa 0,5 W", 0.5, 2}},
+		Bands:  []band{{400000000, 470000000}}, Narrow: true, HasScan: true, DCS: rb27dcs, Baud: 9600, Fam: bft8Fam{},
+		Opt: &bft8Opt{spec: frsa1Spec, names: true, dcs: rb27dcs, n: 22, frs: true}, Notes: frsNote})
 }
+
+// 4.9: BTECH FRS-A1 (FRSA1Radio di bf_t8.py): identificativo «BF-T8A.», memoria
+// fino a 0x0DC0, scrittura di 0x0000-0x0640 e dei nomi 0x0D00-0x0DC0
+var frsa1Spec = &rbSpec{magic: []byte("\x02PROGRAM"), finger: []byte("BF-T8A\x2E"), memsize: 0x0DC0,
+	ranges: [][2]int{{0x0000, 0x0640}, {0x0D00, 0x0DC0}}, block: 0x10, tries: 5, to: time.Second}
 
 func bft8o(m *genModel) *bft8Opt {
 	if o, ok := m.Opt.(*bft8Opt); ok {
@@ -955,6 +1024,30 @@ func (f bft8Fam) Get(m *genModel, img []byte, i int) *Chan {
 			c.Power = m.Powers[1].Sem
 		}
 	}
+	if o.frs && t18In(t18FRS, rx) {
+		// 4.9 (RT16, RB27B, FRS-A1): canale FRS fisso, come lo mostra CHIRP
+		// (lo scostamento diventa 0; «off» resta)
+		if n := i + 1; n <= 22 {
+			c.Rx = t18FRS[n-1]
+		}
+		if !c.TxOff {
+			c.Tx = c.Rx
+		}
+		c.Narrow = true
+		if n := i + 1; n >= 8 && n <= 14 && len(m.Powers) > 1 {
+			c.Power = m.Powers[1].Sem
+		}
+	}
+	if o.murs && t18In(t18MURS, rx) {
+		// 4.9 (RB27V): canale MURS fisso
+		if n := i + 1; n <= 5 {
+			c.Rx = t18MURS[n-1]
+		}
+		c.Tx, c.TxOff = c.Rx, false
+		if i+1 <= 3 {
+			c.Narrow = true
+		}
+	}
 	if o.names {
 		// come CHIRP: 0xFF (anche in mezzo al nome) = spazio, spazi finali tolti
 		nb := []byte{}
@@ -1028,30 +1121,44 @@ func (f bft8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 // lockedSlotImg (4.7, RB627B): canale PMR446 fisso (escluso dalle prove di scrittura)
 func (f bft8Fam) lockedSlotImg(m *genModel, img []byte, i int) bool {
 	c := f.Get(m, img, i)
-	return c != nil && bft8o(m).pmr && t18In(t18PMR, c.Rx)
+	fx, _ := bft8o(m).fixed()
+	return c != nil && fx != nil && t18In(fx, c.Rx)
 }
 
 // Locked (4.7, RB627B): i canali PMR446 non si cancellano e non cambiano
 // frequenza, banda e potenza (campi non modificabili di CHIRP)
 func (f bft8Fam) Locked(m *genModel, i int, old, want *Chan) error {
-	if !bft8o(m).pmr {
+	o := bft8o(m)
+	fx, n := o.fixed()
+	if fx == nil {
 		return nil
 	}
-	if want != nil && t18In(t18PMR, want.Rx) && i < 16 && want.Rx != t18PMR[i] {
-		return fmt.Errorf("nella posizione %d della %s la frequenza %s MHz non è ammessa (canali PMR446 fissi)", i+1, m.Name, fmtMHz(want.Rx))
+	what := "PMR446"
+	switch {
+	case o.frs:
+		what = "FRS"
+	case o.murs:
+		what = "MURS"
 	}
-	if old == nil || !t18In(t18PMR, old.Rx) {
+	if want != nil && t18In(fx, want.Rx) && i < n && want.Rx != fx[i] {
+		return fmt.Errorf("nella posizione %d della %s la frequenza %s MHz non è ammessa (canali %s fissi)", i+1, m.Name, fmtMHz(want.Rx), what)
+	}
+	if old == nil || !t18In(fx, old.Rx) {
 		return nil
 	}
+	// campi non modificabili di CHIRP: frequenza e duplex sempre; banda stretta
+	// (PMR, FRS, MURS 1-3) e potenza (PMR, FRS 8-14)
+	narrowFix := o.pmr || o.frs || (o.murs && i+1 <= 3)
+	powerFix := o.pmr || (o.frs && i+1 >= 8 && i+1 <= 14)
 	switch {
 	case want == nil:
-		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: non si può cancellare", i+1, m.Name)
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: non si può cancellare", i+1, m.Name, what)
 	case want.Rx != old.Rx || want.Tx != old.Tx || want.TxOff != old.TxOff:
-		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: frequenza non modificabile", i+1, m.Name)
-	case want.Narrow != old.Narrow:
-		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: sempre a banda stretta", i+1, m.Name)
-	case want.Power != old.Power:
-		return fmt.Errorf("il canale %d della %s è un canale PMR446 fisso: potenza non modificabile", i+1, m.Name)
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: frequenza non modificabile", i+1, m.Name, what)
+	case narrowFix && want.Narrow != old.Narrow:
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: sempre a banda stretta", i+1, m.Name, what)
+	case powerFix && want.Power != old.Power:
+		return fmt.Errorf("il canale %d della %s è un canale %s fisso: potenza non modificabile", i+1, m.Name, what)
 	}
 	return nil
 }

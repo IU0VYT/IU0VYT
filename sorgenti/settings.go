@@ -488,13 +488,15 @@ func writeSetting(d *setDef, img []byte, v string) error {
 		if d.Type == "int" && d.Step > 1 && math.Mod(n-d.Min, d.Step) != 0 {
 			return fmt.Errorf("il valore deve andare a passi di %s", fmtSetNum(d.Step, 0))
 		}
-		if n < 0 {
-			return errors.New("valore negativo non ammesso")
-		}
 		iv := int64(math.Round(n * float64(setScale(e))))
 		x := iv*e.Num + e.Add*e.Den
 		if e.Den == 0 || x%e.Den != 0 {
 			return fmt.Errorf("valore non rappresentabile: %q", v)
+		}
+		// 4.9: conta il valore memorizzato, non quello mostrato (UV-K5 egzumer:
+		// livelli dell'S-meter in dBm negativi, memorizzati senza segno)
+		if x/e.Den < 0 {
+			return errors.New("valore negativo non ammesso")
 		}
 		return e.putNum(img, x/e.Den)
 	case "str":

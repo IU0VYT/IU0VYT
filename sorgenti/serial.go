@@ -55,6 +55,14 @@ func setTwoStopBits(p Port) error {
 	return nil
 }
 
+// setRTSOff (4.9): RTS spento sulle porte che lo permettono (Retevis C2)
+func setRTSOff(p Port) error {
+	if x, ok := p.(interface{ SetRTS(bool) error }); ok {
+		return x.SetRTS(false)
+	}
+	return nil
+}
+
 var openPortFunc = func(name string, baud int) (Port, error) {
 	return nil, fmt.Errorf("porte seriali non disponibili su questo sistema")
 }

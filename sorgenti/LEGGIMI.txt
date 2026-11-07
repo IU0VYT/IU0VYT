@@ -1,11 +1,42 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.8.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.9.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.9.0:
+- CORRETTO: Lanchonlh HG-UV98 e Quansheng TG-UV2+ non riconosciute da «Identifica».
+  Durante l'identificazione la porta parlava sempre in 8N1: ora usa la parità pari
+  (HG-UV98) e i due bit di stop (TG-UV2+), come la lettura dalla scheda della radio;
+- CORRETTO: parità della HG-UV98. Con la parità pari la porta di Windows ora controlla
+  anche gli errori di parità (prima il controllo veniva acceso e subito spento);
+- QUANSHENG UV-K5 / UV-K6 / UV-5R Plus CON I FIRMWARE LIBERI: nuove schede «firmware
+  egzumer», «firmware F4HWN» (driver di armel F4HWN, fuori da CHIRP: 8 livelli di
+  potenza, blocco della trasmissione, 3 liste di scansione e le impostazioni F4HWN) e
+  «firmware LOSEHU, LTS, UVE» (memoria di 256 KiB). Dopo l'aggiornamento del firmware
+  il programma indica la scheda da usare;
+- NUOVE RADIO dai driver di CHIRP, riscritte e verificate come le altre (lettura,
+  scrittura, byte scambiati con la radio e impostazioni identici a CHIRP):
+  Wouxun KG-UVD1P (KG-UV2D, KG-UV3D), KG-UV6D, KG-816, KG-818, KG-805G, KG-UV8D,
+  KG-UV8D Plus, KG-UV8E, KG-UV9D Plus, KG-UV9PX, KG-UV9GX, KG-UV9K, KG-UV9G Pro,
+  KG-935G, KG-935G Plus, KG-935H, KG-UV8H, KG-XS20G, KG-XS20G Plus, KG-XS20H;
+  TYT TH-UV8000D/E, UVL-15W, TH-350 (USA); Abbree AR-518, Ruyage UV58Plus, Radtel
+  RT-880G e RT-890; Retevis C2, HA1G, HA1UV, HA2, RB15, RB615, RB17P, RB28, RB628,
+  RB48, RB648, RT23, RT26, RT76P, RT87, RT16, RB27B, RB27V; BTECH GMRS-V1, GMRS-V2,
+  MURS-V1, MURS-V2, FRS-A1; AnyTone TERMN-8R e OBLTR-8R; Puxing PX-888K; QYT KT-8R;
+  Rugged RH5R-V2; Baojie BJ-UV55; MTC UV-5R-3; Radioddity MU-5; Zartek ZA-758;
+  TIDRADIO TD-M11; TDXone TD-Q8A. Per TD-Q8A e BJ-UV55 la lettura via cavo di CHIRP
+  non funziona con Python 3: il protocollo è quello dei loro driver, provato con la
+  radio simulata (da verificare con una radio vera);
+- Radtel RT-890 con il firmware libero di M7OCM (driver di M7OCM e Jim Unroe, fuori da
+  CHIRP): modulazione per canale e 8 liste di scansione, 10-1300 MHz; provato con
+  l'immagine di esempio del progetto e con la radio simulata;
+- le radio GMRS, FRS e MURS sono per gli Stati Uniti: in Italia non sono ammesse in
+  trasmissione su quelle frequenze;
+- galleria: 489 modelli di 44 marche (451 con canali, 386 con impostazioni, 52 con
+  l'aggiornamento del firmware).
 Novità della 4.8.0:
 - AGGIORNAMENTO DEL FIRMWARE .BTU per Radtel RT-910 e RT-900 senza Bluetooth e
   Bajeton BJ-7700 senza Bluetooth, con il protocollo del programma «Radtel Bootload
@@ -688,14 +719,33 @@ RADIO GESTITE CON I DRIVER DI CHIRP
   V4 e RT21H (retevis_h777v4.py: la scheda della H777 riconosce la V4 e indica la sua
   scheda); Quansheng TG-UV2+ (tg_uv2p.py, due bit di stop, canali 0-199); Feidaxin
   FD-268A/B, FD-288A/B, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH (fd268.py).
+- Dalla 4.9: Wouxun (wouxun.py, kguv8d.py, kguv8dplus.py, kguv8e.py, kguv9dplus.py,
+  kg935g.py: 20 modelli; KG-UV8D Plus, KG-UV8E e KG-935G con il protocollo cifrato);
+  TYT TH-UV8000D/E (th_uv8000.py), UVL-15W (tyt_uvl15w.py, 1000 canali) e TH-350 USA
+  (th350.py); Abbree AR-518, Ruyage UV58Plus e Radtel RT-880G (iradio_*.py,
+  radtel_rt880g.py); Retevis C2 (retevis_c2.py, RTS spento), HA1G, HA1UV e HA2
+  (retevis_ha1g.py, retevis_ha2.py; i canali 1-30 della HA1G sono fissi), RB15/RB615,
+  RB17P, RB28/RB628/RB48/RB648, RT23, RT26, RT76P, RT87 e RT16/RB27B/RB27V (bf_t8.py);
+  BTECH GMRS-V1, GMRS-V2, MURS-V1, MURS-V2 (canali GMRS/MURS con le regole di CHIRP,
+  la scrittura controlla che la versione del firmware sia quella della lettura) e
+  FRS-A1; AnyTone TERMN-8R/OBLTR-8R (anytone_ht.py); Puxing PX-888K; QYT KT-8R
+  (btech.py); Rugged RH5R-V2; Baojie BJ-UV55 (uv5r.py); MTC UV-5R-3 (uv5x3.py);
+  Radioddity MU-5 (canali MURS fissi); Zartek ZA-758 (h777.py); TIDRADIO TD-M11
+  (tdm11.py, versioni 22 FRS, 16 PMR e 16 v0.95); TDXone TD-Q8A (tdxone_tdq8a.py).
+  Differenze volute: RT87 (CHIRP aumenta lo scrambler di 1 a ogni modifica), TERMN-8R/OBLTR-8R (CHIRP
+  non toglie mai «solo ricezione»: il canale non torna a trasmettere), TD-M11 (data e ora della
+  radio non toccate). Senza impostazioni: RH5R-V2 (CHIRP non ne ha), BJ-UV55, RT76P,
+  TD-M11 e RT-890 M7OCM.
 - Quansheng UV-K5 e simili: 200 memorie con nome fino a 10 caratteri, potenze Bassa
   1,5 W / Media 3 W / Alta 5 W, banda aerea in AM (frequenze arrotondate al passo di
   8,33 kHz come fa CHIRP), trasmissione su una banda diversa dalla ricezione ammessa.
   Il firmware comunicato dalla radio (es. "k5_2.01.32") compare nei dettagli della
   lettura e nell'identificazione. Il programma gestisce solo il firmware originale
-  Quansheng (versioni conosciute da CHIRP): con un firmware modificato (es. egzumer,
-  IJV, F4HWN), che usa la memoria in modo diverso, si ferma senza leggere né scrivere,
-  come CHIRP; in quel caso usa il programma indicato da chi ha scritto il firmware.
+  Quansheng (versioni conosciute da CHIRP): con un firmware modificato, che usa la
+  memoria in modo diverso, si ferma senza leggere né scrivere, come CHIRP. Dalla 4.9
+  i firmware egzumer, F4HWN e LOSEHU/LTS/UVE hanno le loro schede (UV-K5 firmware
+  egzumer, F4HWN, LOSEHU): ognuna legge e scrive solo il suo firmware; per gli altri
+  (es. IJV) usa il programma indicato da chi ha scritto il firmware.
 - Si lavora sui canali: "Leggi dalla radio" (oppure apri un file .img, anche salvato
   con CHIRP), modifica, "Scrivi nella radio" e/o "Salva" (file .img apribile con CHIRP).
   Le impostazioni della radio sono quelle lette (si modificano con "⚙ Impostazioni…",
@@ -980,8 +1030,9 @@ AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
   aggiornamento di Quansheng; qui è riscritto da zero e provato con una radio
   simulata. Dalla 4.4 anche le radio con il caricatore 7.x (UV-K5 V3, UV-K1, Retevis
   RA79 V3): vedi "AGGIORNAMENTO DEL FIRMWARE RETEVIS".
-- Un firmware non di Quansheng (es. egzumer, F4HWN) si può installare, ma poi questo
-  programma (come CHIRP) non legge più i canali della radio.
+- Un firmware non di Quansheng si può installare. Dalla 4.9, dopo un firmware egzumer,
+  F4HWN o LOSEHU i canali si leggono con la scheda di quel firmware; con altri firmware
+  questo programma (come CHIRP) non legge più i canali della radio.
 - Dalla 4.2 anche Radtel RT-590 / RT-590 Plus (la stessa radio della UV-K5) e RT-600 /
   RT-600 Plus (della UV-5R Plus) con i file .bin di Radtel (radtels.com, es.
   RT590_update_file_v2.01.32.rar e RT600_update_file_v4.00.06.rar, liberi da

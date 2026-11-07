@@ -32,7 +32,7 @@ https://github.com/kk7ds/chirp), software libero distribuito con la GNU General
 Public License (versione 2 o successiva, oppure 3 o successiva, secondo il file).
 Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
 01/11/2026; le radio aggiunte nella 4.6 e nella 4.7 con la revisione ba67ff4 del 04/11/2026, quelle
-della 4.8 con la revisione 0a9e92c del 06/11/2026). Autori indicati nei file di CHIRP usati:
+della 4.8 e della 4.9 con la revisione 0a9e92c del 06/11/2026). Autori indicati nei file di CHIRP usati:
 
   chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
   drivers/uv5r.py                           Copyright 2012 Dan Smith
@@ -95,13 +95,58 @@ della 4.8 con la revisione 0a9e92c del 06/11/2026). Autori indicati nei file di 
   drivers/retevis_h777v4.py                 Copyright 2025 Jim Unroe
   drivers/tg_uv2p.py                        Copyright 2013 Dan Smith
   drivers/fd268.py                          Copyright 2015 Pavel Milanes CO7WT
+  4.9 (revisione 0a9e92c):
+  drivers/uvk5_egzumer.py                   Copyright 2023 Jacek Lipkowski SQ5BPF,
+                                            egzumer, JOC2
+  drivers/uvk5_cn.py                        Copyright 2026 赵昕 BG8ADW
+  drivers/wouxun.py                         Copyright 2011 Dan Smith (GPL v3)
+  drivers/kguv8d.py                         Copyright 2014 Ron Wellsted M0RNW (GPL v3)
+  drivers/kguv8dplus.py                     Copyright 2017 Krystian Struzik (GPL v3)
+  drivers/kguv8e.py, drivers/kg935g.py      Copyright 2019 Pavel Milanes CO7WT (GPL v3)
+  drivers/kguv9dplus.py                     Copyright 2022 Mel Terechenok (GPL v3)
+  drivers/th_uv8000.py                      Copyright 2019 Rick DeWitt AA0RD
+  drivers/tyt_uvl15w.py                     Copyright 2026 (GPL v3; autore nel
+                                            registro di CHIRP: chaffed)
+  drivers/th350.py                          Copyright 2019 Zhaofeng Li
+  drivers/iradio_common.py,
+  drivers/iradio_uv_5118.py,
+  drivers/iradio_uv_5118plus.py,
+  drivers/radtel_rt880g.py                  Copyright 2022-2023 Jim Unroe KC9HI
+  drivers/retevis_c2.py                     Copyright 2026 Tony Gies
+  drivers/retevis_ha1g.py,
+  drivers/retevis_ha2.py                    Copyright 2024 Tommy (HA2: GPL v3)
+  drivers/retevis_rb15.py, retevis_rb17p.py,
+  retevis_rb28.py, retevis_rt23.py,
+  retevis_rt26.py, retevis_rt76p.py,
+  retevis_rt87.py, bf_t8.py                 Copyright 2017-2026 Jim Unroe KC9HI
+  drivers/gmrsuv1.py, gmrsv2.py, mursv1.py,
+  drivers/uv5x3.py, drivers/tdxone_tdq8a.py Copyright 2016-2022 Jim Unroe KC9HI
+  drivers/btech.py                          Copyright 2016-2026 Pavel Milanes CO7WT,
+                                            Jim Unroe KC9HI
+  drivers/anytone_ht.py                     Copyright 2015 Jim Unroe (GPL v3)
+  drivers/puxing_px888k.py                  Copyright 2016 Leo Barring
+  drivers/rh5r_v2.py                        Copyright 2017 Dan Smith (GPL v3)
+  drivers/tdm11.py                          Copyright 2025, 2026 Fred Trimble
+  drivers/h777.py (ZA-758)                  Copyright 2013 Andrew Morgan
+  drivers/radioddity_gm30.py (MU-5)         Copyright 2025 Mike Iacovacci
+  Fuori da CHIRP (stessa licenza, GNU GPL v2 o successiva):
+  uvk5_egzumer_f4hwn_ver_4_3_0.py           driver F4HWN di armel F4HWN, adattato
+                                            da JOC2 sul driver egzumer
+                                            (https://github.com/armel/uv-k5-chirp-driver)
+  chirp-next-radtel-rt-890-m7ocm.py         Copyright 2023 Jim Unroe, adattato da
+                                            M7OCM (https://github.com/M7OCM/890)
 
 File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
 drv_h777.go, drv_small.go, drv_rt900.go, drv_ga510.go, drv_gm30.go, drv_dm32.go,
 drv_uvk5.go, drv_jc8810.go, drv_tdh8.go, drv_thuv88.go, drv_rt490.go, drv_rt21.go,
-drv_tk11.go, drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go.
-Grazie agli autori di CHIRP.
+drv_tk11.go, drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go;
+4.9: drv_uvk5x.go, drv_wouxun49.go, drv_kguv8.go, drv_kguv9.go, drv_kg935.go,
+drv_thuv8000.go, drv_uvl15w.go, drv_iradio.go, drv_tdq8a.go, drv_tdm11.go,
+drv_btgmrs.go, drv_retevisc2.go, drv_rb15.go, drv_rb17p.go, drv_rb28.go, drv_rt23.go,
+drv_rt26.go, drv_rt76p.go, drv_rt87.go, drv_anytoneht.go, drv_rh5rv2.go,
+drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go.
+Grazie agli autori di CHIRP, ad armel F4HWN e a M7OCM.
 
 AGGIORNAMENTO DEL FIRMWARE DELLA QUANSHENG UV-K5 (4.1)
 Il formato dei file .bin di Quansheng e il protocollo del caricatore della UV-K5 sono

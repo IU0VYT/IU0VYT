@@ -182,6 +182,23 @@ func chanEqual(a, b *Chan) bool {
 
 // genWrite applica i canali all'immagine base: modifica solo le posizioni
 // cambiate (un file aperto e salvato senza modifiche resta identico).
+// genLockedFn: regole delle posizioni bloccate della radio (canali fissi), nil
+// se non ne ha; LockedImg (4.9) riceve anche la memoria (regole che dipendono
+// dal firmware: BTECH GMRS-V1)
+func genLockedFn(m *genModel, img []byte) func(i int, old, want *Chan) error {
+	if lk, ok := m.Fam.(interface {
+		LockedImg(m *genModel, img []byte, i int, old, want *Chan) error
+	}); ok {
+		return func(i int, old, want *Chan) error { return lk.LockedImg(m, img, i, old, want) }
+	}
+	if lk, ok := m.Fam.(interface {
+		Locked(m *genModel, i int, old, want *Chan) error
+	}); ok {
+		return func(i int, old, want *Chan) error { return lk.Locked(m, i, old, want) }
+	}
+	return nil
+}
+
 func genWrite(m *genModel, base []byte, chs []*Chan, rep *Report) ([]byte, error) {
 	out := append([]byte{}, base...)
 	for i := 0; i < m.Slots; i++ {
@@ -193,10 +210,8 @@ func genWrite(m *genModel, base []byte, chs []*Chan, rep *Report) ([]byte, error
 		if chanEqual(cur, want) {
 			continue
 		}
-		if lk, ok := m.Fam.(interface {
-			Locked(m *genModel, i int, old, want *Chan) error
-		}); ok {
-			if err := lk.Locked(m, i, cur, want); err != nil {
+		if lk := genLockedFn(m, out); lk != nil {
+			if err := lk(i, cur, want); err != nil {
 				return nil, fmt.Errorf("canale %d: %v", i+m.First, err)
 			}
 		}
@@ -366,13 +381,25 @@ func (m *genModel) cleanName(s string) string {
 		if up {
 			s = strings.ToUpper(s)
 		}
-		b := []byte(s)
-		for i, c := range b {
-			if !strings.ContainsRune(m.Charset, rune(c)) {
-				b[i] = ' '
+		// 4.9: carattere sostitutivo per quelli non ammessi: lo spazio, o «-» per
+		// le radio che non hanno lo spazio (Wouxun KG-UVD1P…), altrimenti nessuno
+		rep := " "
+		if !strings.Contains(m.Charset, " ") {
+			rep = ""
+			if strings.Contains(m.Charset, "-") {
+				rep = "-"
+			}
+			s = strings.TrimRight(s, " ")
+		}
+		var b strings.Builder
+		for _, c := range []byte(s) {
+			if strings.ContainsRune(m.Charset, rune(c)) {
+				b.WriteByte(c)
+			} else {
+				b.WriteString(rep)
 			}
 		}
-		s = string(b)
+		s = b.String()
 	}
 	if len(s) > m.NameMax {
 		s = s[:m.NameMax]
@@ -504,11 +531,46 @@ func detectGen0(b []byte, prefer string) (*genModel, []byte, map[string]interfac
 				cands = append(cands, m)
 			}
 		}
-		if len(cands) == 0 {
+		// 4.9: classe con lo stesso nome in driver diversi (il driver F4HWN della
+		// UV-K5 usa il nome della classe dell'egzumer): conta il modello
+		same := false
+		for _, m := range cands {
+			same = same || strings.EqualFold(m.Model, model)
+		}
+		if len(cands) == 0 || (!same && model != "") {
+			var byModel []*genModel
 			for _, m := range genModels {
 				if strings.EqualFold(m.Model, model) && strings.EqualFold(m.Vendor, vendor) {
-					cands = append(cands, m)
+					byModel = append(byModel, m)
 				}
+			}
+			if len(byModel) > 0 || len(cands) == 0 {
+				cands = byModel
+			}
+		}
+		// 4.9: stessa classe di CHIRP o stesso modello con firmware diversi (UV-K5
+		// originale, egzumer, F4HWN, LOSEHU): conta il firmware scritto nel file,
+		// poi la variante
+		if fw, _ := meta["uvk5_firmware"].(string); fw != "" {
+			var ok []*genModel
+			for _, m := range cands {
+				if o, k := m.Opt.(*uvk5Opt); k && o.approve(fw) {
+					ok = append(ok, m)
+				}
+			}
+			if len(ok) > 0 {
+				cands = ok
+			}
+		}
+		if v, _ := meta["variant"].(string); v != "" {
+			var ok []*genModel
+			for _, m := range cands {
+				if strings.EqualFold(m.Variant, v) {
+					ok = append(ok, m)
+				}
+			}
+			if len(ok) > 0 {
+				cands = ok
 			}
 		}
 		for _, m := range cands {

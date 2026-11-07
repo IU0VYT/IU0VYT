@@ -34,6 +34,64 @@ type pipeEnd struct {
 	baud   int
 	log    *bytes.Buffer // byte inviati da questo lato
 	closed bool
+	// 4.9: impostazioni della linea. even/stop2: quelle scelte da questo lato
+	// (SetEvenParity, SetTwoStopBits); need*: quelle che la radio simulata
+	// richiede (emuRequireLine). Se il PC non le usa, la radio scarta i byte,
+	// come una radio vera con errori di parità o di stop.
+	even, stop2                  bool
+	needSet, needEven, needStop2 bool
+}
+
+func (p *pipeEnd) SetEvenParity(on bool) error {
+	p.mu.Lock()
+	p.even = on
+	p.mu.Unlock()
+	return nil
+}
+
+func (p *pipeEnd) SetTwoStopBits(on bool) error {
+	p.mu.Lock()
+	p.stop2 = on
+	p.mu.Unlock()
+	return nil
+}
+
+// lineOK: i byte inviati da p arrivano a o (stesse impostazioni della linea)
+func (p *pipeEnd) lineOK(o *pipeEnd) bool {
+	p.mu.Lock()
+	even, stop2 := p.even, p.stop2
+	p.mu.Unlock()
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	return !o.needSet || (even == o.needEven && stop2 == o.needStop2)
+}
+
+// portUnwrapper: porte che ne avvolgono un'altra (registrazione, eco…)
+type portUnwrapper interface{ unwrapPort() Port }
+
+// emuRequireLine (4.9): la radio simulata su p accetta solo i byte inviati con
+// queste impostazioni della linea (parità pari, due bit di stop). I byte già
+// arrivati con impostazioni diverse si scartano.
+func emuRequireLine(p Port, even, stop2 bool) {
+	for {
+		if u, ok := p.(portUnwrapper); ok {
+			p = u.unwrapPort()
+			continue
+		}
+		break
+	}
+	pe, ok := p.(*pipeEnd)
+	if !ok {
+		return
+	}
+	pe.mu.Lock()
+	pe.needSet, pe.needEven, pe.needStop2 = true, even, stop2
+	pe.mu.Unlock()
+	if !pe.other.lineOK(pe) {
+		pe.mu.Lock()
+		pe.buf = nil
+		pe.mu.Unlock()
+	}
 }
 
 func newPipe() (*pipeEnd, *pipeEnd) {
@@ -46,6 +104,9 @@ func newPipe() (*pipeEnd, *pipeEnd) {
 func (p *pipeEnd) Write(b []byte) error {
 	p.log.Write(b)
 	o := p.other
+	if !p.lineOK(o) {
+		return nil // impostazioni della linea diverse: la radio scarta i byte
+	}
 	o.mu.Lock()
 	o.buf = append(o.buf, b...)
 	o.mu.Unlock()

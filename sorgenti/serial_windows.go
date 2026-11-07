@@ -28,6 +28,7 @@ type winPort struct {
 	baud  int
 	even  bool // 4.8: parità pari (Lanchonlh HG-UV98)
 	stop2 bool // 4.8: due bit di stop (Quansheng TG-UV2+)
+	noRTS bool // 4.9: RTS spento (Retevis C2)
 }
 
 func init() {
@@ -77,17 +78,17 @@ func (p *winPort) SetBaud(baud int) error {
 	p.baud = baud
 	dcb.BaudRate = uint32(baud)
 	dcb.ByteSize = 8
+	// binario, DTR e RTS attivi, nessun controllo di flusso (come SerialPort .NET);
+	// con la parità pari anche il controllo degli errori di parità (dcbFlags)
+	dcb.Flags = dcbFlags(p.even, p.noRTS)
 	dcb.Parity = windows.NOPARITY
 	if p.even {
 		dcb.Parity = windows.EVENPARITY
-		dcb.Flags |= 0x0002 // fParity: controllo della parità
 	}
 	dcb.StopBits = windows.ONESTOPBIT
 	if p.stop2 {
 		dcb.StopBits = windows.TWOSTOPBITS
 	}
-	// binario, DTR e RTS attivi, nessun controllo di flusso (come SerialPort .NET)
-	dcb.Flags = 0x0001 | windows.DTR_CONTROL_ENABLE | windows.RTS_CONTROL_ENABLE
 	if err := windows.SetCommState(p.h, &dcb); err != nil {
 		return fmt.Errorf("impostazione della porta %s a %d baud non riuscita: %v", p.name, baud, err)
 	}
@@ -103,6 +104,12 @@ func (p *winPort) SetEvenParity(on bool) error {
 // SetTwoStopBits (4.8): due bit di stop, come pipe.stopbits = STOPBITS_TWO di CHIRP
 func (p *winPort) SetTwoStopBits(on bool) error {
 	p.stop2 = on
+	return p.SetBaud(p.baud)
+}
+
+// SetRTS (4.9): RTS attivo o spento, come pipe.rts di CHIRP
+func (p *winPort) SetRTS(on bool) error {
+	p.noRTS = !on
 	return p.SetBaud(p.baud)
 }
 

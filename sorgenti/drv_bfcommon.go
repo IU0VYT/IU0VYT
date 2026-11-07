@@ -22,6 +22,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"slices"
 	"time"
 )
 
@@ -75,6 +76,7 @@ type bfcOpt struct {
 	dtcs      []int
 	scodeN    int // elementi della lista S-CODE
 	pttidN    int
+	gmrs      int // 4.9: regole GMRS/MURS dei BTECH (drv_btgmrs.go)
 }
 
 type bfcFam struct{}
@@ -130,6 +132,14 @@ func init() {
 		7, pw2, []band{{130000000, 180000000}, {220000000, 226000000}, {400000000, 521000000}})
 	x3.Vendor = "BTECH"
 	genRegister(x3)
+	// 4.9: MTC UV-5R-3 (MTCUV5R3Radio di uv5x3.py): la UV-5X3 con un altro
+	// identificativo e la gamma 200-260 MHz
+	r3 := mk("mtc-uv5r3", "UV-5R-3", "MTCUV5R3Radio", "MTC UV-5R-3", bfcOpt{format: uv6rFormat, identN: 14,
+		fileid5x3: true, fileid: []string{"5R31709"}, match: true, magics: [][]byte{{0x50, 0x0D, 0x0C, 0x20, 0x17, 0x09, 0x19}},
+		ranges: [][2]int{{0x0000, 0x0DF0}, {0x0E00, 0x1800}, {0x1E00, 0x1E70}, {0x1EE0, 0x1EF0}, {0x1F60, 0x1F70}, {0x1F80, 0x1F90}, {0x1FA0, 0x1FB0}, {0x1FE0, 0x2000}}},
+		7, pw2, []band{{136000000, 174000000}, {200000000, 260000000}, {400000000, 521000000}})
+	r3.Vendor = "MTC"
+	genRegister(r3)
 }
 
 func bfco(m *genModel) *bfcOpt { return m.Opt.(*bfcOpt) }
@@ -190,6 +200,9 @@ func (f bfcFam) Match(m *genModel, img []byte) bool {
 			return false
 		}
 		rid := string(img[0x1EF0:0x1EF7])
+		if len(o.fileid) > 0 {
+			return slices.Contains(o.fileid, rid) // 4.9: MTC UV-5R-3 («5R31709»)
+		}
 		return rid == "UVVG302" || rid == "UVVG301" || rid == "UVVG306"
 	}
 	if o.uv6r {
@@ -210,6 +223,9 @@ func (f bfcFam) Match(m *genModel, img []byte) bool {
 
 func (f bfcFam) Get(m *genModel, img []byte, i int) *Chan {
 	o := bfco(m)
+	if o.gmrs != 0 {
+		return f.gmrsGet(m, img, i)
+	}
 	mem, nam := f.recs(m, i)
 	if mem.Raw(img)[0] == 0xFF {
 		return nil
@@ -242,6 +258,9 @@ func (f bfcFam) Get(m *genModel, img []byte, i int) *Chan {
 
 func (f bfcFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	o := bfco(m)
+	if o.gmrs != 0 {
+		return f.gmrsSet(m, img, i, c)
+	}
 	mem, nam := f.recs(m, i)
 	if c == nil {
 		mem.Fill(img, 0xFF)
@@ -501,6 +520,11 @@ func (f bfcFam) Upload(ctx context.Context, m *genModel, port string, img []byte
 	r1 := append(append([]byte{}, blk[2]...), blk[3][0:32]...)
 	r2, r3 := blk[3][48:64], blk[4][16:64]
 	dropped := blk[5][15] == 0xFF
+	// 4.9: BTECH GMRS-V1 e MURS-V1: la versione del firmware della radio deve essere
+	// quella dell'immagine (come CHIRP)
+	if g := bfco(m).gmrs; (g == btGmrsV1 || g == btMursV1) && !bytes.Equal(blk[1][48:62], img[0x1EF0:0x1EFE]) {
+		return info, rErr("immagine non adatta a questa radio (versione del firmware diversa): leggi prima la radio")
+	}
 	matched := bytes.Equal(img[0x1F00:0x1F60], r1) && bytes.Equal(img[0x1F70:0x1F80], r2) && bytes.Equal(img[0x1F90:0x1FC0], r3)
 	if dropped && !matched {
 		return info, rErr("immagine non adatta a questa radio: leggi prima la radio, modifica i canali e scrivili nella stessa radio")

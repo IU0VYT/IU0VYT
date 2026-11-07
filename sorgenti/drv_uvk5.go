@@ -90,6 +90,7 @@ type uvk5Opt struct {
 	// detect: CHIRP sceglie il driver dal firmware (detect_from_serial) con un
 	// primo saluto prima della lettura (solo la classe UV-K5)
 	detect bool
+	emuFW  string // 4.9: versione del firmware della radio simulata dei test
 }
 
 type uvk5Fam struct{}
@@ -121,8 +122,18 @@ func init() {
 	k5 := mk("qs-uvk5", "Quansheng", "UV-K5", "UVK5Radio", "Quansheng UV-K5 / UV-K6 / UV-5R Plus", uvk5ApproveK5)
 	uvk5o(k5).detect = true
 	k1 := mk("qs-uvk1", "Quansheng", "UV-K1", "UVK1Radio", "Quansheng UV-K1", func(fw string) bool { return strings.HasPrefix(fw, "7.03.") })
+	// 4.9: firmware libero «OSFW» (OSFWUVK5Radio di uvk5.py): memoria del
+	// firmware originale, gamme senza limiti
+	osfw := mk("qs-uvk5-osfw", "Quansheng", "UV-K5", "OSFWUVK5Radio", "Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware OSFW)",
+		func(fw string) bool { return fw == "OSFW-bd90ca3" })
+	osfw.Variant = "OSFW"
+	osfw.Bands = []band{{18000000, 1300000000}}
+	uvk5o(osfw).emuFW = "OSFW-bd90ca3"
+	osfw.Notes = "Firmware libero OSFW (versione bd90ca3, la sola gestita da CHIRP). Accendi la radio, poi collega il cavo al " +
+		"connettore microfono/altoparlante. Stessa memoria del firmware originale; gamme senza limiti. Driver di CHIRP."
 	genRegister(
 		k5,
+		osfw,
 		mk("rt-ra79", "Retevis", "RA79", "RA79Radio", "Retevis RA79", uvk5ApproveK5),
 		mk("mt-tk6", "MaxTalker", "TK-6", "MaxTalkerTK6", "MaxTalker TK-6", uvk5ApproveK5),
 		k1,
@@ -153,36 +164,24 @@ func (f uvk5Fam) PutRec(m *genModel, img []byte, i int, raw []byte) {
 
 func (f uvk5Fam) Match(m *genModel, img []byte) bool { return false }
 
-// uvk5LegalAir: frequenza aeronautica arrotondata al canale da 25 o 8,33 kHz
-// (_legal_airband_freq di uvk5.py e fix_rounded_step di CHIRP)
+// uvk5LegalAir: frequenza aeronautica come _legal_airband_freq di uvk5.py.
+// 4.9: come CHIRP, la frequenza memorizzata resta com'è; solo una frequenza
+// allineata a 5 kHz che non è uno dei tre canali da 8,33 kHz del blocco di
+// 25 kHz (fix_rounded_step la rifiuta) diventa il canale più vicino, compreso
+// l'inizio del blocco seguente. Prima si arrotondava sempre al canale da
+// 8,33 kHz, e una frequenza come 127,0875 MHz veniva letta 127,091666 MHz.
 func uvk5LegalAir(hz int64) int64 {
 	if hz < 108000000 || hz > 137000000 || hz%25000 == 0 {
 		return hz
 	}
 	base := hz / 25000 * 25000
-	f := hz
-	if (hz-base)%5000 == 0 {
-		switch k := (hz - base) / 5000; {
-		case k == 1:
-			f -= 25000 / 3
-		case k == 3:
-			f += 25000 / 3
-		case k >= 4:
-			// non è un canale: il più vicino tra i quattro
-			best := base
-			for j := int64(0); j < 4; j++ {
-				c := base + (25000/3)*j
-				if abs64(c-hz) < abs64(best-hz) {
-					best = c
-				}
-			}
-			return best
-		}
+	if (hz-base)%5000 != 0 || (hz-base)/5000 < 4 {
+		return hz
 	}
 	best := base
-	for j := int64(0); j < 3; j++ {
+	for j := int64(0); j < 4; j++ {
 		c := base + (25000/3)*j
-		if abs64(c-f) < abs64(best-f) {
+		if abs64(c-hz) < abs64(best-hz) {
 			best = c
 		}
 	}
@@ -533,7 +532,13 @@ func (s *uvk5Sess) start(m *genModel) (string, error) {
 		return "", rErr("la radio non ha comunicato la versione del firmware")
 	}
 	if !uvk5o(m).approve(fw) {
-		return fw, rErr("il firmware della radio (%s) non è tra quelli originali conosciuti per la %s: per sicurezza non si legge e non si scrive (come in CHIRP)", fw, m.Name)
+		// 4.9: scheda giusta per il firmware della radio (firmware liberi)
+		for _, o := range genModels {
+			if op, ok := o.Opt.(*uvk5Opt); ok && o != m && op.approve(fw) {
+				return fw, rErr("la radio ha il firmware %s: apri la scheda «%s» (questa scheda è per un altro firmware e, come CHIRP, non legge e non scrive)", fw, o.Name)
+			}
+		}
+		return fw, rErr("il firmware della radio (%s) non è tra quelli conosciuti per la %s: per sicurezza non si legge e non si scrive (come in CHIRP)", fw, m.Name)
 	}
 	return fw, nil
 }

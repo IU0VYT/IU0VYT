@@ -696,12 +696,10 @@ func uniConvert(src []*Chan, target string, base []byte, pack bool, k67Band *byt
 // sua posizione va nella prima posizione libera adatta, altrimenti viene escluso;
 // le posizioni bloccate conservano il canale dell'immagine di base.
 func genPlace(m *genModel, mem []byte, chs []*Chan, rep *Report) []*Chan {
-	lk, hasLock := m.Fam.(interface {
-		Locked(m *genModel, i int, old, want *Chan) error
-	})
+	lk := genLockedFn(m, mem)
 	ok := func(i int, c *Chan) bool {
 		cur := genGet(m, mem, i)
-		if hasLock && lk.Locked(m, i, cur, c) != nil {
+		if lk != nil && lk(i, cur, c) != nil {
 			return false
 		}
 		return c == nil || genValidate(m, c, i) == nil

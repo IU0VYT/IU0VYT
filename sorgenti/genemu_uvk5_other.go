@@ -30,10 +30,24 @@ func (uvk5Fam) emu(m *genModel, img []byte) genEmu {
 	if m.ID == "qs-uvk1" {
 		e.fw = "7.03.01"
 	}
+	if f := uvk5o(m).emuFW; f != "" {
+		e.fw = f
+	}
 	if len(e.img) < uvk5MemSize {
 		e.img = append(e.img, bytes.Repeat([]byte{0xFF}, uvk5MemSize-len(e.img))...)
 	}
 	e.img = e.img[:uvk5MemSize]
+	return e
+}
+
+// 4.9: firmware liberi (egzumer, F4HWN, LOSEHU)
+func (f uvk5xFam) emu(m *genModel, img []byte) genEmu {
+	size := f.memSize()
+	e := &uvk5Emu{img: append([]byte{}, img...), fw: uvk5o(m).emuFW}
+	if len(e.img) < size {
+		e.img = append(e.img, bytes.Repeat([]byte{0xFF}, size-len(e.img))...)
+	}
+	e.img = e.img[:size]
 	return e
 }
 
@@ -81,6 +95,28 @@ func (e *uvk5Emu) serve(p Port) error {
 			copy(e.img[off:], cmd[12:12+n])
 			e.mu.Unlock()
 			reply([]byte{0x1e, 0x05, 0x02, 0x00, cmd[4], cmd[5]})
+		case bytes.HasPrefix(cmd, []byte{0x2b, 0x05}) && len(cmd) >= 14:
+			// 4.9: lettura a indirizzo lungo dei firmware LOSEHU
+			off := int(binary.LittleEndian.Uint16(cmd[4:]))<<16 | int(binary.LittleEndian.Uint16(cmd[12:]))
+			n := int(cmd[6])
+			e.mu.Lock()
+			if off+n > len(e.img) {
+				e.mu.Unlock()
+				return fmt.Errorf("indirizzo 0x%05X fuori dalla memoria", off)
+			}
+			d := append([]byte{}, e.img[off:off+n]...)
+			e.mu.Unlock()
+			reply(append([]byte{0x2c, 0x05, byte(n + 4), 0x00, cmd[12], cmd[13], byte(n), 0x00}, d...))
+		case bytes.HasPrefix(cmd, []byte{0x38, 0x05}) && len(cmd) >= 14:
+			off := int(binary.LittleEndian.Uint16(cmd[4:]))<<16 | int(binary.LittleEndian.Uint16(cmd[12:]))
+			n := int(cmd[6]) - 2
+			if n < 0 || len(cmd) < 14+n || off+n > len(e.img) {
+				return fmt.Errorf("scrittura non valida")
+			}
+			e.mu.Lock()
+			copy(e.img[off:], cmd[14:14+n])
+			e.mu.Unlock()
+			reply([]byte{0x1e, 0x05, 0x02, 0x00, cmd[12], cmd[13]})
 		case bytes.HasPrefix(cmd, []byte{0xdd, 0x05}):
 			return nil // riavvio
 		default:

@@ -164,6 +164,34 @@ type probePort struct {
 	st *probeState
 }
 
+// 4.9: la porta controllata passa alla porta vera la parità pari e i due bit di
+// stop. Prima non lo faceva: durante «Identifica» la Lanchonlh HG-UV98 (parità
+// pari) e la Quansheng TG-UV2+ (due bit di stop) parlavano con la porta in 8N1
+// e non venivano riconosciute.
+func (p probePort) SetEvenParity(on bool) error {
+	if x, ok := p.Port.(interface{ SetEvenParity(bool) error }); ok {
+		return x.SetEvenParity(on)
+	}
+	return nil
+}
+
+func (p probePort) SetTwoStopBits(on bool) error {
+	if x, ok := p.Port.(interface{ SetTwoStopBits(bool) error }); ok {
+		return x.SetTwoStopBits(on)
+	}
+	return nil
+}
+
+// SetRTS (4.9): RTS spento per la Retevis C2
+func (p probePort) SetRTS(on bool) error {
+	if x, ok := p.Port.(interface{ SetRTS(bool) error }); ok {
+		return x.SetRTS(on)
+	}
+	return nil
+}
+
+func (p probePort) unwrapPort() Port { return p.Port }
+
 type probeState struct {
 	mu      sync.Mutex
 	key     string // porta (vedi probeKey)
@@ -278,6 +306,15 @@ func (s *probeState) radioSure() bool {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	return s.sure
+}
+
+// identProbing (4.9): sulla porta è in corso un tentativo di «Identifica»
+// (i driver che provano più saluti possono cambiarne l'ordine per rispondere
+// entro identSilentMax)
+func identProbing(port string) bool {
+	probeReg.Lock()
+	defer probeReg.Unlock()
+	return probeReg.m[probeKey(port)] != nil
 }
 
 // identAnswerKey: valore del contesto con la funzione da chiamare quando una radio
@@ -1347,6 +1384,10 @@ func identShape(m *genModel) string {
 		n = o.memsize
 	case *rt900Opt:
 		n = o.memsize
+	case *bft8Opt:
+		if o.spec != nil {
+			n = o.spec.memsize // 4.9: la RB27V (5 canali) ha la memoria della RB27
+		}
 	}
 	return fmt.Sprintf("%s/%d", famName(m), n)
 }

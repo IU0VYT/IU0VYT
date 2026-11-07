@@ -60,7 +60,12 @@ var chirpCloneClass = map[string]string{"td-uv68": "TDH8"}
 // fd268.py: confronti tra byte e stringhe). Qui si prova solo questo programma con la radio
 // simulata: immagine letta uguale alla memoria della radio, memoria finale
 // uguale all'immagine scritta
-var chirpCloneBroken = map[string]bool{"NC630aRadio": true, "IP620Radio": true, "Puxing2RRadio": true, "BoblovX3Plus": true, "RT21HRadio": true, "FD268ARadio": true, "FD268BRadio": true, "FD288BRadio": true}
+var chirpCloneBroken = map[string]bool{"NC630aRadio": true, "IP620Radio": true, "Puxing2RRadio": true, "BoblovX3Plus": true, "RT21HRadio": true, "FD268ARadio": true, "FD268BRadio": true, "FD288BRadio": true,
+	// 4.9: tdxone_tdq8a.py confronta bytes con str (Python 2): con CHIRP la copia non parte mai
+	"TDXoneTDQ8A": true,
+	// 4.9: uv5r.py con la BJ-UV55 usa has_dropped_byte senza averlo calcolato:
+	// la lettura di CHIRP si interrompe sempre
+	"BaojieBJUV55Radio": true}
 
 // sessione di CHIRP con la radio simulata: byte ricevuti dalla radio
 func chirpSession(t *testing.T, m *genModel, e genEmu, op, file string) []byte {
@@ -111,6 +116,11 @@ func goSession(t *testing.T, m *genModel, e genEmu, run func() error) []byte {
 		t.Fatal("la radio simulata non ha terminato la sessione")
 	}
 	return rec.got()
+}
+
+// 4.9: metadati che il driver di CHIRP vuole nell'immagine da scrivere
+var chirpUploadMeta = map[string]map[string]interface{}{
+	"tyt-uvl15w": {"uvl15w_version": "3.09.21"},
 }
 
 func TestChirpClone(t *testing.T) {
@@ -189,7 +199,12 @@ func TestChirpClone(t *testing.T) {
 				}
 			}
 			inF := filepath.Join(tmp, m.ID+"_ul.img")
-			_ = os.WriteFile(inF, mod, 0o644)
+			if meta, ok := chirpUploadMeta[m.ID]; ok {
+				// 4.9: CHIRP scrive solo un'immagine con i metadati della lettura
+				_ = os.WriteFile(inF, makeImg(m, mod, meta), 0o644)
+			} else {
+				_ = os.WriteFile(inF, mod, 0o644)
+			}
 			uC, uG := emuFor(m, img), emuFor(m, img)
 			recC = chirpSession(t, m, uC, "upload", inF)
 			recG = goSession(t, m, uG, func() error {

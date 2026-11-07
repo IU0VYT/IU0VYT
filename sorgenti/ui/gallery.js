@@ -41,6 +41,8 @@ const BRAND_COLOR = {
   TYT: '#c92a2a', Explorer: '#2f9e44', MMLradio: '#9c36b5', JJCC: '#e8590c', Socotran: '#3b5bdb', Jianpai: '#0c8599',
   Boristone: '#a0522d', HamGeek: '#f08c00', SenhaiX: '#1864ab', Cignus: '#5c7cfa',
   Puxing: '#2f9e44', Feidaxin: '#c92a2a', KYD: '#1971c2', KSUN: '#e8590c', Lanchonlh: '#6741d9', Boblov: '#0b7285',
+  Wouxun: '#d6336c', AnyTone: '#1c7ed6', QYT: '#f76707', Rugged: '#795548', Baojie: '#099268', MTC: '#ae3ec9',
+  Zartek: '#e64980', Ruyage: '#74b816', TDXone: '#4263eb',
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];

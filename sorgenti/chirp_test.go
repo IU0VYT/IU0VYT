@@ -97,11 +97,52 @@ var chirpTestImage = map[string]string{
 	"td-uv68":  "TIDRADIO_TD-H8.img",
 	// 4.7
 	"rd-ga510v2": "Radioddity_GA-510_V2.img",
+	// 4.9: UV-K5 con firmware liberi (F4HWN: memoria dell'egzumer)
+	"qs-uvk5-egz":      "Quansheng_UV-K5_egzumer.img",
+	"qs-uvk5-f4hwn":    "Quansheng_UV-K5_egzumer.img",
+	"qs-uvk5-losehu":   "Quansheng_UV-K5_losehu.img",
+	"qs-uvk5-osfw":     "Quansheng_UV-K5.img",
+	"mtc-uv5r3":        "BTECH_UV-5X3.img",
+	"tdr-tdm11-16v095": "TIDRADIO_TD-M11_16_PMR.img",
+	"bt-gmrsv1":        "BTECH_GMRS-V1.img",
+	"bt-gmrsv2":        "BTECH_GMRS-V2.img",
+	"bt-mursv1":        "BTECH_MURS-V1.img",
+	"bt-mursv2":        "BTECH_MURS-V2.img",
+}
+
+// 4.9: metadati cambiati nell'immagine di prova (il driver di CHIRP la carica
+// solo con la versione del firmware giusta)
+var chirpImageMeta = map[string]map[string]interface{}{
+	"qs-uvk5-osfw":     {"uvk5_firmware": "OSFW-bd90ca3", "variant": "OSFW"},
+	"tdr-tdm11-16v095": {"rclass": "TDM11_16_1", "variant": "16 PMR v0.9.5"},
+	"bj-uv55":          {},
+	"at-obltr8r":       {},
+}
+
+// 4.9: classi di driver esterni a CHIRP (vedi verifica/chirp/chirpextra.py):
+// le prove si fanno solo se CHIRP_EXTRA indica il file del driver
+var chirpExtraClass = map[string]string{
+	"UVK5RadioEgzumerF4HWN":    "driver F4HWN di armel (uvk5_egzumer_f4hwn_ver_4_3_0.py)",
+	"RuyageUV58PlusRadioM7OCM": "driver di M7OCM per la RT-890 (chirp-next-radtel-rt-890-m7ocm.py)",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {
 	d := chirpDir(t)
+	if what, ok := chirpExtraClass[m.RClass]; ok && os.Getenv("CHIRP_EXTRA") == "" {
+		t.Skipf("%s: serve il %s (variabile CHIRP_EXTRA)", m.Name, what)
+	}
 	cands := []string{chirpTestImage[m.ID], strings.ReplaceAll(m.Vendor+"_"+m.Model, " ", "_") + ".img"}
+	// 4.9: immagini di prova dei driver esterni (nella cartella del driver)
+	if name, ok := chirpExtraImage[m.ID]; ok {
+		for _, it := range strings.Split(os.Getenv("CHIRP_EXTRA"), ";") {
+			path, _, _ := strings.Cut(it, ":")
+			if q := filepath.Join(filepath.Dir(path), name); path != "" {
+				if _, err := os.Stat(q); err == nil {
+					return q
+				}
+			}
+		}
+	}
 	if f, ok := chirpFamilyImage[fmt.Sprintf("%T", m.Fam)]; ok {
 		cands = append(cands, f)
 	}
@@ -111,11 +152,66 @@ func chirpImageFor(t *testing.T, m *genModel) string {
 		}
 		p := filepath.Join(d, "tests", "images", c)
 		if _, err := os.Stat(p); err == nil {
+			if patch, ok := chirpImagePatch[m.ID]; ok {
+				b, err := os.ReadFile(p)
+				if err != nil {
+					t.Fatal(err)
+				}
+				mem, old := splitImg(b)
+				mem = append([]byte{}, mem...)
+				patch(mem)
+				q := filepath.Join(t.TempDir(), m.ID+".img")
+				if err := os.WriteFile(q, makeImg(m, mem, old), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				return q
+			}
+			if meta, ok := chirpImageMeta[m.ID]; ok {
+				b, err := os.ReadFile(p)
+				if err != nil {
+					t.Fatal(err)
+				}
+				mem, old := splitImg(b)
+				for k, v := range meta {
+					old[k] = v
+				}
+				q := filepath.Join(t.TempDir(), m.ID+".img")
+				if err := os.WriteFile(q, makeImg(m, mem, old), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				return q
+			}
 			return p
 		}
 	}
+	// 4.9: modelli senza un'immagine di prova in CHIRP: memoria vuota (FF) della
+	// dimensione della radio, con i metadati; le prove di scrittura la riempiono
+	// con le stesse modifiche qui e con CHIRP
+	if n, ok := chirpBlankImage[m.ID]; ok {
+		q := filepath.Join(t.TempDir(), m.ID+".img")
+		if err := os.WriteFile(q, makeImg(m, bytes.Repeat([]byte{0xFF}, n), map[string]interface{}{}), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		return q
+	}
 	t.Skipf("nessuna immagine di prova per %s", m.Name)
 	return ""
+}
+
+// chirpImagePatch (4.9): immagini di prova di CHIRP da ritoccare prima delle
+// prove (Retevis HA1G: firmware 1.1.11.1, che CHIRP rifiuta via cavo; qui 1.1.12.0)
+var chirpImagePatch = map[string]func([]byte){
+	"rt-ha1g": func(b []byte) { copy(b[82+2:], []byte{1, 1, 12, 0}) },
+}
+
+// chirpExtraImage (4.9): immagini di prova che accompagnano i driver esterni
+var chirpExtraImage = map[string]string{
+	"rtl-rt890-m7ocm": "EXAMPLE-CHIRP-NEXT.img",
+}
+
+// chirpBlankImage (4.9): dimensione della memoria dei modelli senza immagine di prova
+var chirpBlankImage = map[string]int{
+	"rt-rt76p": 0x2000,
 }
 
 // immagine di riferimento per i modelli della famiglia senza un'immagine propria
@@ -150,7 +246,23 @@ func loadImg(t *testing.T, p string) []byte {
 	return mem
 }
 
+// chirpPowerOf (4.9): indice della potenza in CHIRP per il canale i (radio
+// con più livelli di quelli del programma: F4HWN)
+func chirpPowerOf(m *genModel, img []byte, i int, sem int) int {
+	if h, ok := m.Fam.(interface {
+		chirpPower(*genModel, []byte, int, int) int
+	}); ok {
+		return h.chirpPower(m, img, i, sem)
+	}
+	return m.powerIndex(sem)
+}
+
 func cmpChan(m *genModel, n int, g *Chan, c *chirpChan) string {
+	return cmpChanP(m, n, g, c, -1)
+}
+
+// cmpChanP: come cmpChan, con l'indice della potenza in CHIRP già calcolato (pi >= 0)
+func cmpChanP(m *genModel, n int, g *Chan, c *chirpChan, pi int) string {
 	if (g == nil) != (c == nil) {
 		return fmt.Sprintf("canale %d: vuoto qui=%v CHIRP=%v (%+v / %+v)", n, g == nil, c == nil, g, c)
 	}
@@ -170,8 +282,11 @@ func cmpChan(m *genModel, n int, g *Chan, c *chirpChan) string {
 	if g.TxTone != c.TxTone || g.RxTone != c.RxTone {
 		diffs = append(diffs, fmt.Sprintf("toni %q,%q / %q,%q", g.TxTone, g.RxTone, c.TxTone, c.RxTone))
 	}
-	if c.Power >= 0 && m.powerIndex(g.Power) != c.Power {
-		diffs = append(diffs, fmt.Sprintf("potenza %d/%d", m.powerIndex(g.Power), c.Power))
+	if pi < 0 && g != nil {
+		pi = m.powerIndex(g.Power)
+	}
+	if c.Power >= 0 && pi != c.Power {
+		diffs = append(diffs, fmt.Sprintf("potenza %d/%d", pi, c.Power))
 	}
 	if c.Mode == "FM" || c.Mode == "NFM" {
 		if g.Narrow != (c.Mode == "NFM") {
@@ -219,7 +334,11 @@ func TestChirpDecode(t *testing.T) {
 				if g != nil {
 					used++
 				}
-				if d := cmpChan(m, i+m.First, g, ref[i]); d != "" {
+				pi := -1
+				if g != nil {
+					pi = chirpPowerOf(m, img, i, g.Power)
+				}
+				if d := cmpChanP(m, i+m.First, g, ref[i], pi); d != "" {
 					bad++
 					if bad < 15 {
 						t.Error(d)
@@ -255,8 +374,14 @@ func chirpEdits(m *genModel, img []byte) []struct {
 	}
 	vhf := pick([]int64{145600000, 146520000, 155000000, 162400000})
 	uhf := pick([]int64{430700000, 433500000, 446006250, 462562500, 145750000})
-	dcs1 := fmt.Sprintf("D%03d", m.DCS[0])
-	dcs2 := fmt.Sprintf("D%03d", m.DCS[len(m.DCS)/2])
+	// 4.9: radio senza DCS (TDXone TD-Q8A): codici di comodo, le modifiche con
+	// il DCS si tolgono più sotto
+	dcsCodes := m.DCS
+	if len(dcsCodes) == 0 {
+		dcsCodes = []int{23}
+	}
+	dcs1 := fmt.Sprintf("D%03d", dcsCodes[0])
+	dcs2 := fmt.Sprintf("D%03d", dcsCodes[len(dcsCodes)/2])
 	np := len(m.Powers)
 	pw := func(k int) int { return m.Powers[k%np].Sem }
 	name := func(s string) string { return m.cleanName(s) }
@@ -307,6 +432,15 @@ func chirpEdits(m *genModel, img []byte) []struct {
 				break
 			}
 		}
+	}
+	if len(m.DCS) == 0 {
+		var keep []*Chan
+		for _, c := range chs {
+			if !strings.HasPrefix(c.TxTone, "D") && !strings.HasPrefix(c.RxTone, "D") {
+				keep = append(keep, c)
+			}
+		}
+		chs = keep
 	}
 	// modifiche che CHIRP non ammette per questa radio (e non scrive)
 	if ci, ok := m.Fam.(interface {
@@ -392,6 +526,30 @@ func chirpEdits(m *genModel, img []byte) []struct {
 			}
 		}
 	}
+	// 4.9: modifiche che le regole della radio non ammettono (Locked): se possibile
+	// lo stesso canale senza trasmissione, altrimenti la modifica si toglie
+	if lk := genLockedFn(m, img); lk != nil {
+		var keep []struct {
+			N    int
+			Chan *Chan
+		}
+		for _, e := range out {
+			old := m.Fam.Get(m, img, e.N)
+			if lk(e.N, old, e.Chan) != nil {
+				if e.Chan == nil || m.NoTxOff {
+					continue
+				}
+				cc := *e.Chan
+				cc.TxOff, cc.Tx = true, cc.Rx
+				if lk(e.N, old, &cc) != nil {
+					continue
+				}
+				e.Chan = &cc
+			}
+			keep = append(keep, e)
+		}
+		out = keep
+	}
 	return out
 }
 
@@ -437,7 +595,7 @@ func TestChirpEncode(t *testing.T) {
 						mode = "NFM"
 					}
 					cj = map[string]interface{}{"rx": c.Rx, "tx": c.Tx, "txOff": c.TxOff, "txTone": c.TxTone, "rxTone": c.RxTone,
-						"power": m.powerIndex(c.Power), "mode": mode, "scan": c.Scan, "name": c.Name}
+						"power": chirpPowerOf(m, out, e.N, c.Power), "mode": mode, "scan": c.Scan, "name": c.Name}
 				}
 				js = append(js, map[string]interface{}{"n": e.N + m.First, "chan": cj})
 				if err := m.Fam.Set(m, out, e.N, e.Chan); err != nil {
@@ -572,9 +730,7 @@ func chirpFixedEdits(m *genModel, img []byte, dcs1, dcs2 string) []struct {
 	N    int
 	Chan *Chan
 } {
-	lk, _ := m.Fam.(interface {
-		Locked(m *genModel, i int, old, want *Chan) error
-	})
+	lk := genLockedFn(m, img)
 	tones := [][2]string{{"88.5", ""}, {"123.0", "123.0"}, {dcs1 + "N", dcs1 + "N"}, {dcs2 + "I", dcs2 + "N"},
 		{"100.0", dcs1 + "I"}, {dcs2 + "N", "67.0"}, {"", "254.1"}, {"", dcs2 + "I"}, {"77.0", "203.5"}, {"", ""}}
 	var out []struct {
@@ -595,7 +751,7 @@ func chirpFixedEdits(m *genModel, img []byte, dcs1, dcs2 string) []struct {
 		try := func(f func(c *Chan)) {
 			c := w
 			f(&c)
-			if lk == nil || lk.Locked(m, i, old, &c) == nil {
+			if lk == nil || lk(i, old, &c) == nil {
 				w = c
 			}
 		}
@@ -608,7 +764,7 @@ func chirpFixedEdits(m *genModel, img []byte, dcs1, dcs2 string) []struct {
 		if k%5 == 3 {
 			try(func(c *Chan) { c.TxOff, c.Tx = !c.TxOff, c.Rx })
 		}
-		if lk != nil && lk.Locked(m, i, old, &w) != nil {
+		if lk != nil && lk(i, old, &w) != nil {
 			continue
 		}
 		out = append(out, struct {

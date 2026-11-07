@@ -188,7 +188,17 @@ const gm30Size = 0xA000
 
 type gm30Opt struct {
 	ident []byte
+	// 4.9 mu5: Radioddity MU-5 (RadioddityMU5 di CHIRP): canali 1-20 MURS fissi
+	// (le 5 frequenze MURS ripetute; nella memoria la frequenza è 0xFFFFFFFF),
+	// canali 21-250 solo in ricezione
+	mu5 bool
 }
+
+// frequenze MURS della MU-5 (MURS_FREQS)
+var mu5Freqs = []int64{151820000, 151880000, 151940000, 154570000, 154600000}
+
+func mu5Fixed(i int) bool  { return i < 20 }
+func mu5Narrow(i int) bool { return i%5 < 3 }
 
 type gm30Fam struct{}
 
@@ -214,6 +224,19 @@ func init() {
 }
 
 func gm30o(m *genModel) *gm30Opt { return m.Opt.(*gm30Opt) }
+
+func init() {
+	// 4.9: Radioddity MU-5 (MURS, USA)
+	genRegister(&genModel{ID: "rd-mu5", Vendor: "Radioddity", Model: "MU-5", RClass: "RadioddityMU5",
+		Name: "Radioddity MU-5 (MURS)", Slots: 250, First: 1, NameMax: 6,
+		// la radio ha una sola potenza (in CHIRP «Low» e «High» sono entrambe 2 W:
+		// si scrive sempre il primo livello)
+		Powers: []genPower{{"Unica 2 W", 2, 0}},
+		Bands:  []band{{136000000, 174000000}, {400000000, 470000000}}, Narrow: true, HasScan: true,
+		DCS: dtcsCodes, Baud: 57600, Fam: gm30Fam{}, Opt: &gm30Opt{ident: []byte("P13GMRS"), mu5: true},
+		Notes: "Radio MURS (USA). Canali come in CHIRP: 1-20 frequenze MURS fisse (le 5 frequenze ripetute; 1-3, 6-8… a banda " +
+			"stretta), potenza fissa; 21-250 solo ricezione. Driver di CHIRP (radioddity_gm30, MU-5)."})
+}
 
 func (gm30Fam) mem() *bwEl                 { return bwMust(gm30Format) }
 func (f gm30Fam) layout(m *genModel) *bwEl { return f.mem() }
@@ -242,10 +265,20 @@ func gm30RxOnly(i int) bool   { n := i + 1; return n >= 8 && n <= 14 || n >= 55 
 func gm30Repeater(i int) bool { n := i + 1; return n >= 23 && n <= 54 }
 
 // lockedSlot: canali 1-54 con frequenze o scostamento imposti (esclusi dalle prove)
-func (f gm30Fam) lockedSlot(m *genModel, i int) bool { return i < 54 }
+func (f gm30Fam) lockedSlot(m *genModel, i int) bool {
+	if gm30o(m).mu5 {
+		return mu5Fixed(i)
+	}
+	return i < 54
+}
 
 // rxOnlySlot: canali in sola ricezione (nelle prove si scrivono senza TX)
-func (f gm30Fam) rxOnlySlot(m *genModel, i int) bool { return gm30RxOnly(i) }
+func (f gm30Fam) rxOnlySlot(m *genModel, i int) bool {
+	if gm30o(m).mu5 {
+		return !mu5Fixed(i)
+	}
+	return gm30RxOnly(i)
+}
 
 // tono: lbcd[2], bit 0x80 (DCS) e 0x40 (invertito) del secondo byte (get_tone)
 func gm30ToneDec(raw []byte) string {
@@ -281,11 +314,17 @@ func gm30ToneEnc(dst []byte, t genTone) {
 
 func (f gm30Fam) Get(m *genModel, img []byte, i int) *Chan {
 	r, n := f.recs(i)
-	if bytes.Equal(r.F("rx_freq").Raw(img), ff4) {
+	mu5 := gm30o(m).mu5
+	if bytes.Equal(r.F("rx_freq").Raw(img), ff4) && !(mu5 && mu5Fixed(i)) {
 		return nil
 	}
 	c := &Chan{Rx: r.F("rx_freq").Int(img) * 10}
 	switch {
+	case mu5 && mu5Fixed(i):
+		c.Rx = mu5Freqs[i%5]
+		c.Tx = c.Rx
+	case mu5:
+		c.TxOff, c.Tx = true, c.Rx
 	case gm30RxOnly(i):
 		c.TxOff, c.Tx = true, c.Rx
 	case gm30Repeater(i):
@@ -304,6 +343,9 @@ func (f gm30Fam) Get(m *genModel, img []byte, i int) *Chan {
 	c.RxTone = gm30ToneDec(r.F("rx_tone").Raw(img))
 	c.Power = m.powerSem(int(r.F("power").Int(img)))
 	c.Narrow = r.F("mode").Int(img) == 0
+	if mu5 && mu5Fixed(i) && mu5Narrow(i) {
+		c.Narrow = true
+	}
 	c.Scan = r.F("scan").Bool(img)
 	return c
 }
@@ -331,11 +373,18 @@ func (f gm30Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		return err
 	}
 	existed := !bytes.Equal(r.F("rx_freq").Raw(img), ff4)
-	r.F("rx_freq").SetInt(img, c.Rx/10)
-	if c.TxOff {
+	if mu5 := gm30o(m).mu5; mu5 && mu5Fixed(i) {
+		// MU-5 canali MURS: la frequenza la impone la radio (nella memoria 0xFFFFFFFF)
+		existed = true
+		r.F("rx_freq").Fill(img, 0xFF)
 		r.F("tx_freq").Fill(img, 0xFF)
 	} else {
-		r.F("tx_freq").SetInt(img, c.Tx/10)
+		r.F("rx_freq").SetInt(img, c.Rx/10)
+		if c.TxOff || mu5 {
+			r.F("tx_freq").Fill(img, 0xFF)
+		} else {
+			r.F("tx_freq").SetInt(img, c.Tx/10)
+		}
 	}
 	mode := int64(1)
 	if c.Narrow {
@@ -357,6 +406,21 @@ func (f gm30Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 // Locked: regole dei canali GMRS (immutable e validate_memory di CHIRP)
 func (f gm30Fam) Locked(m *genModel, i int, old, want *Chan) error {
 	n := i + 1
+	if gm30o(m).mu5 {
+		switch {
+		case mu5Fixed(i) && want == nil:
+			return fmt.Errorf("i canali MURS 1-20 della MU-5 non si possono cancellare")
+		case want == nil:
+			return nil
+		case mu5Fixed(i) && (want.Rx != mu5Freqs[i%5] || want.Tx != want.Rx || want.TxOff):
+			return fmt.Errorf("il canale %d della MU-5 è il canale MURS %s MHz: frequenza non modificabile", n, fmtMHz(mu5Freqs[i%5]))
+		case mu5Fixed(i) && mu5Narrow(i) && !want.Narrow:
+			return fmt.Errorf("il canale MURS %d della MU-5 è sempre a banda stretta", n)
+		case !mu5Fixed(i) && !want.TxOff:
+			return fmt.Errorf("i canali 21-250 della MU-5 sono solo in ricezione: imposta TX OFF")
+		}
+		return nil
+	}
 	if n <= 54 && want == nil {
 		return fmt.Errorf("i canali GMRS 1-54 della GM-15 Pro non si possono cancellare")
 	}

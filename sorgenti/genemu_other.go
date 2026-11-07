@@ -34,6 +34,8 @@ type recPort struct {
 	ops []string
 }
 
+func (r *recPort) unwrapPort() Port { return r.Port }
+
 func (r *recPort) ReadFull(ctx context.Context, b []byte, timeout time.Duration) error {
 	err := r.Port.ReadFull(ctx, b, timeout)
 	if err == nil {
@@ -421,6 +423,15 @@ start:
 		c, err := emuByte(p)
 		if err != nil {
 			return nil
+		}
+		if c == 0x05 && o.za758 {
+			// 4.9 ZA-758: password di lettura
+			p.Write([]byte("000000"))
+			if b, err := emuByte(p); err != nil || b != 0x06 {
+				return fmt.Errorf("0x06 atteso dopo la password")
+			}
+			p.Write([]byte{0x06})
+			continue
 		}
 		if c == 'E' {
 			if o.endF {

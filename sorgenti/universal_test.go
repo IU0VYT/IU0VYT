@@ -183,6 +183,9 @@ func uniBase(t *testing.T, m *genModel) []byte {
 		if b, err := os.ReadFile(filepath.Join(d, "tests", "images", c)); err == nil {
 			mem, _ := splitImg(b)
 			if len(mem) >= genMinSize(m) {
+				if patch, ok := chirpImagePatch[m.ID]; ok {
+					patch(mem) // 4.9: HA1G con un firmware accettato (come nelle prove con CHIRP)
+				}
 				return makeImg(m, mem, nil)
 			}
 		}
@@ -295,6 +298,9 @@ func TestUniversalChirpOpens(t *testing.T) {
 	for _, m := range genModels {
 		if m.NoChirp {
 			continue
+		}
+		if _, ok := chirpExtraClass[m.RClass]; ok && os.Getenv("CHIRP_EXTRA") == "" {
+			continue // 4.9: driver fuori da CHIRP (F4HWN, M7OCM), solo con CHIRP_EXTRA
 		}
 		base := uniBase(t, m)
 		if base == nil {

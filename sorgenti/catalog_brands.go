@@ -46,10 +46,11 @@ func fixedNote(what string) string {
 var catalogOther = []catItem{
 	// ------------------------------------------------ Quansheng
 	{ID: "qs-uv-k5", Brand: "Quansheng", Name: "UV-K5 / UV-K6 / UV-5R Plus", Aliases: []string{"UV-K5", "UV-K6", "UV-5R Plus"},
-		Models: []string{"UV-K5", "UV-K6", "UV-5R Plus"}, Type: "analog", Drivers: []string{"qs-uvk5"}, FW: "k5",
-		Links: []catLink{info("Download center Quansheng", qsDown)},
-		Notes: chirpNote("UVK5Radio") + " Solo con le versioni del firmware originale conosciute (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»): " +
-			"con un firmware modificato (egzumer, IJV, F4HWN…) il programma si ferma senza leggere né scrivere, come CHIRP. " +
+		Models: []string{"UV-K5", "UV-K6", "UV-5R Plus"}, Type: "analog", Drivers: []string{"qs-uvk5", "qs-uvk5-egz", "qs-uvk5-f4hwn", "qs-uvk5-losehu", "qs-uvk5-osfw"}, FW: "k5",
+		Links: []catLink{info("Download center Quansheng", qsDown), info("Firmware F4HWN (armel)", "https://github.com/armel/uv-k5-firmware-custom/releases")},
+		Notes: chirpNote("UVK5Radio") + " Ogni scheda legge e scrive solo il suo firmware: originale Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), " +
+			"egzumer (driver di CHIRP), F4HWN (driver di armel per CHIRP, con le impostazioni F4HWN), OSFW (driver di CHIRP) o i firmware cinesi LOSEHU / LTS / UVE (driver di CHIRP, nomi cinesi). " +
+			"Se apri la scheda sbagliata il programma legge la versione del firmware, si ferma senza scrivere e indica la scheda giusta; «Identifica» la trova da solo. " +
 			"Firmware: file .bin di Quansheng (es. k5_v2.01.26_publish.bin) con il caricatore della radio (accesa tenendo premuto il PTT); " +
 			"il programma controlla che il firmware sia per il tipo di caricatore della radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). " +
 			"Quansheng protegge i download con una password che fornisce il rivenditore."},

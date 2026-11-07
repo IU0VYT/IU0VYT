@@ -48,6 +48,11 @@ for m in pkgutil.iter_modules(chirp.drivers.__path__):
     except Exception:
         pass
 
+# 4.9: driver esterni (CHIRP_EXTRA, vedi chirpextra.py)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import chirpextra  # noqa: E402
+chirpextra.load_extra(directory)
+
 MAGIC = chirp_common.CloneModeRadio.MAGIC
 # gruppi di servizio (taratura): non si toccano
 SKIP_GROUP = re.compile(r"(?i)service|calibrat|factory|tuning|engineer|test mode")
@@ -521,6 +526,12 @@ def extract(cls, path):
                 enc = find_num(b0, fl, samples)
                 if enc is None:
                     skipped.append({"key": key, "why": "codifica numerica non riconosciuta"})
+                    continue
+                if k == "str" and enc.get("add", 0) != 0:
+                    # 4.9: un testo di cifre (codici DTMF, identificativi di
+                    # chiamata) non è un numero con uno scostamento: la codifica
+                    # varrebbe solo vicino al valore attuale
+                    skipped.append({"key": key, "why": "testo di cifre: codifica numerica non affidabile"})
                     continue
                 cv = int(round(float(str(cur).strip()) * scale))
                 if num_raw(b0, fl, enc) * enc["den"] != cv * enc["num"] + enc["add"] * enc["den"]:

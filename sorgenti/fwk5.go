@@ -214,11 +214,27 @@ func analyzeK5(name, origin string, raw []byte) *fwImage {
 		info.Known = k
 		add("ok", "File conosciuto: %s", k)
 	}
-	add("warn", "Con un firmware non di Quansheng (es. egzumer, F4HWN) la radio funziona, ma questo programma (come CHIRP) non ne legge più i canali")
-	info.Warnings = true
+	// 4.9: canali e impostazioni dei firmware liberi (schede egzumer, F4HWN, LOSEHU)
+	up := strings.ToUpper(vs)
+	switch {
+	case strings.Contains(up, "F4HWN"):
+		add("ok", "Firmware libero F4HWN: dopo l'aggiornamento canali e impostazioni si leggono con la scheda «Quansheng UV-K5 (firmware F4HWN)»")
+		img.Info.Models = []string{"qs-uvk5-f4hwn"}
+	case strings.Contains(up, "EGZUMER"):
+		add("ok", "Firmware libero egzumer: dopo l'aggiornamento canali e impostazioni si leggono con la scheda «Quansheng UV-K5 (firmware egzumer)»")
+		img.Info.Models = []string{"qs-uvk5-egz"}
+	case strings.Contains(up, "LOSEHU") || strings.Contains(up, "UVE") || strings.Contains(up, "LTS"):
+		add("ok", "Firmware cinese ampliato: dopo l'aggiornamento i canali si leggono con la scheda «Quansheng UV-K5 (firmware LOSEHU, LTS, UVE)» se la versione è tra quelle gestite")
+		img.Info.Models = []string{"qs-uvk5-losehu"}
+	case vs[0] == '*':
+		add("warn", "Firmware non di Quansheng: i canali si leggono solo con le schede dei firmware liberi gestiti (egzumer, F4HWN, LOSEHU); con altri firmware il programma, come CHIRP, non li legge")
+		info.Warnings = true
+		img.Info.Models = []string{"qs-uvk5"}
+	default:
+		img.Info.Models = []string{"qs-uvk5"}
+	}
 	img.Dec = fw
 	info.Hw = "caricatore " + strings.TrimSuffix(fam, " (versione «*»)")
-	img.Info.Models = []string{"qs-uvk5"}
 	if vs[0] == '7' {
 		img.Info.Models = []string{"rt-ra79", "qs-uvk1"}
 	}

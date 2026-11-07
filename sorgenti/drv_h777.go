@@ -82,7 +82,31 @@ type h777Opt struct {
 	// noBeat: come i programmi «BF_V1_FH» e «GT-22», che nei canali scritti
 	// azzerano il bit 1 (beatshift: queste radio non hanno lo scrambler)
 	noBeat bool
+	// 4.9 za758 (Zartek ZA-758, ZartekZA758Radio di h777.py): i bit del canale
+	// sono PTT ID, compander e scrambler (si conservano), il canale nuovo parte
+	// dai bit 0xF7 e prima della lettura la radio invia la sua password (6 byte)
+	za758 bool
 }
+
+// 4.9: canale della Zartek ZA-758 (ZA758_MEM_FORMAT di h777.py)
+const za758Format = `
+#seekto 0x0010;
+struct {
+    lbcd rxfreq[4];
+    lbcd txfreq[4];
+    lbcd rxtone[2];
+    lbcd txtone[2];
+    u8 pttid:1,
+       compander:1,
+       scramble:1,
+       skip:1,
+       highpower:1,
+       narrow:1,
+       unknown1:1,
+       bcl:1;
+    u8 unknown2[3];
+} memory[16];
+`
 
 type h777Fam struct{}
 
@@ -166,6 +190,15 @@ func init() {
 		"il programma del costruttore la chiede: questo programma, come CHIRP, non la controlla."
 	genRegister(g68, g22)
 
+	// 4.9: Zartek ZA-758 (ZartekZA758Radio di h777.py)
+	za := h777Opt{cmd: []byte("LROGRAM"), idents: [][]byte{[]byte("SMP558\x00\x00")},
+		ranges: [][2]int{{0x0000, 0x0110}, {0x03A0, 0x03D0}, {0x03E0, 0x03F0}}, memsize: 0x0400, base: 0x0010, za758: true}
+	zx := mk("zt-za758", "ZA-758", "ZartekZA758Radio", "Zartek ZA-758", 16, za,
+		[]genPower{{"Bassa 0,5 W", 0.5, 2}, {"Alta 2 W", 2, 0}}, []band{{400000000, 470000000}})
+	zx.Vendor = "Zartek"
+	zx.Notes = "Radio senza display: i canali non hanno nome. Scrambler, compander e PTT ID di ogni canale si conservano. Driver di CHIRP."
+	genRegister(zx)
+
 	h777Detect := std
 	h777Detect.detect = []byte("C777HAM")
 	// 4.0: altri modelli della stessa famiglia in CHIRP (h777.py), con lo stesso
@@ -190,7 +223,12 @@ func dtcsAll() []int { return dtcsCodes }
 
 func h777o(m *genModel) *h777Opt { return m.Opt.(*h777Opt) }
 
-func (h777Fam) mem(m *genModel) *bwEl { return bwMust(fmt.Sprintf(h777Format, h777o(m).base, m.Slots)) }
+func (h777Fam) mem(m *genModel) *bwEl {
+	if h777o(m).za758 {
+		return bwMust(za758Format)
+	}
+	return bwMust(fmt.Sprintf(h777Format, h777o(m).base, m.Slots))
+}
 
 func (f h777Fam) layout(m *genModel) *bwEl { return f.mem(m) }
 
@@ -283,6 +321,10 @@ func (f h777Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	if err != nil {
 		return err
 	}
+	if raw := r.F("rxfreq").Raw(img); h777o(m).za758 && (bytes.Equal(raw, []byte{0xFF, 0xFF, 0xFF, 0xFF}) || bytes.Equal(raw, make([]byte, 4))) {
+		// ZA-758: canale nuovo con i bit della radio (scrambler, compander e PTT ID spenti)
+		r.SetRaw(img, append(append(bytes.Repeat([]byte{0xFF}, 12), 0xF7), 0xFF, 0xFF, 0xFF))
+	}
 	r.F("rxfreq").SetInt(img, c.Rx/10)
 	if c.TxOff {
 		r.F("txfreq").Fill(img, 0xFF)
@@ -294,6 +336,9 @@ func (f h777Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	r.F("narrow").SetBool(img, c.Narrow || h777o(m).gt22)
 	r.F("highpower").SetBool(img, m.powerIndex(c.Power) == 1)
 	r.F("skip").SetBool(img, !c.Scan || h777o(m).gt22)
+	if h777o(m).za758 {
+		return nil // PTT ID, compander, scrambler e bcl restano come sono
+	}
 	if h777o(m).noBeat {
 		r.F("beatshift").SetInt(img, 0)
 	}
@@ -431,6 +476,22 @@ func (f h777Fam) Download(ctx context.Context, m *genModel, port string, prog Pr
 		return nil, "", genFail("Identificazione", err)
 	}
 	info := fmt.Sprintf("identificativo %q", ident)
+	if o.za758 {
+		// ZA-758 (_pre_download): la radio invia la password di lettura, che
+		// come CHIRP non si controlla
+		if err := s.p.Write([]byte{0x05}); err != nil {
+			return nil, info, err
+		}
+		if pw := readUpTo(ctx, s.p, 6, 500*time.Millisecond); len(pw) != 6 {
+			return nil, info, rErr("la radio non ha inviato la password di lettura")
+		}
+		if err := s.p.Write([]byte{0x06}); err != nil {
+			return nil, info, err
+		}
+		if ack, err := s.read(1, 500*time.Millisecond); err != nil || ack[0] != 0x06 {
+			return nil, info, rErr("nessuna conferma dopo la password di lettura")
+		}
+	}
 	var data []byte
 	for a := 0; a < o.memsize; a += 8 {
 		if ctx.Err() != nil {

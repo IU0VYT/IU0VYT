@@ -3,6 +3,67 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.9.0 (07/11/2026)
+------------------
+- Identifica: la porta controllata (probePort) passa alla porta vera la parità
+  pari, i due bit di stop e l'RTS; prima la Lanchonlh HG-UV98 (parità pari) e la
+  Quansheng TG-UV2+ (due bit di stop) parlavano con la porta in 8N1 e non venivano
+  riconosciute. Porta seriale di Windows (serial_windows.go, serial_dcb.go): con la
+  parità pari resta attivo anche il controllo degli errori di parità (dcbFlags; prima
+  il bit fParity veniva cancellato subito dopo), RTS spegnibile (SetRTS, Retevis C2);
+  serial_dcb_test.go.
+- Identifica: TIDRADIO TD-M11 16 PMR 0.9.5 (i tre saluti a turno, uno per giro: la
+  radio risponde entro 0,3 s invece di 1 s, prima il tentativo si chiudeva dopo
+  0,7 s di silenzio; identProbing); Retevis RB27V proposta con le radio della stessa
+  memoria (identShape: memoria di bf_t8.py, non il numero di canali).
+- Convertitore: Retevis HA1G/HA1UV/HA2 e Rugged RH5R-V2, canali con spostamento oltre
+  70 MHz non copiati con avviso (fit), invece di fermare la conversione.
+- Quansheng UV-K5 / UV-K6 / UV-5R Plus con i firmware liberi (drv_uvk5x.go): schede
+  egzumer (uvk5_egzumer.py di CHIRP), F4HWN (driver di armel, fuori da CHIRP: 8
+  livelli di potenza, blocco della trasmissione, 3 liste di scansione, impostazioni
+  F4HWN) e LOSEHU/LTS/UVE (uvk5_cn.py, memoria di 256 KiB, nomi GB2312); ogni scheda
+  legge e scrive solo il firmware per cui è fatta. fwk5.go: dopo l'aggiornamento con
+  un firmware libero indica la scheda da usare.
+- Wouxun (20 modelli): KG-UVD1P, KG-UV6D, KG-816, KG-818, KG-805G (drv_wouxun49.go);
+  KG-UV8D, KG-UV8D Plus, KG-UV8E (drv_kguv8.go, pacchetti cifrati con XOR a catena);
+  KG-UV9D Plus, KG-UV9PX, KG-UV9GX, KG-UV9K, KG-UV9G Pro (drv_kguv9.go); KG-935G,
+  KG-935G Plus, KG-935H, KG-UV8H, KG-XS20G, KG-XS20G Plus, KG-XS20H (drv_kg935.go).
+- TYT TH-UV8000D/E (drv_thuv8000.go), TYT UVL-15W (drv_uvl15w.go, 1000 canali,
+  memorie dei firmware 3.03 e 3.09), TYT TH-350 USA (nomi di 8 caratteri).
+- Protocollo iRadio (drv_iradio.go): Abbree AR-518, Ruyage UV58Plus, Radtel RT-880G,
+  Radtel RT-890 con il firmware Radtel (stessa radio della UV58Plus) e con il firmware
+  M7OCM (driver di M7OCM e Jim Unroe, fuori da CHIRP: modulazione per canale, 8 liste
+  di scansione, 10-1300 MHz; provato con l'immagine di esempio del progetto e con la
+  radio simulata, extra_test.go).
+- Retevis: C2 (STX/ETX con DLE, 115200 baud, RTS spento, DCS Golay), HA1G, HA1UV,
+  HA2 (pacchetti RDTP con CRC, regioni, canali fissi 1-30 della HA1G, banchi secondo
+  il firmware), RB15, RB615, RB17P, RB28, RB628, RB48, RB648, RT23, RT26, RT76P, RT87,
+  RT16, RB27B, RB27V.
+- BTECH GMRS-V1 (firmware originale e 2017), GMRS-V2, MURS-V1, MURS-V2 (regole
+  GMRS/MURS dei canali come CHIRP, controllo della versione del firmware prima della
+  scrittura), FRS-A1.
+- Altre marche: AnyTone TERMN-8R e OBLTR-8R (512 codici DCS), Puxing PX-888K, QYT
+  KT-8R, Rugged RH5R-V2, Baojie BJ-UV55, MTC UV-5R-3, Radioddity MU-5 (MURS), Zartek
+  ZA-758, TIDRADIO TD-M11 (versioni 22 FRS, 16 PMR e 16 v0.95), TDXone TD-Q8A.
+  Nuove marche nella galleria: Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek,
+  Ruyage, TDXone (44 in tutto); radio simulate per ogni nuova famiglia.
+- Impostazioni da CHIRP per i nuovi modelli (settings_chirp.json, 259 classi); senza
+  impostazioni: RH5R-V2 (CHIRP non ne ha), BJ-UV55 e RT76P (nessuna immagine di
+  CHIRP), TD-M11 (mappa di CHIRP sbagliata), RT-890 M7OCM. Impostazioni a testo di
+  sole cifre.
+- Differenze volute da CHIRP: RT87 (CHIRP aumenta lo scrambler di 1 a ogni
+  modifica), AnyTone TERMN-8R e OBLTR-8R (CHIRP non toglie mai il bit «solo
+  ricezione»), TD-M11 (data e ora non scritte nella radio); driver di CHIRP non
+  utilizzabili via cavo con Python 3 (TD-Q8A, download della BJ-UV55): lettura e
+  scrittura provate solo con la radio simulata.
+- Prove con CHIRP: LockedImg (canali che la radio non permette di cambiare),
+  modifiche rifiutate da CHIRP scartate dopo un tentativo senza trasmissione,
+  immagini vuote per i modelli senza immagine di CHIRP, correzione della versione del
+  firmware della HA1G nell'immagine di prova, chirpref.py con i campi non
+  modificabili (GMRS-V2, RB17P) e il riconoscimento della TD-M11.
+- Nomi dei canali: senza lo spazio tra i caratteri della radio si usa «-»
+  (ui/radio.js).
+
 4.8.0 (06/11/2026)
 ------------------
 - Firmware .BTU (btufw.go, bfkdh.go, fwapi.go, ui/firmware.js): Radtel RT-910 e RT-900
