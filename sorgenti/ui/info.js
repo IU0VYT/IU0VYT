@@ -8,7 +8,7 @@
 // Scheda «Info»: versione, autore, licenza, collegamenti e verifica degli aggiornamenti.
 // Aggiornamenti: il programma confronta la sua versione con quella pubblicata
 // (indirizzo fisso, nel programma) a ogni avvio e con il pulsante «Verifica
-// aggiornamenti». La verifica legge solo il numero di versione; il pacchetto si
+// aggiornamenti» di questa scheda (4.10: non più nella barra in alto). La verifica legge solo il numero di versione; il pacchetto si
 // scarica solo se è più recente e solo quando lo chiedi.
 
 const Updates = {
@@ -30,25 +30,9 @@ const Updates = {
         return r;
       } finally {
         this.running = null;
-        const b = $('#btn-upd');
-        if (b) b.classList.remove('spin');
       }
     })();
-    const b = $('#btn-upd');
-    if (b) b.classList.add('spin');
     return this.running;
-  },
-
-  // pulsante della barra in alto
-  async manual() {
-    try {
-      const r = await this.check();
-      if (r.cmp > 0) {
-        toast(`È disponibile la versione ${r.remote}: usa «Scarica l'aggiornamento».`);
-      } else {
-        toast(`✔ Il software è aggiornato: la versione ${r.local} è la più recente.`);
-      }
-    } catch (e) { reportError(new Error('Verifica degli aggiornamenti non riuscita: ' + e.message)); }
   },
 
   showBanner(r, auto) {

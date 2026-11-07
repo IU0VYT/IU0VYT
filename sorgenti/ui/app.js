@@ -166,6 +166,8 @@ Object.assign(App, {
 async function start() {
   try {
     App.init = await api('init', {}, { quiet: true });
+    // 4.10: lingua dell'interfaccia (l'ultima scelta; al primo avvio l'italiano)
+    await I18N.start((App.init.settings || {}).lang || '');
     const cat = await api('catalog', {}, { quiet: true });
     App.catalog = cat.catalog || [];
     App.defs = cat.defs || {};
@@ -202,7 +204,6 @@ async function start() {
 
   $$('.tab').forEach(b => { if (!b.classList.contains('gen')) b.onclick = () => App.showTab(b.dataset.tab); });
   $('#btn-help').onclick = () => Dialogs.help();
-  $('#btn-upd').onclick = () => Updates.manual();
   $('#btn-quit').onclick = () => App.quit();
   // a ogni avvio si parte dalla schermata iniziale
   App.showTab('home');

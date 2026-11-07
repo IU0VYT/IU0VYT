@@ -43,6 +43,8 @@ type Settings struct {
 	CableBackup bool   `json:"cableBackup"`
 	// identificazione automatica della radio al collegamento (4.0, scheda «Identifica»)
 	AutoIdent bool `json:"autoIdent"`
+	// Lang (4.10): lingua dell'interfaccia scelta con le bandiere (vuoto = italiano)
+	Lang string `json:"lang,omitempty"`
 	// KnownRadios (4.3): modelli riconosciuti dall'identificazione, il più recente
 	// per primo: le ricerche successive cominciano da questi
 	KnownRadios []string `json:"knownRadios,omitempty"`

@@ -112,7 +112,7 @@ func winFilter(s string) *uint16 {
 var mainHwnd uintptr
 
 func msgBox(text string, flags uintptr) int {
-	r, _, _ := pMsgBox.Call(mainHwnd, uintptr(unsafe.Pointer(u16(text))), uintptr(unsafe.Pointer(u16(winTitle))), flags)
+	r, _, _ := pMsgBox.Call(mainHwnd, uintptr(unsafe.Pointer(u16(T(text)))), uintptr(unsafe.Pointer(u16(winTitle))), flags)
 	return int(r)
 }
 

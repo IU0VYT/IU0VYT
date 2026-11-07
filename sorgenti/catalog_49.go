@@ -131,11 +131,11 @@ var catalog49 = []catItem{
 		Notes: chirpNote("AbbreeAR518Radio") + " Famiglia iRadio UV-5118."},
 	{ID: "ryg-uv58plus", Brand: "Ruyage", Name: "UV58Plus", Aliases: []string{"iRadio UV-5118plus", "UV-58 Plus"}, Type: "analog", Drivers: []string{"ry-uv58plus"},
 		Notes: chirpNote("RuyageUV58PlusRadio") + " Famiglia iRadio UV-5118plus."},
-	{ID: "rtl-rt-890", Brand: "Radtel", Name: "RT-890", Aliases: []string{"RT890", "RT-890 (firmware Radtel)"}, Type: "analog", Drivers: []string{"ry-uv58plus"},
+	{ID: "rtl-rt-890", Brand: "Radtel", Name: "RT-890", Aliases: []string{"RT890", "RT-890 (firmware Radtel)"}, Type: "analog", Drivers: []string{"ry-uv58plus"}, FW: "rt890",
 		Links: []catLink{info("Programmi Radtel", rtlDown)},
 		Notes: chirpNote("RuyageUV58PlusRadio") + " Con il firmware Radtel è la stessa radio della Ruyage UV58Plus (iRadio UV-5118plus): si usa la sua scheda."},
 	{ID: "rtl-rt-890-m7ocm", Brand: "Radtel", Name: "RT-890 (firmware M7OCM)", Aliases: []string{"RT-890 M7OCM", "RT-890 OEFW"}, Type: "analog",
-		Drivers: []string{"rtl-rt890-m7ocm"}, Links: []catLink{info("Firmware e driver M7OCM", "https://github.com/M7OCM/890")},
+		Drivers: []string{"rtl-rt890-m7ocm"}, FW: "rt890", Links: []catLink{info("Firmware e driver M7OCM", "https://github.com/M7OCM/890")},
 		Notes: "Canali con il driver di M7OCM per CHIRP (chirp-next-radtel-rt-890-m7ocm.py, GPL v2 o successiva; non compreso in CHIRP): " +
 			"999 canali con nomi di 10 caratteri, 10-1300 MHz, modulazione FM/AM/LSB/USB e otto liste di scansione. Verificato con l'immagine " +
 			"di esempio del suo autore e con la radio simulata (da verificare con una radio vera); solo per la RT-890 PCB 2.0 con il firmware M7OCM."},

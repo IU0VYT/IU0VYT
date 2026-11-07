@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "4.9.0"
+const appVersion = "4.10.0"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -73,6 +73,7 @@ type App struct {
 func newApp(st *Store) *App {
 	b := make([]byte, 16)
 	_, _ = rand.Read(b)
+	setUILang(st.Get().Lang) // 4.10: lingua dei messaggi di Windows
 	return &App{store: st, token: hex.EncodeToString(b), radios: map[string]*radioSession{}, lastPing: time.Now()}
 }
 
@@ -170,6 +171,7 @@ func (a *App) handler() http.Handler {
 	api("cable/cancel", a.apiCableCancel)
 	a.fwHandlers(mux, api)
 	a.infoHandlers(api)
+	api("lang", a.apiLang)
 	api("ping", func(r *http.Request) (interface{}, error) { return map[string]bool{"ok": true}, nil })
 	api("quit", func(r *http.Request) (interface{}, error) {
 		go func() { time.Sleep(200 * time.Millisecond); quitApp() }()
@@ -195,7 +197,7 @@ func (a *App) dialog(save bool, title, filter, initial, defExt string) (string, 
 	if initial == "" && a.store.Get().LastDir != "" {
 		initial = a.store.Get().LastDir + string(os.PathSeparator)
 	}
-	p, err := fileDialog(save, title, filter, initial, defExt)
+	p, err := fileDialog(save, T(title), trFilter(filter), initial, defExt)
 	if err == nil && p != "" {
 		st := a.store.Get()
 		st.LastDir = filepath.Dir(p)
@@ -734,4 +736,29 @@ func (a *App) listen() (net.Listener, string, error) {
 	}
 	url := fmt.Sprintf("http://%s/index.html?t=%s", ln.Addr().String(), a.token)
 	return ln, url, nil
+}
+
+// apiLang (4.10): lingua dell'interfaccia scelta con il selettore delle bandiere;
+// si ricorda nelle impostazioni e vale anche per le finestre di Windows (titoli
+// e filtri delle finestre «Apri» e «Salva»)
+func (a *App) apiLang(r *http.Request) (interface{}, error) {
+	var req struct {
+		Lang string `json:"lang"`
+	}
+	if err := decode(r, &req); err != nil {
+		return nil, err
+	}
+	if !uiLangKnown(req.Lang) {
+		return nil, fmt.Errorf("lingua sconosciuta: %q", req.Lang)
+	}
+	st := a.store.Get()
+	st.Lang = req.Lang
+	setUILang(req.Lang)
+	if req.Lang == "it" {
+		st.Lang = ""
+	}
+	if err := a.store.SaveSettings(st); err != nil {
+		return nil, err
+	}
+	return map[string]string{"lang": req.Lang}, nil
 }

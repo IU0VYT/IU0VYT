@@ -1,0 +1,43 @@
+IU0VYT FLASH - REGISTRO DE CAMBIOS
+==================================
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o posterior
+
+Esta es la traducción al español de la última entrada de CHANGELOG.txt. La historia
+completa de las versiones anteriores (1.0 - 4.9) está en el original italiano,
+CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
+versión también se resumen en LEEME.txt.
+
+4.10.0 (07/11/2026)
+-------------------
+- Idiomas de la interfaz: selector con las banderas a la derecha de «ℹ Info»
+  (italiano, inglés, francés, alemán, español, portugués, ruso, chino, japonés),
+  traducción inmediata de toda la página (ui/i18n.js: cada texto, también los que
+  llegan del programa, se sustituye por su traducción; se reconocen textos con partes
+  variables y mensajes compuestos) y de los textos de las ventanas de Windows
+  (i18n.go: mensajes, títulos y filtros de «Abrir» y «Guardar»). Traducciones en
+  ui/lang/<idioma>.tsv (clave FNV-1a de 32 bits del texto italiano); el idioma elegido
+  se guarda en los ajustes (Settings.Lang, API «lang»). i18n_test.go extrae los textos
+  (ui/*.js, ui/index.html, cadenas de los archivos .go) y comprueba que cada idioma
+  los tenga todos con las mismas partes variables. Archivos informativos traducidos en
+  la carpeta «lingue».
+- Barra superior: quitado «Actualizaciones» (quedan la comprobación automática y
+  «Buscar actualizaciones» en la pestaña Info); «Identificar radio» junto a «? Guía».
+- Firmware Radtel RT-890 (fwrt890.go): archivos .bin de Radtel y libres (M7OCM, OEFW),
+  cargador de la radio (115200 baudios, borrado, bloques de 128 bytes), según el
+  programa rt_890_flasher de JuantAldea; radio simulada y firmware M7OCM v3.2.
+- Firmware Baofeng DM-1701 / Retevis RT84 (fwdm1701.go): archivos «OutSecurityBin» del
+  fabricante por USB DFU en el cargador, como radio_tool (comando 91 31, borrado por
+  sector, bloques de 1024 bytes numerados desde 2 por sector); solo la memoria del
+  programa desde 0x0800C000, el cargador no se toca; archivos V02.06 del fabricante
+  con la radio simulada.
+- Firmware Baofeng RD-5R y DM-1801 (fwsgl.go): archivos .sgl del fabricante por USB
+  HID, como el FirmwareLoader de OpenGD77 y radio_tool (clave del modelo comprobada
+  por la radio antes del borrado, bloques de 32 bytes, suma en cada KB); archivos del
+  fabricante con la radio simulada.
+- Ajustes: Feidaxin FD-288A, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH (fd268.py,
+  con la imagen de un modelo de la misma familia) y Retevis RT76P (imagen vacía) desde
+  CHIRP; Baofeng RD-5R y DM-1801 (settings_rdty.go, 31 elementos, según qdmr y
+  dmrconfig); Baofeng DM-1701 (nombre, ID DMR, textos de encendido; textos Unicode de
+  16 bits).
+- Pruebas: extra_test.go solo fuera de Windows (go test vuelve a funcionar en
+  Windows).

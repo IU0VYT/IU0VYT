@@ -61,6 +61,8 @@ var chirpCloneClass = map[string]string{"td-uv68": "TDH8"}
 // simulata: immagine letta uguale alla memoria della radio, memoria finale
 // uguale all'immagine scritta
 var chirpCloneBroken = map[string]bool{"NC630aRadio": true, "IP620Radio": true, "Puxing2RRadio": true, "BoblovX3Plus": true, "RT21HRadio": true, "FD268ARadio": true, "FD268BRadio": true, "FD288BRadio": true,
+	// 4.10: stessa famiglia, ora provata con l'immagine di un modello vicino
+	"FD288ARadio": true, "FD150ARadio": true, "FD160ARadio": true, "FD450ARadio": true, "FD460ARadio": true, "FD460UHRadio": true,
 	// 4.9: tdxone_tdq8a.py confronta bytes con str (Python 2): con CHIRP la copia non parte mai
 	"TDXoneTDQ8A": true,
 	// 4.9: uv5r.py con la BJ-UV55 usa has_dropped_byte senza averlo calcolato:

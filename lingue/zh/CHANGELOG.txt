@@ -1,0 +1,15 @@
+IU0VYT FLASH - 更新日志
+=======================
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
+
+本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.9）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
+
+4.10.0（2026/11/07）
+-------------------
+- 界面语言：“ℹ Info”右侧带旗帜的选择器（意大利语、英语、法语、德语、西班牙语、葡萄牙语、俄语、中文、日语），整个页面立即翻译（ui/i18n.js：每段文本，包括来自程序的文本，都会被替换为译文；可识别含可变部分的文本和组合消息），Windows 窗口的文本也会翻译（i18n.go：“打开”和“保存”的消息、标题和筛选器）。译文位于 ui/lang/<语言>.tsv（键为意大利文文本的 32 位 FNV-1a 值）；所选语言保存在设置中（Settings.Lang，API“lang”）。i18n_test.go 提取文本（ui/*.js、ui/index.html、.go 文件中的字符串），并检查每种语言都具备所有文本且可变部分相同。说明文件已翻译，位于“lingue”文件夹。
+- 顶部栏：移除了“更新”（自动检查和 Info 标签页中的“检查更新”保留）；“识别电台”放在“? 帮助”旁边。
+- Radtel RT-890 固件（fwrt890.go）：Radtel 的和自由的 .bin 文件（M7OCM、OEFW），电台的引导程序（115200 波特、擦除、128 字节块），参照 JuantAldea 的 rt_890_flasher 程序；模拟电台和 M7OCM v3.2 固件。
+- Baofeng DM-1701 / Retevis RT84 固件（fwdm1701.go）：厂家的“OutSecurityBin”文件，在引导程序中通过 USB DFU 写入，与 radio_tool 相同（命令 91 31、按扇区擦除、每个扇区从 2 开始编号的 1024 字节块）；只写入 0x0800C000 起的程序存储，不改动引导程序；厂家的 V02.06 文件与模拟电台。
+- Baofeng RD-5R 和 DM-1801 固件（fwsgl.go）：厂家的 .sgl 文件，通过 USB HID 写入，与 OpenGD77 的 FirmwareLoader 和 radio_tool 相同（电台在擦除前检查型号密钥、32 字节块、每 KB 一个校验和）；厂家文件与模拟电台。
+- 设置：来自 CHIRP 的 Feidaxin FD-288A、FD-150A、FD-160A、FD-450A、FD-460A、FD-460UH（fd268.py，使用同系列型号的映像）和 Retevis RT76P（空映像）；Baofeng RD-5R 和 DM-1801（settings_rdty.go，31 项，参照 qdmr 和 dmrconfig）；Baofeng DM-1701（名称、DMR ID、开机文字；16 位 Unicode 文本）。
+- 测试：extra_test.go 只在 Windows 以外运行（go test 在 Windows 上恢复正常）。

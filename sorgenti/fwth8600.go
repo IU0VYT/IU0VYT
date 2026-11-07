@@ -348,11 +348,10 @@ func thUpdate(ctx context.Context, port string, pr thProfile, hello byte, blocks
 		if err == errCancelled {
 			return 0, err
 		}
-		other := ""
 		if pr.name == "RT85" {
-			other = " o è una RT85 di potenza diversa da quella scelta"
+			return 0, rErr("la radio non è in modalità di aggiornamento, non è una RT85 o è una RT85 di potenza diversa da quella scelta (%v)", err)
 		}
-		return 0, rErr("la radio non è in modalità di aggiornamento, non è una %s%s (%v)", pr.name, other, err)
+		return 0, rErr("la radio non è in modalità di aggiornamento o non è una %s (%v)", pr.name, err)
 	}
 	logf("Radio in modalità di aggiornamento")
 	if err := sleep(pr.start); err != nil {

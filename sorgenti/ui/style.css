@@ -271,7 +271,6 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 #updbanner .updtext { flex: 1; min-width: 240px; }
 #updbanner .updx { border: 0; background: transparent; font-size: 20px; line-height: 1; cursor: pointer; color: #7a6512; padding: 2px 6px; }
 #updbanner .updx:hover { color: #000; }
-#btn-upd.spin { opacity: .7; cursor: progress; }
 .updbox { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .updbox .note { flex: 1; min-width: 260px; }
 .btn.big { padding: 8px 18px; font-size: 14px; font-weight: 600; }
@@ -552,3 +551,20 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
   .home-card { padding: 8px 9px; }
   .home-card span { font-size: 11.5px; line-height: 1.3; }
 }
+
+/* 4.10: selettore della lingua (accanto a «ℹ Info») */
+.langsel { flex: none; display: flex; align-items: center; margin-left: 6px; }
+.langbtn { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 6px; border-radius: 6px;
+  border: 1px solid #3a4760; background: transparent; color: #dfe6f1; cursor: pointer; }
+.langbtn:hover, .langbtn[aria-expanded="true"] { background: #2a3650; }
+.langbtn .flag, .langopt .flag { display: block; border-radius: 2px; flex: none; }
+.langcaret { font-size: 10px; opacity: .8; }
+#langmenu { position: fixed; z-index: 3000; min-width: 168px; padding: 4px; border-radius: 8px; background: var(--panel, #fff);
+  border: 1px solid rgba(127,127,127,.35); box-shadow: 0 8px 24px rgba(0,0,0,.25); display: flex; flex-direction: column; }
+.langopt { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border: 0; border-radius: 6px; background: transparent;
+  color: var(--ink, #222); font: inherit; text-align: left; cursor: pointer; }
+.langopt:hover, .langopt:focus { background: rgba(80,120,200,.14); outline: none; }
+.langopt.cur { font-weight: 600; }
+.langopt.cur::after { content: '✓'; margin-left: auto; opacity: .7; }
+:root:lang(zh) { font-family: "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif; }
+:root:lang(ja) { font-family: "Segoe UI", "Yu Gothic UI", "Meiryo UI", "Meiryo", "Hiragino Sans", "Noto Sans CJK JP", sans-serif; }

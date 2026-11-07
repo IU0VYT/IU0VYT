@@ -142,6 +142,12 @@ func (a *App) fwSelect(i int, skipped []string) (interface{}, error) {
 		img = analyzeBTU(c.Name, c.Where, c.data)
 	case fwTH8600:
 		img = analyzeTH8600(c.Name, c.Where, c.data)
+	case fwRT890:
+		img = analyzeRT890(c.Name, c.Where, c.data)
+	case fwDM1701:
+		img = analyzeDM1701(c.Name, c.Where, c.data)
+	case fwSGL:
+		img = analyzeSGL(c.Name, c.Where, c.data)
 	default:
 		img = analyzeANC(c.Name, c.Where, c.data)
 	}
@@ -394,7 +400,7 @@ func fwCheckStart(req *fwStartReq, img *fwImage) error {
 			return fmt.Errorf("conferma che la radio collegata è una %s ed è nel caricatore", img.Info.Target)
 		}
 		return nil
-	case "tdh", "th8600":
+	case "tdh", "th8600", "rt890", "dm1701", "sgl":
 		if req.Mode != "manual" {
 			return errors.New("modalità sconosciuta")
 		}
@@ -476,6 +482,12 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 		return a.runFirmwareTDH(ctx, j, req, img)
 	case "th8600":
 		return a.runFirmwareTH8600(ctx, j, req, img)
+	case "rt890":
+		return a.runFirmwareRT890(ctx, j, req, img)
+	case "dm1701":
+		return a.runFirmwareDM1701(ctx, j, req, img)
+	case "sgl":
+		return a.runFirmwareSGL(ctx, j, req, img)
 	}
 	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
 	j.logf("Firmware: %s (%s, SHA-256 %s…)", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16])
@@ -567,8 +579,8 @@ func (a *App) runFirmware(ctx context.Context, j *cableJob, req *fwStartReq, img
 		}
 		rid := strings.TrimSpace(info.ID)
 		res["radioId"] = rid
-		j.logf("Radio identificata: risponde al%s (identificativo «%s»)", strings.TrimPrefix(proto, "il"), rid)
-		j.note("Radio identificata: risponde al%s (identificativo «%s»); modello confermato dall'utente: %s", strings.TrimPrefix(proto, "il"), rid, img.Info.Target)
+		j.logf("Radio identificata: risponde con %s (identificativo «%s»)", proto, rid)
+		j.note("Radio identificata: risponde con %s (identificativo «%s»); modello confermato dall'utente: %s", proto, rid, img.Info.Target)
 		// la radio esce dalla modalità di programmazione
 		select {
 		case <-ctx.Done():
@@ -882,6 +894,81 @@ func (a *App) runFirmwareTH8600(ctx context.Context, j *cableJob, req *fwStartRe
 		}
 		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati). NON accendere la radio normalmente: riportala in modalità di "+
 			"aggiornamento come indicato da Retevis e ripeti subito l'aggiornamento (%v)", fmtBytes(int(sent)), err)
+	}
+	res["seconds"] = int(time.Since(t0).Seconds())
+	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
+	return res, nil
+}
+
+// runFirmwareRT890 (4.10): Radtel RT-890 nel caricatore (fwrt890.go)
+func (a *App) runFirmwareRT890(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
+	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
+	j.logf("Firmware: %s (%s, SHA-256 %s…) per %s", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16], img.Info.Target)
+	j.set("In attesa della radio nel caricatore", true)
+	started := false
+	t0 := time.Now()
+	sent, err := rt890Update(ctx, req.Port, img.Dec, j.prog, func(s string) { j.logf("%s", s) },
+		func() { fwStarted(j, &started)(); j.set("Aggiornamento del firmware", false) })
+	res["sent"] = sent
+	if err == errCancelled && !started {
+		return nil, err
+	}
+	if err != nil {
+		if !started {
+			return nil, fmt.Errorf("aggiornamento non avviato, la radio non è stata modificata: %v", err)
+		}
+		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati): la radio resta nel caricatore. Spegnila, riaccendila tenendo premuti "+
+			"i due tasti laterali e ripeti l'aggiornamento (%v)", fmtBytes(int(sent)), err)
+	}
+	res["seconds"] = int(time.Since(t0).Seconds())
+	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
+	return res, nil
+}
+
+// runFirmwareDM1701 (4.10): Baofeng DM-1701 via USB nel caricatore DFU (fwdm1701.go)
+func (a *App) runFirmwareDM1701(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
+	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
+	j.logf("Firmware: %s (%s, SHA-256 %s…) per %s", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16], img.Info.Target)
+	j.set("Collegamento USB con il caricatore", true)
+	started := false
+	t0 := time.Now()
+	sent, id, err := dm1701Update(ctx, img.Dec, j.prog, func(s string) { j.logf("%s", s) },
+		func() { fwStarted(j, &started)(); j.set("Aggiornamento del firmware", false) })
+	res["sent"], res["radio"] = sent, id
+	if err == errCancelled && !started {
+		return nil, err
+	}
+	if err != nil {
+		if !started {
+			return nil, fmt.Errorf("aggiornamento non avviato, la radio non è stata modificata: %v", err)
+		}
+		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati): il caricatore della radio è intatto. Spegnila, riaccendila tenendo premuti "+
+			"il PTT e il tasto sopra il PTT e ripeti l'aggiornamento (%v)", fmtBytes(int(sent)), err)
+	}
+	res["seconds"] = int(time.Since(t0).Seconds())
+	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))
+	return res, nil
+}
+
+// runFirmwareSGL (4.10): Baofeng RD-5R / DM-1801 via USB nel caricatore (fwsgl.go)
+func (a *App) runFirmwareSGL(ctx context.Context, j *cableJob, req *fwStartReq, img *fwImage) (interface{}, error) {
+	res := map[string]interface{}{"firmware": img.Info.Name, "version": img.Info.Version}
+	j.logf("Firmware: %s (%s, SHA-256 %s…) per %s", img.Info.Name, fmtBytes(img.Info.Size), img.Info.SHA256[:16], img.Info.Target)
+	j.set("Collegamento USB con il caricatore", true)
+	started := false
+	t0 := time.Now()
+	sent, err := sglUpdate(ctx, img.Dec, j.prog, func(s string) { j.logf("%s", s) },
+		func() { fwStarted(j, &started)(); j.set("Aggiornamento del firmware", false) })
+	res["sent"] = sent
+	if err == errCancelled && !started {
+		return nil, err
+	}
+	if err != nil {
+		if !started {
+			return nil, fmt.Errorf("aggiornamento non avviato, la radio non è stata modificata: %v", err)
+		}
+		return nil, fmt.Errorf("aggiornamento interrotto (%s inviati): la radio resta nel caricatore. Spegnila, riaccendila nella modalità "+
+			"di aggiornamento e ripeti l'aggiornamento (%v)", fmtBytes(int(sent)), err)
 	}
 	res["seconds"] = int(time.Since(t0).Seconds())
 	j.note("Firmware inviato: %s in %d secondi. Spegni e riaccendi la radio e controlla la versione.", fmtBytes(int(sent)), int(time.Since(t0).Seconds()))

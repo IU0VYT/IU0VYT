@@ -788,11 +788,11 @@ const Dialogs = {
         <li>Durante l'aggiornamento non spegnere la radio e non scollegare il cavo. Il protocollo è quello del programma originale «BinTe ANC Bootloader» V1.1.</li>
       </ul>
       <h4>Canali</h4><ul>
-        <li>Doppio clic, <kbd>Invio</kbd> o <kbd>F2</kbd> per modificare una cella; si può anche iniziare a scrivere direttamente. <kbd>Esc</kbd> annulla.</li>
+        <li>Doppio clic, <kbd>Invio</kbd> o <kbd>F2</kbd> per modificare una cella; si può anche iniziare a scrivere direttamente. <kbd>Esc</kbd> annulla la modifica.</li>
         <li>Frequenze in MHz (145.600 o 145,600). Lo shift si scrive come -0.6, +1.6, +5: il TX viene calcolato. I toni sono subtoni CTCSS (es. 88.5) o codici DCS (es. D023N, D023I invertito); vuoto = OFF.</li>
         <li>Selezione: clic, <kbd>Maiusc</kbd>+clic per un intervallo, <kbd>Ctrl</kbd>+clic per aggiungere, <kbd>Ctrl</kbd>+<kbd>A</kbd> tutti.</li>
         <li><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>X</kbd> / <kbd>V</kbd> copia, taglia, incolla (anche tra le due radio e dall'archivio, con gli adattamenti segnalati);
-          <kbd>Canc</kbd> cancella; <kbd>Ins</kbd> inserisce una riga; <kbd>Alt</kbd>+<kbd>↑</kbd>/<kbd>↓</kbd> sposta; <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Y</kbd> annulla/ripeti; <kbd>Ctrl</kbd>+<kbd>S</kbd> salva.</li>
+          <kbd>Canc</kbd> cancella; <kbd>Ins</kbd> inserisce una riga; <kbd>Alt</kbd>+<kbd>↑</kbd>/<kbd>↓</kbd> sposta; <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Y</kbd> annulla o ripete l'ultima modifica; <kbd>Ctrl</kbd>+<kbd>S</kbd> salva il file.</li>
         <li>Bajeton: 15 zone da 64 canali; scegli la zona dalla barra sopra la tabella, «Tutte» per vederle insieme, «Sposta in zona» per spostare i selezionati.
           Con i file della v1.0.9 di BT-11_CPS impostati su «tutti i canali» (⚙ Impostazioni → Divisione dei canali) i 960 canali sono in un unico elenco, come nel programma originale.</li>
         <li>Nomi: massimo 16 caratteri sul K67 e 12 sulla Bajeton. Potenza Media solo sulla Bajeton (sul K67 diventa Alta).</li>
@@ -805,7 +805,7 @@ const Dialogs = {
           riconosce la radio anche se la accendi dopo, e più radio su cavi diversi insieme, e apre le loro schede (se una scheda è già aperta compare «Radio già
           identificata!! Scheda Radio già aperta»). Il riquadro «Identificazione Radio In Corso» compare solo per il cavo a cui è collegata una radio che risponde (mai per un
           cavo senza radio). Dopo il riconoscimento la porta di quella radio si ferma: per un'altra radio sullo stesso cavo premi «🔎 Identifica Radio» in alto a
-          destra, accanto ad «Aggiornamenti» (grigio se la funzione è disattivata; con molte schede aperte si restringe alla sola lente).</li>
+          destra, accanto a «? Guida» (grigio se la funzione è disattivata; con molte schede aperte si restringe alla sola lente).</li>
         <li>Se più modelli hanno lo stesso protocollo e la stessa memoria, scegli il tuo dall'elenco prima di aprire i canali.</li>
         <li>DM-1701: nella finestra «Leggi dalla radio» lo stato del driver USB, «Installa il driver USB…» (pacchetto del costruttore) o WinUSB con Zadig.</li>
         <li>BTECH DMR-6X2 / PRO: nella galleria «🧭 Aggiornamento guidato…» controlla i file del firmware ufficiale e guida passo per passo il programma BTECH.</li>
@@ -843,7 +843,7 @@ const Dialogs = {
           digitali non si copiano sulle radio solo analogiche.</li>
         <li>L'archivio si salva da solo in: <span class="note">${esc(App.init.archivePath)}</span></li>
       </ul>
-      <p class="note">IU0VYT Flash, versione ${esc(App.init.version)} (verifica degli aggiornamenti con il pulsante «🔄 Aggiornamenti» in alto o nella scheda «ℹ Info»; licenza GNU GPL v3 o successiva) · i formati dei file e i protocolli via cavo sono stati ricostruiti dai programmi originali dei costruttori e verificati con radio simulate: conserva sempre le copie di sicurezza.</p>
+      <p class="note">IU0VYT Flash, versione ${esc(App.init.version)} (verifica degli aggiornamenti nella scheda «ℹ Info»; licenza GNU GPL v3 o successiva) · i formati dei file e i protocolli via cavo sono stati ricostruiti dai programmi originali dei costruttori e verificati con radio simulate: conserva sempre le copie di sicurezza.</p>
       </div><footer><button class="btn primary" data-ok>Chiudi</button></footer></div>`);
     $('[data-ok]', m.el).onclick = () => m.close();
   },

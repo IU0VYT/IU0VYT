@@ -36,11 +36,11 @@ const Firmware = {
   },
 
   // ------------------------------------------------------------ finestra principale
-  // expect: tipo di firmware della radio da cui si apre la finestra ('anc' | 'bf' | 'rh5' | 'kdhx' | 'bj9000' | 'kdh9g' | 'k5' | 'tdh' | 'th8600' | 'btu'), radioKind: scheda d'origine
+  // expect: tipo di firmware della radio da cui si apre la finestra ('anc' | 'bf' | 'rh5' | 'kdhx' | 'bj9000' | 'kdh9g' | 'k5' | 'tdh' | 'th8600' | 'btu' | 'rt890' | 'dm1701' | 'sgl'), radioKind: scheda d'origine
   open(expect, radioKind) {
     const TARGET = { anc: 'Bajeton BJ-8300 / BJ-7800 / BJ-7700', bf: 'Baofeng UV-5RM / UV-5RH e radio con lo stesso caricatore', rh5: 'Baofeng 5RH Pro / K67 Pro',
       kdhx: 'Baofeng UV-25 Plus, Radtel RT-470 / RT-495 / RT-630 e radio con il caricatore «Bootloader Pro»', bj9000: 'Bajeton BJ-9000', kdh9g: 'Baofeng UV-9G',
-      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus / UV-K5 V3, Retevis RA79', th8600: 'Retevis RA89 / RT85', tdh: 'TIDRADIO TD-H3 / TD-H8 o Radtel RT-730',
+      k5: 'Quansheng UV-K5 / UV-K5(8) / UV-K6 / UV-5R Plus / UV-K5 V3, Retevis RA79', th8600: 'Retevis RA89 / RT85', tdh: 'TIDRADIO TD-H3 / TD-H8 o Radtel RT-730', rt890: 'Radtel RT-890', dm1701: 'Baofeng DM-1701 / Retevis RT84', sgl: 'Baofeng RD-5R / DM-1801',
       btu: 'Radtel RT-910 / RT-900 e Bajeton BJ-7700 senza Bluetooth' };
     const PROTO = {
       anc: 'quello del programma originale «BinTe ANC Bootloader» V1.1',
@@ -54,6 +54,9 @@ const Firmware = {
       th8600: 'quello del programma originale «RA89-update-software» di Retevis («TH8600-UpDAta Soft» 2.3)',
       th8600rt85: 'quello del programma originale «RT85 10W_5W_UpData» di Retevis («TH8600-UpDAta Soft» 2.1)',
       tdh: 'quello dei programmi originali «H8_IAP» di TIDRADIO e «RT730 Update tool» di Radtel (documentato da nicsure, TD-H3-Engineering), riscritto da zero',
+      rt890: 'quello del caricatore della RT-890 documentato dal programma libero «rt_890_flasher» di JuantAldea, riscritto da zero',
+      dm1701: 'quello del caricatore DFU della DM-1701 usato dal programma libero «radio_tool» (provato da quel progetto su radio vere), riscritto da zero',
+      sgl: 'quello del caricatore della famiglia GD-77 usato dal «FirmwareLoader» di OpenGD77 e da radio_tool, riscritto da zero',
     };
     // caricatori KDH recenti: istruzioni del costruttore e velocità
     const BOOT = {
@@ -199,6 +202,36 @@ const Firmware = {
           <p class="note">Velocità fissa 115200 baud, blocchi da 32 byte confermati dalla radio uno per uno.</p>
         </div>
 
+        <div data-panel="rt890" style="display:none">
+          <div class="fwbox"><b>Porta la radio nel caricatore</b>:
+            <ol><li>Collega il cavo di programmazione alla radio spenta.</li>
+            <li>Accendi la radio <b>tenendo premuti i due tasti laterali</b> (lo schermo resta spento).</li>
+            <li>Premi «Avvia aggiornamento» (il programma aspetta la radio per 60 secondi).</li></ol>
+            Il caricatore non controlla il modello del firmware: per questo si deve scrivere il modello. Le schede PCB 2.0 e PCB 2.1 (RT-890 II)
+            usano firmware diversi. Se l'invio si interrompe la radio resta nel caricatore: riaccendila tenendo premuti i due tasti laterali e ripeti l'aggiornamento.
+            Dopo un firmware libero (M7OCM) i canali si gestiscono con la scheda «Radtel RT-890 (firmware M7OCM)».</div>
+          <p class="note">Velocità fissa 115200 baud: cancellazione della memoria del programma, poi blocchi da 128 byte confermati dalla radio uno per uno.</p>
+        </div>
+
+        <div data-panel="dm1701" style="display:none">
+          <div class="fwbox"><b>Porta la radio nel caricatore</b>:
+            <ol><li>Radio spenta: tieni premuti <b>il PTT e il tasto sopra il PTT</b> e accendila (l'indicatore lampeggia, lo schermo resta spento).</li>
+            <li>Collega il cavo USB di programmazione (serve il driver USB della DM-1701, come per i canali).</li>
+            <li>Premi «Avvia aggiornamento».</li></ol>
+            Si scrive solo la memoria del programma: il caricatore della radio resta intatto, quindi se l'invio si interrompe basta riaccendere la radio
+            nel caricatore e ripetere l'aggiornamento. Le parti del file per la memoria SPI (caratteri, immagini) non si scrivono.</div>
+          <p class="note">Collegamento USB DFU (STMicroelectronics 0483:DF11): settori cancellati prima di scrivere, blocchi da 1024 byte.</p>
+        </div>
+
+        <div data-panel="sgl" style="display:none">
+          <div class="fwbox"><b>Porta la radio nella modalità di aggiornamento</b> (lo schermo resta spento, l'indicatore si accende o lampeggia):
+            <ul><li><b>RD-5R</b>: radio spenta, tieni premuti il tasto <b>arancione S1</b> e il tasto <b>nero Fn (S2)</b>, ai due lati del PTT, e accendila.</li>
+            <li><b>DM-1801</b>: radio spenta, tieni premuti <b>i due tasti piccoli sotto il PTT</b> e accendila.</li></ul>
+            Poi collega il cavo USB (nessun driver da installare: è un dispositivo HID) e premi «Avvia aggiornamento».
+            La radio controlla la chiave del modello prima di cancellare la memoria. Se l'invio si interrompe la radio resta nel caricatore: ripeti l'aggiornamento.</div>
+          <p class="note">Collegamento USB HID (15A2:0073): blocchi da 32 byte con la somma di controllo a ogni KB, confermati dalla radio.</p>
+        </div>
+
         <h4 class="fwh"><span class="num">3</span> Conferma</h4>
         <div data-warnok style="display:none" class="row"><label><input type="checkbox" data-acceptwarn> <b>Ho letto le segnalazioni sul firmware</b> e voglio usarlo comunque</label></div>
         <div class="row"><label><input type="checkbox" data-confirm> <b data-conftext>Confermo il modello della radio collegata.</b>
@@ -243,7 +276,7 @@ const Firmware = {
     };
 
     const needTyped = () => (kind() === 'anc' && (mode() === 'recovery' || $('[data-skip]', el).checked)) ||
-      kind() === 'kdh9g' || kind() === 'btu' || kind() === 'tdh' || kind() === 'th8600' || (kind() === 'kdhx' && btmode() === 'manual') || !!(fw && fw.typed) || otherModel();
+      kind() === 'kdh9g' || kind() === 'btu' || kind() === 'tdh' || kind() === 'rt890' || kind() === 'dm1701' || kind() === 'sgl' || kind() === 'th8600' || (kind() === 'kdhx' && btmode() === 'manual') || !!(fw && fw.typed) || otherModel();
     // radio scelta nella finestra diversa da quelle a cui è destinato il file
     const otherModel = () => {
       if (!fw || !fw.models || !fw.models.length) return false;
@@ -252,6 +285,15 @@ const Firmware = {
     };
     const refresh = () => {
       const k = kind();
+      // 4.10: DM-1701, RD-5R e DM-1801 via USB (nessuna porta seriale)
+      const usb = k === 'dm1701' ? 'DFU:0483:DF11' : k === 'sgl' ? 'HID:15A2:0073' : '';
+      if (usb && sel.value !== usb) {
+        if (sel.dataset.prev == null) sel.dataset.prev = sel.innerHTML;
+        sel.innerHTML = `<option value="${usb}">${k === 'sgl' ? 'USB (HID) — RD-5R / DM-1801' : 'USB (DFU) — DM-1701'}</option>`;
+      } else if (!usb && sel.dataset.prev != null) {
+        sel.innerHTML = sel.dataset.prev;
+        delete sel.dataset.prev;
+      }
       $('[data-nokind]', el).style.display = k ? 'none' : '';
       $('[data-common]', el).style.display = k ? '' : 'none';
       setupBoot(k);
@@ -271,7 +313,7 @@ const Firmware = {
       $('[data-thnote]', el).textContent = 'Velocità 57600 baud, blocchi da ' + (rt85 ? '64 byte (4 righe del file .hex con la loro somma)' : '128 byte') +
         ' confermati dalla radio uno per uno, come nel programma di Retevis (confrontato byte per byte con il suo codice).';
       $('[data-proto]', el).textContent = (rt85 ? PROTO.th8600rt85 : PROTO[k]) || 'quello del programma originale del costruttore';
-      $('[data-protohow]', el).textContent = k === 'k5' || k === 'tdh' ? '' : ', ricavato dal suo codice';
+      $('[data-protohow]', el).textContent = k === 'k5' || k === 'tdh' || k === 'rt890' || k === 'dm1701' || k === 'sgl' ? '' : ', ricavato dal suo codice';
       const target = fw ? fw.target : TARGET[k];
       $('[data-conftext]', el).textContent = k === 'kdh9g' || k === 'btu'
         ? `Confermo che la radio collegata è una ${target}${fw && fw.hw ? ' (' + fw.hw + ')' : ''}: il suo caricatore non controlla il firmware che riceve.`
@@ -281,6 +323,12 @@ const Firmware = {
         ? `Confermo che la radio collegata è una ${target} ed è nel caricatore (accesa tenendo premuto il PTT).`
         : k === 'tdh'
         ? `Confermo che la radio collegata è una ${target}: dopo l'avvio la accenderò tenendo premuto il PTT.`
+        : k === 'rt890'
+        ? `Confermo che la radio collegata è una ${target} ed è nel caricatore (accesa tenendo premuti i due tasti laterali).`
+        : k === 'dm1701'
+        ? `Confermo che la radio collegata via USB è una ${target} ed è nel caricatore (accesa tenendo premuti il PTT e il tasto sopra il PTT).`
+        : k === 'sgl'
+        ? `Confermo che la radio collegata via USB è una ${target} ed è nella modalità di aggiornamento (schermo spento).`
         : k === 'th8600'
         ? `Confermo che la radio collegata è una ${target}${rt85 && $('[data-thpower]', el).value ? ' da ' + $('[data-thpower]', el).value.replace('W', ' W') : ''} ed è in modalità di aggiornamento.`
         : target ? `Confermo che la radio collegata è una ${target}.` : 'Confermo il modello della radio collegata.';
@@ -290,7 +338,7 @@ const Firmware = {
       const ok = fw && fw.valid && sel.value && $('[data-confirm]', el).checked && typedOk && (!fw.warnings || $('[data-acceptwarn]', el).checked) &&
         (!rt85 || !!$('[data-thpower]', el).value);
       $('[data-ok]', el).disabled = !ok || running;
-      $('[data-ident]', el).disabled = !sel.value || running;
+      $('[data-ident]', el).disabled = !sel.value || running || k === 'dm1701' || k === 'sgl';
     };
     $$('input,select', el).forEach(x => x.addEventListener('change', refresh));
     // cambiando porta l'esito dell'identificazione precedente non vale più
@@ -482,6 +530,15 @@ const Firmware = {
         req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value, power: fw.power ? $('[data-thpower]', el).value : '' });
         how = (fw.power ? `Potenza scelta: ${req.power.replace('W', ' W')}. La radio deve essere già in modalità di aggiornamento (accesa tenendo premuti PTT e P1: indicatore verde).`
           : 'La radio deve essere già in modalità di aggiornamento (indicatore verde).') + ' Se l\'invio si interrompe non accenderla normalmente: ripeti subito l\'aggiornamento.\n';
+      } else if (k === 'sgl') {
+        req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value });
+        how = 'La radio deve essere collegata via USB e accesa nella modalità di aggiornamento (schermo spento).\n';
+      } else if (k === 'dm1701') {
+        req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value });
+        how = 'La radio deve essere collegata via USB e accesa nel caricatore (tenendo premuti il PTT e il tasto sopra il PTT).\n';
+      } else if (k === 'rt890') {
+        req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value });
+        how = 'La radio deve essere nel caricatore (spenta e riaccesa tenendo premuti i due tasti laterali, schermo spento).\n';
       } else if (k === 'tdh') {
         req = Object.assign(base, { mode: 'manual', confirmText: $('[data-typed]', el).value });
         how = 'Dopo l\'avvio spegni la radio e riaccendila tenendo premuto il PTT (il programma la aspetta per 60 secondi).\n';

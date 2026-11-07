@@ -1,0 +1,1502 @@
+IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
+==========================================================
+Version 4.10.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 9
+Sprachen.
+Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
+Website: https://iu0vyt.github.io/IU0VYT/
+Quellcode und Versionen: https://github.com/IU0VYT/IU0VYT
+Lizenz: GNU General Public License Version 3 oder neuer (freie Software, OHNE JEGLICHE
+GEWÄHRLEISTUNG): siehe LICENSE.txt und AUTOREN_UND_LIZENZEN.txt.
+Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original ist der
+maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
+CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
+4.10).
+Neu in 4.10.0:
+- SPRACHEN: Neben «ℹ Info» gibt es die Sprachauswahl mit den Flaggen (Italienisch,
+  Englisch, Französisch, Deutsch, Spanisch, Portugiesisch, Russisch, Chinesisch,
+  Japanisch). Die Übersetzung erfolgt sofort und betrifft das ganze Programm, auch die
+  Meldungen und die Windows-Fenster; die zuletzt gewählte Sprache bleibt beim Neustart
+  erhalten (siehe «SPRACHE DER OBERFLÄCHE»). Diese Datei und die anderen
+  Informationsdateien gibt es in allen Sprachen (Ordner «lingue» des Pakets);
+- obere Leiste: die Schaltfläche «Aggiornamenti» (Updates) wurde entfernt (die Prüfung
+  erfolgt weiterhin automatisch bei jedem Start und mit «🔄 Nach Updates suchen» in der
+  Registerkarte Info); «🔎 Funkgerät identifizieren» steht neben «? Hilfe»;
+- FIRMWARE-UPDATE für 5 weitere Funkgeräte (insgesamt 57): Radtel RT-890
+  (Radtel-Firmware und freie Firmware M7OCM), Baofeng DM-1701 / Retevis RT84 über USB,
+  Baofeng RD-5R und DM-1801 über USB (.sgl-Dateien), siehe die entsprechenden
+  Abschnitte;
+- EINSTELLUNGEN für 10 weitere Funkgeräte (insgesamt 396): Feidaxin FD-288A, FD-150A,
+  FD-160A, FD-450A, FD-460A, FD-460UH und Retevis RT76P (aus CHIRP), Baofeng RD-5R und
+  DM-1801 (31 Punkte: DMR-Name und -ID, Einschalttexte, Töne, Zeiten, VOX, Suchlauf,
+  Energiesparen), Baofeng DM-1701 (DMR-Name und -ID, Einschalttexte);
+- Tests: «go test» funktioniert wieder auch unter Windows (extra_test.go).
+
+START
+- Doppelklick auf "IU0VYT Flash.exe". Der Startbildschirm "🏠 Home" öffnet sich, oben
+  befinden sich die festen Registerkarten "🏠 Home", "📻 Modelle", "Relais-Archiv" und
+  "ℹ Info"; jedes in der Galerie gewählte Funkgerät (auch Baofeng K67 Pro und Bajeton
+  8300) öffnet sich in einer weiteren Registerkarte, die mit × geschlossen wird.
+- Beim Update von Version 2.x genügt es, die ausführbare Datei zu ersetzen: Archiv,
+  Einstellungen und Kopien bleiben, wo sie sind.
+- Beim Update von Version 2.1 oder älter (GestioneCanali.exe): Relais-Archiv,
+  Einstellungen und Kopien bleiben dieselben (Ordner %APPDATA%\GestioneCanaliRadio);
+  die alte GestioneCanali.exe kann gelöscht werden.
+- Das Programm hat keine digitale Signatur: Beim ersten Start kann Windows "Der
+  Computer wurde durch Windows geschützt" anzeigen. Auf "Weitere Informationen" und
+  dann auf "Trotzdem ausführen" klicken.
+- Das Fenster verwendet die Komponente WebView2, die in Windows 11 bereits vorhanden
+  ist. Fehlt sie, öffnet sich das Programm im Standardbrowser und ein kleines Fenster
+  erlaubt das Schließen.
+- Es kann immer nur eine Instanz des Programms geöffnet sein.
+
+ARBEITSWEISE
+Mit dem Programmierkabel:
+1. "📻 Vom Funkgerät lesen…": Die Kanäle des Funkgeräts erscheinen in der Tabelle.
+2. Die Kanäle bearbeiten; sie auch in einer Datei speichern (Speichern unter…), um
+   eine Kopie zu haben.
+3. "📻 In das Funkgerät schreiben…".
+Mit Dateien (wie in Version 1.0):
+- Eine .xlc-Datei (K67 Pro) oder .dat-Datei (Bajeton 8300) öffnen, die mit dem
+  Originalprogramm oder mit diesem gespeichert wurde, bearbeiten, speichern (Strg+S).
+  Die hier gespeicherten Dateien lassen sich auch mit dem Originalprogramm öffnen und
+  schreiben.
+Beim Speichern über eine vorhandene Datei bleibt die vorherige Version daneben mit der
+Endung .bak erhalten (z. B. k67.xlc.bak).
+
+MODELLGALERIE
+- Die Registerkarte "📻 Modelle" zeigt alle Funkgeräte von Baofeng (Katalog und
+  Download-Seite von baofengradio.com), Bajeton (bajeton.com) und seit 4.0 der anderen
+  unterstützten Marken (Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, MaxTalker,
+  Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID und seit 4.1 Hiroyasu,
+  Talkpod, Anysecu). Suche nach Marke oder Name, auch alternativ (z. B. UV-5RA,
+  MINI-5, GT-3TP, UV-K5), und Filter nach Marke (Menü "Alle Marken"), Typ
+  (Amateurfunk, DMR, GMRS / FRS, PMR446 und anmeldefrei, für Kinder), Funkgeräte mit
+  Kanälen über Kabel oder mit Firmware.
+- Oben die "KOMPATIBLEN MODELLE: N", die dieses Programm unterstützt (Etiketten
+  "Kanäle" und "Firmware"), unten die "NICHT KOMPATIBLEN MODELLE: N", die sich nur mit
+  dem Herstellerprogramm oder mit freien Programmen programmieren lassen: Für sie gibt
+  es die offiziellen Links zu Programmen, Firmware und Handbüchern. N ist die Anzahl
+  der Modelle (mit Suche und Filtern die angezeigten). Seit 4.3 trennt eine dicke
+  Linie die beiden Teile.
+- In jedem Teil sind die Funkgeräte nach Typ unterteilt: Amateurfunk (VHF/UHF), DMR
+  (digital), GMRS / FRS (USA), PMR446 und anmeldefreie Funkgeräte, Für Kinder;
+  innerhalb jeder Gruppe sind die Funkgeräte nach Marke getrennt (zuerst Baofeng, dann
+  Bajeton, dann die anderen alphabetisch, mit der Anzahl der Modelle jeder Marke) und
+  die Modelle alphabetisch geordnet (UV-5R vor UV-17). Auf der Karte jedes Funkgeräts
+  steht die Marke, jede mit eigener Farbe (Baofeng blau, Bajeton orange, Quansheng
+  grün, Retevis rot, Radtel violett…).
+- Jedes Modell hat seine eigene Karte, auch wenn es wie ein anderes behandelt wird:
+  Zum Beispiel verwenden UV-5R, UV-5RA, UV-5RE, GT-3 denselben Treiber, ebenso BF-888S
+  und BF-777S. Der Hinweis auf der Karte nennt die Modelle mit gleicher Behandlung.
+  Bei den in der CHIRP-Tabelle genannten gleichwertigen Modellen
+  (chirp/share/model_alias_map.yaml, z. B. GT-1 = BF-888, GT-5 = UV-82, UV-10R =
+  BF-F8HP) steht das im Hinweis: Die Kompatibilität ist die von CHIRP angegebene,
+  nicht die des Herstellers.
+- Klick auf ein Funkgerät: Es öffnen sich seine Kanal-Registerkarte, das
+  Firmware-Update oder die Liste der Links. Gibt es das Funkgerät in mehreren
+  Versionen (z. B. UV-5RX3, UV-5R+Pro), die eigene wählen: Ist es nicht die richtige,
+  antwortet das Funkgerät nicht und wird nicht verändert.
+
+MIT DEN CHIRP-TREIBERN UNTERSTÜTZTE FUNKGERÄTE
+- Für 61 Modelle sind das Kabelprotokoll und die Speicherkarte die der CHIRP-Treiber
+  (https://chirpmyradio.com), in der Sprache dieses Programms neu geschrieben.
+  Familien: UV-5R (UV-5R, F-11, UV-82, UV-82HP, UV-82X3, UV-6, BF-F8HP, UV-5RX3,
+  GT-5R, UV-5G, UV-5G Pro), UV-17 Pro (UV-17Pro, UV-17Pro GPS, UV-21Pro V2, UV-21Pro
+  GPS, UV-25, UV-28 Plus, UV-32, UV-5RM, UV-5RM Plus, K5 Plus, UV-5RH, GM-5RH, GM-21,
+  UV-5G Plus, UV-17R Plus, BF-F8HP Pro, K6/K63, UV-5R Mini, UV-5G Mini), wasserdichte
+  (BF-A58, BF-A58S, UV-82WP, GT-3WP, UV-S9X3, UV-5RX, UV-9R, UV-9G, UV-6R, UV-5X3),
+  UV-17 und UV-13 Pro, BF-888S/BF-M4/MP31/BF-1901/1904/1909, UV-B5/B6, BF-T1,
+  BF-T8/U9, UV-3R, BF-V8A, BF-T20FRS, BF-T20, W31E, Bajeton BJ-7800 und (seit 3.1)
+  Bajeton BJ-7700 (Radtel RT-910 / RT-910 BT), H-Serie (H-31, H-32, BF-H…: dasselbe
+  Funkgerät wie die Radioddity GA-510) und GM-15 Pro.
+- Seit 4.0 auch die Funkgeräte der anderen Marken: Familie UV-K5 (Quansheng UV-K5,
+  UV-K6, UV-5R Plus, UV-K1, Retevis RA79, MaxTalker TK-6: Treiber uvk5.py), Familie
+  T18 (Radtel T18, Retevis RT22S, RT20, RB18, RB618, RT68, RT668, RB17, RB617, RB17V,
+  RB85, RB75, RB19, RB19P, RB619, RT47, RT47V, RT647, RB29, RB629, RT15, RB87, H777H,
+  BTECH FRS-B1: radtel_t18.py), Familie RT22 (Retevis RT22, RT22FRS, RT622, WLN KD-C1,
+  Zastone ZT-X6, Luiton LT-316, TID TD-M8: retevis_rt22.py), Familie H777 (Retevis
+  H777, H777 Plus, Radioddity GA-2S, MaxTalker MT-8S, Maverick RA-100 und RA-425),
+  Familie GA-510 (Retevis RA685, RA85, Abbree AR-F5, TIDRADIO TD-H6), Familie UV-17
+  Pro (MaxTalker P15, MT-5RM, Radioddity GM-30 Plus und GM-30 Pro), Familie RT-900
+  (Radtel RT-900, RT-900 BT, RT-920, Radioddity GS-10B), Radioddity GM-30, Retevis RT6
+  und Intek KT-980HP (Familie UV-5R).
+- Seit 4.1: Familie MML JC-8810 (Radtel RT-470, RT-470L, RT-470X, RT-470X Plus,
+  RT-630, RT-495, Hiroyasu HI-8811, Talkpod A36plus und A36plus 8 W, Anysecu UV-A37,
+  Abbree AR-730: Treiber mml_jc8810.py; 256 Kanäle, 512 bei den A36plus, Namen mit 12
+  Zeichen; bei der RT-470X ist das Flugfunkband 118-136 MHz in AM) und Familie TD-H8
+  (TIDRADIO TD-H8 der zweiten und dritten Generation, TD-H3, Basis-, HAM- und
+  GMRS-Versionen, Radtel RT-730: Treiber tdh8.py; 199 Kanäle mit Namen aus 8 Zeichen;
+  Frequenzen, die die HAM-Version nur empfangen kann, sind Nur-Empfang; in den
+  GMRS-Versionen haben die Kanäle 1-30 eine feste Frequenz).
+- Seit 4.2: Familie TYT TH-UV88 (TYT TH-UV88 und TH-UV98, Retevis RT85, RA89, P2 und
+  P62, Explorer QRZ-1: Treiber th_uv88.py; 200 Kanäle mit Namen aus 10 Zeichen, drei
+  Leistungsstufen; jedes Modell hat seinen Namen im Protokoll, «UV88», «UV99»…),
+  Familie Radtel RT-490 (Radtel RT-490, JC-8629 von MMLradio, JJCC und Socotran,
+  Socotran FB-8629, Jianpai 8800 Plus, Boristone 8RS, Abbree AR-869, HamGeek HG-590:
+  radtel_rt490.py; 256 Kanäle mit Namen aus 12 Zeichen, auch auf Chinesisch; AM-Kanäle
+  bleiben im Flugfunkband in AM; das Funkgerät meldet die Marke nicht), Familie
+  Retevis RT21 (RT21, RT21V, RB17A, RB23, RB26, RB626, RB89, RT76, RT29 UHF und VHF,
+  RT19, RT619, RT40B, RB28B, RB628B, RT86, RT86S, RT86A, Abbree AR-63:
+  retevis_rt21.py; Kanäle ohne Namen; bei RB28B und RT19 haben die Kanäle 1-22 FRS,
+  bei RB628B und RT619 die Kanäle 1-16 PMR446 und bei RB17A, RB23, RB26, RT76 und
+  RT40B die GMRS-Kanäle eine feste Frequenz, wie in CHIRP) und Quansheng TK11
+  (tk11.py; 999 Kanäle mit Namen aus 16 Zeichen, 0,15-1160 MHz; AM-, SSB- und
+  CW-Kanäle bleiben in ihrem Modus; nach dem Schreiben startet das Funkgerät neu).
+- Seit 4.8: TYT TH-UV3R und TH-UV3R-25 (th_uv3r.py, th_uv3r25.py), TH-UVF1 (thuv1f.py)
+  und TH-UVF8D (th_uvf8d.py); KYD NC-630A (kyd.py) und IP-620 (kyd_IP620.py); KSUN M6
+  (ksun_m6.py, Frequenzen in 500-Hz-Schritten); Puxing PX-777 und PX-2R (puxing.py;
+  der Bereich der PX-777 ist der im Funkgerät gespeicherte); Boblov X3 Plus
+  (boblov_x3plus.py, Helmfunkgerät: wie in CHIRP lässt sich die Leistung nicht
+  ändern); Lanchonlh HG-UV98 (hg_uv98.py, gerade Parität); Radioddity R2, Retevis
+  RT24, RT24V und H777S (radioddity_r2.py); Retevis RT1 (retevis_rt1.py, VHF- und
+  UHF-Version); Retevis H777 V4 und RT21H (retevis_h777v4.py: die Registerkarte der
+  H777 erkennt die V4 und nennt ihre Registerkarte); Quansheng TG-UV2+ (tg_uv2p.py,
+  zwei Stoppbits, Kanäle 0-199); Feidaxin FD-268A/B, FD-288A/B, FD-150A, FD-160A,
+  FD-450A, FD-460A, FD-460UH (fd268.py).
+- Seit 4.9: Wouxun (wouxun.py, kguv8d.py, kguv8dplus.py, kguv8e.py, kguv9dplus.py,
+  kg935g.py: 20 Modelle; KG-UV8D Plus, KG-UV8E und KG-935G mit dem verschlüsselten
+  Protokoll); TYT TH-UV8000D/E (th_uv8000.py), UVL-15W (tyt_uvl15w.py, 1000 Kanäle)
+  und TH-350 USA (th350.py); Abbree AR-518, Ruyage UV58Plus und Radtel RT-880G
+  (iradio_*.py, radtel_rt880g.py); Retevis C2 (retevis_c2.py, RTS aus), HA1G, HA1UV
+  und HA2 (retevis_ha1g.py, retevis_ha2.py; die Kanäle 1-30 der HA1G sind fest),
+  RB15/RB615, RB17P, RB28/RB628/RB48/RB648, RT23, RT26, RT76P, RT87 und
+  RT16/RB27B/RB27V (bf_t8.py); BTECH GMRS-V1, GMRS-V2, MURS-V1, MURS-V2
+  (GMRS-/MURS-Kanäle mit den Regeln von CHIRP, beim Schreiben wird geprüft, ob die
+  Firmware-Version die des Lesens ist) und FRS-A1; AnyTone TERMN-8R/OBLTR-8R
+  (anytone_ht.py); Puxing PX-888K; QYT KT-8R (btech.py); Rugged RH5R-V2; Baojie
+  BJ-UV55 (uv5r.py); MTC UV-5R-3 (uv5x3.py); Radioddity MU-5 (feste MURS-Kanäle);
+  Zartek ZA-758 (h777.py); TIDRADIO TD-M11 (tdm11.py, Versionen 22 FRS, 16 PMR und 16
+  v0.95); TDXone TD-Q8A (tdxone_tdq8a.py). Gewollte Unterschiede: RT87 (CHIRP erhöht
+  den Scrambler bei jeder Änderung um 1), TERMN-8R/OBLTR-8R (CHIRP entfernt «Nur
+  Empfang» nie: Der Kanal sendet nicht wieder), TD-M11 (Datum und Uhrzeit des
+  Funkgeräts bleiben unberührt). Ohne Einstellungen: RH5R-V2 (CHIRP hat keine),
+  BJ-UV55, RT76P, TD-M11 und RT-890 M7OCM.
+- Quansheng UV-K5 und ähnliche: 200 Speicher mit Namen bis zu 10 Zeichen, Leistungen
+  Niedrig 1,5 W / Mittel 3 W / Hoch 5 W, Flugfunkband in AM (Frequenzen wie bei CHIRP
+  auf das 8,33-kHz-Raster gerundet), Senden auf einem anderen Band als dem
+  Empfangsband erlaubt. Die vom Funkgerät gemeldete Firmware (z. B. "k5_2.01.32")
+  erscheint in den Details der Lesung und bei der Identifizierung. Das Programm
+  unterstützt nur die Original-Firmware von Quansheng (CHIRP bekannte Versionen): Bei
+  einer veränderten Firmware, die den Speicher anders nutzt, hält es an, ohne zu lesen
+  oder zu schreiben, wie CHIRP. Seit 4.9 haben die Firmwares egzumer, F4HWN und
+  LOSEHU/LTS/UVE eigene Registerkarten (UV-K5 Firmware egzumer, F4HWN, LOSEHU): Jede
+  liest und schreibt nur ihre Firmware; für andere (z. B. IJV) das vom Autor der
+  Firmware angegebene Programm verwenden.
+- Man arbeitet mit den Kanälen: "Vom Funkgerät lesen" (oder eine .img-Datei öffnen,
+  auch mit CHIRP gespeichert), bearbeiten, "In das Funkgerät schreiben" und/oder
+  "Speichern" (.img-Datei, die sich mit CHIRP öffnen lässt). Die Einstellungen des
+  Funkgeräts sind die gelesenen (sie werden mit "⚙ Einstellungen…" geändert, siehe
+  "EINSTELLUNGEN DER FUNKGERÄTE"): Deshalb gibt es kein "Neue Datei".
+- Wie bei den anderen Funkgeräten: Sicherungskopie vor dem Schreiben (.img-Datei im
+  Ordner copie_radio) und Kontrolllesung danach.
+- Namen an die vom Funkgerät erlaubten Zeichen und Längen angepasst, Leistungen mit
+  den Stufen des Funkgeräts (z. B. "Hoch 5 W"), DCS nur unter den Codes des
+  Funkgeräts, Frequenzbereiche geprüft. In der Spalte TX bedeutet "OFF" =
+  Nur-Empfang-Kanal.
+- Von CHIRP übernommene Besonderheiten: UV-5G Mini (GMRS-Kanäle 1-30 fest, 8-14
+  schmalbandig mit niedriger Leistung), GM-21 (GMRS-Grenzen), BJ-7800 (15 Zonen zu 64
+  Kanälen; FM-/AM-/HF-Zusatzkanäle nicht unterstützt), UV-5R (Nummerierung ab 0, wie
+  das Funkgerät), GM-15 Pro (GMRS-Funkgerät: Kanäle 1-30 fest, 8-14 und 55-250 nur
+  Empfang, 23-54 GMRS-Relais mit TX = RX + 5 MHz), H-Serie (Kanäle 0-127).
+- Die CHIRP-Treiber sind freie Software (Lizenz GNU GPL v3): Die davon abgeleiteten
+  Teile dieses Programms werden unter derselben Lizenz verbreitet, und der
+  vollständige Quellcode befindet sich im Ordner "sorgenti". Dank an die Autoren von
+  CHIRP.
+
+AUS DEN HERSTELLERPROGRAMMEN ABGELEITETE FUNKGERÄTE (3.1 - 3.6)
+Für diese Funkgeräte hat CHIRP keinen Treiber: Protokoll und Speicher wurden aus dem
+Code der offiziellen Programme von den Websites von Baofeng und Bajeton abgeleitet und
+mit der CHIRP-Familie mit gleicher Speicherkarte verglichen (die .img-Dateien lassen
+sich auch mit CHIRP öffnen, unter dem Namen dieses Modells).
+- UV-25 Plus, AR-152 Pro, UV-29 Pro / SW-9, UV-7B (Programm «BF-UVs CPS»): gleicher
+  Speicher und gleiches Protokoll wie die UV-17 Pro GPS; das Funkgerät muss mit seinem
+  Modell antworten (z. B. «UV25PRO», «AR152»), sonst starten Lesen und Schreiben
+  nicht.
+- UV-17R, UV-21R, UV-21L (Programm «T6UV Series CPS»): wie die UV-17 Pro.
+- T22 (PMR446, PMR-Version des Programms): wie die W31E von CHIRP, 16 Kanäle.
+- BF-C2 / BF-V2 und BF-88ST (Programme «BF_V1_FH» und «BF-889»): wie die BF-888S, 16
+  Kanäle ohne Namen.
+- BF-88A / BF-88E: Das Paket des Herstellers empfiehlt, CHIRP als «BF-888» zu
+  verwenden: Es wird der Treiber der BF-888S verwendet.
+- Bajeton BJ-9000 und Radtel RT-950 Pro (Programme «BJ-9000_CPS» und «RT-950PRO_CPS»):
+  gleiches Protokoll wie die BJ-7800 mit Modellprüfung; geschrieben werden Kanäle,
+  Namen und (seit 3.6) allgemeine Einstellungen; VFO, DTMF und APRS mit dem
+  Herstellerprogramm. Seit 4.6 zwei Versionen je nach Firmware (siehe "RADTEL RT-950
+  PRO UND BAJETON BJ-9000"). Kanäle und Einstellungen sind mit dem Originalcode der
+  Programme geprüft, verbunden mit dem simulierten Funkgerät.
+- (4.6) Radtel RT-950 (ohne «Pro», Programm «BT-9000_CPS»): Das Funkgerät antwortet
+  «BT-9000»; 960 Kanäle in 15 Zonen zu 64 oder in einer einzigen Liste, gleiche
+  Einstellungen wie die BJ-9000 mit Firmware bis 0.23.
+
+RADTEL RT-950 PRO UND BAJETON BJ-9000 (4.6)
+- Es sind zwei verschiedene Funkgeräte mit derselben Elektronik und demselben
+  Protokoll: Über Kabel antworten sie gleich ("RT-950"), daher verwendet das Programm
+  den Namen des in der Galerie oder bei der Identifizierung gewählten Funkgeräts (und
+  merkt ihn sich).
+- Firmware bis 0.23 (Herstellerprogramme bis v1.2.0): 960 Kanäle, 15 Zonen zu 64
+  Kanälen (Zone 1: Kanäle 1-64, Zone 2: 65-128, …) oder eine einzige Liste mit 960
+  Kanälen. In der Galerie: "Firmware bis 0.23: 960 Kanäle".
+- Firmware 0.24 und neuer (Programme v1.2.1 und neuer): 990 Kanäle, 10 Zonen zu 99
+  (Zone 1: Kanäle 1-99, Zone 2: 100-198, …) oder eine einzige Liste mit 990 Kanälen.
+  In der Galerie: "Firmware 0.24 und neuer: 990 Kanäle".
+- In beiden Versionen sind die Kanäle in den beiden Anzeigearten dieselben: Es ändert
+  sich nur, wie das Funkgerät sie zeigt (Einstellung "Kanalaufteilung").
+- Erkennung: Das Funkgerät meldet die Firmware-Version nicht. Das Programm liest den
+  Speicher immer bis Kanal 990 (ein harmloses Lesen auch mit der früheren Firmware,
+  wie es das Programm v1.2.1 tut) und prüft die Daten: ein Kanal über 960 → 0.24 und
+  neuer; Daten nach Kanal 960, die keine Kanäle sind, oder eine aktive Zone über der
+  zehnten → bis 0.23. Reichen die Daten nicht, wird die Registerkarte verwendet, aus
+  der gelesen wird, und ein Hinweis erklärt, wie man die Version im Menü des
+  Funkgeräts prüft.
+- Schreiben: die Kanäle 1-960 und die allgemeinen Einstellungen; die Kanäle 961-990
+  nur, wenn sie sich ändern, nachdem sie in derselben Sitzung aus dem Funkgerät
+  zurückgelesen wurden. Hat das Funkgerät in diesem Bereich Daten, die keine Kanäle
+  sind, bricht das Schreiben ab, bevor irgendetwas geschrieben wird. Bei aktiver
+  Sicherungskopie startet das Schreiben nicht, wenn das angeschlossene Funkgerät die
+  andere Version hat (die Kopie bleibt gespeichert).
+- Die von dieser Version gespeicherten .img-Dateien merken sich die Version des
+  Funkgeräts; früher gespeicherte öffnen sich in der aus den Daten erkannten Version
+  oder, wenn das nicht zu erkennen ist, in der Version der Registerkarte (aus der
+  Galerie: 0.24 und neuer).
+- Byte der Kanaloptionen (4.7): Bit 0 = Modulation (0 FM, 1 AM), Bit 1 = "Senden
+  aktiviert", das die Radtel-Programme bis v1.2.x (auch die v1.2.1 mit 990 Kanälen)
+  immer auf 1 schreiben. Die v1.3.3 liest nur Bit 0 und schreibt Bit 1 auf 0 zurück.
+  Das Programm schreibt es mit beiden Versionen immer auf 1 (mit Firmware bis 0.23
+  könnte ein Kanal ohne dieses Bit nicht senden; bei der neueren Firmware ändert sich
+  nichts) und setzt es in den Kanälen 1-960, in denen es fehlt, wieder.
+- Firmware-Version am Funkgerät: MENU, Punkt "About" (Informationen): Es erscheint
+  "Software Ver 0.xx".
+- Veröffentlichte Versionen (November 2026): Radtel RT-950 Pro V0.15-V0.29 (Programm
+  RT-950PRO_CPS bis v1.3.3); Bajeton BJ-9000 V0.22 (November 2025), V0.27 (März 2026)
+  und V0.29 (Juni 2026, identisch mit der von Radtel), Programm BJ-9000_CPS v1.1.1
+  (960 Kanäle, mit Firmware bis 0.23 zu verwenden) und v1.3.3 (990 Kanäle). Die
+  Hiroyasu HI-UV850 Pro ist dasselbe Funkgerät (das Radtel-Programm v1.3.3 enthält
+  ihre Version).
+- (3.2) BF-9700 / BF-S56 Max: Speicher der BF-1909 von CHIRP, bis 0x0400 gelesen.
+- (3.3) D-Serie (Programm «BF Series CPS», Pakete «Baofeng_V1D_CPS» und
+  «Baofeng_BF-D_Series_CPS»): gleicher Speicher wie die BF-888S (16 Kanäle ohne Namen;
+  30 bei W31D und BF-T20D), mit analogen oder verschlüsselten digitalen Kanälen. Das
+  Funkgerät meldet sein Modell: Ist es nicht das gewählte, starten Lesen und Schreiben
+  nicht, und die Meldung sagt, welches Modell angeschlossen ist. Bei der BF-V12D wird
+  die Entsperrung des Herstellerprogramms verwendet. W31D, BF-T20D und BF-V12D sind
+  auch in CHIRP (Treiber «Baofeng digital»), der jedoch die Aufnahme in den Suchlauf
+  umgekehrt liest: Hier wird dem Herstellerprogramm gefolgt.
+- (3.3) BF-T17 / BF-T18 (Programme «T17-T18 PMR446 PRO» und «T17-T18 FRS» v1.2.2): 99
+  Kanäle (PMR446) oder 35 (FRS); ist am Funkgerät das Lese- und Schreibpasswort
+  gesetzt, es zuerst mit dem Herstellerprogramm entfernen.
+- (3.3) DM-32UV, DMR-Funkgerät: CHIRP-Treiber (selbst aus dem Herstellerprogramm v1.60
+  abgeleitet und an einem echten Funkgerät getestet). Geändert werden Frequenzen,
+  Namen (16 Zeichen), Leistung (1 / 2,5 / 5 W), Bandbreite und Töne; bei DMR-Kanälen
+  bleiben Kontakt, Gruppe, Slot und Color Code wie eingestellt; Zonen, Kontakte,
+  Listen und Einstellungen des Funkgeräts werden nicht angetastet, ein gelöschter
+  Kanal wird aber auch aus den Zonen und Suchlauflisten entfernt. Geschrieben werden
+  nur die geänderten Speicherseiten, jede zur Kontrolle zurückgelesen. Manche Kabel
+  mit CH340-Chip verfälschen die Daten dieses Funkgeräts: besser ein Kabel mit FTDI-
+  oder CP2102-Chip.
+- (3.3) DM-1801 Pro, im Test: Der Hersteller veröffentlicht dasselbe Programm wie für
+  die DM-32UV (gleiche ausführbare Datei, v1.60). Meldet sich das Funkgerät mit einem
+  anderen Modell, hält das Programm vor dem Lesen oder Schreiben an.
+- (3.3) Bajeton BJ-8200: gleiche Pakete wie die BJ-7700 auf der Download-Seite von
+  Bajeton (Programm «BT-RT910_CPS», Firmware BJ7700PRO_….anc): Treiber und Firmware
+  der BJ-7700, mit Modellprüfung.
+- (3.4) BF-T9 (Programm «BF-Ts» v1.04): 99 Kanäle ohne Namen, Anmeldung «PROGRAL»,
+  Lesen und Schreiben in Blöcken zu 16 Byte. Das Funkgerät speichert seinen eigenen
+  Frequenzbereich (z. B. 400-470 MHz, 13 mögliche Bereiche): Kanäle außerhalb des
+  Bereichs werden abgelehnt. Geprüft mit dem Originalcode des Programms, verbunden mit
+  dem simulierten Funkgerät (Lesen, Schreiben, identischer Speicher; das Programm
+  setzt das Bit «beat shift» wegen eines eigenen Lesefehlers immer zurück).
+- (3.4) GT-18 PMR446 (Programm «BAOFENG GT18 PMR» v1.2.1): Das Programm ist dasselbe
+  wie für die T17 PMR446 (gleiche Protokollklasse, nur die Anmeldung ändert sich): 99
+  Kanäle, mit dem Originalcode des Programms geprüft.
+- (3.4) Bajeton DM-5000, DMR-Funkgerät (Programm «BAJETON DM-5000 CPS», Version
+  250726): 1024 Kanäle zu 48 Byte, 115200 Baud, Blöcke zu 1 KB mit Prüfsumme. Geändert
+  werden Frequenzen, Namen (16 Zeichen), Leistung, Suchlauf, Bandbreite und Töne der
+  analogen Kanäle; neue DMR-Kanäle erhalten die Standardwerte des Programms (erste
+  Gruppe, erster Kontakt, Slot 1, Color Code 0). Ein neuer Kanal kommt in Zone 1, wenn
+  er nicht schon in einer Zone ist; ein gelöschter Kanal wird aus den Zonen entfernt.
+  Kontakte, Gruppen, Nachrichten und Einstellungen werden nicht angetastet. Ist am
+  Funkgerät ein Passwort gesetzt, es zuerst mit dem Herstellerprogramm entfernen.
+  ACHTUNG: Manche Virenscanner melden die für die Firmware veröffentlichten Pakete
+  «DMR R5000 Update Tool» als gefährlich: Dieses Programm verwendet sie nicht und
+  enthält sie nicht.
+- (3.4) UV-28 Pro: gleiches Programm «BF-UVs CPS» wie die anderen (das Funkgerät
+  meldet sich als «UV28PRO»).
+- (3.4) AR-152: Das Herstellerprogramm verwendet die Anmeldung der UV-5R, und CHIRP
+  führt sie als UV-5R; die AR-152 Pro bleibt ein anderes Funkgerät. UV-5R III:
+  Dreiband-Funkgerät, bei CHIRP «UV-5RIII» = Radioddity UV-5RX3. BF-R5: Programm
+  «BF_480» mit dem Protokoll der BF-888S. W31: Das Herstellerprogramm verwendet
+  dasselbe Protokoll wie die W31E von CHIRP. UV-98 Pro, im Test: Der Hersteller
+  veröffentlicht das Programm der WP970I, Basis der Familie UV-9R / BF-A58 in CHIRP
+  (es wird der Treiber der UV-9R verwendet).
+- (3.5) DR-1801UV (BF-1801A6, Chip Auctus A6), DMR-Funkgerät (Programm «DR-1801A6»):
+  1024 Kanäle zu 52 Byte mit Namen aus 16 Zeichen, analog und DMR; 9600 Baud für die
+  Anmeldung, dann 115200; der Speicher wird vollständig mit Prüfsumme gelesen und
+  geschrieben. Geändert werden Frequenzen, Namen, Leistung (hoch / niedrig),
+  Bandbreite und Töne (CTCSS und DCS, auch Nicht-Standard wie im Programm); ein
+  gelöschter Kanal wird auch aus Zonen, Suchlauflisten und Roaming entfernt (leere
+  Zonen werden gelöscht), ein neuer Kanal kommt in die erste Zone mit freiem Platz
+  (sonst in eine neue Zone). Wie im Herstellerprogramm nummeriert das Löschen eines
+  Kanals die anderen nicht um. Kontakte, Gruppen und DMR-Einstellungen werden nicht
+  angetastet. Geprüft mit dem ORIGINALCODE des Programms: Lesen der Werksdatei, sechs
+  Änderungen mit einem Speicher, der Byte für Byte mit dem vom Programm geschriebenen
+  übereinstimmt, Lesen und Schreiben des Programms mit dem simulierten Funkgerät
+  gleich wie bei diesem Programm.
+- (3.5) BF-T60 / TR-988UV: Der Hersteller veröffentlicht das Programm «T6UV Series
+  CPS», dasselbe wie für UV-17R und UV-21R (Treiber der UV-17R). UV-3R+: im Test mit
+  dem UV-3R-Treiber von CHIRP (CHIRP-Meldung Nr. 239).
+- (3.6) GT-22 (PMR446, Programm «GT-22») und GT-68 (FRS, Programm «BF_V1_FH» des
+  GT-68-Pakets): gleiche Protokollklasse und gleicher Speicher wie die BF-888S, 16
+  Kanäle ohne Namen. Die GT-22 schreibt die Kanäle immer schmalbandig und hat keinen
+  Suchlauf (wie ihr Programm). Geprüft mit dem Originalcode der beiden Programme,
+  verbunden mit dem simulierten Funkgerät.
+- (3.6) RD-5R und DM-1801, DMR-Funkgeräte, über USB als HID-Gerät angeschlossen (kein
+  COM-Anschluss, kein Treiber zu installieren): Speicher der Familie Radioddity GD-77
+  und Protokoll der freien Programme dmrconfig (BSD-Lizenz) und qdmr (GPL). 1024
+  analoge und DMR-Kanäle mit Namen aus 16 Zeichen; ein gelöschter Kanal wird aus Zonen
+  und Suchlauflisten entfernt, ein neuer Kanal kommt in eine Zone. Kontakte, Gruppen
+  und DMR-Einstellungen werden nicht angetastet.
+- (3.6) DM-1701 / Retevis RT84 (Familie TYT MD-UV380), DMR-Funkgerät, über USB im
+  DFU-Modus angeschlossen: Es wird der USB-Treiber des Herstellers benötigt (Ordner
+  «DM-1701 USB Driver» des Pakets «DM-1701 CPS»), derselbe wie für sein Programm; das
+  Herstellerprogramm vor dem Lesen oder Schreiben schließen. 3000 Kanäle, Name
+  erforderlich (ein Kanal ohne Namen wird zu «CH n», wie in dmrconfig).
+- (3.6) RD-5R, DM-1801 und DM-1701 sind mit dmrconfig selbst geprüft, kompiliert mit
+  einer Verbindung zum simulierten Funkgerät: gleiche gelesene Kanäle, Änderungen mit
+  Byte für Byte identischem Speicher, identisches Lesen und Schreiben über USB.
+Noch nicht unterstützt: DMR-Funkgeräte mit undokumentierten Protokollen oder nativen
+Programmen (DM-1702, DM-5R, M20D, DMR-6X2 / 6X2 PRO: Für die DMR-6X2 haben dmrconfig
+und qdmr eine für alte Firmwares geschriebene Speicherkarte, die nicht mit den
+aktuellen vergleichbar ist), PMR-Funkgeräte ohne veröffentlichtes Programm (BF-T3,
+BF-T6…T57, BF-V1…V6A, BF-33C, BF-358…), 5RHam, UV-8D / BF-UV8 und BJ-98 Plus: Links zu
+den offiziellen Programmen in der Galerie, sofern vorhanden.
+
+EINSTELLUNGEN DER FUNKGERÄTE (3.6)
+- Schaltfläche „⚙ Einstellungen…“ in der Registerkarte des Funkgeräts, nachdem das
+  Funkgerät per Kabel gelesen oder eine seiner Dateien geöffnet wurde. Links die
+  Gruppen (z. B. „Empfang und Senden“, „Display, Töne und Tasten“, „DTMF“), oben die
+  Suche. Jeder Eintrag hat:
+    ⓘ  Beschreibung des Eintrags (beim Überfahren mit der Maus; ein Klick lässt sie
+    darunter geöffnet);
+    ⚠  bei heiklen Einträgen: die Warnung steht in der Beschreibung, und vor dem
+    Übernehmen fasst ein Fenster die Warnungen zusammen und bittet um Bestätigung.
+  Geänderte Einträge werden hervorgehoben; „Übernehmen“ schreibt sie in den Speicher
+  der Registerkarte (die „geändert“ wird): danach die Datei speichern oder wie bei den
+  Kanälen ins Funkgerät schreiben. „Änderungen rückgängig“ kehrt zu den gelesenen
+  Werten zurück.
+- Heikle Einträge: Passwörter (Einschalten, Lesen, Schreiben), Frequenzgrenzen und
+  Sendefreigabe je Band, Senden gesperrt, maximale Sendezeit, VOX, Zurücksetzen und
+  Menüeinträge, PTT-ID und gesendete Codes, Alarm, der sendet, Relaisfunktion,
+  Fernsperre, Bluetooth-Programmierung, Tastensperre.
+- K67 Pro / 5RH Pro (53 Einträge): aus dem Programm „5RH PRO“, Methoden ConvertSetting
+  und SettingConvert.
+- Bajeton BJ-8300 (40 Einträge; 41 in den Dateien von BT-11_CPS v1.0.9, mit
+  „Kanalaufteilung“): Fenster „Optional Features“ des Programms; jeder Eintrag ist
+  eine Zahl des in der .dat-Datei gespeicherten Objekts, an ihrer Stelle geändert (die
+  Datei bleibt identisch mit der, die das Programm speichern würde).
+- Bajeton BJ-9000, Radtel RT-950 Pro und RT-950 (57 Einträge): Fenster „Optional
+  Features“ der Herstellerprogramme; es werden nur die Bits jedes Eintrags geändert,
+  die übrigen Bytes bleiben die des Funkgeräts. Die aktiven Zonen der Bänder sind je
+  nach Firmware-Version 10 oder 15.
+- Mit den CHIRP-Treibern verwaltete Funkgeräte (63 Familien: UV-5R, UV-17 Pro,
+  wasserdichte, BF-888S, UV-B5, BF-T1, BJ-7800, BJ-7700, H-Serie…): die Tabelle jeder
+  Familie ist aus dem CHIRP-Code abgeleitet (für jeden Eintrag lässt man CHIRP jeden
+  Wert schreiben und sieht, welche Bits sich ändern), und die Einträge sind übersetzt.
+  Abgleich-, Test- und Werkseinträge sind nicht enthalten. Texte mit
+  nicht-lateinischen Zeichen (z. B. vom Herstellerprogramm geschriebene chinesische
+  Namen) können nur ersetzt werden.
+- Baofeng RD-5R und DM-1801 (4.10, 31 Einträge): allgemeine Einstellungen der Familie
+  Radioddity GD-77, wie qdmr sie beschreibt (DMR-Name und -ID wie dmrconfig);
+  Passwörter werden nicht angetastet. Baofeng DM-1701 (4.10): Name, DMR-ID und
+  Einschalttexte, die einzigen Felder, bei denen dmrconfig und qdmr übereinstimmen.
+- Noch nicht verfügbar: D-Serie, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST,
+  BF-9700 / BF-S56 Max, DM-5000, DR-1801UV und die Modelle der UV-17-Pro-Familie, die
+  CHIRP nicht aufführt (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B, UV-17R,
+  UV-21R, UV-21L): für diese das Herstellerprogramm verwenden.
+
+.DAT-DATEIEN DER BAJETON BJ-8300 (3.6)
+Das Programm BT-11_CPS v1.0.9 speichert die Kanäle in einer einzigen Liste mit 960
+(v1.0.8 in 15 Zonen zu 64) und hat einen Eintrag mehr („Kanalaufteilung“): v1.0.9
+öffnet keine Dateien von v1.0.8 und umgekehrt. IU0VYT Flash öffnet beide Formate und
+speichert eine Datei in dem Format, in dem sie geöffnet wurde. In der Registerkarte
+der 8300 wählt „Datei für BT-11_CPS“ die Version: die geöffnete Datei wird umgewandelt
+(Kanäle und Einstellungen bleiben gleich), und neue Dateien und Lesevorgänge vom
+Funkgerät verwenden dieses Format (Standard: v1.0.8, die Version, die auf der
+Bajeton-Downloadseite für die 8300 angegeben ist).
+Kanäle in Zonen oder in einer einzigen Liste (3.9.2): wie in BT-11_CPS v1.0.9 folgt
+die Tabelle bei Dateien von v1.0.9 der Einstellung „Kanalaufteilung“ (Channel Divide):
+„in 15 Zonen zu 64“ (Zonenleiste, Nummern 1-64 in jeder Zone) oder „alle (960)“ (eine
+einzige Liste, Nummern 1-960). Die Wahl steht in der Leiste der Registerkarte
+(„Kanäle“) und in „⚙ Einstellungen“; sie wird in der Datei gespeichert und ins
+Funkgerät geschrieben, das die Kanäle ebenso anzeigt. Eine neue Datei von v1.0.9
+beginnt mit „alle Kanäle“, wie im Originalprogramm; ein gelesenes Funkgerät behält
+seine Wahl. v1.0.8 hat diese Einstellung nicht: ihre Dateien sind immer in Zonen und
+stellen das Funkgerät beim Schreiben wieder auf Zonen um.
+
+FIRMWARE-AKTUALISIERUNG RADTEL RT-950 PRO, RT-950, RT-920 UND RT-910B (4.7)
+- RT-950 Pro, BJ-9000, HI-UV850 Pro und RT-950: .BTF-Datei (oder .Firmware) mit
+  demselben Lader und demselben Protokoll wie Radtels Programm „RT-950_EnUPDATE“, das
+  bis auf den Fenstertitel Bajetons „BJ9000_EnUPDATE“ gleicht. In der Datei steht der
+  Modellcode („RT-950“ für RT-950 Pro / BJ-9000 / HI-UV850 Pro, „BT-9000“ für die
+  RT-950 ohne „Pro“): das Funkgerät prüft ihn und weist eine fremde Firmware ab, bevor
+  es den Speicher löscht; das Programm zeigt ihn an und verlangt eine schriftliche
+  Bestätigung, wenn das gewählte Funkgerät ein anderes ist. Manueller Modus: Funkgerät
+  aus, Seitentasten 3 und 4 gedrückt halten und einschalten (Bildschirm „Update“).
+- RT-920 und RT-910B (mit Bluetooth): .anc-Datei des Programms „Radtel ANC Bootloader
+  V1.2“, dasselbe Protokoll wie Bajetons „BinTe ANC Bootloader“ (Code verglichen:
+  gleiche Befehle, Geschwindigkeiten und Wartezeiten). Die RT-920 ist die BJ-7800 und
+  die RT-910B die BJ-7700: Erkennung und Sicherungskopie wie bei diesen Funkgeräten
+  (die Kopie der RT-920 mit ihrem eigenen Treiber). Das Radtel-Programm verlangt
+  außerdem eine Freigabe über das Internet, die hier nicht nötig ist. Die
+  .BTU-Firmware der RT-910 ohne Bluetooth lässt sich seit 4.8 aktualisieren (siehe
+  „FIRMWARE-AKTUALISIERUNG .BTU“).
+- Bekannte Fingerabdrücke: RT-950 Pro V0.15-V0.29, RT-950 V0.27 und V0.29, BJ-9000
+  V0.22, V0.27 und V0.29, RT-920 V0.13-V0.18, RT-910B V0.14.
+
+FIRMWARE-AKTUALISIERUNG .BTU (4.8)
+- Radtel RT-910 und RT-900 ohne Bluetooth, Bajeton BJ-7700 ohne Bluetooth: .BTU-Datei
+  des Programms „Radtel Bootload Tools“ (dasselbe für RT-900 und RT-910).
+  Automatischer Modus: das eingeschaltete Funkgerät empfängt „PROGRAMBT80U“ mit 57600
+  Baud, dann wechselt der Anschluss für den Lader auf 115200 Baud. Manueller Modus
+  (auch für ein Funkgerät, das nicht startet): Funkgerät aus, die beiden Seitentasten
+  unter der PTT gedrückt halten und einschalten, das Display zeigt „UPDATE“ (im
+  Radtel-Programm ist es die Schaltfläche „Update“ mit schwarzer Schrift). Laut
+  Radtel, wenn das Funkgerät nicht wieder startet: so wiederholen, und wenn das nicht
+  reicht, den Akku 10 Minuten entfernen.
+- Der Lader prüft das Modell der Firmware NICHT: das Programm leitet es aus dem
+  Dateinamen ab (RT910…, RT900…, BJ7700…) und verlangt immer, es einzugeben. RT-910:
+  Platine H1.00 (V0.07-V0.09) und H1.00G (V0.10, V0.11 mit 15 Zonen zu 64 Kanälen).
+  RT-900: V1.14P (999 Kanäle) ist für die Platine H3.01 (Menü 47); V1.04P ist für die
+  vorherige Platine (Firmware ab 0x08001000) und nicht austauschbar mit den „OPEN“
+  V1.05P-V1.14P. Die Sicherungskopie verwendet auf RT-900, RT-910 und BJ-7700 mit und
+  ohne Bluetooth dasselbe Protokoll: sie bestätigt, dass das Funkgerät zu dieser
+  Familie gehört, nicht welches Modell es ist.
+- Bekannte Fingerabdrücke: RT-910 V0.07-V0.11, RT-900 V1.04P, V1.05P, V1.09P und
+  V1.14P, BJ-7700 ohne Bluetooth V1.07 (5 W).
+
+FIRMWARE-AKTUALISIERUNG QUANSHENG UV-K5 (4.1)
+- Quansheng UV-K5, UV-K5(8), UV-K6 und UV-5R Plus, von Quansheng veröffentlichte
+  .bin-Dateien (z. B. k5_v2.01.26_publish.bin, k6_v3.00.22_publish.bin). Quansheng
+  schützt die Downloads seiner Website mit einem Passwort, das der Händler mitteilt.
+- Die Datei wird geprüft (CRC16-Summe, Version) und entschlüsselt; die Version (z. B.
+  2.01.26) gibt den Funkgerätetyp an: 2 = UV-K5, 3 = UV-K5(8) und UV-K6, 4 = UV-5R
+  Plus.
+- Ablauf: Funkgerät ausschalten, Kabel anschließen, mit gedrückter PTT wieder
+  einschalten (die Taschenlampe leuchtet, der Bildschirm bleibt dunkel), dann
+  „Aktualisierung starten“. Vor dem Schreiben liest das Programm die Version des
+  Laders im Funkgerät: passt sie nicht zum Typ der Firmware (z. B. Firmware der UV-K6
+  auf einer UV-K5), hält es an und das Funkgerät bleibt unberührt. Kanäle,
+  Einstellungen und Abgleich werden nicht gelöscht.
+- Das Laderprotokoll (Pakete zu 256 Byte mit Bestätigung) ist das von den freien
+  Programmen k5prog und uvtools dokumentierte, abgeleitet aus Quanshengs
+  Aktualisierungsprogramm; hier von Grund auf neu geschrieben und mit einem
+  simulierten Funkgerät getestet. Seit 4.4 auch die Funkgeräte mit dem Lader 7.x
+  (UV-K5 V3, UV-K1, Retevis RA79 V3): siehe „FIRMWARE-AKTUALISIERUNG RETEVIS“.
+- Eine Nicht-Quansheng-Firmware kann installiert werden. Seit 4.9 werden nach einer
+  egzumer-, F4HWN- oder LOSEHU-Firmware die Kanäle mit der Registerkarte dieser
+  Firmware gelesen; mit anderen Firmwares liest dieses Programm (wie CHIRP) die Kanäle
+  des Funkgeräts nicht mehr.
+- Seit 4.2 auch Radtel RT-590 / RT-590 Plus (dasselbe Funkgerät wie die UV-K5) und
+  RT-600 / RT-600 Plus (das der UV-5R Plus) mit den .bin-Dateien von Radtel
+  (radtels.com, z. B. RT590_update_file_v2.01.32.rar und
+  RT600_update_file_v4.00.06.rar, frei herunterladbar): gleicher Ablauf (PTT +
+  Einschalten, Taschenlampe an). Die beiden echten Dateien wurden getestet:
+  Entschlüsselung und gesendete Bytes identisch mit dem Programm uvtools.
+
+FIRMWARE-AKTUALISIERUNG RADTEL RT-470 / RT-495 / RT-630 (4.3)
+- Radtel RT-470, RT-470L, RT-470X, RT-495 und RT-630, von Radtel veröffentlichte
+  .kdhx-Dateien (radtels.com, frei herunterladbar, z. B. „470 serial
+  MFM_V2.13C_20240425.kdhx“, „RT470_AllBandTx_V1.27A_20240523.kdhx“,
+  „495_NUM_ALLBAND_V0.07_20231207.kdhx“, „rt-630 8.33AM137_AMFM.kdhx“), auch innerhalb
+  des heruntergeladenen .rar-Archivs.
+- Das Radtel-Programm („New RT470 serial Bootloader Pro“, gleich für die vier
+  Funkgeräte) ist derselbe „Bootloader Pro“ wie bei der Baofeng UV-25 Plus mit der
+  Plattform JJCC: gleicher Ablauf, automatischer Handshake „PROGROMJJCCU“.
+- RT-470: es gibt ZWEI Platinen. Die Firmware 1.x ist nur für die alte Platine (Menü
+  55: FW 1.xx), die 2.x nur für die neue (FW 2.0 oder später): Radtel warnt, dass eine
+  falsche Datei das Funkgerät blockiert. Vor der Wahl der Datei Menü 55 prüfen: das
+  Programm zeigt, für welche Platine die Datei ist, und verlangt zur Bestätigung die
+  Eingabe des Modells.
+- Automatischer Modus (Funkgerät an) oder manuell: Funkgerät aus, mit gedrückten
+  Seitentasten 2 und 3 eingeschaltet. Die vier echten Dateien wurden vom Programm
+  geprüft und die Übertragung mit einem simulierten Funkgerät getestet.
+
+FIRMWARE-AKTUALISIERUNG TIDRADIO TD-H3 / TD-H8 UND RADTEL RT-730 (4.3)
+- TIDRADIO TD-H3, TD-H8 und Radtel RT-730 (Plattform TD-H8), .BIN-Dateien des
+  Herstellers (z. B. „730Step improvement.BIN“ von radtels.com, „H3_240530.BIN“).
+- Der Lader ist für die drei Funkgeräte gleich (identischer Handshake in den
+  Programmen „H8_IAP“ von TIDRADIO und „RT730 Update tool“ von Radtel; Protokoll
+  veröffentlicht von nicsure, TD-H3-Engineering): 115200 Baud, Blöcke zu 32 Byte, vom
+  Funkgerät einzeln bestätigt.
+- Ablauf: Kabel an das ausgeschaltete Funkgerät anschließen, „Aktualisierung starten“
+  drücken (das Programm wartet 60 Sekunden) und das Funkgerät mit gedrückter PTT
+  einschalten.
+- Der Lader prüft NICHT, für welches Funkgerät die Datei bestimmt ist (TD-H3, TD-H8
+  und RT-730 haben unterschiedliche Firmware): das Programm leitet es aus Name oder
+  Inhalt der Datei ab und verlangt die Eingabe des Modells (RT730, TDH3, TDH8). Bricht
+  die Übertragung ab, bleibt das Funkgerät im Lader: mit gedrückter PTT wieder
+  einschalten und wiederholen.
+- Von Dritten geänderte Firmwares (nicsure) werden erkannt und gemeldet: dieses
+  Programm könnte, wie CHIRP, deren Kanäle nicht mehr lesen.
+
+FIRMWARE-AKTUALISIERUNG RADTEL RT-890 (4.10)
+- Radtel RT-890: .bin-Dateien von Radtel und freie Firmwares (M7OCM, OEFW). Das
+  Programm prüft, dass die Datei ein Programm für den Mikrocontroller des Funkgeräts
+  ist (AT32F421, höchstens 59 KB), und erkennt freie Firmwares und die Platine (PCB
+  2.0 oder 2.1).
+- Ablauf: Kabel an das ausgeschaltete Funkgerät anschließen, es mit den beiden
+  gedrückten Seitentasten einschalten (Bildschirm dunkel) und „Aktualisierung starten“
+  drücken. Der Lader des Funkgeräts bleibt unversehrt; bricht die Übertragung ab, das
+  Funkgerät auf dieselbe Weise wieder einschalten und wiederholen.
+- Der Lader prüft das Modell nicht: man muss RT890 eingeben. Nach der freien Firmware
+  M7OCM werden die Kanäle mit der Registerkarte „Radtel RT-890 (Firmware M7OCM)“
+  verwaltet.
+- Protokoll wie das freie Programm rt_890_flasher von JuantAldea (115200 Baud,
+  Löschen, bestätigte Blöcke zu 128 Byte), von Grund auf neu geschrieben und mit einem
+  simulierten Funkgerät und mit der Firmware M7OCM v3.2 getestet.
+
+DMR-FIRMWARE-AKTUALISIERUNG ÜBER USB: DM-1701, RD-5R, DM-1801 (4.10)
+- Baofeng DM-1701 / Retevis RT84: .bin-Datei von Baofeng („OutSecurityBin“, z. B.
+  „DM-1701(CSV)-V02.06.bin“), über USB mit demselben Treiber wie für die Kanäle.
+  Funkgerät aus: die PTT und die Taste über der PTT gedrückt halten und einschalten
+  (Lader), Kabel anschließen und „Aktualisierung starten“ drücken. Es wird nur der
+  Programmspeicher geschrieben (ab 0x0800C000): der Lader bleibt unversehrt. Die Teile
+  der Datei für den SPI-Speicher (Schriften und Bilder) werden nicht geschrieben, wie
+  in radio_tool. Ablauf des freien Programms radio_tool (von diesem Projekt an echten
+  DM-1701 getestet), von Grund auf neu geschrieben; die Dateien V02.06 des Herstellers
+  mit einem simulierten Funkgerät getestet.
+- Baofeng RD-5R und DM-1801: .sgl-Dateien des Herstellers (z. B. „BF-5R_V2.1.6.sgl“,
+  „DM-1801_V2.1.9.sgl“), über USB als HID-Gerät (kein Treiber). Aktualisierungsmodus
+  (Bildschirm dunkel): RD-5R, orange Taste S1 und schwarze Taste Fn neben der PTT;
+  DM-1801, die beiden kleinen Tasten unter der PTT; beim Einschalten gedrückt
+  gehalten. Das Funkgerät prüft den Modellschlüssel, bevor es den Speicher löscht: mit
+  der Firmware eines anderen Funkgeräts hält die Aktualisierung an, ohne es zu
+  verändern. Ablauf des „FirmwareLoader“ von OpenGD77 und von radio_tool, von Grund
+  auf neu geschrieben; Dateien des Herstellers mit einem simulierten Funkgerät
+  getestet.
+- In allen drei Fällen muss das Modell eingegeben werden (DM1701, RD5R, DM1801).
+
+FIRMWARE-AKTUALISIERUNG RETEVIS (4.4, 4.5)
+- Retevis RA79 V3 (und Quansheng UV-K5 V3 und UV-K1, Mikrocontroller PY32F071, Lader
+  7.x): .bin-Datei von Retevis im Quansheng-Format (z. B. „RA79 V3.bin“, Version
+  7.00.16). Ablauf wie bei der UV-K5: Funkgerät aus, mit gedrückter PTT wieder
+  eingeschaltet, dann „Aktualisierung starten“. Der Lader 7.x prüft die Firmware
+  nicht: das tut das Programm, das sie nur sendet, wenn der Lader dieselbe
+  Hauptversion hat (Firmware 7.00.xx nur auf Lader 7.00.xx; die UV-K1 haben 7.02 oder
+  7.03), und es weist Funkgeräte mit dem Lader der klassischen UV-K5 ab (2.x und 5.x:
+  ein anderer Mikrocontroller). Protokoll wie von quansheng_toolkit und Multi-UVTools
+  veröffentlicht, von Grund auf neu geschrieben und mit einem simulierten Funkgerät
+  und mit der echten Datei getestet.
+- Retevis RA89: .bin-Datei von Retevis (z. B. „Eng_RA89_Upadat_20250524_B91.38.bin“,
+  Version B91.38 vom 24.05.2025). Protokoll des Retevis-Programms
+  „RA89-update-software“ („TH8600-UpDAta Soft“ 2.3): 57600 Baud, Blöcke zu 128 Byte,
+  einzeln bestätigt. Der Originalcode des Programms wurde mit einem simulierten
+  Funkgerät ausgeführt: die gesendeten Befehle sind Byte für Byte identisch (846
+  Schritte mit der echten Datei, bei 57600 und bei 115200 Baud, auch bei einem Fehler
+  des Funkgeräts), mit denselben Pausen.
+- RA89: das Funkgerät zuerst wie von Retevis angegeben in den Aktualisierungsmodus
+  bringen. Die Datei ist verschlüsselt und das Funkgerät prüft das Modell nicht: zur
+  Bestätigung muss RA89 eingegeben werden. ACHTUNG (Retevis): wenn die Aktualisierung
+  abbricht, das Funkgerät NICHT normal einschalten, sondern die Aktualisierung sofort
+  wiederholen.
+- RA89, Korrektur in 4.5: in 4.4 erwartete das Programm vom Funkgerät „AA 01 EF“ nach
+  dem Handshake „AA 09 EF“, während das Retevis-Programm (bei Wahl der RA89) „AA 09
+  EF“ erwartet: mit einem echten Funkgerät hielt die Aktualisierung von 4.4 sofort mit
+  „das Funkgerät ist nicht im Aktualisierungsmodus“ an, ohne etwas zu schreiben. Der
+  Test von 4.4 führte den Teil des Retevis-Programms nicht aus, der die erwartete
+  Antwort festlegt (die Modellwahl im Fenster); jetzt schon.
+- Retevis RT85 (4.5): .hex-Datei von Retevis (z. B. „RT85-Firmware-V1.53.hex“).
+  Protokoll des Retevis-Programms „RT85 10W_5W_UpData“ („TH8600-UpDAta Soft“ 2.1),
+  dasselbe wie bei der RA89 mit kürzeren Pausen: aus der .hex-Datei (keine Firmware im
+  Klartext: sie ist verschlüsselt) bereitet das Programm Blöcke mit den Daten von 4
+  Zeilen (64 Byte) und deren Summe vor; 1024 Blöcke für die Datei 1.53. Der
+  Originalcode wurde mit einem simulierten Funkgerät ausgeführt: Blöcke und Befehle
+  Byte für Byte identisch, bei 57600 und 115200 Baud, mit 5 W und mit 10 W, auch bei
+  einem Fehler des Funkgeräts.
+- RT85, Ablauf von Retevis: Funkgerät aus, mit gedrückter PTT und P1 eingeschaltet:
+  die Anzeige wird grün. Kabel anschließen, die Leistung des Funkgeräts wählen und
+  „Aktualisierung starten“ drücken. Die Leistung wird wie im Retevis-Programm gewählt
+  („5W“ oder „10W“): das Funkgerät antwortet nur auf den Handshake seines Modells,
+  sonst hält das Programm sofort an, ohne etwas zu schreiben (dann die andere Wahl
+  versuchen). Die auf der Retevis-Website beschriebene RT85 ist die mit 5 W (wie die
+  TYT TH-UV88). Zur Bestätigung muss außerdem RT85 eingegeben werden.
+- RT85, ACHTUNG (Retevis): wenn die Aktualisierung abbricht, das Funkgerät NICHT
+  einschalten (der Mikrocontroller blockiert für immer): im Aktualisierungsmodus
+  lassen und die Aktualisierung sofort wiederholen.
+- Retevis-Firmwares werden von retevis.com heruntergeladen (Seite Firmware). Die
+  übrigen Retevis-Funkgeräte der Galerie haben keine von Retevis veröffentlichte
+  Firmware.
+
+FIRMWARE-AKTUALISIERUNG BAOFENG
+- Baofeng UV-5RM / UV-5RH (Serie mit TFT-Display „330L“), .BF-Datei: Protokoll des
+  Herstellerprogramms „BF Upgrade Tool for TFT 330L Series“ (Lader KDH V1.0). Zwei
+  Modi, wie im Original: automatisch (Funkgerät an: es wird in den Lader gebracht;
+  vorher wird auf Wunsch eine Kopie seiner Kanäle gespeichert) und manuell (Funkgerät
+  mit gedrückter PTT eingeschaltet, Bildschirm dunkel: auch für ein Funkgerät, das
+  nicht startet). ACHTUNG: es gibt Versionen mit unterschiedlichen Funkchips (BK4819,
+  AT1846S, FD6818), und die Firmwares sind NICHT austauschbar; der Dateiname gibt es
+  meist an (z. B. 5RH_BK_V0.14_231123.BF). Das Programm prüft die Datei (Kopf,
+  Bereiche, gültiges ARM-Programm, stimmiger verschlüsselter Teil) und erkennt die von
+  der Community gesammelten Firmwares (SHA-256-Fingerabdruck); Baofeng veröffentlicht
+  sie nicht auf seiner Website.
+- Baofeng 5RH Pro (und Funkgeräte mit derselben CPS „5RH_PRO“, wie das K67 Pro),
+  .dat-Datei „BF_5RH“: Protokoll des Aktualisierungsprogramms des Herstellers
+  (Radio.exe). Das Funkgerät muss wie vom Hersteller angegeben in den
+  Aktualisierungsmodus gebracht werden; zu Beginn meldet es seine Platine (V1 =
+  Firmware 1.x, V2 = Firmware 2.x), und wenn es nicht die der Datei ist, startet die
+  Aktualisierung nicht. Nach dem Löschen des Speichers kann sie nicht mehr abgebrochen
+  werden.
+- Bajeton BJ-7800: dasselbe Programm („BinTe ANC Bootloader“) und dieselben
+  .anc-Dateien wie die BJ-8300 (offizielle Firmware BJ7800_CN_EN_V0.17_20251126.anc,
+  auf dem Google Drive des Herstellers); das Modell wird am Dateinamen erkannt. Die
+  Sicherungskopie vor der Aktualisierung ist eine .img-Datei (Treiber der BJ-7800).
+- Seit 3.1, mit den Protokollen der offiziellen Aktualisierungsprogramme (Klasse
+  „KDH_Bootloader“, aus ihrem Code abgeleitet):
+    UV-25 Plus, .kdhx-Datei („Baofeng Bootloader Pro“; offiziell V0.23 vom
+    22.05.2025);
+    UV-9G, .kdh-Datei („Bootloader_BaudRate38400“, Aktualisierung zum Senden auf Kanal
+    15; offiziell T52GMRS_M8_V02_231004.kdh);
+    Bajeton BJ-9000, .Firmware-Datei („BJ9000_EnUPDATE“; offiziell V0.27 vom
+    13.03.2026; das Funkgerät prüft auch das in der Datei geschriebene Modell).
+  Automatischer Modus (Funkgerät an) oder manuell (Funkgerät mit den vom Hersteller
+  angegebenen Tasten eingeschaltet, im Fenster gezeigt: UV-25 Plus SK2+SK3, UV-9G
+  Tasten 12+13, BJ-9000 Seitentasten 3+4). Die Datei wird geprüft (gültiges
+  ARM-Programm, Modell im Namen, SHA-256-Fingerabdruck der offiziellen Firmwares).
+- Bajeton BJ-7700 mit Bluetooth: .anc-Datei wie BJ-8300/BJ-7800 (offiziell
+  BJ7700PRO_V0.06_251124.anc); das Funkgerät wird mit dem Protokoll der BJ-7700
+  erkannt, und die Sicherungskopie ist eine .img-Datei.
+- BJ-8200 (3.3): dieselbe Firmware und dasselbe Programm wie die BJ-7700 mit
+  Bluetooth.
+- Seit 3.5 derselbe Lader für Funkgeräte derselben Familie (Protokolle oben bereits
+  mit dem Originalcode überprüft; nur das Zielfunkgerät ändert sich):
+    .BF-Datei (Lader KDH V1.0 der UV-5RM): K5 Plus, UV-5RM Plus, UV-17R, UV-17R Plus,
+    UV-21R, UV-21L, UV-21, BF-T60 / TR-988UV. Es sind Funkgeräte des Programms „T6UV
+    Series CPS“, das auch die UV-5RH verwaltet (in CHIRP sind K5 Plus und UV-5RM Plus
+    von der UV-5RM abgeleitet);
+    .kdhx-Datei (Lader „Bootloader Pro“, Plattformcode H802): UV-28 Pro, UV-29 Pro /
+    SW-9, AR-152 Pro, UV-7B, UV-32. Sie verwenden dasselbe Herstellerprogramm wie die
+    UV-25 Plus („BF-UVs Pro CPS“); der Lader „Bootloader Pro“ ist für die Plattform
+    „BF_H802“ geschrieben, derselbe interne Name wie bei der „T6UV Series CPS“: für
+    diese Funkgeräte nimmt das Fenster auch .kdhx-Dateien an.
+  Baofeng veröffentlicht Firmwares nur für UV-25 Plus und UV-9G: für die anderen
+  Funkgeräte braucht man die vom Hersteller oder Händler gelieferten Dateien. Das
+  Zielmodell wird am Dateinamen erkannt (z. B. „UV29Pro_…kdhx“, „K5Plus_…BF“): ist es
+  nicht das Funkgerät der Registerkarte, erscheint eine Warnung, und ist es nicht die
+  UV-25 Plus (.kdhx-Datei) oder die UV-5RM / UV-5RH (.BF-Datei), muss zum Starten der
+  Aktualisierung das Modell eingegeben werden (z. B. UV29PRO, K5PLUS; H802, wenn der
+  Dateiname es nicht angibt). Die schriftliche Bestätigung ist auch nötig, wenn das im
+  Fenster gewählte Funkgerät nicht das der Datei ist. Eine bekannte Datei
+  (SHA-256-Fingerabdruck) zählt mehr als ihr Name: die umbenannte offizielle Firmware
+  der UV-25 Plus bleibt „für UV-25 Plus“. Im automatischen Modus wird ein Funkgerät,
+  das auf die Aktualisierungsanfrage nicht antwortet, nicht verändert.
+- DM-32UV, DM-5000, M20D: Aktualisierung nur mit den Herstellerprogrammen (Links in
+  der Galerie). Bei der DM-32UV steckt die Aktualisierung im nativen Programm des
+  Herstellers (Protokoll nicht überprüfbar aus dem Code ableitbar), M20D und DM-5000
+  verwenden gepackte oder von Virenscannern gemeldete Programme. Ohne Vergleich mit
+  dem Originalcode könnte eine falsche Aktualisierung das Funkgerät unbrauchbar
+  machen: deshalb werden sie nicht unterstützt. Die BJ-7700 ohne Bluetooth
+  (.BTU-Datei) lässt sich seit 4.8 aktualisieren, RD-5R, DM-1801 und DM-1701 seit 4.10
+  (siehe oben).
+
+LESEN UND SCHREIBEN PER KABEL
+- Kabel anschließen, Funkgerät einschalten, im Fenster den COM-Anschluss des Kabels
+  wählen (der Treibername hilft beim Erkennen, z. B. „USB-SERIAL CH340 (COM3)“).
+  Erscheint der Anschluss nicht, den Kabeltreiber installieren und „Aktualisieren“
+  drücken.
+- Das Protokoll ist das der Originalprogramme der Hersteller (CPS des K67 Pro, 5RH_PRO
+  und BT-11_CPS von Bajeton), aus ihrem Code abgeleitet: gleiche Befehle, gleiche
+  Verschlüsselung, gleiche Prüfungen, gleiche Pausen.
+    K67 Pro: 19200 Baud (das Funkgerät kann von sich aus 115200 verlangen, wie im
+    Original), optionales Programmierpasswort (max. 8 Zeichen).
+    Bajeton 8300: 57600 Baud.
+- Vor dem Schreiben liest das Programm standardmäßig das Funkgerät und speichert eine
+  Sicherungskopie; nach dem Schreiben liest es das Funkgerät erneut und vergleicht die
+  Kanäle. Startet das Funkgerät am Ende des Schreibens neu, wartet das erneute Lesen
+  und versucht es weiter, bis das Funkgerät wieder antwortet (bis zu 45 Sekunden,
+  3.9.2).
+  Kopien und Lesevorgänge liegen in %APPDATA%\GestioneCanaliRadio\copie_radio (sie
+  öffnen sich wie normale .xlc/.dat-Dateien). Misslingt die Sicherungskopie, wird
+  nichts geschrieben.
+- Es wird der ganze Speicher geschrieben, wie es das Originalprogramm tut: mit den
+  Kanälen auch die allgemeinen Einstellungen der Datei oder des Lesevorgangs, an dem
+  Sie arbeiten (Menüs, VFO, Zonen, DTMF…). Um sie nicht zu ändern, von einem
+  Lesevorgang des Funkgeräts ausgehen. Beim K67 werden die ersten 128 Byte
+  (Gerätedaten, Modell, Bereiche) nie überschrieben: das Programm liest sie wie das
+  Original aus dem Funkgerät.
+- Prüfungen vor dem Schreiben (wie im Original): K67 mit einem anderen Frequenzband
+  als die Datei oder Modell „BF-K6“ nicht vorher gelesen → Schreiben abgelehnt; nicht
+  umwandelbare Daten → Fehler vor der Verbindung mit dem Funkgerät.
+- Lesen und Sicherungskopie lassen sich abbrechen, das Schreiben nicht (das Funkgerät
+  bliebe mit unvollständigen Daten). Bricht das Schreiben ab (Kabel gezogen, Funkgerät
+  ausgeschaltet), wiederholen: die Sicherungskopie liegt im oben genannten Ordner.
+- Nach einem Lesevorgang gelten die Kanäle als „noch nicht in einer Datei
+  gespeichert“.
+- Ist das Funkgerät mit dem PC verbunden, das Originalprogramm nicht gleichzeitig
+  verwenden (der COM-Anschluss kann nur von einem Programm geöffnet werden).
+
+FIRMWARE-AKTUALISIERUNG (BAJETON 8300)
+In der Registerkarte „Bajeton 8300“ „⬆ Firmware aktualisieren…“ drücken. Das Fenster
+hat drei Schritte.
+1. Firmware
+   - „Datei auf dem PC…“: die Firmware-Datei wählen (.anc, z. B.
+     BJ8300_V0.12_20251112.anc) oder ein .zip- oder .rar-Archiv, das sie enthält, auch
+     ineinander verschachtelte Archive (wie das Herstellerpaket: ein .rar mit einem
+     .zip, das die .anc enthält).
+   - „Aus dem Internet“: die Adresse der Datei (.anc, .zip oder .rar) einfügen und
+     „Herunterladen“ drücken. Freigabelinks einer einzelnen Datei bei Google Drive und
+     Dropbox funktionieren auch. Ein Link auf einen Google-Drive-ORDNER lässt sich
+     nicht herunterladen: den Ordner im Browser öffnen und den Link der Datei
+     kopieren, oder sie herunterladen und vom PC laden. Heruntergeladene Firmwares
+     werden in %APPDATA%\GestioneCanaliRadio\firmware aufbewahrt.
+   - Enthalten die Archive mehrere Firmwares, fragt das Programm, welche verwendet
+     werden soll.
+   - Prüfungen der Datei: Format (Signatur „JLUFW“ der Firmwares des Funkgeräts),
+     Entschlüsselung (die .anc-Datei ist verschlüsselt: das Programm entschlüsselt sie
+     wie das Original und prüft, dass der Inhalt lesbar ist), Plattform gleich der der
+     offiziellen BJ-8300-Firmware (YHD15C8_soundbox), Dateiname, SHA-256-Fingerabdruck
+     der bekannten offiziellen Firmwares. Die Firmware BJ8300 V0.12 vom 12.11.2025
+     (die letzte von Bajeton veröffentlichte) wird als offiziell erkannt. Eine
+     ungültige Datei kann nicht gesendet werden; eine Datei mit Hinweisen (z. B.
+     andere Plattform) erfordert eine zusätzliche Bestätigung.
+2. Funkgerät
+   - Den Anschluss des Kabels und den Zustand des Funkgeräts wählen:
+     „Funktioniert normal“ (wie die Schaltfläche „Update“ des Originalprogramms):
+     zuerst wird das Funkgerät mit dem Programmierprotokoll der Bajeton 8300
+     (demselben wie „Aus Funkgerät lesen“) IDENTIFIZIERT, und standardmäßig wird eine
+     Kopie seiner Kanäle und Einstellungen gelesen und gespeichert
+     (Bajeton_prima_del_firmware_….dat in copie_radio). Antwortet das Funkgerät nicht
+     wie eine Bajeton 8300, startet die Aktualisierung NICHT und das Funkgerät bleibt
+     unberührt. Dann wird das Funkgerät in den Aktualisierungsmodus gebracht und
+     erhält die Firmware.
+       „Funkgerät identifizieren“ macht nur die Prüfung, ohne zu aktualisieren.
+     „Startet nicht“ (Wiederherstellungsmodus, wie die Schaltfläche „Click Here If
+     Your Radio Can't Work“): für ein Funkgerät ohne gültige Firmware. Das Funkgerät
+     kann nicht identifiziert werden: das Programm wartet wie das Original etwa 12
+     Sekunden, bis sich das Funkgerät im Aktualisierungsmodus meldet. „Aktualisierung
+     starten“ drücken und das Funkgerät sofort nach den Anweisungen des Händlers in
+     den Aktualisierungsmodus bringen (meist durch Einschalten mit einer gedrückten
+     Taste, oft der PTT: der Ablauf ist nicht dokumentiert).
+   - Übertragungsgeschwindigkeit: 115200 Baud (Standard des Originalprogramms) oder
+     57600.
+3. Bestätigung
+   - „Ich bestätige, dass das angeschlossene Funkgerät eine Bajeton BJ-8300 ist“ muss
+     immer angehakt werden.
+   - Wenn das Funkgerät vom Programm nicht identifiziert wird (Wiederherstellungsmodus
+     oder „automatische Identifizierung überspringen“), muss außerdem BJ8300 in das
+     Feld eingegeben werden.
+Während der Aktualisierung zeigt ein Fenster Fortschritt und Meldungen. Das Funkgerät
+nicht ausschalten und das Kabel nicht trennen; einen geladenen Akku verwenden. Der
+Vorgang kann nur abgebrochen werden, solange das Funkgerät noch nicht zu antworten
+begonnen hat. Am Ende das Funkgerät aus- und wieder einschalten und die Version beim
+Einschalten prüfen; falls sich Kanäle oder Einstellungen geändert haben, die vor der
+Aktualisierung gespeicherte Kopie ins Funkgerät schreiben. Bricht die Aktualisierung
+ab: das Funkgerät aus- und einschalten und sie wiederholen; startet das Funkgerät
+nicht mehr, im Wiederherstellungsmodus wiederholen.
+Protokoll: das des Herstellerprogramms „BinTe ANC Bootloader“ V1.1 (BinTalk), aus
+seinem Code abgeleitet: Pakete AA 55 mit CRC16, 9600 Baud, Befehl zum Eintritt in den
+Aktualisierungsmodus, Wechsel auf 10000 Baud und dann auf die gewählte
+Geschwindigkeit, Senden der vom Funkgerät angeforderten Daten, 5 neue Versuche im
+Abstand von 2 Sekunden. Das Originalprogramm prüft weder die Datei noch das Modell des
+Funkgeräts: die oben beschriebenen Prüfungen fügt dieses Programm hinzu.
+.rar-Archive (Formate RAR 1.5-5, auch „solid“) öffnet das Programm mit dem freien
+Dekoder rardecode (BSD-Lizenz). Passwortgeschützte und in mehrere Teile aufgeteilte
+Archive werden nicht unterstützt.
+
+SPRACHE DER OBERFLÄCHE (4.10)
+- Die Auswahl mit der Flagge ist oben, direkt rechts von „ℹ Info“. Beim ersten Start
+  zeigt sie die italienische Flagge; ein Klick öffnet die Liste der Sprachen:
+  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語.
+- Die Übersetzung erfolgt sofort, ohne Neustart: Registerkarten, Schaltflächen, Menüs,
+  Fenster, Hilfe, Meldungen und Warnungen (auch die von den Funkgeräten), Karten der
+  Galerie, Einstellungen und die Windows-Fenster „Öffnen“ und „Speichern“.
+- Die gewählte Sprache wird in den Einstellungen des Programms gespeichert und gilt
+  auch nach Neustarts.
+- Die Namen der CHIRP-Einträge (Spalte „Originalname“ der Einstellungen), die Kanäle,
+  die Relaisnamen und die Dateien bleiben, wie sie sind.
+- Die Informationsdateien (LIESMICH, CHANGELOG, README, AUTOREN_UND_LIZENZEN, VERSION,
+  LIZENZHINWEIS) stehen im Ordner „lingue“ des Pakets, ein Unterordner je Sprache.
+  Maßgebliche Lizenz ist der englische Originaltext der GNU GPL (LICENSE.txt): die
+  Übersetzungen erklären, was sie erlaubt, wie es die Free Software Foundation
+  verlangt.
+
+REGISTERKARTE INFO UND AKTUALISIERUNGEN
+- Die Registerkarte „ℹ Info“ zeigt Name, Version, Erstellungsdatum, Autor, QRZ-Seite,
+  Website des Programms (https://iu0vyt.github.io/IU0VYT/, seit 3.9.3),
+  GitHub-Repository (https://github.com/IU0VYT/IU0VYT: Quellcode, Veröffentlichungen
+  und Aktualisierungen), Lizenz, Datenordner und rechtliche Hinweise (die Links öffnen
+  sich im Browser).
+- E-Mail (3.9): „✉ Dem Autor schreiben“ öffnet das Mailprogramm des PCs mit bereits
+  eingetragenem Empfänger und dem Betreff „IU0VYT Flash x.y“. Öffnet sich kein
+  Programm: „📋 Adresse kopieren“ (zum Einfügen in das Feld «An» von Gmail, Outlook.com
+  oder einer anderen Browser-Mail) oder „👁 Adresse anzeigen“ (als Bild, zum
+  Abschreiben). Die Adresse steht nicht als Text auf der Seite.
+- Datenordner: Relaisarchiv, Einstellungen, Kopien der Funkgeräte. Es ist der Ordner
+  %APPDATA%\GestioneCanaliRadio des Windows-Benutzers, der das Programm startet, bei
+  jedem Start auf diesem PC ermittelt (z. B.
+  C:\Users\<Benutzername>\AppData\Roaming\GestioneCanaliRadio): jeder Benutzer und
+  jeder PC hat seinen eigenen. „📂 Öffnen“ öffnet ihn im Datei-Explorer.
+- Prüfung auf Aktualisierungen: bei jedem Start automatisch und mit der Schaltfläche
+  „🔄 Nach Aktualisierungen suchen“ in der Registerkarte Info (seit 4.10 gibt es oben
+  keine Schaltfläche „Aktualisierungen“ mehr).
+  Das Programm vergleicht seine Version mit der vom Autor veröffentlichten:
+    · ist die verwendete die neueste, sagt es das und lädt nichts herunter;
+    · gibt es eine neuere, erscheint oben ein gelber Hinweis mit „⬇ Aktualisierung
+      herunterladen“ (und „Details“); das × blendet ihn bis zum nächsten Start aus.
+  Die Prüfung liest nur die Versionsnummer (wenige KB), nicht das Programm. Ohne
+  Internetverbindung zeigt die Prüfung beim Start keine Fehler.
+- „Aktualisierung herunterladen“: den Speicherort wählen (meist den Ordner Downloads),
+  das .zip-Paket wird heruntergeladen und geprüft. Danach das Programm schließen, das
+  Zip entpacken und die ausführbare Datei ersetzen: Relaisarchiv und Einstellungen
+  bleiben, wo sie sind.
+- Die Adresse, von der Aktualisierungen geprüft und heruntergeladen werden, ist im
+  Programm fest hinterlegt und kann nicht geändert werden:
+  https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip (seit
+  3.9). GitHub leitet sie auf die Datei IU0VYT.Flash.zip der letzten veröffentlichten
+  Version weiter.
+- Für den Autor, eine neue Version veröffentlichen: appVersion (server.go) und die
+  Version in res/risorse.rc erhöhen, neu kompilieren, versione.txt aktualisieren
+  (Zeilen „versione=x.y“ und „compilazione=...“) und im (öffentlichen)
+  GitHub-Repository eine neue Veröffentlichung anlegen, KEINE Vorabversion und KEIN
+  Entwurf, mit der Datei, die genau „IU0VYT.Flash.zip“ heißt, als Anhang: sie wird zur
+  „letzten Veröffentlichung“ (latest), und bereits installierte Programme finden sie
+  selbst. Die Version wird aus versione.txt gelesen oder aus der Zeile „Versione x.y“
+  von LEGGIMI.txt.
+- Die Website https://iu0vyt.github.io/IU0VYT/ (Ordner docs) aktualisiert sich selbst:
+  bei jeder Änderung des Zweigs main berechnet der Ablauf .github/workflows/sito.yml
+  aus dem Katalog die Modellzahlen (wie auf dem Startbildschirm) und veröffentlicht
+  sie; Version und Download-Schaltfläche folgen der letzten veröffentlichten Version.
+
+KANALTABELLEN
+- Doppelklick, Eingabe oder F2 zum Bearbeiten einer Zelle; man kann auch einfach
+  lostippen. Esc bricht die Bearbeitung ab. In einer leeren Zeile beginnt man mit der
+  RX-Frequenz.
+- Frequenzen in MHz (145.600 oder 145,600). Die Ablage schreibt man -0.6, +1.6, +5: TX
+  wird berechnet. Für TX in einem anderen Band die TX-Frequenz direkt eingeben.
+- Töne: CTCSS-Standardtöne (67.0 … 254.1) oder DCS-Codes: D023N normal, D023I
+  invertiert (D023 = normal); leer = AUS. „TX-Ton“ öffnet das Relais, „RX-Ton“ ist die
+  Tonsperre beim Empfang. Der K67 akzeptiert jeden oktalen DCS-Code; die Bajeton die
+  104 Standardcodes (D023 … D754).
+- Scan: Kanal im Suchlauf enthalten oder nicht (jetzt auch beim K67).
+- Modus (nur Funkgeräte mit digitalen Kanälen): Analog oder DMR / Digital. Bei
+  digitalen Kanälen werden keine Töne verwendet, und die digitalen Einstellungen des
+  Funkgeräts bleiben.
+- Auswahl: Klick, Umschalt+Klick (Bereich), Strg+Klick (hinzufügen), Strg+A (alle).
+- Häkchen (3.9.3): Kästchen links von jedem Kanal (Umschalt+Klick hakt einen Bereich
+  ab, die Leertaste die ausgewählten Zeilen); das Kästchen im Spaltenkopf hakt die
+  sichtbaren Kanäle ab, „☑ Alle auswählen“ / „☐ Auswahl aufheben“ alle Kanäle des
+  Funkgeräts. „📻 An ein anderes Funkgerät weitergeben“ und „→ Archiv“ verwenden die
+  abgehakten Kanäle oder, wenn keine abgehakt sind, die ausgewählten. Die Häkchen
+  folgen dem Kanal, wenn man ihn verschiebt oder ändert; sie werden nicht in der Datei
+  gespeichert.
+- Schaltflächen und Tasten: Hinzufügen; Zeile einfügen (Einfg); Löschen (Entf);
+  Löschen und verdichten (Umschalt+Entf); Nach oben/unten (Alt+↑ / Alt+↓); Sortieren
+  (nach Frequenz, Name, Ton: sind mehrere Kanäle ausgewählt, werden nur diese
+  sortiert); Verdichten (entfernt Lücken); Kopieren/Ausschneiden/Einfügen
+  (Strg+C/X/V); Rückgängig/Wiederholen (Strg+Z/Y). Ein Rechtsklick auf die Tabelle
+  öffnet ein Menü mit denselben Vorgängen.
+- Beim Einfügen auf belegte Plätze fragt das Programm, ob überschrieben, mit
+  Verschieben nach unten eingefügt oder nur freie Plätze verwendet werden sollen.
+- Bajeton 8300: 15 Zonen zu 64 Kanälen. Die Zone in der Leiste über der Tabelle
+  wählen, „Alle“, um sie zusammen zu sehen; „In Zone verschieben“ verschiebt die
+  ausgewählten Kanäle.
+- K67 Pro: 640 Kanäle. Die Frequenzbereiche des Funkgeräts werden aus der Datei
+  gelesen: Frequenzen außerhalb des Bereichs sind rot hervorgehoben.
+
+KOPIEREN ZWISCHEN DEN BEIDEN FUNKGERÄTEN
+Kopieren in der ersten Registerkarte und Einfügen in der anderen (seit 3.9.3 ist aus
+„Kopieren nach…“ „📻 An ein anderes Funkgerät weitergeben“ geworden, das direkt in das
+angeschlossene Funkgerät schreibt: siehe „WEITERGABE AN EIN ANDERES FUNKGERÄT“) passt
+die Kanäle mit der Logik des Konverters an und zeigt die Warnungen:
+- Namen: max. 16 Zeichen beim K67, 12 bei der Bajeton (Abkürzungen M. S. D. und
+  Endnummer bleiben erhalten, z. B. „CAMPOLUNGHINO 3“ → „CAMPOLUNGH 3“);
+- Leistung: die mittlere Stufe der Bajeton wird beim K67 zu Hoch;
+- DCS-Töne: übertragen, wenn das Zielgerät diesen Code hat, sonst AUS mit Warnung;
+- Frequenzen außerhalb der Bereiche des K67.
+Im Einfügefenster die Zone (Bajeton), die Startposition und die Wahl zwischen nur
+freien Plätzen und Überschreiben festlegen.
+
+WEITERGABE AN EIN ANDERES FUNKGERÄT (3.9.3)
+„📻 An ein anderes Funkgerät weitergeben“ (in der Registerkarte jedes Funkgeräts und im
+Rechtsklickmenü) schreibt die gewählten Kanäle direkt in ein anderes per Kabel
+angeschlossenes Funkgerät:
+1) die Kanäle abhaken (Kästchen links; „☑ Alle auswählen“ für alle Kanäle des
+   Funkgeräts): ist keiner abgehakt, werden die per Klick ausgewählten verwendet;
+2) Marke und Modell des Zielgeräts in den beiden Auswahllisten wählen (die Modelle
+   sind nach Typ gegliedert) und wohin die Kanäle sollen: auf die freien Plätze (die
+   schon im Funkgerät vorhandenen Kanäle bleiben) oder anstelle aller Kanäle des
+   Funkgeräts;
+3) bestätigen, dass das Modell stimmt und das Funkgerät am Kabel angeschlossen und
+   eingeschaltet ist;
+4) Verträglichkeitsprüfung wie beim Relaisarchiv: Frequenzen innerhalb der Bereiche
+   des Funkgeräts, kein Amateurfunkkanal auf einem PMR446- / GMRS-Gerät (gelbe
+   Warnung, wenn das Funkgerät diese Frequenzen trotzdem annimmt), kein DMR-Kanal auf
+   einem rein analogen Funkgerät. Man kann abbrechen, ein anderes Funkgerät wählen
+   oder nur die verträglichen Kanäle senden;
+5) den Anschluss des Kabels wählen und „Weitergeben und schreiben“ drücken. Das
+   Programm liest das Funkgerät und speichert eine Sicherungskopie (Ordner
+   „copie_radio“, Datei „..._prima_dell_inoltro_...“), passt die Kanäle an das
+   Funkgerät an (Namen, Zeichen, Töne, Leistungen, reine Empfangs- oder Digitalkanäle,
+   gesperrte Plätze wie die festen GMRS-Kanäle), schreibt sie und liest das Funkgerät
+   zur Prüfung erneut.
+Die Einstellungen des Funkgeräts (Menüs, VFO, Tasten…) bleiben die aus dem Funkgerät
+gelesenen: nur die Kanäle ändern sich. Fehlen freie Plätze oder ist kein Kanal
+verwendbar, hält das Programm vor dem Schreiben an, und ins Funkgerät wird nichts
+geschrieben. Am Ende zeigt das Fenster die verwendeten Plätze und die Anpassungen; war
+die Registerkarte des Zielgeräts nicht offen, öffnet „Kanäle des Funkgeräts anzeigen“
+sie mit den Kanälen, wie sie jetzt im Funkgerät sind.
+
+WAS ERHALTEN BLEIBT
+Das Programm ändert nur, was Sie ändern. Eine ohne Änderungen geöffnete und
+gespeicherte Datei bleibt Byte für Byte identisch. Daten, die das Programm nicht
+auswertet (weitere Bytes des K67-Datensatzes, die Felder Signalisierung/PTT ID/Busy
+Lock/usw. der Bajeton), bleiben unverändert und folgen dem Kanal, wenn man ihn
+innerhalb desselben Funkgeräts verschiebt oder kopiert. Die allgemeinen Einstellungen
+der Funkgeräte ändern sich nur mit „⚙ Einstellungen…“ (und nur die Einträge, die Sie
+ändern). K67: beim Hinzufügen oder Löschen von Kanälen werden die Zonenlisten, die
+Kanäle A/B und der Notrufkanal so aktualisiert, wie es das Originalprogramm tut (Zonen
+werden hier nicht bearbeitet).
+
+KORREKTUR EINES FEHLERS DER VERSION 1.0 (K67 Pro)
+Bei der Analyse des Originalprogramms stellte sich heraus, dass die .xlc-Datei je
+Kanal zwei Bittabellen hat („Platz belegt“ und „im Suchlauf“). Version 1.0 verwendete
+falsche Tabellen: ein auf einem LEEREN Platz hinzugefügter Kanal konnte für das
+Funkgerät und das Originalprogramm unsichtbar sein (Änderungen und Löschungen
+vorhandener Kanäle waren dagegen korrekt). Wenn Sie mit 1.0 .xlc-Dateien gespeichert
+und dabei Kanäle auf leeren Plätzen hinzugefügt haben, öffnen Sie sie mit dieser
+Version: die betroffenen Plätze werden gemeldet, und es genügt, diese Kanäle erneut
+einzufügen (oder das Hinzufügen zu wiederholen).
+
+RELAISARCHIV
+- Es wird von allen Funkgeräten gemeinsam genutzt und speichert sich selbst, auf dem
+  PC, in: %APPDATA%\GestioneCanaliRadio\archivio_ponti.json (Sicherungskopie: .bak)
+- „Importieren…“: aus dem Internet (voreingestellte Adresse
+  https://www.ik2ane.it/pontixls.xls, änderbar; die verwendeten Adressen werden
+  gespeichert) oder aus .xls-, .xlsx-, .csv-Dateien. Es erkennt die Liste von IK2ANE
+  (Blatt „ponti“), die CSV von CHIRP, die von diesem Programm exportierten Dateien und
+  allgemeine Tabellen mit Überschriften wie Frequenz, Ablage, Ton, Name, Ort, Region,
+  Provinz, Typ, Netz.
+- Unregelmäßige Werte werden mit gesundem Menschenverstand ausgelegt und gemeldet
+  (gelbe Zeilen mit ⚠):
+    "+5.0MHz", "-600 kHz"         → normale Ablagen
+    "+1.362,5 MHz"                → 1,3625 MHz (gemeldet)
+    "79,7" "123"                  → 79.7 / 123.0
+    "77.0-141.3" "110.9/162.2 loc"→ erster Ton verwendet, die anderen in der Warnung
+    genannt
+    "82.2" (nicht Standard)       → 82.5, gemeldet
+    "CC1" (DMR-Color-Code)        → kein Ton, in den Notizen vermerkt
+    "DCS023", "1750", "DG-ID:10"  → vermerkt/gemeldet
+    "input" / "output"            → Simplex, gemeldet
+  Der ursprüngliche Wert bleibt im Detailbereich sichtbar. Zeilen ohne gültige
+  Frequenz (z. B. die Platzhalter 9999999 und die Textzeilen am Ende) sind nicht
+  importierbar: sie werden im Fenster aufgeführt, nicht stillschweigend verworfen.
+- Aus der Datei von IK2ANE werden auch die Farben der Legende gelesen: Relais nicht
+  mehr aktiv, vorübergehend außer Betrieb, nicht H24, nicht regionaler Ton, nicht
+  standardmäßige Ablage.
+- Filter (beim Import, beim Export und im Archiv): Band (VHF/UHF/Andere), Typ (Analog,
+  EchoLink, SvxLink, DMR, C4FM, D-Star, NXDN, Multimode, HotSpot, Transponder,
+  Winlink), Status, Region, Provinz, Netz, freier Text, nur Zeilen mit Warnungen; dazu
+  das Häkchen Zeile für Zeile. Beim Import beginnen die Filter mit „nur analog
+  nutzbare Relais, ohne inaktive“: Sie können sie ändern.
+- Kanalname: frei wählbare Vorlage mit {LOC} {SIGLA} {NOMINATIVO} {PROV} (Ort, Kürzel,
+  Rufzeichen, Provinz; z. B. „{NOMINATIVO} {LOC}“ → „IR0XX M.ALTO“). „Namen neu
+  erzeugen…“ wendet sie erneut an.
+- Bereits vorhandene Relais (gleiche Frequenz, TX, Ort und Kürzel): Sie können nur die
+  neuen hinzufügen, die vorhandenen aktualisieren (der vergebene Name bleibt) oder
+  alles ersetzen.
+- Die Relais abhaken, die ins Funkgerät sollen: Kästchen links von jeder Zeile (die
+  Leertaste hakt die ausgewählten Zeilen ab) oder „☑ Alle auswählen“ und „☐ Auswahl
+  aufheben“, die für die mit den aktuellen Filtern sichtbaren Relais gelten. Die
+  Häkchen bleiben im Archiv gespeichert, auch beim Schließen des Programms.
+- „📻 An das Funkgerät weitergeben“ schreibt die abgehakten Relais ins Funkgerät (sind
+  keine abgehakt, die per Klick ausgewählten):
+    · wurde bereits ein Funkgerät gewählt (das in der blauen Leiste „Zielfunkgerät“
+      angezeigte, also das zuletzt verwendete oder die zuletzt geöffnete
+      Funkgerät-Registerkarte), erscheint ein Fenster mit dem Modell und der Bitte um
+      Bestätigung („Bestätigen und schreiben“ oder „Anderes Funkgerät wählen…“);
+    · andernfalls öffnet sich die Liste aller verträglichen Funkgeräte, mit Suche:
+      nach Marke (Baofeng, Bajeton) und nach Typ gegliedert, jedes Modell einzeln in
+      alphabetischer Reihenfolge aufgeführt (in Klammern die verwendete Verwaltung, z.
+      B. „UV-5RA (Verwaltung: Baofeng UV-5R)“, oder die Version, wenn das Funkgerät
+      mehrere hat).
+  Vor dem Schreiben prüft das Programm, ob die Relais mit dem gewählten Funkgerät
+  verträglich sind:
+    · Empfangs- und Sendefrequenzen innerhalb der Bereiche des Funkgeräts;
+    · kein Amateurfunkrelais auf einem PMR446- / Jedermannfunkgerät (nur 446,0-446,2
+      MHz) oder GMRS / FRS (nur 462,55-467,725 MHz);
+    · kein rein digitales Relais (DMR, C4FM, D-Star, NXDN) auf einem rein analogen
+      Funkgerät; auf DMR-Funkgeräten (DM-32UV, DM-1801 Pro, DM-5000) werden reine
+      DMR-Relais zu DMR-Kanälen.
+  Ausnahme: manche als PMR446 / Jedermannfunk oder GMRS verkaufte Funkgeräte nehmen
+  auch Amateurfunkfrequenzen an (die Bereiche des Treibers sind die des
+  Herstellerprogramms, z. B. BF-T17 PMR446 400-480 MHz). Für Relais innerhalb dieser
+  Bereiche erscheint eine gelbe Warnung mit „Die N Relais trotzdem schreiben“: das
+  Schreiben ist erlaubt (auch aus der Registerkarte des Funkgeräts durch Einfügen der
+  Relais). Beachten Sie die Vorschriften: Senden auf Amateurfunkfrequenzen erfordert
+  eine Lizenz, und ein zugelassenes PMR446-Gerät darf nicht außerhalb seiner Kanäle
+  betrieben werden.
+  Gibt es keine Probleme, werden die Relais gesendet; sonst erscheint eine Warnung
+  („Sie haben ein Gerät gewählt, das mit den Daten, die Sie an das Funkgerät senden
+  wollen, nicht verträglich ist“) mit der Liste der Probleme, und ins Funkgerät wird
+  nichts geschrieben: Sie können abbrechen, ein anderes Funkgerät wählen oder, wenn
+  ein Teil der Relais verträglich ist, nur diesen senden.
+  Dann öffnet sich das übliche Einfügefenster (Startposition, nur freie Plätze oder
+  Überschreiben, Anpassungen für das Funkgerät); wurde das Funkgerät noch nicht
+  gelesen, schlägt das Programm vor, es per Kabel zu lesen oder eine seiner Dateien zu
+  öffnen. „Funkgerät wechseln…“ in der blauen Leiste ändert das Ziel.
+- „Kopieren“ kopiert die abgehakten (oder ausgewählten) Relais, um sie in ein
+  Funkgerät einzufügen (Strg+V).
+- „🗑 Löschen“ (3.9.3) entfernt die abgehakten Relais aus dem Archiv, auch die durch
+  Filter ausgeblendeten (die Bestätigung nennt die Anzahl), oder, wenn keine abgehakt
+  sind, die per Klick ausgewählten; die Entf-Taste löscht die ausgewählten Zeilen. „🗑
+  Alle löschen“ leert das Archiv. Beide fragen nach Bestätigung und lassen sich mit ↶
+  (Strg+Z) rückgängig machen, solange das Programm geöffnet bleibt; um die Liste von
+  IK2ANE neu zu laden, „⬇ Importieren…“ verwenden.
+- „Als geprüft markieren“ entfernt die Warnungen nach der Prüfung (sie bleiben in den
+  Notizen).
+
+KONVERTER UND UNIVERSELLE FORMATE (3.7)
+- Registerkarte „🔁 Konvertieren“: 1) die Ausgangsdatei oder eine geöffnete
+  Registerkarte wählen; 2) das Zielformat wählen (Suche nach Name); 3) „Umwandeln und
+  speichern…“. Nach der Umwandlung zeigt die Liste alle Anpassungen (gekürzte Namen,
+  Leistungen, nicht verfügbare Töne, Kanäle außerhalb des Bereichs oder
+  ausgeschlossen), und „In der Registerkarte des Funkgeräts öffnen“ öffnet die
+  erzeugte Datei.
+- Ausgangsdateien: .xlc (K67), .dat (Bajeton, v1.0.8 oder v1.0.9), .img-Abbilder jedes
+  verträglichen Funkgeräts (auch von CHIRP gespeicherte: das Modell wird an den Daten
+  der Datei erkannt), CSV von CHIRP (auch mit Kommentarzeilen), Excel- oder
+  CSV-Tabellen (von hier, aus dem Relaisarchiv exportiert oder von Hand geschrieben:
+  nötig ist eine Spalte mit der Frequenz, z. B. «RX (MHz)», «Frequenza» oder
+  «Frequency»; optional Name, TX, Ablage, Töne, Leistung, Bandbreite, Scan, nur RX,
+  digital).
+- Ziele: CSV von CHIRP (universelles Format, lässt sich mit CHIRP für jedes Funkgerät
+  öffnen), Excel .xlsx, CSV für Excel, .xlc-Datei des K67, .dat der Bajeton für v1.0.8
+  oder v1.0.9 von BT-11_CPS, .img-Abbild jedes der mit den Treibern verwalteten
+  Funkgeräte. Die Kanäle bleiben an derselben Position, wenn das Funkgerät sie hat
+  (oder „Kanäle verdichten“); überzählige kommen auf die ersten freien Plätze, die
+  übrigen werden ausgeschlossen und gemeldet. Die gesperrten Plätze mancher Funkgeräte
+  (z. B. feste GMRS-Kanäle der GM-15 Pro) bleiben die des Funkgeräts.
+- Für das .img-Abbild eines Funkgeräts braucht man ein Abbild genau dieses Funkgeräts,
+  also die vollständige Kopie seines Speichers (die nach „Aus Funkgerät lesen“ oder
+  „Öffnen…“ geöffnete Registerkarte oder eine früher von hier oder von CHIRP
+  gespeicherte .img-Datei; seit 3.8 auch mit „📻 Angeschlossenes Funkgerät jetzt
+  lesen…“ direkt aus dem Konverter): das Abbild enthält Einstellungen und Abgleich des
+  Funkgeräts, die man nicht erfinden kann, und ein „leeres“ zu schreiben würde das
+  Funkgerät beschädigen. Für K67 und Bajeton kann man auch von den
+  Standardeinstellungen der Herstellerprogramme ausgehen.
+- „📥 Importieren…“ (Registerkarte jedes Funkgeräts) und „Exportieren…“ → „🔁 Für ein
+  anderes Funkgerät…“ verwenden denselben Konverter.
+
+FUNKGERÄT IDENTIFIZIEREN (3.8)
+- Registerkarte „🔎 Identifizieren“: den Anschluss des Kabels wählen (oder „USB“ für
+  die DMR-Funkgeräte mit direktem USB-Kabel: RD-5R, DM-1801, DM-1701) und „Funkgerät
+  identifizieren“ drücken. Man kann die Suche nach Marke oder Typ (analog / DMR)
+  einschränken: das ist schneller.
+- Das Programm probiert nacheinander die LESE-Protokolle (zuerst K67 Pro und Bajeton
+  BJ-8300, dann die Funkgeräte der Treiber, beginnend mit denen, die eine geöffnete
+  Registerkarte haben). Modelle, die die Verbindung gleich beginnen, werden nur einmal
+  probiert (38 Versuche für die 100 Funkgeräte per Kabel; seit 4.1 60 Versuche für
+  alle Funkgeräte per Kabel). Wenn ein Funkgerät antwortet, wird es wie mit „Aus
+  Funkgerät lesen“ vollständig gelesen, und eine Kopie des Lesevorgangs wird im
+  Kopienordner (copie_radio) gespeichert.
+- Das Modell wird am Inhalt des Speichers erkannt, wie es CHIRP mit Dateien tut. Viele
+  Funkgeräte verwenden jedoch dasselbe Protokoll und denselben Speicher, ohne irgendwo
+  ihren Namen zu schreiben (z. B. die Funkgeräte der Familie UV-17Pro, die PMR der
+  Familie BF-888S): in diesem Fall sagt es das Programm („Modell per Kabel nicht
+  unterscheidbar“) und lässt vor dem Öffnen der Kanäle das richtige Modell wählen.
+- Angezeigt werden: Marke und Modell, Typ (analog FM oder DMR, PMR446, GMRS),
+  Frequenzbereiche, Anzahl der Speicher, verwendete Verbindung, vom Funkgerät
+  gemeldete Firmware oder Kennung (z. B. UV-5R „BFB297“, BJ-8300 „BT-11U V1.00“,
+  Firmware der DM-32UV, K67 „5RH-PRO“ oder „BF-K6“), vom Funkgerät während der
+  Verbindung gesendeter Text, vorhandene Kanäle; bei RD-5R, DM-1801 und DM-1701 auch
+  DMR-ID, Name des Funkgeräts, Datum der letzten Programmierung und (DM-1701) Version
+  des Programms, das sie geschrieben hat. Die Seriennummer: keines dieser Funkgeräte
+  meldet sie über das Programmierprotokoll (sie steht nur auf dem Etikett).
+- „Kanäle in der Registerkarte des Funkgeräts öffnen“: wie nach „Aus Funkgerät lesen“.
+- Zeiten (4.3): ohne angeschlossenes Funkgerät dauert die vollständige Suche etwa 50
+  Sekunden (81 Versuche; weniger, wenn die Suche nach Marke oder Typ eingeschränkt
+  wird); zuerst werden die früher schon erkannten Funkgeräte probiert (die letzten
+  24), dann die mit einer geöffneten Registerkarte, dann die übrigen. Ein antwortendes
+  Funkgerät wird gefunden, sobald es an der Reihe ist, und dann gelesen.
+- Antwortet ein Funkgerät, aber der Lesevorgang gelingt nicht (z. B. Passwort, anderes
+  Modell), werden die Antworten in den Details aufgeführt. Bleibt das Funkgerät im
+  Programmiermodus hängen, aus- und wieder einschalten.
+
+AUTOMATISCHE IDENTIFIZIERUNG (4.0 - 4.7)
+- In der Registerkarte „🔎 Identifizieren“ „🔄 Automatische Identifizierung aktivieren“
+  drücken. Ab dann wird, solange das Programm geöffnet ist, beim Anschließen des
+  Programmierkabels (oder eines DMR-Funkgeräts per USB) das Funkgerät von selbst
+  gesucht, mit denselben reinen LESE-Befehlen wie „Funkgerät identifizieren“: ins
+  Funkgerät wird nichts geschrieben.
+- Es funktioniert in jeder Registerkarte des Programms. Das Feld „Funkgerät wird
+  identifiziert. Bitte warten.“ (mit „Abbrechen“) erscheint unten nur, wenn ein am
+  Kabel angeschlossenes Funkgerät wirklich antwortet, und verschwindet, wenn das
+  Funkgerät erkannt ist oder die Suche endet. Seit 4.4 reichen Leitungsstörungen
+  (0x00, 0xFF und ähnliche, typisch für ein Kabel ohne Funkgerät oder mit
+  ausgeschaltetem Funkgerät) und das Echo der gesendeten Befehle, auch wenn es
+  verspätet kommt, nicht aus: nötig sind mindestens 4 echte Bytes oder zwei
+  unterschiedliche Antworten. Bei mehreren Kabeln zeigt das Feld nur die Anschlüsse
+  mit einem antwortenden Funkgerät.
+- Wenn das Funkgerät erkannt ist, erscheinen seine Daten (auch in einem Fenster) und
+  seine Registerkarte öffnet sich mit den gelesenen Kanälen; hatte die Registerkarte
+  ungespeicherte Änderungen, fragt das Programm, bevor es sie ersetzt.
+- Seit 4.2 HÄLT die Suche nach dem Erkennen AN (die Funktion bleibt aktiv): um ein
+  anderes Funkgerät am selben Kabel zu suchen, die gelbe Schaltfläche „🔎 Funkgerät
+  identifizieren“ oben rechts neben „? Hilfe“ drücken (seit 4.4; sie ist grau und
+  nicht drückbar, wenn die automatische Identifizierung ausgeschaltet ist; bei vielen
+  geöffneten Registerkarten schrumpft sie auf die Lupe). Ein später an den PC
+  angeschlossenes Kabel (auch dasselbe, abgezogen und wieder angesteckt) wird von
+  selbst durchsucht.
+- Seit 4.3 HÖRT das Programm STÄNDIG an allen Anschlüssen der angeschlossenen Kabel,
+  jeder für sich und alle zugleich: ein ausgeschaltetes Funkgerät oder die Lautstärke
+  auf Minimum halten die Suche nicht an, die sofort wieder beginnt (ohne das Feld),
+  solange das Kabel angeschlossen bleibt. Man kann also das Kabel anschließen und das
+  Funkgerät danach einschalten: es wird erkannt, sobald es antwortet. Ein Funkgerät,
+  das antwortet, aber nicht zu den unterstützten gehört, wird alle 30 Sekunden erneut
+  probiert.
+- Mehrere an verschiedenen Kabeln angeschlossene Funkgeräte (z. B. COM6 und COM7)
+  werden gleichzeitig gesucht: für jedes erscheinen die Daten und öffnet sich die
+  Registerkarte; ist die Registerkarte schon offen, erscheint der Hinweis „Funkgerät
+  bereits identifiziert!! Registerkarte bereits geöffnet“ (bei mehreren Funkgeräten
+  „Funkgeräte bereits identifiziert!! Registerkarten bereits geöffnet“). Nach dem
+  Erkennen hält nur der Anschluss dieses Funkgeräts an: die anderen hören weiter.
+- Erkannte Funkgeräte werden gespeichert (auch über den Neustart hinaus): spätere
+  Suchen probieren sie zuerst und während der Suche alle 8 Versuche erneut, so wird
+  ein schon benutztes Funkgerät (z. B. K67 Pro, Bajeton 8300, BJ-9000) in wenigen
+  Sekunden erkannt.
+- Durchsucht werden nur die Anschlüsse von Programmierkabeln (USB-Seriell-Adapter
+  CH340, Prolific, Silicon Labs, FTDI…), nie Bluetooth-Anschlüsse, Modems oder die
+  seriellen Systemanschlüsse (COM1, COM2).
+- Eine laufende automatische Suche bricht von selbst ab, wenn Sie einen anderen
+  Vorgang verlangen (Lesen, Schreiben, Firmware, Weitergabe oder manuelle
+  Identifizierung).
+- Die Wahl bleibt auch nach Schließen und Neustart des Programms gespeichert. Um sie
+  nicht mehr zu verwenden, zur Registerkarte „🔎 Identifizieren“ zurückkehren und „⏹
+  Automatische Identifizierung deaktivieren“ drücken.
+- (4.7) Bevor es die Modelle probiert, hört das Programm 1 Sekunde am Anschluss
+  (einmal pro Minute je Anschluss und Geschwindigkeit). Ein Funkgerät im
+  Firmware-Aktualisierungsmodus sendet von selbst regelmäßige Meldungen: diese Bytes
+  zählen nicht als Antwort, daher endet die Suche bald und die Registerkarte
+  Identifizieren warnt, dass das Funkgerät wahrscheinlich im Aktualisierungsmodus ist
+  (normal aus- und wieder einschalten oder die Registerkarte Firmware verwenden).
+- (4.7) Reihenfolge der Versuche: die bereits erkannten Funkgeräte, die mit einer
+  geöffneten Registerkarte, dann die verbreitetsten (K67 Pro, BJ-8300, BJ-7800 /
+  RT-920, BJ-7700 / RT-900, BJ-9000 / RT-950 Pro, TD-H8, UV-17 / UV-17Pro, UV-K5,
+  UV-5R, BF-888S), dann die übrigen.
+
+USB-TREIBER DER DM-1701 (3.8)
+- Die DM-1701 (und die Retevis RT84) wird per USB im DFU-Modus angeschlossen (Gerät
+  0483:DF11) und braucht einen Treiber. Zwei Möglichkeiten:
+  1. der Treiber des Herstellers (STTub30), Ordner „DM-1701 USB Driver“ des Pakets
+     „DM-1701 CPS“: im Fenster „Aus Funkgerät lesen“ der DM-1701 fragt die
+     Schaltfläche „USB-Treiber installieren…“ nach dem Installationsprogramm
+     (dpinst_amd64.exe oder die .inf-Datei) und startet es mit Windows-Freigabe (mit
+     einer .inf verwendet es „pnputil /add-driver … /install“, Windows 10 und 11);
+  2. der allgemeine WinUSB-Treiber von Windows, installiert mit Zadig
+     (https://zadig.akeo.ie, Options → List All Devices, Gerät 0483 DF11, Treiber
+     WinUSB): derselbe, den dmrconfig und qdmr verwenden. Danach sieht das
+     Herstellerprogramm das Funkgerät nicht mehr, bis sein Treiber neu installiert
+     wird.
+- Das Programm verwendet von selbst den installierten; das Fenster zeigt, ob das
+  Funkgerät angeschlossen ist und mit welchem Treiber.
+- Ein Windows-Treiber kann weder in das Programm aufgenommen noch weitergegeben
+  werden: deshalb wird der offizielle verwendet (oder WinUSB, das Teil von Windows
+  ist).
+
+BTECH DMR-6X2: GEFÜHRTE FIRMWARE-AKTUALISIERUNG (3.8)
+- DMR-6X2 (Firmware 2.21) und DMR-6X2 PRO (Firmware 1.21) sind DMR-Funkgeräte der
+  Marke BTECH (BaofengTech, Vereinigte Staaten). Die Firmware wird mit dem offiziellen
+  Programm „Firmware_Update“ des BTECH-Pakets installiert (Menü Tool → Firmware
+  Upgrade der CPS oder C:\DMR_6X2_2.21\Update\Firmware_Update.exe), mit dem Funkgerät
+  im Aktualisierungsmodus: ausgeschaltet, PTT und Alarm (die orange Taste) gedrückt
+  halten und einschalten (die LED blinkt rot); COM-Anschluss des „USB Virtual Com Port
+  Driver“, 921600 Baud, Duplex, „Write“. Nach der Firmware (und den Symbolen, PTT +
+  PF2 beim Einschalten) muss ein Zurücksetzen erfolgen (PTT + PF1 beim Einschalten)
+  und das vorher gespeicherte Codeplug wieder geschrieben werden: die Aktualisierung
+  löscht die Programmierung. Quelle: „STOP and README FIRST.pdf“ der offiziellen
+  Pakete DMR-6X2-221b und DMR-6X2-PRO-121e (https://baofengtech.com/software/).
+- In der Galerie, Karte des Funkgeräts → „🧭 Geführte Aktualisierung…“: die .spi-Datei
+  wählen, und das Programm prüft, dass die Dateien .spi, .CDI und .CDD stimmig und
+  vollständig sind, für welches Funkgerät sie sind (DMR-6X2 oder PRO: die Firmwares
+  dürfen nicht vertauscht werden), welche Art von Aktualisierung es ist (Firmware,
+  Symbole, APRS-Platine) und die Version; es zeigt den richtigen Ablauf und startet
+  das offizielle Programm (auch als Administrator).
+- Das Schreiben der Firmware übernimmt das BTECH-Programm: sein Protokoll ist nicht
+  veröffentlicht und das Programm ist kompiliert, daher konnte es nicht mit einer
+  anderen Umsetzung verglichen werden; ein Fehler könnte das Funkgerät unbrauchbar
+  machen.
+
+SUCHE NACH LÖSUNGEN FÜR NICHT UNTERSTÜTZTE FUNKGERÄTE (3.7)
+Suche in Foren und Seiten von Funkfreunden (CHIRP, RadioReference, miklor.com, RigPix,
+GitHub) nach Programmen oder Kniffen für die nicht unterstützten Funkgeräte:
+- UV-8D / BF-UV8: CHIRP unterstützt sie nicht (Meldungen #1225, noch offen, und
+  #4519): das Funkgerät gibt nicht an, welche Kanäle leer sind, und ein Testtreiber
+  von 2014 lieferte geschriebene Kanäle, die das Funkgerät nicht anzeigte;
+  programmieren lässt es sich nur mit dem Herstellerprogramm für die UV-8 (auf
+  Chinesisch). Hier nicht unterstützt: ohne dieses Programm wäre das Ergebnis nicht
+  überprüfbar.
+- DM-5R (Tier I): dmrconfig unterstützt die TD-5R, gibt aber ausdrücklich „nicht
+  DM-5R“ an; das Funkgerät verwendet ein anderes Kabel als die übrigen Baofeng und ein
+  natives Programm. Nicht unterstützt (die RD-5R, ein anderes Funkgerät, wird
+  unterstützt). Um es zu unterstützen, bräuchte man (3.8): sein Herstellerprogramm (in
+  C++Builder geschrieben, also Maschinencode: es wird mit einem Disassembler wie
+  Ghidra oder IDR untersucht, viel langsamer als ein .NET-Programm) und vor allem eine
+  Aufzeichnung des Dialogs zwischen diesem Programm und einer echten DM-5R (Lesen und
+  Schreiben), gemacht mit einem Monitor der seriellen Schnittstelle, zusammen mit der
+  vom Programm gespeicherten Datei und dem speziellen Kabel des Funkgeräts.
+- DM-1702 / DM-1703: es gibt freie Werkzeuge (MD1702-tools), die den Speicher lesen
+  und schreiben, aber ihre Autoren warnen selbst, dass sie mit der Firmware L05 und
+  dem Lader MD1706-V2 Funkgeräte unbrauchbar gemacht haben: aus Vorsicht nicht
+  unterstützt.
+- DM-V1: eigenes Programm des Herstellers, Micro-USB-Kabel mit dem Wandler im
+  Funkgerät; kein freies Programm unterstützt es.
+- PMR446 ohne veröffentlichtes Programm (BF-T3, BF-T6…T57, BF-V1…V6A, BF-33C,
+  BF-358…): für einige ähnliche Funkgeräte haben CHIRP-Nutzer mit teilweisem Erfolg
+  den Treiber der BF-888 verwendet (z. B. BF-M4, Meldung #7215, später in CHIRP
+  aufgenommen). Das ist kein sicherer Kniff: ohne das Herstellerprogramm kann man
+  nicht wissen, ob der Speicher derselbe ist, und das Schreiben eines anderen
+  Speichers kann das Funkgerät blockieren.
+- 5RHam, BJ-98 Plus, M20D: es wurden weder Programme noch technische Informationen
+  gefunden.
+
+EXPORT
+Aus dem Archiv (mit Filtern und Häkchen) oder aus den Kanälen eines Funkgeräts (alle
+oder ausgewählte):
+- Excel .xlsx und Excel 97-2003 .xls (erste Zeile fixiert, Zeilen mit Warnungen gelb);
+- CSV für italienisches Excel (Trennzeichen „;“ und Dezimalkomma);
+- CSV für CHIRP: Standardspalten von CHIRP. Die Leistung wird in Watt geschrieben
+  (Hoch 5.0W, Mittel 2.0W, Niedrig 1.0W), wie es neuere CHIRP-Versionen erwarten; die
+  Töne verwenden Tone (nur TX), TSQL (TX und RX gleich), DTCS (gleicher DCS-Code) oder
+  Cross (verschieden, auch DCS→DCS, Tone→DTCS…); seit 3.7 auch reine Empfangskanäle
+  (Duplex „off“), DMR-Kanäle (Mode „DMR“) und Suchlauf aller Funkgeräte. CHIRP passt
+  danach die Leistung an die Stufen des Zielfunkgeräts an.
+
+UNTERSCHIEDE ZUM FRÜHEREN KONVERTER
+- Der K67 behält jetzt die nicht ausgewerteten Bytes jedes Kanals, statt sie auf null
+  zu setzen.
+- CHIRP-CSV: Leistung in Watt statt High/Mid/Low (von neueren CHIRP-Versionen
+  abgelehnt) und unterschiedliche TX- und RX-Töne als Cross geschrieben (vorher TSQL,
+  das in CHIRP nur einen Ton verwendet).
+
+WIE ES ÜBERPRÜFT WURDE
+Der Code der beiden Originalprogramme wurde dekompiliert und auf simulierten
+Funkgeräten neben diesem Programm ausgeführt:
+- Schreiben: Speicher des Funkgeräts Byte für Byte identisch und gleiche Befehlsfolge
+  (K67: 17 Befehle, 49.152 Byte; Bajeton: 505 Befehle, 49.984 Byte), sowohl mit den
+  Beispieldateien als auch mit geänderten Dateien (Verschiebungen, Löschungen, neue
+  Kanäle, DCS);
+- Lesen: Datei identisch mit der, die das Originalprogramm speichert (vom Datum
+  abgesehen); Bajeton: alle 15.600 Felder der .dat gleich;
+- das Originalprogramm öffnet die Dateien dieses Programms erneut und speichert sie
+  ohne weitere Änderungen;
+- falsches Passwort, ausgeschaltetes Funkgerät, anderes Band, Ablehnung der Daten,
+  Abbrüche, Sicherungskopie und Prüfung werden mit automatischen Tests geprüft.
+ES WAR NICHT MÖGLICH, ES MIT ECHTEN FUNKGERÄTEN ZU TESTEN. Beim ersten Versuch: von
+einem Lesevorgang ausgehen, ihn in einer Datei speichern und aufbewahren; dann das
+Schreiben versuchen.
+Firmware-Aktualisierung (2.1): der ORIGINALCODE des Programms „BinTe ANC Bootloader“
+(direkt aus seiner ausführbaren Datei geladen) und dieses Programm wurden in 10
+Situationen mit derselben simulierten Bajeton verbunden (Aktualisierung mit 115200 und
+mit 57600 Baud, Wiederherstellungsmodus, Dateien beliebiger Länge, verlorene
+Antworten, falsche CRC, verlorener Geschwindigkeitswechsel, ausgeschaltetes Funkgerät,
+echte Firmware V0.12 mit 700 KB Daten): das simulierte Funkgerät erhielt in allen
+Fällen dieselben Pakete, mit denselben Geschwindigkeiten und denselben Daten, und die
+Ergebnisse sind identisch (gleiche Versuche, gleiche Fehler). Die
+Windows-Programmdatei wurde auch unter Wine mit echten seriellen Schnittstellen
+(Pseudoterminals) getestet: Aktualisierung und Wiederherstellung abgeschlossen,
+Geschwindigkeitswechsel korrekt. Auch die Firmware-Aktualisierung wurde NICHT mit
+einem echten Funkgerät getestet: das Verhalten des Funkgeräts ist aus dem
+rekonstruiert, was das Originalprogramm erwartet.
+
+Neu in 3.0, gleiche Prüfungen:
+- CHIRP-Treiber: echtes CHIRP (Quellordner) und dieses Programm bei jedem Modell
+  verglichen: Lesen der Kanäle aus den Testabbildern von CHIRP (alle Kanäle gleich),
+  bis zu 18 Änderungen je Modell (neue Kanäle, Relais, normale und invertierte
+  CTCSS/DCS-Töne, Split, nur Empfang, Löschungen, letzte Position) mit einem
+  Ergebnisabbild, das Byte für Byte mit dem von CHIRP übereinstimmt, gleiche Position
+  jedes Feldes der Speicherkarte, und Lesen/Schreiben per Kabel mit simulierten
+  Funkgeräten: an das Funkgerät gesendete Bytes identisch mit denen von CHIRP und
+  identischer Endspeicher;
+- .BF-Firmware: der ORIGINALCODE des „BF Upgrade Tool for TFT 330L Series“ (aus seiner
+  ausführbaren Datei geladen) und dieses Programm in 9 Situationen mit demselben
+  simulierten Funkgerät verbunden (automatisch, manuell, verlorene Antworten,
+  Prüffehler, falsche CRC, verlorener Handshake, Schreibfehler, ausgeschaltetes
+  Funkgerät) und mit 7 echten Firmwares: Pakete und Ergebnisse identisch;
+- 5RH-Pro-Firmware: der originale Aktualisierungscode (Radio.exe) und dieses Programm
+  mit demselben simulierten Funkgerät verglichen (Platinen V1 und V2, 115200 und 38400
+  Baud, andere Platine als die der Datei, abgelehnter Block) und mit 6 echten
+  Firmwares: identisch;
+- Oberfläche in einem automatisierten Browser mit den simulierten Funkgeräten getestet
+  (Galerie, Lesen, Bearbeiten, Schreiben mit Kopie und Prüfung, Kopieren zwischen
+  Funkgeräten, Firmware).
+Neu in 3.1, gleiche Prüfungen:
+- BJ-7700, H-Serie, GM-15 Pro: vollständiger Vergleich mit CHIRP wie oben (Lesen,
+  Änderungen, Speicherkarte, Kabelprotokoll: identisch); bei der GM-15 Pro auch die
+  Regeln der GMRS-Kanäle;
+- aus den Herstellerprogrammen abgeleitete Funkgeräte: Lesen, Bearbeiten und Schreiben
+  mit simulierten Funkgeräten, die auf dem Code der offiziellen Programme aufbauen
+  (Endspeicher gleich dem geschriebenen; ein Funkgerät, das mit einem anderen Modell
+  antwortet, wird abgelehnt);
+- Firmware UV-25 Plus, UV-9G und BJ-9000: der ORIGINALCODE der drei
+  Aktualisierungsprogramme (aus ihren ausführbaren Dateien geladen) und dieses
+  Programm mit demselben simulierten Funkgerät verbunden, im automatischen und
+  manuellen Modus, mit verlorenen Antworten und Fehlern und mit den offiziellen
+  Firmwares: Pakete, Geschwindigkeiten und Ergebnisse identisch.
+Neu in 3.2 und 3.3, gleiche Prüfungen:
+- G11S, DM-32UV: vollständiger Vergleich mit CHIRP (Lesen der Testabbilder, Änderungen
+  mit Byte für Byte identischem Abbild, Speicherkarte, Kabelprotokoll mit identischen
+  Bytes); bei der DM-32UV auch Löschungen, die Zonen und Suchlauflisten leeren,
+  DMR-Kanäle und neue Kanäle hinter dem letzten: Abbild identisch mit dem von CHIRP;
+- D-Serie: die Funktionen zum Lesen und Schreiben der Kanäle des Programms „BF Series
+  CPS“ (unverändert ausgeführt) liefern dieselben Kanäle und dieselben Bytes wie
+  dieses Programm; bei W31D und BF-V12D Kanäle der Testabbilder von CHIRP gleich (vom
+  Suchlauf abgesehen) und an das Funkgerät gesendete Bytes identisch mit denen von
+  CHIRP;
+- BF-T17 / BF-T18: der ORIGINALCODE der beiden Herstellerprogramme (aus ihren
+  ausführbaren Dateien geladen) und dieses Programm haben dasselbe simulierte
+  Funkgerät gelesen und beschrieben: gleiche gelesene Kanäle und Byte für Byte
+  identischer Endspeicher.
+Neu in 3.4 und 3.5, gleiche Prüfungen:
+- BF-T9, GT-18 PMR446, DR-1801UV: der ORIGINALCODE der Herstellerprogramme (aus ihren
+  ausführbaren Dateien geladen) und dieses Programm haben dasselbe simulierte
+  Funkgerät gelesen und beschrieben: gleiche gelesene Kanäle und Byte für Byte
+  identischer Endspeicher; bei der DR-1801UV auch die Änderungen (Löschen von Kanälen
+  in Zonen, Listen und Roaming, neue analoge und DMR-Kanäle, nicht standardmäßige
+  Töne), geschrieben von der Speicherfunktion des Programms: identischer Speicher;
+- DM-5000: Bytes der Kanäle und der Zonen vom Code des Programms berechnet;
+- Firmware der Familien (3.5): Erkennung des Modells am Dateinamen, verlangte
+  Bestätigungen und mit jedem Lader verknüpfte Funkgeräte der Galerie.
+Neu in 3.6, gleiche Prüfungen:
+- RD-5R, DM-1801, DM-1701: dmrconfig (BSD), kompiliert mit einer TCP-Verbindung statt
+  USB/HID und DFU, zu den simulierten Funkgeräten: gelesene Kanäle gleich denen von
+  dmrconfig, sieben Änderungen mit Byte für Byte identischem Speicher, Lesen und
+  Schreiben per USB identisch;
+- GT-22 und GT-68: Originalcode der beiden Herstellerprogramme mit dem simulierten
+  Funkgerät: gleiche gelesene Kanäle und identischer Speicher;
+- Einstellungen: K67 (ConvertSetting / SettingConvert des Programms „5RH PRO“: 53
+  Einträge gleich gelesen, 636 Änderungen in 12 Kombinationen mit identischen Bytes);
+  BJ-8300 v1.0.8 und v1.0.9 (Originalcode von BT-11_CPS: Einträge gleich gelesen, 400
+  + 410 Änderungen mit Byte für Byte identischen Dateien; Lesen und Schreiben des
+  Programms mit dem simulierten Funkgerät gleich denen dieses Programms, auch für
+  zwischen den beiden Versionen umgewandelte Dateien); BJ-9000 (Originalcode von
+  BJ-9000_CPS mit dem simulierten Funkgerät: 57 Einträge gleich gelesen, 456
+  Änderungen mit identischen Bits; hier geschriebene Kanäle, vom Programm gelesen und
+  neu geschrieben: identischer Speicher); 63 CHIRP-Familien (gelesene Werte gleich
+  denen von CHIRP und zufällige Kombinationen von Änderungen, hier und von CHIRP
+  angewendet: Byte für Byte identischer Speicher).
+Neu in 3.7, gleiche Prüfungen:
+- K67 „BF-K6“: Lesen, Schreiben mit Sicherungskopie, Schreiben nach einem Lesevorgang
+  und Ablehnung gegenüber einem anderen Modell, mit der Kabel-API und dem simulierten
+  Funkgerät, das sich als „BF-K6“ meldet (derselbe Fall, der mit einem echten
+  Funkgerät gemeldet wurde; die Korrektur ist mit dem echten Funkgerät noch nicht
+  getestet);
+- Konverter: 3 Quellen (Testkanäle mit allen Tonfällen, K67- und Bajeton-Dateien) zu
+  jedem der 109 Formate: wieder lesbare Dateien und alle Kanäle aus der Quelle
+  übernommen (327 Umwandlungen); universelle Formate ohne Verluste; die für die 63
+  CHIRP-Funkgeräte erzeugten .img-Abbilder öffnen sich in CHIRP mit denselben Kanälen
+  (826);
+- CHIRP-CSV: hier geschrieben und vom CHIRP-Code (Treiber generic_csv) mit denselben
+  Kanälen gelesen, DCS-Töne eingeschlossen; von CHIRP aus seinen Testabbildern
+  geschriebene CSV (UV-5R, UV-9G, UV-17Pro, BJ-7800: 186 Kanäle) hier gleich gelesen.
+Auch diese Teile wurden NICHT mit echten Funkgeräten getestet.
+Neu in 3.8, gleiche Prüfungen:
+- Identifizierung: jedes der 103 Treibermodelle, simuliert mit seinem Testspeicher,
+  wurde mit dem Versuch seiner Gruppe gesucht und erkannt (oder, wenn der Testspeicher
+  der eines anderen Modells der Familie ist, als dieses Modell erkannt, wie es CHIRP
+  täte), mit denselben Kanälen wie das simulierte Funkgerät und unverändertem Speicher
+  des simulierten Funkgeräts; vollständige Suche über die API mit K67 Pro (auch
+  „BF-K6“), BJ-8300 und 9 Treiberfunkgeräten am Ende der Versuche, einschließlich
+  Öffnen in der Registerkarte; kein Funkgerät: Suche ohne falsche Erkennungen beendet;
+- DMR-ID, Name und Programmierdatum von RD-5R, DM-1801 und DM-1701 gleich denen, die
+  dmrconfig für von dmrconfig erzeugte Speicher ausgibt;
+- DM-1701: vollständiges Lesen und Schreiben über denselben Adapter für USB-Anfragen,
+  der mit WinUSB und STTub30 verwendet wird (5.967 Anfragen); der echte WinUSB-Zugriff
+  und die Treiberinstallation wurden NICHT getestet (dafür braucht man Windows und das
+  Funkgerät);
+- DMR-6X2: Dateiprüfung an allen Dateien der offiziellen Pakete 2.21b und 1.21e
+  (Firmware, Symbole, APRS-Platine) und an beschädigten Dateien (abgeschnittene Daten,
+  vertauschtes Modell, falscher Firmware-Anfang, fehlende Datei).
+Neu in 4.6, gleiche Prüfungen:
+- RT-950 Pro / BJ-9000: der ORIGINALCODE der Radtel-Programme RT-950PRO_CPS v1.2.0
+  (960 Kanäle) und v1.3.3 (990 Kanäle) und Radtel RT-950 BT-9000_CPS v1.3.0 wurde mit
+  dem simulierten Funkgerät ausgeführt: hier geschriebene Kanäle (auch die Kanäle 961,
+  980 und 990), vom Programm gelesen und neu geschrieben: identischer Speicher; 57
+  Einstellungen gleich gelesen und 456 Änderungen in 8 Kombinationen mit identischen
+  Bits für jedes der drei Funkgeräte; Erkennung der Firmware-Version aus den Daten,
+  Wahl der Registerkarte, .img-Dateien mit und ohne Versionsangabe; Schreiben der
+  Kanäle 961-990 in ein simuliertes Funkgerät mit leerem Bereich und mit Daten, die
+  keine Kanäle sind (kein Byte geschrieben);
+- über die Oberfläche (automatisiertes Chromium, simulierte RT-950 Pro mit Firmware
+  0.24): Registerkarte „960 Kanäle“ aus der Galerie geöffnet, Lesen → Kanäle in der
+  Registerkarte „990 Kanäle“ mit dem Namen Radtel RT-950 Pro geöffnet, keine Warnung
+  über ungespeicherte Daten; Bearbeiten → Warnung; Schreiben mit Kopie und Prüfung →
+  keine Warnung; Identifizierung → „Radtel RT-950 Pro“ (Wahl gespeichert);
+- Namen der Funkgeräte mit derselben Verwaltung (RT-950 Pro / BJ-9000, K67 Pro / 5RH
+  Pro): erste Identifizierung mit der Wahl, dann der gespeicherte Name;
+- SenhaiX 8800, Radioddity GS-5B, Cignus XTR-5, Anysecu AC-580, TID TD-UV68: Kanäle
+  wie von CHIRP gelesen, geschriebene Abbilder identisch mit denen von CHIRP, mit dem
+  simulierten Funkgerät ausgetauschte Bytes identisch mit CHIRP (TD-UV68: Schreiben
+  mit der TD-H8 verglichen, weil es in CHIRP bei der TD-UV68 mit einem Fehler
+  abbricht).
+Auch diese Teile wurden NICHT mit echten Funkgeräten getestet.
+
+EINSCHRÄNKUNGEN
+- Die Protokolle und Formate sind proprietär und aus den Originalprogrammen
+  rekonstruiert: bewahren Sie immer die Sicherungskopien auf.
+- Die Zonen des K67, der DM-32UV, der DR-1801UV und der USB-DMR-Funkgeräte werden hier
+  nicht bearbeitet (sie werden nur stimmig gehalten); für DMR-Kontakte, -Gruppen und
+  -Einstellungen das Herstellerprogramm verwenden.
+- Einstellungen: die Beschreibungen der Einträge der CHIRP-Funkgeräte sind vom
+  englischen Namen des Eintrags ausgehend geschrieben (viele Treiber verwenden
+  unterschiedliche Namen für dieselbe Funktion): der Originalname steht immer am Ende
+  der Beschreibung.
+- Zumindest einige K67 Pro melden sich als „BF-K6“ (mit einem echten Funkgerät
+  überprüft, 3.7): das Schreiben startet, wenn das zuletzt gelesene Funkgerät dasselbe
+  Modell war, wie im Originalprogramm (mit aktiver Sicherungskopie erfolgt das Lesen
+  von selbst).
+- Identifizierung: manche verschiedenen Funkgeräte verwenden dasselbe Protokoll und
+  denselben Speicher, ohne ihr Modell anzugeben: in diesem Fall schlägt das Programm
+  die möglichen Modelle vor, und die Wahl liegt bei Ihnen. Ein Funkgerät, das auf ein
+  Protokoll einer anderen Familie antwortet, könnte im Programmiermodus bleiben: aus-
+  und wieder einschalten.
+- Das Herunterladen aus dem Internet verwendet die direkte Verbindung (nicht den Proxy
+  des Systems).
+- Mit den CHIRP-Treibern verwaltete Funkgeräte: es gelten die Einschränkungen von
+  CHIRP für dieses Modell (z. B. BJ-7800 für die Firmware V0.15P geschrieben; hat das
+  Funkgerät eine neuere Firmware und antwortet nicht wie erwartet, hält das Lesen an,
+  ohne das Funkgerät zu verändern).
+- Firmware: der Ablauf, um ein blockiertes Funkgerät in den Aktualisierungsmodus zu
+  bringen, ist vom Hersteller nicht dokumentiert. Die automatische Identifizierung
+  erkennt die Funkgeräte, die das Programmierprotokoll der Bajeton 8300 (BT-11)
+  verwenden: ein anderes Funkgerät mit demselben Protokoll wäre nicht unterscheidbar,
+  deshalb ist auch Ihre Bestätigung nötig.
+
+AUS DEN QUELLEN NEU KOMPILIEREN (optional)
+Benötigt wird Go 1.22 oder neuer. Im Ordner „sorgenti“:
+      go build -mod=vendor -trimpath -ldflags "-H=windowsgui -s -w -X main.buildDate=JJJJ-MM-TTTHH:MM" -o "IU0VYT Flash.exe" .
+(buildDate ist das in der Registerkarte Info angezeigte Erstellungsdatum, z. B.
+2026-10-20T21:45.)
+Symbol und Eigenschaften der .exe-Datei (Name, Version) stehen in res/risorse.rc,
+kompiliert in rsrc_windows_amd64.syso (der Befehl steht am Anfang der .rc-Datei).
+(Die Bibliotheken sind bereits im Ordner vendor enthalten; das Symbol steckt in
+rsrc_windows_amd64.syso.)
+Unter Linux führt „go test -mod=vendor .“ die automatischen Tests an den
+Beispieldateien in testdata und mit den simulierten Funkgeräten aus. Der Ordner
+„verifica“ enthält die Programme für den Vergleich mit dem Originalcode (siehe
+verifica/LEGGIMI_VERIFICA.txt).
+Die Tests zum Import der Relaisliste von IK2ANE benötigen die Datei
+testdata/pontixls.xls (nicht enthalten: Daten Dritter, herunterladbar von
+www.ik2ane.it).
+
+LIZENZ
+IU0VYT Flash, Copyright (C) 2026 Daniele „IU0VYT“ Bonifazi. Freie Software: Sie können
+sie unter den Bedingungen der GNU General Public License, wie von der Free Software
+Foundation veröffentlicht, weitergeben und/oder verändern, entweder gemäß Version 3
+der Lizenz oder (nach Ihrer Wahl) jeder späteren Version. Sie wird in der Hoffnung
+verbreitet, dass sie nützlich ist, aber OHNE JEDE GEWÄHRLEISTUNG, sogar ohne die
+implizite Gewährleistung der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.
+Vollständiger Text in LICENSE.txt. Wer sie (auch verändert) weitergibt, muss dieselbe
+Lizenz verwenden, den Quellcode bereitstellen und die Urheberrechtshinweise erhalten.
+Die Treiber der Funkgeräte stammen zum großen Teil aus CHIRP (GNU GPL): Autoren und
+Lizenzen aller Bestandteile in AUTOREN_UND_LIZENZEN.txt.
+Unabhängiges Programm, weder mit Baofeng oder Bajeton verbunden noch von ihnen
+genehmigt: die Modellnamen geben nur an, mit welchen Funkgeräten es funktioniert; die
+Marken gehören ihren jeweiligen Inhabern.

@@ -1,0 +1,241 @@
+IU0VYT FLASH - 作者和许可证
+===========================
+
+IU0VYT Flash
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
+https://www.qrz.com/db/IU0VYT
+源代码：https://github.com/IU0VYT/IU0VYT
+
+本文件是 AUTORI_E_LICENZE.txt 的中文译本；以意大利文原文为准。人名、文件名和许可证声明保持原样。
+
+本程序是自由软件：你可以按照自由软件基金会发布的 GNU 通用公共许可证的条款重新分发和/或修改它，可以使用该许可证的第 3 版，或（由你选择）任何更高版本（SPDX：GPL-3.0-or-later）。
+
+发布本程序是希望它有用，但不提供任何担保；甚至不包括对适销性或特定用途适用性的默示担保。详情请参阅 GNU 通用公共许可证。
+
+许可证全文见 LICENSE.txt 文件（官方文本 https://www.gnu.org/licenses/gpl-3.0.txt 的精确副本；SHA-256 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986）。
+
+分发本程序（包括修改后的版本）的人必须使用相同的许可证，提供完整的源代码（“sorgenti”文件夹），并保留本文件、LICENSE.txt 以及源文件中的版权声明。
+
+
+源自 CHIRP 的部分
+-----------------
+大部分电台驱动（数据线协议、存储映射、信道规则）和 .img 文件格式源自 CHIRP（https://chirpmyradio.com，https://github.com/kk7ds/chirp），它是按照 GNU 通用公共许可证（视文件而定，第 2 版或更高版本，或第 3 版或更高版本）发布的自由软件。这些部分已用 Go 重写，并与 CHIRP 比对（2026/11/01 的修订版 dcf5d2519310；4.6 和 4.7 中新增的电台使用 2026/11/04 的修订版 ba67ff4，4.8 和 4.9 中的使用 2026/11/06 的修订版 0a9e92c）。所用 CHIRP 文件中注明的作者：
+
+  chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
+  drivers/uv5r.py                           Copyright 2012 Dan Smith
+  drivers/baofeng_uv3r.py                   Copyright 2011 Dan Smith
+  drivers/uvb5.py                           Copyright 2013 Dan Smith
+  drivers/ga510.py                          Copyright 2024 Dan Smith;
+                                            portions copyright 2023 Dave Liske,
+                                            2020 Jiaxun Yang
+  drivers/baofeng_uv17Pro.py                Copyright 2023 Sander van der Wel
+  drivers/baofeng_uv17.py                   Copyright 2023 Sander van der Wel
+  drivers/baofeng_common.py                 Copyright 2016 Jim Unroe KC9HI
+  drivers/baofeng_wp970i.py                 Copyright 2016 Jim Unroe KC9HI
+  drivers/uv6r.py                           Copyright 2016 Jim Unroe KC9HI
+  drivers/uv5x3.py                          Copyright 2016 Jim Unroe KC9HI
+  drivers/bf_t8.py                          Copyright 2022 Jim Unroe
+  drivers/radtel_t18.py                     Copyright 2021 Jim Unroe
+  drivers/retevis_rt22.py                   Copyright 2016-2020 Jim Unroe
+  drivers/bf_t1.py                          Copyright 2017 Pavel Milanes CO7WT
+                                            （与 PA3CQN、H. Hankins、D. Milkov 合作）
+  drivers/h777.py                           Copyright 2013 Andrew Morgan
+  drivers/radtel_rt900.py                   Copyright 2025, 2026 Fred Trimble;
+                                            2024 Pavel Moravec OK2MOP;
+                                            2023 Jim Unroe
+  drivers/radioddity_gm30.py                Copyright 2025 Mike Iacovacci
+  drivers/baofeng_dm32uv.py                 Copyright 2026 chaffed （GPL v3 或更高版本）
+  chirp/kenwood_tone.py                     Copyright 2026 Dan Smith
+  drivers/uvk5.py                           (c) 2023 Jacek Lipkowski SQ5BPF (UV-K5);
+                                            (c) 2025 Thibaut Berg (UV-K1)
+  drivers/mml_jc8810.py                     Copyright 2023 Jim Unroe
+  drivers/tdh8.py                           Copyright 2012 Dan Smith （及其他作者）
+  drivers/th_uv88.py                        2020 James Berry; Jim Unroe （GPL v2 或更高版本）
+  drivers/radtel_rt490.py                   Copyright 2023 angeof9 （GPL v3；也可按 2 条款
+                                            BSD）
+  drivers/retevis_rt21.py                   Copyright 2021-2026 Jim Unroe
+  drivers/tk11.py                           Copyright 2012 Dan Smith; 2025 Thibaut Berg
+  drivers/radtel_rt620.py                   Copyright 2024 Pavel Moravec OK2MOP (4.7)
+  drivers/th350.py                          Copyright 2019 Zhaofeng Li; 2013 Dan Smith
+                                            （GPL v2 或更高版本；4.7）
+  drivers/retevis_rt18.py                   Copyright 2026 （文件中未注明
+                                            作者；实验性驱动；4.7）
+  drivers/baofeng_digital.py                Copyright 2024 Marcos Del Sol Vives
+                                            （GPL v2 或更高版本；用作
+                                            W31D、BF-T20D 和 BF-V12D 的参考：型号
+                                            代码和 BF-V12D 的解锁）
+  4.8:
+  drivers/wouxun_common.py                  Copyright 2012 Filippi Marco IZ3GME (GPL v3)
+  drivers/th_uv3r.py                        Copyright 2011 Dan Smith (GPL v3)
+  drivers/th_uv3r25.py                      Copyright 2015 Eric Allen (GPL v3)
+  drivers/thuv1f.py                         Copyright 2012 Dan Smith
+  drivers/th_uvf8d.py                       Copyright 2013 Dan Smith (GPL v3)
+  drivers/kyd.py                            Copyright 2014 Jim Unroe, Dan Smith
+  drivers/kyd_IP620.py                      Copyright 2015 Lepik.stv
+  drivers/ksun_m6.py                        Copyright 2012 Dan Smith; 2024 Yuri D'Elia
+  drivers/puxing.py                         Copyright 2011 Dan Smith (GPL v3)
+  drivers/boblov_x3plus.py                  Copyright 2018 Robert C Jennings
+  drivers/hg_uv98.py                        Copyright 2022 Masen Furer KF7HVM
+                                            （与 KG7KMV 和 Bartłomiej Zieliński 合作）
+  drivers/radioddity_r2.py                  Copyright 2018 Klaus Ruebsam DG5EAU
+  drivers/retevis_rt1.py                    Copyright 2016 Jim Unroe
+  drivers/retevis_h777v4.py                 Copyright 2025 Jim Unroe
+  drivers/tg_uv2p.py                        Copyright 2013 Dan Smith
+  drivers/fd268.py                          Copyright 2015 Pavel Milanes CO7WT
+  4.9（修订版 0a9e92c）：
+  drivers/uvk5_egzumer.py                   Copyright 2023 Jacek Lipkowski SQ5BPF,
+                                            egzumer, JOC2
+  drivers/uvk5_cn.py                        Copyright 2026 赵昕 BG8ADW
+  drivers/wouxun.py                         Copyright 2011 Dan Smith (GPL v3)
+  drivers/kguv8d.py                         Copyright 2014 Ron Wellsted M0RNW (GPL v3)
+  drivers/kguv8dplus.py                     Copyright 2017 Krystian Struzik (GPL v3)
+  drivers/kguv8e.py, drivers/kg935g.py      Copyright 2019 Pavel Milanes CO7WT (GPL v3)
+  drivers/kguv9dplus.py                     Copyright 2022 Mel Terechenok (GPL v3)
+  drivers/th_uv8000.py                      Copyright 2019 Rick DeWitt AA0RD
+  drivers/tyt_uvl15w.py                     Copyright 2026 （GPL v3；CHIRP
+                                            日志中的作者：chaffed）
+  drivers/th350.py                          Copyright 2019 Zhaofeng Li
+  drivers/iradio_common.py,
+  drivers/iradio_uv_5118.py,
+  drivers/iradio_uv_5118plus.py,
+  drivers/radtel_rt880g.py                  Copyright 2022-2023 Jim Unroe KC9HI
+  drivers/retevis_c2.py                     Copyright 2026 Tony Gies
+  drivers/retevis_ha1g.py,
+  drivers/retevis_ha2.py                    Copyright 2024 Tommy (HA2: GPL v3)
+  drivers/retevis_rb15.py, retevis_rb17p.py,
+  retevis_rb28.py, retevis_rt23.py,
+  retevis_rt26.py, retevis_rt76p.py,
+  retevis_rt87.py, bf_t8.py                 Copyright 2017-2026 Jim Unroe KC9HI
+  drivers/gmrsuv1.py, gmrsv2.py, mursv1.py,
+  drivers/uv5x3.py, drivers/tdxone_tdq8a.py Copyright 2016-2022 Jim Unroe KC9HI
+  drivers/btech.py                          Copyright 2016-2026 Pavel Milanes CO7WT,
+                                            Jim Unroe KC9HI
+  drivers/anytone_ht.py                     Copyright 2015 Jim Unroe (GPL v3)
+  drivers/puxing_px888k.py                  Copyright 2016 Leo Barring
+  drivers/rh5r_v2.py                        Copyright 2017 Dan Smith (GPL v3)
+  drivers/tdm11.py                          Copyright 2025, 2026 Fred Trimble
+  drivers/h777.py (ZA-758)                  Copyright 2013 Andrew Morgan
+  drivers/radioddity_gm30.py (MU-5)         Copyright 2025 Mike Iacovacci
+  CHIRP 之外（相同许可证，GNU GPL v2 或更高版本）：
+  uvk5_egzumer_f4hwn_ver_4_3_0.py           armel F4HWN 的 F4HWN 驱动，由 JOC2
+                                            在 egzumer 驱动基础上改编
+                                            (https://github.com/armel/uv-k5-chirp-driver)
+  chirp-next-radtel-rt-890-m7ocm.py         Copyright 2023 Jim Unroe，由以下作者改编：
+                                            M7OCM (https://github.com/M7OCM/890)
+  4.10，来自 CHIRP 的设置：drivers/fd268.py（Copyright 2015 Pavel Milanes CO7WT）
+  和 drivers/retevis_rt76p.py（Copyright 2021-2022 Jim Unroe KC9HI），同上。
+
+固件升级协议和 DMR 设置（4.10）
+根据以下自由程序的说明和代码，用 Go 从零重写（未复制任何文件；测试所用的厂家固件不在软件包中）：
+  rt_890_flasher.py (Radtel RT-890)          Copyright 2023 JuantAldea, GNU GPL v3
+                                            (https://github.com/JuantAldea/RT-890-python-flasher)
+  radtel-rt-890-oefw（引导程序说明）        DualTachyon，Apache 2.0 许可证
+                                            (https://github.com/DualTachyon/radtel-rt-890-oefw)
+  radio_tool（DM-1701 通过 DFU，            v0l 等，GNU GPL v3
+  “OutSecurityBin”和 .sgl 文件，HID 引导程序）(https://github.com/v0l/radio_tool)
+  OpenGD77 FirmwareLoader (RD-5R, DM-1801)  Roger Clark VK3KYY 等，GNU GPL v2
+                                            (https://github.com/open-ham/OpenGD77)
+  qdmr（RD-5R、DM-1801 和 DM-1701           Hannes Matuschek DM3MAT, GNU GPL v3
+  的常规设置）                              (https://github.com/hmatuschek/qdmr)
+  dmrconfig（名称、ID 和开机文字）          Serge Vakulenko KK6ABQ，BSD 许可证
+                                            (https://github.com/OpenRTX/dmrconfig)
+语言选择器中的旗帜由程序绘制（国旗，属于公有领域）。
+
+IU0VYT Flash 中包含派生部分的文件（每个文件开头也有说明）：
+drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、drv_h777.go、drv_small.go、drv_rt900.go、drv_ga510.go、drv_gm30.go、drv_dm32.go、drv_uvk5.go、drv_jc8810.go、drv_tdh8.go、drv_thuv88.go、drv_rt490.go、drv_rt21.go、drv_tk11.go、drv_bfd.go（交叉参考）以及模拟电台 genemu_*.go；
+4.9：drv_uvk5x.go、drv_wouxun49.go、drv_kguv8.go、drv_kguv9.go、drv_kg935.go、drv_thuv8000.go、drv_uvl15w.go、drv_iradio.go、drv_tdq8a.go、drv_tdm11.go、drv_btgmrs.go、drv_retevisc2.go、drv_rb15.go、drv_rb17p.go、drv_rb28.go、drv_rt23.go、drv_rt26.go、drv_rt76p.go、drv_rt87.go、drv_anytoneht.go、drv_rh5rv2.go、drv_px888k.go、drv_kt8r.go、drv_ha1g.go、drv_ha1gfmt.go；
+4.10：fwrt890.go、fwdm1701.go、fwsgl.go、settings_rdty.go。
+感谢 CHIRP 的作者、armel F4HWN、M7OCM、JuantAldea、v0l（radio_tool）、OpenGD77 项目、Hannes Matuschek DM3MAT（qdmr）和 Serge Vakulenko KK6ABQ。
+
+QUANSHENG UV-K5 固件升级（4.1）
+Quansheng .bin 文件的格式和 UV-K5 引导程序的协议由自由程序 k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF，GNU GPL v3，https://github.com/sq5bpf/k5prog）和 uvtools（egzumer，https://github.com/egzumer/uvtools）记录。为实现互操作性，fwk5.go 根据这些资料从零编写；软件包中不包含这些程序的任何代码。verifica/k5/k5ref.js 只用于测试，它从执行验证者指定的文件夹加载 uvtools 的代码。感谢 SQ5BPF 和 egzumer。
+
+TIDRADIO TD-H3 / TD-H8 和 RADTEL RT-730 固件升级（4.3）
+引导程序的协议由 nicsure 在 TD-H3-Engineering 项目中记录（https://github.com/nicsure/TD-H3-Engineering，firmware_flash_protocol.txt，附有厂家程序的端口抓包），并被他的程序 TID Station 使用；相同的 36 字节握手也存在于厂家程序“H8_IAP”（TIDRADIO）和“RT730 Update tool”（Radtel）中。为实现互操作性，fwtdh.go 根据这些资料从零编写；软件包中不包含这些程序的任何代码。感谢 nicsure。
+
+使用 7.x 引导程序的固件升级（UV-K5 V3、UV-K1、RA79 V3）（4.4）
+该协议由自由程序 quansheng_toolkit（Copyright 2026 knoinok，Apache 2.0 许可证，https://github.com/knoinok/quansheng_toolkit，kradio/dfu.py）和 Multi-UVTools（spm81，https://github.com/armel/Multi-UVTools，js/flash-k1.js）描述并使用。fwk5.go（k5v3Update）根据这些资料从零编写；软件包中不包含这些程序的任何代码。
+
+RETEVIS RA89（4.4）和 RT85（4.5）固件升级
+为实现互操作性，协议取自 Retevis 的程序“RA89-update-software”（“TH8600-UpDAta Soft”2.3）和“RT85 10W_5W_UpData”（“TH8600-UpDAta Soft”2.1，retevis.com）；这些程序不包含在软件包中。verifica/ra89 只用于测试，它加载执行验证者指定的可执行文件。
+
+RADTEL RT-950 PRO、BAJETON BJ-9000 和 RADTEL RT-950（4.6、4.7）
+4.7：还比对了 Radtel RT-950PRO_CPS v1.2.1 和 Bajeton BJ-9000_CPS v1.3.3（bajeton.cn）程序，以及引导程序“RT-950_EnUPDATE”“BJ9000_EnUPDATE”和“Radtel ANC Bootloader V1.2”（升级协议，用于互操作性）；固件（Radtel radtels.com，Bajeton bajeton.com 和 bajeton.cn）只通过 SHA-256 指纹识别。软件包中不包含任何程序或固件。
+为实现互操作性，信道存储和设置取自厂家程序的代码（Radtel RT-950PRO_CPS v1.1.1、v1.2.0、v1.2.1、v1.3.3 和 RT-950_EnCPS“BT-9000_CPS”v1.3.0，radtels.com；Bajeton BJ-9000_CPS v1.1.1）以及 Radtel 固件的说明；这些程序不包含在软件包中。还参考了 JA van Hernen（PE1HVH）为其 RT-950 Pro 的 CHIRP 驱动发布的说明（https://github.com/pe1hvh/chirp_radtel_rt950pro，MIT 许可证；固件 0.18 和 0.29 对“F”命令的响应相同）以及 CHIRP 的第 12180 号报告：不包含这些项目的任何代码。
+
+.BTU 固件（4.8）
+无蓝牙的 Radtel RT-910 和 RT-900 以及无蓝牙的 Bajeton BJ-7700 的 .BTU 固件，使用“Radtel Bootload Tools”程序（Radtel，radtels.com）的协议发送，该协议为实现互操作性取自其代码：它与 Baofeng UV-5RM 的 KDH V1.0 引导程序（bfkdh.go）相同，握手为“PROGRAMBT80U”。固件（Radtel radtels.com，Bajeton bajeton.com）只通过 SHA-256 指纹识别；对于 RT-900，还比对了厂家程序“RT900_512 CPS”v1.0.0 和 v1.0.2（512 和 999 个信道）。软件包中不包含任何程序或固件。
+
+Radtel RT-470 / RT-495 / RT-630 的 .kdhx 固件使用与 UV-25 Plus 的“Bootloader Pro”（fwkdhx.go）相同的协议，平台为 Radtel 程序“New RT470 serial Bootloader Pro”指定的 JJCC。
+相对于 CHIRP 原始文件的修改（用 Go 重写、仅信道、适配 IU0VYT Flash 的界面）在每个文件开头和 CHANGELOG.txt 中说明，并注明各版本的日期。
+
+
+源自 DMRCONFIG 和 QDMR 的部分（自 3.6 起）
+----------------------------------------
+DMR 电台 RD-5R、DM-1801 和 DM-1701 的存储和 USB 协议源自：
+- dmrconfig（https://github.com/OpenRTX/dmrconfig），Copyright (C) 2018-2019 Serge Vakulenko KK6ABQ，3 条款 BSD 许可证（全文见下）：rd5r.c、dm1801.c、uv380.c、hid.c、hid-windows.c、dfu-libusb.c、dfu-windows.c；
+- qdmr（https://github.com/hmatuschek/qdmr），Hannes Matuschek DM3MAT，GNU GPL v3：radioddity_interface.cc、dm1701_codeplug.cc、tyt_interface.cc（用于比对）。
+IU0VYT Flash 中包含派生部分的文件：drv_rdty.go、drv_tyt.go、usb_windows.go、genemu_rdty_other.go、genemu_tyt_other.go、identify.go（自 3.8 起：DMR ID、名称、最近编程日期和 CPS 版本的位置，与 rd5r.c、gd77.c 和 uv380.c 中的 print_id 和 print_version 相同）；用于测试的 verifica/dmrconfig/tcpdev.c（为 dmrconfig 提供 TCP 连接，dmrconfig 本身不包含在内：需从其网站下载）。
+dmrconfig 许可证全文：
+
+  BSD 3-Clause License
+
+  Copyright (C) 2018-2019, Serge Vakulenko KK6ABQ
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+
+  1. Redistributions of source code must retain the above copyright notice, this
+     list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+
+  3. Neither the name of the copyright holder nor the names of its
+     contributors may be used to endorse or promote products derived from
+     this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+源自 CHIRP 的设置（自 3.6 起）
+------------------------------
+使用 CHIRP 驱动的电台的设置表（sorgenti/settings_chirp.json）是通过让 CHIRP 的代码（GNU GPL，作者同上）读写每一项而得出的（sorgenti/verifica/chirp/chirpsettings.py）：其中包含数据在存储中的位置、允许的值以及 CHIRP 各项的英文名称。
+自 3.7 起，CHIRP 的 CSV 格式（generic_csv 驱动的列）由转换器读写，并与 CHIRP 的代码进行比对（sorgenti/verifica/chirp/csvcheck.py，不包含在程序中）。
+
+
+使用的第三方信息（不作为代码包含）
+----------------------------------
+- CHIRP 的等效型号表（chirp/share/model_alias_map.yaml，GPL）：BF-R3 和 UV-9S = Radioddity UV-5RX3、G11S = Retevis RB27、TH-888S 和 BF-777S = BF-888 的对应关系，以及自 3.4 起 Baofeng/Pofung 部分的 77 个等效型号（例如 GT-1 = BF-888、GT-5 = UV-82、UV-10R = BF-F8HP）均来自此表，以名称列表的形式列在 catalog.go 中。
+- CHIRP 系统的公开报告（chirpmyradio.com/issues）：#9833（UV-16）、#9405（P52UV）、#10388（GMRS-9R）、#11280（UV-E70）和 #11696（BF-9700 和 BF-S56 Max：一位用户发布的标识、存储大小以及读写测试），#239（使用 UV-3R 驱动的 UV-3R+），以及自 3.5 起的 #11119（源自 UV-5RM 的 K5 Plus，用于固件系列）。对于用户报告的型号，兼容性标为实验性。
+- BTECH 关于升级 DMR-6X2 和 DMR-6X2 PRO 的官方说明（DMR-6X2-221b 和 DMR-6X2-PRO-121e 软件包中的“STOP and README FIRST.pdf”，https://baofengtech.com/software/），已概述在引导步骤中（自 3.8 起）；.spi/.CDI/.CDD 文件的结构根据软件包中的文件得出。BTECH 的程序、驱动和固件不包含在内。
+- Zadig（https://zadig.akeo.ie，GPL）仅作为安装 DM-1701 WinUSB 驱动的工具被提及：不包含在内。
+- IK2ANE 的意大利中继台列表（https://www.ik2ane.it）：不包含在软件包中；程序在你要求时从 IK2ANE 的网站下载。数据仍属于 IK2ANE，他免费向所有人提供这些数据。
+
+
+其他包含的组件
+--------------
+- go-webview2，Copyright (c) 2020 John Chadwick - MIT 许可证（sorgenti/vendor/github.com/jchv/go-webview2/LICENSE）
+- go-winloader，Copyright (c) 2021 John Chadwick - ISC 许可证（sorgenti/vendor/github.com/jchv/go-winloader/LICENSE.md）
+- WebView2Loader.dll（Microsoft WebView2 SDK，可再分发组件），包含在 go-webview2 中；窗口使用 Windows 的 WebView2 Runtime。
+- rardecode v2，Copyright (c) 2015 Nicholas Waples - 2 条款 BSD 许可证（sorgenti/vendor/github.com/nwaples/rardecode/v2/LICENSE）：读取 .rar 压缩包。自 3.1.1 版起取代 node-unrar-js/UnRAR，后者的许可证与 GNU GPL 不兼容。
+- golang.org/x/sys 和 golang.org/x/text，Copyright 2009 The Go Authors - 3 条款 BSD 许可证（sorgenti/vendor/golang.org/x/*/LICENSE）
+- Go 标准库，Copyright The Go Authors - 3 条款 BSD 许可证。
+以上所有许可证均与 GNU GPL 第 3 版兼容。
+
+
+商标和互操作性
+--------------
+IU0VYT Flash 是独立程序，与 Baofeng、Bajeton 或提及的其他厂家（例如 Quansheng、Retevis、Radtel、Radioddity、TIDRADIO、Hiroyasu、Talkpod、Anysecu、BTECH、Abbree、MaxTalker、Intek、Maverick、WLN、Zastone、Luiton）没有关联，也未获其认可。型号名称仅用于说明本程序适用于哪些电台。商标归各自所有者所有。
+为实现与电台的互操作性，数据协议和格式根据厂家程序重建（自 3.3 起还有“BF Series CPS”“T17-T18 PMR446 PRO / FRS”“DM-32UV CPS”和 Bajeton 的 BJ-8200 软件包；自 3.4 起有“BF-Ts”“BAOFENG GT18 PMR”“BAJETON DM-5000 CPS”；自 3.5 起有“DR-1801A6”以及固件系列的升级程序“Baofeng Bootloader Pro”和“T6UV Series CPS”；自 3.6 起有用于设置的“GT-22”“BF_V1_FH”（GT-68）“BT-11_CPS”v1.0.8 和 v1.0.9、“BJ-9000_CPS”和“5RH PRO”；自 3.8 起有 BTECH DMR-6X2 升级文件的结构；自 4.0 起有 CHIRP 驱动所记录的其他品牌电台的协议）（意大利第 633/1941 号法律第 64-quater 条，第 2009/24/EC 号指令第 6 条）。软件包中不包含厂家的代码、程序或固件：型号库会链接到厂家的官方网站。

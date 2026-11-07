@@ -1,0 +1,32 @@
+IU0VYT FLASH - LICENSE NOTICE
+=============================
+
+IU0VYT Flash, Copyright (C) 2026 Daniele "IU0VYT" Bonifazi.
+
+The program is distributed under the GNU General Public License, version 3 or (at your
+option) any later version (SPDX: GPL-3.0-or-later). The only legally valid text of the
+license is the original English text in LICENSE.txt (main folder of the package), an
+exact copy of https://www.gnu.org/licenses/gpl-3.0.txt.
+
+This notice is not a translation of the license: as the Free Software Foundation asks,
+it only summarizes what the license allows, and in case of doubt the English text
+prevails.
+
+In short, you may:
+- use the program for any purpose;
+- study how it works and change it (the complete source code is in the "sorgenti"
+  folder);
+- give copies to others, also selling them;
+- distribute your modified versions.
+
+If you distribute the program, original or modified, you must:
+- use the same license (GPL-3.0-or-later) for the whole program;
+- provide the complete source code, or a written offer to provide it;
+- keep the copyright notices, LICENSE.txt and the authors and licenses file;
+- state clearly what you changed and when.
+
+The program is provided WITHOUT ANY WARRANTY: the authors are not responsible for
+damage to radios, data or anything else.
+
+Third-party components keep their own licenses (MIT, ISC, BSD, GNU GPL), all
+compatible with the GPL version 3: see AUTHORS_AND_LICENSES.txt.

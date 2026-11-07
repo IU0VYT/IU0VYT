@@ -3,6 +3,38 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.10.0 (07/11/2026)
+-------------------
+- Lingue dell'interfaccia: selettore con le bandiere a destra di «ℹ Info» (italiano,
+  inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese),
+  traduzione immediata di tutta la pagina (ui/i18n.js: ogni testo, anche quelli che
+  arrivano dal programma, si sostituisce con la traduzione; testi con parti variabili
+  e messaggi composti riconosciuti) e dei testi delle finestre di Windows (i18n.go:
+  messaggi, titoli e filtri di «Apri» e «Salva»). Traduzioni in ui/lang/<lingua>.tsv
+  (chiave FNV-1a a 32 bit del testo italiano); la lingua scelta si salva nelle
+  impostazioni (Settings.Lang, api «lang»). i18n_test.go estrae i testi (ui/*.js,
+  ui/index.html, stringhe dei file .go) e controlla che ogni lingua li abbia tutti con
+  le stesse parti variabili. File informativi tradotti nella cartella «lingue».
+- Barra in alto: tolto «Aggiornamenti» (resta il controllo automatico e «Verifica
+  aggiornamenti» nella scheda Info); «Identifica Radio» accanto a «? Guida».
+- Firmware Radtel RT-890 (fwrt890.go): file .bin di Radtel e liberi (M7OCM, OEFW),
+  caricatore della radio (115200 baud, cancellazione, blocchi da 128 byte), dal
+  programma rt_890_flasher di JuantAldea; radio simulata e firmware M7OCM v3.2.
+- Firmware Baofeng DM-1701 / Retevis RT84 (fwdm1701.go): file «OutSecurityBin» del
+  costruttore via USB DFU nel caricatore, come radio_tool (comando 91 31,
+  cancellazione per settore, blocchi da 1024 byte numerati da 2 per settore); solo la
+  memoria del programma da 0x0800C000, il caricatore non si tocca; file V02.06 del
+  costruttore con la radio simulata.
+- Firmware Baofeng RD-5R e DM-1801 (fwsgl.go): file .sgl del costruttore via USB HID,
+  come il FirmwareLoader di OpenGD77 e radio_tool (chiave del modello controllata dalla
+  radio prima della cancellazione, blocchi da 32 byte, somma a ogni KB); file del
+  costruttore con la radio simulata.
+- Impostazioni: Feidaxin FD-288A, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH (fd268.py,
+  con l'immagine di un modello della stessa famiglia) e Retevis RT76P (immagine vuota)
+  da CHIRP; Baofeng RD-5R e DM-1801 (settings_rdty.go, 31 voci, da qdmr e dmrconfig);
+  Baofeng DM-1701 (nome, ID DMR, testi di accensione; testi Unicode a 16 bit).
+- Prove: extra_test.go solo fuori da Windows (go test di nuovo funzionante su Windows).
+
 4.9.0 (07/11/2026)
 ------------------
 - Identifica: la porta controllata (probePort) passa alla porta vera la parità

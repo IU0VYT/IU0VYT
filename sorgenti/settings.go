@@ -390,6 +390,20 @@ func readSetting(d *setDef, img []byte) (string, error) {
 		}
 		return fmtSetNum(v, dec), nil
 	case "str":
+		if e.Fmt == "utf16le" { // 4.10: testi Unicode a 16 bit (DM-1701)
+			var out []rune
+			for _, off := range e.Offs {
+				if off+1 >= len(img) {
+					return "", errors.New("impostazione fuori dalla memoria")
+				}
+				c := rune(img[off]) | rune(img[off+1])<<8
+				if c == 0 || c == 0xFFFF {
+					break
+				}
+				out = append(out, c)
+			}
+			return strings.TrimRight(string(out), " "), nil
+		}
 		rev := map[int]rune{}
 		for c, b := range e.Map {
 			rev[b] = []rune(c)[0]
@@ -511,6 +525,22 @@ func writeSetting(d *setDef, img []byte, v string) error {
 			for len(r) < len(e.Offs) {
 				r = append(r, ' ')
 			}
+		}
+		if e.Fmt == "utf16le" { // 4.10: come dmrconfig, il resto a 0x0000
+			for i, off := range e.Offs {
+				if off+1 >= len(img) {
+					return errors.New("impostazione fuori dalla memoria")
+				}
+				var c rune
+				if i < len(r) {
+					c = r[i]
+					if c < 0x20 || c > 0xFFFD || (c >= 0xD800 && c < 0xE000) {
+						return fmt.Errorf("carattere non ammesso: %q", string(c))
+					}
+				}
+				img[off], img[off+1] = byte(c), byte(c>>8)
+			}
+			return nil
 		}
 		for i, off := range e.Offs {
 			if off >= len(img) {

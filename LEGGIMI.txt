@@ -1,11 +1,29 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.9.0 - un solo file eseguibile, nessuna installazione, interfaccia in italiano.
+Versione 4.10.0 - un solo file eseguibile, nessuna installazione, interfaccia in 9 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.10.0:
+- LINGUE: accanto a «ℹ Info» c'è il selettore della lingua con le bandiere (italiano,
+  inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese). La
+  traduzione è immediata e riguarda tutto il programma, anche i messaggi e le finestre
+  di Windows; l'ultima lingua scelta si ricorda al riavvio (vedi «LINGUA
+  DELL'INTERFACCIA»). Questo file e gli altri file informativi ci sono in tutte le
+  lingue (cartella «lingue» del pacchetto);
+- barra in alto: tolto il pulsante «Aggiornamenti» (il controllo resta automatico a
+  ogni avvio e con «🔄 Verifica aggiornamenti» nella scheda Info); «🔎 Identifica
+  Radio» è accanto a «? Guida»;
+- AGGIORNAMENTO DEL FIRMWARE per 5 radio in più (57 in tutto): Radtel RT-890 (firmware
+  di Radtel e firmware libero M7OCM), Baofeng DM-1701 / Retevis RT84 via USB, Baofeng
+  RD-5R e DM-1801 via USB (file .sgl), vedi le sezioni dedicate;
+- IMPOSTAZIONI per 10 radio in più (396 in tutto): Feidaxin FD-288A, FD-150A,
+  FD-160A, FD-450A, FD-460A, FD-460UH e Retevis RT76P (da CHIRP), Baofeng RD-5R e
+  DM-1801 (31 voci: nome e ID DMR, testi di accensione, toni, tempi, VOX, scansione,
+  risparmio energetico), Baofeng DM-1701 (nome e ID DMR, testi di accensione);
+- prove: «go test» funziona di nuovo anche su Windows (extra_test.go).
 Novità della 4.9.0:
 - CORRETTO: Lanchonlh HG-UV98 e Quansheng TG-UV2+ non riconosciute da «Identifica».
   Durante l'identificazione la porta parlava sempre in 8N1: ora usa la parità pari
@@ -952,8 +970,12 @@ IMPOSTAZIONI DELLE RADIO (3.6)
   guarda quali bit cambiano) e le voci sono tradotte in italiano. Non sono incluse le
   voci di taratura, di prova o di fabbrica. I testi con caratteri non latini (es. nomi
   in cinese scritti dal programma del costruttore) si possono solo sostituire.
+- Baofeng RD-5R e DM-1801 (4.10, 31 voci): impostazioni generali della famiglia
+  Radioddity GD-77 come le descrive qdmr (nome e ID DMR come dmrconfig); le password
+  non si toccano. Baofeng DM-1701 (4.10): nome, ID DMR e testi di accensione, gli
+  unici campi su cui dmrconfig e qdmr concordano.
 - Non ancora disponibili: serie D, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST,
-  BF-9700 / BF-S56 Max, DM-5000, DR-1801UV, RD-5R, DM-1801, DM-1701 e i modelli della famiglia UV-17 Pro che
+  BF-9700 / BF-S56 Max, DM-5000, DR-1801UV e i modelli della famiglia UV-17 Pro che
   CHIRP non elenca (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B, UV-17R, UV-21R,
   UV-21L): per queste usa il programma del costruttore.
 
@@ -1072,6 +1094,38 @@ AGGIORNAMENTO DEL FIRMWARE TIDRADIO TD-H3 / TD-H8 E RADTEL RT-730 (4.3)
 - I firmware modificati da terzi (nicsure) sono riconosciuti e segnalati: questo
   programma, come CHIRP, potrebbe non leggerne più i canali.
 
+AGGIORNAMENTO DEL FIRMWARE RADTEL RT-890 (4.10)
+- Radtel RT-890: file .bin di Radtel e firmware liberi (M7OCM, OEFW). Il programma
+  controlla che il file sia un programma per il microcontrollore della radio (AT32F421,
+  al massimo 59 KB) e riconosce i firmware liberi e la scheda (PCB 2.0 o 2.1).
+- Procedura: collega il cavo alla radio spenta, accendila tenendo premuti i due tasti
+  laterali (schermo spento) e premi "Avvia aggiornamento". Il caricatore della radio
+  resta intatto; se l'invio si interrompe riaccendi la radio nello stesso modo e ripeti.
+- Il caricatore non controlla il modello: si deve scrivere RT890. Dopo il firmware
+  libero M7OCM i canali si gestiscono con la scheda "Radtel RT-890 (firmware M7OCM)".
+- Protocollo come il programma libero rt_890_flasher di JuantAldea (115200 baud,
+  cancellazione, blocchi da 128 byte confermati), riscritto da zero e provato con una
+  radio simulata e con il firmware M7OCM v3.2.
+
+AGGIORNAMENTO DEL FIRMWARE DMR VIA USB: DM-1701, RD-5R, DM-1801 (4.10)
+- Baofeng DM-1701 / Retevis RT84: file .bin di Baofeng ("OutSecurityBin", es.
+  "DM-1701(CSV)-V02.06.bin"), via USB con lo stesso driver dei canali. Radio spenta:
+  tieni premuti il PTT e il tasto sopra il PTT e accendila (caricatore), collega il
+  cavo e premi "Avvia aggiornamento". Si scrive solo la memoria del programma
+  (0x0800C000 in poi): il caricatore resta intatto. Le parti del file per la memoria
+  SPI (caratteri e immagini) non si scrivono, come in radio_tool. Sequenza del
+  programma libero radio_tool (provata da quel progetto su DM-1701 vere), riscritta da
+  zero; file V02.06 del costruttore provati con una radio simulata.
+- Baofeng RD-5R e DM-1801: file .sgl del costruttore (es. "BF-5R_V2.1.6.sgl",
+  "DM-1801_V2.1.9.sgl"), via USB come dispositivo HID (nessun driver). Modalità di
+  aggiornamento (schermo spento): RD-5R, tasto arancione S1 e tasto nero Fn ai lati
+  del PTT; DM-1801, i due tasti piccoli sotto il PTT; tenuti premuti all'accensione.
+  La radio controlla la chiave del modello prima di cancellare la memoria: con il
+  firmware di un'altra radio l'aggiornamento si ferma senza modificarla. Sequenza del
+  "FirmwareLoader" di OpenGD77 e di radio_tool, riscritta da zero; file del
+  costruttore provati con una radio simulata.
+- In tutti e tre i casi si deve scrivere il modello (DM1701, RD5R, DM1801).
+
 AGGIORNAMENTO DEL FIRMWARE RETEVIS (4.4, 4.5)
 - Retevis RA79 V3 (e Quansheng UV-K5 V3 e UV-K1, microcontrollore PY32F071, caricatore
   7.x): file .bin di Retevis nel formato di Quansheng (es. "RA79 V3.bin", versione
@@ -1176,14 +1230,13 @@ AGGIORNAMENTO DEL FIRMWARE BAOFENG
   conosciuto (impronta SHA-256) vale più del nome: il firmware ufficiale della UV-25
   Plus rinominato resta "per UV-25 Plus". Nella modalità automatica una radio che non
   risponde alla richiesta di aggiornamento non viene modificata.
-- BJ-7700 senza Bluetooth (file .BTU), DM-32UV, DM-5000, M20D, RD-5R, DM-1801, DM-1701:
-  aggiornamento solo con i programmi del costruttore (link nella galleria). Sono
-  stati controllati di nuovo tutti i pacchetti scaricati: per la DM-32UV
-  l'aggiornamento è dentro il programma nativo del costruttore (protocollo non
-  ricavabile dal codice in modo verificabile), RD-5R e DM-1701 usano programmi USB
-  (DFU / HID) con driver propri, M20D e DM-5000 programmi compressi o segnalati dagli
-  antivirus. Senza un confronto con il codice originale, un aggiornamento sbagliato
-  potrebbe rendere la radio inutilizzabile: per questo non sono gestite.
+- DM-32UV, DM-5000, M20D: aggiornamento solo con i programmi del costruttore (link
+  nella galleria). Per la DM-32UV l'aggiornamento è dentro il programma nativo del
+  costruttore (protocollo non ricavabile dal codice in modo verificabile), M20D e
+  DM-5000 usano programmi compressi o segnalati dagli antivirus. Senza un confronto
+  con il codice originale, un aggiornamento sbagliato potrebbe rendere la radio
+  inutilizzabile: per questo non sono gestite. La BJ-7700 senza Bluetooth (file .BTU)
+  si aggiorna dalla 4.8, RD-5R, DM-1801 e DM-1701 dalla 4.10 (vedi sopra).
 
 LETTURA E SCRITTURA VIA CAVO
 - Collega il cavo, accendi la radio, scegli la porta COM del cavo nella finestra
@@ -1274,6 +1327,25 @@ Gli archivi .rar (formati RAR 1.5-5, anche "solidi") sono aperti dal programma c
 decodificatore libero rardecode (licenza BSD). Non sono supportati gli archivi protetti
 da password e quelli divisi in più parti.
 
+LINGUA DELL'INTERFACCIA (4.10)
+- Il selettore con la bandiera è in alto, subito a destra di "ℹ Info". Al primo avvio
+  mostra la bandiera italiana; con un clic si apre l'elenco delle lingue: italiano,
+  English, Français, Deutsch, Español, Português, Русский, 中文, 日本語.
+- La traduzione è immediata, senza riavviare: schede, pulsanti, menu, finestre, guida,
+  messaggi e avvisi (anche quelli che arrivano dalle radio), schede della galleria,
+  impostazioni e le finestre di Windows "Apri" e "Salva".
+- La lingua scelta si salva nelle impostazioni del programma e vale anche ai riavvii.
+- I nomi delle voci di CHIRP (colonna "nome originale" delle impostazioni), i canali,
+  i nomi dei ponti e i file restano come sono.
+- I file informativi tradotti (guida completa, CHANGELOG con le novità della 4.10,
+  README, autori e licenze, versione, nota sulla licenza) sono nella cartella
+  "lingue" del pacchetto, una sottocartella per lingua (en, fr, de, es, pt, ru, zh,
+  ja); i nomi dei file sono nella lingua della cartella (es. GUIDE.txt, LISEZMOI.txt,
+  LIESMICH.txt, LEEME.txt, LEIAME.txt). La storia delle versioni precedenti resta in
+  italiano in CHANGELOG.txt. La licenza valida è il testo originale inglese della GNU
+  GPL (LICENSE.txt): le traduzioni spiegano che cosa permette, come chiede la Free
+  Software Foundation.
+
 SCHEDA INFO E AGGIORNAMENTI
 - La scheda "ℹ Info" mostra nome, versione, data di compilazione, autore, pagina QRZ,
   sito del programma (https://iu0vyt.github.io/IU0VYT/, dalla 3.9.3), repository GitHub (https://github.com/IU0VYT/IU0VYT: codice sorgente, rilasci e
@@ -1290,7 +1362,8 @@ SCHEDA INFO E AGGIORNAMENTI
   Roaming\GestioneCanaliRadio): ogni utente e ogni PC ha la sua. "📂 Apri" la apre in
   Esplora risorse.
 - Verifica degli aggiornamenti: a ogni avvio, in automatico, e con il pulsante
-  "🔄 Aggiornamenti" in alto (o "🔄 Verifica aggiornamenti" nella scheda Info).
+  "🔄 Verifica aggiornamenti" nella scheda Info (dalla 4.10 non c'è più il pulsante
+  "Aggiornamenti" in alto).
   Il programma confronta la sua versione con quella pubblicata dall'autore:
     · se quella in uso è la più recente lo dice e non scarica nulla;
     · se ne esiste una più recente compare in alto un avviso giallo con
@@ -1566,7 +1639,7 @@ IDENTIFICAZIONE AUTOMATICA (4.0 - 4.7)
   il programma chiede prima di sostituirle.
 - Dalla 4.2, dopo il riconoscimento la ricerca si FERMA (la funzione resta attiva):
   per cercare un'altra radio sullo stesso cavo premi il pulsante giallo
-  "🔎 Identifica Radio" in alto a destra, accanto ad "Aggiornamenti" (dalla 4.4; è
+  "🔎 Identifica Radio" in alto a destra, accanto a "? Guida" (dalla 4.4; è
   grigio e non si può premere se l'identificazione automatica è disattivata; con molte
   schede aperte si restringe fino alla sola lente). Un cavo collegato al PC dopo (anche lo stesso,
   staccato e ricollegato) viene cercato da solo.

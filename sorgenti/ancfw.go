@@ -73,7 +73,7 @@ type fwCheck struct {
 }
 
 type fwInfo struct {
-	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730) | th8600 (Retevis RA89 / RT85) | btu (RT-910 / RT-900 senza Bluetooth)
+	Kind     string    `json:"kind"`   // anc (Bajeton 8300/7800) | bf (Baofeng KDH .BF) | rh5 (Baofeng 5RH Pro .dat) | kdhx (UV-25 Plus) | bj9000 | kdh9g (UV-9G) | k5 (Quansheng UV-K5) | tdh (TD-H3 / TD-H8 / RT-730) | th8600 (Retevis RA89 / RT85) | btu (RT-910 / RT-900 senza Bluetooth) | rt890 (Radtel RT-890) | dm1701 (Baofeng DM-1701) | sgl (RD-5R / DM-1801)
 	Target   string    `json:"target"` // radio a cui è destinato
 	Confirm  string    `json:"confirm"`
 	Hw       string    `json:"hw,omitempty"`
@@ -272,6 +272,9 @@ const (
 	fwTDH    // TIDRADIO TD-H3 / TD-H8, Radtel RT-730 (.BIN, 4.3)
 	fwTH8600 // Retevis RA89 (.bin, 4.4) e RT85 (.hex, 4.5)
 	fwBTU    // Radtel RT-910 / RT-900 e Bajeton BJ-7700 senza Bluetooth (.BTU, 4.8)
+	fwRT890  // Radtel RT-890 (.bin, 4.10)
+	fwDM1701 // Baofeng DM-1701 / Retevis RT84 («OutSecurityBin», 4.10)
+	fwSGL    // Baofeng RD-5R / DM-1801 (.sgl, 4.10)
 )
 
 func sniffKind(name string, b []byte) fwKind {
@@ -280,6 +283,12 @@ func sniffKind(name string, b []byte) fwKind {
 		return fwZIP
 	case bytes.HasPrefix(b, []byte("Rar!\x1a\x07")):
 		return fwRAR
+	}
+	if bytes.HasPrefix(b, []byte(dm1701FwMagic)) {
+		return fwDM1701
+	}
+	if bytes.HasPrefix(b, []byte("SGL!")) {
+		return fwSGL
 	}
 	ext := strings.ToLower(path.Ext(name))
 	switch ext {
@@ -302,6 +311,9 @@ func sniffKind(name string, b []byte) fwKind {
 		}
 		if thFile(name) {
 			return fwTH8600
+		}
+		if rt890Plausible(b) {
+			return fwRT890
 		}
 	case ".hex":
 		if thFile(name) {

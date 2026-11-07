@@ -17,7 +17,7 @@ const TYPE_GROUP = {
 };
 // ordine alfabetico «naturale» (UV-5R prima di UV-17)
 const byModelName = (a, b) => a.name.localeCompare(b.name, 'it', { numeric: true, sensitivity: 'base' }) || a.brand.localeCompare(b.brand);
-const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin', tdh: 'firmware .BIN', th8600: 'firmware .bin / .hex', btu: 'firmware .BTU' };
+const FW_LABEL = { anc: 'firmware .anc', bf: 'firmware .BF', rh5: 'firmware .dat', kdhx: 'firmware .kdhx', bj9000: 'firmware .Firmware', kdh9g: 'firmware .kdh', k5: 'firmware .bin', tdh: 'firmware .BIN', th8600: 'firmware .bin / .hex', btu: 'firmware .BTU', rt890: 'firmware .bin', dm1701: 'firmware .bin', sgl: 'firmware .sgl' };
 const FW_KINDS = Object.keys(FW_LABEL);
 const FW_DESC = {
   anc: 'file .anc del costruttore (protocollo del programma «BinTe ANC Bootloader»)',
@@ -30,6 +30,9 @@ const FW_DESC = {
   tdh: 'file .BIN del costruttore (caricatore di TD-H3, TD-H8 e RT-730: radio accesa tenendo premuto il PTT)',
   th8600: 'file .bin (RA89) o .hex (RT85) di Retevis (programmi «TH8600-UpDAta Soft»: radio in modalità di aggiornamento)',
   btu: 'file .BTU di Radtel o Bajeton (programma «Radtel Bootload Tools» del costruttore: radio accesa normalmente o tenendo premuti i due tasti laterali)',
+  rt890: 'file .bin di Radtel o firmware libero M7OCM / OEFW (caricatore della RT-890: radio accesa tenendo premuti i due tasti laterali)',
+  dm1701: 'file .bin di Baofeng («OutSecurityBin», via USB nel caricatore DFU: radio accesa tenendo premuti il PTT e il tasto sopra il PTT)',
+  sgl: 'file .sgl di Baofeng o Radioddity (via USB nel caricatore: radio accesa tenendo premuti i due tasti indicati, schermo spento)',
 };
 
 // colore di ogni marca (icone e riquadri della galleria); le marche non
@@ -160,14 +163,14 @@ const Gallery = {
       return bs.map(br => {
         const bi = its.filter(c => c.brand === br);
         return `<div class="galbrand" style="--bc:${brandColor(br)}"><div class="galbrand-head"><span class="galbrand-name">${esc(br)}</span>
-          <span class="note">${bi.length} ${bi.length === 1 ? 'modello' : 'modelli'}</span></div>
+          <span class="note">${bi.length === 1 ? `1 modello` : `${bi.length} modelli`}</span></div>
           <div class="galgrid">${bi.map(c => this.card(c)).join('')}</div></div>`;
       }).join('');
     };
     const groups = items => TYPE_ORDER.concat([...new Set(items.map(c => c.type))].filter(t => !TYPE_ORDER.includes(t))).map(type => {
       const its = items.filter(c => c.type === type).sort(byModelName);
       return its.length ? `<div class="galarea galtype-${esc(type)}"><div class="galarea-head"><span class="galarea-name">${esc(TYPE_GROUP[type] || type)}</span>
-        <span class="note">${its.length} ${its.length === 1 ? 'modello' : 'modelli'}</span></div>
+        <span class="note">${its.length === 1 ? `1 modello` : `${its.length} modelli`}</span></div>
         ${brands(its)}</div>` : '';
     }).join('');
     const sec = (title, note, items, cls) => `<section class="galsecbox ${cls}"><h3 class="galsec">${esc(title)}: ${items.length}</h3>
@@ -184,7 +187,8 @@ const Gallery = {
     const g = App.defs[kind];
     if (!g) return '';
     const bands = (g.bands || []).map(b => `${Math.round(b.lo / 1e5) / 10}–${Math.round(b.hi / 1e5) / 10}`).join(', ');
-    return `${g.slots} canali · nomi ${g.nameMax ? 'fino a ' + g.nameMax + ' caratteri' : 'non memorizzati'} · ${(g.powerLevels || []).slice().sort((a, b) => a.sem - b.sem).map(p => p.label).join(', ')}${bands ? ' · ' + bands + ' MHz' : ''}`;
+    // ogni parte in un elemento a sé: si traduce da sola
+    return `<span>${g.slots} canali</span> · <span>${g.nameMax ? `nomi fino a ${g.nameMax} caratteri` : 'nomi non memorizzati'}</span> · ${(g.powerLevels || []).slice().sort((a, b) => a.sem - b.sem).map(p => `<span>${esc(p.label)}</span>`).join(', ')}${bands ? ' · ' + bands + ' MHz' : ''}`;
   },
 
   detail(c) {
@@ -199,8 +203,8 @@ const Gallery = {
         ${!drivers.length ? `<p class="note">${esc(App.noDriver)}</p>` : ''}</div></div>
       ${drivers.length ? `<h4 class="fwh">Canali e ponti</h4>
         ${drivers.length > 1 ? '<p class="note">Questa radio esiste in più versioni: scegli quella giusta. Se non è quella, la radio non risponde alla lettura e non viene modificata, oppure il programma lo riconosce dai dati letti e apre la scheda giusta.</p>' : ''}
-        <div class="galacts">${drivers.map(d => `<div class="galact"><button class="btn primary" data-open="${esc(d)}">📻 ${esc((d === 'k67' || d === 'baj' ? 'Vai alla scheda ' : 'Apri la scheda ') + App.cardLabel(c, d))}</button>
-          <span class="note">${esc(this.driverLine(d))}</span></div>`).join('')}</div>` : ''}
+        <div class="galacts">${drivers.map(d => `<div class="galact"><button class="btn primary" data-open="${esc(d)}"><span aria-hidden="true">📻</span> ${d === 'k67' || d === 'baj' ? `Vai alla scheda ${esc(App.cardLabel(c, d))}` : `Apri la scheda ${esc(App.cardLabel(c, d))}`}</button>
+          <span class="note">${this.driverLine(d)}</span></div>`).join('')}</div>` : ''}
       ${c.guide === '6x2' ? `<h4 class="fwh">Firmware</h4><div class="galact"><button class="btn" data-guide>🧭 Aggiornamento guidato…</button>
         <span class="note">controllo dei file del pacchetto ufficiale, procedura passo per passo e avvio del programma BTECH</span></div>` : ''}
       ${FW_KINDS.includes(c.fw) ? `<h4 class="fwh">Firmware</h4><div class="galact"><button class="btn" data-fw>⬆ Aggiorna il firmware…</button>

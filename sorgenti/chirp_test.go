@@ -56,6 +56,10 @@ func chirpRef(t *testing.T, args ...string) []byte {
 
 // immagine di prova per il modello: quella di CHIRP del modello, o della famiglia
 var chirpTestImage = map[string]string{
+	// 4.10: Feidaxin senza immagine propria in CHIRP: immagine di un modello della
+	// stessa famiglia (fd268.py, stessa memoria)
+	"fdx-288a": "Feidaxin_FD-288B.img", "fdx-150a": "Feidaxin_FD-268A.img", "fdx-160a": "Feidaxin_FD-268A.img",
+	"fdx-450a": "Feidaxin_FD-268B.img", "fdx-460a": "Feidaxin_FD-268B.img", "fdx-460uh": "Feidaxin_FD-268B.img",
 	"rt-h777v4": "Retevis_H777_V4.img", // 4.8: variante V4 (nome del file con la variante)
 	"bf-v8a":    "Radtel_T18.img",
 	"bf-g11s":   "Retevis_RB27.img",

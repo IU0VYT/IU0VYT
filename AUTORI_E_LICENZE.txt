@@ -135,6 +135,26 @@ della 4.8 e della 4.9 con la revisione 0a9e92c del 06/11/2026). Autori indicati 
                                             (https://github.com/armel/uv-k5-chirp-driver)
   chirp-next-radtel-rt-890-m7ocm.py         Copyright 2023 Jim Unroe, adattato da
                                             M7OCM (https://github.com/M7OCM/890)
+  4.10, impostazioni da CHIRP: drivers/fd268.py (Copyright 2015 Pavel Milanes CO7WT)
+  e drivers/retevis_rt76p.py (Copyright 2021-2022 Jim Unroe KC9HI), come sopra.
+
+PROTOCOLLI DI AGGIORNAMENTO DEL FIRMWARE E IMPOSTAZIONI DMR (4.10)
+Riscritti da zero in Go dalle descrizioni e dal codice di questi programmi liberi (nessun
+file copiato; i firmware dei costruttori usati per le prove non sono nel pacchetto):
+  rt_890_flasher.py (Radtel RT-890)          Copyright 2023 JuantAldea, GNU GPL v3
+                                            (https://github.com/JuantAldea/RT-890-python-flasher)
+  radtel-rt-890-oefw (note sul caricatore)  DualTachyon, licenza Apache 2.0
+                                            (https://github.com/DualTachyon/radtel-rt-890-oefw)
+  radio_tool (DM-1701 via DFU, file         v0l e altri, GNU GPL v3
+  «OutSecurityBin» e .sgl, caricatore HID)  (https://github.com/v0l/radio_tool)
+  OpenGD77 FirmwareLoader (RD-5R, DM-1801)  Roger Clark VK3KYY e altri, GNU GPL v2
+                                            (https://github.com/open-ham/OpenGD77)
+  qdmr (impostazioni generali RD-5R,        Hannes Matuschek DM3MAT, GNU GPL v3
+  DM-1801 e DM-1701)                        (https://github.com/hmatuschek/qdmr)
+  dmrconfig (nome, ID e testi di accensione) Serge Vakulenko KK6ABQ, licenza BSD
+                                            (https://github.com/OpenRTX/dmrconfig)
+Le bandiere del selettore della lingua sono disegnate nel programma (bandiere
+nazionali, di pubblico dominio).
 
 File di IU0VYT Flash con parti derivate (indicato anche in testa a ciascun file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go,
@@ -145,8 +165,10 @@ drv_tk11.go, drv_bfd.go (riferimento incrociato) e le radio simulate genemu_*.go
 drv_thuv8000.go, drv_uvl15w.go, drv_iradio.go, drv_tdq8a.go, drv_tdm11.go,
 drv_btgmrs.go, drv_retevisc2.go, drv_rb15.go, drv_rb17p.go, drv_rb28.go, drv_rt23.go,
 drv_rt26.go, drv_rt76p.go, drv_rt87.go, drv_anytoneht.go, drv_rh5rv2.go,
-drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go.
-Grazie agli autori di CHIRP, ad armel F4HWN e a M7OCM.
+drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
+4.10: fwrt890.go, fwdm1701.go, fwsgl.go, settings_rdty.go.
+Grazie agli autori di CHIRP, ad armel F4HWN, a M7OCM, a JuantAldea, a v0l (radio_tool),
+al progetto OpenGD77, a Hannes Matuschek DM3MAT (qdmr) e a Serge Vakulenko KK6ABQ.
 
 AGGIORNAMENTO DEL FIRMWARE DELLA QUANSHENG UV-K5 (4.1)
 Il formato dei file .bin di Quansheng e il protocollo del caricatore della UV-K5 sono

@@ -1,0 +1,45 @@
+IU0VYT FLASH - ÄNDERUNGSPROTOKOLL
+=================================
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 oder neuer
+
+Dies ist die deutsche Übersetzung des neuesten Eintrags von CHANGELOG.txt. Die
+vollständige Geschichte der früheren Versionen (1.0 - 4.9) steht im italienischen
+Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
+Version sind auch in LIESMICH.txt zusammengefasst.
+
+4.10.0 (07.11.2026)
+-------------------
+- Sprachen der Oberfläche: Auswahl mit den Flaggen rechts von „ℹ Info“ (Italienisch,
+  Englisch, Französisch, Deutsch, Spanisch, Portugiesisch, Russisch, Chinesisch,
+  Japanisch), sofortige Übersetzung der ganzen Seite (ui/i18n.js: jeder Text, auch die
+  vom Programm kommenden, wird durch seine Übersetzung ersetzt; Texte mit variablen
+  Teilen und zusammengesetzte Meldungen werden erkannt) und der Texte der
+  Windows-Fenster (i18n.go: Meldungen, Titel und Filter von „Öffnen“ und „Speichern“).
+  Übersetzungen in ui/lang/<Sprache>.tsv (32-Bit-FNV-1a-Schlüssel des italienischen
+  Textes); die gewählte Sprache wird in den Einstellungen gespeichert (Settings.Lang,
+  API „lang“). i18n_test.go zieht die Texte heraus (ui/*.js, ui/index.html,
+  Zeichenketten der .go-Dateien) und prüft, dass jede Sprache alle mit denselben
+  variablen Teilen hat. Informationsdateien übersetzt im Ordner „lingue“.
+- Obere Leiste: „Aktualisierungen“ entfernt (es bleiben die automatische Prüfung und
+  „Nach Aktualisierungen suchen“ in der Registerkarte Info); „Funkgerät
+  identifizieren“ neben „? Hilfe“.
+- Firmware Radtel RT-890 (fwrt890.go): .bin-Dateien von Radtel und freie (M7OCM,
+  OEFW), Lader des Funkgeräts (115200 Baud, Löschen, Blöcke zu 128 Byte), nach dem
+  Programm rt_890_flasher von JuantAldea; simuliertes Funkgerät und Firmware M7OCM
+  v3.2.
+- Firmware Baofeng DM-1701 / Retevis RT84 (fwdm1701.go): „OutSecurityBin“-Dateien des
+  Herstellers per USB DFU im Lader, wie radio_tool (Befehl 91 31, Löschen je Sektor,
+  Blöcke zu 1024 Byte, je Sektor ab 2 nummeriert); nur der Programmspeicher ab
+  0x0800C000, der Lader wird nicht angetastet; Dateien V02.06 des Herstellers mit dem
+  simulierten Funkgerät.
+- Firmware Baofeng RD-5R und DM-1801 (fwsgl.go): .sgl-Dateien des Herstellers per USB
+  HID, wie der FirmwareLoader von OpenGD77 und radio_tool (Modellschlüssel vom
+  Funkgerät vor dem Löschen geprüft, Blöcke zu 32 Byte, Prüfsumme je KB); Dateien des
+  Herstellers mit dem simulierten Funkgerät.
+- Einstellungen: Feidaxin FD-288A, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH
+  (fd268.py, mit dem Abbild eines Modells derselben Familie) und Retevis RT76P (leeres
+  Abbild) aus CHIRP; Baofeng RD-5R und DM-1801 (settings_rdty.go, 31 Einträge, nach
+  qdmr und dmrconfig); Baofeng DM-1701 (Name, DMR-ID, Einschalttexte;
+  16-Bit-Unicode-Texte).
+- Tests: extra_test.go nur außerhalb von Windows (go test funktioniert unter Windows
+  wieder).

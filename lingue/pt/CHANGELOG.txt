@@ -1,0 +1,41 @@
+IU0VYT FLASH - REGISTO DE ALTERAÇÕES
+====================================
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 ou posterior
+
+Esta é a tradução portuguesa da última entrada de CHANGELOG.txt. A história completa
+das versões anteriores (1.0 - 4.9) está no original italiano, CHANGELOG.txt, na pasta
+principal do pacote; as principais novidades de cada versão estão também resumidas em
+LEIAME.txt.
+
+4.10.0 (07/11/2026)
+-------------------
+- Línguas da interface: seletor com as bandeiras à direita de «ℹ Info» (italiano,
+  inglês, francês, alemão, espanhol, português, russo, chinês, japonês), tradução
+  imediata de toda a página (ui/i18n.js: cada texto, também os que chegam do programa,
+  é substituído pela tradução; textos com partes variáveis e mensagens compostas são
+  reconhecidos) e dos textos das janelas do Windows (i18n.go: mensagens, títulos e
+  filtros de «Abrir» e «Guardar»). Traduções em ui/lang/<língua>.tsv (chave FNV-1a de
+  32 bits do texto italiano); a língua escolhida é guardada nas definições
+  (Settings.Lang, API «lang»). i18n_test.go extrai os textos (ui/*.js, ui/index.html,
+  cadeias dos ficheiros .go) e verifica que cada língua os tem todos com as mesmas
+  partes variáveis. Ficheiros informativos traduzidos na pasta «lingue».
+- Barra superior: retirado «Atualizações» (ficam a verificação automática e «Verificar
+  atualizações» no separador Info); «Identificar rádio» ao lado de «? Guia».
+- Firmware Radtel RT-890 (fwrt890.go): ficheiros .bin da Radtel e livres (M7OCM,
+  OEFW), carregador do rádio (115200 baud, apagamento, blocos de 128 bytes), segundo o
+  programa rt_890_flasher de JuantAldea; rádio simulado e firmware M7OCM v3.2.
+- Firmware Baofeng DM-1701 / Retevis RT84 (fwdm1701.go): ficheiros «OutSecurityBin» do
+  fabricante por USB DFU no carregador, como o radio_tool (comando 91 31, apagamento
+  por setor, blocos de 1024 bytes numerados a partir de 2 por setor); só a memória do
+  programa a partir de 0x0800C000, o carregador não é tocado; ficheiros V02.06 do
+  fabricante com o rádio simulado.
+- Firmware Baofeng RD-5R e DM-1801 (fwsgl.go): ficheiros .sgl do fabricante por USB
+  HID, como o FirmwareLoader do OpenGD77 e o radio_tool (chave do modelo verificada
+  pelo rádio antes do apagamento, blocos de 32 bytes, soma a cada KB); ficheiros do
+  fabricante com o rádio simulado.
+- Definições: Feidaxin FD-288A, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH
+  (fd268.py, com a imagem de um modelo da mesma família) e Retevis RT76P (imagem
+  vazia) a partir do CHIRP; Baofeng RD-5R e DM-1801 (settings_rdty.go, 31 itens,
+  segundo qdmr e dmrconfig); Baofeng DM-1701 (nome, ID DMR, textos de arranque; textos
+  Unicode de 16 bits).
+- Testes: extra_test.go só fora do Windows (go test volta a funcionar no Windows).
