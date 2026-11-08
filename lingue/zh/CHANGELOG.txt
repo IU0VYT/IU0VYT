@@ -2,14 +2,12 @@ IU0VYT FLASH - 更新日志
 =======================
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
 
-本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.9）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
+本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.10）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
 
-4.10.0（2026/11/07）
+4.11.0（2026/11/08）
 -------------------
-- 界面语言：“ℹ Info”右侧带旗帜的选择器（意大利语、英语、法语、德语、西班牙语、葡萄牙语、俄语、中文、日语），整个页面立即翻译（ui/i18n.js：每段文本，包括来自程序的文本，都会被替换为译文；可识别含可变部分的文本和组合消息），Windows 窗口的文本也会翻译（i18n.go：“打开”和“保存”的消息、标题和筛选器）。译文位于 ui/lang/<语言>.tsv（键为意大利文文本的 32 位 FNV-1a 值）；所选语言保存在设置中（Settings.Lang，API“lang”）。i18n_test.go 提取文本（ui/*.js、ui/index.html、.go 文件中的字符串），并检查每种语言都具备所有文本且可变部分相同。说明文件已翻译，位于“lingue”文件夹。
-- 顶部栏：移除了“更新”（自动检查和 Info 标签页中的“检查更新”保留）；“识别电台”放在“? 帮助”旁边。
-- Radtel RT-890 固件（fwrt890.go）：Radtel 的和自由的 .bin 文件（M7OCM、OEFW），电台的引导程序（115200 波特、擦除、128 字节块），参照 JuantAldea 的 rt_890_flasher 程序；模拟电台和 M7OCM v3.2 固件。
-- Baofeng DM-1701 / Retevis RT84 固件（fwdm1701.go）：厂家的“OutSecurityBin”文件，在引导程序中通过 USB DFU 写入，与 radio_tool 相同（命令 91 31、按扇区擦除、每个扇区从 2 开始编号的 1024 字节块）；只写入 0x0800C000 起的程序存储，不改动引导程序；厂家的 V02.06 文件与模拟电台。
-- Baofeng RD-5R 和 DM-1801 固件（fwsgl.go）：厂家的 .sgl 文件，通过 USB HID 写入，与 OpenGD77 的 FirmwareLoader 和 radio_tool 相同（电台在擦除前检查型号密钥、32 字节块、每 KB 一个校验和）；厂家文件与模拟电台。
-- 设置：来自 CHIRP 的 Feidaxin FD-288A、FD-150A、FD-160A、FD-450A、FD-460A、FD-460UH（fd268.py，使用同系列型号的映像）和 Retevis RT76P（空映像）；Baofeng RD-5R 和 DM-1801（settings_rdty.go，31 项，参照 qdmr 和 dmrconfig）；Baofeng DM-1701（名称、DMR ID、开机文字；16 位 Unicode 文本）。
-- 测试：extra_test.go 只在 Windows 以外运行（go test 在 Windows 上恢复正常）。
+- 区域名称（zonenames.go）：每个区域都有可编辑的名称，代替“区域 1”“区域 2”……（“✎ 区域名称…”或双击区域栏中的区域）。格式取自厂家程序的代码和 CHIRP 的驱动程序：Radtel RT-950 Pro / Bajeton BJ-9000 / Hiroyasu HI-UV850 Pro（RT-950PRO_CPS v1.2.0-v1.3.3、BJ-9000_CPS v1.3.3）和 Radtel RT-950（BT-9000_CPS v1.3.0）：区域 0xC000，每个区域 16 字节，12 字节 GB2312，用 0xFF 填充；Radtel RT-920（RT-920_EnCPS v1.2.4 和 CHIRP 的 radtel_rt900.py）：区域 0xC800，10 个区域，与 CHIRP 一样 10 个字符；无蓝牙的 Radtel RT-910 / Bajeton BJ-7700（RT910_EnCPS v1.0.3）：区域 0xA200，12 个 ASCII 字符。DMR 电台 RD-5R、DM-1801 和 DM-32UV：已有区域的名称，16 个字符。现在会读取 BJ-9000 / RT-950 Pro 的 0xC000-0xC0FF 区域，RT-950 则最后可选地读取；只有名称改变时才写入，写入前先从电台重新读取，并且只有其中是名称或为空时才写入（否则不写入任何内容）；4.11 之前保存的 RT-950 文件不涉及该区域。用模拟电台进行了测试（zonenames_test.go）。
+- 批量修改已勾选或已选中的信道（radio.js）：功率、带宽、扫描、TX 亚音、RX 亚音、频差和发射（仅接收），修改信道前先检查亚音和频差，只需一步即可撤销。
+- 语言：韩语（韩国国旗）和阿拉伯语（阿拉伯联合酋长国国旗；页面从右到左，数字和频率从左到右；Windows 消息框从右到左），每种语言 4902 条文本；说明文件的译本位于 lingue/ko 和 lingue/ar。
+- 网站：页面上列出可用的语言；删除了列举固件文件的那句话。
+- 测试：i18n_test.go 用 filepath.ToSlash 比较路径（go test 在 Windows 上通过）；新增 documenti_test.go：“sorgenti”中的 LEGGIMI.txt、AUTORI_E_LICENZE.txt 和许可证副本必须与主文件夹中的相同（“sorgenti”中的 LEGGIMI.txt 副本在 4.10 中落后了）。

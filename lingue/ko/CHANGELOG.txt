@@ -1,0 +1,27 @@
+IU0VYT FLASH - CHANGELOG
+========================
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 또는 그 이후 버전
+
+이 파일은 CHANGELOG.txt의 최신 항목을 한국어로 번역한 것입니다. 이전 버전(1.0 - 4.10)의 전체 기록은 패키지 메인 폴더의 이탈리아어
+원문 CHANGELOG.txt에 있습니다. 각 버전의 주요 새 기능은 GUIDE.txt에도 요약되어 있습니다.
+
+4.11.0 (2026/11/08)
+-------------------
+- 구역 이름(zonenames.go): «구역 1», «구역 2»… 대신 각 구역에 편집할 수 있는 이름이 있습니다(«✎ 구역 이름…» 또는 막대의
+  구역을 더블클릭). 형식은 제조사 프로그램의 코드와 CHIRP 드라이버에서 얻었습니다: Radtel RT-950 Pro / Bajeton BJ-9000
+  / Hiroyasu HI-UV850 Pro(RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS v1.3.3)와 Radtel
+  RT-950(BT-9000_CPS v1.3.0): 영역 0xC000, 구역당 16바이트, 0xFF로 채운 GB2312 12바이트. Radtel
+  RT-920(RT-920_EnCPS v1.2.4와 CHIRP의 radtel_rt900.py): 영역 0xC800, 구역 10개, CHIRP처럼 10자.
+  블루투스 없는 Radtel RT-910 / Bajeton BJ-7700(RT910_EnCPS v1.0.3): 영역 0xA200, ASCII 12자.
+  DMR 무전기 RD-5R, DM-1801, DM-32UV: 이미 있는 구역의 이름, 16자. 영역 0xC000-0xC0FF는 이제 BJ-9000 /
+  RT-950 Pro에서 읽고, RT-950에서는 마지막에 선택적으로 읽습니다. 이름이 바뀔 때만, 무전기에서 다시 읽은 뒤, 그리고 이름이 들어 있거나
+  비어 있을 때만 씁니다(그렇지 않으면 아무것도 쓰지 않음). 4.11 전에 저장한 RT-950 파일은 이 영역을 건드리지 않습니다. 시뮬레이션 무전기로
+  시험했습니다(zonenames_test.go).
+- 체크하거나 선택한 채널의 일괄 편집(radio.js): 출력, 대역폭, 스캔, TX 톤, RX 톤, 시프트, 송신(수신 전용). 채널을 바꾸기 전에
+  톤과 시프트를 확인하며 한 번에 되돌릴 수 있습니다.
+- 언어: 한국어(대한민국 국기)와 아랍어(아랍에미리트 국기. 페이지는 오른쪽에서 왼쪽으로, 숫자와 주파수는 왼쪽에서 오른쪽으로, Windows 메시지
+  상자는 오른쪽에서 왼쪽으로), 언어마다 텍스트 4902개. 안내 파일의 번역은 lingue/ko와 lingue/ar에 있습니다.
+- 사이트: 페이지에 쓸 수 있는 언어를 적었고, 펌웨어 파일을 나열하던 문장을 지웠습니다.
+- 테스트: i18n_test.go는 경로를 filepath.ToSlash로 비교합니다(go test가 Windows에서 통과). 새
+  documenti_test.go: «sorgenti»에 있는 LEGGIMI.txt, AUTORI_E_LICENZE.txt, 라이선스의 사본은 메인
+  폴더의 것과 같아야 합니다(«sorgenti»의 LEGGIMI.txt 사본은 4.10에서 뒤처져 있었습니다).

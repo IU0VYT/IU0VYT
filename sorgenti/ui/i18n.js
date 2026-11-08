@@ -24,6 +24,8 @@ const I18N = {
     { code: 'ru', name: 'Русский' },
     { code: 'zh', name: '中文' },
     { code: 'ja', name: '日本語' },
+    { code: 'ko', name: '한국어' },  // 4.11
+    { code: 'ar', name: 'العربية' }, // 4.11: scritta da destra a sinistra
   ],
   lang: 'it',
   dict: null,        // chiave -> traduzione (lingua corrente)
@@ -108,6 +110,9 @@ const I18N = {
     this.lang = code;
     this.cache = new Map();
     document.documentElement.lang = code;
+    // 4.11: l'arabo si scrive da destra a sinistra (frequenze, numeri e codici
+    // restano da sinistra a destra, vedi style.css)
+    document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
     this.applyAll();
     this.renderSelector();
   },
@@ -127,6 +132,27 @@ const I18N = {
     } else if (res === undefined && /[^.]\.$/.test(n)) {
       const t = this.dict.get(this.hash(n.slice(0, -1)));
       if (t !== undefined) res = /[.!?。！？]$/.test(t) ? t : t + (/[\u3000-\u9fff]$/.test(t) ? '。' : '.');
+    }
+    // 4.11: testo fra parentesi («(firmware fino a 0.23: 960 canali)»)
+    if (res === undefined && /^\([^()]+\)$/.test(n)) {
+      const t = this.tr(n.slice(1, -1), depth);
+      if (t != null) res = '(' + t + ')';
+    }
+    // 4.11: nome di una radio con la variante fra parentesi («BJ-9000 (firmware fino
+    // a 0.23: 960 canali)»): si traduce la variante, il nome resta com'è
+    if (res === undefined) {
+      const m = /^(.*\S) (\([^()]+\))$/.exec(n);
+      if (m && !/(^|\s)[a-zà-ù]{4,}/u.test(m[1].replace(/\([^()]*\)/g, ' '))) {
+        const t = this.tr(m[2], depth);
+        // anche il nome può avere a sua volta una variante fra parentesi
+        if (t != null) res = ((depth || 0) < 2 ? this.tr(m[1], (depth || 0) + 1) ?? m[1] : m[1]) + ' ' + t;
+      }
+    }
+    // 4.11: testo con un'aggiunta dopo il trattino che è un testo noto («… — scheda aperta»)
+    if (res === undefined && (depth || 0) < 2) {
+      const m = /^(.*\S) ([—–] [^—–]*\S)$/.exec(n);
+      const t = m && this.dict.get(this.hash(m[2]));
+      if (t !== undefined && t !== null && m) res = (this.tr(m[1], (depth || 0) + 1) ?? m[1]) + ' ' + t;
     }
     if (res === undefined) res = this.trPattern(n, depth || 0);
     if (res == null && (depth || 0) < 3) res = this.trSplit(n, depth || 0);
@@ -185,13 +211,19 @@ const I18N = {
   trSplit(n, depth) {
     // si prova ogni punto di divisione: prima quelli in cui si traducono entrambe
     // le parti (frasi messe una dopo l'altra), poi il primo con almeno una parte
-    let half = null;
+    // 4.11: fra le traduzioni a metà vince quella che traduce più testo
+    let half = null, halfLen = 0;
     for (const sep of ['. ', ': ', '; ', ' — ', ' – ', ' · ', ', ', ' (', ' - ']) {
       for (let i = n.indexOf(sep), k = 0; i > 0 && k < (depth ? 2 : 12); i = n.indexOf(sep, i + 1), k++) {
         const a = n.slice(0, i);
         const b = sep === ' (' ? '(' + n.slice(i + 2) : n.slice(i + sep.length);
         const punct = /^[:;.,] $/.test(sep) ? sep[0] : '';
-        const tb = this.tr(b, depth + 1);
+        let tb = this.tr(b, depth + 1);
+        // 4.11: «… — scheda aperta»: la seconda parte è un testo che comincia con il trattino
+        if (tb == null && (sep === ' — ' || sep === ' – ')) {
+          const t = this.tr(sep.trim() + ' ' + b, depth + 1);
+          if (t != null) tb = t.replace(/^[—–]\s*/, '');
+        }
         // il testo a sinistra con la sua punteggiatura («Lettura non riuscita:»)
         let ta = punct ? this.tr(a + punct, depth + 1) : null, joined = null;
         if (ta != null) joined = (x, y) => x + (x && y ? ' ' : '') + y;
@@ -200,7 +232,8 @@ const I18N = {
           joined = (x, y) => x + (sep === ' (' ? ' ' : sep) + y;
         }
         if (ta != null && tb != null) return joined(ta, tb);
-        if (!half && (ta != null || tb != null)) half = joined(ta ?? a, tb ?? b);
+        const hl = (ta != null ? a.length : 0) + (tb != null ? b.length : 0);
+        if (hl > halfLen) { half = joined(ta ?? a, tb ?? b); halfLen = hl; }
       }
     }
     return half;
@@ -292,6 +325,10 @@ const I18N = {
       ru: '<rect width="24" height="5.34" fill="#fff"/><rect y="5.33" width="24" height="5.34" fill="#0039a6"/><rect y="10.66" width="24" height="5.34" fill="#d52b1e"/>',
       zh: '<rect width="24" height="16" fill="#de2910"/><path d="M4 1.6l.9 2.7h2.8l-2.3 1.7.9 2.7L4 7l-2.3 1.7.9-2.7L.3 4.3h2.8z" fill="#ffde00"/><circle cx="8.6" cy="1.8" r=".7" fill="#ffde00"/><circle cx="10" cy="3.6" r=".7" fill="#ffde00"/><circle cx="10" cy="6" r=".7" fill="#ffde00"/><circle cx="8.6" cy="7.8" r=".7" fill="#ffde00"/>',
       ja: '<rect width="24" height="16" fill="#fff"/><circle cx="12" cy="8" r="4.8" fill="#bc002d"/>',
+      // 4.11: Corea del Sud; arabo: Emirati Arabi Uniti (la bandiera saudita porta
+      // un testo religioso, la professione di fede, che non si usa come decorazione)
+      ko: '<rect width="24" height="16" fill="#fff"/><g transform="rotate(33.69 12 8)"><path d="M8 8a4 4 0 0 1 8 0z" fill="#cd2e3a"/><path d="M8 8a4 4 0 0 0 8 0z" fill="#0047a0"/><circle cx="10" cy="8" r="2" fill="#cd2e3a"/><circle cx="14" cy="8" r="2" fill="#0047a0"/></g><g transform="translate(4.3 3.1) rotate(-56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="3" height=".44"/><rect x="-1.5" y="-0.22" width="3" height=".44"/><rect x="-1.5" y="0.53" width="3" height=".44"/></g><g transform="translate(19.7 12.9) rotate(-56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="1.3" height=".44"/><rect x=".2" y="-0.97" width="1.3" height=".44"/><rect x="-1.5" y="-0.22" width="1.3" height=".44"/><rect x=".2" y="-0.22" width="1.3" height=".44"/><rect x="-1.5" y="0.53" width="1.3" height=".44"/><rect x=".2" y="0.53" width="1.3" height=".44"/></g><g transform="translate(19.7 3.1) rotate(56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="1.3" height=".44"/><rect x=".2" y="-0.97" width="1.3" height=".44"/><rect x="-1.5" y="-0.22" width="3" height=".44"/><rect x="-1.5" y="0.53" width="1.3" height=".44"/><rect x=".2" y="0.53" width="1.3" height=".44"/></g><g transform="translate(4.3 12.9) rotate(56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="3" height=".44"/><rect x="-1.5" y="-0.22" width="1.3" height=".44"/><rect x=".2" y="-0.22" width="1.3" height=".44"/><rect x="-1.5" y="0.53" width="3" height=".44"/></g>',
+      ar: '<rect width="24" height="5.34" fill="#00732f"/><rect y="5.33" width="24" height="5.34" fill="#fff"/><rect y="10.66" width="24" height="5.34" fill="#000"/><rect width="6" height="16" fill="#ff0000"/>',
     }[code] || '';
     return `<svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true">${f}<rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg>`;
   },

@@ -3,41 +3,38 @@ IU0VYT FLASH - REGISTRO DE CAMBIOS
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o posterior
 
 Esta es la traducción al español de la última entrada de CHANGELOG.txt. La historia
-completa de las versiones anteriores (1.0 - 4.9) está en el original italiano,
+completa de las versiones anteriores (1.0 - 4.10) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
-4.10.0 (07/11/2026)
+4.11.0 (08/11/2026)
 -------------------
-- Idiomas de la interfaz: selector con las banderas a la derecha de «ℹ Info»
-  (italiano, inglés, francés, alemán, español, portugués, ruso, chino, japonés),
-  traducción inmediata de toda la página (ui/i18n.js: cada texto, también los que
-  llegan del programa, se sustituye por su traducción; se reconocen textos con partes
-  variables y mensajes compuestos) y de los textos de las ventanas de Windows
-  (i18n.go: mensajes, títulos y filtros de «Abrir» y «Guardar»). Traducciones en
-  ui/lang/<idioma>.tsv (clave FNV-1a de 32 bits del texto italiano); el idioma elegido
-  se guarda en los ajustes (Settings.Lang, API «lang»). i18n_test.go extrae los textos
-  (ui/*.js, ui/index.html, cadenas de los archivos .go) y comprueba que cada idioma
-  los tenga todos con las mismas partes variables. Archivos informativos traducidos en
-  la carpeta «lingue».
-- Barra superior: quitado «Actualizaciones» (quedan la comprobación automática y
-  «Buscar actualizaciones» en la pestaña Info); «Identificar radio» junto a «? Guía».
-- Firmware Radtel RT-890 (fwrt890.go): archivos .bin de Radtel y libres (M7OCM, OEFW),
-  cargador de la radio (115200 baudios, borrado, bloques de 128 bytes), según el
-  programa rt_890_flasher de JuantAldea; radio simulada y firmware M7OCM v3.2.
-- Firmware Baofeng DM-1701 / Retevis RT84 (fwdm1701.go): archivos «OutSecurityBin» del
-  fabricante por USB DFU en el cargador, como radio_tool (comando 91 31, borrado por
-  sector, bloques de 1024 bytes numerados desde 2 por sector); solo la memoria del
-  programa desde 0x0800C000, el cargador no se toca; archivos V02.06 del fabricante
-  con la radio simulada.
-- Firmware Baofeng RD-5R y DM-1801 (fwsgl.go): archivos .sgl del fabricante por USB
-  HID, como el FirmwareLoader de OpenGD77 y radio_tool (clave del modelo comprobada
-  por la radio antes del borrado, bloques de 32 bytes, suma en cada KB); archivos del
-  fabricante con la radio simulada.
-- Ajustes: Feidaxin FD-288A, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH (fd268.py,
-  con la imagen de un modelo de la misma familia) y Retevis RT76P (imagen vacía) desde
-  CHIRP; Baofeng RD-5R y DM-1801 (settings_rdty.go, 31 elementos, según qdmr y
-  dmrconfig); Baofeng DM-1701 (nombre, ID DMR, textos de encendido; textos Unicode de
-  16 bits).
-- Pruebas: extra_test.go solo fuera de Windows (go test vuelve a funcionar en
-  Windows).
+- Nombres de las zonas (zonenames.go): en lugar de «Zona 1», «Zona 2»… cada zona tiene
+  un nombre editable («✎ Nombres de las zonas…» o doble clic en la zona de la barra).
+  Formatos obtenidos del código de los programas del fabricante y del controlador de
+  CHIRP: Radtel RT-950 Pro / Bajeton BJ-9000 / Hiroyasu HI-UV850 Pro (RT-950PRO_CPS
+  v1.2.0-v1.3.3, BJ-9000_CPS v1.3.3) y Radtel RT-950 (BT-9000_CPS v1.3.0): área
+  0xC000, 16 bytes por zona, 12 bytes GB2312 rellenados con 0xFF; Radtel RT-920
+  (RT-920_EnCPS v1.2.4 y radtel_rt900.py de CHIRP): área 0xC800, 10 zonas, 10
+  caracteres como en CHIRP; Radtel RT-910 / Bajeton BJ-7700 sin Bluetooth (RT910_EnCPS
+  v1.0.3): área 0xA200, 12 caracteres ASCII. Radios DMR RD-5R, DM-1801 y DM-32UV:
+  nombres de las zonas existentes, 16 caracteres. El área 0xC000-0xC0FF ahora se lee
+  en la BJ-9000 / RT-950 Pro y, al final y de forma opcional, en la RT-950; se escribe
+  solo si los nombres cambian, después de volver a leerla de la radio, y solo si
+  contiene nombres o está vacía (si no, no se escribe nada); los archivos de la RT-950
+  guardados antes de la 4.11 no tocan el área. Pruebas con las radios simuladas
+  (zonenames_test.go).
+- Edición en bloque de los canales marcados o seleccionados (radio.js): potencia,
+  ancho de banda, escaneo, tono TX, tono RX, desplazamiento y transmisión (solo
+  recepción), con comprobación de tonos y desplazamiento antes de cambiar los canales
+  y un único paso para deshacer.
+- Idiomas: coreano (bandera de Corea del Sur) y árabe (bandera de los Emiratos Árabes
+  Unidos; página de derecha a izquierda, números y frecuencias de izquierda a derecha;
+  cuadros de mensaje de Windows de derecha a izquierda), 4902 textos por idioma;
+  archivos informativos traducidos en lingue/ko y lingue/ar.
+- Sitio web: los idiomas disponibles en la página; se ha eliminado la frase que
+  enumeraba los archivos de firmware.
+- Pruebas: i18n_test.go compara la ruta con filepath.ToSlash (go test pasa en
+  Windows); nuevo documenti_test.go: las copias de LEGGIMI.txt, AUTORI_E_LICENZE.txt y
+  de la licencia en «sorgenti» deben ser idénticas a las de la carpeta principal (la
+  copia de LEGGIMI.txt en «sorgenti» se había quedado atrasada en la 4.10).

@@ -1,11 +1,28 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.10.0 - un solo file eseguibile, nessuna installazione, interfaccia in 9 lingue.
+Versione 4.11.0 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.11.0:
+- NOMI DELLE ZONE: al posto di «Zona 1», «Zona 2»… ogni zona può avere un nome, come
+  nei programmi del costruttore (pulsante «✎ Nomi delle zone…» o doppio clic sulla
+  zona). Radtel RT-950 Pro, Bajeton BJ-9000 e Hiroyasu HI-UV850 Pro (entrambe le
+  versioni del firmware), Radtel RT-950, Radtel RT-920, Radtel RT-910 / Bajeton
+  BJ-7700 senza Bluetooth; zone delle radio DMR Baofeng RD-5R, DM-1801 e DM-32UV.
+  I nomi si leggono e si scrivono via cavo con i canali e si salvano nel file .img
+  (vedi «NOMI DELLE ZONE»);
+- MODIFICA IN BLOCCO: «✎ Modifica in blocco…» cambia insieme potenza, banda,
+  scansione, subtoni, shift o trasmissione dei canali spuntati (o selezionati); il
+  resto di ogni canale resta com'è e si annulla con Ctrl+Z;
+- LINGUE: due lingue in più, coreano (bandiera della Corea del Sud) e arabo (bandiera
+  degli Emirati Arabi Uniti, con la pagina da destra a sinistra): 11 in tutto, anche
+  per i file informativi della cartella «lingue»;
+- prove: i test vanno anche su Windows (i18n_test.go); un nuovo test controlla che
+  le due copie di LEGGIMI.txt, AUTORI_E_LICENZE.txt e della licenza (cartella
+  principale e «sorgenti») restino identiche.
 Novità della 4.10.0:
 - LINGUE: accanto a «ℹ Info» c'è il selettore della lingua con le bandiere (italiano,
   inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese). La
@@ -1230,14 +1247,13 @@ AGGIORNAMENTO DEL FIRMWARE BAOFENG
   conosciuto (impronta SHA-256) vale più del nome: il firmware ufficiale della UV-25
   Plus rinominato resta "per UV-25 Plus". Nella modalità automatica una radio che non
   risponde alla richiesta di aggiornamento non viene modificata.
-- BJ-7700 senza Bluetooth (file .BTU), DM-32UV, DM-5000, M20D, RD-5R, DM-1801, DM-1701:
-  aggiornamento solo con i programmi del costruttore (link nella galleria). Sono
-  stati controllati di nuovo tutti i pacchetti scaricati: per la DM-32UV
-  l'aggiornamento è dentro il programma nativo del costruttore (protocollo non
-  ricavabile dal codice in modo verificabile), RD-5R e DM-1701 usano programmi USB
-  (DFU / HID) con driver propri, M20D e DM-5000 programmi compressi o segnalati dagli
-  antivirus. Senza un confronto con il codice originale, un aggiornamento sbagliato
-  potrebbe rendere la radio inutilizzabile: per questo non sono gestite.
+- DM-32UV, DM-5000, M20D: aggiornamento solo con i programmi del costruttore (link
+  nella galleria). Per la DM-32UV l'aggiornamento è dentro il programma nativo del
+  costruttore (protocollo non ricavabile dal codice in modo verificabile), M20D e
+  DM-5000 usano programmi compressi o segnalati dagli antivirus. Senza un confronto
+  con il codice originale, un aggiornamento sbagliato potrebbe rendere la radio
+  inutilizzabile: per questo non sono gestite. La BJ-7700 senza Bluetooth (file .BTU)
+  si aggiorna dalla 4.8, RD-5R, DM-1801 e DM-1701 dalla 4.10 (vedi sopra).
 
 LETTURA E SCRITTURA VIA CAVO
 - Collega il cavo, accendi la radio, scegli la porta COM del cavo nella finestra
@@ -1331,17 +1347,27 @@ da password e quelli divisi in più parti.
 LINGUA DELL'INTERFACCIA (4.10)
 - Il selettore con la bandiera è in alto, subito a destra di "ℹ Info". Al primo avvio
   mostra la bandiera italiana; con un clic si apre l'elenco delle lingue: italiano,
-  English, Français, Deutsch, Español, Português, Русский, 中文, 日本語.
+  English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
+  (coreano, 4.11, bandiera della Corea del Sud), العربية (arabo, 4.11, bandiera degli
+  Emirati Arabi Uniti).
+- Con l'arabo la pagina si legge da destra a sinistra; frequenze, numeri e codici
+  restano da sinistra a destra. Per l'arabo si usa la bandiera degli Emirati Arabi
+  Uniti perché quella dell'Arabia Saudita contiene un testo religioso (la professione
+  di fede), che non si usa come semplice simbolo di una lingua.
 - La traduzione è immediata, senza riavviare: schede, pulsanti, menu, finestre, guida,
   messaggi e avvisi (anche quelli che arrivano dalle radio), schede della galleria,
   impostazioni e le finestre di Windows "Apri" e "Salva".
 - La lingua scelta si salva nelle impostazioni del programma e vale anche ai riavvii.
 - I nomi delle voci di CHIRP (colonna "nome originale" delle impostazioni), i canali,
   i nomi dei ponti e i file restano come sono.
-- I file informativi (LEGGIMI, CHANGELOG, README, AUTORI_E_LICENZE, versione) sono
-  nella cartella "lingue" del pacchetto, una sottocartella per lingua. La licenza
-  valida è il testo originale inglese della GNU GPL (LICENSE.txt): le traduzioni
-  spiegano che cosa permette, come chiede la Free Software Foundation.
+- I file informativi tradotti (guida completa, CHANGELOG con le novità dell'ultima versione,
+  README, autori e licenze, versione, nota sulla licenza) sono nella cartella
+  "lingue" del pacchetto, una sottocartella per lingua (en, fr, de, es, pt, ru, zh,
+  ja, ko, ar); i nomi dei file sono nella lingua della cartella (es. GUIDE.txt, LISEZMOI.txt,
+  LIESMICH.txt, LEEME.txt, LEIAME.txt). La storia delle versioni precedenti resta in
+  italiano in CHANGELOG.txt. La licenza valida è il testo originale inglese della GNU
+  GPL (LICENSE.txt): le traduzioni spiegano che cosa permette, come chiede la Free
+  Software Foundation.
 
 SCHEDA INFO E AGGIORNAMENTI
 - La scheda "ℹ Info" mostra nome, versione, data di compilazione, autore, pagina QRZ,
@@ -1417,6 +1443,39 @@ TABELLE DEI CANALI
   "Tutte" per vederle insieme; "Sposta in zona" sposta i canali selezionati.
 - K67 Pro: 640 canali. Le gamme di frequenza della radio sono lette dal file:
   le frequenze fuori gamma sono evidenziate in rosso.
+- Modifica in blocco (4.11): «✎ Modifica in blocco…» (anche dal tasto destro) cambia
+  insieme, nei canali spuntati o, se non ce ne sono, in quelli selezionati: potenza,
+  banda, scansione, tono TX, tono RX (OFF toglie il tono), shift e, dove la radio lo
+  permette, la trasmissione (solo ricezione). Le voci lasciate su «non cambiare»
+  restano come sono in ogni canale; i subtoni non si mettono sui canali digitali.
+  Toni e shift si controllano prima di cambiare qualsiasi canale; Ctrl+Z annulla tutta
+  l'operazione.
+
+NOMI DELLE ZONE (4.11)
+Al posto di «Zona 1», «Zona 2»… si può dare un nome a ogni zona, come nei programmi
+del costruttore. Il pulsante «✎ Nomi delle zone…» (o il doppio clic su una zona della
+barra) apre l'elenco delle zone con il loro nome; la barra delle zone e la riga in
+basso mostrano «numero · nome». I nomi stanno nella memoria della radio: si leggono e
+si scrivono via cavo con i canali e si salvano nel file .img.
+- Radtel RT-950 Pro, Bajeton BJ-9000, Hiroyasu HI-UV850 Pro (firmware fino a 0.23:
+  15 zone; dalla 0.24: 10 zone) e Radtel RT-950 (15 zone): fino a 12 caratteri;
+  lettere senza accenti, cifre, simboli e caratteri cinesi (GB2312, 2 byte ciascuno),
+  come i programmi del costruttore RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS v1.3.3 e
+  BT-9000_CPS v1.3.0 (area 0xC000, 16 byte per zona).
+- Radtel RT-920 (firmware V0.17 e successivi, 10 zone): fino a 10 caratteri, come il
+  driver di CHIRP (il programma del costruttore v1.2.4 ne permette 12; area 0xC800).
+- Radtel RT-910 / Bajeton BJ-7700 senza Bluetooth (15 zone): fino a 12 caratteri senza
+  accenti, come il programma del costruttore RT910_EnCPS v1.0.3 (area 0xA200).
+- Radio DMR Baofeng RD-5R, DM-1801 e DM-32UV: si rinominano le zone che ci sono (fino a
+  16 caratteri); ogni zona deve avere un nome.
+- Sicurezza: per RT-950 Pro, BJ-9000, HI-UV850 Pro, RT-950 e RT-910 l'area dei nomi si
+  scrive solo se i nomi cambiano, e prima si rilegge dalla radio: se lì ci sono dati
+  che non sono nomi (firmware senza nomi delle zone) non si scrive nulla e compare un
+  messaggio. Un nome vuoto lascia la zona come la mostra la radio. Per la RT-920 l'area
+  è tra quelle che si scrivono sempre, come fa CHIRP.
+- File .img salvati prima della 4.11 per la RT-950 non contengono i nomi: rileggi la
+  radio per vederli. Se la radio non risponde alla lettura dei nomi (firmware vecchio)
+  il file resta senza nomi e tutto il resto funziona come prima.
 
 COPIA TRA LE DUE RADIO
 Copia nella prima scheda e Incolla nell'altra (dalla 3.9.3 "Copia in…" è diventato

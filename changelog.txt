@@ -3,6 +3,36 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.11.0 (08/11/2026)
+-------------------
+- Nomi delle zone (zonenames.go): al posto di «Zona 1», «Zona 2»… ogni zona ha un nome
+  modificabile («✎ Nomi delle zone…» o doppio clic sulla zona della barra). Formati
+  ricavati dal codice dei programmi del costruttore e dal driver di CHIRP: Radtel
+  RT-950 Pro / Bajeton BJ-9000 / Hiroyasu HI-UV850 Pro (RT-950PRO_CPS v1.2.0-v1.3.3,
+  BJ-9000_CPS v1.3.3) e Radtel RT-950 (BT-9000_CPS v1.3.0): area 0xC000, 16 byte per
+  zona, 12 byte GB2312 con riempimento 0xFF; Radtel RT-920 (RT-920_EnCPS v1.2.4 e
+  radtel_rt900.py di CHIRP): area 0xC800, 10 zone, 10 caratteri come CHIRP; Radtel
+  RT-910 / Bajeton BJ-7700 senza Bluetooth (RT910_EnCPS v1.0.3): area 0xA200, 12
+  caratteri ASCII. Radio DMR RD-5R, DM-1801 e DM-32UV: nomi delle zone presenti, 16
+  caratteri. Lettura dell'area 0xC000-0xC0FF aggiunta a BJ-9000 / RT-950 Pro e, per
+  ultima e facoltativa, alla RT-950; scrittura solo se i nomi cambiano, dopo aver
+  riletto l'area dalla radio, e solo se l'area contiene nomi o è vuota (altrimenti non
+  si scrive nulla); i file della RT-950 salvati prima della 4.11 non toccano l'area.
+  Prove con le radio simulate (zonenames_test.go).
+- Modifica in blocco dei canali spuntati o selezionati (radio.js): potenza, banda,
+  scansione, tono TX, tono RX, shift e trasmissione (solo ricezione), con controllo
+  di toni e shift prima di cambiare i canali e un solo passo di annullamento.
+- Lingue: coreano (bandiera della Corea del Sud) e arabo (bandiera degli Emirati
+  Arabi Uniti; pagina da destra a sinistra, numeri e frequenze da sinistra a destra;
+  finestre di messaggio di Windows da destra a sinistra), 4902 testi per lingua; file
+  informativi tradotti in lingue/ko e lingue/ar.
+- Sito: le lingue disponibili nella pagina; tolta la frase con l'elenco dei file dei
+  firmware.
+- Prove: i18n_test.go confronta il percorso con filepath.ToSlash (go test passa su
+  Windows); nuovo documenti_test.go: le copie di LEGGIMI.txt, AUTORI_E_LICENZE.txt e
+  della licenza in «sorgenti» devono essere identiche a quelle della cartella
+  principale (la copia in «sorgenti» di LEGGIMI.txt era rimasta indietro nella 4.10).
+
 4.10.0 (07/11/2026)
 -------------------
 - Lingue dell'interfaccia: selettore con le bandiere a destra di «ℹ Info» (italiano,

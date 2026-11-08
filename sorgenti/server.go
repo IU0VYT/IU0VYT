@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "4.10.0"
+const appVersion = "4.11.0"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -152,6 +152,7 @@ func (a *App) handler() http.Handler {
 	api("settings", a.apiSettings)
 	api("radio/settings", a.apiRadioSettings)
 	api("radio/settings/set", a.apiRadioSettingsSet)
+	api("radio/zonenames", a.apiZoneNames)
 	api("radio/datver", a.apiDatVer)
 	api("radio/import", a.apiRadioImport)
 	api("convert/open", a.apiConvertOpen)

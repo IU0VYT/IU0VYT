@@ -220,6 +220,19 @@ func TestChirpClone(t *testing.T) {
 			if _, ok := m.Fam.(rt900Fam); ok && rt900o(m).hiFirst != 0 {
 				hiOwn = true
 			}
+			// 4.11: prima di scrivere, l'area dei nomi delle zone si rilegge dalla
+			// radio (si scrive solo se cambia): tolti quei comandi di lettura, la
+			// sequenza deve essere quella di CHIRP
+			if zs := m.ZoneNames; zs != nil && zs.Area > 0 && len(mod) >= zs.Addr+zs.Area {
+				bs := rt900o(m).blk()
+				for a := zs.Addr; a < zs.Addr+zs.Area; a += bs {
+					cmd := []byte{'R', byte(a >> 8), byte(a), byte(bs)}
+					if bytes.Count(recG, cmd) != 1 {
+						t.Errorf("scrittura: lettura dell'area dei nomi delle zone (0x%04X) non trovata", a)
+					}
+					recG = bytes.Replace(recG, cmd, nil, 1)
+				}
+			}
 			if !hiOwn && !bytes.Equal(recC, recG) {
 				t.Errorf("scrittura: byte inviati alla radio diversi da CHIRP (%d / %d byte): %s", len(recC), len(recG), diffRanges(recC, recG))
 			}

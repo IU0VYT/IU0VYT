@@ -49,14 +49,13 @@ bb4eb6f9	Nicht aktiv
 5d16953d	Das Archiv ist leer. Mit «Importieren…» die Liste von IK2ANE (aus dem Internet oder einer Datei) oder eine eigene Excel/CSV-Datei laden, oder Relais von Hand hinzufügen.
 93001810	Gespeichert in:
 07bff8ea	Gespeichert in: {0}
-e952af22	Relais im Archiv: {0} · sichtbar mit den Filtern: {1}{2}{3}{4}
-72deff09	Strg+A wählt alle sichtbaren aus · Doppelklick zum Bearbeiten
-771d36b4	· angehakt:
-bed57bd6	· angehakt: {0}
+ee3328b1	Relais im Archiv: {0}
+69265a65	sichtbar mit den Filtern: {0}
+63a6f44b	angehakt: {0}
 617510a5	{0} durch Filter ausgeblendet
 ef2eb38e	: «Auswahl aufheben» entfernt auch diese)
-439ec563	· ausgewählt:
-0735f80d	· ausgewählt: {0}
+2607d6be	ausgewählt: {0}
+72deff09	Strg+A wählt alle sichtbaren aus · Doppelklick zum Bearbeiten
 d3a371de	mit zu prüfenden Warnungen (⚠)
 b1a5eaf0	{0} mit zu prüfenden Warnungen (⚠)
 de3f9f7f	Kein Relais angehakt.
@@ -266,14 +265,14 @@ b8909346	In der Registerkarte {0} ist noch keine Datei geöffnet. Öffnen Sie di
 199746a4	Neue Datei
 f48d912d	Datei öffnen
 fbf82f2d	{0}-Datei öffnen…
-75c8f969	Zone {0} — {1} frei
+e234b53d	{0} — frei {1}
+82378b1b	Zona
 1469dc06	{0} in {1} einfügen
 f4db09d7	Ab Position
 594e80a4	Modus
 6a9e220f	nur in die freien Positionen {0}
 616ec49c	in aufeinanderfolgende Positionen, belegte werden überschrieben
 4f750fe4	Einfügen
-82378b1b	Zona
 fdd3697e	Nummer in der Zone (1–{0})
 22ab4f8c	(das Funkgerät zählt die Kanäle ab 0: Position 1 = Kanal 0)
 10919737	(ist die Zone voll, geht es in den folgenden Zonen weiter)
@@ -515,6 +514,8 @@ fb741ab7	Einfg
 9cdddeef	speichert die Datei.
 0ee34f77	Bajeton: 15 Zonen zu 64 Kanälen; die Zone in der Leiste über der Tabelle wählen, «Alle», um sie zusammen zu sehen, «In Zone verschieben», um die ausgewählten zu verschieben. Mit Dateien von BT-11_CPS v1.0.9 mit der Einstellung «alle Kanäle» (⚙ Einstellungen → Kanalaufteilung) stehen die 960 Kanäle in einer einzigen Liste, wie im Originalprogramm.
 16817b03	Namen: höchstens 16 Zeichen beim K67 und 12 bei der Bajeton. Mittlere Leistung nur bei der Bajeton (beim K67 wird sie zu Hoch).
+f0c8d97c	«✎ Sammelbearbeitung» ändert Leistung, Bandbreite, Suchlauf, Subtöne, Ablage oder Senden der angehakten (oder ausgewählten) Kanäle gemeinsam: Nur die gewählten Punkte ändern sich, der Rest jedes Kanals bleibt, wie er ist (rückgängig mit
+e9f18966	«✎ Zonennamen» (Radtel RT-950 Pro, RT-950, RT-920, RT-910, Bajeton BJ-9000 und BJ-7700, HI-UV850 Pro; Zonen der DMR-Funkgeräte RD-5R, DM-1801 und DM-32UV) gibt jeder Zone einen Namen statt «Zone 1», «Zone 2»…; auch per Doppelklick auf die Zone. Die Namen werden mit den Kanälen per Kabel gelesen und geschrieben und in der .img-Datei gespeichert.
 06e1cc67	Funkgerät identifizieren
 338f1a9c	Registerkarte «🔎 Identifizieren»: den Anschluss des Kabels wählen (oder «USB» für RD-5R, DM-1801, DM-1701) und «Funkgerät identifizieren» drücken. Das Programm probiert die Leseprotokolle aller bekannten Funkgeräte, liest das antwortende und zeigt Marke, Modell, Typ, Bereiche, Firmware oder Kennung, Kanäle und bei USB-DMR-Funkgeräten DMR-ID und Namen. Es werden keine Daten in das Funkgerät geschrieben. Ohne Funkgerät dauert die vollständige Suche etwa 50 Sekunden; früher erkannte Funkgeräte werden zuerst probiert.
 4ade63e6	Automatische Identifizierung
@@ -1125,6 +1126,7 @@ f143cede	Löscht die ausgewählten Kanäle und rückt die folgenden nach oben
 e76bf679	An der ausgewählten Position einfügen (Strg+V)
 12fd3bac	Hakt alle Kanäle des Funkgeräts an{0}
 97de4b01	Entfernt den Haken bei allen Kanälen
+3249789e	Ändert Leistung, Bandbreite, Suchlauf, Subtöne oder Ablage der angehakten (oder ausgewählten) Kanäle gemeinsam: Der Rest jedes Kanals bleibt, wie er ist
 f61aee58	Schreibt die angehakten (oder ausgewählten) Kanäle in ein anderes per Kabel angeschlossenes Funkgerät: Marke und Modell wählen, dann prüft das Programm die Kompatibilität, passt die Kanäle an, speichert eine Sicherungskopie des Funkgeräts, schreibt und prüft
 81a32ab9	Fügt die angehakten (oder ausgewählten) Kanäle dem Relais-Archiv hinzu
 d204ca9d	Fügt die Kanäle einer anderen Datei ein: K67 (.xlc), Bajeton (.dat), .img-Abbilder beliebiger Funkgeräte (auch von CHIRP), CHIRP-CSV, Excel-/CSV-Tabellen
@@ -1142,6 +1144,7 @@ f68325d8	Sortieren ▾
 15143ff0	Zusammenrücken
 fda928f7	Ausschneiden
 ab7e4ca3	Einfügen
+c9973af8	✎ Sammelbearbeitung…
 fe11e9bf	📻 An ein anderes Funkgerät weitergeben…
 5e22dc80	→ Archiv
 b008252c	📥 Importieren…
@@ -1153,6 +1156,8 @@ b008252c	📥 Importieren…
 7ff3d81a	⬆ Firmware aktualisieren…
 8b94462b	Einstellungen des Funkgeräts (Menü, Display, VOX, DTMF…) mit Beschreibung jedes Eintrags
 55f63842	⚙ Einstellungen…
+09d2ad18	Gibt jeder Zone einen Namen statt «Zone 1», «Zone 2»…, wie das Programm des Herstellers
+419c7f60	✎ Zonennamen…
 65125214	Das Programm Bajeton BT-11_CPS v1.0.9 speichert .dat-Dateien in einem anderen Format als v1.0.8, und die beiden Versionen öffnen die Dateien der jeweils anderen nicht. Wählen Sie die auf Ihrem PC installierte Version: Die geöffnete Datei wird konvertiert (Kanäle und Einstellungen bleiben gleich), und neue Dateien und Lesungen vom Funkgerät verwenden dieses Format.
 0bc7b5bb	Wie im Programm BT-11_CPS v1.0.9 (Channel Divide): Kanäle in 15 Zonen zu 64 aufgeteilt oder alle 960 Kanäle in einer einzigen Liste. Ändert auch, wie das Funkgerät die Kanäle anzeigt.
 ea35e69c	Datei für BT-11_CPS
@@ -1201,11 +1206,43 @@ a95ee268	Keine Datei geöffnet
 c5bc2462	Lesen Sie die Kanäle direkt mit dem Programmierkabel aus dem Funkgerät, öffnen Sie eine mit dem Programm des Funkgeräts gespeicherte {0}-Datei oder erstellen Sie eine neue Datei. Nach den Änderungen können Sie die Kanäle in das Funkgerät schreiben und in einer {1}-Datei speichern.
 f0a2ac7f	📂 {0}-Datei öffnen…
 f748546f	Neue leere Datei
+33b8c42a	Doppelklick, um die Zone zu benennen
 69f3ae85	Zone {0}
+2817d663	Haken Sie zuerst die zu ändernden Kanäle an (oder wählen Sie sie mit Klick, Umschalt+Klick, Strg+Klick aus).
+10004adc	— nicht ändern —
+1b65fe1e	nicht ändern (OFF = kein Ton; z. B. 88.5, D023N)
+63732e04	nicht ändern (z. B. -0.6, +1.6, 0)
+62cfbd1e	Senden
+baaaad3e	nur Empfang (TX OFF)
+de022377	Sammelbearbeitung: {0} {1}
+8ad80f5d	Nur die gewählten Punkte ändern sich; Namen, Frequenzen und die übrigen Punkte bleiben, wie sie sind. Auf digitale Kanäle werden keine Subtöne gesetzt.
+5534e33b	Übernehmen
+02204c19	{0}: ungültiger Ton (z. B. 88.5, D023N, D023I, OFF).
+ef755fde	DCS-Code {0} auf dem Bajeton 8300 nicht verfügbar.
+c3dfc199	DCS-Code {0} auf dem {1} nicht verfügbar.
+153b0a1f	Ungültige Ablage (z. B. -0.6, +1.6, +5, 0).
+e5a2543c	Ungültige Ablage für Kanal {0} ({1} MHz).
+50714c60	Kein Kanal geändert (auf digitale Kanäle werden keine Subtöne gesetzt).
+5e1d7b1e	Kein Kanal geändert: Sie hatten diese Werte bereits.
+243be716	Geändert: {0}
+2aade796	(Subtöne nicht gesetzt auf {0})
+8183fe22	digitale Kanäle
+4844dfd0	· Achtung: {0} mit Senden außerhalb der Bereiche des Funkgeräts
+c08ef3ef	Lesen Sie zuerst das Funkgerät aus oder öffnen Sie eine seiner Dateien.
+7b056b7c	Zonennamen
+4b1d6064	Zone {0}{1}
+9e516dd6	kein Name
+853429f2	Bis zu {0} Zeichen: Buchstaben ohne Akzente, Ziffern, Symbole und chinesische Zeichen (ein chinesisches Zeichen zählt doppelt).
+d827614d	Bis zu {0} Zeichen: Buchstaben ohne Akzente, Ziffern und Symbole.
+185fcd05	Jede Zone muss einen Namen haben.
+926753df	Eine Zone ohne Namen bleibt so, wie das Funkgerät sie anzeigt.
+cc168424	Zonennamen — {0}
+ea15bcb5	Die Namen werden mit «📻 Ins Funkgerät schreiben…» zusammen mit den Kanälen ins Funkgerät geschrieben und in der Datei gespeichert.
+caf3cdaf	Zonennamen auf den Speicher des Funkgeräts angewendet: Speichern Sie die Datei oder schreiben Sie ins Funkgerät, um sie zu behalten.
 133eae6d	Programmierte Kanäle: {0} von {1}
-1dae24f5	· Zone {0}: {1} von {2}
-6f011736	· Angehakt: {0}
-8fe6706d	· Ausgewählt: {0}
+46b62038	{0} von {1} Kanälen belegt
+31acc3eb	Angehakt: {0}
+3114d45e	Ausgewählt: {0}
 58324d3b	Doppelklick oder Enter zum Bearbeiten · Rechtsklick für das Menü
 64275293	Kanäle importieren
 50f603dd	{0}: Einige Zeilen wurden nicht gelesen.
@@ -1268,6 +1305,7 @@ c1a2e3a6	DCS-Code bei {0} nicht verfügbar
 1280ef3c	Name auf {0} Zeichen gekürzt.
 6019487d	Nach oben
 6c6ecbc1	Nach unten
+2d903ea0	Sammelbearbeitung…
 fa7545de	An ein anderes Funkgerät weitergeben…
 ca4751b9	Zum Archiv hinzufügen
 f93c1ba8	Einstellungen werden gelesen…
@@ -1281,7 +1319,6 @@ c2dc43e0	Tabelle abgeleitet aus dem
 5fb2cc3a	⚙ Einstellungen — {0}
 71ca99f7	{0} Die Änderungen werden in den Speicher der Registerkarte geschrieben: Datei speichern oder in das Funkgerät schreiben, um sie zu behalten.
 b98d8ace	Änderungen rückgängig
-5534e33b	Übernehmen
 a132b5db	Änderungen nicht übernommen
 6a0d898b	Sie haben {0} Einstellungen geändert, ohne sie zu übernehmen. Trotzdem schließen?
 4d272065	Schließen ohne Übernehmen
@@ -2790,8 +2827,11 @@ e8fcbbef	Firmware 0.24 oder neuer ({0}): Kanäle als 10 Zonen zu 99 verwaltet (9
 6370b54b	das Funkgerät hat sich als «{0}» gemeldet, nicht als {1}: Ist es das richtige Modell?
 6f96413b	Fehler beim Einstellen der Verschlüsselung
 c7b15fc5	unbekannte Zweitkennung des Funkgeräts ({0})
+159a10ff	Zonennamen werden gelesen…
 7c82ae7f	Prüfung der Kanäle {0}-{1}…
 9cb120ea	im Funkgerät stehen nach Kanal 960 Daten, die keine Kanäle sind: Das Funkgerät scheint Firmware bis 0.23 (960 Kanäle) zu haben. Es wurden keine Daten geschrieben. Die Registerkarte der Version mit 960 Kanälen verwenden oder die Firmware des Funkgeräts aktualisieren
+79e4da26	Zonennamen werden geprüft…
+c0638f61	im Funkgerät enthält der Bereich der Zonennamen Daten, die keine Namen sind: Die Firmware des Funkgeräts hat möglicherweise keine Zonennamen. Es wurden keine Daten geschrieben. Lassen Sie die Zonennamen so, wie Sie sie aus dem Funkgerät gelesen haben (oder lesen Sie das Funkgerät erneut), oder aktualisieren Sie die Firmware
 eb85e206	Subton {0} bei diesem Funkgerät nicht verfügbar
 e02dc347	DCS-Code D{0} bei diesem Funkgerät nicht verfügbar
 ea46d8f7	0123456789- ABCDEFGHIJKLMNOPQRSTUVWXYZ/_+*
@@ -4482,7 +4522,6 @@ fe543d54	Doppelanzeige, Einzelüberwachung
 4004f8ff	super mode
 9ca1d6ca	deep mode
 5d51c05f	Empfang
-62cfbd1e	Senden
 7276864f	ptt only
 7cf7824a	Nur PTT
 86f0782b	sk only
@@ -4820,6 +4859,33 @@ a05feb13	sharedStrings.xml: {0}
 b47a734d	kein lesbares Blatt in der .xlsx-Datei
 7c8930a1	Foglio{0}
 bb441a60	<sheetView workbookViewId="0"
+e5d5fe51	«{0}»: Das Funkgerät akzeptiert nur Buchstaben ohne Akzente, Ziffern, Symbole und chinesische Zeichen
+ef09386b	«{0}»: Das Funkgerät akzeptiert nur Buchstaben ohne Akzente, Ziffern und Symbole
+d102432f	«{0}»: zu lang, höchstens {1} Byte (jedes chinesische Zeichen belegt 2)
+5002cc34	«{0}»: zu lang, höchstens {1} Zeichen
+ce495534	dieses Funkgerät hat keine Zonennamen
+fa01433a	die geöffnete Datei enthält keine Zonennamen: Lesen Sie das Funkgerät erneut per Kabel aus
+c12ce408	{0} Namen werden benötigt, {1} erhalten
+3c2ab7be	Um die Zonen zu benennen, lesen Sie zuerst das Funkgerät per Kabel aus (oder öffnen Sie eine seiner Dateien).
+501af569	Der geöffnete Speicher enthält keine Zonennamen (mit einer früheren Version gespeicherte Datei oder Firmware ohne Zonennamen): Lesen Sie das Funkgerät erneut per Kabel aus.
+d8d764d0	Zone {0}: Der Name darf nicht leer sein
+a916c443	im Speicher gibt es keine Zonen
+63f94611	FRS, USA
+5bf8b9a1	Firmware UV-5R
+0ce70622	ohne Bluetooth
+fea692a8	Firmware 0.24 und neuer: 990 Kanäle
+ec8cdbd9	Firmware bis 0.23: 960 Kanäle
+18734e24	Helmfunkgerät
+810324ef	Firmware egzumer
+087d5c7b	Firmware F4HWN
+fb975e6f	Firmware LOSEHU, LTS, UVE
+6c3baeb5	Firmware OSFW
+d1f9e8ef	neue Version
+37ed5e1e	Freenet
+53826d51	Firmware M7OCM
+8781a829	3. Generation
+f0a3a6ce	US-Version, Namen mit 8 Zeichen
+c001d72f	Raster 2,5 kHz
 f8c9e807	hoch
 a15fb723	Bereitschaft
 1f743f81	niedrig

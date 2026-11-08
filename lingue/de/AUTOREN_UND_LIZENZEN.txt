@@ -160,7 +160,7 @@ sind nicht im Paket):
   dmrconfig (Name, ID, Einschalttexte)      Serge Vakulenko KK6ABQ, BSD-Lizenz
                                             (https://github.com/OpenRTX/dmrconfig)
 Die Flaggen der Sprachauswahl sind im Programm gezeichnet (Nationalflaggen,
-gemeinfrei).
+gemeinfrei; 4.11: Südkorea für Koreanisch, Vereinigte Arabische Emirate für Arabisch).
 
 Dateien von IU0VYT Flash mit abgeleiteten Teilen (auch am Anfang jeder Datei
 angegeben):
@@ -174,6 +174,7 @@ drv_btgmrs.go, drv_retevisc2.go, drv_rb15.go, drv_rb17p.go, drv_rb28.go, drv_rt2
 drv_rt26.go, drv_rt76p.go, drv_rt87.go, drv_anytoneht.go, drv_rh5rv2.go,
 drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.10: fwrt890.go, fwdm1701.go, fwsgl.go, settings_rdty.go.
+4.11: zonenames.go (Format der Namen der RT-920 nach radtel_rt900.py).
 Dank an die Autoren von CHIRP, an armel F4HWN, an M7OCM, an JuantAldea, an v0l
 (radio_tool), an das Projekt OpenGD77, an Hannes Matuschek DM3MAT (qdmr) und an Serge
 Vakulenko KK6ABQ.
@@ -228,6 +229,21 @@ Hinweise zu seinem CHIRP-Treiber der RT-950 Pro
 (https://github.com/pe1hvh/chirp_radtel_rt950pro, MIT-Lizenz; Antwort des Funkgeräts
 auf den Befehl „F“ gleich mit den Firmwares 0.18 und 0.29) und in der CHIRP-Meldung
 12180: kein Code dieser Projekte ist enthalten.
+
+ZONENNAMEN (4.11)
+Das Format der Zonennamen ist, zur Interoperabilität, aus dem Code der
+Herstellerprogramme abgeleitet: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 und Bajeton
+BJ-9000_CPS v1.3.3 (RT-950 Pro, BJ-9000, HI-UV850 Pro), RT-950_EnCPS „BT-9000_CPS“
+v1.3.0 (RT-950), RT-920_EnCPS v1.2.4 (RT-920) und RT910_EnCPS v1.0.3 (RT-910 ohne
+Bluetooth), radtels.com und bajeton.cn; für die RT-920 auch aus dem Treiber
+radtel_rt900.py von CHIRP (Fred Trimble, GNU GPL, siehe oben). Kein Herstellerprogramm
+ist enthalten.
+Die Idee, die Zonen zu benennen, und die Sammelbearbeitung der Kanäle stammen aus dem
+Programm „RT-950 / 950 Pro Editor“ von Jorge De La Cruz KK4OXN
+(https://github.com/cruzerdlc/RT-950-950Pro-Editor, MIT-Lizenz): Das Repository
+veröffentlicht nur Dokumente und kompilierte Programme, nicht den Quellcode, und es
+wurde kein Code daraus übernommen; die Funktionen sind in IU0VYT Flash von Grund auf
+neu geschrieben.
 
 .BTU-FIRMWARE (4.8)
 Die .BTU-Firmwares der Radtel RT-910 und RT-900 ohne Bluetooth und der Bajeton BJ-7700

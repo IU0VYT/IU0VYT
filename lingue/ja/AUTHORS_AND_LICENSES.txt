@@ -139,12 +139,13 @@ CHIRP に由来する部分
   全般設定）                                (https://github.com/hmatuschek/qdmr)
   dmrconfig（名前、ID、電源オン時のテキスト）Serge Vakulenko KK6ABQ、BSD ライセンス
                                             (https://github.com/OpenRTX/dmrconfig)
-言語選択の旗はプログラム内で描いています（国旗、パブリックドメイン）。
+言語選択の旗はプログラム内で描いています（国旗、パブリックドメイン。4.11：韓国語には韓国、アラビア語にはアラブ首長国連邦の旗）。
 
 派生部分を含む IU0VYT Flash のファイル（各ファイルの先頭にも記載）：
 drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、drv_h777.go、drv_small.go、drv_rt900.go、drv_ga510.go、drv_gm30.go、drv_dm32.go、drv_uvk5.go、drv_jc8810.go、drv_tdh8.go、drv_thuv88.go、drv_rt490.go、drv_rt21.go、drv_tk11.go、drv_bfd.go（相互参照）と模擬無線機 genemu_*.go。
 4.9：drv_uvk5x.go、drv_wouxun49.go、drv_kguv8.go、drv_kguv9.go、drv_kg935.go、drv_thuv8000.go、drv_uvl15w.go、drv_iradio.go、drv_tdq8a.go、drv_tdm11.go、drv_btgmrs.go、drv_retevisc2.go、drv_rb15.go、drv_rb17p.go、drv_rb28.go、drv_rt23.go、drv_rt26.go、drv_rt76p.go、drv_rt87.go、drv_anytoneht.go、drv_rh5rv2.go、drv_px888k.go、drv_kt8r.go、drv_ha1g.go、drv_ha1gfmt.go。
 4.10：fwrt890.go、fwdm1701.go、fwsgl.go、settings_rdty.go。
+4.11：zonenames.go（RT-920 の名前の形式は radtel_rt900.py による）。
 CHIRP の作者の皆さん、armel F4HWN、M7OCM、JuantAldea、v0l（radio_tool）、OpenGD77 プロジェクト、Hannes Matuschek DM3MAT（qdmr）、Serge Vakulenko KK6ABQ に感謝します。
 
 QUANSHENG UV-K5 のファームウェア更新（4.1）
@@ -162,6 +163,10 @@ RETEVIS RA89（4.4）と RT85（4.5）のファームウェア更新
 RADTEL RT-950 PRO、BAJETON BJ-9000、RADTEL RT-950（4.6、4.7）
 4.7：Radtel RT-950PRO_CPS v1.2.1 と Bajeton BJ-9000_CPS v1.3.3（bajeton.cn）のプログラム、ローダー「RT-950_EnUPDATE」「BJ9000_EnUPDATE」「Radtel ANC Bootloader V1.2」（更新プロトコル、相互運用のため）とも比較しました。ファームウェア（Radtel radtels.com、Bajeton bajeton.com と bajeton.cn）は SHA-256 フィンガープリントでのみ識別します。プログラムやファームウェアはパッケージに含まれていません。
 チャンネルのメモリーと設定は、相互運用のためにメーカーのプログラムのコード（Radtel RT-950PRO_CPS v1.1.1、v1.2.0、v1.2.1、v1.3.3 と RT-950_EnCPS「BT-9000_CPS」v1.3.0、radtels.com。Bajeton BJ-9000_CPS v1.1.1）と Radtel のファームウェアの説明から得ました。これらのプログラムはパッケージに含まれていません。JA van Hernen（PE1HVH）が RT-950 Pro 用の CHIRP ドライバーについて公開した説明（https://github.com/pe1hvh/chirp_radtel_rt950pro、MIT ライセンス。「F」コマンドへの無線機の応答はファームウェア 0.18 と 0.29 で同じ）と CHIRP の報告 12180 も参考にしましたが、それらのプロジェクトのコードは含まれていません。
+
+ゾーン名（4.11）
+ゾーン名の形式は、相互運用性のために、メーカーのプログラムのコードから得ました：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 と Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS「BT-9000_CPS」v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）、RT910_EnCPS v1.0.3（Bluetooth なしの RT-910）、radtels.com と bajeton.cn。RT-920 については CHIRP のドライバー radtel_rt900.py（Fred Trimble、GNU GPL、上記参照）からも得ました。メーカーのプログラムは含まれていません。
+ゾーンに名前を付けるアイデアとチャンネルの一括編集は、Jorge De La Cruz KK4OXN の「RT-950 / 950 Pro Editor」プログラム（https://github.com/cruzerdlc/RT-950-950Pro-Editor、MIT ライセンス）から来ています。このリポジトリは文書とコンパイル済みのプログラムだけを公開しており、ソースコードはなく、そこからコードは取っていません。機能は IU0VYT Flash で一から書き直しました。
 
 .BTU ファームウェア（4.8）
 Bluetooth なしの Radtel RT-910 と RT-900、Bluetooth なしの Bajeton BJ-7700 の .BTU ファームウェアは、「Radtel Bootload Tools」プログラム（Radtel、radtels.com）のプロトコルで送ります。このプロトコルは相互運用のためにそのコードから得たもので、Baofeng UV-5RM の KDH V1.0 ローダー（bfkdh.go）と同じで、ハンドシェイクは「PROGRAMBT80U」です。ファームウェア（Radtel radtels.com、Bajeton bajeton.com）は SHA-256 フィンガープリントでのみ識別します。RT-900 ではメーカーのプログラム「RT900_512 CPS」v1.0.0 と v1.0.2（512 と 999 チャンネル）とも比較しました。プログラムやファームウェアはパッケージに含まれていません。

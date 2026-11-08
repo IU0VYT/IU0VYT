@@ -157,7 +157,8 @@ GNU General Public License (версии 2 или новее либо 3 или �
   dmrconfig (имя, ID, тексты при включении) Serge Vakulenko KK6ABQ, лицензия BSD
                                             (https://github.com/OpenRTX/dmrconfig)
 Флаги переключателя языка нарисованы в самой программе (государственные флаги,
-общественное достояние).
+общественное достояние; 4.11: Южная Корея для корейского, Объединённые Арабские
+Эмираты для арабского).
 
 Файлы IU0VYT Flash с производными частями (указано также в начале каждого файла):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go, drv_h777.go,
@@ -170,6 +171,7 @@ drv_btgmrs.go, drv_retevisc2.go, drv_rb15.go, drv_rb17p.go, drv_rb28.go, drv_rt2
 drv_rt26.go, drv_rt76p.go, drv_rt87.go, drv_anytoneht.go, drv_rh5rv2.go,
 drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.10: fwrt890.go, fwdm1701.go, fwsgl.go, settings_rdty.go.
+4.11: zonenames.go (формат названий RT-920 по radtel_rt900.py).
 Спасибо авторам CHIRP, armel F4HWN, M7OCM, JuantAldea, v0l (radio_tool), проекту
 OpenGD77, Hannes Matuschek DM3MAT (qdmr) и Serge Vakulenko KK6ABQ.
 
@@ -218,6 +220,19 @@ Bootloader V1.2» (протоколы обновления, для обеспе�
 (https://github.com/pe1hvh/chirp_radtel_rt950pro, лицензия MIT; ответ радиостанции на
 команду «F» одинаков с прошивками 0.18 и 0.29), и сообщение 12180 в CHIRP: кода этих
 проектов в пакете нет.
+
+НАЗВАНИЯ ЗОН (4.11)
+Формат названий зон получен, ради совместимости, из кода программ производителя:
+Radtel RT-950PRO_CPS v1.2.0-v1.3.3 и Bajeton BJ-9000_CPS v1.3.3 (RT-950 Pro, BJ-9000,
+HI-UV850 Pro), RT-950_EnCPS «BT-9000_CPS» v1.3.0 (RT-950), RT-920_EnCPS v1.2.4
+(RT-920) и RT910_EnCPS v1.0.3 (RT-910 без Bluetooth), radtels.com и bajeton.cn; для
+RT-920 также из драйвера radtel_rt900.py из CHIRP (Fred Trimble, GNU GPL, см. выше).
+Программы производителя не включены.
+Идея давать зонам названия и групповое изменение каналов взяты из программы «RT-950 /
+950 Pro Editor» Jorge De La Cruz KK4OXN
+(https://github.com/cruzerdlc/RT-950-950Pro-Editor, лицензия MIT): в репозитории
+опубликованы только документы и скомпилированные программы, без исходного кода, и код
+оттуда не брался; функции написаны в IU0VYT Flash с нуля.
 
 ПРОШИВКА .BTU (4.8)
 Прошивки .BTU для Radtel RT-910 и RT-900 без Bluetooth и Bajeton BJ-7700 без Bluetooth

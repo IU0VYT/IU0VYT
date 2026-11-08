@@ -1,0 +1,361 @@
+IU0VYT FLASH - المؤلفون والتراخيص
+===================================
+
+IU0VYT Flash
+Copyright (C) 2026 Daniele "IU0VYT" Bonifazi
+https://www.qrz.com/db/IU0VYT
+الشيفرة المصدرية: https://github.com/IU0VYT/IU0VYT
+
+هذا الملف ترجمة عربية لملف AUTORI_E_LICENZE.txt؛ والأصل الإيطالي هو المرجع. الأسماء
+والملفات وإشعارات التراخيص مذكورة كما هي.
+
+هذا البرنامج برنامج حر: يمكنك إعادة توزيعه و/أو تعديله وفق شروط رخصة جنو العمومية GNU
+General Public License كما نشرتها مؤسسة البرمجيات الحرة، إما الإصدار 3 من الرخصة، أو
+(حسب اختيارك) أي إصدار لاحق (SPDX: GPL-3.0-or-later).
+
+يُوزَّع هذا البرنامج على أمل أن يكون مفيدًا، لكن دون أي ضمان؛ ودون حتى الضمان الضمني
+لقابلية التسويق أو الملاءمة لغرض معيّن. انظر رخصة GNU General Public License لمزيد من
+التفاصيل.
+
+النص الكامل للرخصة في الملف LICENSE.txt (نسخة مطابقة من النص الرسمي
+https://www.gnu.org/licenses/gpl-3.0.txt؛ SHA-256
+3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986).
+
+من يوزّع البرنامج (ولو معدّلًا) يجب أن يوزّعه بالرخصة نفسها، ويوفّر الشيفرة المصدرية
+الكاملة (المجلد "sorgenti") ويحافظ على هذا الملف وLICENSE.txt وإشعارات حقوق النشر في
+ملفات المصدر.
+
+
+الأجزاء المشتقة من CHIRP
+------------------------
+معظم مشغّلات الأجهزة (بروتوكولات الكابل، خرائط الذاكرة، قواعد القنوات) وصيغة ملفات
+.img مشتقة من CHIRP (https://chirpmyradio.com، https://github.com/kk7ds/chirp)، وهو
+برنامج حر يُوزَّع برخصة GNU General Public License (الإصدار 2 أو لاحق، أو 3 أو لاحق،
+بحسب الملف). أعيدت كتابتها بلغة Go وقورنت مع CHIRP (المراجعة dcf5d2519310 بتاريخ
+01/11/2026؛ والأجهزة المضافة في 4.6 و4.7 بالمراجعة ba67ff4 بتاريخ 04/11/2026، وأجهزة
+4.8 و4.9 بالمراجعة 0a9e92c بتاريخ 06/11/2026). المؤلفون المذكورون في ملفات CHIRP
+المستخدمة:
+
+  chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
+  drivers/uv5r.py                           Copyright 2012 Dan Smith
+  drivers/baofeng_uv3r.py                   Copyright 2011 Dan Smith
+  drivers/uvb5.py                           Copyright 2013 Dan Smith
+  drivers/ga510.py                          Copyright 2024 Dan Smith;
+                                            portions copyright 2023 Dave Liske,
+                                            2020 Jiaxun Yang
+  drivers/baofeng_uv17Pro.py                Copyright 2023 Sander van der Wel
+  drivers/baofeng_uv17.py                   Copyright 2023 Sander van der Wel
+  drivers/baofeng_common.py                 Copyright 2016 Jim Unroe KC9HI
+  drivers/baofeng_wp970i.py                 Copyright 2016 Jim Unroe KC9HI
+  drivers/uv6r.py                           Copyright 2016 Jim Unroe KC9HI
+  drivers/uv5x3.py                          Copyright 2016 Jim Unroe KC9HI
+  drivers/bf_t8.py                          Copyright 2022 Jim Unroe
+  drivers/radtel_t18.py                     Copyright 2021 Jim Unroe
+  drivers/retevis_rt22.py                   Copyright 2016-2020 Jim Unroe
+  drivers/bf_t1.py                          Copyright 2017 Pavel Milanes CO7WT
+                                            (مع PA3CQN وH. Hankins وD. Milkov)
+  drivers/h777.py                           Copyright 2013 Andrew Morgan
+  drivers/radtel_rt900.py                   Copyright 2025, 2026 Fred Trimble;
+                                            2024 Pavel Moravec OK2MOP;
+                                            2023 Jim Unroe
+  drivers/radioddity_gm30.py                Copyright 2025 Mike Iacovacci
+  drivers/baofeng_dm32uv.py                 Copyright 2026 chaffed (GPL v3 أو لاحق)
+  chirp/kenwood_tone.py                     Copyright 2026 Dan Smith
+  drivers/uvk5.py                           (c) 2023 Jacek Lipkowski SQ5BPF (UV-K5);
+                                            (c) 2025 Thibaut Berg (UV-K1)
+  drivers/mml_jc8810.py                     Copyright 2023 Jim Unroe
+  drivers/tdh8.py                           Copyright 2012 Dan Smith (ومؤلفون آخرون)
+  drivers/th_uv88.py                        2020 James Berry; Jim Unroe (GPL v2 أو لاحق)
+  drivers/radtel_rt490.py                   Copyright 2023 angeof9 (GPL v3؛ وأيضًا BSD
+                                            ذات البندين)
+  drivers/retevis_rt21.py                   Copyright 2021-2026 Jim Unroe
+  drivers/tk11.py                           Copyright 2012 Dan Smith; 2025 Thibaut Berg
+  drivers/radtel_rt620.py                   Copyright 2024 Pavel Moravec OK2MOP (4.7)
+  drivers/th350.py                          Copyright 2019 Zhaofeng Li; 2013 Dan Smith
+                                            (GPL v2 أو لاحق؛ 4.7)
+  drivers/retevis_rt18.py                   Copyright 2026 (المؤلف غير مذكور في
+                                            الملف؛ مشغّل تجريبي؛ 4.7)
+  drivers/baofeng_digital.py                Copyright 2024 Marcos Del Sol Vives
+                                            (GPL v2 أو لاحق؛ مرجع
+                                            لـ W31D وBF-T20D وBF-V12D: رموز
+                                            الطرازات وفتح قفل BF-V12D)
+  4.8:
+  drivers/wouxun_common.py                  Copyright 2012 Filippi Marco IZ3GME (GPL v3)
+  drivers/th_uv3r.py                        Copyright 2011 Dan Smith (GPL v3)
+  drivers/th_uv3r25.py                      Copyright 2015 Eric Allen (GPL v3)
+  drivers/thuv1f.py                         Copyright 2012 Dan Smith
+  drivers/th_uvf8d.py                       Copyright 2013 Dan Smith (GPL v3)
+  drivers/kyd.py                            Copyright 2014 Jim Unroe, Dan Smith
+  drivers/kyd_IP620.py                      Copyright 2015 Lepik.stv
+  drivers/ksun_m6.py                        Copyright 2012 Dan Smith; 2024 Yuri D'Elia
+  drivers/puxing.py                         Copyright 2011 Dan Smith (GPL v3)
+  drivers/boblov_x3plus.py                  Copyright 2018 Robert C Jennings
+  drivers/hg_uv98.py                        Copyright 2022 Masen Furer KF7HVM
+                                            (مع KG7KMV وBartłomiej Zieliński)
+  drivers/radioddity_r2.py                  Copyright 2018 Klaus Ruebsam DG5EAU
+  drivers/retevis_rt1.py                    Copyright 2016 Jim Unroe
+  drivers/retevis_h777v4.py                 Copyright 2025 Jim Unroe
+  drivers/tg_uv2p.py                        Copyright 2013 Dan Smith
+  drivers/fd268.py                          Copyright 2015 Pavel Milanes CO7WT
+  4.9 (المراجعة 0a9e92c):
+  drivers/uvk5_egzumer.py                   Copyright 2023 Jacek Lipkowski SQ5BPF,
+                                            egzumer, JOC2
+  drivers/uvk5_cn.py                        Copyright 2026 赵昕 BG8ADW
+  drivers/wouxun.py                         Copyright 2011 Dan Smith (GPL v3)
+  drivers/kguv8d.py                         Copyright 2014 Ron Wellsted M0RNW (GPL v3)
+  drivers/kguv8dplus.py                     Copyright 2017 Krystian Struzik (GPL v3)
+  drivers/kguv8e.py, drivers/kg935g.py      Copyright 2019 Pavel Milanes CO7WT (GPL v3)
+  drivers/kguv9dplus.py                     Copyright 2022 Mel Terechenok (GPL v3)
+  drivers/th_uv8000.py                      Copyright 2019 Rick DeWitt AA0RD
+  drivers/tyt_uvl15w.py                     Copyright 2026 (GPL v3؛ المؤلف في
+                                            سجل CHIRP: chaffed)
+  drivers/th350.py                          Copyright 2019 Zhaofeng Li
+  drivers/iradio_common.py,
+  drivers/iradio_uv_5118.py,
+  drivers/iradio_uv_5118plus.py,
+  drivers/radtel_rt880g.py                  Copyright 2022-2023 Jim Unroe KC9HI
+  drivers/retevis_c2.py                     Copyright 2026 Tony Gies
+  drivers/retevis_ha1g.py,
+  drivers/retevis_ha2.py                    Copyright 2024 Tommy (HA2: GPL v3)
+  drivers/retevis_rb15.py, retevis_rb17p.py,
+  retevis_rb28.py, retevis_rt23.py,
+  retevis_rt26.py, retevis_rt76p.py,
+  retevis_rt87.py, bf_t8.py                 Copyright 2017-2026 Jim Unroe KC9HI
+  drivers/gmrsuv1.py, gmrsv2.py, mursv1.py,
+  drivers/uv5x3.py, drivers/tdxone_tdq8a.py Copyright 2016-2022 Jim Unroe KC9HI
+  drivers/btech.py                          Copyright 2016-2026 Pavel Milanes CO7WT,
+                                            Jim Unroe KC9HI
+  drivers/anytone_ht.py                     Copyright 2015 Jim Unroe (GPL v3)
+  drivers/puxing_px888k.py                  Copyright 2016 Leo Barring
+  drivers/rh5r_v2.py                        Copyright 2017 Dan Smith (GPL v3)
+  drivers/tdm11.py                          Copyright 2025, 2026 Fred Trimble
+  drivers/h777.py (ZA-758)                  Copyright 2013 Andrew Morgan
+  drivers/radioddity_gm30.py (MU-5)         Copyright 2025 Mike Iacovacci
+  خارج CHIRP (الرخصة نفسها، GNU GPL v2 أو لاحق):
+  uvk5_egzumer_f4hwn_ver_4_3_0.py           مشغّل F4HWN من armel F4HWN، كيّفه
+                                            JOC2 من مشغّل egzumer
+                                            (https://github.com/armel/uv-k5-chirp-driver)
+  chirp-next-radtel-rt-890-m7ocm.py         Copyright 2023 Jim Unroe، كيّفه
+                                            M7OCM (https://github.com/M7OCM/890)
+  4.10، الإعدادات من CHIRP: drivers/fd268.py (Copyright 2015 Pavel Milanes CO7WT)
+  وdrivers/retevis_rt76p.py (Copyright 2021-2022 Jim Unroe KC9HI)، كما أعلاه.
+
+بروتوكولات تحديث البرنامج الثابت وإعدادات DMR (4.10)
+أعيدت كتابتها من الصفر بلغة Go انطلاقًا من أوصاف هذه البرامج الحرة وشيفرتها (دون نسخ
+أي ملف؛ والبرامج الثابتة من الشركات المصنّعة المستخدمة في الاختبارات ليست في الحزمة):
+  rt_890_flasher.py (Radtel RT-890)          Copyright 2023 JuantAldea, GNU GPL v3
+                                            (https://github.com/JuantAldea/RT-890-python-flasher)
+  radtel-rt-890-oefw (ملاحظات المحمّل)      DualTachyon, رخصة Apache 2.0
+                                            (https://github.com/DualTachyon/radtel-rt-890-oefw)
+  radio_tool (DM-1701 عبر DFU،              v0l وآخرون, GNU GPL v3
+  ملفات «OutSecurityBin» و.sgl،             (https://github.com/v0l/radio_tool)
+  محمّل HID)
+  OpenGD77 FirmwareLoader (RD-5R, DM-1801)  Roger Clark VK3KYY وآخرون, GNU GPL v2
+                                            (https://github.com/open-ham/OpenGD77)
+  qdmr (الإعدادات العامة لـ RD-5R           Hannes Matuschek DM3MAT, GNU GPL v3
+  وDM-1801 وDM-1701)                        (https://github.com/hmatuschek/qdmr)
+  dmrconfig (الاسم والمعرّف ونصوص التشغيل)  Serge Vakulenko KK6ABQ, رخصة BSD
+                                            (https://github.com/OpenRTX/dmrconfig)
+أعلام محدِّد اللغة مرسومة في البرنامج (أعلام وطنية، ملكية عامة؛ 4.11: كوريا الجنوبية
+للكورية، والإمارات العربية المتحدة للعربية).
+
+ملفات IU0VYT Flash التي فيها أجزاء مشتقة (مذكورة أيضًا في أعلى كل ملف):
+drv.go وbw.go وdrv_uv5r.go وdrv_uv17pro.go وdrv_uv17.go وdrv_bfcommon.go وdrv_h777.go
+وdrv_small.go وdrv_rt900.go وdrv_ga510.go وdrv_gm30.go وdrv_dm32.go وdrv_uvk5.go
+وdrv_jc8810.go وdrv_tdh8.go وdrv_thuv88.go وdrv_rt490.go وdrv_rt21.go وdrv_tk11.go
+وdrv_bfd.go (إحالة مرجعية) والأجهزة المحاكاة genemu_*.go؛
+4.9: drv_uvk5x.go وdrv_wouxun49.go وdrv_kguv8.go وdrv_kguv9.go وdrv_kg935.go
+وdrv_thuv8000.go وdrv_uvl15w.go وdrv_iradio.go وdrv_tdq8a.go وdrv_tdm11.go
+وdrv_btgmrs.go وdrv_retevisc2.go وdrv_rb15.go وdrv_rb17p.go وdrv_rb28.go وdrv_rt23.go
+وdrv_rt26.go وdrv_rt76p.go وdrv_rt87.go وdrv_anytoneht.go وdrv_rh5rv2.go
+وdrv_px888k.go وdrv_kt8r.go وdrv_ha1g.go وdrv_ha1gfmt.go؛
+4.10: fwrt890.go وfwdm1701.go وfwsgl.go وsettings_rdty.go.
+4.11: zonenames.go (صيغة أسماء RT-920 من radtel_rt900.py).
+شكرًا لمؤلفي CHIRP، ولـ armel F4HWN، ولـ M7OCM، ولـ JuantAldea، ولـ v0l (radio_tool)،
+ولمشروع OpenGD77، ولـ Hannes Matuschek DM3MAT (qdmr) ولـ Serge Vakulenko KK6ABQ.
+
+تحديث البرنامج الثابت لـ QUANSHENG UV-K5 (4.1)
+صيغة ملفات .bin من Quansheng وبروتوكول محمّل UV-K5 موثّقان في البرنامجين الحرّين
+k5prog (Copyright 2023 Jacek Lipkowski SQ5BPF، GNU GPL v3،
+https://github.com/sq5bpf/k5prog) وuvtools (egzumer،
+https://github.com/egzumer/uvtools). كُتب fwk5.go من الصفر على أساس ذلك التوثيق،
+لأغراض التوافق؛ ولا تتضمن الحزمة أي شيفرة من تلك البرامج. الملف verifica/k5/k5ref.js،
+المستخدم للاختبارات فقط، يحمّل شيفرة uvtools من المجلد الذي يحدده من يُجري التحقق.
+شكرًا لـ SQ5BPF ولـ egzumer.
+
+تحديث البرنامج الثابت لـ TIDRADIO TD-H3 / TD-H8 وRADTEL RT-730 (4.3)
+بروتوكول المحمّل وثّقه nicsure في مشروع TD-H3-Engineering
+(https://github.com/nicsure/TD-H3-Engineering، firmware_flash_protocol.txt، مع التقاط
+منفذ برنامج الشركة المصنّعة) ويستخدمه برنامجه TID Station؛ والمصافحة نفسها من 36 بايت
+موجودة في برنامجي الشركتين المصنّعتين «H8_IAP» (TIDRADIO) و«RT730 Update tool»
+(Radtel). كُتب fwtdh.go من الصفر على أساس ذلك التوثيق، لأغراض التوافق؛ ولا تتضمن
+الحزمة أي شيفرة من تلك البرامج. شكرًا لـ nicsure.
+
+تحديث البرنامج الثابت بالمحمّل 7.x (UV-K5 V3 وUV-K1 وRA79 V3) (4.4)
+البروتوكول موصوف ومستخدم في البرنامجين الحرّين quansheng_toolkit (Copyright 2026
+knoinok، رخصة Apache 2.0، https://github.com/knoinok/quansheng_toolkit، kradio/dfu.py)
+وMulti-UVTools (spm81، https://github.com/armel/Multi-UVTools، js/flash-k1.js). كُتب
+fwk5.go (k5v3Update) من الصفر على أساس ذلك التوثيق؛ ولا تتضمن الحزمة أي شيفرة من تلك
+البرامج.
+
+تحديث البرنامج الثابت لـ RETEVIS RA89 (4.4) وRT85 (4.5)
+البروتوكول مستخرج، لأغراض التوافق، من برنامجي Retevis «RA89-update-software»
+(«TH8600-UpDAta Soft» 2.3) و«RT85 10W_5W_UpData» («TH8600-UpDAta Soft» 2.1،
+retevis.com)؛ والبرنامجان غير مضمّنين في الحزمة. المجلد verifica/ra89، المستخدم
+للاختبارات فقط، يحمّل الملف التنفيذي الذي يحدده من يُجري التحقق.
+
+RADTEL RT-950 PRO وBAJETON BJ-9000 وRADTEL RT-950 (4.6، 4.7)
+4.7: قورنت أيضًا برامج Radtel RT-950PRO_CPS v1.2.1 وBajeton BJ-9000_CPS v1.3.3
+(bajeton.cn) والمحمّلات «RT-950_EnUPDATE» و«BJ9000_EnUPDATE» و«Radtel ANC Bootloader
+V1.2» (بروتوكولات التحديث، لأغراض التوافق)؛ ويُتعرّف على البرامج الثابتة (Radtel
+radtels.com، وBajeton bajeton.com وbajeton.cn) ببصمة SHA-256 فقط. لا يتضمن الحزمة أي
+برنامج أو برنامج ثابت.
+ذاكرة القنوات والإعدادات مستخرجة، لأغراض التوافق، من شيفرة برامج الشركة المصنّعة
+(Radtel RT-950PRO_CPS v1.1.1 وv1.2.0 وv1.2.1 وv1.3.3 وRT-950_EnCPS «BT-9000_CPS»
+v1.3.0، radtels.com؛ وBajeton BJ-9000_CPS v1.1.1) ومن ملاحظات البرنامج الثابت من
+Radtel؛ والبرامج غير مضمّنة في الحزمة. رُوجعت أيضًا الملاحظات التي نشرها JA van Hernen
+(PE1HVH) لمشغّله في CHIRP لجهاز RT-950 Pro
+(https://github.com/pe1hvh/chirp_radtel_rt950pro، رخصة MIT؛ ورد الجهاز على الأمر «F»
+هو نفسه مع البرنامج الثابت 0.18 و0.29) وفي تقرير CHIRP رقم 12180: لا تُضمَّن أي شيفرة
+من تلك المشاريع.
+
+أسماء المناطق (4.11)
+صيغة أسماء المناطق مستخرجة، لأغراض التوافق، من شيفرة برامج الشركة المصنّعة: Radtel
+RT-950PRO_CPS v1.2.0-v1.3.3 وBajeton BJ-9000_CPS v1.3.3 (RT-950 Pro وBJ-9000 وHI-UV850
+Pro)، وRT-950_EnCPS «BT-9000_CPS» v1.3.0 (RT-950)، وRT-920_EnCPS v1.2.4 (RT-920)
+وRT910_EnCPS v1.0.3 (RT-910 بدون بلوتوث)، من radtels.com وbajeton.cn؛ ولجهاز RT-920
+أيضًا من مشغّل CHIRP radtel_rt900.py (Fred Trimble، GNU GPL، انظر أعلاه). لا يُضمَّن
+أي برنامج من الشركة المصنّعة.
+فكرة تسمية المناطق والتعديل الجماعي للقنوات مأخوذتان من برنامج «RT-950 / 950 Pro
+Editor» من Jorge De La Cruz KK4OXN (https://github.com/cruzerdlc/RT-950-950Pro-Editor،
+رخصة MIT): لا ينشر المستودع إلا وثائق وبرامج مجمَّعة، دون الشيفرة المصدرية، ولم تؤخذ
+منه أي شيفرة؛ وأعيدت كتابة الوظائف من الصفر في IU0VYT Flash.
+
+البرنامج الثابت .BTU (4.8)
+يُرسل البرنامج الثابت .BTU لـ Radtel RT-910 وRT-900 بدون بلوتوث ولـ Bajeton BJ-7700
+بدون بلوتوث ببروتوكول برنامج «Radtel Bootload Tools» (Radtel، radtels.com)، المستخرج
+من شيفرته لأغراض التوافق: هو المحمّل KDH V1.0 نفسه مثل Baofeng UV-5RM (bfkdh.go)، مع
+المصافحة «PROGRAMBT80U». يُتعرّف على البرامج الثابتة (Radtel radtels.com، وBajeton
+bajeton.com) ببصمة SHA-256 فقط؛ ولجهاز RT-900 قورن أيضًا برنامجا الشركة المصنّعة
+«RT900_512 CPS» v1.0.0 وv1.0.2 (512 و999 قناة). لا يتضمن الحزمة أي برنامج أو برنامج
+ثابت.
+
+البرنامج الثابت .kdhx لـ Radtel RT-470 / RT-495 / RT-630 يستخدم البروتوكول نفسه مثل
+«Bootloader Pro» لجهاز UV-25 Plus (fwkdhx.go)، مع منصة JJCC التي يشير إليها برنامج
+Radtel «New RT470 serial Bootloader Pro».
+التغييرات مقارنة بملفات CHIRP الأصلية (إعادة الكتابة بلغة Go، القنوات فقط، التكييف مع
+واجهة IU0VYT Flash) موصوفة في أعلى كل ملف وفي CHANGELOG.txt، مع تواريخ الإصدارات.
+
+
+الأجزاء المشتقة من DMRCONFIG وQDMR (منذ 3.6)
+-------------------------------------------------
+ذاكرة أجهزة DMR RD-5R وDM-1801 وDM-1701 وبروتوكول USB الخاص بها مشتقة من:
+- dmrconfig (https://github.com/OpenRTX/dmrconfig)، Copyright (C) 2018-2019 Serge
+  Vakulenko KK6ABQ، رخصة BSD ذات البنود الثلاثة (النص أدناه): rd5r.c وdm1801.c
+  وuv380.c وhid.c وhid-windows.c وdfu-libusb.c وdfu-windows.c؛
+- qdmr (https://github.com/hmatuschek/qdmr)، Hannes Matuschek DM3MAT، GNU GPL v3:
+  radioddity_interface.cc وdm1701_codeplug.cc وtyt_interface.cc (مقارنة).
+ملفات IU0VYT Flash التي فيها أجزاء مشتقة: drv_rdty.go وdrv_tyt.go وusb_windows.go
+وgenemu_rdty_other.go وgenemu_tyt_other.go وidentify.go (منذ 3.8: مواضع معرّف DMR
+والاسم وتاريخ آخر برمجة وإصدار CPS، مثل print_id وprint_version في rd5r.c وgd77.c
+وuv380.c)؛ وللاختبارات verifica/dmrconfig/tcpdev.c (اتصال TCP لـ dmrconfig، غير
+المضمّن: يُنزَّل من موقعه).
+نص رخصة dmrconfig:
+
+  BSD 3-Clause License
+
+  Copyright (C) 2018-2019, Serge Vakulenko KK6ABQ
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+
+  1. Redistributions of source code must retain the above copyright notice, this
+     list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+
+  3. Neither the name of the copyright holder nor the names of its
+     contributors may be used to endorse or promote products derived from
+     this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+الإعدادات المشتقة من CHIRP (منذ 3.6)
+---------------------------------------
+جداول إعدادات الأجهزة التي يُتعامل معها بمشغّلات CHIRP (sorgenti/settings_chirp.json)
+مستخرجة بجعل شيفرة CHIRP (GNU GPL، المؤلفون كما أعلاه) تقرأ كل بند وتكتبه
+(sorgenti/verifica/chirp/chirpsettings.py): وتحتوي على موضع البيانات في الذاكرة والقيم
+المسموح بها والأسماء الإنجليزية لبنود CHIRP.
+منذ 3.7 يقرأ المحوّل صيغة CSV الخاصة بـ CHIRP (أعمدة المشغّل generic_csv) ويكتبها
+ويقارنها بشيفرة CHIRP (sorgenti/verifica/chirp/csvcheck.py، غير المضمّن في البرنامج).
+
+
+معلومات من أطراف أخرى مستخدمة (غير مضمّنة بوصفها شيفرة)
+---------------------------------------------------
+- جدول الطرازات المتكافئة في CHIRP (chirp/share/model_alias_map.yaml، GPL): منه تأتي
+  المطابقات BF-R3 وUV-9S = Radioddity UV-5RX3، وG11S = Retevis RB27، وTH-888S وBF-777S
+  = BF-888، ومنذ 3.4 الطرازات المتكافئة الـ 77 في قسم Baofeng/Pofung (مثلًا GT-1 =
+  BF-888 وGT-5 = UV-82 وUV-10R = BF-F8HP)، الواردة بوصفها قائمة أسماء في catalog.go.
+- التقارير العامة في نظام CHIRP (chirpmyradio.com/issues): #9833 (UV-16) و#9405
+  (P52UV) و#10388 (GMRS-9R) و#11280 (UV-E70) و#11696 (BF-9700 وBF-S56 Max: المعرّفات
+  وحجم الذاكرة واختبارات القراءة والكتابة التي نشرها مستخدم)، و#239 (UV-3R+ بمشغّل
+  UV-3R)، ومنذ 3.5 #11119 (K5 Plus المشتق من UV-5RM، لعائلة البرنامج الثابت). للطرازات
+  التي أبلغ عنها المستخدمون يُوسم التوافق بأنه تجريبي.
+- تعليمات BTECH الرسمية لتحديث DMR-6X2 وDMR-6X2 PRO («STOP and README FIRST.pdf» في
+  الحزمتين DMR-6X2-221b وDMR-6X2-PRO-121e، https://baofengtech.com/software/)، ملخّصة
+  في الإجراء الموجَّه (منذ 3.8)؛ وبنية ملفات .spi/.CDI/.CDD مستخرجة من ملفات الحزمة.
+  لا تُضمَّن برامج BTECH ولا مشغّلاتها ولا برامجها الثابتة.
+- Zadig (https://zadig.akeo.ie، GPL) مذكور فقط بوصفه أداة لتثبيت مشغّل WinUSB لجهاز
+  DM-1701: وهو غير مضمّن.
+- قائمة IK2ANE للمرحّلات الإيطالية (https://www.ik2ane.it): غير مضمّنة في الحزمة؛
+  ينزّلها البرنامج من موقع IK2ANE عندما تطلب ذلك. وتبقى البيانات لـ IK2ANE، الذي
+  يتيحها للجميع مجانًا.
+
+
+مكوّنات أخرى مضمّنة
+-------------------------
+- go-webview2، Copyright (c) 2020 John Chadwick - رخصة MIT
+  (sorgenti/vendor/github.com/jchv/go-webview2/LICENSE)
+- go-winloader، Copyright (c) 2021 John Chadwick - رخصة ISC
+  (sorgenti/vendor/github.com/jchv/go-winloader/LICENSE.md)
+- WebView2Loader.dll (Microsoft WebView2 SDK، مكوّن قابل لإعادة التوزيع)، مضمّن في
+  go-webview2؛ وتستخدم النافذة WebView2 Runtime في Windows.
+- rardecode v2، Copyright (c) 2015 Nicholas Waples - رخصة BSD ذات البندين
+  (sorgenti/vendor/github.com/nwaples/rardecode/v2/LICENSE): قراءة أرشيفات .rar. ومنذ
+  الإصدار 3.1.1 يحل محل node-unrar-js/UnRAR، الذي رخصته غير متوافقة مع GNU GPL.
+- golang.org/x/sys وgolang.org/x/text، Copyright 2009 The Go Authors - رخصة BSD ذات
+  البنود الثلاثة (sorgenti/vendor/golang.org/x/*/LICENSE)
+- مكتبة Go القياسية، Copyright The Go Authors - رخصة BSD ذات البنود الثلاثة.
+كل هذه التراخيص متوافقة مع الإصدار 3 من GNU GPL.
+
+
+العلامات التجارية والتوافق
+-------------------------------
+IU0VYT Flash برنامج مستقل، غير تابع لـ Baofeng أو Bajeton أو الشركات المصنّعة الأخرى
+المذكورة ولا معتمد منها (مثل Quansheng وRetevis وRadtel وRadioddity وTIDRADIO
+وHiroyasu وTalkpod وAnysecu وBTECH وAbbree وMaxTalker وIntek وMaverick وWLN وZastone
+وLuiton). أسماء الطرازات لا تفيد إلا في الإشارة إلى الأجهزة التي يعمل معها البرنامج.
+العلامات التجارية ملك أصحابها.
+أعيد بناء بروتوكولات البيانات وصيغها، لأغراض التوافق مع الأجهزة، من برامج الشركات
+المصنّعة (منذ 3.3 أيضًا «BF Series CPS» و«T17-T18 PMR446 PRO / FRS» و«DM-32UV CPS»
+وحزم BJ-8200 من Bajeton؛ ومنذ 3.4 «BF-Ts» و«BAOFENG GT18 PMR» و«BAJETON DM-5000 CPS»؛
+ومنذ 3.5 «DR-1801A6» وبرنامجا التحديث «Baofeng Bootloader Pro» و«T6UV Series CPS»
+لعائلات البرامج الثابتة؛ ومنذ 3.6 «GT-22» و«BF_V1_FH» (GT-68) و«BT-11_CPS» v1.0.8
+وv1.0.9 و«BJ-9000_CPS» و«5RH PRO» للإعدادات؛ ومنذ 3.8 بنية ملفات تحديث BTECH DMR-6X2؛
+ومنذ 4.0 بروتوكولات أجهزة العلامات الأخرى كما توثّقها مشغّلات CHIRP) (المادة 64 مكرر
+رابعًا من القانون الإيطالي 633/1941، والمادة 6 من التوجيه 2009/24/EC). لا تحتوي الحزمة
+على شيفرة أو برامج أو برامج ثابتة من الشركات المصنّعة: يشير معرض الطرازات إلى مواقعها
+الرسمية.

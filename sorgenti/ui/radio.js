@@ -30,6 +30,7 @@ function genRadioDef(g, fw) {
     dcs: new Set(g.dcs || []), charset: g.charset || '', noTxOff: g.noTxOff, notes: g.notes || '', generic: true, fw: fw || '', digital: g.digital || '',
     conn: g.conn || '', settings: !!g.settings,
     divide: g.divide || '', divideAll: g.divideAll || '', divideZones: g.divideZones || '',
+    zoneNames: !!g.zoneNames,
   };
 }
 
@@ -63,6 +64,7 @@ class RadioView {
     this.undoStack = [];
     this.redoStack = [];
     this.zone = 0;
+    this.zoneNames = null; // 4.11: nomi delle zone (null = la radio o il file non li hanno)
     this.showEmpty = true;
     // canali spuntati (3.9.3): si ricordano gli oggetti canale, così la spunta segue il
     // canale quando viene spostato, ordinato o compattato
@@ -133,6 +135,7 @@ class RadioView {
         <button class="btn primary" data-a="cwrite" title="Scrive i canali di questa tabella nella radio collegata con il cavo">📻 Scrivi nella radio…</button>
         ${FW_EXT[d.fw] ? `<button class="btn" data-a="firmware" title="Aggiorna il firmware della radio (file ${FW_EXT[d.fw]}, anche dentro archivi .zip o .rar, dal PC o da Internet)">⬆ Aggiorna firmware…</button>` : ''}
         ${d.settings ? '<button class="btn" data-a="settings" title="Impostazioni della radio (menu, display, VOX, DTMF…), con la descrizione di ogni voce">⚙ Impostazioni…</button>' : ''}
+        ${d.zoneNames ? '<button class="btn" data-a="zonenames" title="Dà un nome a ogni zona al posto di «Zona 1», «Zona 2»…, come il programma del costruttore">✎ Nomi delle zone…</button>' : ''}
         ${this.kind === 'baj' ? `<label class="note" style="white-space:nowrap" title="Il programma Bajeton BT-11_CPS v1.0.9 salva i file .dat in un formato diverso dalla v1.0.8 e le due versioni non aprono i file dell'altra. Scegli la versione installata sul tuo PC: il file aperto viene convertito (canali e impostazioni restano gli stessi) e i nuovi file e le letture dalla radio useranno questo formato.">File per BT-11_CPS
           <select data-datver><option value="1.0.8">v1.0.8</option><option value="1.0.9">v1.0.9</option></select></label>
           <label class="note" data-dividebox style="white-space:nowrap;display:none" title="Come nel programma BT-11_CPS v1.0.9 (Channel Divide): canali divisi in 15 zone da 64 oppure tutti i 960 canali in un unico elenco. Cambia anche il modo in cui la radio mostra i canali.">Canali
@@ -163,6 +166,7 @@ class RadioView {
         <span class="sep"></span>
         <button class="btn" data-a="checkall" title="Spunta tutti i canali della radio${d.zones ? ' (di tutte le zone)' : ''}">☑ Seleziona tutti</button>
         <button class="btn" data-a="uncheckall" title="Toglie la spunta a tutti i canali">☐ Deseleziona tutti</button>
+        <button class="btn" data-a="bulk" title="Cambia insieme potenza, banda, scansione, subtoni o shift dei canali spuntati (o selezionati): il resto di ogni canale resta com'è">✎ Modifica in blocco…</button>
         <button class="btn primary" data-a="forward" title="Scrive i canali spuntati (o selezionati) in un'altra radio collegata con il cavo: scegli marca e modello, poi il programma controlla la compatibilità, adatta i canali, salva una copia di sicurezza della radio, scrive e verifica">📻 Inoltra ad altra radio…</button>
         <button class="btn" data-a="toarch" title="Aggiunge all'archivio ponti i canali spuntati (o selezionati)">→ Archivio</button>
         <button class="btn" data-a="import" title="Inserisce i canali di un altro file: K67 (.xlc), Bajeton (.dat), immagini .img di qualsiasi radio (anche di CHIRP), CSV di CHIRP, tabelle Excel/CSV">📥 Importa…</button>
@@ -352,13 +356,150 @@ class RadioView {
     if (!this.loaded) { bar.innerHTML = ''; return; }
     const d = this.def;
     let html = '';
+    const ztip = this.zoneNames ? 'Doppio clic per dare un nome alla zona' : '';
     for (let z = 0; z < d.zones; z++) {
       const n = this.usedIn(z * d.perZone, (z + 1) * d.perZone);
-      html += `<button class="zonebtn ${this.zone === z ? 'active' : ''}" data-z="${z}">Zona ${z + 1}<span class="n">${n}</span></button>`;
+      html += `<button class="zonebtn ${this.zone === z ? 'active' : ''}" data-z="${z}"${ztip ? ` title="${ztip}"` : ''}>${this.zoneLabelHTML(z)}<span class="n">${n}</span></button>`;
     }
     html += `<button class="zonebtn ${this.zone < 0 ? 'active' : ''}" data-z="-1">Tutte</button>`;
     bar.innerHTML = html;
-    $$('[data-z]', bar).forEach(b => b.onclick = () => { this.zone = +b.dataset.z; this.grid.sel.clear(); this.grid.cur.r = 0; this.render(); this.grid.wrap.focus(); });
+    $$('[data-z]', bar).forEach(b => {
+      b.onclick = () => { this.zone = +b.dataset.z; this.grid.sel.clear(); this.grid.cur.r = 0; this.render(); this.grid.wrap.focus(); };
+      if (this.zoneNames && +b.dataset.z >= 0) b.ondblclick = () => this.editZoneNames(+b.dataset.z).catch(reportError);
+    });
+  }
+
+  // 4.11: nome della zona z: quello dato alla zona, altrimenti «Zona N»
+  zoneName(z) { return (this.zoneNames && this.zoneNames[z]) || ''; }
+  zoneLabel(z) { const n = this.zoneName(z); return n ? `${z + 1} · ${n}` : `Zona ${z + 1}`; }
+  zoneLabelHTML(z) { const n = this.zoneName(z); return n ? `${z + 1} · <span class="notr">${esc(n)}</span>` : `Zona ${z + 1}`; }
+
+  // 4.11: nomi delle zone della memoria aperta (se la radio e il file li hanno)
+  async refreshZoneNames() {
+    const had = !!this.zoneNames;
+    this.zoneNames = null;
+    if (this.baseDef.zoneNames && this.loaded) {
+      try {
+        const r = await api('radio/zonenames', { kind: this.kind }, { quiet: true });
+        if (r.available) this.zoneNames = r.names;
+      } catch (e) { /* restano «Zona 1», «Zona 2»… */ }
+    }
+    if (had || this.zoneNames) { this.renderZones(); this.renderStatus(); }
+  }
+
+  // 4.11: «Modifica in blocco»: le voci scelte cambiano in tutti i canali spuntati
+  // (o selezionati); le altre voci di ogni canale restano come sono
+  async bulkEdit() {
+    if (!this.loaded) return;
+    if (this.grid.editing) await this.grid.commitEdit();
+    const { slots, how } = this.chosenSlots();
+    if (!slots.length) { toast('Spunta prima i canali da modificare (oppure selezionali con clic, Maiusc+clic, Ctrl+clic).'); return; }
+    const d = this.def;
+    const keep = '<option value="">— non cambiare —</option>';
+    const sel = (key, label, opts) => `<div class="row"><label class="l">${esc(label)}</label><select data-b="${key}" style="flex:1">${keep}${opts.map(o => `<option value="${esc(String(o[0]))}">${esc(o[1])}</option>`).join('')}</select></div>`;
+    const inp = (key, label, ph) => `<div class="row"><label class="l">${esc(label)}</label><input type="text" data-b="${key}" style="flex:1" placeholder="${esc(ph)}" spellcheck="false"></div>`;
+    let rows = sel('power', 'Potenza', d.powers.map(p => [p, powerLabel(d, p)]));
+    if (d.narrow !== false) rows += sel('narrow', 'Banda', [['0', 'Larga'], ['1', 'Stretta']]);
+    if (d.hasScan) rows += sel('scan', 'Scan', [['1', 'Sì'], ['0', 'No']]);
+    rows += inp('txTone', 'Tono TX', 'non cambiare (OFF = nessun tono; es. 88.5, D023N)');
+    rows += inp('rxTone', 'Tono RX', 'non cambiare (OFF = nessun tono; es. 88.5, D023N)');
+    rows += inp('shift', 'Shift', 'non cambiare (es. -0.6, +1.6, 0)');
+    if (d.generic && !d.noTxOff) rows += sel('txOff', 'Trasmissione', [['0', 'consentita'], ['1', 'solo ricezione (TX OFF)']]);
+    const m = openModal(`<div class="dialog mid"><header>Modifica in blocco: ${plural(slots.length, 'canale', 'canali')} ${how}</header><div class="body">
+      <p class="note">Si cambiano solo le voci scelte; nomi, frequenze e le altre voci restano come sono. I subtoni non si mettono sui canali digitali.</p>
+      ${rows}<p class="note" data-berr style="color:var(--bad)"></p></div>
+      <footer><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>Applica</button></footer></div>`);
+    const val = k => { const e = m.el.querySelector(`[data-b="${k}"]`); return e ? e.value.trim() : ''; };
+    const err = t => { m.el.querySelector('[data-berr]').textContent = t; };
+    m.el.querySelector('[data-no]').onclick = () => m.close();
+    m.el.querySelector('[data-ok]').onclick = () => {
+      const ch = {};
+      for (const k of ['power', 'narrow', 'scan', 'txOff']) if (val(k) !== '') ch[k] = val(k);
+      for (const k of ['txTone', 'rxTone']) {
+        const v = val(k);
+        if (v === '') continue;
+        const t = normTone(v);
+        if (t == null) { err(`${k === 'txTone' ? 'Tono TX' : 'Tono RX'}: tono non valido (es. 88.5, D023N, D023I, OFF).`); return; }
+        if (t.startsWith('D') && this.kind === 'baj' && !(App.init.dcsBaj || []).includes(t)) { err(`Codice DCS ${t} non disponibile sulla Bajeton 8300.`); return; }
+        if (t.startsWith('D') && d.generic && !d.dcs.has(t)) { err(`Codice DCS ${t} non disponibile sulla ${d.name}.`); return; }
+        ch[k] = t;
+      }
+      if (val('shift') !== '') {
+        const off = parseShift(val('shift'));
+        if (off == null) { err('Shift non valido (es. -0.6, +1.6, +5, 0).'); return; }
+        ch.shift = off;
+      }
+      if (!Object.keys(ch).length) { m.close(); return; }
+      let changed = 0, skipped = 0;
+      const out = new Map();
+      for (const i of slots) {
+        const old = this.chans[i];
+        if (!old) continue;
+        const c = clone(old);
+        if ('power' in ch) c.power = +ch.power;
+        if ('narrow' in ch) c.narrow = ch.narrow === '1';
+        if ('scan' in ch) c.scan = ch.scan === '1';
+        if ('txTone' in ch || 'rxTone' in ch) {
+          if (c.dig) skipped++;
+          else { if ('txTone' in ch) c.txTone = ch.txTone; if ('rxTone' in ch) c.rxTone = ch.rxTone; }
+        }
+        if ('txOff' in ch) { if (ch.txOff === '1') { c.txOff = true; c.tx = c.rx; } else if (c.txOff) { delete c.txOff; c.tx = c.rx; } }
+        if ('shift' in ch && !c.txOff) {
+          const tx = c.rx + ch.shift;
+          if (tx <= 0 || tx >= 1e9) { err(`Shift non valido per il canale ${this.posText(i)} (${fmtMHz(c.rx)} MHz).`); return; }
+          c.tx = tx;
+        }
+        if (JSON.stringify(c) !== JSON.stringify(old)) { out.set(i, c); changed++; }
+      }
+      m.close();
+      if (!changed) { toast(skipped ? 'Nessun canale cambiato (i subtoni non si mettono sui canali digitali).' : 'Nessun canale cambiato: avevano già questi valori.'); return; }
+      this.snapshot();
+      for (const [i, c] of out) { const old = this.chans[i]; if (this.chk.has(old)) this.chk.add(c); this.chans[i] = c; }
+      this.changed();
+      const bad = [...out.keys()].filter(i => this.outOfBand(out.get(i).tx) && !out.get(i).txOff).length;
+      toast(`Modificati ${plural(changed, 'canale', 'canali')}` + (skipped ? ` (subtoni non messi su ${plural(skipped, 'canale digitale', 'canali digitali')})` : '') +
+        (bad ? ` · attenzione: ${bad} con la trasmissione fuori dalle gamme della radio` : '') + '.', !!bad);
+    };
+  }
+
+  // 4.11: finestra «Nomi delle zone» (focus: zona da modificare)
+  async editZoneNames(focus) {
+    if (!this.loaded) { toast('Leggi prima la radio o apri un suo file.'); return; }
+    if (this.grid.editing) await this.grid.commitEdit();
+    const r = await api('radio/zonenames', { kind: this.kind });
+    if (!r.available) { await alertDlg('Nomi delle zone', r.reason); return; }
+    const d = this.baseDef;
+    const rows = r.names.map((v, z) => {
+      const used = d.zones && d.perZone ? ` <span class="note">(${plural(this.usedIn(z * d.perZone, (z + 1) * d.perZone), 'canale', 'canali')})</span>` : '';
+      return `<div class="row"><label class="l">Zona ${z + 1}${used}</label><input type="text" data-zn="${z}" maxlength="${r.max}" value="${esc(v)}"
+        placeholder="${r.required ? '' : 'nessun nome'}" style="flex:1" spellcheck="false"></div>`;
+    }).join('');
+    const note = (r.gb ? `Fino a ${r.max} caratteri: lettere senza accenti, cifre, simboli e caratteri cinesi (un carattere cinese conta come 2).`
+      : `Fino a ${r.max} caratteri: lettere senza accenti, cifre e simboli.`) +
+      (r.required ? ' Ogni zona deve avere un nome.' : ' Una zona senza nome resta come la mostra la radio.');
+    const m = openModal(`<div class="dialog mid"><header>Nomi delle zone — ${esc(this.def.name)}</header><div class="body">
+      <p class="note">${esc(note)}</p><div class="zonenames" style="max-height:60vh;overflow:auto">${rows}</div>
+      <p class="note">I nomi si scrivono nella radio con «📻 Scrivi nella radio…», insieme ai canali, e si salvano nel file.</p></div>
+      <footer><button class="btn" data-no>Annulla</button><button class="btn primary" data-ok>Applica</button></footer></div>`);
+    const inputs = $$('[data-zn]', m.el);
+    if (focus >= 0 && inputs[focus]) setTimeout(() => { inputs[focus].focus(); inputs[focus].select(); }, 40);
+    m.el.querySelector('[data-no]').onclick = () => m.close();
+    const apply = async () => {
+      const names = inputs.map(i => i.value.trim());
+      if (names.every((n, z) => n === r.names[z])) { m.close(); return; }
+      try {
+        const res = await api('radio/zonenames', { kind: this.kind, set: true, names }, { busyText: 'Applicazione…' });
+        m.close();
+        this.zoneNames = res.names;
+        this.dirty = true;
+        App.onDirty();
+        this.render();
+        App.saveSession();
+        toast('Nomi delle zone applicati alla memoria della radio: salva il file o scrivi nella radio per conservarli.');
+      } catch (e) { reportError(e); }
+    };
+    m.el.querySelector('[data-ok]').onclick = apply;
+    inputs.forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') apply(); }));
   }
 
   renderStatus() {
@@ -366,12 +507,15 @@ class RadioView {
     if (!this.loaded) { st.textContent = ''; return; }
     const used = this.chans.filter(Boolean).length;
     const sel = this.grid.sel.size;
-    let s = `Canali programmati: ${used} su ${this.def.slots}`;
-    if (this.def.zones && this.zone >= 0) s += ` · Zona ${this.zone + 1}: ${this.usedIn(...this.range())} su ${this.def.perZone}`;
+    // 4.11: ogni pezzo nel suo elemento, così si traduce da solo (e il nome della
+    // zona scritto dall'utente resta com'è)
+    const dot = '<span aria-hidden="true"> · </span>';
+    let s = `<span>Canali programmati: ${used} su ${this.def.slots}</span>`;
+    if (this.def.zones && this.zone >= 0) s += `${dot}<span>${this.zoneLabelHTML(this.zone)}</span><span>: </span><span>${this.usedIn(...this.range())} su ${this.def.perZone} canali in uso</span>`;
     const nChk = this.chans.filter(c => c && this.chk.has(c)).length;
-    if (nChk) s += ` · Spuntati: ${nChk}`;
-    if (sel) s += ` · Selezionati: ${sel}`;
-    st.innerHTML = `<span>${esc(s)}</span><span>Doppio clic o Invio per modificare · tasto destro per il menu</span>`;
+    if (nChk) s += `${dot}<span>Spuntati: ${nChk}</span>`;
+    if (sel) s += `${dot}<span>Selezionati: ${sel}</span>`;
+    st.innerHTML = `<span>${s}</span><span>Doppio clic o Invio per modificare · tasto destro per il menu</span>`;
   }
 
   // ------------------------------------------------------------ stato e annulla
@@ -447,6 +591,7 @@ class RadioView {
     App.onDirty();
     this.render();
     App.saveSession();
+    this.refreshZoneNames();
   }
 
   // ------------------------------------------------------------ azioni
@@ -479,6 +624,8 @@ class RadioView {
         case 'cwrite': return await this.cableWrite();
         case 'firmware': return Firmware.open(this.def.fw, this.kind);
         case 'settings': return await RadioSettings.open(this);
+        case 'zonenames': return await this.editZoneNames();
+        case 'bulk': return await this.bulkEdit();
       }
     } catch (e) { reportError(e); }
   }
@@ -899,7 +1046,7 @@ class RadioView {
       ['Copia', () => this.copy()], ['Taglia', () => this.cut()], ['Incolla', () => this.paste()],
       ['Cancella', () => this.deleteSel(false)], ['Elimina e compatta', () => this.deleteSel(true)], ['Inserisci riga', () => this.insertRow()],
       ['Sposta su', () => this.move(-1)], ['Sposta giù', () => this.move(1)],
-      ['Inoltra ad altra radio…', () => this.forward()], ['Aggiungi all\'archivio', () => this.toArchive()],
+      ['Modifica in blocco…', () => this.bulkEdit()], ['Inoltra ad altra radio…', () => this.forward()], ['Aggiungi all\'archivio', () => this.toArchive()],
     ];
     const m = h('<div class="menu open ctxmenu" style="position:fixed"></div>');
     for (const [label, fn] of items) {
@@ -924,5 +1071,6 @@ class RadioView {
     this.loaded = true; this.path = s.path; this.fromRadio = !!s.fromRadio; this.chans = s.chans; this.bands = s.bands || []; this.dirty = s.dirty; this.zone = s.zone || 0;
     this.syncDivide();
     this.render();
+    this.refreshZoneNames();
   }
 }

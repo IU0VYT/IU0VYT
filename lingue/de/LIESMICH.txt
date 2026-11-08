@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.10.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 9
+Version 4.11.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 11
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -10,7 +10,24 @@ GEWÄHRLEISTUNG): siehe LICENSE.txt und AUTOREN_UND_LIZENZEN.txt.
 Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original ist der
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
-4.10).
+4.11).
+Neu in 4.11.0:
+- ZONENNAMEN: statt „Zone 1“, „Zone 2“… kann jede Zone einen Namen haben, wie in den
+  Programmen des Herstellers (Schaltfläche „✎ Zonennamen…“ oder Doppelklick auf die
+  Zone). Radtel RT-950 Pro, Bajeton BJ-9000 und Hiroyasu HI-UV850 Pro (beide
+  Firmware-Versionen), Radtel RT-950, Radtel RT-920, Radtel RT-910 / Bajeton BJ-7700
+  ohne Bluetooth; Zonen der DMR-Funkgeräte Baofeng RD-5R, DM-1801 und DM-32UV. Die
+  Namen werden per Kabel zusammen mit den Kanälen gelesen und geschrieben und in der
+  .img-Datei gespeichert (siehe „ZONENNAMEN“);
+- SAMMELBEARBEITUNG: „✎ Sammelbearbeitung…“ ändert Leistung, Bandbreite, Suchlauf,
+  Subtöne, Ablage oder Senden der angehakten (oder ausgewählten) Kanäle gemeinsam; der
+  Rest jedes Kanals bleibt, wie er ist, und Strg+Z macht es rückgängig;
+- SPRACHEN: zwei Sprachen mehr, Koreanisch (Flagge Südkoreas) und Arabisch (Flagge der
+  Vereinigten Arabischen Emirate, mit der Seite von rechts nach links): insgesamt 11,
+  auch für die Informationsdateien im Ordner „lingue“;
+- Tests: die Tests laufen auch unter Windows (i18n_test.go); ein neuer Test prüft,
+  dass die beiden Kopien von LEGGIMI.txt, AUTORI_E_LICENZE.txt und der Lizenz
+  (Hauptordner und „sorgenti“) identisch bleiben.
 Neu in 4.10.0:
 - SPRACHEN: Neben «ℹ Info» gibt es die Sprachauswahl mit den Flaggen (Italienisch,
   Englisch, Französisch, Deutsch, Spanisch, Portugiesisch, Russisch, Chinesisch,
@@ -804,7 +821,14 @@ Archive werden nicht unterstützt.
 SPRACHE DER OBERFLÄCHE (4.10)
 - Die Auswahl mit der Flagge ist oben, direkt rechts von „ℹ Info“. Beim ersten Start
   zeigt sie die italienische Flagge; ein Klick öffnet die Liste der Sprachen:
-  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語.
+  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
+  (Koreanisch, 4.11, Flagge Südkoreas), العربية (Arabisch, 4.11, Flagge der
+  Vereinigten Arabischen Emirate).
+- Mit Arabisch liest sich die Seite von rechts nach links; Frequenzen, Zahlen und
+  Codes bleiben von links nach rechts. Für Arabisch wird die Flagge der Vereinigten
+  Arabischen Emirate verwendet, weil die Flagge Saudi-Arabiens einen religiösen Text
+  enthält (das Glaubensbekenntnis), der nicht als bloßes Symbol einer Sprache
+  verwendet wird.
 - Die Übersetzung erfolgt sofort, ohne Neustart: Registerkarten, Schaltflächen, Menüs,
   Fenster, Hilfe, Meldungen und Warnungen (auch die von den Funkgeräten), Karten der
   Galerie, Einstellungen und die Windows-Fenster „Öffnen“ und „Speichern“.
@@ -900,6 +924,42 @@ KANALTABELLEN
   ausgewählten Kanäle.
 - K67 Pro: 640 Kanäle. Die Frequenzbereiche des Funkgeräts werden aus der Datei
   gelesen: Frequenzen außerhalb des Bereichs sind rot hervorgehoben.
+- Sammelbearbeitung (4.11): „✎ Sammelbearbeitung…“ (auch über den Rechtsklick) ändert
+  gemeinsam, in den angehakten Kanälen oder, wenn keine angehakt sind, in den
+  ausgewählten: Leistung, Bandbreite, Suchlauf, TX-Ton, RX-Ton (OFF entfernt den Ton),
+  Ablage und, wo das Funkgerät es erlaubt, das Senden (nur Empfang). Die auf „nicht
+  ändern“ belassenen Punkte bleiben in jedem Kanal, wie sie sind; Subtöne werden nicht
+  auf digitale Kanäle gesetzt. Töne und Ablage werden geprüft, bevor irgendein Kanal
+  geändert wird; Strg+Z macht den ganzen Vorgang rückgängig.
+
+ZONENNAMEN (4.11)
+Statt „Zone 1“, „Zone 2“… kann jede Zone einen Namen bekommen, wie in den Programmen
+des Herstellers. Die Schaltfläche „✎ Zonennamen…“ (oder der Doppelklick auf eine Zone
+der Leiste) öffnet die Liste der Zonen mit ihrem Namen; die Zonenleiste und die
+Statuszeile zeigen „Nummer · Name“. Die Namen stehen im Speicher des Funkgeräts: Sie
+werden per Kabel zusammen mit den Kanälen gelesen und geschrieben und in der
+.img-Datei gespeichert.
+- Radtel RT-950 Pro, Bajeton BJ-9000, Hiroyasu HI-UV850 Pro (Firmware bis 0.23: 15
+  Zonen; ab 0.24: 10 Zonen) und Radtel RT-950 (15 Zonen): bis zu 12 Zeichen;
+  Buchstaben ohne Akzente, Ziffern, Symbole und chinesische Zeichen (GB2312, je 2
+  Byte), wie die Herstellerprogramme RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS v1.3.3
+  und BT-9000_CPS v1.3.0 (Bereich 0xC000, 16 Byte pro Zone).
+- Radtel RT-920 (Firmware V0.17 und neuer, 10 Zonen): bis zu 10 Zeichen, wie der
+  Treiber von CHIRP (das Herstellerprogramm v1.2.4 erlaubt 12; Bereich 0xC800).
+- Radtel RT-910 / Bajeton BJ-7700 ohne Bluetooth (15 Zonen): bis zu 12 Zeichen ohne
+  Akzente, wie das Herstellerprogramm RT910_EnCPS v1.0.3 (Bereich 0xA200).
+- DMR-Funkgeräte Baofeng RD-5R, DM-1801 und DM-32UV: die vorhandenen Zonen werden
+  umbenannt (bis zu 16 Zeichen); jede Zone muss einen Namen haben.
+- Sicherheit: Bei RT-950 Pro, BJ-9000, HI-UV850 Pro, RT-950 und RT-910 wird der
+  Namensbereich nur geschrieben, wenn sich die Namen ändern, und vorher aus dem
+  Funkgerät zurückgelesen: Enthält er Daten, die keine Namen sind (Firmware ohne
+  Zonennamen), wird nichts geschrieben und eine Meldung erscheint. Ein leerer Name
+  lässt die Zone so, wie das Funkgerät sie zeigt. Bei der RT-920 gehört der Bereich zu
+  denen, die immer geschrieben werden, wie es CHIRP tut.
+- .img-Dateien der RT-950, die vor 4.11 gespeichert wurden, enthalten die Namen nicht:
+  Lesen Sie das Funkgerät erneut aus, um sie zu sehen. Antwortet das Funkgerät nicht
+  auf das Lesen der Namen (alte Firmware), bleibt die Datei ohne Namen und alles
+  andere funktioniert wie zuvor.
 
 KOPIEREN ZWISCHEN DEN BEIDEN FUNKGERÄTEN
 Kopieren in der ersten Registerkarte und Einfügen in der anderen (seit 3.9.3 ist aus

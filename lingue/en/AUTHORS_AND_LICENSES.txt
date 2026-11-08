@@ -159,7 +159,7 @@ package):
   dmrconfig (name, ID and power-on texts)   Serge Vakulenko KK6ABQ, BSD license
                                             (https://github.com/OpenRTX/dmrconfig)
 The flags of the language selector are drawn in the program (national flags, public
-domain).
+domain; 4.11: South Korea for Korean, United Arab Emirates for Arabic).
 
 IU0VYT Flash files with derived parts (also stated at the top of each file):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go, drv_h777.go,
@@ -172,6 +172,7 @@ drv_btgmrs.go, drv_retevisc2.go, drv_rb15.go, drv_rb17p.go, drv_rb28.go, drv_rt2
 drv_rt26.go, drv_rt76p.go, drv_rt87.go, drv_anytoneht.go, drv_rh5rv2.go,
 drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.10: fwrt890.go, fwdm1701.go, fwsgl.go, settings_rdty.go.
+4.11: zonenames.go (format of the RT-920 names from radtel_rt900.py).
 Thanks to the authors of CHIRP, to armel F4HWN, to M7OCM, to JuantAldea, to v0l
 (radio_tool), to the OpenGD77 project, to Hannes Matuschek DM3MAT (qdmr) and to Serge
 Vakulenko KK6ABQ.
@@ -222,6 +223,20 @@ notes published by JA van Hernen (PE1HVH) for his CHIRP driver of the RT-950 Pro
 (https://github.com/pe1hvh/chirp_radtel_rt950pro, MIT license; the radio's answer to
 the «F» command is the same with firmware 0.18 and 0.29) and in CHIRP report 12180
 were also consulted: no code of those projects is included.
+
+ZONE NAMES (4.11)
+The format of the zone names is derived, for interoperability, from the code of the
+manufacturer's programs: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 and Bajeton BJ-9000_CPS
+v1.3.3 (RT-950 Pro, BJ-9000, HI-UV850 Pro), RT-950_EnCPS «BT-9000_CPS» v1.3.0
+(RT-950), RT-920_EnCPS v1.2.4 (RT-920) and RT910_EnCPS v1.0.3 (RT-910 without
+Bluetooth), radtels.com and bajeton.cn; for the RT-920 also from CHIRP's driver
+radtel_rt900.py (Fred Trimble, GNU GPL, see above). No manufacturer's program is
+included.
+The idea of naming the zones and the bulk editing of channels come from the «RT-950 /
+950 Pro Editor» program by Jorge De La Cruz KK4OXN
+(https://github.com/cruzerdlc/RT-950-950Pro-Editor, MIT license): the repository
+publishes only documents and compiled programs, not the source code, and no code was
+taken from it; the functions are rewritten from scratch in IU0VYT Flash.
 
 .BTU FIRMWARE (4.8)
 The .BTU firmware of the Radtel RT-910 and RT-900 without Bluetooth and the Bajeton

@@ -49,14 +49,13 @@ bb4eb6f9	Inactif
 5d16953d	L'archive est vide. Utilisez « Importer… » pour charger la liste d'IK2ANE (depuis Internet ou un fichier) ou votre fichier Excel/CSV, ou ajoutez les relais à la main.
 93001810	Enregistré dans :
 07bff8ea	Enregistré dans : {0}
-e952af22	Relais dans l'archive : {0} · visibles avec les filtres : {1}{2}{3}{4}
-72deff09	Ctrl+A sélectionne tout ce qui est visible · double-clic pour modifier
-771d36b4	· cochés :
-bed57bd6	· cochés : {0}
+ee3328b1	Relais dans l'archive : {0}
+69265a65	visibles avec les filtres : {0}
+63a6f44b	cochés : {0}
 617510a5	{0} masqués par les filtres
 ef2eb38e	: « Tout désélectionner » les retire aussi)
-439ec563	· sélectionnés :
-0735f80d	· sélectionnés : {0}
+2607d6be	sélectionnés : {0}
+72deff09	Ctrl+A sélectionne tout ce qui est visible · double-clic pour modifier
 d3a371de	avec des avertissements à vérifier (⚠)
 b1a5eaf0	{0} avec des avertissements à vérifier (⚠)
 de3f9f7f	Aucun relais coché.
@@ -266,14 +265,14 @@ b8909346	L'onglet {0} n'a pas encore de fichier ouvert. Ouvrez le fichier de la 
 199746a4	Nouveau fichier
 f48d912d	Ouvrir un fichier
 fbf82f2d	Ouvrir un fichier {0}…
-75c8f969	Zone {0} — {1} libres
+e234b53d	{0} — libres {1}
+82378b1b	Zona
 1469dc06	Insérer {0} dans le {1}
 f4db09d7	À partir de la position
 594e80a4	Modo
 6a9e220f	seulement dans les positions libres {0}
 616ec49c	dans des positions consécutives, en écrasant celles qui sont occupées
 4f750fe4	Insérer
-82378b1b	Zona
 fdd3697e	numéro dans la zone (1–{0})
 22ab4f8c	(la radio numérote les canaux à partir de 0 : position 1 = canal 0)
 10919737	(si la zone se remplit on continue dans les zones suivantes)
@@ -515,6 +514,8 @@ fb741ab7	Inser
 9cdddeef	enregistre le fichier.
 0ee34f77	Bajeton : 15 zones de 64 canaux ; choisissez la zone dans la barre au-dessus du tableau, « Toutes » pour les voir ensemble, « Déplacer vers la zone » pour déplacer les canaux sélectionnés. Avec les fichiers de BT-11_CPS v1.0.9 réglés sur « tous les canaux » (⚙ Réglages → Division des canaux), les 960 canaux sont dans une seule liste, comme dans le programme d'origine.
 16817b03	Noms : 16 caractères au maximum sur la K67 et 12 sur la Bajeton. Puissance moyenne uniquement sur la Bajeton (sur la K67 elle devient Haute).
+f0c8d97c	«✎ Modification groupée» change ensemble la puissance, la largeur de bande, le balayage, les sous-tons, le décalage ou l'émission des canaux cochés (ou sélectionnés) : seuls les éléments choisis changent, le reste de chaque canal reste tel quel (annulation avec
+e9f18966	«✎ Noms des zones» (Radtel RT-950 Pro, RT-950, RT-920, RT-910, Bajeton BJ-9000 et BJ-7700, HI-UV850 Pro ; zones des radios DMR RD-5R, DM-1801 et DM-32UV) donne un nom à chaque zone au lieu de «Zone 1», «Zone 2»… ; aussi par un double clic sur la zone. Les noms sont lus et écrits par câble avec les canaux et enregistrés dans le fichier .img.
 06e1cc67	Identifier la radio
 338f1a9c	Onglet « 🔎 Identifier » : choisissez le port du câble (ou « USB » pour RD-5R, DM-1801, DM-1701) et appuyez sur « Identifier la radio ». Le programme essaie les protocoles de lecture de toutes les radios qu'il connaît, lit celle qui répond et affiche marque, modèle, type, gammes, firmware ou identifiant, canaux et, pour les radios DMR USB, ID DMR et nom. Aucune donnée n'est écrite dans la radio. Sans radio, la recherche complète dure environ 50 secondes ; les radios déjà reconnues auparavant sont essayées en premier.
 4ade63e6	Identification automatique
@@ -1125,6 +1126,7 @@ f143cede	Supprime les canaux sélectionnés et fait remonter les suivants
 e76bf679	Coller à la position sélectionnée (Ctrl+V)
 12fd3bac	Coche tous les canaux de la radio{0}
 97de4b01	Décoche tous les canaux
+3249789e	Change ensemble la puissance, la largeur de bande, le balayage, les sous-tons ou le décalage des canaux cochés (ou sélectionnés) : le reste de chaque canal reste tel quel
 f61aee58	Écrit les canaux cochés (ou sélectionnés) dans une autre radio branchée avec le câble : choisissez marque et modèle, puis le programme vérifie la compatibilité, adapte les canaux, enregistre une copie de sécurité de la radio, écrit et vérifie
 81a32ab9	Ajoute les canaux cochés (ou sélectionnés) à l'archive des relais
 d204ca9d	Insère les canaux d'un autre fichier : K67 (.xlc), Bajeton (.dat), images .img de n'importe quelle radio (aussi de CHIRP), CSV de CHIRP, tableaux Excel/CSV
@@ -1142,6 +1144,7 @@ f68325d8	Trier ▾
 15143ff0	Compacter
 fda928f7	Couper
 ab7e4ca3	Coller
+c9973af8	✎ Modification groupée…
 fe11e9bf	📻 Transférer vers une autre radio…
 5e22dc80	→ Archive
 b008252c	📥 Importer…
@@ -1153,6 +1156,8 @@ b008252c	📥 Importer…
 7ff3d81a	⬆ Mettre à jour le firmware…
 8b94462b	Réglages de la radio (menu, écran, VOX, DTMF…), avec la description de chaque élément
 55f63842	⚙ Réglages…
+09d2ad18	Donne un nom à chaque zone au lieu de «Zone 1», «Zone 2»…, comme le programme du fabricant
+419c7f60	✎ Noms des zones…
 65125214	Le programme Bajeton BT-11_CPS v1.0.9 enregistre les fichiers .dat dans un format différent de la v1.0.8 et les deux versions n'ouvrent pas les fichiers de l'autre. Choisissez la version installée sur votre PC : le fichier ouvert est converti (canaux et réglages restent les mêmes) et les nouveaux fichiers et lectures de la radio utiliseront ce format.
 0bc7b5bb	Comme dans le programme BT-11_CPS v1.0.9 (Channel Divide) : canaux divisés en 15 zones de 64 ou les 960 canaux dans une seule liste. Cela change aussi la façon dont la radio affiche les canaux.
 ea35e69c	Fichier pour BT-11_CPS
@@ -1201,11 +1206,43 @@ a95ee268	Aucun fichier ouvert
 c5bc2462	Lisez les canaux directement dans la radio avec le câble de programmation, ou ouvrez un fichier {0} enregistré avec le programme de la radio, ou créez un nouveau fichier. Après les modifications, vous pouvez écrire les canaux dans la radio et les enregistrer dans un fichier {1}.
 f0a2ac7f	📂 Ouvrir un fichier {0}…
 f748546f	Nouveau fichier vide
+33b8c42a	Double clic pour nommer la zone
 69f3ae85	Zone {0}
+2817d663	Cochez d'abord les canaux à modifier (ou sélectionnez-les par clic, Maj+clic, Ctrl+clic).
+10004adc	— ne pas changer —
+1b65fe1e	ne pas changer (OFF = aucun ton ; ex. 88.5, D023N)
+63732e04	ne pas changer (ex. -0.6, +1.6, 0)
+62cfbd1e	Émission
+baaaad3e	réception seule (TX OFF)
+de022377	Modification groupée : {0} {1}
+8ad80f5d	Seuls les éléments choisis changent ; noms, fréquences et autres éléments restent tels quels. Les sous-tons ne sont pas mis sur les canaux numériques.
+5534e33b	Appliquer
+02204c19	{0} : ton non valide (ex. 88.5, D023N, D023I, OFF).
+ef755fde	Code DCS {0} non disponible sur le Bajeton 8300.
+c3dfc199	Code DCS {0} non disponible sur le {1}.
+153b0a1f	Décalage non valide (ex. -0.6, +1.6, +5, 0).
+e5a2543c	Décalage non valide pour le canal {0} ({1} MHz).
+50714c60	Aucun canal modifié (les sous-tons ne sont pas mis sur les canaux numériques).
+5e1d7b1e	Aucun canal modifié : ils avaient déjà ces valeurs.
+243be716	Modifiés : {0}
+2aade796	(sous-tons non mis sur {0})
+8183fe22	canaux numériques
+4844dfd0	· attention : {0} avec émission hors des gammes de la radio
+c08ef3ef	Lisez d'abord la radio ou ouvrez un de ses fichiers.
+7b056b7c	Noms des zones
+4b1d6064	Zone {0}{1}
+9e516dd6	sans nom
+853429f2	Jusqu'à {0} caractères : lettres sans accents, chiffres, symboles et caractères chinois (un caractère chinois compte pour 2).
+d827614d	Jusqu'à {0} caractères : lettres sans accents, chiffres et symboles.
+185fcd05	Chaque zone doit avoir un nom.
+926753df	Une zone sans nom reste comme la radio l'affiche.
+cc168424	Noms des zones — {0}
+ea15bcb5	Les noms sont écrits dans la radio avec «📻 Écrire dans la radio…», avec les canaux, et enregistrés dans le fichier.
+caf3cdaf	Noms des zones appliqués à la mémoire de la radio : enregistrez le fichier ou écrivez dans la radio pour les conserver.
 133eae6d	Canaux programmés : {0} sur {1}
-1dae24f5	· Zone {0} : {1} sur {2}
-6f011736	· Cochés : {0}
-8fe6706d	· Sélectionnés : {0}
+46b62038	{0} sur {1} canaux utilisés
+31acc3eb	Cochés : {0}
+3114d45e	Sélectionnés : {0}
 58324d3b	Double-clic ou Entrée pour modifier · clic droit pour le menu
 64275293	Importer des canaux
 50f603dd	{0} : certaines lignes n'ont pas été lues.
@@ -1268,6 +1305,7 @@ c1a2e3a6	Code DCS non disponible sur la {0}
 1280ef3c	Nom raccourci à {0} caractères.
 6019487d	Monter
 6c6ecbc1	Descendre
+2d903ea0	Modification groupée…
 fa7545de	Transférer vers une autre radio…
 ca4751b9	Ajouter à l'archive
 f93c1ba8	Lecture des réglages…
@@ -1281,7 +1319,6 @@ c2dc43e0	Tableau tiré du
 5fb2cc3a	⚙ Réglages — {0}
 71ca99f7	{0} Les modifications sont écrites dans la mémoire de l'onglet : enregistrez le fichier ou écrivez dans la radio pour les conserver.
 b98d8ace	Annuler les modifications
-5534e33b	Appliquer
 a132b5db	Modifications non appliquées
 6a0d898b	Vous avez modifié {0} réglages sans les appliquer. Voulez-vous fermer quand même ?
 4d272065	Fermer sans appliquer
@@ -2790,8 +2827,11 @@ e8fcbbef	Firmware 0.24 ou ultérieur ({0}) : canaux gérés comme 10 zones de 99
 6370b54b	la radio s'est identifiée comme « {0} », pas comme {1} : est-ce le bon modèle ?
 6f96413b	erreur dans le réglage du chiffrement
 c7b15fc5	identifiant secondaire de la radio inconnu ({0})
+159a10ff	Lecture des noms des zones…
 7c82ae7f	Vérification des canaux {0}-{1}…
 9cb120ea	dans la radio, après le canal 960, il y a des données qui ne sont pas des canaux : la radio semble avoir le firmware jusqu'à 0.23 (960 canaux). Aucune donnée n'a été écrite. Utilisez l'onglet de la version à 960 canaux, ou mettez à jour le firmware de la radio
+79e4da26	Vérification des noms des zones…
+c0638f61	dans la radio, la zone des noms des zones contient des données qui ne sont pas des noms : le firmware de la radio n'a peut-être pas de noms de zones. Aucune donnée n'a été écrite. Laissez les noms des zones tels que lus dans la radio (ou relisez la radio), ou mettez à jour le firmware
 eb85e206	sous-ton {0} non disponible sur cette radio
 e02dc347	code DCS D{0} non disponible sur cette radio
 ea46d8f7	0123456789- ABCDEFGHIJKLMNOPQRSTUVWXYZ/_+*
@@ -4482,7 +4522,6 @@ fe543d54	Affichage double, veille simple
 4004f8ff	super mode
 9ca1d6ca	deep mode
 5d51c05f	Réception
-62cfbd1e	Émission
 7276864f	ptt only
 7cf7824a	PTT seulement
 86f0782b	sk only
@@ -4820,6 +4859,33 @@ a05feb13	sharedStrings.xml: {0}
 b47a734d	aucune feuille lisible dans le fichier .xlsx
 7c8930a1	Foglio{0}
 bb441a60	<sheetView workbookViewId="0"
+e5d5fe51	«{0}» : la radio n'accepte que des lettres sans accents, des chiffres, des symboles et des caractères chinois
+ef09386b	«{0}» : la radio n'accepte que des lettres sans accents, des chiffres et des symboles
+d102432f	«{0}» : trop long, au maximum {1} octets (chaque caractère chinois en occupe 2)
+5002cc34	«{0}» : trop long, au maximum {1} caractères
+ce495534	cette radio n'a pas de noms de zones
+fa01433a	le fichier ouvert ne contient pas les noms des zones : relisez la radio par câble
+c12ce408	{0} noms sont nécessaires, {1} reçus
+3c2ab7be	Pour nommer les zones, lisez d'abord la radio par câble (ou ouvrez un de ses fichiers).
+501af569	La mémoire ouverte ne contient pas les noms des zones (fichier enregistré avec une version précédente ou firmware sans noms de zones) : relisez la radio par câble.
+d8d764d0	zone {0} : le nom ne peut pas être vide
+a916c443	il n'y a pas de zones dans la mémoire
+63f94611	FRS, États-Unis
+5bf8b9a1	firmware UV-5R
+0ce70622	sans Bluetooth
+fea692a8	firmware 0.24 et suivants : 990 canaux
+ec8cdbd9	firmware jusqu'à 0.23 : 960 canaux
+18734e24	radio pour casque
+810324ef	firmware egzumer
+087d5c7b	firmware F4HWN
+fb975e6f	firmware LOSEHU, LTS, UVE
+6c3baeb5	firmware OSFW
+d1f9e8ef	nouvelle version
+37ed5e1e	Freenet
+53826d51	firmware M7OCM
+8781a829	3e génération
+f0a3a6ce	version USA, noms de 8 caractères
+c001d72f	pas de 2,5 kHz
 f8c9e807	haute
 a15fb723	veille
 1f743f81	basse

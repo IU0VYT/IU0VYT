@@ -139,12 +139,13 @@ https://www.qrz.com/db/IU0VYT
   的常规设置）                              (https://github.com/hmatuschek/qdmr)
   dmrconfig（名称、ID 和开机文字）          Serge Vakulenko KK6ABQ，BSD 许可证
                                             (https://github.com/OpenRTX/dmrconfig)
-语言选择器中的旗帜由程序绘制（国旗，属于公有领域）。
+语言选择器中的旗帜由程序绘制（国旗，属于公有领域；4.11：韩语用韩国国旗，阿拉伯语用阿拉伯联合酋长国国旗）。
 
 IU0VYT Flash 中包含派生部分的文件（每个文件开头也有说明）：
 drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、drv_h777.go、drv_small.go、drv_rt900.go、drv_ga510.go、drv_gm30.go、drv_dm32.go、drv_uvk5.go、drv_jc8810.go、drv_tdh8.go、drv_thuv88.go、drv_rt490.go、drv_rt21.go、drv_tk11.go、drv_bfd.go（交叉参考）以及模拟电台 genemu_*.go；
 4.9：drv_uvk5x.go、drv_wouxun49.go、drv_kguv8.go、drv_kguv9.go、drv_kg935.go、drv_thuv8000.go、drv_uvl15w.go、drv_iradio.go、drv_tdq8a.go、drv_tdm11.go、drv_btgmrs.go、drv_retevisc2.go、drv_rb15.go、drv_rb17p.go、drv_rb28.go、drv_rt23.go、drv_rt26.go、drv_rt76p.go、drv_rt87.go、drv_anytoneht.go、drv_rh5rv2.go、drv_px888k.go、drv_kt8r.go、drv_ha1g.go、drv_ha1gfmt.go；
 4.10：fwrt890.go、fwdm1701.go、fwsgl.go、settings_rdty.go。
+4.11：zonenames.go（RT-920 名称的格式依据 radtel_rt900.py）。
 感谢 CHIRP 的作者、armel F4HWN、M7OCM、JuantAldea、v0l（radio_tool）、OpenGD77 项目、Hannes Matuschek DM3MAT（qdmr）和 Serge Vakulenko KK6ABQ。
 
 QUANSHENG UV-K5 固件升级（4.1）
@@ -162,6 +163,10 @@ RETEVIS RA89（4.4）和 RT85（4.5）固件升级
 RADTEL RT-950 PRO、BAJETON BJ-9000 和 RADTEL RT-950（4.6、4.7）
 4.7：还比对了 Radtel RT-950PRO_CPS v1.2.1 和 Bajeton BJ-9000_CPS v1.3.3（bajeton.cn）程序，以及引导程序“RT-950_EnUPDATE”“BJ9000_EnUPDATE”和“Radtel ANC Bootloader V1.2”（升级协议，用于互操作性）；固件（Radtel radtels.com，Bajeton bajeton.com 和 bajeton.cn）只通过 SHA-256 指纹识别。软件包中不包含任何程序或固件。
 为实现互操作性，信道存储和设置取自厂家程序的代码（Radtel RT-950PRO_CPS v1.1.1、v1.2.0、v1.2.1、v1.3.3 和 RT-950_EnCPS“BT-9000_CPS”v1.3.0，radtels.com；Bajeton BJ-9000_CPS v1.1.1）以及 Radtel 固件的说明；这些程序不包含在软件包中。还参考了 JA van Hernen（PE1HVH）为其 RT-950 Pro 的 CHIRP 驱动发布的说明（https://github.com/pe1hvh/chirp_radtel_rt950pro，MIT 许可证；固件 0.18 和 0.29 对“F”命令的响应相同）以及 CHIRP 的第 12180 号报告：不包含这些项目的任何代码。
+
+区域名称（4.11）
+为了互操作性，区域名称的格式取自厂家程序的代码：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 和 Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS“BT-9000_CPS”v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）和 RT910_EnCPS v1.0.3（无蓝牙的 RT-910），来自 radtels.com 和 bajeton.cn；RT-920 的格式还取自 CHIRP 的驱动程序 radtel_rt900.py（Fred Trimble，GNU GPL，见上文）。不包含任何厂家程序。
+给区域命名和批量修改信道的想法来自 Jorge De La Cruz KK4OXN 的“RT-950 / 950 Pro Editor”程序（https://github.com/cruzerdlc/RT-950-950Pro-Editor，MIT 许可证）：该仓库只发布文档和编译好的程序，没有源代码，也没有从中取用任何代码；这些功能在 IU0VYT Flash 中从头重写。
 
 .BTU 固件（4.8）
 无蓝牙的 Radtel RT-910 和 RT-900 以及无蓝牙的 Bajeton BJ-7700 的 .BTU 固件，使用“Radtel Bootload Tools”程序（Radtel，radtels.com）的协议发送，该协议为实现互操作性取自其代码：它与 Baofeng UV-5RM 的 KDH V1.0 引导程序（bfkdh.go）相同，握手为“PROGRAMBT80U”。固件（Radtel radtels.com，Bajeton bajeton.com）只通过 SHA-256 指纹识别；对于 RT-900，还比对了厂家程序“RT900_512 CPS”v1.0.0 和 v1.0.2（512 和 999 个信道）。软件包中不包含任何程序或固件。

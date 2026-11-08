@@ -29,6 +29,9 @@ type rt900Emu struct {
 
 func (rt900Fam) emu(m *genModel, img []byte) genEmu {
 	n := (rt900o(m).memsize + 0x7F) &^ 0x7F
+	if zs := m.ZoneNames; zs != nil && zs.Addr+zs.Area > n {
+		n = zs.Addr + zs.Area // 4.11: nomi delle zone della Radtel RT-950
+	}
 	e := &rt900Emu{m: m, img: append([]byte{}, img...)}
 	if len(e.img) < n {
 		e.img = append(e.img, bytes.Repeat([]byte{0xFF}, n-len(e.img))...)

@@ -256,7 +256,7 @@ func extractJS(out map[string]*uiStr, order *[]string, file, src string) {
 		// testi composti con +: 'Leggi ' + n + ' canali' -> «Leggi {0} canali»
 		joined := t
 		k := i
-		for k+1 < len(lits) && lits[k+1].q != '`' && reJSJoin.MatchString(src[lits[k].end:lits[k+1].start]) {
+		for k+1 < len(lits) && lits[k+1].q != '`' && lits[k].end <= lits[k+1].start && reJSJoin.MatchString(src[lits[k].end:lits[k+1].start]) {
 			joined += "\x00" + lits[k+1].text
 			k++
 		}
@@ -265,7 +265,7 @@ func extractJS(out map[string]*uiStr, order *[]string, file, src string) {
 				joined += "\x00"
 			}
 		}
-		if i > 0 && reJSHead.MatchString(src[max(0, l.start-120):l.start]) && !reJSJoin.MatchString(src[lits[i-1].end:l.start]) {
+		if i > 0 && reJSHead.MatchString(src[max(0, l.start-120):l.start]) && (lits[i-1].end > l.start || !reJSJoin.MatchString(src[lits[i-1].end:l.start])) {
 			joined = "\x00" + joined
 		}
 		if joined != t {
@@ -402,6 +402,10 @@ func extractGo(t testing.TB, out map[string]*uiStr, order *[]string, file string
 	})
 }
 
+// 4.11: la variante fra parentesi in fondo al nome di una radio («… (firmware fino
+// a 0.23: 960 canali)») si usa anche da sola nei nomi delle schede: è un testo a sé
+var reNameVariant = regexp.MustCompile(`^.*\S \(([^()]*\pL\pL[^()]*)\)$`)
+
 // {3} {4} in una riga -> {0} {1}
 func renumberLocal(s string) string {
 	m := map[string]string{}
@@ -423,7 +427,7 @@ func extractUI(t testing.TB) []*uiStr {
 	files, _ := filepath.Glob("ui/*.js")
 	sort.Strings(files)
 	for _, f := range files {
-		if f == "ui/i18n.js" {
+		if filepath.ToSlash(f) == "ui/i18n.js" {
 			continue
 		}
 		b, err := os.ReadFile(f)
@@ -444,6 +448,16 @@ func extractUI(t testing.TB) []*uiStr {
 			continue
 		}
 		extractGo(t, out, &order, f)
+	}
+	ids := make([]string, 0, len(genByID))
+	for id := range genByID {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+	for _, id := range ids {
+		if m := reNameVariant.FindStringSubmatch(genByID[id].Name); m != nil {
+			addUI(out, &order, m[1], "nome della radio "+id)
+		}
 	}
 	// parti dei nomi delle impostazioni inserite nelle etichette ($1, $2…): anche parole singole minuscole
 	phr := make([]string, 0, len(itPhrases))

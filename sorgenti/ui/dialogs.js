@@ -215,7 +215,7 @@ const Dialogs = {
     const n = chans.length;
     const zoneOpts = () => {
       let s = '';
-      for (let z = 0; z < d.zones; z++) s += `<option value="${z}" ${z === Math.max(0, view.zone) ? 'selected' : ''}>Zona ${z + 1} — libere ${d.perZone - view.usedIn(z * d.perZone, (z + 1) * d.perZone)}</option>`;
+      for (let z = 0; z < d.zones; z++) s += `<option value="${z}" ${z === Math.max(0, view.zone) ? 'selected' : ''}>${esc(view.zoneLabel ? view.zoneLabel(z) : 'Zona ' + (z + 1))} — libere ${d.perZone - view.usedIn(z * d.perZone, (z + 1) * d.perZone)}</option>`;
       return s;
     };
     const m = openModal(`<div class="dialog mid"><header>Inserisci ${plural(n, 'canale', 'canali')} nel ${esc(d.name)}</header><div class="body">
@@ -796,6 +796,9 @@ const Dialogs = {
         <li>Bajeton: 15 zone da 64 canali; scegli la zona dalla barra sopra la tabella, «Tutte» per vederle insieme, «Sposta in zona» per spostare i selezionati.
           Con i file della v1.0.9 di BT-11_CPS impostati su «tutti i canali» (⚙ Impostazioni → Divisione dei canali) i 960 canali sono in un unico elenco, come nel programma originale.</li>
         <li>Nomi: massimo 16 caratteri sul K67 e 12 sulla Bajeton. Potenza Media solo sulla Bajeton (sul K67 diventa Alta).</li>
+        <li>«✎ Modifica in blocco» cambia insieme potenza, banda, scansione, subtoni, shift o trasmissione dei canali spuntati (o selezionati): si cambiano solo le voci scelte, il resto di ogni canale resta com'è (si annulla con <kbd>Ctrl</kbd>+<kbd>Z</kbd>).</li>
+        <li>«✎ Nomi delle zone» (Radtel RT-950 Pro, RT-950, RT-920, RT-910, Bajeton BJ-9000 e BJ-7700, HI-UV850 Pro; zone delle radio DMR RD-5R, DM-1801 e DM-32UV) dà un nome a ogni zona al posto di «Zona 1», «Zona 2»…;
+          anche con un doppio clic sulla zona. I nomi si leggono e si scrivono via cavo con i canali e si salvano nel file .img.</li>
       </ul>
       <h4>Identifica la radio</h4><ul>
         <li>Scheda «🔎 Identifica»: scegli la porta del cavo (o «USB» per RD-5R, DM-1801, DM-1701) e premi «Identifica la radio». Il programma prova i protocolli

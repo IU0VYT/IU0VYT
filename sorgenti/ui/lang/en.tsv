@@ -49,14 +49,13 @@ bb4eb6f9	Not active
 5d16953d	The archive is empty. Use «Import…» to load the IK2ANE list (from the Internet or a file) or your own Excel/CSV file, or add repeaters by hand.
 93001810	Saved in:
 07bff8ea	Saved in: {0}
-e952af22	Repeaters in the archive: {0} · visible with the filters: {1}{2}{3}{4}
-72deff09	Ctrl+A selects all visible · double-click to edit
-771d36b4	· checked:
-bed57bd6	· checked: {0}
+ee3328b1	Repeaters in the archive: {0}
+69265a65	visible with the filters: {0}
+63a6f44b	checked: {0}
 617510a5	{0} hidden by the filters
 ef2eb38e	: «Deselect all» removes those too)
-439ec563	· selected:
-0735f80d	· selected: {0}
+2607d6be	selected: {0}
+72deff09	Ctrl+A selects all visible · double-click to edit
 d3a371de	with warnings to check (⚠)
 b1a5eaf0	{0} with warnings to check (⚠)
 de3f9f7f	No repeater checked.
@@ -266,14 +265,14 @@ b8909346	There is no open file in the {0} tab yet. Open the radio's file (recomm
 199746a4	New file
 f48d912d	Open file
 fbf82f2d	Open {0} file…
-75c8f969	Zone {0} — {1} free
+e234b53d	{0} — free {1}
+82378b1b	Zone
 1469dc06	Insert {0} into the {1}
 f4db09d7	Starting from position
 594e80a4	Mode
 6a9e220f	only in the free positions {0}
 616ec49c	in consecutive positions, overwriting the occupied ones
 4f750fe4	Insert
-82378b1b	Zone
 fdd3697e	number in the zone (1–{0})
 22ab4f8c	(the radio numbers channels from 0: position 1 = channel 0)
 10919737	(if the zone fills up it continues in the following zones)
@@ -515,6 +514,8 @@ fb741ab7	Ins
 9cdddeef	saves the file.
 0ee34f77	Bajeton: 15 zones of 64 channels; choose the zone from the bar above the table, «All» to see them together, «Move to zone» to move the selected ones. With BT-11_CPS v1.0.9 files set to «all channels» (⚙ Settings → Channel division) the 960 channels are in a single list, as in the original program.
 16817b03	Names: at most 16 characters on the K67 and 12 on the Bajeton. Medium power only on the Bajeton (on the K67 it becomes High).
+f0c8d97c	«✎ Bulk edit» changes power, bandwidth, scan, subtones, shift or transmission of the checked (or selected) channels together: only the chosen items change, the rest of each channel stays as it is (undo with
+e9f18966	«✎ Zone names» (Radtel RT-950 Pro, RT-950, RT-920, RT-910, Bajeton BJ-9000 and BJ-7700, HI-UV850 Pro; zones of the DMR radios RD-5R, DM-1801 and DM-32UV) gives each zone a name instead of «Zone 1», «Zone 2»…; also with a double click on the zone. The names are read and written by cable together with the channels and saved in the .img file.
 06e1cc67	Identify the radio
 338f1a9c	«🔎 Identify» tab: choose the cable port (or «USB» for RD-5R, DM-1801, DM-1701) and press «Identify the radio». The program tries the read protocols of all the radios it knows, reads the one that responds and shows brand, model, type, ranges, firmware or identifier, channels and, for USB DMR radios, DMR ID and name. No data is written to the radio. Without a radio the full search takes about 50 seconds; radios already recognised in the past are tried first.
 4ade63e6	Automatic identification
@@ -1125,6 +1126,7 @@ f143cede	Deletes the selected channels and moves up the following ones
 e76bf679	Paste in the selected position (Ctrl+V)
 12fd3bac	Checks all the radio's channels{0}
 97de4b01	Unchecks all the channels
+3249789e	Changes power, bandwidth, scan, subtones or shift of the checked (or selected) channels together: the rest of each channel stays as it is
 f61aee58	Writes the checked (or selected) channels to another radio connected with the cable: choose brand and model, then the program checks compatibility, adapts the channels, saves a backup of the radio, writes and verifies
 81a32ab9	Adds the checked (or selected) channels to the repeater archive
 d204ca9d	Inserts the channels of another file: K67 (.xlc), Bajeton (.dat), .img images of any radio (also from CHIRP), CHIRP CSV, Excel/CSV tables
@@ -1142,6 +1144,7 @@ f68325d8	Sort ▾
 15143ff0	Compact
 fda928f7	Cut
 ab7e4ca3	Paste
+c9973af8	✎ Bulk edit…
 fe11e9bf	📻 Forward to another radio…
 5e22dc80	→ Archive
 b008252c	📥 Import…
@@ -1153,6 +1156,8 @@ b008252c	📥 Import…
 7ff3d81a	⬆ Update firmware…
 8b94462b	Radio settings (menu, display, VOX, DTMF…), with the description of each item
 55f63842	⚙ Settings…
+09d2ad18	Gives each zone a name instead of «Zone 1», «Zone 2»…, like the manufacturer's program
+419c7f60	✎ Zone names…
 65125214	The Bajeton BT-11_CPS v1.0.9 program saves .dat files in a different format from v1.0.8 and the two versions do not open each other's files. Choose the version installed on your PC: the open file is converted (channels and settings stay the same) and new files and readings from the radio will use this format.
 0bc7b5bb	As in the BT-11_CPS v1.0.9 program (Channel Divide): channels divided into 15 zones of 64 or all 960 channels in a single list. It also changes the way the radio shows the channels.
 ea35e69c	File for BT-11_CPS
@@ -1201,11 +1206,43 @@ a95ee268	No file open
 c5bc2462	Read the channels directly from the radio with the programming cable, or open a {0} file saved with the radio's program, or create a new file. After the changes you can write the channels to the radio and save them to a {1} file.
 f0a2ac7f	📂 Open {0} file…
 f748546f	New empty file
+33b8c42a	Double click to name the zone
 69f3ae85	Zone {0}
+2817d663	First check the channels to edit (or select them with click, Shift+click, Ctrl+click).
+10004adc	— do not change —
+1b65fe1e	do not change (OFF = no tone; e.g. 88.5, D023N)
+63732e04	do not change (e.g. -0.6, +1.6, 0)
+62cfbd1e	Transmit
+baaaad3e	receive only (TX OFF)
+de022377	Bulk edit: {0} {1}
+8ad80f5d	Only the chosen items change; names, frequencies and the other items stay as they are. Subtones are not put on digital channels.
+5534e33b	Apply
+02204c19	{0}: invalid tone (e.g. 88.5, D023N, D023I, OFF).
+ef755fde	DCS code {0} not available on the Bajeton 8300.
+c3dfc199	DCS code {0} not available on the {1}.
+153b0a1f	Invalid shift (e.g. -0.6, +1.6, +5, 0).
+e5a2543c	Invalid shift for channel {0} ({1} MHz).
+50714c60	No channel changed (subtones are not put on digital channels).
+5e1d7b1e	No channel changed: they already had these values.
+243be716	Changed {0}
+2aade796	(subtones not put on {0})
+8183fe22	digital channels
+4844dfd0	· warning: {0} with transmission outside the radio's ranges
+c08ef3ef	Read the radio first or open one of its files.
+7b056b7c	Zone names
+4b1d6064	Zone {0}{1}
+9e516dd6	no name
+853429f2	Up to {0} characters: letters without accents, digits, symbols and Chinese characters (a Chinese character counts as 2).
+d827614d	Up to {0} characters: letters without accents, digits and symbols.
+185fcd05	Every zone must have a name.
+926753df	A zone without a name stays as the radio shows it.
+cc168424	Zone names — {0}
+ea15bcb5	The names are written to the radio with «📻 Write to radio…», together with the channels, and saved in the file.
+caf3cdaf	Zone names applied to the radio's memory: save the file or write to the radio to keep them.
 133eae6d	Programmed channels: {0} of {1}
-1dae24f5	· Zone {0}: {1} of {2}
-6f011736	· Checked: {0}
-8fe6706d	· Selected: {0}
+46b62038	{0} of {1} channels in use
+31acc3eb	Checked: {0}
+3114d45e	Selected: {0}
 58324d3b	Double click or Enter to edit · right click for the menu
 64275293	Import channels
 50f603dd	{0}: some rows were not read.
@@ -1268,6 +1305,7 @@ c1a2e3a6	DCS code not available on the {0}
 1280ef3c	Name shortened to {0} characters.
 6019487d	Move up
 6c6ecbc1	Move down
+2d903ea0	Bulk edit…
 fa7545de	Forward to another radio…
 ca4751b9	Add to the archive
 f93c1ba8	Reading the settings…
@@ -1281,7 +1319,6 @@ c2dc43e0	Table derived from the
 5fb2cc3a	⚙ Settings — {0}
 71ca99f7	{0} The changes are written to the tab's memory: save the file or write to the radio to keep them.
 b98d8ace	Undo changes
-5534e33b	Apply
 a132b5db	Changes not applied
 6a0d898b	You have changed {0} settings without applying them. Do you want to close anyway?
 4d272065	Close without applying
@@ -2790,8 +2827,11 @@ e8fcbbef	Firmware 0.24 or later ({0}): channels handled as 10 zones of 99 (990 c
 6370b54b	the radio identified itself as «{0}», not as {1}: is it the right model?
 6f96413b	error in setting the encryption
 c7b15fc5	unknown secondary radio identifier ({0})
+159a10ff	Reading the zone names…
 7c82ae7f	Checking channels {0}-{1}…
 9cb120ea	in the radio, after channel 960, there are data that are not channels: the radio seems to have firmware up to 0.23 (960 channels). No data has been written. Use the tab of the version with 960 channels, or update the radio's firmware
+79e4da26	Checking the zone names…
+c0638f61	in the radio the zone names area contains data that are not names: the radio's firmware may not have zone names. No data has been written. Leave the zone names as you read them from the radio (or read the radio again), or update the firmware
 eb85e206	subtone {0} not available on this radio
 e02dc347	DCS code D{0} not available on this radio
 ea46d8f7	0123456789- ABCDEFGHIJKLMNOPQRSTUVWXYZ/_+*
@@ -4482,7 +4522,6 @@ fe543d54	Dual display, single watch
 4004f8ff	super mode
 9ca1d6ca	deep mode
 5d51c05f	Receive
-62cfbd1e	Transmit
 7276864f	ptt only
 7cf7824a	PTT only
 86f0782b	sk only
@@ -4820,6 +4859,33 @@ a05feb13	sharedStrings.xml: {0}
 b47a734d	no readable sheet in the .xlsx file
 7c8930a1	Foglio{0}
 bb441a60	<sheetView workbookViewId="0"
+e5d5fe51	«{0}»: the radio accepts only letters without accents, digits, symbols and Chinese characters
+ef09386b	«{0}»: the radio accepts only letters without accents, digits and symbols
+d102432f	«{0}»: too long, at most {1} bytes (each Chinese character takes 2)
+5002cc34	«{0}»: too long, at most {1} characters
+ce495534	this radio has no zone names
+fa01433a	the open file does not contain the zone names: read the radio again by cable
+c12ce408	{0} names are needed, {1} received
+3c2ab7be	To name the zones, first read the radio by cable (or open one of its files).
+501af569	The open memory does not contain the zone names (file saved with an earlier version or firmware without zone names): read the radio again by cable.
+d8d764d0	zone {0}: the name cannot be empty
+a916c443	there are no zones in the memory
+63f94611	FRS, USA
+5bf8b9a1	UV-5R firmware
+0ce70622	without Bluetooth
+fea692a8	firmware 0.24 and later: 990 channels
+ec8cdbd9	firmware up to 0.23: 960 channels
+18734e24	helmet radio
+810324ef	egzumer firmware
+087d5c7b	F4HWN firmware
+fb975e6f	LOSEHU, LTS, UVE firmware
+6c3baeb5	OSFW firmware
+d1f9e8ef	new version
+37ed5e1e	Freenet
+53826d51	M7OCM firmware
+8781a829	3rd generation
+f0a3a6ce	US version, 8-character names
+c001d72f	2.5 kHz step
 f8c9e807	high
 a15fb723	standby
 1f743f81	low

@@ -199,6 +199,10 @@ func init() {
 				"La BJ-7700 è la Radtel RT-910 (il programma del costruttore è lo stesso): driver di CHIRP per il firmware " + v.fw + "; " +
 				"nei file .img compare come Radtel " + v.model + "."})
 	}
+	// 4.11: nomi delle zone della RT-910 senza Bluetooth (programma RT910_EnCPS
+	// v1.0.3: 0xA200, 16 byte per zona, 12 caratteri ASCII); si scrivono solo se
+	// cambiano e se nella radio l'area contiene nomi o è vuota
+	genByID["bj-7700nbt"].ZoneNames = &zoneNameSpec{Addr: 0xA200, Count: 15, Stride: 16, Max: 12, Pad: 0x00, Area: 0x100}
 
 	// 4.0: Radtel RT-900, RT-900 BT, RT-920 e Radioddity GS-10B (radtel_rt900.py
 	// di CHIRP): stesso protocollo, cambiano il numero di canali e le aree scritte
@@ -247,6 +251,10 @@ func init() {
 			DCS: uv5rDTCS, Baud: 57600, Fam: rt900Fam{}, Opt: v.o,
 			Notes: notes})
 	}
+	// 4.11: nomi delle 10 zone della RT-920 (0xC800, già scritto sempre come fa
+	// CHIRP): 10 caratteri come il driver di CHIRP (il programma del costruttore
+	// v1.2.4 ne permette 12, in GB2312)
+	genByID["rt-rt920"].ZoneNames = &zoneNameSpec{Addr: 0xC800, Count: 10, Stride: 16, Max: 10, GB: true, Pad: 0xFF}
 }
 
 func init() {
@@ -267,7 +275,8 @@ func init() {
 	// con il firmware precedente); si scrivono i canali (0x0000-0x77FF), i canali
 	// 961-990 solo se cambiano e dopo averli riletti dalla radio, e le impostazioni
 	// generali (blocco 0x9000, rileggendo dalla radio i byte non modificati qui).
-	reads := [][2]int{{0x0000, 0x7C00}, {0x8000, 0x8080}, {0x9000, 0x9080}, {0xA000, 0xA180}, {0xB000, 0xB100}, {0xD000, 0xD300}}
+	// 4.11: anche i nomi delle zone (0xC000-0xC0FF), come i programmi v1.2.0 e successivi
+	reads := [][2]int{{0x0000, 0x7C00}, {0x8000, 0x8080}, {0x9000, 0x9080}, {0xA000, 0xA180}, {0xB000, 0xB100}, {0xC000, 0xC100}, {0xD000, 0xD300}}
 	mk := func(layout int) *rt900Opt {
 		o := &rt900Opt{
 			magic:   []byte("PROGRAMBT9000U"),
@@ -306,6 +315,11 @@ func init() {
 			DCS: uv5rDTCS, Baud: 115200, Fam: rt900Fam{}, Opt: mk(960),
 			Notes: common + "Firmware fino a 0.23 (programma del costruttore fino a v1.2.0): canali 1-960 = 15 zone da 64, " +
 				"oppure un unico elenco di 960 canali (impostazione «Divisione dei canali»)."})
+	// 4.11: nomi delle zone (programmi RT-950PRO_CPS v1.2.0-v1.3.3: 0xC000, 16 byte
+	// per zona, 12 byte GB2312), scritti solo se cambiano e se nella radio l'area
+	// contiene nomi o è vuota
+	genByID["bj-9000"].ZoneNames = &zoneNameSpec{Addr: 0xC000, Count: 10, Stride: 16, Max: 12, GB: true, Pad: 0xFF, Area: 0x100}
+	genByID["bj-9000-960"].ZoneNames = &zoneNameSpec{Addr: 0xC000, Count: 15, Stride: 16, Max: 12, GB: true, Pad: 0xFF, Area: 0x100}
 }
 
 func init() {
@@ -336,6 +350,10 @@ func init() {
 		Notes: "Accendi la radio con il cavo collegato. Canali 1-960 = 15 zone da 64, oppure un unico elenco di 960 canali (impostazione " +
 			"«Divisione dei canali»). Canali e impostazioni generali come nel programma del costruttore «BT-9000_CPS» v1.3.0; VFO, DTMF e APRS " +
 			"restano quelli della radio. Non compatibile con CHIRP."})
+	// 4.11: nomi delle 15 zone (BT-9000_CPS v1.3.0, come la RT-950 Pro): l'area
+	// 0xC000-0xC0FF si legge dopo le altre; se la radio non risponde (firmware
+	// vecchio) il file resta senza nomi delle zone
+	genByID["rtl-rt950"].ZoneNames = &zoneNameSpec{Addr: 0xC000, Count: 15, Stride: 16, Max: 12, GB: true, Pad: 0xFF, Area: 0x100}
 }
 
 // rt950Siblings: le due versioni (960 e 990 canali) della stessa radio
@@ -809,9 +827,48 @@ func (f rt900Fam) Download(ctx context.Context, m *genModel, port string, prog P
 			done += bs
 		}
 	}
+	// 4.11: nomi delle zone fuori dall'area letta (Radtel RT-950): si leggono per
+	// ultimi; se la radio non li dà, il file resta senza
+	if zs := m.ZoneNames; zs != nil && zs.Area > 0 && o.reads != nil && len(data) < zs.Addr+zs.Area {
+		prog(done, total, "Lettura dei nomi delle zone…")
+		area, err := s.readArea(zs.Addr, zs.Addr+zs.Area, key, bs)
+		if ctx.Err() != nil {
+			s.exit()
+			return nil, "", errCancelled
+		}
+		if err == nil {
+			data = append(data, bytes.Repeat([]byte{0xFF}, zs.Addr-len(data))...)
+			data = append(data, area...)
+		}
+	}
 	s.exit()
 	prog(total, total, "Lettura completata")
 	return data, "", nil
+}
+
+// readArea (4.11): legge e decifra i blocchi da a0 ad a1
+func (s *rt900Sess) readArea(a0, a1 int, key []byte, bs int) ([]byte, error) {
+	o := rt900o(s.m)
+	cur := make([]byte, 0, a1-a0)
+	for a := a0; a < a1; a += bs {
+		cmd := []byte{'R', byte(a >> 8), byte(a), byte(bs)}
+		if err := s.p.Write(cmd); err != nil {
+			return nil, err
+		}
+		d, err := s.recv(4 + bs)
+		if err == nil && !bytes.Equal(d[:4], cmd) {
+			err = rErr("risposta inattesa")
+		}
+		if err != nil {
+			return nil, genFail(fmt.Sprintf("Lettura (0x%04X)", a), err)
+		}
+		blk := append([]byte{}, d[4:]...)
+		if a < 0xF000 && !o.plain {
+			btCrypt(blk, key)
+		}
+		cur = append(cur, blk...)
+	}
+	return cur, nil
 }
 
 func (f rt900Fam) Upload(ctx context.Context, m *genModel, port string, img []byte, prog Progress) (string, error) {
@@ -875,6 +932,26 @@ func (f rt900Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 			}
 			ranges = append([][2]int{ranges[0], o.hi}, ranges[1:]...)
 			total += o.hi[1] - o.hi[0]
+		}
+	}
+	if zs := m.ZoneNames; zs != nil && zs.Area > 0 && len(img) >= zs.Addr+zs.Area {
+		// 4.11: nomi delle zone, scritti solo se cambiano e solo se nella radio
+		// l'area contiene nomi o è vuota (altrimenti non si scrive nulla); un file
+		// senza i nomi (salvato prima della 4.11) non li tocca
+		prog(0, total, "Controllo dei nomi delle zone…")
+		cur, err := s.readArea(zs.Addr, zs.Addr+zs.Area, key, bs)
+		if err != nil {
+			s.exit()
+			return "", err
+		}
+		if !bytes.Equal(cur, img[zs.Addr:zs.Addr+zs.Area]) {
+			if !zoneAreaPlausible(zs, cur) {
+				s.exit()
+				return "", rErr("nella radio l'area dei nomi delle zone contiene dati che non sono nomi: il firmware della radio potrebbe non avere i nomi delle zone. " +
+					"Nessun dato è stato scritto. Lascia i nomi delle zone come li hai letti dalla radio (o leggi di nuovo la radio), oppure aggiorna il firmware")
+			}
+			ranges = append(ranges, [2]int{zs.Addr, zs.Addr + zs.Area})
+			total += zs.Area
 		}
 	}
 	done := 0

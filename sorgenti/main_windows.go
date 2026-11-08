@@ -112,6 +112,9 @@ func winFilter(s string) *uint16 {
 var mainHwnd uintptr
 
 func msgBox(text string, flags uintptr) int {
+	if uiLang() == "ar" {
+		flags |= 0x00180000 // 4.11: arabo, MB_RIGHT | MB_RTLREADING
+	}
 	r, _, _ := pMsgBox.Call(mainHwnd, uintptr(unsafe.Pointer(u16(T(text)))), uintptr(unsafe.Pointer(u16(winTitle))), flags)
 	return int(r)
 }

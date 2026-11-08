@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.10.0 - um só ficheiro executável, sem instalação, interface em 9 línguas.
+Versão 4.11.0 - um só ficheiro executável, sem instalação, interface em 11 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -8,7 +8,23 @@ Licença: GNU General Public License versão 3 ou posterior (software livre, SEM
 QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
-pasta principal (CHANGELOG.txt aqui contém a entrada 4.10 traduzida).
+pasta principal (CHANGELOG.txt aqui contém a entrada 4.11 traduzida).
+Novidades da 4.11.0:
+- NOMES DAS ZONAS: em vez de «Zona 1», «Zona 2»… cada zona pode ter um nome, como nos
+  programas do fabricante (botão «✎ Nomes das zonas…» ou duplo clique na zona). Radtel
+  RT-950 Pro, Bajeton BJ-9000 e Hiroyasu HI-UV850 Pro (as duas versões do firmware),
+  Radtel RT-950, Radtel RT-920, Radtel RT-910 / Bajeton BJ-7700 sem Bluetooth; zonas
+  dos rádios DMR Baofeng RD-5R, DM-1801 e DM-32UV. Os nomes leem-se e escrevem-se por
+  cabo juntamente com os canais e guardam-se no ficheiro .img (ver «NOMES DAS ZONAS»);
+- EDIÇÃO EM BLOCO: «✎ Edição em bloco…» altera em conjunto potência, largura de banda,
+  varredura, subtons, desvio ou transmissão dos canais marcados (ou selecionados); o
+  resto de cada canal fica como está, e Ctrl+Z anula a operação;
+- LÍNGUAS: duas línguas a mais, coreano (bandeira da Coreia do Sul) e árabe (bandeira
+  dos Emirados Árabes Unidos, com a página da direita para a esquerda): 11 no total,
+  também para os ficheiros informativos da pasta «lingue»;
+- testes: os testes funcionam também no Windows (i18n_test.go); um novo teste verifica
+  que as duas cópias de LEGGIMI.txt, AUTORI_E_LICENZE.txt e da licença (pasta
+  principal e «sorgenti») continuam idênticas.
 Novidades da 4.10.0:
 - LÍNGUAS: ao lado de «ℹ Info» está o seletor de língua com as bandeiras (italiano,
   inglês, francês, alemão, espanhol, português, russo, chinês, japonês). A tradução é
@@ -745,7 +761,13 @@ protegidos por palavra-passe nem os divididos em várias partes.
 LÍNGUA DA INTERFACE (4.10)
 - O seletor com a bandeira está em cima, logo à direita de «ℹ Info». No primeiro
   arranque mostra a bandeira italiana; com um clique abre-se a lista das línguas:
-  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語.
+  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
+  (coreano, 4.11, bandeira da Coreia do Sul), العربية (árabe, 4.11, bandeira dos
+  Emirados Árabes Unidos).
+- Com o árabe a página lê-se da direita para a esquerda; as frequências, os números e
+  os códigos ficam da esquerda para a direita. Para o árabe usa-se a bandeira dos
+  Emirados Árabes Unidos porque a da Arábia Saudita contém um texto religioso (a
+  profissão de fé), que não se usa como simples símbolo de uma língua.
 - A tradução é imediata, sem reiniciar: separadores, botões, menus, janelas, guia,
   mensagens e avisos (também os que chegam dos rádios), fichas da galeria, definições
   e as janelas do Windows «Abrir» e «Guardar».
@@ -835,6 +857,39 @@ TABELAS DE CANAIS
   «Todas» para as ver juntas; «Mover para a zona» move os canais selecionados.
 - K67 Pro: 640 canais. As gamas de frequência do rádio são lidas do ficheiro: as
   frequências fora da gama ficam realçadas a vermelho.
+- Edição em bloco (4.11): «✎ Edição em bloco…» (também a partir do clique direito)
+  altera em conjunto, nos canais marcados ou, se não houver nenhum, nos selecionados:
+  potência, largura de banda, varredura, tom TX, tom RX (OFF retira o tom), desvio e,
+  onde o rádio o permite, a transmissão (só receção). Os itens deixados em «não
+  alterar» ficam como estão em cada canal; os subtons não se põem nos canais digitais.
+  Tons e desvio são verificados antes de alterar qualquer canal; Ctrl+Z anula toda a
+  operação.
+
+NOMES DAS ZONAS (4.11)
+Em vez de «Zona 1», «Zona 2»… pode dar-se um nome a cada zona, como nos programas do
+fabricante. O botão «✎ Nomes das zonas…» (ou o duplo clique numa zona da barra) abre a
+lista das zonas com o seu nome; a barra das zonas e a linha de estado mostram «número
+· nome». Os nomes estão na memória do rádio: leem-se e escrevem-se por cabo juntamente
+com os canais e guardam-se no ficheiro .img.
+- Radtel RT-950 Pro, Bajeton BJ-9000, Hiroyasu HI-UV850 Pro (firmware até 0.23: 15
+  zonas; a partir de 0.24: 10 zonas) e Radtel RT-950 (15 zonas): até 12 caracteres;
+  letras sem acentos, algarismos, símbolos e caracteres chineses (GB2312, 2 bytes cada
+  um), como os programas do fabricante RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS v1.3.3
+  e BT-9000_CPS v1.3.0 (área 0xC000, 16 bytes por zona).
+- Radtel RT-920 (firmware V0.17 e posteriores, 10 zonas): até 10 caracteres, como o
+  controlador do CHIRP (o programa do fabricante v1.2.4 permite 12; área 0xC800).
+- Radtel RT-910 / Bajeton BJ-7700 sem Bluetooth (15 zonas): até 12 caracteres sem
+  acentos, como o programa do fabricante RT910_EnCPS v1.0.3 (área 0xA200).
+- Rádios DMR Baofeng RD-5R, DM-1801 e DM-32UV: mudam-se os nomes das zonas existentes
+  (até 16 caracteres); cada zona tem de ter um nome.
+- Segurança: para RT-950 Pro, BJ-9000, HI-UV850 Pro, RT-950 e RT-910 a área dos nomes
+  só é escrita se os nomes mudarem, e antes é lida de novo do rádio: se lá houver
+  dados que não são nomes (firmware sem nomes de zonas) não se escreve nada e aparece
+  uma mensagem. Um nome vazio deixa a zona como o rádio a mostra. Para o RT-920 a área
+  está entre as que se escrevem sempre, como faz o CHIRP.
+- Os ficheiros .img do RT-950 guardados antes da 4.11 não contêm os nomes: leia de
+  novo o rádio para os ver. Se o rádio não responder à leitura dos nomes (firmware
+  antigo) o ficheiro fica sem nomes e tudo o resto funciona como antes.
 
 CÓPIA ENTRE OS DOIS RÁDIOS
 Copiar no primeiro separador e Colar no outro (desde a 3.9.3 «Copiar para…» passou a

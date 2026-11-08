@@ -91,7 +91,13 @@ const Archive = {
     const warn = this.ponti.filter(p => p.avvisi && p.avvisi.length).length;
     const chk = this.ponti.filter(p => p.scelto).length;
     const hid = chk ? chk - this.grid.rows.filter(r => r.checked).length : 0;
-    $('[data-status]', this.page).innerHTML = `<span>Ponti in archivio: ${this.ponti.length} · visibili con i filtri: ${vis}${chk ? ' · spuntati: ' + chk : ''}${hid ? ` (<b>${hid} nascosti dai filtri</b>: «Deseleziona tutti» toglie anche quelli)` : ''}${sel ? ' · selezionati: ' + sel : ''}</span>
+    // 4.11: ogni pezzo nel suo elemento, così si traduce da solo
+    const dot = '<span aria-hidden="true"> · </span>';
+    let s = `<span>Ponti in archivio: ${this.ponti.length}</span>${dot}<span>visibili con i filtri: ${vis}</span>`;
+    if (chk) s += `${dot}<span>spuntati: ${chk}</span>`;
+    if (hid) s += ` <span>(<b>${hid} nascosti dai filtri</b>: «Deseleziona tutti» toglie anche quelli)</span>`;
+    if (sel) s += `${dot}<span>selezionati: ${sel}</span>`;
+    $('[data-status]', this.page).innerHTML = `<span>${s}</span>
       <span>${warn ? warn + ' con avvisi da controllare (⚠)' : ''}</span><span>Ctrl+A seleziona tutti i visibili · doppio clic per modificare</span>`;
   },
 

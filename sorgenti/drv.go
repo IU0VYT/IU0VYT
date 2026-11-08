@@ -76,6 +76,8 @@ type genModel struct {
 	// Conn: collegamento ("" porta seriale; "hid" USB HID, "dfu" USB DFU: la
 	// radio si apre con openPortFunc("HID:vid:pid" / "DFU:vid:pid"))
 	Conn string
+	// ZoneNames (4.11): area della memoria con i nomi delle zone (vedi zonenames.go)
+	ZoneNames *zoneNameSpec
 }
 
 // genFamily: operazioni di una famiglia di radio.
@@ -632,6 +634,8 @@ type genDef struct {
 	Divide    string `json:"divide,omitempty"`
 	DivideAll string `json:"divideAll,omitempty"`
 	DivideZon string `json:"divideZones,omitempty"`
+	// ZoneNames (4.11): le zone hanno un nome modificabile (vedi zonenames.go)
+	ZoneNames bool `json:"zoneNames,omitempty"`
 }
 
 // genDivides (4.3): radio con le zone che hanno la scelta «tutti i canali in un
@@ -670,6 +674,9 @@ func (m *genModel) def() genDef {
 		NoTxOff: m.NoTxOff, Zones: m.Zones, Vendor: m.Vendor, Model: m.Model, Digital: m.Digital, Conn: m.Conn, Settings: settingsAvailable(m.ID)}
 	if m.Zones > 0 {
 		d.PerZone = m.Slots / m.Zones
+	}
+	if _, ok := m.Fam.(zoneNamer); ok || m.ZoneNames != nil {
+		d.ZoneNames = true
 	}
 	if dv, ok := genDivides[m.ID]; ok && d.Settings {
 		d.Divide, d.DivideZon, d.DivideAll = dv[0], dv[1], dv[2]

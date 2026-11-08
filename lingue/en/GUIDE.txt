@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.10.0 - a single executable file, no installation, interface in 9 languages.
+Version 4.11.0 - a single executable file, no installation, interface in 11 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -8,7 +8,24 @@ License: GNU General Public License version 3 or later (free software, WITHOUT A
 WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
-folder (CHANGELOG.txt here contains the translated 4.10 entry).
+folder (CHANGELOG.txt here contains the translated 4.11 entry).
+What's new in 4.11.0:
+- ZONE NAMES: instead of «Zone 1», «Zone 2»… each zone can have a name, as in the
+  manufacturer's programs («✎ Zone names…» button or double click on the zone). Radtel
+  RT-950 Pro, Bajeton BJ-9000 and Hiroyasu HI-UV850 Pro (both firmware versions),
+  Radtel RT-950, Radtel RT-920, Radtel RT-910 / Bajeton BJ-7700 without Bluetooth;
+  zones of the DMR radios Baofeng RD-5R, DM-1801 and DM-32UV. The names are read and
+  written by cable together with the channels and saved in the .img file (see «ZONE
+  NAMES»);
+- BULK EDIT: «✎ Bulk edit…» changes power, bandwidth, scan, subtones, shift or
+  transmission of the ticked (or selected) channels together; the rest of each channel
+  stays as it is, and Ctrl+Z undoes it;
+- LANGUAGES: two more languages, Korean (flag of South Korea) and Arabic (flag of the
+  United Arab Emirates, with the page right to left): 11 in all, also for the
+  information files in the «lingue» folder;
+- tests: the tests also run on Windows (i18n_test.go); a new test checks that the two
+  copies of LEGGIMI.txt, AUTORI_E_LICENZE.txt and the license (main folder and
+  «sorgenti») stay identical.
 What's new in 4.10.0:
 - LANGUAGES: next to «ℹ Info» there is the language selector with the flags (Italian,
   English, French, German, Spanish, Portuguese, Russian, Chinese, Japanese). The
@@ -729,7 +746,13 @@ into several parts are not supported.
 INTERFACE LANGUAGE (4.10)
 - The selector with the flag is at the top, immediately to the right of "ℹ Info". At
   first start it shows the Italian flag; one click opens the list of languages:
-  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語.
+  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
+  (Korean, 4.11, flag of South Korea), العربية (Arabic, 4.11, flag of the United Arab
+  Emirates).
+- With Arabic the page reads right to left; frequencies, numbers and codes stay left
+  to right. For Arabic the flag of the United Arab Emirates is used because that of
+  Saudi Arabia contains a religious text (the profession of faith), which is not used
+  as a mere symbol of a language.
 - The translation is immediate, without restarting: tabs, buttons, menus, windows,
   guide, messages and warnings (also those coming from the radios), gallery cards,
   settings and the Windows "Open" and "Save" windows.
@@ -816,6 +839,38 @@ CHANNEL TABLES
   "All" to see them together; "Move to zone" moves the selected channels.
 - K67 Pro: 640 channels. The radio's frequency ranges are read from the file:
   out-of-range frequencies are highlighted in red.
+- Bulk edit (4.11): «✎ Bulk edit…» (also from the right click) changes together, in
+  the ticked channels or, if there are none, in the selected ones: power, bandwidth,
+  scan, TX tone, RX tone (OFF removes the tone), shift and, where the radio allows it,
+  transmission (receive only). The items left on «do not change» stay as they are in
+  every channel; subtones are not put on digital channels. Tones and shift are checked
+  before any channel is changed; Ctrl+Z undoes the whole operation.
+
+ZONE NAMES (4.11)
+Instead of «Zone 1», «Zone 2»… each zone can be given a name, as in the manufacturer's
+programs. The «✎ Zone names…» button (or a double click on a zone of the bar) opens
+the list of zones with their names; the zone bar and the status line show «number ·
+name». The names are in the radio's memory: they are read and written by cable
+together with the channels and saved in the .img file.
+- Radtel RT-950 Pro, Bajeton BJ-9000, Hiroyasu HI-UV850 Pro (firmware up to 0.23: 15
+  zones; from 0.24: 10 zones) and Radtel RT-950 (15 zones): up to 12 characters;
+  letters without accents, digits, symbols and Chinese characters (GB2312, 2 bytes
+  each), as in the manufacturer's programs RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS
+  v1.3.3 and BT-9000_CPS v1.3.0 (area 0xC000, 16 bytes per zone).
+- Radtel RT-920 (firmware V0.17 and later, 10 zones): up to 10 characters, as CHIRP's
+  driver (the manufacturer's program v1.2.4 allows 12; area 0xC800).
+- Radtel RT-910 / Bajeton BJ-7700 without Bluetooth (15 zones): up to 12 characters
+  without accents, as the manufacturer's program RT910_EnCPS v1.0.3 (area 0xA200).
+- DMR radios Baofeng RD-5R, DM-1801 and DM-32UV: the existing zones are renamed (up to
+  16 characters); every zone must have a name.
+- Safety: for RT-950 Pro, BJ-9000, HI-UV850 Pro, RT-950 and RT-910 the names area is
+  written only if the names change, and it is first read back from the radio: if it
+  contains data that are not names (firmware without zone names) nothing is written
+  and a message appears. An empty name leaves the zone as the radio shows it. For the
+  RT-920 the area is among those always written, as CHIRP does.
+- .img files of the RT-950 saved before 4.11 do not contain the names: read the radio
+  again to see them. If the radio does not answer the reading of the names (old
+  firmware) the file stays without names and everything else works as before.
 
 COPYING BETWEEN THE TWO RADIOS
 Copy in the first tab and Paste in the other (since 3.9.3 "Copy to…" has become "📻
