@@ -1,6 +1,7 @@
 # Sito del programma (GitHub Pages): a ogni modifica del ramo main pubblica la
 # cartella docs insieme a versione.txt con i conteggi dei modelli calcolati dal
-# catalogo dei sorgenti (radio, impostazioni, galleria, firmware).
+# catalogo dei sorgenti (radio, impostazioni, galleria, firmware) e alle pagine
+# nelle altre 10 lingue scritte da sito/genera.go.
 name: Sito
 
 on:
@@ -37,21 +38,31 @@ jobs:
           IU0VYT_SCRIVI_CONTEGGI=1 go test -mod=vendor -count=1 -run TestConteggiVersione .
           cp ../versione.txt ../docs/versione.txt
           cat ../docs/versione.txt
-      # versione e conteggi scritti anche nel testo della pagina (letti dai motori
-      # di ricerca senza JavaScript) e data della sitemap uguale all'ultimo commit
-      - name: Versione e data nella pagina
+      # pagine nelle altre lingue (sito/genera.go): docs/<lingua>/index.html dalle
+      # traduzioni di sito/lang, link hreflang, selettore della lingua e sitemap; se
+      # manca una traduzione si ferma con l'elenco dei testi e il sito resta com'era
+      - name: Pagine nelle altre lingue
+        working-directory: sito
+        run: go run . -docs ../docs
+      # versione e conteggi scritti anche nel testo delle pagine (letti dai motori
+      # di ricerca senza JavaScript) e data della sitemap e dei dati strutturati
+      # uguale all'ultimo commit
+      - name: Versione e data nelle pagine
         run: |
           val() { sed -n "s/^$1=//p" versione.txt | tr -d '\r'; }
+          pages="docs/index.html $(ls docs/*/index.html)"
+          day=$(git log -1 --format=%cs)
           ver=$(val versione)
           if [ -n "$ver" ]; then
-            sed -i -E "s/(class=\"[a-z -]*js-ver\">)[^<]*</\1${ver}</g; s/(\"softwareVersion\": \")[^\"]*\"/\1${ver}\"/" docs/index.html
+            sed -i -E "s/(class=\"[a-z -]*js-ver\">)[^<]*</\1${ver}</g; s/(\"softwareVersion\": \")[^\"]*\"/\1${ver}\"/" $pages
           fi
           for k in radio impostazioni galleria firmware marche; do
             n=$(val $k)
-            if [ -n "$n" ]; then sed -i -E "s/(data-n=\"$k\">)[0-9]+</\1${n}</g" docs/index.html; fi
+            if [ -n "$n" ]; then sed -i -E "s/(data-n=\"$k\">)[0-9]+</\1${n}</g" $pages; fi
           done
-          sed -i -E "s|<lastmod>[^<]*</lastmod>|<lastmod>$(git log -1 --format=%cs)</lastmod>|" docs/sitemap.xml
-          grep -E 'js-ver|softwareVersion|data-n=' docs/index.html
+          sed -i -E "s/(\"dateModified\": \")[^\"]*\"/\1${day}\"/" $pages
+          sed -i -E "s|<lastmod>[^<]*</lastmod>|<lastmod>${day}</lastmod>|" docs/sitemap.xml
+          grep -E 'js-ver|softwareVersion|dateModified|data-n=' $pages
           cat docs/sitemap.xml
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

@@ -1,0 +1,74 @@
+# IU0VYT Flash: testi del sito in «zh» (chiave del testo italiano in it.tsv, TAB, traduzione)
+a5397f2b	IU0VYT Flash — 适用于 Baofeng、Quansheng、Retevis、Radtel 等品牌电台的信道、中继台与固件工具
+7ee08973	IU0VYT Flash：免费的自由软件（GPL），适用于 Windows，可读写多个品牌（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO…）电台的信道、频率和设置，能自动识别电台，管理意大利中继台并升级固件。
+56e08062	适用于 Baofeng、Bajeton、Quansheng、Retevis、Radtel 等品牌电台的信道、中继台与固件。免费、自由软件，适用于 Windows 10/11。
+9743b861	IU0VYT Flash 图标
+f8218bc1	免费的自由软件（GPL），适用于 Windows，可读写多个品牌（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO…）电台的信道、频率和设置，管理意大利中继台并升级固件。
+6a0c8bb4	栏目
+0c023b2f	下载
+16f0aba9	功能
+8297e0a4	使用方法
+8fe1e625	信息
+cd611275	信道管理<span class="tag-sep"> - </span><span class="tag-b">频率 - 中继台 - 固件</span>
+540321f7	支持的电台品牌: #
+e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> 个品牌
+5998daca	免费的 Windows 程序，通过编程线读写电台的信道和频率，<br>导入意大利中继台并升级固件。<br>只有一个文件，无需安装，支持意大利语及另外 10 种语言。
+65c3ed2e	最新版本：
+4fc59698	此按钮始终下载最新发布版本的软件包。
+b6a8d2e0	最新版本
+58eb0261	发布于 {0}
+232335c3	最新可用版本
+39b13e38	⬇ 下载 IU0VYT.Flash.zip
+d97f7a86	版本说明
+3114018a	更新日志
+08d24901	历史版本
+e2d01b09	源代码
+b3944402	要检查文件是否完整，请在 Windows 中于文件所在的文件夹打开命令提示符并输入 <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code>：结果必须完全相同。
+15ff1cf6	解压压缩包并运行 <code>IU0VYT Flash.exe</code>。程序使用 WebView2 组件，已更新的 Windows 10 和 Windows 11 均已自带。
+32cb457a	功能介绍
+ca302446	一个工具即可编程、转换和升级 <span data-n="marche">#</span> 个品牌的电台（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO、TYT、Hiroyasu、Talkpod、Puxing、Feidaxin、Wouxun、AnyTone 等），专为业余无线电爱好者和 PMR446 电台用户设计。
+ef1bb9fc	可编程电台
+52b8232b	支持设置
+c4a0722d	图库中的型号
+c8b8648a	可升级固件
+17c25383	信道与频率
+8d4e62cd	通过编程线读写 <span data-n="radio">#</span> 个型号，包括数字 PMR 和 DMR 电台，也支持 USB。兼容 CHIRP 的 <code>.img</code> 文件，以及 K67 Pro（<code>.xlc</code>）和 Bajeton 8300（<code>.dat</code>）的原厂文件。
+eb86ce5e	电台设置
+6139dc35	菜单、显示、VOX、静噪、TOT、DTMF、按键等，适用于 <span data-n="impostazioni">#</span> 个型号，每项都有说明，敏感项需要确认。
+06e1cc67	识别电台
+238339e0	连接电台：程序会识别它并显示品牌、型号、固件，DMR 电台还会显示 ID 和名称。使用自动识别时只需连接编程线：程序会监听所有端口，也能同时识别多台电台以及稍后开机的电台，并打开它们的标签页；其他电台可使用“识别电台”按钮。不会向电台写入任何内容。
+66c001f1	通用转换器
+82ce44a6	将任意电台或文件（K67、Bajeton、CHIRP 镜像、CHIRP CSV、Excel）的信道转换为任意其他电台的格式，并按其规则调整。
+4a61c5a1	意大利中继台
+a1f35340	基于 IK2ANE 最新列表的档案，带筛选、自动命名和兼容性检查，可直接写入电台。
+ecd4b3ef	固件升级
+d72d8b35	<span data-n="firmware">#</span> 个型号的固件升级，采用官方程序的协议，带文件检查和备份。
+620c0164	型号图库
+fd632a2d	<span data-n="marche">#</span> 个品牌的 <span data-n="galleria">#</span> 款电台，按类型（业余、DMR、GMRS/FRS、PMR446、儿童用）和品牌分类，可搜索，并附官方程序和说明书的链接。
+c86bd7e2	11 种语言
+7bf9a67c	除意大利语外，程序还提供英语、法语、德语、西班牙语、葡萄牙语、俄语、中文、日语、韩语和阿拉伯语：点击“信息”旁的旗帜，整个程序会立即切换语言。指南和说明的译文位于软件包的 <code>lingue</code> 文件夹中。
+e60a286e	备份
+adfe4a55	每次写入前，程序都会保存电台中的内容，写入后再检查数据是否写入正确。
+ab670cd6	始终保持最新
+60772ac8	每次启动时，程序都会检查是否有新版本，并从本发布页面下载。
+473d4aaa	需要一台装有 Windows 10 或 11 的电脑和电台的编程线。
+c22ecae0	下载并解压
+1f5c9d6a	从本页面下载 <code>IU0VYT.Flash.zip</code>，并将压缩包解压到一个文件夹中。无需安装。
+2e1d7bc6	启动并选择电台
+3651366b	打开 <code>IU0VYT Flash.exe</code>，在 <b>📻 型号</b> 标签页中选择你的电台，或使用 <b>🔎 识别</b>。
+4c3f730f	连接并编程
+7870de1e	连接编程线，点击 <b>从电台读取</b>，修改信道和中继台，然后全部写入电台。
+41c051ae	完整指南见软件包 <code>lingue/zh</code> 文件夹中的 <code>GUIDE.txt</code>（意大利语原文：LEGGIMI.txt）。
+128ac670	须知
+59334bb5	自由软件：你可以依据 GNU GPL 第 3 版或更高版本的许可证使用、研究、修改和再发布本程序。
+e240d883	⚠ 注意事项
+d54cc175	电台协议是为实现互操作而重建的，并已用模拟电台验证：<b>请务必保留备份</b>。
+56e0b4b3	本程序<b>不提供任何担保</b>。
+f47e8f93	本程序为独立程序，与电台制造商（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO 等）无关联，也未获其认可。文中提及的商标归各自所有者所有，仅用于说明兼容的电台。
+88ea8053	请遵守所在国家关于频率使用的规定。
+50ee767e	★ 致谢
+6533bd03	<a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> 及其作者：大部分电台驱动程序来自他们的工作。
+819de25f	<a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>，免费向所有人提供意大利中继台列表。
+301c5be0	所有组件的作者和许可证见文件 <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTHORS_AND_LICENSES.txt</a>。
+dba4cb69	发现错误或想提出改进建议？请在 <a href="https://github.com/IU0VYT/IU0VYT/issues">GitHub 上提交问题</a>。
+3f1602bf	依据 <a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 或更高版本</a>发布&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">GitHub 上的源代码</a>

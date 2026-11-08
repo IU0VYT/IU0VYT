@@ -5,6 +5,18 @@ sorgenti/verifica/**/obj/
 sorgenti/gestionecanali
 **/__pycache__/
 
+# pagine del sito nelle altre lingue: le scrive sito/genera.go nel flusso «Sito»
+/docs/en/
+/docs/fr/
+/docs/de/
+/docs/es/
+/docs/pt/
+/docs/ru/
+/docs/zh/
+/docs/ja/
+/docs/ko/
+/docs/ar/
+
 # Eseguibili e file binari di Go
 *.exe
 *.exe~

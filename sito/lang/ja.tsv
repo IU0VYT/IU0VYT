@@ -1,0 +1,74 @@
+# IU0VYT Flash: testi del sito in «ja» (chiave del testo italiano in it.tsv, TAB, traduzione)
+a5397f2b	IU0VYT Flash — Baofeng、Quansheng、Retevis、Radtel などの無線機のチャンネル、レピーター、ファームウェア
+7ee08973	IU0VYT Flash：Windows 用の無料・自由（GPL）なプログラム。多くのメーカー（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO…）の無線機のチャンネル、周波数、設定を読み書きし、無線機を自動で識別し、イタリアのレピーターを管理し、ファームウェアを更新します。
+56e08062	Baofeng、Bajeton、Quansheng、Retevis、Radtel などの無線機のチャンネル、レピーター、ファームウェア。無料の自由ソフトウェア、Windows 10/11 用。
+9743b861	IU0VYT Flash のアイコン
+f8218bc1	Windows 用の無料・自由（GPL）なプログラム。多くのメーカー（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO…）の無線機のチャンネル、周波数、設定を読み書きし、イタリアのレピーターを管理し、ファームウェアを更新します。
+6a0c8bb4	セクション
+0c023b2f	ダウンロード
+16f0aba9	機能
+8297e0a4	使い方
+8fe1e625	情報
+cd611275	チャンネル管理<span class="tag-sep"> - </span><span class="tag-b">周波数 - レピーター - ファームウェア</span>
+540321f7	対応する無線機メーカー: #
+e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> メーカー
+5998daca	無線機のチャンネルと周波数をケーブルで読み書きし、<br>イタリアのレピーターを登録し、ファームウェアを更新する Windows 用の無料プログラム。<br>ファイル 1 つだけ、インストール不要、イタリア語とほか 10 言語に対応。
+65c3ed2e	最新バージョン：
+4fc59698	このボタンは常に最新の公開バージョンのパッケージをダウンロードします。
+b6a8d2e0	最新バージョン
+58eb0261	{0} 公開
+232335c3	最新版
+39b13e38	⬇ IU0VYT.Flash.zip をダウンロード
+d97f7a86	リリースノート
+3114018a	変更履歴
+08d24901	以前のバージョン
+e2d01b09	ソースコード
+b3944402	ファイルが破損していないか確認するには、Windows でファイルのあるフォルダーでコマンド プロンプトを開き、<code>certutil -hashfile IU0VYT.Flash.zip SHA256</code> と入力します。結果が完全に一致する必要があります。
+15ff1cf6	アーカイブを展開して <code>IU0VYT Flash.exe</code> を起動します。WebView2 コンポーネントを使用します。更新済みの Windows 10 と Windows 11 には既に含まれています。
+32cb457a	できること
+ca302446	<span data-n="marche">#</span> メーカー（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO、TYT、Hiroyasu、Talkpod、Puxing、Feidaxin、Wouxun、AnyTone など）の無線機をプログラム、変換、更新できるひとつのツール。アマチュア無線家と PMR446 無線機の利用者のために作られました。
+ef1bb9fc	プログラム可能な無線機
+52b8232b	設定に対応
+c4a0722d	ギャラリーの機種
+c8b8648a	更新できるファームウェア
+17c25383	チャンネルと周波数
+8d4e62cd	<span data-n="radio">#</span> 機種をケーブルで読み書き。デジタル PMR や DMR 無線機も含み、USB にも対応。CHIRP 互換の <code>.img</code> ファイル、K67 Pro（<code>.xlc</code>）と Bajeton 8300（<code>.dat</code>）の純正ファイルに対応。
+eb86ce5e	無線機の設定
+6139dc35	メニュー、表示、VOX、スケルチ、TOT、DTMF、キーなどを <span data-n="impostazioni">#</span> 機種で設定。各項目に説明があり、重要な項目は確認が必要です。
+06e1cc67	無線機を識別
+238339e0	無線機をつなぐと、プログラムが識別してメーカー、機種、ファームウェア、DMR の場合は ID と名前を表示します。自動識別ではケーブルをつなぐだけ：プログラムはすべてのポートを監視し、複数の無線機や後から電源を入れた無線機も識別して、それぞれのタブを開きます。別の無線機には「無線機を識別」ボタンがあります。無線機には何も書き込みません。
+66c001f1	ユニバーサル変換
+82ce44a6	あらゆる無線機やファイル（K67、Bajeton、CHIRP イメージ、CHIRP の CSV、Excel）のチャンネルを、ほかの無線機の形式に、そのルールに合わせて変換します。
+4a61c5a1	イタリアのレピーター
+a1f35340	IK2ANE の最新リストに基づくアーカイブ。フィルター、自動命名、互換性チェック、無線機への直接登録に対応。
+ecd4b3ef	ファームウェアの更新
+d72d8b35	<span data-n="firmware">#</span> 機種のファームウェアを公式プログラムのプロトコルで更新。ファイルのチェックとバックアップ付き。
+620c0164	機種ギャラリー
+fd632a2d	<span data-n="marche">#</span> メーカーの <span data-n="galleria">#</span> 機種を種類（アマチュア無線、DMR、GMRS/FRS、PMR446、子供向け）とメーカー別に分類。検索と公式プログラム・マニュアルへのリンク付き。
+c86bd7e2	11 言語に対応
+7bf9a67c	イタリア語のほか、英語、フランス語、ドイツ語、スペイン語、ポルトガル語、ロシア語、中国語、日本語、韓国語、アラビア語に対応：「情報」の横の国旗を選ぶと、プログラム全体の言語がすぐに切り替わります。ガイドと情報の翻訳はパッケージの <code>lingue</code> フォルダーにあります。
+e60a286e	バックアップ
+adfe4a55	書き込みのたびに、プログラムは事前に無線機の内容を保存し、書き込み後にデータが正しく書き込まれたか確認します。
+ab670cd6	常に最新
+60772ac8	起動のたびに新しいバージョンがあるか確認し、このリリースページからダウンロードします。
+473d4aaa	Windows 10 または 11 の PC と、無線機のプログラミングケーブルが必要です。
+c22ecae0	ダウンロードして展開
+1f5c9d6a	このページから <code>IU0VYT.Flash.zip</code> をダウンロードし、フォルダーに展開します。インストールは不要です。
+2e1d7bc6	起動して無線機を選ぶ
+3651366b	<code>IU0VYT Flash.exe</code> を開き、<b>📻 機種</b> タブで無線機を選ぶか、<b>🔎 識別</b> を使います。
+4c3f730f	つないでプログラム
+7870de1e	ケーブルをつなぎ、<b>無線機から読み込む</b> を押し、チャンネルとレピーターを編集して、すべてを無線機に書き込みます。
+41c051ae	詳しいガイドはパッケージの <code>lingue/ja</code> フォルダーにある <code>GUIDE.txt</code> です（イタリア語の原文：LEGGIMI.txt）。
+128ac670	知っておきたいこと
+59334bb5	自由ソフトウェア：GNU GPL バージョン 3 以降のライセンスに従って、使用、研究、改変、再配布できます。
+e240d883	⚠ 注意
+d54cc175	無線機のプロトコルは相互運用のために再構築され、シミュレートした無線機で検証されています：<b>バックアップは必ず保管してください</b>。
+56e0b4b3	本プログラムは<b>一切の保証なし</b>で提供されます。
+f47e8f93	独立したプログラムであり、無線機メーカー（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO ほか）とは提携しておらず、承認も受けていません。記載の商標は各所有者に帰属し、対応する無線機を示すためだけに使用しています。
+88ea8053	お住まいの国の周波数の使用に関する規則を守ってください。
+50ee767e	★ 謝辞
+6533bd03	<a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> とその作者の皆さん：無線機ドライバーの多くは彼らの成果に基づいています。
+819de25f	イタリアのレピーターのリストを誰でも無料で使えるように公開している <a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>。
+301c5be0	すべてのコンポーネントの作者とライセンスはファイル <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTHORS_AND_LICENSES.txt</a> にあります。
+dba4cb69	不具合を見つけたり、改善を提案したいときは、<a href="https://github.com/IU0VYT/IU0VYT/issues">GitHub でイシューを作成</a>してください。
+3f1602bf	<a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 以降</a>で配布&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">GitHub のソース</a>

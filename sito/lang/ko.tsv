@@ -1,0 +1,74 @@
+# IU0VYT Flash: testi del sito in «ko» (chiave del testo italiano in it.tsv, TAB, traduzione)
+a5397f2b	IU0VYT Flash — Baofeng, Quansheng, Retevis, Radtel 등 여러 브랜드 무전기의 채널, 중계기, 펌웨어
+7ee08973	IU0VYT Flash: Windows용 무료 자유 소프트웨어(GPL)로, 여러 브랜드(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) 무전기의 채널, 주파수, 설정을 읽고 쓰며, 무전기를 자동으로 식별하고, 이탈리아 중계기를 관리하고, 펌웨어를 업데이트합니다.
+56e08062	Baofeng, Bajeton, Quansheng, Retevis, Radtel 등 여러 브랜드 무전기의 채널, 중계기, 펌웨어. 무료 자유 소프트웨어, Windows 10/11용.
+9743b861	IU0VYT Flash 아이콘
+f8218bc1	Windows용 무료 자유 소프트웨어(GPL)로, 여러 브랜드(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) 무전기의 채널, 주파수, 설정을 읽고 쓰며, 이탈리아 중계기를 관리하고, 펌웨어를 업데이트합니다.
+6a0c8bb4	섹션
+0c023b2f	다운로드
+16f0aba9	기능
+8297e0a4	사용 방법
+8fe1e625	정보
+cd611275	채널 관리<span class="tag-sep"> - </span><span class="tag-b">주파수 - 중계기 - 펌웨어</span>
+540321f7	지원하는 무전기 브랜드: #
+e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span>개 브랜드
+5998daca	케이블로 무전기의 채널과 주파수를 읽고 쓰고, <br>이탈리아 중계기를 넣고 펌웨어를 업데이트하는 Windows용 무료 프로그램. <br>파일 하나, 설치 필요 없음, 이탈리아어와 그 밖의 10개 언어 지원.
+65c3ed2e	최신 버전:
+4fc59698	이 버튼은 항상 최신 공개 버전의 패키지를 다운로드합니다.
+b6a8d2e0	최신 버전
+58eb0261	{0} 게시
+232335c3	사용 가능한 최신 버전
+39b13e38	⬇ IU0VYT.Flash.zip 다운로드
+d97f7a86	릴리스 노트
+3114018a	변경 기록
+08d24901	이전 버전
+e2d01b09	소스 코드
+b3944402	파일이 손상되지 않았는지 확인하려면 Windows에서 파일이 있는 폴더에서 명령 프롬프트를 열고 <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code>을 입력하세요. 결과가 똑같아야 합니다.
+15ff1cf6	압축을 풀고 <code>IU0VYT Flash.exe</code>를 실행하세요. WebView2 구성 요소를 사용하며, 업데이트된 Windows 10과 Windows 11에는 이미 들어 있습니다.
+32cb457a	주요 기능
+ca302446	<span data-n="marche">#</span>개 브랜드(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, TYT, Hiroyasu, Talkpod, Puxing, Feidaxin, Wouxun, AnyTone 등)의 무전기를 프로그래밍하고 변환하고 업데이트하는 하나의 도구로, 아마추어 무선사와 PMR446 무전기 사용자를 위해 만들었습니다.
+ef1bb9fc	프로그래밍 가능한 무전기
+52b8232b	설정 지원
+c4a0722d	갤러리의 모델
+c8b8648a	업데이트 가능한 펌웨어
+17c25383	채널과 주파수
+8d4e62cd	<span data-n="radio">#</span>개 모델을 케이블로 읽고 쓰기. 디지털 PMR과 DMR 무전기도 포함하며 USB도 지원합니다. CHIRP 호환 <code>.img</code> 파일과 K67 Pro(<code>.xlc</code>), Bajeton 8300(<code>.dat</code>)의 원본 파일.
+eb86ce5e	무전기 설정
+6139dc35	메뉴, 디스플레이, VOX, 스켈치, TOT, DTMF, 키 등 <span data-n="impostazioni">#</span>개 모델의 설정. 항목마다 설명이 있고 민감한 항목은 확인을 거칩니다.
+06e1cc67	무전기 식별
+238339e0	무전기를 연결하면 프로그램이 이를 식별해 브랜드, 모델, 펌웨어와 DMR 무전기의 경우 ID와 이름을 보여 줍니다. 자동 식별을 쓰면 케이블만 연결하면 됩니다. 프로그램이 모든 포트를 듣고, 여러 무전기를 동시에, 나중에 켠 무전기도 식별해 각 탭을 엽니다. 다른 무전기는 “무전기 식별” 버튼을 쓰면 됩니다. 무전기에는 아무것도 쓰지 않습니다.
+66c001f1	범용 변환기
+82ce44a6	어떤 무전기나 파일(K67, Bajeton, CHIRP 이미지, CHIRP CSV, Excel)의 채널이든 다른 무전기의 형식으로, 그 규칙에 맞게 변환합니다.
+4a61c5a1	이탈리아 중계기
+a1f35340	IK2ANE의 최신 목록을 바탕으로 한 보관함. 필터, 자동 이름, 호환성 검사, 무전기에 바로 넣기를 지원합니다.
+ecd4b3ef	펌웨어 업데이트
+d72d8b35	공식 프로그램의 프로토콜로 <span data-n="firmware">#</span>개 모델의 펌웨어를 업데이트하며, 파일 검사와 백업을 합니다.
+620c0164	모델 갤러리
+fd632a2d	<span data-n="marche">#</span>개 브랜드의 무전기 <span data-n="galleria">#</span>종을 유형(아마추어, DMR, GMRS/FRS, PMR446, 어린이용)과 브랜드별로 나누고, 검색과 공식 프로그램·설명서 링크를 제공합니다.
+c86bd7e2	11개 언어
+7bf9a67c	이탈리아어 외에도 영어, 프랑스어, 독일어, 스페인어, 포르투갈어, 러시아어, 중국어, 일본어, 한국어, 아랍어를 지원합니다. “정보” 옆의 국기를 고르면 프로그램 전체의 언어가 바로 바뀝니다. 안내서와 정보 번역은 패키지의 <code>lingue</code> 폴더에 있습니다.
+e60a286e	백업
+adfe4a55	쓰기 전마다 프로그램이 무전기의 내용을 저장하고, 쓴 뒤에는 데이터가 올바르게 쓰였는지 확인합니다.
+ab670cd6	항상 최신
+60772ac8	실행할 때마다 더 새로운 버전이 있는지 확인하고, 바로 이 릴리스 페이지에서 다운로드합니다.
+473d4aaa	Windows 10 또는 11 PC와 무전기의 프로그래밍 케이블이 필요합니다.
+c22ecae0	다운로드하고 압축 풀기
+1f5c9d6a	이 페이지에서 <code>IU0VYT.Flash.zip</code>을 다운로드하고 폴더에 압축을 푸세요. 설치할 것은 없습니다.
+2e1d7bc6	실행하고 무전기 선택
+3651366b	<code>IU0VYT Flash.exe</code>를 열고 <b>📻 모델</b> 탭에서 무전기를 고르거나 <b>🔎 식별</b>을 사용하세요.
+4c3f730f	연결하고 프로그래밍
+7870de1e	케이블을 연결하고 <b>무전기에서 읽기</b>를 누른 다음, 채널과 중계기를 고치고 모두 무전기에 쓰세요.
+41c051ae	전체 안내서는 패키지의 <code>lingue/ko</code> 폴더에 있는 <code>GUIDE.txt</code>입니다(이탈리아어 원문: LEGGIMI.txt).
+128ac670	알아 둘 점
+59334bb5	자유 소프트웨어: GNU GPL 버전 3 이상의 라이선스에 따라 사용, 연구, 수정, 재배포할 수 있습니다.
+e240d883	⚠ 주의 사항
+d54cc175	무전기 프로토콜은 상호 운용을 위해 재구성되었고 시뮬레이션 무전기로 검증되었습니다. <b>백업은 항상 보관하세요</b>.
+56e0b4b3	이 프로그램은 <b>어떠한 보증도 없이</b> 제공됩니다.
+f47e8f93	독립 프로그램으로, 무전기 제조사(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO 등)와 제휴하거나 승인받지 않았습니다. 언급된 상표는 각 소유자의 것이며 호환되는 무전기를 나타내는 데만 쓰입니다.
+88ea8053	여러분 나라의 주파수 사용 규정을 지키세요.
+50ee767e	★ 감사의 말
+6533bd03	<a href="https://chirpmyradio.com" rel="noopener">CHIRP</a>와 그 개발자들: 무전기 드라이버의 대부분은 그들의 작업에서 나왔습니다.
+819de25f	이탈리아 중계기 목록을 누구나 무료로 쓸 수 있게 제공하는 <a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>.
+301c5be0	모든 구성 요소의 저작자와 라이선스는 <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTHORS_AND_LICENSES.txt</a> 파일에 있습니다.
+dba4cb69	오류를 찾았거나 개선을 제안하고 싶으신가요? <a href="https://github.com/IU0VYT/IU0VYT/issues">GitHub에서 이슈를 여세요</a>.
+3f1602bf	<a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 이상</a>으로 배포&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">GitHub의 소스</a>

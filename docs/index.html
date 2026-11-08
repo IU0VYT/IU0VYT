@@ -1,25 +1,77 @@
 <!doctype html>
-<html lang="it">
+<html lang="it" data-intl="it-IT">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IU0VYT Flash — canali, ponti e firmware per radio Baofeng, Quansheng, Retevis, Radtel e altre marche</title>
-<meta name="description" content="IU0VYT Flash: programma gratuito e libero (GPL) per Windows che legge e scrive canali, frequenze e impostazioni delle radio ricetrasmittenti di molte marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), le riconosce in automatico, gestisce i ponti radio italiani e aggiorna il firmware.">
+<script>
+// lingua del sito: le pagine tradotte sono in <codice>/ (le scrive sito/genera.go).
+// All'indirizzo principale (pagina italiana) si passa alla lingua scelta a mano con le
+// bandiere oppure, se non è mai stata scelta, alla prima lingua del browser fra quelle
+// del sito; se nessuna è del sito, all'inglese. I motori di ricerca e chi arriva da
+// un'altra pagina del sito restano sulla pagina italiana.
+(function () {
+  'use strict';
+  var L = ['it', 'en', 'fr', 'de', 'es', 'pt', 'ru', 'zh', 'ja', 'ko', 'ar'];
+  if (document.documentElement.lang !== 'it') return;
+  if (/bot|crawl|spider|slurp|lighthouse|facebookexternalhit|embedly|preview/i.test(navigator.userAgent || '')) return;
+  var here = location.href.split('#')[0].split('?')[0].replace(/index\.html$/, '');
+  if (document.referrer && document.referrer.indexOf(here) === 0) return;
+  var pick = null;
+  try { var s = localStorage.getItem('iu0vyt-lingua'); if (L.indexOf(s) >= 0) pick = s; } catch (e) {}
+  if (!pick) {
+    var a = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
+    for (var i = 0; i < a.length && !pick; i++) {
+      var c = String(a[i]).toLowerCase().split('-')[0];
+      if (L.indexOf(c) >= 0) pick = c;
+    }
+  }
+  pick = pick || 'en';
+  if (pick !== 'it') location.replace(here + pick + '/' + location.hash);
+})();
+</script>
+<title data-t>IU0VYT Flash — canali, ponti e firmware per radio Baofeng, Quansheng, Retevis, Radtel e altre marche</title>
+<meta name="description" data-ta="content" content="IU0VYT Flash: programma gratuito e libero (GPL) per Windows che legge e scrive canali, frequenze e impostazioni delle radio ricetrasmittenti di molte marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), le riconosce in automatico, gestisce i ponti radio italiani e aggiorna il firmware.">
 <meta name="theme-color" content="#07021a">
+<!-- sito:testa: generato da sito/genera.go (indirizzo e lingue della pagina) -->
 <link rel="canonical" href="https://iu0vyt.github.io/IU0VYT/">
-<meta property="og:title" content="IU0VYT Flash">
-<meta property="og:description" content="Canali, ponti e firmware per radio Baofeng, Bajeton, Quansheng, Retevis, Radtel e altre marche. Gratuito, software libero, per Windows 10/11.">
-<meta property="og:type" content="website">
+<link rel="alternate" hreflang="it" href="https://iu0vyt.github.io/IU0VYT/">
+<link rel="alternate" hreflang="en" href="https://iu0vyt.github.io/IU0VYT/en/">
+<link rel="alternate" hreflang="fr" href="https://iu0vyt.github.io/IU0VYT/fr/">
+<link rel="alternate" hreflang="de" href="https://iu0vyt.github.io/IU0VYT/de/">
+<link rel="alternate" hreflang="es" href="https://iu0vyt.github.io/IU0VYT/es/">
+<link rel="alternate" hreflang="pt" href="https://iu0vyt.github.io/IU0VYT/pt/">
+<link rel="alternate" hreflang="ru" href="https://iu0vyt.github.io/IU0VYT/ru/">
+<link rel="alternate" hreflang="zh" href="https://iu0vyt.github.io/IU0VYT/zh/">
+<link rel="alternate" hreflang="ja" href="https://iu0vyt.github.io/IU0VYT/ja/">
+<link rel="alternate" hreflang="ko" href="https://iu0vyt.github.io/IU0VYT/ko/">
+<link rel="alternate" hreflang="ar" href="https://iu0vyt.github.io/IU0VYT/ar/">
+<link rel="alternate" hreflang="x-default" href="https://iu0vyt.github.io/IU0VYT/">
 <meta property="og:url" content="https://iu0vyt.github.io/IU0VYT/">
-<meta property="og:site_name" content="IU0VYT Flash">
 <meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="ar_AE">
+<!-- /sito:testa -->
+<meta property="og:title" content="IU0VYT Flash">
+<meta property="og:description" data-ta="content" content="Canali, ponti e firmware per radio Baofeng, Bajeton, Quansheng, Retevis, Radtel e altre marche. Gratuito, software libero, per Windows 10/11.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IU0VYT Flash">
 <meta property="og:image" content="https://iu0vyt.github.io/IU0VYT/icona.png">
 <meta property="og:image:width" content="256">
 <meta property="og:image:height" content="256">
-<meta property="og:image:alt" content="Icona di IU0VYT Flash">
+<meta property="og:image:alt" data-ta="content" content="Icona di IU0VYT Flash">
 <meta name="twitter:card" content="summary">
 <link rel="icon" type="image/png" href="icona.png">
-<!-- dati strutturati per i motori di ricerca; versione aggiornata dal flusso del sito -->
+<!-- dati strutturati per i motori di ricerca: versione e data aggiornate dal flusso del
+     sito; indirizzo, descrizione, funzioni (titoli delle schede) e parole chiave (marche
+     del riquadro) scritti per ogni lingua da sito/genera.go -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -31,10 +83,15 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Windows 10, Windows 11",
   "softwareVersion": "3.9.2",
+  "dateModified": "2026-11-08",
+  "softwareRequirements": "Microsoft Edge WebView2",
   "inLanguage": ["it", "en", "fr", "de", "es", "pt", "ru", "zh", "ja", "ko", "ar"],
   "isAccessibleForFree": true,
   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
   "downloadUrl": "https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip",
+  "releaseNotes": "https://github.com/IU0VYT/IU0VYT/releases/latest",
+  "featureList": ["Canali e frequenze", "Impostazioni della radio", "Identifica la radio", "Convertitore universale", "Ponti radio italiani", "Aggiornamento firmware", "Galleria dei modelli", "In 11 lingue", "Copia di sicurezza", "Sempre aggiornato"],
+  "keywords": "Baofeng, Bajeton, Abbree, Anysecu, AnyTone, Baojie, Boblov, Boristone, BTECH, Cignus, Explorer, Feidaxin, HamGeek, Hiroyasu, Intek, Jianpai, JJCC, KSUN, KYD, Lanchonlh, Luiton, Maverick, MaxTalker, MMLradio, MTC, Puxing, Quansheng, QYT, Radioddity, Radtel, Retevis, Rugged, Ruyage, SenhaiX, Socotran, Talkpod, TDXone, TID, TIDRADIO, TYT, WLN, Wouxun, Zartek, Zastone",
   "sameAs": "https://github.com/IU0VYT/IU0VYT",
   "author": { "@type": "Person", "name": "Daniele Bonifazi", "alternateName": "IU0VYT", "url": "https://www.qrz.com/db/IU0VYT" },
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
@@ -65,10 +122,29 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 .top .wrap { display: flex; align-items: center; gap: 12px; height: 56px; }
 .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 800; letter-spacing: .04em; }
 .brand img { width: 30px; height: 30px; border-radius: 7px; }
-.nav { margin-left: auto; display: flex; gap: 18px; }
+.nav { margin-inline-start: auto; display: flex; gap: 18px; }
 .nav a { color: var(--ink2); text-decoration: none; font: 700 13px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .nav a:hover { color: var(--cyan); text-shadow: 0 0 8px var(--cyan); }
 @media (max-width: 720px) { .nav { display: none; } }
+
+/* ---------- lingua del sito: selettore con le bandiere del programma (sito/genera.go) */
+.lang { position: relative; flex: none; margin-inline-start: 16px; }
+.lang summary { list-style: none; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;
+  padding: 7px 10px; border: 1px solid rgba(0,229,255,.55); border-radius: 6px; color: var(--ink);
+  font: 700 12px/1 var(--mono); letter-spacing: .06em; box-shadow: 0 0 8px rgba(0,229,255,.25); }
+.lang summary::-webkit-details-marker { display: none; }
+.lang summary::after { content: "▾"; color: var(--cyan); }
+.lang[open] summary, .lang summary:hover { border-color: var(--cyan); box-shadow: 0 0 14px rgba(0,229,255,.5); }
+.lang .flag { display: block; flex: none; border-radius: 2px; }
+.lang-code { display: none; }
+.lang-list { position: absolute; top: calc(100% + 8px); inset-inline-end: 0; z-index: 30; min-width: 200px; margin: 0; padding: 6px;
+  list-style: none; background: #12052e; border: 1px solid rgba(0,229,255,.55); border-radius: 10px;
+  box-shadow: 0 0 22px rgba(0,229,255,.3), 0 12px 30px rgba(0,0,0,.6); max-height: calc(100vh - 80px); overflow-y: auto; }
+.lang-list a { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 15px; }
+.lang-list a:hover, .lang-list a:focus-visible { background: rgba(0,229,255,.14); color: #fff; }
+.lang-list a[aria-current] { color: var(--yellow); font-weight: 700; }
+@media (max-width: 720px) { .lang { margin-inline-start: auto; } }
+@media (max-width: 420px) { .lang-name { display: none; } .lang-code { display: inline; } }
 
 /* ---------- schermata iniziale (come la Home del programma) */
 .hero { position: relative; overflow: hidden; text-align: center; padding: 30px 0 120px;
@@ -84,7 +160,7 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 @keyframes grid { from { background-position: 0 0; } to { background-position: 0 48px; } }
 .hero-inner { position: relative; z-index: 1; }
 
-.neon { margin: 0 0 6px; line-height: .95; font-family: "Arial Black", "Segoe UI Black", Impact, system-ui, sans-serif; font-weight: 900;
+.neon { direction: ltr; margin: 0 0 6px; line-height: .95; font-family: "Arial Black", "Segoe UI Black", Impact, system-ui, sans-serif; font-weight: 900;
   letter-spacing: .06em; user-select: none; }
 .neon span { display: block; }
 /* testo per motori di ricerca e lettori di schermo, non visibile */
@@ -143,7 +219,7 @@ h2 { margin: 0 0 8px; text-align: center; font: 900 clamp(26px, 5vw, 38px)/1.1 "
 .btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,210,63,.8), 0 6px 0 #a3471a; }
 .btn:active { transform: translateY(2px); box-shadow: 0 0 12px rgba(255,210,63,.5), 0 1px 0 #a3471a; }
 .links { margin-top: 18px; display: flex; gap: 8px 18px; justify-content: center; flex-wrap: wrap; font-size: 14px; }
-.hash { margin: 22px auto 0; text-align: left; background: rgba(0,0,0,.35); border: 1px dashed rgba(0,229,255,.35); border-radius: 8px;
+.hash { margin: 22px auto 0; text-align: start; background: rgba(0,0,0,.35); border: 1px dashed rgba(0,229,255,.35); border-radius: 8px;
   padding: 12px 14px; font: 12.5px/1.5 var(--mono); color: var(--ink2); overflow-wrap: anywhere; }
 .hash b { color: var(--yellow); }
 .req { margin-top: 16px; font-size: 13.5px; color: var(--muted); }
@@ -175,13 +251,16 @@ h2 { margin: 0 0 8px; text-align: center; font: 900 clamp(26px, 5vw, 38px)/1.1 "
 .level p { margin: 0; color: var(--ink2); font-size: 14.5px; }
 @media (max-width: 760px) { .levels { grid-template-columns: 1fr; } }
 code, kbd { font-family: var(--mono); background: rgba(255,255,255,.08); border-radius: 4px; padding: 1px 5px; font-size: .92em; }
+/* nomi di file, comandi, versioni e conteggi restano da sinistra a destra anche in arabo */
+code, kbd { direction: ltr; unicode-bidi: isolate; }
+.js-ver, [data-n], .dl-meta .nw { unicode-bidi: isolate; }
 
 /* ---------- avvertenze e ringraziamenti */
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
 .box { border: 1px solid rgba(255,210,63,.4); border-radius: 12px; padding: 18px 20px; background: rgba(40,20,0,.18); }
 .box h3 { margin: 0 0 8px; color: var(--yellow); font: 800 14px var(--mono); letter-spacing: .18em; text-transform: uppercase; }
-.box ul { margin: 0; padding-left: 18px; color: var(--ink2); font-size: 14.5px; }
+.box ul { margin: 0; padding-inline-start: 18px; color: var(--ink2); font-size: 14.5px; }
 .box li + li { margin-top: 6px; }
 
 /* ---------- piè di pagina */
@@ -204,7 +283,7 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
 @keyframes hb-march { 50% { transform: translateX(3px); } }
 .hb-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px 14px; }
 .hb-grid li { display: flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font: 700 11px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #cfe6ff; text-align: left; }
+  font: 700 11px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #cfe6ff; text-align: start; }
 .hb-dot { flex: none; width: 6px; height: 6px; }
 @media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (prefers-reduced-motion: reduce) { .hb-inv { animation: none; } }
@@ -230,6 +309,15 @@ h2, .tag { text-wrap: balance; }
   .btn { font-size: 14px; letter-spacing: .03em; padding: 14px 14px; }
 }
 
+/* ---------- cinese, giapponese, coreano e arabo: spaziatura delle lettere ridotta
+   (in arabo le lettere sono legate fra loro: nessuna spaziatura) e testi piccoli
+   un po' più grandi */
+:is(:lang(zh), :lang(ja), :lang(ko)) :is(.tag, .nav a, .stat span, .box h3, .hb-title, .hero-ver, .dl-meta) { letter-spacing: .04em; }
+:lang(ar) :is(.tag, .kicker, .nav a, .stat span, .box h3, .hb-title, .hero-ver, .dl-meta, .btn, .lang summary) { letter-spacing: 0; }
+:is(:lang(zh), :lang(ja), :lang(ko), :lang(ar)) :is(.stat span, .hb-title) { font-size: 12.5px; }
+:lang(ar) body { font-size: 17px; }
+:lang(ar) .card p, :lang(ar) .level p, :lang(ar) .box li { font-size: 15.5px; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .grid, .neon-top i, .start { animation: none; }
@@ -241,12 +329,30 @@ h2, .tag { text-wrap: balance; }
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#"><img src="icona.png" alt="" width="30" height="30">IU0VYT Flash</a>
-    <nav class="nav" aria-label="Sezioni">
-      <a href="#scarica">Scarica</a>
-      <a href="#funzioni">Funzioni</a>
-      <a href="#come">Come si usa</a>
-      <a href="#info">Info</a>
+    <nav class="nav" data-ta="aria-label" aria-label="Sezioni">
+      <a href="#scarica" data-t>Scarica</a>
+      <a href="#funzioni" data-t>Funzioni</a>
+      <a href="#come" data-t>Come si usa</a>
+      <a href="#info" data-t>Info</a>
     </nav>
+    <!-- sito:lingue: generato da sito/genera.go (bandiere di sorgenti/ui/i18n.js) -->
+    <details class="lang">
+      <summary title="Lingua" aria-label="Lingua: Italiano"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="8" height="16" fill="#009246"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#ce2b37"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span class="lang-name">Italiano</span><span class="lang-code" aria-hidden="true">IT</span></summary>
+      <ul class="lang-list">
+        <li><a href="./" hreflang="it" lang="it" data-lang="it" aria-current="page"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="8" height="16" fill="#009246"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#ce2b37"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>Italiano</span></a></li>
+        <li><a href="en/" hreflang="en" lang="en" data-lang="en"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="16" fill="#012169"/><path d="M0 0L24 16M24 0L0 16" stroke="#fff" stroke-width="3.2"/><path d="M0 0L24 16M24 0L0 16" stroke="#c8102e" stroke-width="1.2"/><path d="M12 0V16M0 8H24" stroke="#fff" stroke-width="5"/><path d="M12 0V16M0 8H24" stroke="#c8102e" stroke-width="3"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>English</span></a></li>
+        <li><a href="fr/" hreflang="fr" lang="fr" data-lang="fr"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="8" height="16" fill="#002395"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#ed2939"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>Français</span></a></li>
+        <li><a href="de/" hreflang="de" lang="de" data-lang="de"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="5.34" fill="#000"/><rect y="5.33" width="24" height="5.34" fill="#dd0000"/><rect y="10.66" width="24" height="5.34" fill="#ffce00"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>Deutsch</span></a></li>
+        <li><a href="es/" hreflang="es" lang="es" data-lang="es"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="16" fill="#aa151b"/><rect y="4" width="24" height="8" fill="#f1bf00"/><rect x="5" y="6" width="3" height="4" rx=".6" fill="#aa151b" opacity=".75"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>Español</span></a></li>
+        <li><a href="pt/" hreflang="pt" lang="pt" data-lang="pt"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="16" fill="#ff0000"/><rect width="9.6" height="16" fill="#006600"/><circle cx="9.6" cy="8" r="3.4" fill="#ffcc00"/><circle cx="9.6" cy="8" r="2.2" fill="#ff0000"/><rect x="8.7" y="6.6" width="1.8" height="2.6" rx=".4" fill="#fff"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>Português</span></a></li>
+        <li><a href="ru/" hreflang="ru" lang="ru" data-lang="ru"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="5.34" fill="#fff"/><rect y="5.33" width="24" height="5.34" fill="#0039a6"/><rect y="10.66" width="24" height="5.34" fill="#d52b1e"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>Русский</span></a></li>
+        <li><a href="zh/" hreflang="zh" lang="zh" data-lang="zh"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="16" fill="#de2910"/><path d="M4 1.6l.9 2.7h2.8l-2.3 1.7.9 2.7L4 7l-2.3 1.7.9-2.7L.3 4.3h2.8z" fill="#ffde00"/><circle cx="8.6" cy="1.8" r=".7" fill="#ffde00"/><circle cx="10" cy="3.6" r=".7" fill="#ffde00"/><circle cx="10" cy="6" r=".7" fill="#ffde00"/><circle cx="8.6" cy="7.8" r=".7" fill="#ffde00"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>中文</span></a></li>
+        <li><a href="ja/" hreflang="ja" lang="ja" data-lang="ja"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="16" fill="#fff"/><circle cx="12" cy="8" r="4.8" fill="#bc002d"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>日本語</span></a></li>
+        <li><a href="ko/" hreflang="ko" lang="ko" data-lang="ko"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="16" fill="#fff"/><g transform="rotate(33.69 12 8)"><path d="M8 8a4 4 0 0 1 8 0z" fill="#cd2e3a"/><path d="M8 8a4 4 0 0 0 8 0z" fill="#0047a0"/><circle cx="10" cy="8" r="2" fill="#cd2e3a"/><circle cx="14" cy="8" r="2" fill="#0047a0"/></g><g transform="translate(4.3 3.1) rotate(-56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="3" height=".44"/><rect x="-1.5" y="-0.22" width="3" height=".44"/><rect x="-1.5" y="0.53" width="3" height=".44"/></g><g transform="translate(19.7 12.9) rotate(-56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="1.3" height=".44"/><rect x=".2" y="-0.97" width="1.3" height=".44"/><rect x="-1.5" y="-0.22" width="1.3" height=".44"/><rect x=".2" y="-0.22" width="1.3" height=".44"/><rect x="-1.5" y="0.53" width="1.3" height=".44"/><rect x=".2" y="0.53" width="1.3" height=".44"/></g><g transform="translate(19.7 3.1) rotate(56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="1.3" height=".44"/><rect x=".2" y="-0.97" width="1.3" height=".44"/><rect x="-1.5" y="-0.22" width="3" height=".44"/><rect x="-1.5" y="0.53" width="1.3" height=".44"/><rect x=".2" y="0.53" width="1.3" height=".44"/></g><g transform="translate(4.3 12.9) rotate(56.31)" fill="#000"><rect x="-1.5" y="-0.97" width="3" height=".44"/><rect x="-1.5" y="-0.22" width="1.3" height=".44"/><rect x=".2" y="-0.22" width="1.3" height=".44"/><rect x="-1.5" y="0.53" width="3" height=".44"/></g><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>한국어</span></a></li>
+        <li><a href="ar/" hreflang="ar" lang="ar" data-lang="ar"><svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true"><rect width="24" height="5.34" fill="#00732f"/><rect y="5.33" width="24" height="5.34" fill="#fff"/><rect y="10.66" width="24" height="5.34" fill="#000"/><rect width="6" height="16" fill="#ff0000"/><rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg><span>العربية</span></a></li>
+      </ul>
+    </details>
+    <!-- /sito:lingue -->
   </div>
 </header>
 
@@ -259,41 +365,41 @@ h2, .tag { text-wrap: balance; }
       <span class="neon-top" aria-hidden="true"><i style="--i:0">I</i><i style="--i:1">U</i><i style="--i:2">Ø</i><i style="--i:3">V</i><i style="--i:4">Y</i><i style="--i:5">T</i></span>
       <span class="neon-bottom" aria-hidden="true">FLASH</span>
     </h1>
-    <div class="tag">GESTIONE CANALI<span class="tag-sep"> - </span><span class="tag-b">FREQUENZE - PONTI RADIO - FIRMWARE</span></div>
+    <div class="tag" data-t>GESTIONE CANALI<span class="tag-sep"> - </span><span class="tag-b">FREQUENZE - PONTI RADIO - FIRMWARE</span></div>
     <!-- marche: generato dal catalogo del programma (verificato da TestSitoMarche) -->
-    <div class="hb" role="group" aria-label="Marche di radio gestite: 44"><div class="hb-frame"><div class="hb-in">
-      <div class="hb-title"><svg class="hb-inv" viewBox="0 0 11 8" width="22" height="16" aria-hidden="true" shape-rendering="crispEdges"><rect x="2" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></svg><span>PLAYER SELECT · <span data-n="marche">44</span> MARCHE</span><svg class="hb-inv hb-inv2" viewBox="0 0 11 8" width="22" height="16" aria-hidden="true" shape-rendering="crispEdges"><rect x="2" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></svg></div>
+    <div class="hb" data-ta="aria-label" role="group" aria-label="Marche di radio gestite: 44"><div class="hb-frame"><div class="hb-in">
+      <div class="hb-title"><svg class="hb-inv" viewBox="0 0 11 8" width="22" height="16" aria-hidden="true" shape-rendering="crispEdges"><rect x="2" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></svg><span data-t>PLAYER SELECT · <span data-n="marche">44</span> MARCHE</span><svg class="hb-inv hb-inv2" viewBox="0 0 11 8" width="22" height="16" aria-hidden="true" shape-rendering="crispEdges"><rect x="2" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></svg></div>
       <ul class="hb-grid"><li><span class="hb-dot" style="background:#1c64d8"></span>Baofeng</li><li><span class="hb-dot" style="background:#e8590c"></span>Bajeton</li><li><span class="hb-dot" style="background:#5f3dc4"></span>Abbree</li><li><span class="hb-dot" style="background:#1971c2"></span>Anysecu</li><li><span class="hb-dot" style="background:#1c7ed6"></span>AnyTone</li><li><span class="hb-dot" style="background:#099268"></span>Baojie</li><li><span class="hb-dot" style="background:#0b7285"></span>Boblov</li><li><span class="hb-dot" style="background:#a0522d"></span>Boristone</li><li><span class="hb-dot" style="background:#495057"></span>BTECH</li><li><span class="hb-dot" style="background:#5c7cfa"></span>Cignus</li><li><span class="hb-dot" style="background:#2f9e44"></span>Explorer</li><li><span class="hb-dot" style="background:#c92a2a"></span>Feidaxin</li><li><span class="hb-dot" style="background:#f08c00"></span>HamGeek</li><li><span class="hb-dot" style="background:#b02a8f"></span>Hiroyasu</li><li><span class="hb-dot" style="background:#a61e4d"></span>Intek</li><li><span class="hb-dot" style="background:#0c8599"></span>Jianpai</li><li><span class="hb-dot" style="background:#e8590c"></span>JJCC</li><li><span class="hb-dot" style="background:#e8590c"></span>KSUN</li><li><span class="hb-dot" style="background:#1971c2"></span>KYD</li><li><span class="hb-dot" style="background:#6741d9"></span>Lanchonlh</li><li><span class="hb-dot" style="background:#862e9c"></span>Luiton</li><li><span class="hb-dot" style="background:#364fc7"></span>Maverick</li><li><span class="hb-dot" style="background:#2b8a3e"></span>MaxTalker</li><li><span class="hb-dot" style="background:#9c36b5"></span>MMLradio</li><li><span class="hb-dot" style="background:#ae3ec9"></span>MTC</li><li><span class="hb-dot" style="background:#2f9e44"></span>Puxing</li><li><span class="hb-dot" style="background:#0f8a5f"></span>Quansheng</li><li><span class="hb-dot" style="background:#f76707"></span>QYT</li><li><span class="hb-dot" style="background:#d9480f"></span>Radioddity</li><li><span class="hb-dot" style="background:#7048e8"></span>Radtel</li><li><span class="hb-dot" style="background:#c2255c"></span>Retevis</li><li><span class="hb-dot" style="background:#795548"></span>Rugged</li><li><span class="hb-dot" style="background:#74b816"></span>Ruyage</li><li><span class="hb-dot" style="background:#1864ab"></span>SenhaiX</li><li><span class="hb-dot" style="background:#3b5bdb"></span>Socotran</li><li><span class="hb-dot" style="background:#5c940d"></span>Talkpod</li><li><span class="hb-dot" style="background:#4263eb"></span>TDXone</li><li><span class="hb-dot" style="background:#0b7285"></span>TID</li><li><span class="hb-dot" style="background:#1098ad"></span>TIDRADIO</li><li><span class="hb-dot" style="background:#c92a2a"></span>TYT</li><li><span class="hb-dot" style="background:#e67700"></span>WLN</li><li><span class="hb-dot" style="background:#d6336c"></span>Wouxun</li><li><span class="hb-dot" style="background:#e64980"></span>Zartek</li><li><span class="hb-dot" style="background:#087f5b"></span>Zastone</li></ul>
     </div></div></div>
     <!-- /marche -->
-    <p class="lead">Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, <br>inserisce i ponti radio italiani e aggiorna il firmware. <br>Un solo file, nessuna installazione, in italiano e in altre 10 lingue.</p>
+    <p class="lead" data-t>Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, <br>inserisce i ponti radio italiani e aggiorna il firmware. <br>Un solo file, nessuna installazione, in italiano e in altre 10 lingue.</p>
     <a class="start" href="#scarica">▶ PRESS START</a>
-    <div class="hero-ver">ULTIMA VERSIONE: <b class="js-ver">3.9.2</b></div>
+    <div class="hero-ver"><span data-t>ULTIMA VERSIONE:</span> <b class="js-ver">3.9.2</b></div>
   </div>
 </section>
 
 <section id="scarica" class="alt" aria-labelledby="h-scarica">
   <div class="wrap">
     <div class="kicker">PLAYER 1 · READY</div>
-    <h2 id="h-scarica">Scarica</h2>
-    <p class="sub">Il pulsante scarica sempre il pacchetto dell'ultima versione pubblicata.</p>
+    <h2 id="h-scarica" data-t>Scarica</h2>
+    <p class="sub" data-t>Il pulsante scarica sempre il pacchetto dell'ultima versione pubblicata.</p>
     <div class="dl">
-      <div class="kicker">ULTIMA VERSIONE</div>
+      <div class="kicker" data-t>ULTIMA VERSIONE</div>
       <div class="dl-ver js-ver">3.9.2</div>
-      <div class="dl-meta" id="dl-meta"><span class="nw">Windows 10 / 11 · 64 bit</span></div>
-      <a class="btn" id="dl-btn" href="https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip">⬇ SCARICA IU0VYT.Flash.zip</a>
+      <div class="dl-meta" id="dl-meta" data-ta="data-pub data-last" data-pub="pubblicata il {0}" data-last="ultima disponibile"><span class="nw">Windows 10 / 11 · 64 bit</span></div>
+      <a class="btn" id="dl-btn" href="https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip" data-t>⬇ SCARICA IU0VYT.Flash.zip</a>
       <div class="links">
-        <a id="dl-notes" href="https://github.com/IU0VYT/IU0VYT/releases/latest">Note della versione</a>
-        <a href="https://github.com/IU0VYT/IU0VYT/blob/main/changelog.txt">Registro delle modifiche</a>
-        <a href="https://github.com/IU0VYT/IU0VYT/releases">Versioni precedenti</a>
-        <a href="https://github.com/IU0VYT/IU0VYT">Codice sorgente</a>
+        <a id="dl-notes" href="https://github.com/IU0VYT/IU0VYT/releases/latest" data-t>Note della versione</a>
+        <a href="https://github.com/IU0VYT/IU0VYT/blob/main/changelog.txt" data-t>Registro delle modifiche</a>
+        <a href="https://github.com/IU0VYT/IU0VYT/releases" data-t>Versioni precedenti</a>
+        <a href="https://github.com/IU0VYT/IU0VYT" data-t>Codice sorgente</a>
       </div>
       <div class="hash" id="dl-hash" hidden>
         <b>SHA-256</b> <span id="dl-sha"></span><br>
-        Per controllare che il file sia integro, in Windows apri il Prompt dei comandi nella cartella del file e scrivi
-        <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code>: il risultato deve essere identico.
+        <span data-t>Per controllare che il file sia integro, in Windows apri il Prompt dei comandi nella cartella del file e scrivi
+        <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code>: il risultato deve essere identico.</span>
       </div>
-      <div class="req">Estrai l'archivio e avvia <code>IU0VYT Flash.exe</code>. Usa il componente WebView2, già presente in Windows 10 aggiornato e in Windows 11.</div>
+      <div class="req" data-t>Estrai l'archivio e avvia <code>IU0VYT Flash.exe</code>. Usa il componente WebView2, già presente in Windows 10 aggiornato e in Windows 11.</div>
     </div>
   </div>
 </section>
@@ -301,25 +407,25 @@ h2, .tag { text-wrap: balance; }
 <section id="funzioni" aria-labelledby="h-funzioni">
   <div class="wrap">
     <div class="kicker">SELECT YOUR POWER-UP</div>
-    <h2 id="h-funzioni">Che cosa fa</h2>
-    <p class="sub">Uno strumento unico per programmare, convertire e aggiornare le radio di <span data-n="marche">44</span> marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, TYT, Hiroyasu, Talkpod, Puxing, Feidaxin, Wouxun, AnyTone e altre), pensato per radioamatori e per chi usa le radio PMR446.</p>
+    <h2 id="h-funzioni" data-t>Che cosa fa</h2>
+    <p class="sub" data-t>Uno strumento unico per programmare, convertire e aggiornare le radio di <span data-n="marche">44</span> marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, TYT, Hiroyasu, Talkpod, Puxing, Feidaxin, Wouxun, AnyTone e altre), pensato per radioamatori e per chi usa le radio PMR446.</p>
     <div class="stats">
-      <div class="stat"><b data-n="radio">451</b><span>Radio programmabili</span></div>
-      <div class="stat"><b data-n="impostazioni">396</b><span>Con impostazioni</span></div>
-      <div class="stat"><b data-n="galleria">489</b><span>Modelli in galleria</span></div>
-      <div class="stat"><b data-n="firmware">57</b><span>Firmware aggiornabili</span></div>
+      <div class="stat"><b data-n="radio">451</b><span data-t>Radio programmabili</span></div>
+      <div class="stat"><b data-n="impostazioni">396</b><span data-t>Con impostazioni</span></div>
+      <div class="stat"><b data-n="galleria">489</b><span data-t>Modelli in galleria</span></div>
+      <div class="stat"><b data-n="firmware">57</b><span data-t>Firmware aggiornabili</span></div>
     </div>
     <div class="cards">
-      <article class="card"><span class="ico" aria-hidden="true">📻</span><h3>Canali e frequenze</h3><p>Lettura e scrittura via cavo di <span data-n="radio">451</span> modelli, comprese radio PMR digitali e DMR anche via USB. File <code>.img</code> compatibili con CHIRP e i file originali del K67 Pro (<code>.xlc</code>) e della Bajeton 8300 (<code>.dat</code>).</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">⚙️</span><h3>Impostazioni della radio</h3><p>Menu, display, VOX, squelch, TOT, DTMF, tasti e altro per <span data-n="impostazioni">396</span> modelli, con la spiegazione di ogni voce e una conferma per quelle delicate.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🔎</span><h3>Identifica la radio</h3><p>Collega la radio: il programma la riconosce e mostra marca, modello, firmware e, per le DMR, ID e nome. Con l'identificazione automatica basta collegare il cavo: il programma ascolta tutte le porte, riconosce anche più radio insieme e quelle accese dopo, e apre le loro schede; per un'altra radio c'è il pulsante «Identifica Radio». Senza scrivere nulla nella radio.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🔁</span><h3>Convertitore universale</h3><p>I canali di qualsiasi radio o file (K67, Bajeton, immagini CHIRP, CSV di CHIRP, Excel) nel formato di qualsiasi altra radio, adattati alle sue regole.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">📡</span><h3>Ponti radio italiani</h3><p>Archivio basato sull'elenco aggiornato di IK2ANE, con filtri, nomi automatici, controllo della compatibilità e inserimento diretto nelle radio.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">⬆️</span><h3>Aggiornamento firmware</h3><p>Firmware di <span data-n="firmware">57</span> modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🖼️</span><h3>Galleria dei modelli</h3><p><span data-n="galleria">489</span> radio di <span data-n="marche">44</span> marche divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🌍</span><h3>In 11 lingue</h3><p>Oltre all'italiano, il programma è disponibile in inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese, coreano e arabo: si sceglie la bandiera accanto a «Info» e tutto il programma cambia lingua all'istante. Guida e informazioni tradotte nella cartella <code>lingue</code> del pacchetto.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🛡️</span><h3>Copia di sicurezza</h3><p>Prima di ogni scrittura il programma salva il contenuto della radio e dopo verifica che i dati siano stati scritti correttamente.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🔄</span><h3>Sempre aggiornato</h3><p>A ogni avvio il programma controlla se c'è una versione più recente e la scarica da questa stessa pagina dei rilasci.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">📻</span><h3 data-t>Canali e frequenze</h3><p data-t>Lettura e scrittura via cavo di <span data-n="radio">451</span> modelli, comprese radio PMR digitali e DMR anche via USB. File <code>.img</code> compatibili con CHIRP e i file originali del K67 Pro (<code>.xlc</code>) e della Bajeton 8300 (<code>.dat</code>).</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">⚙️</span><h3 data-t>Impostazioni della radio</h3><p data-t>Menu, display, VOX, squelch, TOT, DTMF, tasti e altro per <span data-n="impostazioni">396</span> modelli, con la spiegazione di ogni voce e una conferma per quelle delicate.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🔎</span><h3 data-t>Identifica la radio</h3><p data-t>Collega la radio: il programma la riconosce e mostra marca, modello, firmware e, per le DMR, ID e nome. Con l'identificazione automatica basta collegare il cavo: il programma ascolta tutte le porte, riconosce anche più radio insieme e quelle accese dopo, e apre le loro schede; per un'altra radio c'è il pulsante «Identifica Radio». Senza scrivere nulla nella radio.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🔁</span><h3 data-t>Convertitore universale</h3><p data-t>I canali di qualsiasi radio o file (K67, Bajeton, immagini CHIRP, CSV di CHIRP, Excel) nel formato di qualsiasi altra radio, adattati alle sue regole.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">📡</span><h3 data-t>Ponti radio italiani</h3><p data-t>Archivio basato sull'elenco aggiornato di IK2ANE, con filtri, nomi automatici, controllo della compatibilità e inserimento diretto nelle radio.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">⬆️</span><h3 data-t>Aggiornamento firmware</h3><p data-t>Firmware di <span data-n="firmware">57</span> modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🖼️</span><h3 data-t>Galleria dei modelli</h3><p data-t><span data-n="galleria">489</span> radio di <span data-n="marche">44</span> marche divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🌍</span><h3 data-t>In 11 lingue</h3><p data-t>Oltre all'italiano, il programma è disponibile in inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese, coreano e arabo: si sceglie la bandiera accanto a «Info» e tutto il programma cambia lingua all'istante. Guida e informazioni tradotte nella cartella <code>lingue</code> del pacchetto.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🛡️</span><h3 data-t>Copia di sicurezza</h3><p data-t>Prima di ogni scrittura il programma salva il contenuto della radio e dopo verifica che i dati siano stati scritti correttamente.</p></article>
+      <article class="card"><span class="ico" aria-hidden="true">🔄</span><h3 data-t>Sempre aggiornato</h3><p data-t>A ogni avvio il programma controlla se c'è una versione più recente e la scarica da questa stessa pagina dei rilasci.</p></article>
     </div>
   </div>
 </section>
@@ -327,39 +433,39 @@ h2, .tag { text-wrap: balance; }
 <section id="come" class="alt" aria-labelledby="h-come">
   <div class="wrap">
     <div class="kicker">HOW TO PLAY</div>
-    <h2 id="h-come">Come si usa</h2>
-    <p class="sub">Servono un PC con Windows 10 o 11 e il cavo di programmazione della radio.</p>
+    <h2 id="h-come" data-t>Come si usa</h2>
+    <p class="sub" data-t>Servono un PC con Windows 10 o 11 e il cavo di programmazione della radio.</p>
     <div class="levels">
-      <div class="level"><h3>Scarica ed estrai</h3><p>Scarica <code>IU0VYT.Flash.zip</code> da questa pagina ed estrai l'archivio in una cartella. Non c'è nulla da installare.</p></div>
-      <div class="level"><h3>Avvia e scegli la radio</h3><p>Apri <code>IU0VYT Flash.exe</code> e, dalla scheda <b>📻 Modelli</b>, scegli la tua radio oppure usa <b>🔎 Identifica</b>.</p></div>
-      <div class="level"><h3>Collega e programma</h3><p>Collega il cavo, premi <b>Leggi dalla radio</b>, modifica canali e ponti e scrivi tutto nella radio.</p></div>
+      <div class="level"><h3 data-t>Scarica ed estrai</h3><p data-t>Scarica <code>IU0VYT.Flash.zip</code> da questa pagina ed estrai l'archivio in una cartella. Non c'è nulla da installare.</p></div>
+      <div class="level"><h3 data-t>Avvia e scegli la radio</h3><p data-t>Apri <code>IU0VYT Flash.exe</code> e, dalla scheda <b>📻 Modelli</b>, scegli la tua radio oppure usa <b>🔎 Identifica</b>.</p></div>
+      <div class="level"><h3 data-t>Collega e programma</h3><p data-t>Collega il cavo, premi <b>Leggi dalla radio</b>, modifica canali e ponti e scrivi tutto nella radio.</p></div>
     </div>
-    <p class="sub" style="margin:26px auto 0">La guida completa è nel file <code>LEGGIMI.txt</code> incluso nel pacchetto; le traduzioni sono nella cartella <code>lingue</code>.</p>
+    <p class="sub" style="margin:26px auto 0" data-t>La guida completa è nel file <code>LEGGIMI.txt</code> incluso nel pacchetto; le traduzioni sono nella cartella <code>lingue</code>.</p>
   </div>
 </section>
 
 <section id="info" aria-labelledby="h-info">
   <div class="wrap">
     <div class="kicker">READ ME FIRST</div>
-    <h2 id="h-info">Da sapere</h2>
-    <p class="sub">Software libero: puoi usarlo, studiarlo, modificarlo e ridistribuirlo secondo la licenza GNU GPL versione 3 o successiva.</p>
+    <h2 id="h-info" data-t>Da sapere</h2>
+    <p class="sub" data-t>Software libero: puoi usarlo, studiarlo, modificarlo e ridistribuirlo secondo la licenza GNU GPL versione 3 o successiva.</p>
     <div class="two">
       <div class="box">
-        <h3>⚠ Avvertenze</h3>
+        <h3 data-t>⚠ Avvertenze</h3>
         <ul>
-          <li>I protocolli delle radio sono stati ricostruiti per l'interoperabilità e verificati con radio simulate: <b>conserva sempre le copie di sicurezza</b>.</li>
-          <li>Il programma è fornito <b>senza alcuna garanzia</b>.</li>
-          <li>Programma indipendente, non affiliato né approvato dai costruttori delle radio (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e gli altri). I marchi citati appartengono ai rispettivi titolari e indicano solo le radio compatibili.</li>
-          <li>Rispetta le norme sull'uso delle frequenze del tuo Paese.</li>
+          <li data-t>I protocolli delle radio sono stati ricostruiti per l'interoperabilità e verificati con radio simulate: <b>conserva sempre le copie di sicurezza</b>.</li>
+          <li data-t>Il programma è fornito <b>senza alcuna garanzia</b>.</li>
+          <li data-t>Programma indipendente, non affiliato né approvato dai costruttori delle radio (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e gli altri). I marchi citati appartengono ai rispettivi titolari e indicano solo le radio compatibili.</li>
+          <li data-t>Rispetta le norme sull'uso delle frequenze del tuo Paese.</li>
         </ul>
       </div>
       <div class="box">
-        <h3>★ Ringraziamenti</h3>
+        <h3 data-t>★ Ringraziamenti</h3>
         <ul>
-          <li><a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> e i suoi autori: gran parte dei driver delle radio deriva dal loro lavoro.</li>
-          <li><a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>, che mette a disposizione di tutti, gratuitamente, l'elenco dei ponti radio italiani.</li>
-          <li>Autori e licenze di tutti i componenti nel file <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTORI_E_LICENZE.txt</a>.</li>
-          <li>Hai trovato un errore o vuoi proporre una miglioria? Apri una <a href="https://github.com/IU0VYT/IU0VYT/issues">segnalazione su GitHub</a>.</li>
+          <li data-t><a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> e i suoi autori: gran parte dei driver delle radio deriva dal loro lavoro.</li>
+          <li data-t><a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>, che mette a disposizione di tutti, gratuitamente, l'elenco dei ponti radio italiani.</li>
+          <li data-t>Autori e licenze di tutti i componenti nel file <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTORI_E_LICENZE.txt</a>.</li>
+          <li data-t>Hai trovato un errore o vuoi proporre una miglioria? Apri una <a href="https://github.com/IU0VYT/IU0VYT/issues">segnalazione su GitHub</a>.</li>
         </ul>
       </div>
     </div>
@@ -370,7 +476,7 @@ h2, .tag { text-wrap: balance; }
 <footer>
   <div class="wrap">
     <div class="copy"><span class="nw">Copyright © 2026 Daniele "IU0VYT" Bonifazi</span><span class="dot"> · </span><a href="https://www.qrz.com/db/IU0VYT" rel="noopener">qrz.com/db/IU0VYT</a></div>
-    <div>Distribuito con licenza <a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 o successiva</a>&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">Sorgenti su GitHub</a></div>
+    <div data-t>Distribuito con licenza <a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 o successiva</a>&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">Sorgenti su GitHub</a></div>
     <div class="over">73 DE IU0VYT · THANKS FOR PLAYING</div>
   </div>
 </footer>
@@ -380,12 +486,30 @@ h2, .tag { text-wrap: balance; }
   'use strict';
   var REPO = 'IU0VYT/IU0VYT';
   var ASSET = 'IU0VYT.Flash.zip';
+  // lingua della pagina: formato di date e numeri e testi dello script (tradotti
+  // negli attributi data-pub e data-last da sito/genera.go)
+  var LOC = document.documentElement.getAttribute('data-intl') || 'it-IT';
+  var DM = document.getElementById('dl-meta');
+  var T_PUB = DM.getAttribute('data-pub') || 'pubblicata il {0}';
+  var T_LAST = DM.getAttribute('data-last') || 'ultima disponibile';
+  // selettore della lingua: la scelta resta per le visite successive
+  var LANG = document.querySelector('details.lang');
+  if (LANG) {
+    LANG.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[data-lang]') : null;
+      if (a) { try { localStorage.setItem('iu0vyt-lingua', a.getAttribute('data-lang')); } catch (x) {} }
+    });
+    document.addEventListener('click', function (e) { if (LANG.open && !LANG.contains(e.target)) LANG.open = false; });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && LANG.open) { LANG.open = false; LANG.querySelector('summary').focus(); }
+    });
+  }
   function setVer(v) {
     var els = document.querySelectorAll('.js-ver');
     for (var i = 0; i < els.length; i++) els[i].textContent = v;
   }
   function cleanVer(tag) { return String(tag || '').replace(/^[vV]\.?\s*/, ''); }
-  function mb(bytes) { return (bytes / 1048576).toLocaleString('it-IT', { maximumFractionDigits: 2 }) + ' MB'; }
+  function mb(bytes) { return (bytes / 1048576).toLocaleString(LOC, { maximumFractionDigits: 2 }) + ' MB'; }
   function withTimeout(url, ms) {
     var ctl = ('AbortController' in window) ? new AbortController() : null;
     var t = ctl ? setTimeout(function () { ctl.abort(); }, ms) : null;
@@ -419,16 +543,17 @@ h2, .tag { text-wrap: balance; }
     .then(function (rel) {
       setVer(cleanVer(rel.tag_name) || rel.name || '—');
       var meta = [];
-      if (rel.published_at) meta.push('pubblicata il ' + new Date(rel.published_at).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }));
+      if (rel.published_at) meta.push(T_PUB.replace('{0}', new Date(rel.published_at).toLocaleDateString(LOC, { day: 'numeric', month: 'long', year: 'numeric' })));
       var a = (rel.assets || []).filter(function (x) { return x.name === ASSET; })[0];
       if (a && a.size) meta.push(mb(a.size));
       meta.push('Windows 10 / 11 · 64 bit');
       // ogni voce resta intera; la riga può andare a capo solo dopo un punto separatore
-      var dm = document.getElementById('dl-meta');
+      var dm = DM;
       dm.textContent = '';
       meta.forEach(function (t, k) {
         if (k) dm.appendChild(document.createTextNode('\u00a0· '));
-        var sp = document.createElement('span'); sp.className = 'nw'; sp.textContent = t; dm.appendChild(sp);
+        // dir="auto": ogni voce va nella direzione del suo testo (in arabo «12.58 MB» resta così)
+        var sp = document.createElement('span'); sp.className = 'nw'; sp.dir = 'auto'; sp.textContent = t; dm.appendChild(sp);
       });
       if (rel.html_url) document.getElementById('dl-notes').href = rel.html_url;
       var sha = (a && a.digest && /^sha256:/.test(a.digest)) ? a.digest.slice(7) : '';
@@ -439,7 +564,7 @@ h2, .tag { text-wrap: balance; }
       // 2) in alternativa il numero di versione dal file versione.txt del repository;
       // se manca anche quello resta il numero già scritto nella pagina
       var cur = document.querySelector('.js-ver').textContent;
-      var keep = /\d/.test(cur) ? cur : 'ultima disponibile';
+      var keep = /\d/.test(cur) ? cur : T_LAST;
       fileVer.then(function (v) { setVer(v || keep); }, function () { setVer(keep); });
     });
 })();

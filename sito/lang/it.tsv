@@ -1,0 +1,74 @@
+# IU0VYT Flash: testi italiani del sito (chiave FNV-1a 32 bit, testo); scritto da «go run . -scrivi-it»
+a5397f2b	IU0VYT Flash — canali, ponti e firmware per radio Baofeng, Quansheng, Retevis, Radtel e altre marche
+7ee08973	IU0VYT Flash: programma gratuito e libero (GPL) per Windows che legge e scrive canali, frequenze e impostazioni delle radio ricetrasmittenti di molte marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), le riconosce in automatico, gestisce i ponti radio italiani e aggiorna il firmware.
+56e08062	Canali, ponti e firmware per radio Baofeng, Bajeton, Quansheng, Retevis, Radtel e altre marche. Gratuito, software libero, per Windows 10/11.
+9743b861	Icona di IU0VYT Flash
+f8218bc1	Programma gratuito e libero (GPL) per Windows che legge e scrive canali, frequenze e impostazioni delle radio ricetrasmittenti di molte marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), gestisce i ponti radio italiani e aggiorna il firmware.
+6a0c8bb4	Sezioni
+0c023b2f	Scarica
+16f0aba9	Funzioni
+8297e0a4	Come si usa
+8fe1e625	Info
+cd611275	GESTIONE CANALI<span class="tag-sep"> - </span><span class="tag-b">FREQUENZE - PONTI RADIO - FIRMWARE</span>
+540321f7	Marche di radio gestite: #
+e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> MARCHE
+5998daca	Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, <br>inserisce i ponti radio italiani e aggiorna il firmware. <br>Un solo file, nessuna installazione, in italiano e in altre 10 lingue.
+65c3ed2e	ULTIMA VERSIONE:
+4fc59698	Il pulsante scarica sempre il pacchetto dell'ultima versione pubblicata.
+b6a8d2e0	ULTIMA VERSIONE
+58eb0261	pubblicata il {0}
+232335c3	ultima disponibile
+39b13e38	⬇ SCARICA IU0VYT.Flash.zip
+d97f7a86	Note della versione
+3114018a	Registro delle modifiche
+08d24901	Versioni precedenti
+e2d01b09	Codice sorgente
+b3944402	Per controllare che il file sia integro, in Windows apri il Prompt dei comandi nella cartella del file e scrivi <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code>: il risultato deve essere identico.
+15ff1cf6	Estrai l'archivio e avvia <code>IU0VYT Flash.exe</code>. Usa il componente WebView2, già presente in Windows 10 aggiornato e in Windows 11.
+32cb457a	Che cosa fa
+ca302446	Uno strumento unico per programmare, convertire e aggiornare le radio di <span data-n="marche">#</span> marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, TYT, Hiroyasu, Talkpod, Puxing, Feidaxin, Wouxun, AnyTone e altre), pensato per radioamatori e per chi usa le radio PMR446.
+ef1bb9fc	Radio programmabili
+52b8232b	Con impostazioni
+c4a0722d	Modelli in galleria
+c8b8648a	Firmware aggiornabili
+17c25383	Canali e frequenze
+8d4e62cd	Lettura e scrittura via cavo di <span data-n="radio">#</span> modelli, comprese radio PMR digitali e DMR anche via USB. File <code>.img</code> compatibili con CHIRP e i file originali del K67 Pro (<code>.xlc</code>) e della Bajeton 8300 (<code>.dat</code>).
+eb86ce5e	Impostazioni della radio
+6139dc35	Menu, display, VOX, squelch, TOT, DTMF, tasti e altro per <span data-n="impostazioni">#</span> modelli, con la spiegazione di ogni voce e una conferma per quelle delicate.
+06e1cc67	Identifica la radio
+238339e0	Collega la radio: il programma la riconosce e mostra marca, modello, firmware e, per le DMR, ID e nome. Con l'identificazione automatica basta collegare il cavo: il programma ascolta tutte le porte, riconosce anche più radio insieme e quelle accese dopo, e apre le loro schede; per un'altra radio c'è il pulsante «Identifica Radio». Senza scrivere nulla nella radio.
+66c001f1	Convertitore universale
+82ce44a6	I canali di qualsiasi radio o file (K67, Bajeton, immagini CHIRP, CSV di CHIRP, Excel) nel formato di qualsiasi altra radio, adattati alle sue regole.
+4a61c5a1	Ponti radio italiani
+a1f35340	Archivio basato sull'elenco aggiornato di IK2ANE, con filtri, nomi automatici, controllo della compatibilità e inserimento diretto nelle radio.
+ecd4b3ef	Aggiornamento firmware
+d72d8b35	Firmware di <span data-n="firmware">#</span> modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza.
+620c0164	Galleria dei modelli
+fd632a2d	<span data-n="galleria">#</span> radio di <span data-n="marche">#</span> marche divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.
+c86bd7e2	In 11 lingue
+7bf9a67c	Oltre all'italiano, il programma è disponibile in inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese, coreano e arabo: si sceglie la bandiera accanto a «Info» e tutto il programma cambia lingua all'istante. Guida e informazioni tradotte nella cartella <code>lingue</code> del pacchetto.
+e60a286e	Copia di sicurezza
+adfe4a55	Prima di ogni scrittura il programma salva il contenuto della radio e dopo verifica che i dati siano stati scritti correttamente.
+ab670cd6	Sempre aggiornato
+60772ac8	A ogni avvio il programma controlla se c'è una versione più recente e la scarica da questa stessa pagina dei rilasci.
+473d4aaa	Servono un PC con Windows 10 o 11 e il cavo di programmazione della radio.
+c22ecae0	Scarica ed estrai
+1f5c9d6a	Scarica <code>IU0VYT.Flash.zip</code> da questa pagina ed estrai l'archivio in una cartella. Non c'è nulla da installare.
+2e1d7bc6	Avvia e scegli la radio
+3651366b	Apri <code>IU0VYT Flash.exe</code> e, dalla scheda <b>📻 Modelli</b>, scegli la tua radio oppure usa <b>🔎 Identifica</b>.
+4c3f730f	Collega e programma
+7870de1e	Collega il cavo, premi <b>Leggi dalla radio</b>, modifica canali e ponti e scrivi tutto nella radio.
+41c051ae	La guida completa è nel file <code>LEGGIMI.txt</code> incluso nel pacchetto; le traduzioni sono nella cartella <code>lingue</code>.
+128ac670	Da sapere
+59334bb5	Software libero: puoi usarlo, studiarlo, modificarlo e ridistribuirlo secondo la licenza GNU GPL versione 3 o successiva.
+e240d883	⚠ Avvertenze
+d54cc175	I protocolli delle radio sono stati ricostruiti per l'interoperabilità e verificati con radio simulate: <b>conserva sempre le copie di sicurezza</b>.
+56e0b4b3	Il programma è fornito <b>senza alcuna garanzia</b>.
+f47e8f93	Programma indipendente, non affiliato né approvato dai costruttori delle radio (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e gli altri). I marchi citati appartengono ai rispettivi titolari e indicano solo le radio compatibili.
+88ea8053	Rispetta le norme sull'uso delle frequenze del tuo Paese.
+50ee767e	★ Ringraziamenti
+6533bd03	<a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> e i suoi autori: gran parte dei driver delle radio deriva dal loro lavoro.
+819de25f	<a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>, che mette a disposizione di tutti, gratuitamente, l'elenco dei ponti radio italiani.
+301c5be0	Autori e licenze di tutti i componenti nel file <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTORI_E_LICENZE.txt</a>.
+dba4cb69	Hai trovato un errore o vuoi proporre una miglioria? Apri una <a href="https://github.com/IU0VYT/IU0VYT/issues">segnalazione su GitHub</a>.
+3f1602bf	Distribuito con licenza <a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 o successiva</a>&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">Sorgenti su GitHub</a>

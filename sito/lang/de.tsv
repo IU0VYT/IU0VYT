@@ -1,0 +1,74 @@
+# IU0VYT Flash: testi del sito in «de» (chiave del testo italiano in it.tsv, TAB, traduzione)
+a5397f2b	IU0VYT Flash — Kanäle, Relais und Firmware für Funkgeräte von Baofeng, Quansheng, Retevis, Radtel und anderen Marken
+7ee08973	IU0VYT Flash: kostenloses, freies (GPL) Programm für Windows, das Kanäle, Frequenzen und Einstellungen von Funkgeräten vieler Marken (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) liest und schreibt, sie automatisch erkennt, die italienischen Relais verwaltet und die Firmware aktualisiert.
+56e08062	Kanäle, Relais und Firmware für Funkgeräte von Baofeng, Bajeton, Quansheng, Retevis, Radtel und anderen Marken. Kostenlos, freie Software, für Windows 10/11.
+9743b861	Symbol von IU0VYT Flash
+f8218bc1	Kostenloses, freies (GPL) Programm für Windows, das Kanäle, Frequenzen und Einstellungen von Funkgeräten vieler Marken (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) liest und schreibt, die italienischen Relais verwaltet und die Firmware aktualisiert.
+6a0c8bb4	Abschnitte
+0c023b2f	Download
+16f0aba9	Funktionen
+8297e0a4	Anleitung
+8fe1e625	Info
+cd611275	KANALVERWALTUNG<span class="tag-sep"> - </span><span class="tag-b">FREQUENZEN - RELAIS - FIRMWARE</span>
+540321f7	Unterstützte Funkgerätemarken: #
+e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> MARKEN
+5998daca	Das kostenlose Windows-Programm, das die Kanäle und Frequenzen Ihrer Funkgeräte per Kabel liest und schreibt, <br>die italienischen Relais einfügt und die Firmware aktualisiert. <br>Eine einzige Datei, keine Installation, auf Italienisch und in 10 weiteren Sprachen.
+65c3ed2e	NEUESTE VERSION:
+4fc59698	Die Schaltfläche lädt immer das Paket der neuesten veröffentlichten Version herunter.
+b6a8d2e0	NEUESTE VERSION
+58eb0261	veröffentlicht am {0}
+232335c3	neueste verfügbare
+39b13e38	⬇ IU0VYT.Flash.zip HERUNTERLADEN
+d97f7a86	Versionshinweise
+3114018a	Änderungsprotokoll
+08d24901	Frühere Versionen
+e2d01b09	Quellcode
+b3944402	Um zu prüfen, ob die Datei unversehrt ist, öffnen Sie unter Windows die Eingabeaufforderung im Ordner der Datei und geben Sie <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code> ein: Das Ergebnis muss identisch sein.
+15ff1cf6	Entpacken Sie das Archiv und starten Sie <code>IU0VYT Flash.exe</code>. Das Programm verwendet die Komponente WebView2, die in einem aktuellen Windows 10 und in Windows 11 bereits vorhanden ist.
+32cb457a	Was es kann
+ca302446	Ein einziges Werkzeug zum Programmieren, Konvertieren und Aktualisieren der Funkgeräte von <span data-n="marche">#</span> Marken (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, TYT, Hiroyasu, Talkpod, Puxing, Feidaxin, Wouxun, AnyTone und weitere), gedacht für Funkamateure und für Nutzer von PMR446-Funkgeräten.
+ef1bb9fc	Programmierbare Funkgeräte
+52b8232b	Mit Einstellungen
+c4a0722d	Modelle in der Galerie
+c8b8648a	Aktualisierbare Firmware
+17c25383	Kanäle und Frequenzen
+8d4e62cd	Lesen und Schreiben per Kabel von <span data-n="radio">#</span> Modellen, einschließlich digitaler PMR- und DMR-Funkgeräte, auch über USB. Mit CHIRP kompatible <code>.img</code>-Dateien und die Originaldateien des K67 Pro (<code>.xlc</code>) und des Bajeton 8300 (<code>.dat</code>).
+eb86ce5e	Einstellungen des Funkgeräts
+6139dc35	Menüs, Anzeige, VOX, Squelch, TOT, DTMF, Tasten und mehr für <span data-n="impostazioni">#</span> Modelle, mit einer Erklärung zu jedem Eintrag und einer Bestätigung für die heiklen.
+06e1cc67	Funkgerät identifizieren
+238339e0	Schließen Sie das Funkgerät an: Das Programm erkennt es und zeigt Marke, Modell, Firmware und bei DMR-Geräten ID und Namen. Mit der automatischen Identifizierung genügt es, das Kabel anzuschließen: Das Programm hört alle Anschlüsse ab, erkennt auch mehrere Funkgeräte gleichzeitig und später eingeschaltete und öffnet ihre Registerkarten; für ein weiteres Funkgerät gibt es die Schaltfläche «Funkgerät identifizieren». Ohne etwas in das Funkgerät zu schreiben.
+66c001f1	Universalkonverter
+82ce44a6	Die Kanäle jedes Funkgeräts oder jeder Datei (K67, Bajeton, CHIRP-Abbilder, CHIRP-CSV, Excel) im Format jedes anderen Funkgeräts, angepasst an dessen Regeln.
+4a61c5a1	Italienische Relais
+a1f35340	Archiv auf Grundlage der aktuellen Liste von IK2ANE, mit Filtern, automatischen Namen, Kompatibilitätsprüfung und direktem Einfügen in die Funkgeräte.
+ecd4b3ef	Firmware-Update
+d72d8b35	Firmware von <span data-n="firmware">#</span> Modellen mit den Protokollen der offiziellen Programme, Prüfung der Datei und Sicherungskopie.
+620c0164	Modellgalerie
+fd632a2d	<span data-n="galleria">#</span> Funkgeräte von <span data-n="marche">#</span> Marken, nach Art (Amateurfunk, DMR, GMRS/FRS, PMR446, für Kinder) und nach Marke geordnet, mit Suche und Links zu den offiziellen Programmen und Handbüchern.
+c86bd7e2	In 11 Sprachen
+7bf9a67c	Neben Italienisch ist das Programm auf Englisch, Französisch, Deutsch, Spanisch, Portugiesisch, Russisch, Chinesisch, Japanisch, Koreanisch und Arabisch verfügbar: Wählen Sie die Flagge neben «Info», und das ganze Programm wechselt sofort die Sprache. Anleitung und Informationen übersetzt im Ordner <code>lingue</code> des Pakets.
+e60a286e	Sicherungskopie
+adfe4a55	Vor jedem Schreiben speichert das Programm den Inhalt des Funkgeräts und prüft danach, ob die Daten richtig geschrieben wurden.
+ab670cd6	Immer aktuell
+60772ac8	Bei jedem Start prüft das Programm, ob es eine neuere Version gibt, und lädt sie von derselben Release-Seite herunter.
+473d4aaa	Sie brauchen einen PC mit Windows 10 oder 11 und das Programmierkabel des Funkgeräts.
+c22ecae0	Herunterladen und entpacken
+1f5c9d6a	Laden Sie <code>IU0VYT.Flash.zip</code> von dieser Seite herunter und entpacken Sie das Archiv in einen Ordner. Es muss nichts installiert werden.
+2e1d7bc6	Starten und Funkgerät wählen
+3651366b	Öffnen Sie <code>IU0VYT Flash.exe</code> und wählen Sie auf der Registerkarte <b>📻 Modelle</b> Ihr Funkgerät oder verwenden Sie <b>🔎 Identifizieren</b>.
+4c3f730f	Anschließen und programmieren
+7870de1e	Schließen Sie das Kabel an, drücken Sie <b>Aus Funkgerät lesen</b>, bearbeiten Sie Kanäle und Relais und schreiben Sie alles in das Funkgerät.
+41c051ae	Die vollständige Anleitung steht in der Datei <code>LIESMICH.txt</code> im Ordner <code>lingue/de</code> des Pakets (italienisches Original: LEGGIMI.txt).
+128ac670	Gut zu wissen
+59334bb5	Freie Software: Sie dürfen sie nach der Lizenz GNU GPL Version 3 oder später verwenden, untersuchen, verändern und weitergeben.
+e240d883	⚠ Hinweise
+d54cc175	Die Protokolle der Funkgeräte wurden für die Interoperabilität rekonstruiert und mit simulierten Funkgeräten geprüft: <b>Bewahren Sie die Sicherungskopien immer auf</b>.
+56e0b4b3	Das Programm wird <b>ohne jede Gewährleistung</b> bereitgestellt.
+f47e8f93	Unabhängiges Programm, weder mit den Herstellern der Funkgeräte (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO und die anderen) verbunden noch von ihnen genehmigt. Die genannten Marken gehören ihren jeweiligen Inhabern und bezeichnen nur die kompatiblen Funkgeräte.
+88ea8053	Beachten Sie die Vorschriften Ihres Landes zur Nutzung der Frequenzen.
+50ee767e	★ Danksagungen
+6533bd03	<a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> und seine Autoren: Ein großer Teil der Funkgerätetreiber stammt aus ihrer Arbeit.
+819de25f	<a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>, der die Liste der italienischen Relais allen kostenlos zur Verfügung stellt.
+301c5be0	Autoren und Lizenzen aller Bestandteile in der Datei <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTOREN_UND_LIZENZEN.txt</a>.
+dba4cb69	Einen Fehler gefunden oder eine Verbesserung vorzuschlagen? Erstellen Sie eine <a href="https://github.com/IU0VYT/IU0VYT/issues">Meldung auf GitHub</a>.
+3f1602bf	Veröffentlicht unter der <a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 oder später</a>&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">Quellen auf GitHub</a>
