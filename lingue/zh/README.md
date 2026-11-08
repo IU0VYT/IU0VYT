@@ -1,5 +1,9 @@
 # IU0VYT Flash
 
+<p align="center">
+🇮🇹 <a href="../../">Italiano</a> · 🇬🇧 <a href="../en/">English</a> · 🇫🇷 <a href="../fr/">Français</a> · 🇩🇪 <a href="../de/">Deutsch</a> · 🇪🇸 <a href="../es/">Español</a> · 🇵🇹 <a href="../pt/">Português</a> · 🇷🇺 <a href="../ru/">Русский</a> · 🇨🇳 <b>中文</b> · 🇯🇵 <a href="../ja/">日本語</a> · 🇰🇷 <a href="../ko/">한국어</a> · 🇦🇪 <a href="../ar/">العربية</a>
+</p>
+
 **版本 4.11.0** · Windows · 界面支持 11 种语言（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 只有一个可执行文件，无需安装
 
 面向业余无线电爱好者和 **44 个品牌**对讲机用户的程序（**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone）：通过编程线读取和写入信道、频率和设置，管理意大利中继台档案，并为支持的电台升级固件。

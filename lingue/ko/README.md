@@ -1,5 +1,9 @@
 # IU0VYT Flash
 
+<p align="center">
+🇮🇹 <a href="../../">Italiano</a> · 🇬🇧 <a href="../en/">English</a> · 🇫🇷 <a href="../fr/">Français</a> · 🇩🇪 <a href="../de/">Deutsch</a> · 🇪🇸 <a href="../es/">Español</a> · 🇵🇹 <a href="../pt/">Português</a> · 🇷🇺 <a href="../ru/">Русский</a> · 🇨🇳 <a href="../zh/">中文</a> · 🇯🇵 <a href="../ja/">日本語</a> · 🇰🇷 <b>한국어</b> · 🇦🇪 <a href="../ar/">العربية</a>
+</p>
+
 **버전 4.11.0** · Windows · 11개 언어의 인터페이스(italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · 실행 파일 하나, 설치 필요 없음
 
 **44개 브랜드**(**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone)의 무전기를 쓰는 아마추어 무선사와 사용자를 위한 프로그램입니다. 프로그래밍 케이블로 채널, 주파수, 설정을 읽고 쓰며, 이탈리아 중계기 보관함을 관리하고, 지원하는 무전기의 펌웨어를 업데이트합니다.

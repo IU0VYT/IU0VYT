@@ -1,5 +1,9 @@
 # IU0VYT Flash
 
+<p align="center">
+🇮🇹 <a href="../../">Italiano</a> · 🇬🇧 <a href="../en/">English</a> · 🇫🇷 <a href="../fr/">Français</a> · 🇩🇪 <a href="../de/">Deutsch</a> · 🇪🇸 <b>Español</b> · 🇵🇹 <a href="../pt/">Português</a> · 🇷🇺 <a href="../ru/">Русский</a> · 🇨🇳 <a href="../zh/">中文</a> · 🇯🇵 <a href="../ja/">日本語</a> · 🇰🇷 <a href="../ko/">한국어</a> · 🇦🇪 <a href="../ar/">العربية</a>
+</p>
+
 **Versión 4.11.0** · Windows · interfaz en 11 idiomas (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · un solo archivo ejecutable, sin instalación
 
 Programa para radioaficionados y usuarios de transceptores de **44 marcas** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): lee y escribe canales, frecuencias y ajustes por el cable de programación, gestiona un archivo de los repetidores italianos y actualiza el firmware de las radios compatibles.

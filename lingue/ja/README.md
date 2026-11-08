@@ -1,5 +1,9 @@
 # IU0VYT Flash
 
+<p align="center">
+🇮🇹 <a href="../../">Italiano</a> · 🇬🇧 <a href="../en/">English</a> · 🇫🇷 <a href="../fr/">Français</a> · 🇩🇪 <a href="../de/">Deutsch</a> · 🇪🇸 <a href="../es/">Español</a> · 🇵🇹 <a href="../pt/">Português</a> · 🇷🇺 <a href="../ru/">Русский</a> · 🇨🇳 <a href="../zh/">中文</a> · 🇯🇵 <b>日本語</b> · 🇰🇷 <a href="../ko/">한국어</a> · 🇦🇪 <a href="../ar/">العربية</a>
+</p>
+
 **バージョン 4.11.0** · Windows · 11 言語のインターフェース（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 実行ファイル 1 つだけ、インストール不要
 
 アマチュア無線家と **44 ブランド**のトランシーバーの利用者のためのプログラムです（**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone）。プログラミングケーブルでチャンネル、周波数、設定を読み書きし、イタリアのレピーターのアーカイブを管理し、対応する無線機のファームウェアを更新します。

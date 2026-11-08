@@ -1,5 +1,9 @@
 # IU0VYT Flash
 
+<p align="center">
+🇮🇹 <b>Italiano</b> · 🇬🇧 <a href="lingue/en/">English</a> · 🇫🇷 <a href="lingue/fr/">Français</a> · 🇩🇪 <a href="lingue/de/">Deutsch</a> · 🇪🇸 <a href="lingue/es/">Español</a> · 🇵🇹 <a href="lingue/pt/">Português</a> · 🇷🇺 <a href="lingue/ru/">Русский</a> · 🇨🇳 <a href="lingue/zh/">中文</a> · 🇯🇵 <a href="lingue/ja/">日本語</a> · 🇰🇷 <a href="lingue/ko/">한국어</a> · 🇦🇪 <a href="lingue/ar/">العربية</a>
+</p>
+
 **Versione 4.11.0** · Windows · interfaccia in 11 lingue (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · un solo file eseguibile, nessuna installazione
 
 Programma per radioamatori e utenti di ricetrasmettitori di **44 marche** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): legge e scrive canali, frequenze e impostazioni via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.

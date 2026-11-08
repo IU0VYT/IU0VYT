@@ -1,5 +1,9 @@
 # IU0VYT Flash
 
+<p align="center">
+🇮🇹 <a href="../../">Italiano</a> · 🇬🇧 <a href="../en/">English</a> · 🇫🇷 <a href="../fr/">Français</a> · 🇩🇪 <a href="../de/">Deutsch</a> · 🇪🇸 <a href="../es/">Español</a> · 🇵🇹 <a href="../pt/">Português</a> · 🇷🇺 <a href="../ru/">Русский</a> · 🇨🇳 <a href="../zh/">中文</a> · 🇯🇵 <a href="../ja/">日本語</a> · 🇰🇷 <a href="../ko/">한국어</a> · 🇦🇪 <b>العربية</b>
+</p>
+
 **الإصدار 4.11.0** · Windows · واجهة بـ 11 لغة (italiano، English، Français، Deutsch، Español، Português، Русский، 中文، 日本語، 한국어، العربية) · ملف تنفيذي واحد، دون تثبيت
 
 برنامج لهواة اللاسلكي ومستخدمي أجهزة الإرسال والاستقبال من **44 علامة تجارية** (**Baofeng** و**Bajeton** و**Quansheng** و**Retevis** و**Radtel** و**Radioddity** و**TIDRADIO** و**TYT** و**Hiroyasu** وTalkpod وAnysecu وMaxTalker وAbbree وIntek وMaverick وBTECH وWLN وZastone وLuiton وTID وExplorer وMMLradio وJJCC وSocotran وJianpai وBoristone وHamGeek وSenhaiX وCignus وPuxing وFeidaxin وKYD وKSUN وLanchonlh وBoblov وWouxun وAnyTone وQYT وRugged وBaojie وMTC وZartek وRuyage وTDXone): يقرأ القنوات والترددات والإعدادات ويكتبها عبر كابل البرمجة، ويدير أرشيفًا للمرحّلات الإيطالية، ويحدّث البرنامج الثابت للأجهزة المدعومة.
