@@ -1,52 +1,58 @@
-# Sicurezza
+# Security policy
 
-## Versioni supportate
+<div align="center">
+<table>
+<tr>
+<td align="center"><img src="../docs/img/flags/en.svg" width="36" height="24" alt=""><br><sub><b>English</b></sub></td>
+<td align="center"><a href="security/SECURITY.it.md"><img src="../docs/img/flags/it.svg" width="36" height="24" alt=""><br><sub>Italiano</sub></a></td>
+<td align="center"><a href="security/SECURITY.fr.md"><img src="../docs/img/flags/fr.svg" width="36" height="24" alt=""><br><sub>Français</sub></a></td>
+<td align="center"><a href="security/SECURITY.de.md"><img src="../docs/img/flags/de.svg" width="36" height="24" alt=""><br><sub>Deutsch</sub></a></td>
+<td align="center"><a href="security/SECURITY.es.md"><img src="../docs/img/flags/es.svg" width="36" height="24" alt=""><br><sub>Español</sub></a></td>
+<td align="center"><a href="security/SECURITY.pt.md"><img src="../docs/img/flags/pt.svg" width="36" height="24" alt=""><br><sub>Português</sub></a></td>
+<td align="center"><a href="security/SECURITY.ru.md"><img src="../docs/img/flags/ru.svg" width="36" height="24" alt=""><br><sub>Русский</sub></a></td>
+<td align="center"><a href="security/SECURITY.zh.md"><img src="../docs/img/flags/zh.svg" width="36" height="24" alt=""><br><sub>中文</sub></a></td>
+<td align="center"><a href="security/SECURITY.ja.md"><img src="../docs/img/flags/ja.svg" width="36" height="24" alt=""><br><sub>日本語</sub></a></td>
+<td align="center"><a href="security/SECURITY.ko.md"><img src="../docs/img/flags/ko.svg" width="36" height="24" alt=""><br><sub>한국어</sub></a></td>
+<td align="center"><a href="security/SECURITY.ar.md"><img src="../docs/img/flags/ar.svg" width="36" height="24" alt=""><br><sub>العربية</sub></a></td>
+</tr>
+</table>
+</div>
 
-Le correzioni di sicurezza vengono pubblicate solo nell'**ultima versione** di
-IU0VYT Flash, disponibile nella pagina dei [rilasci](https://github.com/IU0VYT/IU0VYT/releases/latest).
-Prima di segnalare un problema, verifica che sia presente anche nell'ultima versione.
+## Supported versions
 
-| Versione         | Supportata |
-| ---------------- | ---------- |
-| Ultima rilasciata | ✅         |
-| Precedenti       | ❌         |
+Security fixes are published only in the **latest version** of IU0VYT Flash, available on the [releases](https://github.com/IU0VYT/IU0VYT/releases/latest) page.
+Before reporting a problem, please check that it is also present in the latest version.
 
-## Come segnalare una vulnerabilità
+| Version         | Supported |
+| --------------- | --------- |
+| Latest release  | ✅        |
+| Older versions  | ❌        |
 
-**Non aprire una issue pubblica** per un problema di sicurezza.
+## How to report a vulnerability
 
-Usa la segnalazione privata di GitHub:
+**Do not open a public issue** for a security problem.
+
+Use GitHub's private reporting:
 [**Report a vulnerability**](https://github.com/IU0VYT/IU0VYT/security/advisories/new)
-(scheda *Security* del repository). La segnalazione resta visibile solo a te e
-all'autore finché il problema non è corretto.
+(*Security* tab of the repository). The report stays visible only to you and to the author until the problem is fixed.
 
-Nella segnalazione indica, se possibile:
+In the report, if possible, include:
 
-- la versione del programma e di Windows;
-- il tipo di problema e dove si trova (file del sorgente, funzione, schermata);
-- i passi per riprodurlo, con eventuali file di esempio (immagini .img, file .xlc,
-  .dat, CSV o Excel) **privi di dati personali**;
-- le conseguenze che hai osservato o che ritieni possibili.
+- the version of the program and of Windows;
+- the type of problem and where it is (source file, function, screen);
+- the steps to reproduce it, with any sample files (.img images, .xlc, .dat, CSV or Excel files) **without personal data**;
+- the consequences you observed or think possible.
 
-## Cosa succede dopo
+You can write in English or in Italian (or in any of the program's languages).
 
-IU0VYT Flash è un progetto gratuito curato da una sola persona nel tempo libero:
-la segnalazione verrà letta e riscontrata appena possibile. Se il problema viene
-confermato, la correzione sarà pubblicata in una nuova versione e, se opportuno,
-descritta in un avviso di sicurezza del repository, citando chi l'ha segnalata
-(se lo desidera).
+## What happens next
 
-## Ambito
+IU0VYT Flash is a free project maintained by one person in their spare time: the report will be read and answered as soon as possible. If the problem is confirmed, the fix will be published in a new version and, if appropriate, described in a security advisory of the repository, crediting whoever reported it (if they wish).
 
-Rientrano in questa procedura i problemi del programma IU0VYT Flash e del suo
-codice sorgente. Non ne fanno parte:
+## Scope
 
-- i firmware e i programmi ufficiali dei produttori delle radio;
-- i contenuti dell'elenco dei ponti radio di IK2ANE;
-- i problemi che richiedono di avere già il pieno controllo del computer dell'utente.
+This procedure covers problems of the IU0VYT Flash program and its source code. It does not cover:
 
----
-
-*English:* please report security issues privately through
-[Report a vulnerability](https://github.com/IU0VYT/IU0VYT/security/advisories/new),
-not through public issues. Only the latest release receives security fixes.
+- the official firmware and programs of the radio manufacturers;
+- the contents of the IK2ANE repeater list;
+- problems that require already having full control of the user's computer.

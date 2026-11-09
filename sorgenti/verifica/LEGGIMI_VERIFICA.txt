@@ -266,7 +266,7 @@ prime, due cavi riconosciuti insieme. Con -race:
 SITO: RIQUADRO DELLE MARCHE (cartella "sito", 4.1)
 Il riquadro «PLAYER SELECT» di docs/index.html si rigenera dal catalogo:
      IU0VYT_ELENCO_MARCHE=/tmp/marche.txt go test -mod=vendor -run TestSitoMarche .
-     node verifica/sito/brandcolors.js ui/gallery.js < /tmp/marche.txt |
+     node verifica/sito/brandcolors.js < /tmp/marche.txt |
        python3 verifica/sito/site_brands.py ../docs/index.html
 (brandcolors.js legge colori e ordine da ui/gallery.js; site_brands.py riceve righe
 «Marca|colore»). TestSitoMarche controlla che il sito elenchi le marche del catalogo.

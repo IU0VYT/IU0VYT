@@ -2,7 +2,7 @@
 a5397f2b	IU0VYT Flash — canali, ponti e firmware per radio Baofeng, Quansheng, Retevis, Radtel e altre marche
 7ee08973	IU0VYT Flash: programma gratuito e libero (GPL) per Windows che legge e scrive canali, frequenze e impostazioni delle radio ricetrasmittenti di molte marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), le riconosce in automatico, gestisce i ponti radio italiani e aggiorna il firmware.
 56e08062	Canali, ponti e firmware per radio Baofeng, Bajeton, Quansheng, Retevis, Radtel e altre marche. Gratuito, software libero, per Windows 10/11.
-9743b861	Icona di IU0VYT Flash
+dc80c138	IU0VYT Flash: la pagina iniziale del programma con le marche delle radio gestite
 f8218bc1	Programma gratuito e libero (GPL) per Windows che legge e scrive canali, frequenze e impostazioni delle radio ricetrasmittenti di molte marche (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), gestisce i ponti radio italiani e aggiorna il firmware.
 6a0c8bb4	Sezioni
 0c023b2f	Scarica
@@ -36,7 +36,7 @@ c8b8648a	Firmware aggiornabili
 eb86ce5e	Impostazioni della radio
 6139dc35	Menu, display, VOX, squelch, TOT, DTMF, tasti e altro per <span data-n="impostazioni">#</span> modelli, con la spiegazione di ogni voce e una conferma per quelle delicate.
 06e1cc67	Identifica la radio
-238339e0	Collega la radio: il programma la riconosce e mostra marca, modello, firmware e, per le DMR, ID e nome. Con l'identificazione automatica basta collegare il cavo: il programma ascolta tutte le porte, riconosce anche più radio insieme e quelle accese dopo, e apre le loro schede; per un'altra radio c'è il pulsante «Identifica Radio». Senza scrivere nulla nella radio.
+42d20d21	Collega la radio: il programma la riconosce e mostra marca, modello, firmware e, per le DMR, ID e nome. Con l'identificazione automatica basta collegare il cavo e il gioco è fatto! Identifica anche più radio contemporaneamente!
 66c001f1	Convertitore universale
 82ce44a6	I canali di qualsiasi radio o file (K67, Bajeton, immagini CHIRP, CSV di CHIRP, Excel) nel formato di qualsiasi altra radio, adattati alle sue regole.
 4a61c5a1	Ponti radio italiani
@@ -58,9 +58,9 @@ c22ecae0	Scarica ed estrai
 3651366b	Apri <code>IU0VYT Flash.exe</code> e, dalla scheda <b>📻 Modelli</b>, scegli la tua radio oppure usa <b>🔎 Identifica</b>.
 4c3f730f	Collega e programma
 7870de1e	Collega il cavo, premi <b>Leggi dalla radio</b>, modifica canali e ponti e scrivi tutto nella radio.
-41c051ae	La guida completa è nel file <code>LEGGIMI.txt</code> incluso nel pacchetto; le traduzioni sono nella cartella <code>lingue</code>.
+8eca018b	La guida completa è nel file <code>LEGGIMI.txt</code> incluso nel pacchetto.<br>Le traduzioni sono nella cartella <code>lingue</code>.
 128ac670	Da sapere
-59334bb5	Software libero: puoi usarlo, studiarlo, modificarlo e ridistribuirlo secondo la licenza GNU GPL versione 3 o successiva.
+d74f3bcb	Software libero: puoi usarlo, studiarlo, modificarlo e ridistribuirlo secondo la licenza<br>GNU GPL versione 3 o successiva.
 e240d883	⚠ Avvertenze
 d54cc175	I protocolli delle radio sono stati ricostruiti per l'interoperabilità e verificati con radio simulate: <b>conserva sempre le copie di sicurezza</b>.
 56e0b4b3	Il programma è fornito <b>senza alcuna garanzia</b>.

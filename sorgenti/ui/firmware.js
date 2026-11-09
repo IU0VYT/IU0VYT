@@ -10,6 +10,14 @@
 // o Internet, anche dentro archivi .zip/.rar), identificazione della radio,
 // conferme e avanzamento.
 
+// 4.12: testo semplice di un pezzo di HTML del programma (per i messaggi di conferma),
+// letto dal browser invece che togliendo i tag con un'espressione regolare
+function htmlText(h) {
+  const t = document.createElement('template');
+  t.innerHTML = h;
+  return t.content.textContent;
+}
+
 const Firmware = {
   async choose(choices) {
     return new Promise(res => {
@@ -522,7 +530,7 @@ const Firmware = {
         req = Object.assign(base, { mode: btmode(), backup: auto && +($('[data-btbackup]', el).dataset.n || 0) > 0 && $('[data-btbk]', el).checked,
           model: $('[data-btmodel]', el).value, confirmText: $('[data-typed]', el).value });
         how = auto ? 'La radio accesa verrà portata nel caricatore' + (req.backup ? ' dopo averne salvato una copia dei canali' : '') + '.\n'
-          : 'La radio deve essere già nel caricatore (' + BOOT[k].manual.replace(/<[^>]+>/g, '') + ').\n';
+          : 'La radio deve essere già nel caricatore (' + htmlText(BOOT[k].manual) + ').\n';
       } else if (k === 'k5') {
         req = Object.assign(base, { mode: 'manual' });
         how = 'La radio deve essere nel caricatore (spenta e riaccesa tenendo premuto il PTT: torcia accesa, schermo spento).\n';

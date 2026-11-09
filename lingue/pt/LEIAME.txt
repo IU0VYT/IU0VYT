@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.11.0 - um só ficheiro executável, sem instalação, interface em 11 línguas.
+Versão 4.12.0 - um só ficheiro executável, sem instalação, interface em 11 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -8,7 +8,18 @@ Licença: GNU General Public License versão 3 ou posterior (software livre, SEM
 QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
-pasta principal (CHANGELOG.txt aqui contém a entrada 4.11 traduzida).
+pasta principal (CHANGELOG.txt aqui contém a entrada 4.12 traduzida).
+Novidades da 4.12.0:
+- LÍNGUA NO PRIMEIRO ARRANQUE: o programa arranca na língua do Windows do utilizador
+  (em inglês se não for uma das 11 do programa). Se depois se escolher outra língua
+  com as bandeiras, a escolha é guardada e vale nos reinícios seguintes (também o
+  italiano);
+- traduções: «Sim» e «Não» da coluna Varredura e o nome da licença na página inicial
+  estão agora traduzidos em todas as línguas;
+- segurança: correções aos avisos da análise de código do GitHub (CodeQL);
+- repositório e sítio: README em inglês na página principal do repositório, com as
+  bandeiras das línguas e imagens do programa; política de segurança nas 11 línguas;
+  textos do sítio atualizados e imagem de pré-visualização para as redes sociais.
 Novidades da 4.11.0:
 - NOMES DAS ZONAS: em vez de «Zona 1», «Zona 2»… cada zona pode ter um nome, como nos
   programas do fabricante (botão «✎ Nomes das zonas…» ou duplo clique na zona). Radtel
@@ -760,7 +771,9 @@ protegidos por palavra-passe nem os divididos em várias partes.
 
 LÍNGUA DA INTERFACE (4.10)
 - O seletor com a bandeira está em cima, logo à direita de «ℹ Info». No primeiro
-  arranque mostra a bandeira italiana; com um clique abre-se a lista das línguas:
+  arranque (4.12) o programa usa a língua do Windows do utilizador (Definições do
+  Windows → Hora e idioma → Idioma); se o Windows estiver numa língua que o programa
+  não tem, usa o inglês. Com um clique na bandeira abre-se a lista das línguas:
   italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
   (coreano, 4.11, bandeira da Coreia do Sul), العربية (árabe, 4.11, bandeira dos
   Emirados Árabes Unidos).
@@ -771,8 +784,9 @@ LÍNGUA DA INTERFACE (4.10)
 - A tradução é imediata, sem reiniciar: separadores, botões, menus, janelas, guia,
   mensagens e avisos (também os que chegam dos rádios), fichas da galeria, definições
   e as janelas do Windows «Abrir» e «Guardar».
-- A língua escolhida é guardada nas definições do programa e vale também depois de
-  reiniciar.
+- A língua escolhida com as bandeiras é guardada nas definições do programa e vale
+  também depois de reiniciar, em vez da língua do Windows (desde a 4.12 também o
+  italiano).
 - Os nomes dos itens do CHIRP (coluna «nome original» das definições), os canais, os
   nomes dos repetidores e os ficheiros ficam como estão.
 - Os ficheiros informativos (LEIAME, CHANGELOG, README, AUTORES_E_LICENCAS, VERSION,

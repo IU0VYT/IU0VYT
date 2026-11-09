@@ -33,6 +33,30 @@ func uiLangKnown(l string) bool {
 	return false
 }
 
+// sysLangPick (4.12): fra le lingue preferite del sistema (es. "es-MX", "en-US",
+// "zh-Hans-CN") la prima che il programma ha; se nessuna c'è, l'inglese
+func sysLangPick(prefs []string) string {
+	for _, p := range prefs {
+		p = strings.ToLower(strings.TrimSpace(p))
+		if i := strings.IndexAny(p, "-_.@"); i >= 0 {
+			p = p[:i]
+		}
+		if uiLangKnown(p) {
+			return p
+		}
+	}
+	return "en"
+}
+
+// startLang (4.12): lingua all'avvio. Quella scelta con le bandiere, se c'è;
+// altrimenti (primo avvio, o nessuna scelta finora) la lingua del sistema
+func startLang(saved string) string {
+	if uiLangKnown(saved) {
+		return saved
+	}
+	return sysLangPick(systemLangs())
+}
+
 // lingua corrente dei testi di Windows ("" o "it" = italiano)
 var uiLangCur atomic.Value
 

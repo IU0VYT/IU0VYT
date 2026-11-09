@@ -2,7 +2,7 @@
 a5397f2b	IU0VYT Flash — channels, repeaters and firmware for Baofeng, Quansheng, Retevis, Radtel and other brands of radios
 7ee08973	IU0VYT Flash: free and open-source (GPL) program for Windows that reads and writes channels, frequencies and settings of transceivers of many brands (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), recognizes them automatically, manages the Italian repeaters and updates the firmware.
 56e08062	Channels, repeaters and firmware for Baofeng, Bajeton, Quansheng, Retevis, Radtel and other brands of radios. Free of charge, free software, for Windows 10/11.
-9743b861	IU0VYT Flash icon
+dc80c138	IU0VYT Flash: the program home page with the brands of the supported radios
 f8218bc1	Free and open-source (GPL) program for Windows that reads and writes channels, frequencies and settings of transceivers of many brands (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), manages the Italian repeaters and updates the firmware.
 6a0c8bb4	Sections
 0c023b2f	Download
@@ -36,7 +36,7 @@ c8b8648a	Updatable firmware
 eb86ce5e	Radio settings
 6139dc35	Menus, display, VOX, squelch, TOT, DTMF, keys and more for <span data-n="impostazioni">#</span> models, with an explanation of every item and a confirmation for the sensitive ones.
 06e1cc67	Identify the radio
-238339e0	Connect the radio: the program recognizes it and shows make, model, firmware and, for DMR radios, ID and name. With automatic identification you just connect the cable: the program listens to all the ports, also recognizes several radios together and those turned on later, and opens their tabs; for another radio there is the «Identify Radio» button. Without writing anything to the radio.
+42d20d21	Connect the radio: the program recognizes it and shows make, model, firmware and, for DMR radios, ID and name. With automatic identification just connect the cable and you're done! It even identifies several radios at the same time!
 66c001f1	Universal converter
 82ce44a6	The channels of any radio or file (K67, Bajeton, CHIRP images, CHIRP CSV, Excel) in the format of any other radio, adapted to its rules.
 4a61c5a1	Italian repeaters
@@ -58,9 +58,9 @@ c22ecae0	Download and extract
 3651366b	Open <code>IU0VYT Flash.exe</code> and, from the <b>📻 Models</b> tab, choose your radio or use <b>🔎 Identify</b>.
 4c3f730f	Connect and program
 7870de1e	Connect the cable, press <b>Read from radio</b>, edit channels and repeaters and write everything to the radio.
-41c051ae	The complete guide is in the file <code>GUIDE.txt</code> of the <code>lingue/en</code> folder included in the package (Italian original: LEGGIMI.txt).
+8eca018b	The complete guide is in the file <code>GUIDE.txt</code> of the <code>lingue/en</code> folder included in the package.<br>Italian original: LEGGIMI.txt.
 128ac670	Good to know
-59334bb5	Free software: you can use, study, modify and redistribute it under the GNU GPL license version 3 or later.
+d74f3bcb	Free software: you can use, study, modify and redistribute it under the license<br>GNU GPL version 3 or later.
 e240d883	⚠ Warnings
 d54cc175	The radio protocols were reconstructed for interoperability and verified with simulated radios: <b>always keep the backup copies</b>.
 56e0b4b3	The program is provided <b>without any warranty</b>.

@@ -792,6 +792,7 @@ b7af2088	Atualização concluída
 5aae04bc	depois de guardar uma cópia dos seus canais
 ece1fe40	O rádio tem de estar já no carregador (ligado mantendo premido o PTT, ecrã apagado).
 7350e16b	O rádio tem de estar já no carregador (
+c93101cc	O rádio já deve estar no carregador ({0}).
 f1df2314	O rádio tem de estar no carregador (desligado e novamente ligado mantendo premido o PTT: lanterna acesa, ecrã apagado).
 ca63fa06	Potência escolhida: {0}. O rádio tem de estar já em modo de atualização (ligado mantendo premidos PTT e P1: indicador verde).
 6618455a	O rádio tem de estar já em modo de atualização (indicador verde).
@@ -1190,6 +1191,8 @@ ec07968f	Subtom em receção (squelch por tom): CTCSS ex. 88.5, ou DCS ex. D023N
 ed8b9908	Larga
 48e7cbf7	Largura de banda: Larga 25 kHz, Estreita 12,5 kHz
 6d148508	Varrimento
+86300b4d	Sim
+61e6be1a	Não
 93d79fb3	— {0} canais
 301d8e1b	Ficheiro:
 c4d991e5	alterado, não guardado
@@ -3678,7 +3681,7 @@ e1351ee8	Pesquisa interrompida. Se o rádio ficou em modo de programação, desl
 cf513052	nenhum rádio identificado para abrir
 a7f52778	modelo não compatível com o rádio identificado
 a8e9c0ce	a memória lida não é a deste modelo
-651fd784	GNU General Public License versione 3 o successiva (GPL-3.0-or-later)
+651fd784	GNU General Public License versão 3 ou posterior (GPL-3.0-or-later)
 d6fc58d6	IU0VYT-FLASH-VERSIONE:{0};
 5ed9899f	IU0VYT-Flash
 85158fd0	versão não encontrada

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.11.0 - un solo archivo ejecutable, sin instalación, interfaz en 11 idiomas.
+Versión 4.12.0 - un solo archivo ejecutable, sin instalación, interfaz en 11 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -8,8 +8,20 @@ Licencia: GNU General Public License versión 3 o posterior (software libre, SIN
 NINGUNA GARANTÍA): consulta LICENSE.txt y AUTORES_Y_LICENCIAS.txt.
 Esta es la traducción al español de LEGGIMI.txt (el original italiano es el texto de
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
-italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.11
+italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.12
 traducida).
+Novedades de la 4.12.0:
+- IDIOMA EN EL PRIMER ARRANQUE: el programa arranca en el idioma de Windows del
+  usuario (en inglés si no es uno de los 11 del programa). Si después se elige otro
+  idioma con las banderas, la elección se guarda y vale en los siguientes reinicios
+  (también el italiano);
+- traducciones: «Sí» y «No» de la columna Escaneo y el nombre de la licencia en la
+  página de inicio ahora están traducidos en todos los idiomas;
+- seguridad: correcciones a los avisos del análisis de código de GitHub (CodeQL);
+- repositorio y sitio: README en inglés en la página principal del repositorio, con
+  las banderas de los idiomas e imágenes del programa; política de seguridad en los 11
+  idiomas; textos del sitio actualizados e imagen de vista previa para las redes
+  sociales.
 Novedades de la 4.11.0:
 - NOMBRES DE LAS ZONAS: en lugar de «Zona 1», «Zona 2»… cada zona puede tener un
   nombre, como en los programas del fabricante (botón «✎ Nombres de las zonas…» o
@@ -777,7 +789,9 @@ con contraseña ni los divididos en varias partes.
 
 IDIOMA DE LA INTERFAZ (4.10)
 - El selector con la bandera está arriba, justo a la derecha de «ℹ Info». En el primer
-  arranque muestra la bandera italiana; con un clic se abre la lista de idiomas:
+  arranque (4.12) el programa usa el idioma de Windows del usuario (Configuración de
+  Windows → Hora e idioma → Idioma); si Windows está en un idioma que el programa no
+  tiene, usa el inglés. Con un clic en la bandera se abre la lista de idiomas:
   italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
   (coreano, 4.11, bandera de Corea del Sur), العربية (árabe, 4.11, bandera de los
   Emiratos Árabes Unidos).
@@ -788,8 +802,9 @@ IDIOMA DE LA INTERFAZ (4.10)
 - La traducción es inmediata, sin reiniciar: pestañas, botones, menús, ventanas, guía,
   mensajes y avisos (también los que llegan de las radios), fichas de la galería,
   ajustes y las ventanas de Windows «Abrir» y «Guardar».
-- El idioma elegido se guarda en los ajustes del programa y vale también tras
-  reiniciar.
+- El idioma elegido con las banderas se guarda en los ajustes del programa y vale
+  también tras reiniciar, en lugar del idioma de Windows (desde la 4.12 también el
+  italiano).
 - Los nombres de los elementos de CHIRP (columna «nombre original» de los ajustes),
   los canales, los nombres de los repetidores y los archivos se quedan como están.
 - Los archivos informativos (LEEME, CHANGELOG, README, AUTORES_Y_LICENCIAS, VERSION,

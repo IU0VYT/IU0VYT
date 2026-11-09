@@ -792,6 +792,7 @@ b7af2088	Aggiornamento completato
 5aae04bc	dopo averne salvato una copia dei canali
 ece1fe40	La radio deve essere già nel caricatore (accesa tenendo premuto il PTT, schermo spento).
 7350e16b	La radio deve essere già nel caricatore (
+c93101cc	La radio deve essere già nel caricatore ({0}).
 f1df2314	La radio deve essere nel caricatore (spenta e riaccesa tenendo premuto il PTT: torcia accesa, schermo spento).
 ca63fa06	Potenza scelta: {0}. La radio deve essere già in modalità di aggiornamento (accesa tenendo premuti PTT e P1: indicatore verde).
 6618455a	La radio deve essere già in modalità di aggiornamento (indicatore verde).
@@ -1190,6 +1191,8 @@ ec07968f	Subtono in ricezione (squelch a tono): CTCSS es. 88.5, oppure DCS es. D
 ed8b9908	Larga
 48e7cbf7	Larghezza di banda: Larga 25 kHz, Stretta 12,5 kHz
 6d148508	Scan
+86300b4d	Sì
+61e6be1a	No
 93d79fb3	— {0} canali
 301d8e1b	File:
 c4d991e5	modificato, non salvato

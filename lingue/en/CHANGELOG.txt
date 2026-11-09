@@ -3,36 +3,33 @@ IU0VYT FLASH - CHANGELOG
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 or later
 
 This is the English translation of the latest entry of CHANGELOG.txt. The complete
-history of the earlier versions (1.0 - 4.10) is in the Italian original,
+history of the earlier versions (1.0 - 4.11) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
-4.11.0 (08/11/2026)
+4.12.0 (09/11/2026)
 -------------------
-- Zone names (zonenames.go): instead of «Zone 1», «Zone 2»… every zone has an editable
-  name («✎ Zone names…» or double click on the zone of the bar). Formats derived from
-  the code of the manufacturer's programs and from CHIRP's driver: Radtel RT-950 Pro /
-  Bajeton BJ-9000 / Hiroyasu HI-UV850 Pro (RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS
-  v1.3.3) and Radtel RT-950 (BT-9000_CPS v1.3.0): area 0xC000, 16 bytes per zone, 12
-  GB2312 bytes padded with 0xFF; Radtel RT-920 (RT-920_EnCPS v1.2.4 and CHIRP's
-  radtel_rt900.py): area 0xC800, 10 zones, 10 characters as in CHIRP; Radtel RT-910 /
-  Bajeton BJ-7700 without Bluetooth (RT910_EnCPS v1.0.3): area 0xA200, 12 ASCII
-  characters. DMR radios RD-5R, DM-1801 and DM-32UV: names of the existing zones, 16
-  characters. The area 0xC000-0xC0FF is now read on the BJ-9000 / RT-950 Pro and, last
-  and optional, on the RT-950; it is written only if the names change, after reading
-  it back from the radio, and only if it contains names or is empty (otherwise nothing
-  is written); RT-950 files saved before 4.11 do not touch the area. Tests with the
-  simulated radios (zonenames_test.go).
-- Bulk edit of the ticked or selected channels (radio.js): power, bandwidth, scan, TX
-  tone, RX tone, shift and transmission (receive only), with tones and shift checked
-  before changing the channels and a single undo step.
-- Languages: Korean (flag of South Korea) and Arabic (flag of the United Arab
-  Emirates; page right to left, numbers and frequencies left to right; Windows message
-  boxes right to left), 4902 texts per language; information files translated in
-  lingue/ko and lingue/ar.
-- Site: the available languages on the page; the sentence listing the firmware files
-  has been removed.
-- Tests: i18n_test.go compares the path with filepath.ToSlash (go test passes on
-  Windows); new documenti_test.go: the copies of LEGGIMI.txt, AUTORI_E_LICENZE.txt and
-  the license in «sorgenti» must be identical to those of the main folder (the
-  «sorgenti» copy of LEGGIMI.txt had fallen behind in 4.10).
+- Language at first start (i18n.go, syslang_windows.go): if the language has never
+  been chosen with the flags, the program uses the first of the user's Windows display
+  languages (GetUserPreferredUILanguages) that it has among its 11; if none, English.
+  The choice made with the flags is saved and applies at restarts (now Italian is
+  saved too: before, it was mistaken for «no choice»). The Windows message boxes
+  follow the same language. Test: TestSysLang.
+- Translations: «Yes» and «No» (Scan column and table menus) were too short for the
+  list of texts to translate and stayed in Italian in all languages; the name of the
+  license on the home page had stayed in Italian. Now they are translated (4905 texts
+  per language).
+- Security, CodeQL reports: bw.go writes the bytes of the words without truncating
+  conversions; the data folder taken from the GESTIONE_CANALI_DIR variable (used by
+  the tests) is cleaned and refused with «..»; firmware.js gets the plain text from
+  the HTML with the browser instead of a regular expression;
+  verifica/sito/brandcolors.js reads ui/gallery.js from the source folder and not from
+  a path on the command line.
+- Repository: README.md is now in English (main page of the repository), the Italian
+  original is README.it.md; language bar with flags and pictures of the program in all
+  READMEs; security policy (.github/SECURITY.md) in English with the translations in
+  the other 10 languages (.github/security).
+- Site: updated texts for identification, guide and license; preview picture for
+  social networks (docs/img/social.png); flags and pictures of the program in
+  docs/img; the pages are reported to Bing, Yandex and the other engines that use
+  IndexNow at every publication.

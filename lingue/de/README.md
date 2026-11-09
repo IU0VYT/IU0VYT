@@ -1,16 +1,38 @@
 # IU0VYT Flash
 
+<div align="center">
+<table>
+<tr>
+<td align="center"><a href="../../README.md"><img src="../../docs/img/flags/en.svg" width="36" height="24" alt=""><br><sub>English</sub></a></td>
+<td align="center"><a href="../../README.it.md"><img src="../../docs/img/flags/it.svg" width="36" height="24" alt=""><br><sub>Italiano</sub></a></td>
+<td align="center"><a href="../../lingue/fr/README.md"><img src="../../docs/img/flags/fr.svg" width="36" height="24" alt=""><br><sub>Français</sub></a></td>
+<td align="center"><img src="../../docs/img/flags/de.svg" width="36" height="24" alt=""><br><sub><b>Deutsch</b></sub></td>
+<td align="center"><a href="../../lingue/es/README.md"><img src="../../docs/img/flags/es.svg" width="36" height="24" alt=""><br><sub>Español</sub></a></td>
+<td align="center"><a href="../../lingue/pt/README.md"><img src="../../docs/img/flags/pt.svg" width="36" height="24" alt=""><br><sub>Português</sub></a></td>
+<td align="center"><a href="../../lingue/ru/README.md"><img src="../../docs/img/flags/ru.svg" width="36" height="24" alt=""><br><sub>Русский</sub></a></td>
+<td align="center"><a href="../../lingue/zh/README.md"><img src="../../docs/img/flags/zh.svg" width="36" height="24" alt=""><br><sub>中文</sub></a></td>
+<td align="center"><a href="../../lingue/ja/README.md"><img src="../../docs/img/flags/ja.svg" width="36" height="24" alt=""><br><sub>日本語</sub></a></td>
+<td align="center"><a href="../../lingue/ko/README.md"><img src="../../docs/img/flags/ko.svg" width="36" height="24" alt=""><br><sub>한국어</sub></a></td>
+<td align="center"><a href="../../lingue/ar/README.md"><img src="../../docs/img/flags/ar.svg" width="36" height="24" alt=""><br><sub>العربية</sub></a></td>
+</tr>
+</table>
+</div>
+
 <p align="center">
-🇮🇹 <a href="../../">Italiano</a> · 🇬🇧 <a href="../en/">English</a> · 🇫🇷 <a href="../fr/">Français</a> · 🇩🇪 <b>Deutsch</b> · 🇪🇸 <a href="../es/">Español</a> · 🇵🇹 <a href="../pt/">Português</a> · 🇷🇺 <a href="../ru/">Русский</a> · 🇨🇳 <a href="../zh/">中文</a> · 🇯🇵 <a href="../ja/">日本語</a> · 🇰🇷 <a href="../ko/">한국어</a> · 🇦🇪 <a href="../ar/">العربية</a>
+<a href="https://github.com/IU0VYT/IU0VYT/releases/latest"><img src="https://img.shields.io/github/v/release/IU0VYT/IU0VYT?label=release&color=2ea44f" alt="Latest release"></a>
+<a href="https://github.com/IU0VYT/IU0VYT/releases"><img src="https://img.shields.io/github/downloads/IU0VYT/IU0VYT/total?color=1f6feb" alt="Downloads"></a>
+<a href="../../LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="License GPL-3.0-or-later"></a>
+<img src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078d6" alt="Windows 10 | 11">
+<img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**Version 4.11.0** · Windows · Oberfläche in 11 Sprachen (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · eine einzige ausführbare Datei, keine Installation
+**Version 4.12.0** · Windows · Oberfläche in 11 Sprachen (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · eine einzige ausführbare Datei, keine Installation
 
 Programm für Funkamateure und Nutzer von Funkgeräten von **44 Marken** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): es liest und schreibt Kanäle, Frequenzen und Einstellungen über das Programmierkabel, verwaltet ein Archiv der italienischen Relais und aktualisiert die Firmware der unterstützten Funkgeräte.
 
 🌐 Website des Programms: **[iu0vyt.github.io/IU0VYT](https://iu0vyt.github.io/IU0VYT/)**
 
-*Dies ist die deutsche Übersetzung von README.md; das italienische Original ist der maßgebliche Text.*
+*Dies ist die deutsche Übersetzung von [README.it.md](../../README.it.md); das italienische Original ist der maßgebliche Text.*
 
 ## Funktionen
 

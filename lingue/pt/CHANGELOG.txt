@@ -3,36 +3,32 @@ IU0VYT FLASH - REGISTO DE ALTERAÇÕES
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 ou posterior
 
 Esta é a tradução portuguesa da última entrada de CHANGELOG.txt. A história completa
-das versões anteriores (1.0 - 4.10) está no original italiano, CHANGELOG.txt, na pasta
+das versões anteriores (1.0 - 4.11) está no original italiano, CHANGELOG.txt, na pasta
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
-4.11.0 (08/11/2026)
+4.12.0 (09/11/2026)
 -------------------
-- Nomes das zonas (zonenames.go): em vez de «Zona 1», «Zona 2»… cada zona tem um nome
-  editável («✎ Nomes das zonas…» ou duplo clique na zona da barra). Formatos obtidos
-  do código dos programas do fabricante e do controlador do CHIRP: Radtel RT-950 Pro /
-  Bajeton BJ-9000 / Hiroyasu HI-UV850 Pro (RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS
-  v1.3.3) e Radtel RT-950 (BT-9000_CPS v1.3.0): área 0xC000, 16 bytes por zona, 12
-  bytes GB2312 preenchidos com 0xFF; Radtel RT-920 (RT-920_EnCPS v1.2.4 e
-  radtel_rt900.py do CHIRP): área 0xC800, 10 zonas, 10 caracteres como no CHIRP;
-  Radtel RT-910 / Bajeton BJ-7700 sem Bluetooth (RT910_EnCPS v1.0.3): área 0xA200, 12
-  caracteres ASCII. Rádios DMR RD-5R, DM-1801 e DM-32UV: nomes das zonas existentes,
-  16 caracteres. A área 0xC000-0xC0FF passa a ser lida no BJ-9000 / RT-950 Pro e, por
-  último e de forma opcional, no RT-950; só é escrita se os nomes mudarem, depois de
-  lida de novo do rádio, e só se contiver nomes ou estiver vazia (caso contrário não
-  se escreve nada); os ficheiros do RT-950 guardados antes da 4.11 não mexem na área.
-  Testes com os rádios simulados (zonenames_test.go).
-- Edição em bloco dos canais marcados ou selecionados (radio.js): potência, largura de
-  banda, varredura, tom TX, tom RX, desvio e transmissão (só receção), com verificação
-  de tons e desvio antes de alterar os canais e um único passo para anular.
-- Línguas: coreano (bandeira da Coreia do Sul) e árabe (bandeira dos Emirados Árabes
-  Unidos; página da direita para a esquerda, números e frequências da esquerda para a
-  direita; caixas de mensagem do Windows da direita para a esquerda), 4902 textos por
-  língua; ficheiros informativos traduzidos em lingue/ko e lingue/ar.
-- Sítio web: as línguas disponíveis na página; foi removida a frase que enumerava os
-  ficheiros de firmware.
-- Testes: i18n_test.go compara o caminho com filepath.ToSlash (go test passa no
-  Windows); novo documenti_test.go: as cópias de LEGGIMI.txt, AUTORI_E_LICENZE.txt e
-  da licença em «sorgenti» têm de ser idênticas às da pasta principal (a cópia de
-  LEGGIMI.txt em «sorgenti» tinha ficado desatualizada na 4.10).
+- Língua no primeiro arranque (i18n.go, syslang_windows.go): se a língua nunca foi
+  escolhida com as bandeiras, o programa usa a primeira das línguas de apresentação do
+  Windows do utilizador (GetUserPreferredUILanguages) que tem entre as suas 11; se
+  nenhuma, o inglês. A escolha feita com as bandeiras é guardada e vale nos reinícios
+  (agora também se guarda o italiano, que antes se confundia com «nenhuma escolha»).
+  As caixas de mensagem do Windows seguem a mesma língua. Teste: TestSysLang.
+- Traduções: «Sim» e «Não» (coluna Varredura e menus das tabelas) eram curtos demais
+  para a lista dos textos a traduzir e ficavam em italiano em todas as línguas; o nome
+  da licença na página inicial tinha ficado em italiano. Agora estão traduzidos (4905
+  textos por língua).
+- Segurança, avisos do CodeQL: bw.go escreve os bytes das palavras sem conversões que
+  truncam; a pasta de dados tirada da variável GESTIONE_CANALI_DIR (usada pelos
+  testes) é limpa e recusada com «..»; firmware.js obtém o texto simples do HTML com o
+  navegador em vez de uma expressão regular; verifica/sito/brandcolors.js lê
+  ui/gallery.js da pasta das fontes e não de um caminho na linha de comandos.
+- Repositório: README.md está agora em inglês (página principal do repositório), o
+  original italiano é README.it.md; barra das línguas com bandeiras e imagens do
+  programa em todos os README; política de segurança (.github/SECURITY.md) em inglês
+  com as traduções nas outras 10 línguas (.github/security).
+- Sítio: textos da identificação, do guia e da licença atualizados; imagem de
+  pré-visualização para as redes sociais (docs/img/social.png); bandeiras e imagens do
+  programa em docs/img; as páginas são comunicadas ao Bing, ao Yandex e aos outros
+  motores que usam o IndexNow em cada publicação.

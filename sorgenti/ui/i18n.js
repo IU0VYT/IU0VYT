@@ -390,11 +390,20 @@ const I18N = {
     try { localStorage.setItem('iu0vyt-lang', code); } catch (e) { /* */ }
   },
 
-  // all'avvio: la lingua salvata (impostazioni del programma)
+  // all'avvio: la lingua salvata (impostazioni del programma) o, al primo avvio, quella
+  // del sistema (4.12: la sceglie il programma; qui, di riserva, quella del browser)
   async start(saved) {
-    let code = saved;
+    const known = c => this.langs.some(l => l.code === c);
+    let code = known(saved) ? saved : '';
     if (!code) { try { code = localStorage.getItem('iu0vyt-lang'); } catch (e) { /* */ } }
+    if (!known(code)) {
+      code = 'en';
+      for (const n of (navigator.languages || [navigator.language || ''])) {
+        const c = String(n).toLowerCase().split(/[-_]/)[0];
+        if (known(c)) { code = c; break; }
+      }
+    }
     this.observe();
-    try { await this.use(code || 'it'); } catch (e) { console.error(e); await this.use('it'); }
+    try { await this.use(code); } catch (e) { console.error(e); await this.use('it'); }
   },
 };

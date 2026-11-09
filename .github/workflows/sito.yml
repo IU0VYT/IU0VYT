@@ -70,3 +70,16 @@ jobs:
           path: docs
       - id: deploy
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+      # 4.12: avviso a Bing, Yandex, Seznam, Naver e agli altri motori che usano IndexNow
+      # (https://www.indexnow.org): le 11 pagine del sito sono cambiate. La chiave è il
+      # file docs/3502cec423d4a75f962bdd8c6bcef705.txt; un errore qui non ferma la pubblicazione
+      - name: Avviso ai motori di ricerca (IndexNow)
+        continue-on-error: true
+        run: |
+          base=https://iu0vyt.github.io/IU0VYT/
+          urls="\"$base\""
+          for l in en fr de es pt ru zh ja ko ar; do urls="$urls,\"$base$l/\""; done
+          body="{\"host\":\"iu0vyt.github.io\",\"key\":\"3502cec423d4a75f962bdd8c6bcef705\",\"keyLocation\":\"${base}3502cec423d4a75f962bdd8c6bcef705.txt\",\"urlList\":[$urls]}"
+          echo "$body"
+          curl -sS -m 30 -o /dev/null -w 'IndexNow: HTTP %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' -d "$body"

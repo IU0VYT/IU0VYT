@@ -2,7 +2,7 @@
 a5397f2b	IU0VYT Flash — Kanäle, Relais und Firmware für Funkgeräte von Baofeng, Quansheng, Retevis, Radtel und anderen Marken
 7ee08973	IU0VYT Flash: kostenloses, freies (GPL) Programm für Windows, das Kanäle, Frequenzen und Einstellungen von Funkgeräten vieler Marken (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) liest und schreibt, sie automatisch erkennt, die italienischen Relais verwaltet und die Firmware aktualisiert.
 56e08062	Kanäle, Relais und Firmware für Funkgeräte von Baofeng, Bajeton, Quansheng, Retevis, Radtel und anderen Marken. Kostenlos, freie Software, für Windows 10/11.
-9743b861	Symbol von IU0VYT Flash
+dc80c138	IU0VYT Flash: die Startseite des Programms mit den Marken der unterstützten Funkgeräte
 f8218bc1	Kostenloses, freies (GPL) Programm für Windows, das Kanäle, Frequenzen und Einstellungen von Funkgeräten vieler Marken (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) liest und schreibt, die italienischen Relais verwaltet und die Firmware aktualisiert.
 6a0c8bb4	Abschnitte
 0c023b2f	Download
@@ -36,7 +36,7 @@ c8b8648a	Aktualisierbare Firmware
 eb86ce5e	Einstellungen des Funkgeräts
 6139dc35	Menüs, Anzeige, VOX, Squelch, TOT, DTMF, Tasten und mehr für <span data-n="impostazioni">#</span> Modelle, mit einer Erklärung zu jedem Eintrag und einer Bestätigung für die heiklen.
 06e1cc67	Funkgerät identifizieren
-238339e0	Schließen Sie das Funkgerät an: Das Programm erkennt es und zeigt Marke, Modell, Firmware und bei DMR-Geräten ID und Namen. Mit der automatischen Identifizierung genügt es, das Kabel anzuschließen: Das Programm hört alle Anschlüsse ab, erkennt auch mehrere Funkgeräte gleichzeitig und später eingeschaltete und öffnet ihre Registerkarten; für ein weiteres Funkgerät gibt es die Schaltfläche «Funkgerät identifizieren». Ohne etwas in das Funkgerät zu schreiben.
+42d20d21	Schließen Sie das Funkgerät an: Das Programm erkennt es und zeigt Marke, Modell, Firmware und bei DMR-Geräten ID und Namen. Mit der automatischen Identifizierung genügt es, das Kabel anzuschließen – fertig! Es erkennt sogar mehrere Funkgeräte gleichzeitig!
 66c001f1	Universalkonverter
 82ce44a6	Die Kanäle jedes Funkgeräts oder jeder Datei (K67, Bajeton, CHIRP-Abbilder, CHIRP-CSV, Excel) im Format jedes anderen Funkgeräts, angepasst an dessen Regeln.
 4a61c5a1	Italienische Relais
@@ -58,9 +58,9 @@ c22ecae0	Herunterladen und entpacken
 3651366b	Öffnen Sie <code>IU0VYT Flash.exe</code> und wählen Sie auf der Registerkarte <b>📻 Modelle</b> Ihr Funkgerät oder verwenden Sie <b>🔎 Identifizieren</b>.
 4c3f730f	Anschließen und programmieren
 7870de1e	Schließen Sie das Kabel an, drücken Sie <b>Aus Funkgerät lesen</b>, bearbeiten Sie Kanäle und Relais und schreiben Sie alles in das Funkgerät.
-41c051ae	Die vollständige Anleitung steht in der Datei <code>LIESMICH.txt</code> im Ordner <code>lingue/de</code> des Pakets (italienisches Original: LEGGIMI.txt).
+8eca018b	Die vollständige Anleitung steht in der Datei <code>LIESMICH.txt</code> im Ordner <code>lingue/de</code> des Pakets.<br>Italienisches Original: LEGGIMI.txt.
 128ac670	Gut zu wissen
-59334bb5	Freie Software: Sie dürfen sie nach der Lizenz GNU GPL Version 3 oder später verwenden, untersuchen, verändern und weitergeben.
+d74f3bcb	Freie Software: Sie dürfen sie nach der Lizenz<br>GNU GPL Version 3 oder später verwenden, untersuchen, verändern und weitergeben.
 e240d883	⚠ Hinweise
 d54cc175	Die Protokolle der Funkgeräte wurden für die Interoperabilität rekonstruiert und mit simulierten Funkgeräten geprüft: <b>Bewahren Sie die Sicherungskopien immer auf</b>.
 56e0b4b3	Das Programm wird <b>ohne jede Gewährleistung</b> bereitgestellt.

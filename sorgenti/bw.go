@@ -26,6 +26,7 @@ package main
 // Gli indirizzi di #seekto sono assoluti anche dentro le strutture (come CHIRP).
 
 import (
+	"encoding/binary"
 	"fmt"
 	"strconv"
 	"strings"
@@ -525,14 +526,21 @@ func (e *bwEl) word(b []byte) uint64 {
 }
 
 func (e *bwEl) putWord(b []byte, v uint64) {
-	if bwIsLE(e.Type) {
-		for i := 0; i < e.Size; i++ {
-			b[e.Off+i] = byte(v >> (8 * i))
+	// 4.12: i byte della parola da binary.LittleEndian (stesso risultato di prima,
+	// senza conversioni che troncano: segnalazione di CodeQL)
+	var le [8]byte
+	binary.LittleEndian.PutUint64(le[:], v)
+	at := func(i int) byte { // i-esimo byte meno significativo (0 oltre l'ottavo)
+		if i < len(le) {
+			return le[i]
 		}
-	} else {
-		for i := e.Size - 1; i >= 0; i-- {
-			b[e.Off+i] = byte(v)
-			v >>= 8
+		return 0
+	}
+	for i := 0; i < e.Size; i++ {
+		if bwIsLE(e.Type) {
+			b[e.Off+i] = at(i)
+		} else {
+			b[e.Off+e.Size-1-i] = at(i)
 		}
 	}
 }

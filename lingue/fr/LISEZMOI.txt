@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.11.0 - un seul fichier exécutable, aucune installation, interface en 11
+Version 4.12.0 - un seul fichier exécutable, aucune installation, interface en 11
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -9,7 +9,18 @@ Licence : GNU General Public License version 3 ou ultérieure (logiciel libre, S
 AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
-italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.11 traduite).
+italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.12 traduite).
+Nouveautés de la 4.12.0 :
+- LANGUE AU PREMIER DÉMARRAGE : le programme démarre dans la langue de Windows de
+  l'utilisateur (en anglais si elle ne fait pas partie des 11 du programme). Si l'on
+  choisit ensuite une autre langue avec les drapeaux, le choix est enregistré et vaut
+  aux redémarrages suivants (l'italien aussi) ;
+- traductions : « Oui » et « Non » de la colonne Balayage et le nom de la licence sur
+  la page d'accueil sont désormais traduits dans toutes les langues ;
+- sécurité : corrections des signalements de l'analyse du code de GitHub (CodeQL) ;
+- dépôt et site : README en anglais sur la page principale du dépôt, avec les drapeaux
+  des langues et des images du programme ; politique de sécurité dans les 11 langues ;
+  textes du site mis à jour et image d'aperçu pour les réseaux sociaux.
 Nouveautés de la 4.11.0 :
 - NOMS DES ZONES : au lieu de « Zone 1 », « Zone 2 »… chaque zone peut avoir un nom,
   comme dans les programmes du constructeur (bouton « ✎ Noms des zones… » ou double
@@ -799,10 +810,12 @@ passe et celles divisées en plusieurs parties ne sont pas prises en charge.
 
 LANGUE DE L'INTERFACE (4.10)
 - Le sélecteur avec le drapeau est en haut, juste à droite de « ℹ Info ». Au premier
-  démarrage il montre le drapeau italien ; un clic ouvre la liste des langues :
-  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
-  (coréen, 4.11, drapeau de la Corée du Sud), العربية (arabe, 4.11, drapeau des
-  Émirats arabes unis).
+  démarrage (4.12), le programme utilise la langue de Windows de l'utilisateur
+  (Paramètres de Windows → Heure et langue → Langue) ; si Windows est dans une langue
+  que le programme n'a pas, il utilise l'anglais. Un clic sur le drapeau ouvre la
+  liste des langues : italiano, English, Français, Deutsch, Español, Português,
+  Русский, 中文, 日本語, 한국어 (coréen, 4.11, drapeau de la Corée du Sud), العربية (arabe,
+  4.11, drapeau des Émirats arabes unis).
 - Avec l'arabe, la page se lit de droite à gauche ; les fréquences, les nombres et les
   codes restent de gauche à droite. Pour l'arabe on utilise le drapeau des Émirats
   arabes unis, car celui de l'Arabie saoudite contient un texte religieux (la
@@ -810,8 +823,9 @@ LANGUE DE L'INTERFACE (4.10)
 - La traduction est immédiate, sans redémarrer : onglets, boutons, menus, fenêtres,
   guide, messages et avertissements (aussi ceux qui viennent des radios), fiches de la
   galerie, réglages et les fenêtres Windows « Ouvrir » et « Enregistrer ».
-- La langue choisie est enregistrée dans les réglages du programme et vaut aussi après
-  redémarrage.
+- La langue choisie avec les drapeaux est enregistrée dans les réglages du programme
+  et vaut aussi après redémarrage, à la place de la langue de Windows (depuis la 4.12,
+  l'italien aussi).
 - Les noms des éléments de CHIRP (colonne « nom d'origine » des réglages), les canaux,
   les noms des relais et les fichiers restent tels quels.
 - Les fichiers d'information (LISEZMOI, CHANGELOG, README, AUTEURS_ET_LICENCES,

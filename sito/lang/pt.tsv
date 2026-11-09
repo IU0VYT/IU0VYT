@@ -2,7 +2,7 @@
 a5397f2b	IU0VYT Flash — canais, repetidores e firmware para rádios Baofeng, Quansheng, Retevis, Radtel e outras marcas
 7ee08973	IU0VYT Flash: programa gratuito e livre (GPL) para Windows que lê e escreve canais, frequências e definições dos transceptores de muitas marcas (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), reconhece-os automaticamente, gere os repetidores italianos e atualiza o firmware.
 56e08062	Canais, repetidores e firmware para rádios Baofeng, Bajeton, Quansheng, Retevis, Radtel e outras marcas. Gratuito, software livre, para Windows 10/11.
-9743b861	Ícone do IU0VYT Flash
+dc80c138	IU0VYT Flash: a página inicial do programa com as marcas dos rádios suportados
 f8218bc1	Programa gratuito e livre (GPL) para Windows que lê e escreve canais, frequências e definições dos transceptores de muitas marcas (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), gere os repetidores italianos e atualiza o firmware.
 6a0c8bb4	Secções
 0c023b2f	Transferir
@@ -36,7 +36,7 @@ c8b8648a	Firmware atualizáveis
 eb86ce5e	Definições do rádio
 6139dc35	Menus, ecrã, VOX, squelch, TOT, DTMF, teclas e mais para <span data-n="impostazioni">#</span> modelos, com a explicação de cada opção e uma confirmação para as mais delicadas.
 06e1cc67	Identificar o rádio
-238339e0	Ligue o rádio: o programa reconhece-o e mostra marca, modelo, firmware e, nos DMR, ID e nome. Com a identificação automática basta ligar o cabo: o programa escuta todas as portas, reconhece também vários rádios ao mesmo tempo e os que são ligados depois, e abre os seus separadores; para outro rádio existe o botão «Identificar rádio». Sem escrever nada no rádio.
+42d20d21	Ligue o rádio: o programa reconhece-o e mostra marca, modelo, firmware e, nos DMR, ID e nome. Com a identificação automática basta ligar o cabo e está feito! Identifica até vários rádios ao mesmo tempo!
 66c001f1	Conversor universal
 82ce44a6	Os canais de qualquer rádio ou ficheiro (K67, Bajeton, imagens do CHIRP, CSV do CHIRP, Excel) no formato de qualquer outro rádio, adaptados às suas regras.
 4a61c5a1	Repetidores italianos
@@ -58,9 +58,9 @@ c22ecae0	Transfira e extraia
 3651366b	Abra <code>IU0VYT Flash.exe</code> e, no separador <b>📻 Modelos</b>, escolha o seu rádio ou use <b>🔎 Identificar</b>.
 4c3f730f	Ligue e programe
 7870de1e	Ligue o cabo, prima <b>Ler do rádio</b>, altere canais e repetidores e escreva tudo no rádio.
-41c051ae	O guia completo está no ficheiro <code>LEIAME.txt</code> da pasta <code>lingue/pt</code> incluída no pacote (original italiano: LEGGIMI.txt).
+8eca018b	O guia completo está no ficheiro <code>LEIAME.txt</code> da pasta <code>lingue/pt</code> incluída no pacote.<br>Original italiano: LEGGIMI.txt.
 128ac670	A saber
-59334bb5	Software livre: pode usá-lo, estudá-lo, modificá-lo e redistribuí-lo segundo a licença GNU GPL versão 3 ou posterior.
+d74f3bcb	Software livre: pode usá-lo, estudá-lo, modificá-lo e redistribuí-lo segundo a licença<br>GNU GPL versão 3 ou posterior.
 e240d883	⚠ Avisos
 d54cc175	Os protocolos dos rádios foram reconstruídos para a interoperabilidade e verificados com rádios simulados: <b>guarde sempre as cópias de segurança</b>.
 56e0b4b3	O programa é fornecido <b>sem qualquer garantia</b>.

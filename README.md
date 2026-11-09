@@ -1,64 +1,93 @@
 # IU0VYT Flash
 
+<div align="center">
+<table>
+<tr>
+<td align="center"><img src="docs/img/flags/en.svg" width="36" height="24" alt=""><br><sub><b>English</b></sub></td>
+<td align="center"><a href="README.it.md"><img src="docs/img/flags/it.svg" width="36" height="24" alt=""><br><sub>Italiano</sub></a></td>
+<td align="center"><a href="lingue/fr/README.md"><img src="docs/img/flags/fr.svg" width="36" height="24" alt=""><br><sub>Français</sub></a></td>
+<td align="center"><a href="lingue/de/README.md"><img src="docs/img/flags/de.svg" width="36" height="24" alt=""><br><sub>Deutsch</sub></a></td>
+<td align="center"><a href="lingue/es/README.md"><img src="docs/img/flags/es.svg" width="36" height="24" alt=""><br><sub>Español</sub></a></td>
+<td align="center"><a href="lingue/pt/README.md"><img src="docs/img/flags/pt.svg" width="36" height="24" alt=""><br><sub>Português</sub></a></td>
+<td align="center"><a href="lingue/ru/README.md"><img src="docs/img/flags/ru.svg" width="36" height="24" alt=""><br><sub>Русский</sub></a></td>
+<td align="center"><a href="lingue/zh/README.md"><img src="docs/img/flags/zh.svg" width="36" height="24" alt=""><br><sub>中文</sub></a></td>
+<td align="center"><a href="lingue/ja/README.md"><img src="docs/img/flags/ja.svg" width="36" height="24" alt=""><br><sub>日本語</sub></a></td>
+<td align="center"><a href="lingue/ko/README.md"><img src="docs/img/flags/ko.svg" width="36" height="24" alt=""><br><sub>한국어</sub></a></td>
+<td align="center"><a href="lingue/ar/README.md"><img src="docs/img/flags/ar.svg" width="36" height="24" alt=""><br><sub>العربية</sub></a></td>
+</tr>
+</table>
+</div>
+
 <p align="center">
-🇮🇹 <b>Italiano</b> · 🇬🇧 <a href="lingue/en/">English</a> · 🇫🇷 <a href="lingue/fr/">Français</a> · 🇩🇪 <a href="lingue/de/">Deutsch</a> · 🇪🇸 <a href="lingue/es/">Español</a> · 🇵🇹 <a href="lingue/pt/">Português</a> · 🇷🇺 <a href="lingue/ru/">Русский</a> · 🇨🇳 <a href="lingue/zh/">中文</a> · 🇯🇵 <a href="lingue/ja/">日本語</a> · 🇰🇷 <a href="lingue/ko/">한국어</a> · 🇦🇪 <a href="lingue/ar/">العربية</a>
+<a href="https://github.com/IU0VYT/IU0VYT/releases/latest"><img src="https://img.shields.io/github/v/release/IU0VYT/IU0VYT?label=release&color=2ea44f" alt="Latest release"></a>
+<a href="https://github.com/IU0VYT/IU0VYT/releases"><img src="https://img.shields.io/github/downloads/IU0VYT/IU0VYT/total?color=1f6feb" alt="Downloads"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="License GPL-3.0-or-later"></a>
+<img src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078d6" alt="Windows 10 | 11">
+<img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**Versione 4.11.0** · Windows · interfaccia in 11 lingue (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · un solo file eseguibile, nessuna installazione
+**Version 4.12.0** · Windows · interface in 11 languages (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · a single executable file, no installation
 
-Programma per radioamatori e utenti di ricetrasmettitori di **44 marche** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): legge e scrive canali, frequenze e impostazioni via cavo di programmazione, gestisce un archivio dei ponti radio italiani e aggiorna il firmware delle radio supportate.
+A program for radio amateurs and users of transceivers of **44 brands** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): it reads and writes channels, frequencies and settings via the programming cable, manages an archive of Italian repeaters and updates the firmware of the supported radios.
 
-🌐 Sito del programma: **[iu0vyt.github.io/IU0VYT](https://iu0vyt.github.io/IU0VYT/)**
+🌐 Program site: **[iu0vyt.github.io/IU0VYT](https://iu0vyt.github.io/IU0VYT/)**
 
-## Funzioni
+*Italian original: [README.it.md](README.it.md). The guide and the other information files are translated in the [`lingue`](lingue/) folder.*
 
-- **Canali e frequenze** di 451 modelli (comprese radio PMR digitali e DMR, anche via USB): lettura e scrittura via cavo, file `.img` compatibili con CHIRP, file originali del Baofeng K67 Pro (`.xlc`) e della Bajeton 8300 (`.dat`).
-- **Impostazioni delle radio** (menu, display, VOX, squelch, TOT, DTMF, tasti…) per 396 modelli, con la descrizione di ogni voce e un avviso da confermare per quelle delicate.
-- **Identificazione della radio collegata**: il programma la riconosce da solo e mostra marca, modello, tipo, firmware e le altre informazioni che comunica (per le radio DMR USB anche ID DMR e nome). Con l'**identificazione automatica** (pulsante nella scheda «Identifica», scelta ricordata) basta collegare il cavo, in qualsiasi scheda ci si trovi: il programma ascolta tutte le porte dei cavi insieme, riconosce anche una radio accesa dopo aver collegato il cavo e più radio collegate a cavi diversi, prova per prime le radio già riconosciute in passato e le più diffuse, non si fa ingannare dalle radio in modalità aggiornamento del firmware e apre la scheda di ciascuna con i canali letti; il riquadro «Identificazione Radio In Corso» compare solo per il cavo con una radio che risponde; per un'altra radio c'è il pulsante **«🔎 Identifica Radio»** in alto a destra.
-- **Inoltro ad altra radio**: i canali spuntati in una radio vengono scritti direttamente in un'altra radio collegata, scelta per marca e modello, con controllo di compatibilità, adattamento, copia di sicurezza e verifica.
-- **Convertitore universale**: i canali di qualsiasi radio o file (K67 `.xlc`, Bajeton `.dat`, immagini `.img` anche di CHIRP, CSV di CHIRP, Excel/CSV) nel formato di qualsiasi altra radio, adattati alle sue regole.
-- **Interfaccia in 11 lingue** con il selettore delle bandiere accanto a «ℹ Info»: traduzione immediata di tutto il programma (l'arabo da destra a sinistra), lingua ricordata al riavvio; file informativi tradotti nella cartella `lingue`.
-- **Nomi delle zone** al posto di «Zona 1», «Zona 2»… (Radtel RT-950 Pro, RT-950, RT-920, RT-910, Bajeton BJ-9000 e BJ-7700, Hiroyasu HI-UV850 Pro; zone delle radio DMR RD-5R, DM-1801 e DM-32UV), letti e scritti via cavo con i canali.
-- **Modifica in blocco** dei canali spuntati: potenza, banda, scansione, subtoni, shift o trasmissione insieme, il resto di ogni canale resta com'è.
-- **Galleria di 489 modelli** di 44 marche, divisi tra compatibili e non compatibili, per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca, filtri e collegamenti ai programmi e ai manuali ufficiali.
-- **Archivio dei ponti radio** basato sull'elenco aggiornato di [IK2ANE](https://www.ik2ane.it), con filtri e inserimento nelle radio, con il controllo della compatibilità tra ponti e radio prima della scrittura.
-- **Aggiornamento del firmware** di 57 modelli (anche le Quansheng UV-K5, UV-K6 e UV-5R Plus, le Radtel RT-590 e RT-600 con i file .bin di Quansheng e di Radtel, le Radtel RT-470, RT-470L, RT-470X, RT-495 e RT-630 con i file .kdhx di Radtel, le TIDRADIO TD-H3, TD-H8 e Radtel RT-730 con i file .BIN del costruttore, le Retevis RA79 V3 e RA89 con i file .bin e la Retevis RT85 con i file .hex di Retevis, le Radtel RT-950 Pro e RT-950 e la Bajeton BJ-9000 con i file .BTF, le Radtel RT-920 e RT-910B con i file .anc, le Radtel RT-910 e RT-900 e la Bajeton BJ-7700 senza Bluetooth con i file .BTU, la Radtel RT-890 con i file .bin di Radtel e M7OCM, la Baofeng DM-1701 via USB con i file .bin di Baofeng, le Baofeng RD-5R e DM-1801 via USB con i file .sgl), con controllo del file e copia di sicurezza della radio; aggiornamento guidato con il programma ufficiale per BTECH DMR-6X2 e DMR-6X2 PRO.
-- **Copia di sicurezza** automatica prima di ogni scrittura e verifica dopo.
-- **Verifica degli aggiornamenti** del programma a ogni avvio.
+<p align="center">
+<img src="docs/img/screens/channels.png" width="49%" alt="Channel table with zone names">
+<img src="docs/img/screens/gallery.png" width="49%" alt="Model gallery">
+</p>
 
-## Uso
+## Features
 
-1. Scarica [`IU0VYT.Flash.zip`](https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip) (ultima versione) ed estrai l'archivio.
-2. Avvia `IU0VYT Flash.exe` (Windows 10/11; usa il componente WebView2 di Windows).
-3. Dalla scheda **📻 Modelli** scegli la tua radio, collega il cavo e usa **Leggi dalla radio**.
+- **Channels and frequencies** of 451 models (including digital PMR and DMR radios, also via USB): read and write via cable, CHIRP-compatible `.img` files, original files of the Baofeng K67 Pro (`.xlc`) and the Bajeton 8300 (`.dat`).
+- **Radio settings** (menus, display, VOX, squelch, TOT, DTMF, keys…) for 396 models, with a description of every item and a warning to confirm for the sensitive ones.
+- **Identification of the connected radio**: the program recognizes it by itself and shows make, model, type, firmware and the other information it reports (for USB DMR radios also DMR ID and name). With **automatic identification** (button in the «Identify» tab, choice remembered) you just connect the cable, whatever tab you are in: the program listens to all the cable ports together, also recognizes a radio turned on after connecting the cable and several radios connected to different cables, tries first the radios already recognized in the past and the most common ones, is not fooled by radios in firmware update mode and opens each one's tab with the channels read; the «Identifying radio» box appears only for the cable with a radio that answers; for another radio there is the **«🔎 Identify radio»** button at the top right.
+- **Forwarding to another radio**: the channels ticked in one radio are written directly to another connected radio, chosen by make and model, with compatibility check, adaptation, backup copy and verification.
+- **Universal converter**: the channels of any radio or file (K67 `.xlc`, Bajeton `.dat`, `.img` images also from CHIRP, CHIRP CSV, Excel/CSV) in the format of any other radio, adapted to its rules.
+- **Interface in 11 languages** with the flag selector next to «ℹ Info»: immediate translation of the whole program (Arabic right to left), language remembered at restart; information files translated in the `lingue` folder.
+- **Zone names** instead of «Zone 1», «Zone 2»… (Radtel RT-950 Pro, RT-950, RT-920, RT-910, Bajeton BJ-9000 and BJ-7700, Hiroyasu HI-UV850 Pro; zones of the DMR radios RD-5R, DM-1801 and DM-32UV), read and written by cable together with the channels.
+- **Bulk edit** of the ticked channels: power, bandwidth, scan, subtones, shift or transmission together, the rest of each channel stays as it is.
+- **Gallery of 489 models** of 44 brands, divided into compatible and non-compatible, by type (amateur, DMR, GMRS/FRS, PMR446, for children) and by brand, with search, filters and links to the official programs and manuals.
+- **Repeater archive** based on the updated list by [IK2ANE](https://www.ik2ane.it), with filters and insertion into the radios, with a compatibility check between repeaters and radio before writing.
+- **Firmware update** of 57 models (also the Quansheng UV-K5, UV-K6 and UV-5R Plus, the Radtel RT-590 and RT-600 with Quansheng's and Radtel's .bin files, the Radtel RT-470, RT-470L, RT-470X, RT-495 and RT-630 with Radtel's .kdhx files, the TIDRADIO TD-H3, TD-H8 and Radtel RT-730 with the manufacturer's .BIN files, the Retevis RA79 V3 and RA89 with .bin files and the Retevis RT85 with Retevis's .hex files, the Radtel RT-950 Pro and RT-950 and the Bajeton BJ-9000 with .BTF files, the Radtel RT-920 and RT-910B with .anc files, the Radtel RT-910 and RT-900 and the Bajeton BJ-7700 without Bluetooth with .BTU files, the Radtel RT-890 with Radtel's and M7OCM's .bin files, the Baofeng DM-1701 via USB with Baofeng's .bin files, the Baofeng RD-5R and DM-1801 via USB with .sgl files), with file check and backup copy of the radio; guided update with the official program for BTECH DMR-6X2 and DMR-6X2 PRO.
+- Automatic **backup copy** before every write and verification afterwards.
+- **Check for updates** of the program at every start.
 
-La guida completa è nel file `LEGGIMI.txt`.
+## Use
 
-## Compilazione
+1. Download [`IU0VYT.Flash.zip`](https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip) (latest version) and extract the archive.
+2. Start `IU0VYT Flash.exe` (Windows 10/11; it uses the Windows WebView2 component).
+3. From the **📻 Models** tab choose your radio, connect the cable and use **Read from radio**.
 
-Serve Go 1.22 o successivo. Nella cartella `sorgenti`:
+The complete guide is in [`lingue/en/GUIDE.txt`](lingue/en/GUIDE.txt) (Italian original: [`LEGGIMI.txt`](LEGGIMI.txt)).
+
+## Building
+
+Go 1.22 or later is needed. In the `sorgenti` folder:
 
 ```
 go build -mod=vendor -trimpath -ldflags "-H=windowsgui -s -w" -o "IU0VYT Flash.exe" .
 ```
 
-Le librerie sono incluse nella cartella `vendor`.
+The libraries are included in the `vendor` folder.
 
-## Avvertenze
+## Warnings
 
-- I protocolli delle radio sono stati ricostruiti per l'interoperabilità e verificati con radio simulate: **conserva sempre le copie di sicurezza**. Il programma è fornito senza alcuna garanzia.
-- Programma indipendente, **non affiliato né approvato** dai costruttori delle radio (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e gli altri). I marchi citati appartengono ai rispettivi titolari e servono solo a indicare le radio compatibili.
-- Rispetta le norme sull'uso delle frequenze del tuo Paese.
+- The radio protocols were reconstructed for interoperability and verified with simulated radios: **always keep the backup copies**. The program is provided without any warranty.
+- Independent program, **not affiliated with or endorsed** by the radio manufacturers (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO and the others). The trademarks mentioned belong to their respective owners and only serve to indicate the compatible radios.
+- Respect the rules on the use of frequencies in your country.
 
-## Ringraziamenti
+## Acknowledgements
 
-- [CHIRP](https://chirpmyradio.com) e i suoi autori: gran parte dei driver delle radio deriva dal loro lavoro.
-- [IK2ANE](https://www.ik2ane.it), che mette a disposizione di tutti, gratuitamente, l'elenco dei ponti radio italiani.
+- [CHIRP](https://chirpmyradio.com) and its authors: most of the radio drivers derive from their work.
+- [IK2ANE](https://www.ik2ane.it), who makes the list of Italian repeaters available to everyone, free of charge.
 
-Autori e licenze dei componenti: `AUTORI_E_LICENZE.txt`.
+Authors and licenses of the components: [`AUTHORS_AND_LICENSES.txt`](lingue/en/AUTHORS_AND_LICENSES.txt).
 
-## Licenza
+## License
 
 Copyright © 2026 Daniele "IU0VYT" Bonifazi · [qrz.com/db/IU0VYT](https://www.qrz.com/db/IU0VYT)
 
-Software libero distribuito con la **GNU General Public License versione 3 o successiva** (`GPL-3.0-or-later`): vedi `LICENSE.txt`.
+Free software distributed under the **GNU General Public License version 3 or later** (`GPL-3.0-or-later`): see [`LICENSE`](LICENSE) and [`LICENSE_NOTICE.txt`](lingue/en/LICENSE_NOTICE.txt).

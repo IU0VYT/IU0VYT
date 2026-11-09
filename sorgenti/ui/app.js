@@ -166,8 +166,9 @@ Object.assign(App, {
 async function start() {
   try {
     App.init = await api('init', {}, { quiet: true });
-    // 4.10: lingua dell'interfaccia (l'ultima scelta; al primo avvio l'italiano)
-    await I18N.start((App.init.settings || {}).lang || '');
+    // 4.10: lingua dell'interfaccia (l'ultima scelta; 4.12: al primo avvio quella del sistema)
+    // 4.12: la lingua scelta con le bandiere o, se non è mai stata scelta, quella del sistema
+    await I18N.start(App.init.startLang || (App.init.settings || {}).lang || '');
     const cat = await api('catalog', {}, { quiet: true });
     App.catalog = cat.catalog || [];
     App.defs = cat.defs || {};

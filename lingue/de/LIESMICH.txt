@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.11.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 11
+Version 4.12.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 11
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -10,7 +10,19 @@ GEWÄHRLEISTUNG): siehe LICENSE.txt und AUTOREN_UND_LIZENZEN.txt.
 Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original ist der
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
-4.11).
+4.12).
+Neu in 4.12.0:
+- SPRACHE BEIM ERSTEN START: Das Programm startet in der Windows-Sprache des Benutzers
+  (auf Englisch, wenn sie nicht zu den 11 des Programms gehört). Wird danach mit den
+  Flaggen eine andere Sprache gewählt, wird die Wahl gespeichert und gilt bei den
+  nächsten Neustarts (auch Italienisch);
+- Übersetzungen: „Ja“ und „Nein“ der Spalte Suchlauf und der Name der Lizenz auf der
+  Startseite sind jetzt in allen Sprachen übersetzt;
+- Sicherheit: Korrekturen zu den Meldungen der Code-Analyse von GitHub (CodeQL);
+- Repository und Website: README auf Englisch auf der Hauptseite des Repositorys, mit
+  den Flaggen der Sprachen und Bildern des Programms; Sicherheitsrichtlinie in allen
+  11 Sprachen; aktualisierte Texte der Website und ein Vorschaubild für soziale
+  Netzwerke.
 Neu in 4.11.0:
 - ZONENNAMEN: statt „Zone 1“, „Zone 2“… kann jede Zone einen Namen haben, wie in den
   Programmen des Herstellers (Schaltfläche „✎ Zonennamen…“ oder Doppelklick auf die
@@ -820,10 +832,12 @@ Archive werden nicht unterstützt.
 
 SPRACHE DER OBERFLÄCHE (4.10)
 - Die Auswahl mit der Flagge ist oben, direkt rechts von „ℹ Info“. Beim ersten Start
-  zeigt sie die italienische Flagge; ein Klick öffnet die Liste der Sprachen:
-  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
-  (Koreanisch, 4.11, Flagge Südkoreas), العربية (Arabisch, 4.11, Flagge der
-  Vereinigten Arabischen Emirate).
+  (4.12) verwendet das Programm die Windows-Sprache des Benutzers
+  (Windows-Einstellungen → Zeit und Sprache → Sprache); ist Windows in einer Sprache,
+  die das Programm nicht hat, verwendet es Englisch. Ein Klick auf die Flagge öffnet
+  die Liste der Sprachen: italiano, English, Français, Deutsch, Español, Português,
+  Русский, 中文, 日本語, 한국어 (Koreanisch, 4.11, Flagge Südkoreas), العربية (Arabisch, 4.11,
+  Flagge der Vereinigten Arabischen Emirate).
 - Mit Arabisch liest sich die Seite von rechts nach links; Frequenzen, Zahlen und
   Codes bleiben von links nach rechts. Für Arabisch wird die Flagge der Vereinigten
   Arabischen Emirate verwendet, weil die Flagge Saudi-Arabiens einen religiösen Text
@@ -832,8 +846,9 @@ SPRACHE DER OBERFLÄCHE (4.10)
 - Die Übersetzung erfolgt sofort, ohne Neustart: Registerkarten, Schaltflächen, Menüs,
   Fenster, Hilfe, Meldungen und Warnungen (auch die von den Funkgeräten), Karten der
   Galerie, Einstellungen und die Windows-Fenster „Öffnen“ und „Speichern“.
-- Die gewählte Sprache wird in den Einstellungen des Programms gespeichert und gilt
-  auch nach Neustarts.
+- Die mit den Flaggen gewählte Sprache wird in den Einstellungen des Programms
+  gespeichert und gilt auch nach Neustarts, statt der Windows-Sprache (seit 4.12 auch
+  Italienisch).
 - Die Namen der CHIRP-Einträge (Spalte „Originalname“ der Einstellungen), die Kanäle,
   die Relaisnamen und die Dateien bleiben, wie sie sind.
 - Die Informationsdateien (LIESMICH, CHANGELOG, README, AUTOREN_UND_LIZENZEN, VERSION,

@@ -2,7 +2,7 @@
 a5397f2b	IU0VYT Flash — Baofeng, Quansheng, Retevis, Radtel 등 여러 브랜드 무전기의 채널, 중계기, 펌웨어
 7ee08973	IU0VYT Flash: Windows용 무료 자유 소프트웨어(GPL)로, 여러 브랜드(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) 무전기의 채널, 주파수, 설정을 읽고 쓰며, 무전기를 자동으로 식별하고, 이탈리아 중계기를 관리하고, 펌웨어를 업데이트합니다.
 56e08062	Baofeng, Bajeton, Quansheng, Retevis, Radtel 등 여러 브랜드 무전기의 채널, 중계기, 펌웨어. 무료 자유 소프트웨어, Windows 10/11용.
-9743b861	IU0VYT Flash 아이콘
+dc80c138	IU0VYT Flash: 지원하는 무전기 브랜드가 나오는 프로그램 첫 화면
 f8218bc1	Windows용 무료 자유 소프트웨어(GPL)로, 여러 브랜드(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…) 무전기의 채널, 주파수, 설정을 읽고 쓰며, 이탈리아 중계기를 관리하고, 펌웨어를 업데이트합니다.
 6a0c8bb4	섹션
 0c023b2f	다운로드
@@ -36,7 +36,7 @@ c8b8648a	업데이트 가능한 펌웨어
 eb86ce5e	무전기 설정
 6139dc35	메뉴, 디스플레이, VOX, 스켈치, TOT, DTMF, 키 등 <span data-n="impostazioni">#</span>개 모델의 설정. 항목마다 설명이 있고 민감한 항목은 확인을 거칩니다.
 06e1cc67	무전기 식별
-238339e0	무전기를 연결하면 프로그램이 이를 식별해 브랜드, 모델, 펌웨어와 DMR 무전기의 경우 ID와 이름을 보여 줍니다. 자동 식별을 쓰면 케이블만 연결하면 됩니다. 프로그램이 모든 포트를 듣고, 여러 무전기를 동시에, 나중에 켠 무전기도 식별해 각 탭을 엽니다. 다른 무전기는 “무전기 식별” 버튼을 쓰면 됩니다. 무전기에는 아무것도 쓰지 않습니다.
+42d20d21	무전기를 연결하면 프로그램이 이를 식별해 브랜드, 모델, 펌웨어와 DMR 무전기의 경우 ID와 이름을 보여 줍니다. 자동 식별을 쓰면 케이블만 연결하면 끝! 여러 무전기도 동시에 식별합니다!
 66c001f1	범용 변환기
 82ce44a6	어떤 무전기나 파일(K67, Bajeton, CHIRP 이미지, CHIRP CSV, Excel)의 채널이든 다른 무전기의 형식으로, 그 규칙에 맞게 변환합니다.
 4a61c5a1	이탈리아 중계기
@@ -58,9 +58,9 @@ c22ecae0	다운로드하고 압축 풀기
 3651366b	<code>IU0VYT Flash.exe</code>를 열고 <b>📻 모델</b> 탭에서 무전기를 고르거나 <b>🔎 식별</b>을 사용하세요.
 4c3f730f	연결하고 프로그래밍
 7870de1e	케이블을 연결하고 <b>무전기에서 읽기</b>를 누른 다음, 채널과 중계기를 고치고 모두 무전기에 쓰세요.
-41c051ae	전체 안내서는 패키지의 <code>lingue/ko</code> 폴더에 있는 <code>GUIDE.txt</code>입니다(이탈리아어 원문: LEGGIMI.txt).
+8eca018b	전체 안내서는 패키지의 <code>lingue/ko</code> 폴더에 있는 <code>GUIDE.txt</code>입니다.<br>이탈리아어 원문: LEGGIMI.txt.
 128ac670	알아 둘 점
-59334bb5	자유 소프트웨어: GNU GPL 버전 3 이상의 라이선스에 따라 사용, 연구, 수정, 재배포할 수 있습니다.
+d74f3bcb	자유 소프트웨어: 라이선스<br>GNU GPL 버전 3 이상에 따라 사용, 연구, 수정, 재배포할 수 있습니다.
 e240d883	⚠ 주의 사항
 d54cc175	무전기 프로토콜은 상호 운용을 위해 재구성되었고 시뮬레이션 무전기로 검증되었습니다. <b>백업은 항상 보관하세요</b>.
 56e0b4b3	이 프로그램은 <b>어떠한 보증도 없이</b> 제공됩니다.

@@ -2,7 +2,7 @@
 a5397f2b	IU0VYT Flash — canaux, relais et firmware pour radios Baofeng, Quansheng, Retevis, Radtel et d'autres marques
 7ee08973	IU0VYT Flash : programme gratuit et libre (GPL) pour Windows qui lit et écrit les canaux, les fréquences et les réglages des émetteurs-récepteurs de nombreuses marques (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), les reconnaît automatiquement, gère les relais italiens et met à jour le firmware.
 56e08062	Canaux, relais et firmware pour radios Baofeng, Bajeton, Quansheng, Retevis, Radtel et d'autres marques. Gratuit, logiciel libre, pour Windows 10/11.
-9743b861	Icône d'IU0VYT Flash
+dc80c138	IU0VYT Flash : la page d'accueil du programme avec les marques des radios prises en charge
 f8218bc1	Programme gratuit et libre (GPL) pour Windows qui lit et écrit les canaux, les fréquences et les réglages des émetteurs-récepteurs de nombreuses marques (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), gère les relais italiens et met à jour le firmware.
 6a0c8bb4	Sections
 0c023b2f	Télécharger
@@ -36,7 +36,7 @@ c8b8648a	Firmwares à mettre à jour
 eb86ce5e	Réglages de la radio
 6139dc35	Menus, affichage, VOX, squelch, TOT, DTMF, touches et plus encore pour <span data-n="impostazioni">#</span> modèles, avec l'explication de chaque option et une confirmation pour les plus délicates.
 06e1cc67	Identifier la radio
-238339e0	Branchez la radio : le programme la reconnaît et affiche la marque, le modèle, le firmware et, pour les DMR, l'ID et le nom. Avec l'identification automatique, il suffit de brancher le câble : le programme écoute tous les ports, reconnaît aussi plusieurs radios à la fois et celles allumées plus tard, et ouvre leurs onglets ; pour une autre radio, il y a le bouton « Identifier la radio ». Sans rien écrire dans la radio.
+42d20d21	Branchez la radio : le programme la reconnaît et affiche la marque, le modèle, le firmware et, pour les DMR, l'ID et le nom. Avec l'identification automatique, il suffit de brancher le câble et le tour est joué ! Il identifie même plusieurs radios en même temps !
 66c001f1	Convertisseur universel
 82ce44a6	Les canaux de n'importe quelle radio ou de n'importe quel fichier (K67, Bajeton, images CHIRP, CSV de CHIRP, Excel) au format de n'importe quelle autre radio, adaptés à ses règles.
 4a61c5a1	Relais italiens
@@ -58,9 +58,9 @@ c22ecae0	Téléchargez et extrayez
 3651366b	Ouvrez <code>IU0VYT Flash.exe</code> et, dans l'onglet <b>📻 Modèles</b>, choisissez votre radio ou utilisez <b>🔎 Identifier</b>.
 4c3f730f	Branchez et programmez
 7870de1e	Branchez le câble, appuyez sur <b>Lire la radio</b>, modifiez les canaux et les relais et écrivez tout dans la radio.
-41c051ae	Le guide complet est dans le fichier <code>LISEZMOI.txt</code> du dossier <code>lingue/fr</code> inclus dans le paquet (original italien : LEGGIMI.txt).
+8eca018b	Le guide complet est dans le fichier <code>LISEZMOI.txt</code> du dossier <code>lingue/fr</code> inclus dans le paquet.<br>Original italien : LEGGIMI.txt.
 128ac670	À savoir
-59334bb5	Logiciel libre : vous pouvez l'utiliser, l'étudier, le modifier et le redistribuer selon la licence GNU GPL version 3 ou ultérieure.
+d74f3bcb	Logiciel libre : vous pouvez l'utiliser, l'étudier, le modifier et le redistribuer selon la licence<br>GNU GPL version 3 ou ultérieure.
 e240d883	⚠ Avertissements
 d54cc175	Les protocoles des radios ont été reconstitués pour l'interopérabilité et vérifiés avec des radios simulées : <b>conservez toujours les copies de sauvegarde</b>.
 56e0b4b3	Le programme est fourni <b>sans aucune garantie</b>.

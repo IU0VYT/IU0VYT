@@ -2,7 +2,7 @@
 a5397f2b	IU0VYT Flash — 适用于 Baofeng、Quansheng、Retevis、Radtel 等品牌电台的信道、中继台与固件工具
 7ee08973	IU0VYT Flash：免费的自由软件（GPL），适用于 Windows，可读写多个品牌（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO…）电台的信道、频率和设置，能自动识别电台，管理意大利中继台并升级固件。
 56e08062	适用于 Baofeng、Bajeton、Quansheng、Retevis、Radtel 等品牌电台的信道、中继台与固件。免费、自由软件，适用于 Windows 10/11。
-9743b861	IU0VYT Flash 图标
+dc80c138	IU0VYT Flash：程序首页，显示所支持电台的品牌
 f8218bc1	免费的自由软件（GPL），适用于 Windows，可读写多个品牌（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO…）电台的信道、频率和设置，管理意大利中继台并升级固件。
 6a0c8bb4	栏目
 0c023b2f	下载
@@ -36,7 +36,7 @@ c8b8648a	可升级固件
 eb86ce5e	电台设置
 6139dc35	菜单、显示、VOX、静噪、TOT、DTMF、按键等，适用于 <span data-n="impostazioni">#</span> 个型号，每项都有说明，敏感项需要确认。
 06e1cc67	识别电台
-238339e0	连接电台：程序会识别它并显示品牌、型号、固件，DMR 电台还会显示 ID 和名称。使用自动识别时只需连接编程线：程序会监听所有端口，也能同时识别多台电台以及稍后开机的电台，并打开它们的标签页；其他电台可使用“识别电台”按钮。不会向电台写入任何内容。
+42d20d21	连接电台：程序会识别它并显示品牌、型号、固件，DMR 电台还会显示 ID 和名称。使用自动识别时只需连接编程线，就这么简单！还能同时识别多台电台！
 66c001f1	通用转换器
 82ce44a6	将任意电台或文件（K67、Bajeton、CHIRP 镜像、CHIRP CSV、Excel）的信道转换为任意其他电台的格式，并按其规则调整。
 4a61c5a1	意大利中继台
@@ -58,9 +58,9 @@ c22ecae0	下载并解压
 3651366b	打开 <code>IU0VYT Flash.exe</code>，在 <b>📻 型号</b> 标签页中选择你的电台，或使用 <b>🔎 识别</b>。
 4c3f730f	连接并编程
 7870de1e	连接编程线，点击 <b>从电台读取</b>，修改信道和中继台，然后全部写入电台。
-41c051ae	完整指南见软件包 <code>lingue/zh</code> 文件夹中的 <code>GUIDE.txt</code>（意大利语原文：LEGGIMI.txt）。
+8eca018b	完整指南见软件包 <code>lingue/zh</code> 文件夹中的 <code>GUIDE.txt</code>。<br>意大利语原文：LEGGIMI.txt。
 128ac670	须知
-59334bb5	自由软件：你可以依据 GNU GPL 第 3 版或更高版本的许可证使用、研究、修改和再发布本程序。
+d74f3bcb	自由软件：你可以依据许可证<br>GNU GPL 第 3 版或更高版本使用、研究、修改和再发布本程序。
 e240d883	⚠ 注意事项
 d54cc175	电台协议是为实现互操作而重建的，并已用模拟电台验证：<b>请务必保留备份</b>。
 56e0b4b3	本程序<b>不提供任何担保</b>。

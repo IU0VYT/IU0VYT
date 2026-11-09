@@ -1,11 +1,22 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.11.0 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
+Versione 4.12.0 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.12.0:
+- LINGUA AL PRIMO AVVIO: il programma parte nella lingua di Windows dell'utente (se
+  non è fra le 11 del programma, in inglese). Se poi si sceglie un'altra lingua con le
+  bandiere, la scelta si salva e vale ai riavvii successivi (anche l'italiano);
+- traduzioni: «Sì» e «No» della colonna Scansione e il nome della licenza nella
+  pagina iniziale ora sono tradotti in tutte le lingue;
+- sicurezza: correzioni alle segnalazioni dell'analisi del codice di GitHub
+  (CodeQL);
+- repository e sito: README in inglese nella pagina principale del repository, con le
+  bandiere delle lingue e le immagini del programma; politica di sicurezza in tutte le
+  11 lingue; testi del sito aggiornati e immagine di anteprima per i social.
 Novità della 4.11.0:
 - NOMI DELLE ZONE: al posto di «Zona 1», «Zona 2»… ogni zona può avere un nome, come
   nei programmi del costruttore (pulsante «✎ Nomi delle zone…» o doppio clic sulla
@@ -1346,7 +1357,9 @@ da password e quelli divisi in più parti.
 
 LINGUA DELL'INTERFACCIA (4.10)
 - Il selettore con la bandiera è in alto, subito a destra di "ℹ Info". Al primo avvio
-  mostra la bandiera italiana; con un clic si apre l'elenco delle lingue: italiano,
+  (4.12) il programma usa la lingua di Windows dell'utente (Impostazioni di Windows →
+  Ora e lingua → Lingua); se Windows è in una lingua che il programma non ha, usa
+  l'inglese. Con un clic sulla bandiera si apre l'elenco delle lingue: italiano,
   English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
   (coreano, 4.11, bandiera della Corea del Sud), العربية (arabo, 4.11, bandiera degli
   Emirati Arabi Uniti).
@@ -1357,7 +1370,8 @@ LINGUA DELL'INTERFACCIA (4.10)
 - La traduzione è immediata, senza riavviare: schede, pulsanti, menu, finestre, guida,
   messaggi e avvisi (anche quelli che arrivano dalle radio), schede della galleria,
   impostazioni e le finestre di Windows "Apri" e "Salva".
-- La lingua scelta si salva nelle impostazioni del programma e vale anche ai riavvii.
+- La lingua scelta con le bandiere si salva nelle impostazioni del programma e vale
+  anche ai riavvii, al posto della lingua di Windows (dalla 4.12 anche l'italiano).
 - I nomi delle voci di CHIRP (colonna "nome originale" delle impostazioni), i canali,
   i nomi dei ponti e i file restano come sono.
 - I file informativi tradotti (guida completa, CHANGELOG con le novità dell'ultima versione,

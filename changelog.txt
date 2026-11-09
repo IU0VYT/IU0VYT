@@ -3,6 +3,33 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.12.0 (09/11/2026)
+-------------------
+- Lingua al primo avvio (i18n.go, syslang_windows.go): se la lingua non è mai stata
+  scelta con le bandiere, il programma usa la prima delle lingue di visualizzazione
+  di Windows dell'utente (GetUserPreferredUILanguages) che ha fra le 11; se nessuna,
+  l'inglese. La scelta fatta con le bandiere si salva e vale ai riavvii (ora si salva
+  anche l'italiano, che prima si confondeva con «nessuna scelta»). Le finestre di
+  messaggio di Windows seguono la stessa lingua. Prova: TestSysLang.
+- Traduzioni: «Sì» e «No» (colonna Scansione e menu delle tabelle) erano troppo corti
+  per l'elenco dei testi da tradurre e restavano in italiano in tutte le lingue; il
+  nome della licenza nella pagina iniziale era rimasto italiano. Ora sono tradotti
+  (4905 testi per lingua).
+- Sicurezza, segnalazioni di CodeQL: bw.go scrive i byte delle parole senza
+  conversioni che troncano; la cartella dei dati presa dalla variabile
+  GESTIONE_CANALI_DIR (usata dalle prove) si pulisce e si rifiuta con «..»;
+  firmware.js ricava il testo semplice dall'HTML con il browser invece che con
+  un'espressione regolare; verifica/sito/brandcolors.js legge ui/gallery.js dalla
+  cartella dei sorgenti e non da un percorso sulla riga di comando.
+- Repository: README.md ora è in inglese (pagina principale del repository),
+  l'originale italiano è README.it.md; barra delle lingue con le bandiere e le
+  immagini del programma in tutti i README; politica di sicurezza (.github/SECURITY.md)
+  in inglese con le traduzioni nelle altre 10 lingue (.github/security).
+- Sito: testi dell'identificazione, della guida e della licenza aggiornati; immagine
+  di anteprima per i social (docs/img/social.png); bandiere e immagini del programma
+  in docs/img; segnalazione delle pagine a Bing, Yandex e agli altri motori che usano
+  IndexNow a ogni pubblicazione.
+
 4.11.0 (08/11/2026)
 -------------------
 - Nomi delle zone (zonenames.go): al posto di «Zona 1», «Zona 2»… ogni zona ha un nome

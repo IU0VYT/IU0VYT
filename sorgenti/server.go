@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "4.11.0"
+const appVersion = "4.12.0"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -73,7 +73,7 @@ type App struct {
 func newApp(st *Store) *App {
 	b := make([]byte, 16)
 	_, _ = rand.Read(b)
-	setUILang(st.Get().Lang) // 4.10: lingua dei messaggi di Windows
+	setUILang(startLang(st.Get().Lang)) // 4.10: lingua dei messaggi di Windows (4.12: anche al primo avvio)
 	return &App{store: st, token: hex.EncodeToString(b), radios: map[string]*radioSession{}, lastPing: time.Now()}
 }
 
@@ -220,6 +220,7 @@ func (a *App) apiInit(r *http.Request) (interface{}, error) {
 	return map[string]interface{}{
 		"version":     appVersion,
 		"settings":    a.store.Get(),
+		"startLang":   startLang(a.store.Get().Lang), // 4.12: lingua scelta o, se non c'è, del sistema
 		"archivePath": a.store.archivePath(),
 		"ponti":       a.store.Ponti,
 		"tipi":        tipiNoti,
@@ -753,11 +754,10 @@ func (a *App) apiLang(r *http.Request) (interface{}, error) {
 		return nil, fmt.Errorf("lingua sconosciuta: %q", req.Lang)
 	}
 	st := a.store.Get()
+	// 4.12: anche l'italiano si salva («» vuol dire che la lingua non è mai stata
+	// scelta e allora all'avvio vale quella del sistema)
 	st.Lang = req.Lang
 	setUILang(req.Lang)
-	if req.Lang == "it" {
-		st.Lang = ""
-	}
 	if err := a.store.SaveSettings(st); err != nil {
 		return nil, err
 	}

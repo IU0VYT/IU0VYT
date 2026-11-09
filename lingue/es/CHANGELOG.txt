@@ -3,38 +3,34 @@ IU0VYT FLASH - REGISTRO DE CAMBIOS
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o posterior
 
 Esta es la traducción al español de la última entrada de CHANGELOG.txt. La historia
-completa de las versiones anteriores (1.0 - 4.10) está en el original italiano,
+completa de las versiones anteriores (1.0 - 4.11) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
-4.11.0 (08/11/2026)
+4.12.0 (09/11/2026)
 -------------------
-- Nombres de las zonas (zonenames.go): en lugar de «Zona 1», «Zona 2»… cada zona tiene
-  un nombre editable («✎ Nombres de las zonas…» o doble clic en la zona de la barra).
-  Formatos obtenidos del código de los programas del fabricante y del controlador de
-  CHIRP: Radtel RT-950 Pro / Bajeton BJ-9000 / Hiroyasu HI-UV850 Pro (RT-950PRO_CPS
-  v1.2.0-v1.3.3, BJ-9000_CPS v1.3.3) y Radtel RT-950 (BT-9000_CPS v1.3.0): área
-  0xC000, 16 bytes por zona, 12 bytes GB2312 rellenados con 0xFF; Radtel RT-920
-  (RT-920_EnCPS v1.2.4 y radtel_rt900.py de CHIRP): área 0xC800, 10 zonas, 10
-  caracteres como en CHIRP; Radtel RT-910 / Bajeton BJ-7700 sin Bluetooth (RT910_EnCPS
-  v1.0.3): área 0xA200, 12 caracteres ASCII. Radios DMR RD-5R, DM-1801 y DM-32UV:
-  nombres de las zonas existentes, 16 caracteres. El área 0xC000-0xC0FF ahora se lee
-  en la BJ-9000 / RT-950 Pro y, al final y de forma opcional, en la RT-950; se escribe
-  solo si los nombres cambian, después de volver a leerla de la radio, y solo si
-  contiene nombres o está vacía (si no, no se escribe nada); los archivos de la RT-950
-  guardados antes de la 4.11 no tocan el área. Pruebas con las radios simuladas
-  (zonenames_test.go).
-- Edición en bloque de los canales marcados o seleccionados (radio.js): potencia,
-  ancho de banda, escaneo, tono TX, tono RX, desplazamiento y transmisión (solo
-  recepción), con comprobación de tonos y desplazamiento antes de cambiar los canales
-  y un único paso para deshacer.
-- Idiomas: coreano (bandera de Corea del Sur) y árabe (bandera de los Emiratos Árabes
-  Unidos; página de derecha a izquierda, números y frecuencias de izquierda a derecha;
-  cuadros de mensaje de Windows de derecha a izquierda), 4902 textos por idioma;
-  archivos informativos traducidos en lingue/ko y lingue/ar.
-- Sitio web: los idiomas disponibles en la página; se ha eliminado la frase que
-  enumeraba los archivos de firmware.
-- Pruebas: i18n_test.go compara la ruta con filepath.ToSlash (go test pasa en
-  Windows); nuevo documenti_test.go: las copias de LEGGIMI.txt, AUTORI_E_LICENZE.txt y
-  de la licencia en «sorgenti» deben ser idénticas a las de la carpeta principal (la
-  copia de LEGGIMI.txt en «sorgenti» se había quedado atrasada en la 4.10).
+- Idioma en el primer arranque (i18n.go, syslang_windows.go): si el idioma nunca se ha
+  elegido con las banderas, el programa usa el primero de los idiomas de visualización
+  de Windows del usuario (GetUserPreferredUILanguages) que tiene entre sus 11; si no
+  hay ninguno, el inglés. La elección hecha con las banderas se guarda y vale en los
+  reinicios (ahora también se guarda el italiano, que antes se confundía con «ninguna
+  elección»). Los cuadros de mensaje de Windows siguen el mismo idioma. Prueba:
+  TestSysLang.
+- Traducciones: «Sí» y «No» (columna Escaneo y menús de las tablas) eran demasiado
+  cortos para la lista de textos que traducir y se quedaban en italiano en todos los
+  idiomas; el nombre de la licencia en la página de inicio se había quedado en
+  italiano. Ahora están traducidos (4905 textos por idioma).
+- Seguridad, avisos de CodeQL: bw.go escribe los bytes de las palabras sin
+  conversiones que truncan; la carpeta de datos tomada de la variable
+  GESTIONE_CANALI_DIR (usada por las pruebas) se limpia y se rechaza con «..»;
+  firmware.js obtiene el texto plano del HTML con el navegador en lugar de una
+  expresión regular; verifica/sito/brandcolors.js lee ui/gallery.js de la carpeta de
+  las fuentes y no de una ruta en la línea de órdenes.
+- Repositorio: README.md ahora está en inglés (página principal del repositorio), el
+  original italiano es README.it.md; barra de idiomas con banderas e imágenes del
+  programa en todos los README; política de seguridad (.github/SECURITY.md) en inglés
+  con las traducciones en los otros 10 idiomas (.github/security).
+- Sitio: textos de identificación, guía y licencia actualizados; imagen de vista
+  previa para las redes sociales (docs/img/social.png); banderas e imágenes del
+  programa en docs/img; las páginas se comunican a Bing, Yandex y los demás buscadores
+  que usan IndexNow en cada publicación.

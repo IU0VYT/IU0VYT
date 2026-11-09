@@ -48,6 +48,11 @@ var htmlEnt = strings.NewReplacer("&amp;", "&", "&lt;", "<", "&gt;", ">", "&quot
 
 // testo da tradurre? (almeno una parola di 3 lettere, non un nome di codice)
 func uiCandidate(s string) bool {
+	// 4.12: «Sì» e «No» da soli (colonna Scansione, menu delle tabelle): pochi
+	// caratteri ma testi dell'interfaccia
+	if s == "Sì" || s == "No" {
+		return true
+	}
 	if !reLetters3.MatchString(s) {
 		return false
 	}
@@ -89,7 +94,7 @@ func addUI(out map[string]*uiStr, order *[]string, s, pos string) {
 		return
 	}
 	// solo parti variabili e punteggiatura: niente da tradurre
-	if strings.TrimSpace(rePH.ReplaceAllString(s, "")) == "" || !reLetters3.MatchString(rePH.ReplaceAllString(s, "")) {
+	if s != "Sì" && s != "No" && (strings.TrimSpace(rePH.ReplaceAllString(s, "")) == "" || !reLetters3.MatchString(rePH.ReplaceAllString(s, ""))) {
 		return
 	}
 	if _, ok := out[s]; ok {

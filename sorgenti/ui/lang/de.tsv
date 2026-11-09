@@ -792,6 +792,7 @@ b7af2088	Aktualisierung abgeschlossen
 5aae04bc	nachdem eine Kopie seiner Kanäle gespeichert wurde
 ece1fe40	Das Funkgerät muss bereits im Lader sein (mit gedrückter PTT eingeschaltet, Display aus).
 7350e16b	Das Funkgerät muss bereits im Lader sein (
+c93101cc	Das Funkgerät muss bereits im Lader sein ({0}).
 f1df2314	Das Funkgerät muss im Lader sein (aus- und mit gedrückter PTT wieder eingeschaltet: Taschenlampe an, Display aus).
 ca63fa06	Gewählte Leistung: {0}. Das Funkgerät muss bereits im Aktualisierungsmodus sein (mit gedrückten PTT und P1 eingeschaltet: grüne Anzeige).
 6618455a	Das Funkgerät muss bereits im Aktualisierungsmodus sein (grüne Anzeige).
@@ -1190,6 +1191,8 @@ ec07968f	Empfangssubton (Tonsquelch): CTCSS z. B. 88.5 oder DCS z. B. D023N / D0
 ed8b9908	Breit
 48e7cbf7	Bandbreite: Breit 25 kHz, Schmal 12,5 kHz
 6d148508	Scan
+86300b4d	Ja
+61e6be1a	Nein
 93d79fb3	— {0} Kanäle
 301d8e1b	Datei:
 c4d991e5	geändert, nicht gespeichert
@@ -3678,7 +3681,7 @@ e1351ee8	Suche abgebrochen. Ist das Funkgerät im Programmiermodus geblieben, au
 cf513052	kein identifiziertes Funkgerät zum Öffnen
 a7f52778	Modell nicht kompatibel mit dem identifizierten Funkgerät
 a8e9c0ce	der gelesene Speicher gehört nicht zu diesem Modell
-651fd784	GNU General Public License versione 3 o successiva (GPL-3.0-or-later)
+651fd784	GNU General Public License Version 3 oder später (GPL-3.0-or-later)
 d6fc58d6	IU0VYT-FLASH-VERSIONE:{0};
 5ed9899f	IU0VYT-Flash
 85158fd0	Version nicht gefunden

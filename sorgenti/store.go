@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 )
 
@@ -43,7 +44,7 @@ type Settings struct {
 	CableBackup bool   `json:"cableBackup"`
 	// identificazione automatica della radio al collegamento (4.0, scheda «Identifica»)
 	AutoIdent bool `json:"autoIdent"`
-	// Lang (4.10): lingua dell'interfaccia scelta con le bandiere (vuoto = italiano)
+	// Lang (4.10): lingua dell'interfaccia scelta con le bandiere (vuoto = nessuna scelta: dalla 4.12 si usa la lingua di Windows)
 	Lang string `json:"lang,omitempty"`
 	// KnownRadios (4.3): modelli riconosciuti dall'identificazione, il più recente
 	// per primo: le ricerche successive cominciano da questi
@@ -76,7 +77,8 @@ type Store struct {
 }
 
 func appDataDir() string {
-	if d := os.Getenv("GESTIONE_CANALI_DIR"); d != "" {
+	// cartella dei dati delle prove; 4.12: pulita e senza «..» (segnalazione di CodeQL)
+	if d := filepath.Clean(os.Getenv("GESTIONE_CANALI_DIR")); d != "." && !strings.Contains(d, "..") {
 		return d
 	}
 	base, err := os.UserConfigDir()

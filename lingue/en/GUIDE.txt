@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.11.0 - a single executable file, no installation, interface in 11 languages.
+Version 4.12.0 - a single executable file, no installation, interface in 11 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -8,7 +8,17 @@ License: GNU General Public License version 3 or later (free software, WITHOUT A
 WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
-folder (CHANGELOG.txt here contains the translated 4.11 entry).
+folder (CHANGELOG.txt here contains the translated 4.12 entry).
+What's new in 4.12.0:
+- LANGUAGE AT FIRST START: the program starts in the user's Windows language (English
+  if it is not one of the program's 11). If another language is then chosen with the
+  flags, the choice is saved and applies at the following restarts (Italian too);
+- translations: «Yes» and «No» in the Scan column and the name of the license on the
+  home page are now translated in all languages;
+- security: fixes for the reports of GitHub's code analysis (CodeQL);
+- repository and site: README in English on the repository's main page, with the
+  language flags and pictures of the program; security policy in all 11 languages;
+  updated site texts and a preview picture for social networks.
 What's new in 4.11.0:
 - ZONE NAMES: instead of «Zone 1», «Zone 2»… each zone can have a name, as in the
   manufacturer's programs («✎ Zone names…» button or double click on the zone). Radtel
@@ -745,10 +755,11 @@ into several parts are not supported.
 
 INTERFACE LANGUAGE (4.10)
 - The selector with the flag is at the top, immediately to the right of "ℹ Info". At
-  first start it shows the Italian flag; one click opens the list of languages:
-  italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
-  (Korean, 4.11, flag of South Korea), العربية (Arabic, 4.11, flag of the United Arab
-  Emirates).
+  first start (4.12) the program uses the user's Windows language (Windows Settings →
+  Time & language → Language); if Windows uses a language the program does not have,
+  it uses English. One click on the flag opens the list of languages: italiano,
+  English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어 (Korean, 4.11,
+  flag of South Korea), العربية (Arabic, 4.11, flag of the United Arab Emirates).
 - With Arabic the page reads right to left; frequencies, numbers and codes stay left
   to right. For Arabic the flag of the United Arab Emirates is used because that of
   Saudi Arabia contains a religious text (the profession of faith), which is not used
@@ -756,8 +767,8 @@ INTERFACE LANGUAGE (4.10)
 - The translation is immediate, without restarting: tabs, buttons, menus, windows,
   guide, messages and warnings (also those coming from the radios), gallery cards,
   settings and the Windows "Open" and "Save" windows.
-- The chosen language is saved in the program's settings and also applies after
-  restarting.
+- The language chosen with the flags is saved in the program's settings and also
+  applies after restarting, instead of the Windows language (since 4.12 also Italian).
 - The names of the CHIRP items ("original name" column of the settings), the channels,
   the repeater names and the files stay as they are.
 - The information files (GUIDE, CHANGELOG, README, AUTHORS_AND_LICENSES, VERSION,
