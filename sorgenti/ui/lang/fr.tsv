@@ -4903,8 +4903,6 @@ b68d60bf	réception
 ce833f64	scrambler
 9e6db4fe	émission
 c7d04685	Firmware IJV (IU0IJV)
-f26fc2a8	{0} Chaque onglet lit et écrit uniquement son propre firmware : d'origine Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, « 1o11 »), egzumer (pilote de CHIRP), F4HWN (pilote d'armel pour CHIRP, avec les réglages F4HWN), OSFW (pilote de CHIRP) ou les firmwares chinois LOSEHU / LTS / UVE (pilote de CHIRP, noms chinois). Si vous ouvrez le mauvais onglet, le programme lit la version du firmware, s'arrête sans écrire et indique le bon onglet ; « Identifier » le trouve tout seul. Firmware : fichiers .bin de Quansheng (ex. k5_v2.01.26_publish.bin) avec le chargeur de la radio (allumée en maintenant le PTT) ; le programme vérifie que le firmware est pour le type de chargeur de la radio (UV-K5, UV-K5(8)/UV-K6 ou UV-5R Plus). Quansheng protège les téléchargements par un mot de passe fourni par le revendeur. IJV est aussi géré (V3 à 200 ou 999 canaux sur l'UV-K5 classique ; V4 et V5 sur l'UV-K5 V3 : banque choisie sur la radio, canaux, groupes et réglages principaux ; la V6 est reconnue mais se gère avec RadioManager d'IJV).
-fd90554c	{0} Firmware d'origine : canaux uniquement (CHIRP ne gère pas encore les réglages) et seulement avec la version 7.03. Firmware IJV V4 et V5 : canaux de la banque choisie sur la radio, noms des groupes et réglages principaux (onglets « firmware IJV »).
 eee8f7c6	Allume la radio, puis branche le câble sur le connecteur micro/haut-parleur (bien enfoncé).
 07b28617	IJV V3
 37f9648b	Quansheng UV-K5 (firmware IJV V3, 200 canaux)
@@ -4926,9 +4924,7 @@ dcd51e55	réponse de la radio avec un CRC non valide
 f8238f6c	lecture de la mémoire à 0x{0} échouée
 1361ec4b	la radio a refusé l'écriture à 0x{0} : active sur la radio l'écriture des banques depuis le PC et réessaie
 01ebafa6	la radio n'a pas confirmé l'enregistrement de la mémoire
-6dc6b2d1	la radio a le firmware IJV V6 ({0}) : canaux et réglages de la V6 se gèrent avec RadioManager d'IJV, ce programme ne les lit pas et ne les écrit pas
 49843f26	la radio a le firmware {0} : ouvre l'onglet « {1} » (cet onglet est pour un autre firmware et ne lit ni n'écrit)
-783a8fd7	la radio a le firmware {0} : canaux et réglages de la V6 se gèrent avec RadioManager d'IJV
 ac521e8e	le firmware de la radio ({0}) n'est pas {1} : par sécurité rien n'est lu ni écrit
 a4d09196	IJV {0}
 fc748038	la radio n'indique pas la banque de mémoire choisie (configuration « CFG5 » non valide)
@@ -5038,10 +5034,32 @@ ad8b8e2c	Nom de la banque {0}
 5a9831df	Nom du groupe 0 (tous)
 450a71ed	(banque 0)
 5d8afcae	table des réglages de RadioManager 4.3.2 d'IJV (firmware V4)
-3988856b	table des réglages de RadioManager 4.3.2 d'IJV (firmware V5)
 b4fcd8ba	module CHIRP 3.60 publié par IJV (firmware V3)
 ef53c837	IJV-{0}
 4f21c9a6	firmware IJV V3, 200 canaux
 447dca6b	firmware IJV V3 X, 999 canaux
 1c75d52b	firmware IJV V4
 1b75d398	firmware IJV V5
+7c2fdf6f	{0} Chaque onglet lit et écrit uniquement son propre firmware : d'origine Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, « 1o11 »), egzumer (pilote de CHIRP), F4HWN (pilote d'armel pour CHIRP, avec les réglages F4HWN), OSFW (pilote de CHIRP) ou les firmwares chinois LOSEHU / LTS / UVE (pilote de CHIRP, noms chinois). Si vous ouvrez le mauvais onglet, le programme lit la version du firmware, s'arrête sans écrire et indique le bon onglet ; « Identifier » le trouve tout seul. Firmware : fichiers .bin de Quansheng (ex. k5_v2.01.26_publish.bin) avec le chargeur de la radio (allumée en maintenant le PTT) ; le programme vérifie que le firmware est pour le type de chargeur de la radio (UV-K5, UV-K5(8)/UV-K6 ou UV-5R Plus). Quansheng protège les téléchargements par un mot de passe fourni par le revendeur. IJV est aussi géré (V3 à 200 ou 999 canaux sur l'UV-K5 classique ; V4, V5 et V6 sur l'UV-K5 V3 : banque choisie sur la radio, canaux, groupes et réglages principaux).
+5f4e346a	{0} Firmware d'origine : canaux uniquement (CHIRP ne gère pas encore les réglages) et seulement avec la version 7.03. Firmware IJV V4, V5 et V6 : canaux de la banque choisie sur la radio, noms des groupes et réglages principaux (onglets « firmware IJV »).
+02b27e38	IJV V6
+4b2a8174	Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)
+81db67f1	Firmware IJV V6 (modulaire) pour UV-K5 V3 et UV-K1. {0}Liaison de données de la V6 (DTR et RTS bas) : si la radio indique que la liaison de données manque, mets-la à jour avec FLASH V6 de RadioManager. Les 500 canaux de la banque choisie sur la radio sont lus et écrits, avec les noms des groupes et les réglages principaux, par secteurs de 4 Kio relus et vérifiés un par un ; jamais les étalonnages, la licence, les modules, les voix ni les fichiers des modules. Modules et firmware restent à RadioManager d'IJV.
+171cfc26	la radio a le firmware IJV V6 ({0}) : ouvre l'onglet « {1} »
+ee4c4d54	la radio V6 signale des données mal reçues
+b508d32b	la radio ne répond pas à la liaison V6
+218cbc17	variante {0}
+35a9e6ac	la radio V6 ne répond plus
+51837bf6	le firmware V6 de la radio n'a pas encore la liaison de données : mets-le à jour avec FLASH V6 de RadioManager
+bbb2e60d	la radio V6 ne répond plus (lecture à 0x{0})
+8d8c498a	la radio V6 n'a pas lu la mémoire à 0x{0} (état {1})
+0bf3f50f	la radio V6 n'a pas réussi à écrire dans sa mémoire (secteur 0x{0})
+426acd34	la radio V6 a refusé les réglages : le bloc de configuration n'est pas valide
+ae0323ac	la radio V6 a refusé l'écriture à 0x{0} : mets-la à jour avec FLASH V6 de RadioManager et réessaie
+b5644f11	la radio V6 ne répond plus (écriture à 0x{0})
+41933c7d	IJV V6 {0} {1}
+99731869	Firmware de la radio : {0}, version {1} — banque {2} « {3} »
+bc8910a2	vérification échouée : la radio V6 ne contient pas ce qui a été écrit (0x{0})
+a2a643a8	Firmware de la radio : IJV V6 {0} {1}, version {2} — secteurs modifiés écrits : {3}
+85102cf4	table des réglages de RadioManager 4.3.2 d'IJV (firmware V5 et V6)
+1e75d851	firmware IJV V6

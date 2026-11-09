@@ -1,11 +1,13 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.13.0 - 单个可执行文件，无需安装，界面支持 11 种语言。
+版本 4.13.1 - 单个可执行文件，无需安装，界面支持 11 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.13.1 的新内容：
+- IJV V6 固件：新卡片“Quansheng UV-K5 V3 / UV-K1（IJV V6 固件）”。通过 V6 的数据连接读写电台上选定存储库的 500 个信道、分组和存储库名称以及主要设置（与 V5 相同）。写入以 4 KiB 扇区为单位：只写更改过的扇区，每个都会重新读取并校验。如果电台提示缺少数据连接，请用 RadioManager 的 FLASH V6 更新。
 4.13.0 的新内容：
 - 适用于 Quansheng UV-K5、UV-K5 V3 和 UV-K1 的 IJV 固件（IU0IJV 的非原厂固件，
   www.ijvradio.com）：新增四个卡片，每个固件版本一个。经典 UV-K5 上 200 或 999 信道的

@@ -41,14 +41,15 @@ const ijvEmuFlash = ijvBankBase + 16*ijvBankSize
 
 func (f ijvFam) emu(m *genModel, img []byte) genEmu {
 	// versioni di prova nel formato dei firmware IJV
-	e := &ijvEmu{kind: f.kind, fw: [...]string{"V-N3.60", "V-X3.60", "IJV V4.0.4", "IJV FW5 5.2"}[f.kind]}
+	e := &ijvEmu{kind: f.kind, fw: [...]string{"V-N3.60", "V-X3.60", "IJV V4.0.4", "IJV FW5 5.2", ""}[f.kind]}
 	size := f.imgSize()
 	im := append([]byte{}, img...)
 	if len(im) < size {
 		im = append(im, bytes.Repeat([]byte{0xFF}, size-len(im))...)
 	}
 	im = im[:size]
-	if f.kind == ijvFW5 {
+	if f.kind == ijvFW5 || f.kind == ijvV6 {
+		e.v6 = f.kind == ijvV6
 		e.flash = bytes.Repeat([]byte{0xFF}, ijvEmuFlash)
 		copy(e.flash, im[:ijvFixedEnd])
 		bk, err := f.imgBank(im)
@@ -63,7 +64,7 @@ func (f ijvFam) emu(m *genModel, img []byte) genEmu {
 }
 
 func (e *ijvEmu) bank() int {
-	if e.kind == ijvFW5 {
+	if e.flash != nil {
 		bk, err := ijvCfgBank(e.flash[ijvCfg5 : ijvCfg5+32])
 		if err != nil {
 			return 0
@@ -76,7 +77,7 @@ func (e *ijvEmu) bank() int {
 func (e *ijvEmu) image() []byte {
 	e.mu.Lock()
 	defer e.mu.Unlock()
-	if e.kind != ijvFW5 {
+	if e.flash == nil {
 		return append([]byte{}, e.img...)
 	}
 	bk := e.bank()
@@ -89,13 +90,21 @@ func (e *ijvEmu) serve(p Port) error {
 		return e.serveV6(p)
 	}
 	for {
-		h, err := emuRead(p, 4)
+		// inizio del pacchetto «AB CD» (i byte estranei, come le richieste della
+		// V6, si scartano come fa la radio)
+		h := []byte{0, 0, 0, 0}
+		for h[0] != 0xAB || h[1] != 0xCD {
+			b, err := emuRead(p, 1)
+			if err != nil {
+				return nil
+			}
+			h[0], h[1] = h[1], b[0]
+		}
+		t, err := emuRead(p, 2)
 		if err != nil {
 			return nil
 		}
-		if h[0] != 0xAB || h[1] != 0xCD {
-			return fmt.Errorf("pacchetto non valido % X", h)
-		}
+		h[2], h[3] = t[0], t[1]
 		n := int(h[2])
 		body, err := emuRead(p, n+4)
 		if err != nil {
@@ -209,8 +218,12 @@ func (e *ijvEmu) serve(p Port) error {
 	}
 }
 
-// serveV6: risponde solo al collegamento dati della V6 (informazioni e versione)
+// serveV6: collegamento dati della V6 (informazioni, versione, apertura con il
+// numero delle richieste, lettura, pagine, conferma del settore, fine, riavvio).
+// Senza memoria (radio di un'altra scheda) risponde solo a informazioni e versione.
 func (e *ijvEmu) serveV6(p Port) error {
+	staged := map[int][]byte{}
+	open, used, total := false, 0, 0
 	for {
 		// si cerca l'inizio «A5 5A»: i pacchetti della UV-K5 non hanno risposta
 		b, err := emuRead(p, 1)
@@ -239,18 +252,83 @@ func (e *ijvEmu) serveV6(p Port) error {
 		if crc32IEEE(all[2:]) != binary.LittleEndian.Uint32(rest[n:]) {
 			return fmt.Errorf("CRC V6 non valido")
 		}
-		var v uint32
-		switch h[2] {
-		case 8:
-			v = 1<<28 | 1<<16 | 27<<8 | 1 // UV-K5 V3, servizi 27
-		case 18:
-			v = 6<<16 | 1<<8 | 2 // 6.1.2
-		default:
-			return fmt.Errorf("comando V6 sconosciuto %d", h[2])
+		cmd, seq, addr, data := h[2], h[3], int(binary.LittleEndian.Uint32(h[4:])), rest[:n]
+		reply := func(st byte, v uint32) {
+			r := []byte{0x5A, 0xA5, st, seq, 0, 0, 0, 0}
+			binary.LittleEndian.PutUint32(r[4:], v)
+			p.Write(binary.LittleEndian.AppendUint32(r, crc32IEEE(r[2:8])))
 		}
-		r := []byte{0x5A, 0xA5, 0, h[3], 0, 0, 0, 0}
-		binary.LittleEndian.PutUint32(r[4:], v)
-		p.Write(binary.LittleEndian.AppendUint32(r, crc32IEEE(r[2:8])))
+		if open && cmd != ijv6CmdInfo && cmd != ijv6Version {
+			if used++; used > total {
+				return fmt.Errorf("richiesta %d oltre quelle annunciate (%d)", used, total)
+			}
+		}
+		e.mu.Lock()
+		flash := e.flash
+		e.mu.Unlock()
+		switch cmd {
+		case ijv6CmdInfo:
+			reply(0, (0x80|1<<4)<<24|1<<16|27<<8|1) // UV-K5 V3, servizi 27, collegamento dati
+		case ijv6Version:
+			reply(0, 6<<16|1<<8|2) // 6.1.2
+		case ijv6Open:
+			if flash == nil {
+				return fmt.Errorf("apertura del collegamento dati con una radio senza memoria")
+			}
+			if !open {
+				used = 0
+			}
+			open, total = true, addr
+			reply(0, 0)
+		case ijv6Read:
+			k := int(binary.LittleEndian.Uint16(data))
+			if !open || k == 0 || k > 256 || addr+k > len(flash) {
+				return fmt.Errorf("lettura V6 non valida a 0x%06X (%d byte)", addr, k)
+			}
+			reply(0, uint32(k))
+			d := append([]byte{}, flash[addr:addr+k]...)
+			p.Write(binary.LittleEndian.AppendUint32(d, crc32IEEE(d)))
+		case ijv6Stage:
+			if !open || n != 256 || addr%256 != 0 {
+				return fmt.Errorf("pagina V6 non valida a 0x%06X", addr)
+			}
+			staged[addr] = append([]byte{}, data...)
+			reply(0, 0)
+		case ijv6Commit:
+			if addr%0x1000 != 0 {
+				return fmt.Errorf("settore V6 non allineato 0x%06X", addr)
+			}
+			if e.refuse && addr >= ijvBankBase {
+				reply(2, 0)
+				continue
+			}
+			if !(addr < ijvFixedEnd || (addr >= ijvBankBase && addr < 0x60000)) {
+				return fmt.Errorf("scrittura V6 fuori dalle zone permesse 0x%06X", addr)
+			}
+			e.mu.Lock()
+			for k := 0; k < 0x1000; k += 256 {
+				pg, ok := staged[addr+k]
+				if !ok {
+					e.mu.Unlock()
+					return fmt.Errorf("settore V6 0x%06X incompleto", addr)
+				}
+				copy(e.flash[addr+k:], pg)
+				delete(staged, addr+k)
+			}
+			e.writes++
+			e.mu.Unlock()
+			reply(0, 0)
+		case ijv6End:
+			open = false
+			if e.writes == 0 {
+				reply(0, 0)
+			}
+		case ijv6Reset:
+			reply(0, 0)
+			return nil
+		default:
+			return fmt.Errorf("comando V6 sconosciuto %d", cmd)
+		}
 	}
 }
 
@@ -268,7 +346,7 @@ func ijvSynthImage(m *genModel) []byte {
 	switch f.kind {
 	case ijvV4:
 		img[0x0B] = 2
-	case ijvFW5:
+	case ijvFW5, ijvV6:
 		binary.LittleEndian.PutUint32(img[ijvCfg5:], ijvCfg5Magic)
 		for k := 4; k < 32; k++ {
 			img[ijvCfg5+k] = 0

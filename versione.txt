@@ -1,2 +1,2 @@
-versione=4.13.0
-compilazione=2026-11-09T14:30
+versione=4.13.1
+compilazione=2026-11-09T15:30

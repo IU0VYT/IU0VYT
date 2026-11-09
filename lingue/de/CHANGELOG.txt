@@ -7,6 +7,23 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.13.1 (09.11.2026)
+-------------------
+- IJV-Firmware V6 (drv_ijv6.go, neu): Karte «Quansheng UV-K5 V3 / UV-K1 (IJV-Firmware
+  V6)». Datenverbindung der V6 (DTR und RTS niedrig; Anfrage «A5 5A» mit CRC32,
+  Antwort «5A A5» mit 12 Byte): Info und Version, Öffnen mit der angekündigten Zahl
+  von Anfragen, Lesen zu 256 Byte, Seiten zu 256 Byte, in Sektoren zu 4 KiB bestätigt,
+  Ende und Neustart. Gleicher Speicher wie V5 (Bank n bei 0x020000 + n·0x4000, aktive
+  Bank aus «CFG5», vor dem Schreiben neu gelesen). Nur geänderte Sektoren werden
+  geschrieben, jeder zurückgelesen und verglichen; Kalibrierung, Lizenz und vom Gerät
+  selbst verwaltete Bereiche bleiben wie im Gerät.
+- Die anderen IJV-Karten nennen die V6-Karte, wenn das Gerät nur auf die
+  Datenverbindung der V6 antwortet.
+- Einstellungen: V6 nutzt die Tabelle der V5. Katalog und UV-K5-Firmware: V6-Karte.
+- Übersetzungen: 23 neue oder geänderte Texte. Tests: simuliertes V6-Gerät (Lesen,
+  Schreiben nur geänderter Sektoren, geänderte Bank, abgelehnte Einstellungen, falsche
+  Karte).
+
 4.13.0 (09.11.2026)
 -------------------
 - IJV-Firmware für Quansheng UV-K5 / UV-K5 V3 / UV-K1 (drv_ijv.go, neu): vier Karten,

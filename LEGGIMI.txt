@@ -1,11 +1,18 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.13.0 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
+Versione 4.13.1 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.13.1:
+- FIRMWARE IJV V6: nuova scheda «Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)». Con il
+  collegamento dati della V6 si leggono e si scrivono i 500 canali del banco scelto
+  sulla radio, i nomi dei gruppi e dei banchi e le impostazioni principali (le stesse
+  della V5). La scrittura va per settori di 4 KiB: solo quelli cambiati, ognuno riletto
+  e controllato. Se la radio dice che manca il collegamento dati, aggiornala con FLASH
+  V6 di RadioManager. Vedi «FIRMWARE IJV».
 Novità della 4.13.0:
 - FIRMWARE IJV per le Quansheng UV-K5, UV-K5 V3 e UV-K1 (firmware non originale di
   IU0IJV, www.ijvradio.com): quattro schede nuove, una per versione del firmware.
@@ -1116,15 +1123,22 @@ che la radio comunica:
   lo stesso banco (altrimenti non scrive nulla) e scrive solo i blocchi cambiati.
   Con la V5, se la radio rifiuta la scrittura, abilita sulla radio la scrittura dei
   banchi dal PC.
+- «Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)» (4.13.1): stessa memoria della V5
+  (banco scelto sulla radio, gruppi, banchi, impostazioni principali), ma con il
+  collegamento dati della V6 (cavo come per le altre UV-K5; il programma tiene bassi
+  DTR e RTS). Si scrivono solo i settori di 4 KiB cambiati, ognuno riletto e
+  controllato; le parti che la radio gestisce da sola restano come le ha la radio.
+  Se la radio dice che manca il collegamento dati, aggiornala con FLASH V6 di
+  RadioManager; se rifiuta le impostazioni, rileggi la radio e riprova.
 - Restano a RadioManager di IJV: le tarature, la VFO, le selettive e i contatti, i
-  tasti, gli SMS e il blocco SYSTEM della V5, i moduli e tutta la V6 (il programma la
-  riconosce e lo dice), la licenza e i firmware su misura del server IJV.
+  tasti, gli SMS e il blocco SYSTEM della V5 e della V6, i moduli e i loro file, le
+  voci, la licenza e i firmware su misura del server IJV.
 - Gruppo, AGC, compander, scrambler, selettiva, blocco della trasmissione e canale
   occupato di ogni canale si conservano quando lo modifichi; un canale nuovo parte con
   passo 12,5 kHz, squelch 1 e (nella banda aerea) modulazione AM.
 - Il codice è scritto da zero per l'interoperabilità: la memoria e i comandi sono
   ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
-  RadioManager 4.3.2, e provati con radio simulate. Le radio vere con IJV non sono
+  RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
 
 AGGIORNAMENTO DEL FIRMWARE RADTEL RT-470 / RT-495 / RT-630 (4.3)

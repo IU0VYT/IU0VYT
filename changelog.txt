@@ -3,6 +3,29 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.13.1 (09/11/2026)
+-------------------
+- Firmware IJV V6 (drv_ijv6.go, nuovo): scheda «Quansheng UV-K5 V3 / UV-K1 (firmware
+  IJV V6)». Collegamento dati della V6 (DTR e RTS bassi; richiesta «A5 5A» con comando,
+  numero, indirizzo, lunghezza e CRC32; risposta «5A A5» di 12 byte): informazioni e
+  versione, apertura con il numero di richieste annunciato, lettura a blocchi di
+  256 byte, scrittura di pagine da 256 byte e conferma per settori di 4 KiB, chiusura e
+  riavvio (solo con i servizi che lo prevedono). Stessa memoria della V5: area fissa
+  0x0000-0x1FFF e banco n a 0x020000 + n·0x4000, banco attivo dalla configurazione
+  «CFG5», riletto prima di scrivere. Si scrivono solo i settori cambiati (0x0000,
+  0x1000 e i quattro del banco), ognuno riletto e confrontato; tarature, licenza e
+  zone che la radio gestisce da sola restano come le ha la radio. Messaggi chiari se
+  manca il collegamento dati (FLASH V6 di RadioManager) o se la radio rifiuta le
+  impostazioni.
+- Le altre schede IJV indicano la scheda V6 quando la radio risponde solo al
+  collegamento dati della V6; la scheda V6 indica quella giusta per V3, V4 e V5.
+- Impostazioni: la V6 usa la tabella della V5 (settings_ijv.go).
+- Firmware della UV-K5 (fwk5.go) e catalogo: la scheda V6 fra quelle IJV.
+- Traduzioni: 23 testi nuovi o cambiati in tutte le lingue.
+- Prove: la radio V6 simulata ora gestisce lettura, scrittura, conferma dei settori e
+  annunci; prove di lettura, scrittura dei soli settori cambiati, banco cambiato,
+  impostazioni rifiutate e scheda sbagliata (drv_ijv_test.go).
+
 4.13.0 (09/11/2026)
 -------------------
 - Firmware IJV per Quansheng UV-K5 / UV-K5 V3 / UV-K1 (drv_ijv.go, nuovo): quattro

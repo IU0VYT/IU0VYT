@@ -7,6 +7,23 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.13.1 (09/11/2026)
+-------------------
+- Firmware IJV V6 (drv_ijv6.go, nuevo): ficha «Quansheng UV-K5 V3 / UV-K1 (firmware
+  IJV V6)». Enlace de datos de la V6 (DTR y RTS bajos; petición «A5 5A» con CRC32,
+  respuesta «5A A5» de 12 bytes): información y versión, apertura con el número de
+  peticiones anunciado, lecturas de 256 bytes, páginas de 256 bytes confirmadas por
+  sectores de 4 KiB, cierre y reinicio. Misma memoria que la V5 (banco n en 0x020000 +
+  n·0x4000, banco activo de «CFG5», releído antes de escribir). Solo se escriben los
+  sectores cambiados, cada uno releído y comparado; calibraciones, licencia y zonas que
+  gestiona la radio quedan como en la radio.
+- Las demás fichas IJV indican la ficha V6 cuando la radio solo responde al enlace de
+  datos de la V6.
+- Ajustes: la V6 usa la tabla de la V5. Catálogo y firmware UV-K5: ficha V6.
+- Traducciones: 23 textos nuevos o cambiados. Pruebas: radio V6 simulada (lectura,
+  escritura solo de los sectores cambiados, banco cambiado, ajustes rechazados, ficha
+  equivocada).
+
 4.13.0 (09/11/2026)
 -------------------
 - Firmware IJV para Quansheng UV-K5 / UV-K5 V3 / UV-K1 (drv_ijv.go, nuevo): cuatro

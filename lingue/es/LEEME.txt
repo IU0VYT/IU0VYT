@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.13.0 - un solo archivo ejecutable, sin instalación, interfaz en 11 idiomas.
+Versión 4.13.1 - un solo archivo ejecutable, sin instalación, interfaz en 11 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,13 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.13.1:
+- FIRMWARE IJV V6: nueva ficha «Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)». Con el
+  enlace de datos de la V6 se leen y escriben los 500 canales del banco elegido en la
+  radio, los nombres de los grupos y de los bancos y los ajustes principales (los
+  mismos de la V5). La escritura va por sectores de 4 KiB: solo los que han cambiado,
+  cada uno releído y comprobado. Si la radio dice que falta el enlace de datos,
+  actualízala con FLASH V6 de RadioManager.
 Novedades de la 4.13.0:
 - FIRMWARE IJV para las Quansheng UV-K5, UV-K5 V3 y UV-K1 (firmware no original de
   IU0IJV, www.ijvradio.com): cuatro fichas nuevas, una por versión del firmware. V3 de

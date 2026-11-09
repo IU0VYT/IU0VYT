@@ -38,7 +38,7 @@ func ijvNums(from, n, step int, unit string) []string {
 func ijvSetDefs(kind ijvKind) []ijvSetDef {
 	gOp, gTx, gRx, gDisp, gKeys, gNames := "Funzionamento", "Trasmissione", "Ricezione e audio", "Display", "Tasti laterali", "Nomi"
 	v3 := kind == ijvV3 || kind == ijvV3X
-	fw5 := kind == ijvFW5
+	fw5 := kind == ijvFW5 || kind == ijvV6 // la V6 usa le impostazioni della V5 (come RadioManager)
 	d := []ijvSetDef{
 		{off: 0x02, opts: []string{"OFF", "30 s", "1 min", "3 min", "5 min"}, key: "talk_time", group: gTx, label: "Tempo massimo di trasmissione (TOT)",
 			desc: "Dopo questo tempo la trasmissione si interrompe da sola."},
@@ -138,8 +138,8 @@ func ijvSetDefs(kind ijvKind) []ijvSetDef {
 func ijvSetTable(kind ijvKind) *setTable {
 	src := "tabella delle impostazioni di RadioManager 4.3.2 di IJV (firmware V4)"
 	switch kind {
-	case ijvFW5:
-		src = "tabella delle impostazioni di RadioManager 4.3.2 di IJV (firmware V5)"
+	case ijvFW5, ijvV6:
+		src = "tabella delle impostazioni di RadioManager 4.3.2 di IJV (firmware V5 e V6)"
 	case ijvV3, ijvV3X:
 		src = "modulo CHIRP 3.60 pubblicato da IJV (firmware V3)"
 	}
@@ -194,7 +194,7 @@ func ijvSetTable(kind ijvKind) *setTable {
 var ijvSetTables = map[string]*setTable{}
 
 func init() {
-	for id, k := range map[string]ijvKind{"qs-uvk5-ijv3": ijvV3, "qs-uvk5-ijv3x": ijvV3X, "qs-uvk5v3-ijv4": ijvV4, "qs-uvk5v3-ijv5": ijvFW5} {
+	for id, k := range map[string]ijvKind{"qs-uvk5-ijv3": ijvV3, "qs-uvk5-ijv3x": ijvV3X, "qs-uvk5v3-ijv4": ijvV4, "qs-uvk5v3-ijv5": ijvFW5, "qs-uvk5v3-ijv6": ijvV6} {
 		ijvSetTables[id] = ijvSetTable(k)
 	}
 	settingsProviders = append(settingsProviders, settingsProvider{

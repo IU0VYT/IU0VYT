@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**バージョン 4.13.0** · Windows · 11 言語のインターフェース（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 実行ファイル 1 つだけ、インストール不要
+**バージョン 4.13.1** · Windows · 11 言語のインターフェース（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 実行ファイル 1 つだけ、インストール不要
 
 アマチュア無線家と **44 ブランド**のトランシーバーの利用者のためのプログラムです（**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone）。プログラミングケーブルでチャンネル、周波数、設定を読み書きし、イタリアのレピーターのアーカイブを管理し、対応する無線機のファームウェアを更新します。
 

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.13.0 - un seul fichier exécutable, aucune installation, interface en 11
+Version 4.13.1 - un seul fichier exécutable, aucune installation, interface en 11
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,13 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.13.1 :
+- FIRMWARE IJV V6 : nouvel onglet « Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6) ».
+  Par la liaison de données de la V6, les 500 canaux de la banque choisie sur la radio,
+  les noms des groupes et des banques et les réglages principaux (les mêmes que la V5)
+  sont lus et écrits. L'écriture se fait par secteurs de 4 Kio : seulement ceux qui
+  ont changé, chacun relu et vérifié. Si la radio indique que la liaison de données
+  manque, mets-la à jour avec FLASH V6 de RadioManager.
 Nouveautés de la 4.13.0 :
 - FIRMWARE IJV pour les Quansheng UV-K5, UV-K5 V3 et UV-K1 (firmware non d'origine
   d'IU0IJV, www.ijvradio.com) : quatre nouveaux onglets, un par version du firmware.

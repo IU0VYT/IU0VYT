@@ -57,7 +57,7 @@ func TestIJVFamily(t *testing.T) {
 
 // record del canale: posizioni dei campi come nei moduli CHIRP e in RadioManager
 func TestIJVRecord(t *testing.T) {
-	for _, id := range []string{"qs-uvk5-ijv3", "qs-uvk5-ijv3x", "qs-uvk5v3-ijv4", "qs-uvk5v3-ijv5"} {
+	for _, id := range []string{"qs-uvk5-ijv3", "qs-uvk5-ijv3x", "qs-uvk5v3-ijv4", "qs-uvk5v3-ijv5", "qs-uvk5v3-ijv6"} {
 		m := genByID[id]
 		f := m.Fam.(ijvFam)
 		img := ijvSynthImage(m)
@@ -145,7 +145,7 @@ func TestIJVProtocolModes(t *testing.T) {
 
 // prima di scrivere si controlla il banco scelto sulla radio
 func TestIJVBankMismatch(t *testing.T) {
-	for _, id := range []string{"qs-uvk5v3-ijv4", "qs-uvk5v3-ijv5"} {
+	for _, id := range []string{"qs-uvk5v3-ijv4", "qs-uvk5v3-ijv5", "qs-uvk5v3-ijv6"} {
 		m, e := ijvNewEmu(id, nil)
 		ijvWithEmu(t, e, func() {
 			img, _, err := m.Fam.Download(context.Background(), m, "COM7", noProg)
@@ -156,7 +156,7 @@ func TestIJVBankMismatch(t *testing.T) {
 				t.Fatal(err)
 			}
 			// sulla radio si sceglie un altro banco
-			if e.kind == ijvFW5 {
+			if e.flash != nil {
 				e.flash[ijvCfg5Bank] = 5
 			} else {
 				e.img[0x0B] = 5
@@ -172,7 +172,7 @@ func TestIJVBankMismatch(t *testing.T) {
 
 // solo i blocchi cambiati; impostazioni sì, tarature mai
 func TestIJVWriteOnlyChanged(t *testing.T) {
-	for _, id := range []string{"qs-uvk5v3-ijv4", "qs-uvk5v3-ijv5"} {
+	for _, id := range []string{"qs-uvk5v3-ijv4", "qs-uvk5v3-ijv5", "qs-uvk5v3-ijv6"} {
 		m, e := ijvNewEmu(id, nil)
 		ijvWithEmu(t, e, func() {
 			img, _, err := m.Fam.Download(context.Background(), m, "COM7", noProg)
@@ -197,13 +197,15 @@ func TestIJVWriteOnlyChanged(t *testing.T) {
 				if e.writes != 4 {
 					t.Fatalf("V4: %d scritture, attese 4 (canale, impostazione, chiusura dei settori)", e.writes)
 				}
-			} else if e.writes != 2 || e.flushes != 1 {
+			} else if id == "qs-uvk5v3-ijv5" && (e.writes != 2 || e.flushes != 1) {
 				t.Fatalf("FW5: %d scritture e %d salvataggi", e.writes, e.flushes)
+			} else if id == "qs-uvk5v3-ijv6" && e.writes != 2 {
+				t.Fatalf("V6: %d settori scritti, attesi 2", e.writes)
 			}
 			if !bytes.Equal(got, exp) {
 				t.Fatalf("%s: memoria della radio diversa da quella attesa", id)
 			}
-			if !strings.Contains(note, "blocchi cambiati e scritti: 2") {
+			if !strings.Contains(note, "cambiati e scritti: 2") {
 				t.Fatalf("%s: nota %q", id, note)
 			}
 		})
@@ -211,18 +213,20 @@ func TestIJVWriteOnlyChanged(t *testing.T) {
 }
 
 func TestIJVFW5Refused(t *testing.T) {
-	m, e := ijvNewEmu("qs-uvk5v3-ijv5", nil)
-	e.refuse = true
-	ijvWithEmu(t, e, func() {
-		img, _, err := m.Fam.Download(context.Background(), m, "COM7", noProg)
-		if err != nil {
-			t.Fatal(err)
-		}
-		_ = m.Fam.Set(m, img, 0, &Chan{Rx: 145500000, Tx: 145500000, Scan: true})
-		if _, err := m.Fam.Upload(context.Background(), m, "COM7", img, noProg); err == nil || !strings.Contains(err.Error(), "abilita sulla radio") {
-			t.Fatalf("errore atteso, ottenuto %v", err)
-		}
-	})
+	for id, msg := range map[string]string{"qs-uvk5v3-ijv5": "abilita sulla radio", "qs-uvk5v3-ijv6": "FLASH V6"} {
+		m, e := ijvNewEmu(id, nil)
+		e.refuse = true
+		ijvWithEmu(t, e, func() {
+			img, _, err := m.Fam.Download(context.Background(), m, "COM7", noProg)
+			if err != nil {
+				t.Fatal(err)
+			}
+			_ = m.Fam.Set(m, img, 0, &Chan{Rx: 145500000, Tx: 145500000, Scan: true})
+			if _, err := m.Fam.Upload(context.Background(), m, "COM7", img, noProg); err == nil || !strings.Contains(err.Error(), msg) {
+				t.Fatalf("%s: errore atteso, ottenuto %v", id, err)
+			}
+		})
+	}
 }
 
 // scheda sbagliata: il programma indica quella giusta e non scrive
@@ -251,8 +255,36 @@ func TestIJVV6(t *testing.T) {
 	e.v6 = true
 	ijvWithEmu(t, e, func() {
 		_, _, err := m.Fam.Download(context.Background(), m, "COM7", noProg)
-		if err == nil || !strings.Contains(err.Error(), "IJV V6 (UV-K5 V3, versione 6.1.2)") {
+		if err == nil || !strings.Contains(err.Error(), "IJV V6 (UV-K5 V3, versione 6.1.2)") || !strings.Contains(err.Error(), genByID["qs-uvk5v3-ijv6"].Name) {
 			t.Fatalf("errore atteso, ottenuto %v", err)
+		}
+	})
+}
+
+// scheda V6 con una radio V5: indica la scheda della V5
+func TestIJVV6WrongCard(t *testing.T) {
+	_, e := ijvNewEmu("qs-uvk5v3-ijv5", nil)
+	m6 := genByID["qs-uvk5v3-ijv6"]
+	ijvWithEmu(t, e, func() {
+		_, _, err := m6.Fam.Download(context.Background(), m6, "COM7", noProg)
+		if err == nil || !strings.Contains(err.Error(), genByID["qs-uvk5v3-ijv5"].Name) {
+			t.Fatalf("errore atteso, ottenuto %v", err)
+		}
+	})
+}
+
+// V6: la lettura annuncia le richieste e rilegge solo il banco scelto
+func TestIJVV6Read(t *testing.T) {
+	m, e := ijvNewEmu("qs-uvk5v3-ijv6", func(img []byte) {
+		_ = genByID["qs-uvk5v3-ijv6"].Fam.Set(genByID["qs-uvk5v3-ijv6"], img, 7, &Chan{Rx: 145500000, Tx: 145500000, Scan: true, Name: "V6 TEST"})
+	})
+	ijvWithEmu(t, e, func() {
+		got, note, err := m.Fam.Download(context.Background(), m, "COM7", noProg)
+		if err != nil || !bytes.Equal(got, e.image()) || !strings.Contains(note, "versione 6.1.2") || !strings.Contains(note, "banco 3") {
+			t.Fatalf("%v %q", err, note)
+		}
+		if c := m.Fam.Get(m, got, 7); c == nil || c.Name != "V6 TEST" {
+			t.Fatalf("canale letto %+v", c)
 		}
 	})
 }

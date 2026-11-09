@@ -7,6 +7,22 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.13.1 (09/11/2026)
+-------------------
+- Firmware IJV V6 (drv_ijv6.go, novo): separador «Quansheng UV-K5 V3 / UV-K1
+  (firmware IJV V6)». Ligação de dados da V6 (DTR e RTS baixos; pedido «A5 5A» com
+  CRC32, resposta «5A A5» de 12 bytes): informação e versão, abertura com o número de
+  pedidos anunciado, leituras de 256 bytes, páginas de 256 bytes confirmadas por
+  setores de 4 KiB, fim e reinício. Mesma memória da V5 (banco n em 0x020000 +
+  n·0x4000, banco ativo de «CFG5», relido antes de escrever). Só se escrevem os setores
+  alterados, cada um relido e comparado; calibrações, licença e zonas geridas pelo
+  rádio ficam como no rádio.
+- Os outros separadores IJV indicam o separador V6 quando o rádio só responde à
+  ligação de dados da V6.
+- Definições: a V6 usa a tabela da V5. Catálogo e firmware UV-K5: separador V6.
+- Traduções: 23 textos novos ou alterados. Testes: rádio V6 simulado (leitura, escrita
+  só dos setores alterados, banco mudado, definições recusadas, separador errado).
+
 4.13.0 (09/11/2026)
 -------------------
 - Firmware IJV para Quansheng UV-K5 / UV-K5 V3 / UV-K1 (drv_ijv.go, novo): quatro

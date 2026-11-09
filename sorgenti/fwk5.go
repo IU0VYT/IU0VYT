@@ -229,7 +229,7 @@ func analyzeK5(name, origin string, raw []byte) *fwImage {
 	case ijvFamily(vs) != "":
 		// 4.13: firmware IJV (IU0IJV): canali e impostazioni con le schede IJV
 		fam := ijvFamily(vs)
-		ids := map[string][]string{"V3": {"qs-uvk5-ijv3"}, "V3X": {"qs-uvk5-ijv3x"}, "V4": {"qs-uvk5v3-ijv4"}, "FW5": {"qs-uvk5v3-ijv5"}}[fam]
+		ids := map[string][]string{"V3": {"qs-uvk5-ijv3"}, "V3X": {"qs-uvk5-ijv3x"}, "V4": {"qs-uvk5v3-ijv4"}, "FW5": {"qs-uvk5v3-ijv5"}, "V6": {"qs-uvk5v3-ijv6"}}[fam]
 		if fam == "FW5" || fam == "V6" {
 			add("warn", "Firmware IJV %s: dopo il firmware la radio ha bisogno anche del blocco SYSTEM (V5) o dei moduli (V6), che carica solo RadioManager di IJV; senza, la radio resta incompleta. Per questo firmware usa RadioManager di IJV", fam)
 		} else {

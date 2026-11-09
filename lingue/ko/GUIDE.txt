@@ -1,6 +1,6 @@
 IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 =====================================================================
-버전 4.13.0 - 실행 파일 하나, 설치 필요 없음, 11개 언어의 인터페이스.
+버전 4.13.1 - 실행 파일 하나, 설치 필요 없음, 11개 언어의 인터페이스.
 작성자: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 웹사이트: https://iu0vyt.github.io/IU0VYT/
 소스 코드와 릴리스: https://github.com/IU0VYT/IU0VYT
@@ -8,6 +8,8 @@ IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 AUTHORS_AND_LICENSES.txt를 보세요.
 이 파일은 LEGGIMI.txt의 한국어 번역입니다(이탈리아어 원문이 기준이 되는 글입니다). 이전 버전의 새 기능은 메인 폴더의 이탈리아어
 CHANGELOG.txt에 있습니다(여기의 CHANGELOG.txt에는 4.13 항목의 번역이 있습니다).
+4.13.1의 새 기능:
+- IJV V6 펌웨어: 새 탭 «Quansheng UV-K5 V3 / UV-K1(IJV V6 펌웨어)». V6 데이터 링크로 무전기에서 선택한 뱅크의 500채널, 그룹 및 뱅크 이름, 주요 설정(V5와 동일)을 읽고 씁니다. 쓰기는 4 KiB 섹터 단위로, 바뀐 섹터만 쓰고 섹터마다 다시 읽어 확인합니다. 무전기가 데이터 링크가 없다고 하면 RadioManager의 FLASH V6로 업데이트하세요.
 4.13.0의 새 기능:
 - Quansheng UV-K5, UV-K5 V3, UV-K1용 IJV 펌웨어(IU0IJV의 비순정 펌웨어, www.ijvradio.com):
   펌웨어 버전마다 새 탭 4개. 클래식 UV-K5의 200 또는 999채널 V3, UV-K5 V3와 UV-K1의 V4와

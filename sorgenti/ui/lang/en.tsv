@@ -4903,8 +4903,6 @@ b68d60bf	receive
 ce833f64	scrambler
 9e6db4fe	transmit
 c7d04685	IJV firmware (IU0IJV)
-f26fc2a8	{0} Each tab reads and writes only its own firmware: Quansheng original (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP driver), F4HWN (armel's driver for CHIRP, with the F4HWN settings), OSFW (CHIRP driver) or the Chinese firmware LOSEHU / LTS / UVE (CHIRP driver, Chinese names). If you open the wrong tab the program reads the firmware version, stops without writing and indicates the right tab; «Identify» finds it by itself. Firmware: Quansheng .bin files (e.g. k5_v2.01.26_publish.bin) with the radio's loader (switched on while holding the PTT); the program checks that the firmware is for the radio's type of loader (UV-K5, UV-K5(8)/UV-K6 or UV-5R Plus). Quansheng protects the downloads with a password provided by the dealer. IJV is also handled (V3 with 200 or 999 channels on the classic UV-K5; V4 and V5 on the UV-K5 V3: bank selected on the radio, channels, groups and main settings; V6 is recognised but is managed with IJV's RadioManager).
-fd90554c	{0} Original firmware: channels only (CHIRP does not handle the settings yet) and only with version 7.03. IJV V4 and V5 firmware: channels of the bank selected on the radio, group names and main settings («IJV firmware» tabs).
 eee8f7c6	Turn the radio on, then connect the cable to the mic/speaker connector (firmly inserted).
 07b28617	IJV V3
 37f9648b	Quansheng UV-K5 (IJV V3 firmware, 200 channels)
@@ -4926,9 +4924,7 @@ dcd51e55	radio reply with an invalid CRC
 f8238f6c	memory read at 0x{0} failed
 1361ec4b	the radio refused the write at 0x{0}: enable bank writing from the PC on the radio and try again
 01ebafa6	the radio did not confirm saving the memory
-6dc6b2d1	the radio has IJV V6 firmware ({0}): V6 channels and settings are managed with IJV's RadioManager, this program does not read or write them
 49843f26	the radio has firmware {0}: open the «{1}» tab (this tab is for another firmware and does not read or write)
-783a8fd7	the radio has firmware {0}: V6 channels and settings are managed with IJV's RadioManager
 ac521e8e	the radio firmware ({0}) is not {1}: for safety nothing is read or written
 a4d09196	IJV {0}
 fc748038	the radio does not report the selected memory bank («CFG5» configuration not valid)
@@ -5038,10 +5034,32 @@ ad8b8e2c	Bank {0} name
 5a9831df	Group 0 name (all)
 450a71ed	(bank 0)
 5d8afcae	settings table of IJV's RadioManager 4.3.2 (V4 firmware)
-3988856b	settings table of IJV's RadioManager 4.3.2 (V5 firmware)
 b4fcd8ba	CHIRP 3.60 module published by IJV (V3 firmware)
 ef53c837	IJV-{0}
 4f21c9a6	IJV V3 firmware, 200 channels
 447dca6b	IJV V3 X firmware, 999 channels
 1c75d52b	IJV V4 firmware
 1b75d398	IJV V5 firmware
+7c2fdf6f	{0} Each tab reads and writes only its own firmware: Quansheng original (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP driver), F4HWN (armel's driver for CHIRP, with the F4HWN settings), OSFW (CHIRP driver) or the Chinese firmware LOSEHU / LTS / UVE (CHIRP driver, Chinese names). If you open the wrong tab the program reads the firmware version, stops without writing and indicates the right tab; «Identify» finds it by itself. Firmware: Quansheng .bin files (e.g. k5_v2.01.26_publish.bin) with the radio's loader (switched on while holding the PTT); the program checks that the firmware is for the radio's type of loader (UV-K5, UV-K5(8)/UV-K6 or UV-5R Plus). Quansheng protects the downloads with a password provided by the dealer. IJV is also handled (V3 with 200 or 999 channels on the classic UV-K5; V4, V5 and V6 on the UV-K5 V3: bank selected on the radio, channels, groups and main settings).
+5f4e346a	{0} Original firmware: channels only (CHIRP does not handle the settings yet) and only with version 7.03. IJV V4, V5 and V6 firmware: channels of the bank selected on the radio, group names and main settings («IJV firmware» tabs).
+02b27e38	IJV V6
+4b2a8174	Quansheng UV-K5 V3 / UV-K1 (IJV V6 firmware)
+81db67f1	IJV V6 firmware (modular) for UV-K5 V3 and UV-K1. {0}V6 data link (DTR and RTS low): if the radio says the data link is missing, update it with RadioManager's FLASH V6. The 500 channels of the bank selected on the radio are read and written, with group names and main settings, in 4 KiB sectors read again and verified one by one; calibration, licence, modules, voices and module files never. Modules and firmware stay with IJV's RadioManager.
+171cfc26	the radio has IJV V6 firmware ({0}): open the «{1}» tab
+ee4c4d54	the V6 radio reports badly received data
+b508d32b	the radio does not answer the V6 link
+218cbc17	variant {0}
+35a9e6ac	the V6 radio stopped answering
+51837bf6	the V6 firmware on the radio does not have the data link yet: update it with RadioManager's FLASH V6
+bbb2e60d	the V6 radio stopped answering (read at 0x{0})
+8d8c498a	the V6 radio did not read the memory at 0x{0} (status {1})
+0bf3f50f	the V6 radio could not write to its memory (sector 0x{0})
+426acd34	the V6 radio refused the settings: the configuration block is not valid
+ae0323ac	the V6 radio refused the write at 0x{0}: update it with RadioManager's FLASH V6 and try again
+b5644f11	the V6 radio stopped answering (write at 0x{0})
+41933c7d	IJV V6 {0} {1}
+99731869	Radio firmware: {0}, version {1} — bank {2} «{3}»
+bc8910a2	check failed: the V6 radio does not contain what was written (0x{0})
+a2a643a8	Radio firmware: IJV V6 {0} {1}, version {2} — changed sectors written: {3}
+85102cf4	settings table of IJV's RadioManager 4.3.2 (V5 and V6 firmware)
+1e75d851	IJV V6 firmware

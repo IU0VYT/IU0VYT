@@ -27,8 +27,8 @@ package main
 // del banco a 0x5F00). La V4 la legge con i comandi della UV-K5 (0x051B/0x051D);
 // la FW5 con la lettura fisica (0x0564/0x0566): area fissa a 0x000000, banco n a
 // 0x020000 + n·0x4000. Si legge e si scrive solo il banco scelto sulla radio.
-// V6: collegamento diverso; il programma la riconosce e spiega che canali e
-// impostazioni si gestiscono con RadioManager.
+// V6 (4.13.1): stessa memoria della FW5, ma con il collegamento dati della V6
+// (drv_ijv6.go).
 
 import (
 	"bytes"
@@ -48,6 +48,7 @@ const (
 	ijvV3X                // UV-K5 hardware V1, 999 canali a 0x2000 (versioni «X3»)
 	ijvV4                 // UV-K5 V3 / UV-K1, memoria logica
 	ijvFW5                // UV-K5 V3 / UV-K1, memoria fisica
+	ijvV6                 // 4.13.1: UV-K5 V3 / UV-K1, memoria fisica con il collegamento dati della V6
 )
 
 type ijvFam struct{ kind ijvKind }
@@ -100,7 +101,7 @@ func ijvFamily(fw string) string {
 var ijvV3re = regexp.MustCompile(`(^|[^0-9])3\.\d+`)
 
 func (k ijvKind) family() string {
-	return [...]string{"V3", "V3X", "V4", "FW5"}[k]
+	return [...]string{"V3", "V3X", "V4", "FW5", "V6"}[k]
 }
 
 func init() {
@@ -133,7 +134,14 @@ func init() {
 		"Si leggono e si scrivono i 500 canali del banco scelto sulla radio, con nomi dei gruppi e impostazioni principali. " +
 		"Sotto 13 MHz la radio riceve solo con la scheda HF. Se la radio rifiuta la scrittura, abilita sulla radio la scrittura dei " +
 		"banchi dal PC. Moduli, SMS, tasti, SYSTEM e licenza restano a RadioManager di IJV."
-	genRegister(v3, v3x, v4, f5)
+	v6 := mk("qs-uvk5v3-ijv6", "UV-K5 V3 / UV-K1", "IJV V6", "IJVV6Radio", "Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)", ijvV6, ijvBankChans)
+	v6.Bands = f5.Bands
+	v6.Notes = "Firmware IJV V6 (a moduli) per UV-K5 V3 e UV-K1. " + how +
+		"Collegamento dati della V6 (DTR e RTS bassi): se la radio dice che manca il collegamento dati, aggiornala con FLASH V6 di " +
+		"RadioManager. Si leggono e si scrivono i 500 canali del banco scelto sulla radio, con nomi dei gruppi e impostazioni principali, " +
+		"a settori di 4 KiB rilevati e verificati uno per uno; tarature, licenza, moduli, voci e file dei moduli mai. Moduli e firmware " +
+		"restano a RadioManager di IJV."
+	genRegister(v3, v3x, v4, f5, v6)
 }
 
 // ---------------------------------------------------------------- memoria
@@ -201,7 +209,7 @@ var ijvBands = [][2]int64{{13000000, 108000000}, {108000000, 137000000}, {137000
 func (f ijvFam) band(hz int64) int {
 	for k, b := range ijvBands {
 		lo := b[0]
-		if k == 0 && f.kind == ijvFW5 {
+		if k == 0 && (f.kind == ijvFW5 || f.kind == ijvV6) {
 			lo = 100000
 		}
 		if hz >= lo && hz < b[1] {
@@ -633,8 +641,7 @@ func (f ijvFam) start(ctx context.Context, m *genModel, p Port) (*ijvSess, strin
 	if err != nil {
 		if f.kind == ijvV4 || f.kind == ijvFW5 {
 			if info := ijvV6Probe(ctx, p); info != "" {
-				return nil, "", rErr("la radio ha il firmware IJV V6 (%s): canali e impostazioni della V6 si gestiscono con RadioManager di IJV, "+
-					"questo programma non li legge e non li scrive", info)
+				return nil, "", rErr("la radio ha il firmware IJV V6 (%s): apri la scheda «%s»", info, genByID["qs-uvk5v3-ijv6"].Name)
 			}
 		}
 		return nil, "", genFail("Collegamento", err)
@@ -647,9 +654,6 @@ func (f ijvFam) start(ctx context.Context, m *genModel, p Port) (*ijvSess, strin
 			if op, ok := o.Opt.(*uvk5Opt); ok && o != m && op.approve(fw) {
 				return nil, fw, rErr("la radio ha il firmware %s: apri la scheda «%s» (questa scheda è per un altro firmware e non legge e non scrive)", fw, o.Name)
 			}
-		}
-		if ijvFamily(fw) == "V6" {
-			return nil, fw, rErr("la radio ha il firmware %s: canali e impostazioni della V6 si gestiscono con RadioManager di IJV", fw)
 		}
 		return nil, fw, rErr("il firmware della radio (%s) non è %s: per sicurezza non si legge e non si scrive", fw, "IJV "+f.kind.family())
 	}
@@ -699,6 +703,9 @@ func (f ijvFam) Download(ctx context.Context, m *genModel, port string, prog Pro
 }
 
 func (f ijvFam) DownloadMeta(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, map[string]interface{}, string, error) {
+	if f.kind == ijvV6 {
+		return f.v6Download(ctx, m, port, prog)
+	}
 	p, err := openPort(port, 38400)
 	if err != nil {
 		return nil, nil, "", err
@@ -795,6 +802,9 @@ func (f ijvFam) writeRanges() [][2]int {
 func (f ijvFam) Upload(ctx context.Context, m *genModel, port string, img []byte, prog Progress) (string, error) {
 	if len(img) != f.imgSize() {
 		return "", fmt.Errorf("l'immagine è di %d byte: per questo firmware deve essere di %d byte (leggi prima la radio)", len(img), f.imgSize())
+	}
+	if f.kind == ijvV6 {
+		return f.v6Upload(ctx, m, port, img, prog)
 	}
 	p, err := openPort(port, 38400)
 	if err != nil {

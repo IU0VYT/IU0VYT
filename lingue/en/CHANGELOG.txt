@@ -7,6 +7,20 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.13.1 (09/11/2026)
+-------------------
+- IJV V6 firmware (drv_ijv6.go, new): tab «Quansheng UV-K5 V3 / UV-K1 (IJV V6
+  firmware)». V6 data link (DTR and RTS low; «A5 5A» request with CRC32, 12-byte
+  «5A A5» reply): info and version, opening with the announced number of requests,
+  256-byte reads, 256-byte pages committed in 4 KiB sectors, end and reset. Same
+  memory as V5 (bank n at 0x020000 + n·0x4000, active bank from «CFG5», read again
+  before writing). Only the changed sectors are written, each read back and compared;
+  calibration, licence and the areas the radio manages itself stay as on the radio.
+- The other IJV tabs point to the V6 tab when the radio answers only the V6 data link.
+- Settings: V6 uses the V5 table. Catalogue and UV-K5 firmware: V6 tab added.
+- Translations: 23 new or changed texts. Tests: simulated V6 radio (read, write of the
+  changed sectors only, changed bank, refused settings, wrong tab).
+
 4.13.0 (09/11/2026)
 -------------------
 - IJV firmware for Quansheng UV-K5 / UV-K5 V3 / UV-K1 (drv_ijv.go, new): four tabs,
