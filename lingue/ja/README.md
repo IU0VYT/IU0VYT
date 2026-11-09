@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**バージョン 4.12.0** · Windows · 11 言語のインターフェース（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 実行ファイル 1 つだけ、インストール不要
+**バージョン 4.13.0** · Windows · 11 言語のインターフェース（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 実行ファイル 1 つだけ、インストール不要
 
 アマチュア無線家と **44 ブランド**のトランシーバーの利用者のためのプログラムです（**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone）。プログラミングケーブルでチャンネル、周波数、設定を読み書きし、イタリアのレピーターのアーカイブを管理し、対応する無線機のファームウェアを更新します。
 
@@ -38,7 +38,7 @@
 ## 機能
 
 - 451 機種の**チャンネルと周波数**（デジタル PMR や DMR 無線機を含み、USB 接続も可）：ケーブルによる読み書き、CHIRP 互換の `.img` ファイル、Baofeng K67 Pro（`.xlc`）と Bajeton 8300（`.dat`）の元のファイル。
-- 396 機種の**無線機の設定**（メニュー、表示、VOX、スケルチ、TOT、DTMF、キー…）。各項目の説明があり、注意が必要な項目には確認付きの警告があります。
+- 397 機種の**無線機の設定**（メニュー、表示、VOX、スケルチ、TOT、DTMF、キー…）。各項目の説明があり、注意が必要な項目には確認付きの警告があります。
 - **接続した無線機の識別**：このプログラムが自動で識別し、メーカー、機種、種類、ファームウェア、無線機が伝えるその他の情報を表示します（USB の DMR 無線機では DMR ID と名前も）。**自動識別**（「識別」タブのボタン、選択は記憶）を使えば、どのタブにいてもケーブルをつなぐだけです。すべてのケーブルのポートを同時に監視し、ケーブル接続後に電源を入れた無線機や、別々のケーブルにつないだ複数の無線機も識別します。過去に識別した無線機やよく使われる無線機を先に試し、ファームウェア更新モードの無線機にだまされず、それぞれのタブを読み込んだチャンネルとともに開きます。「無線機を識別中」の枠は応答する無線機のあるケーブルにだけ表示されます。別の無線機には右上の **「🔎 無線機を識別」** ボタンがあります。
 - **別の無線機への転送**：ある無線機でチェックしたチャンネルを、メーカーと機種で選んだ接続中の別の無線機に直接書き込みます。互換性チェック、調整、バックアップ、確認付きです。
 - **汎用コンバーター**：どの無線機やファイル（K67 `.xlc`、Bajeton `.dat`、CHIRP のものを含む `.img` イメージ、CHIRP の CSV、Excel/CSV）のチャンネルも、ほかの無線機の形式にその規則に合わせて変換します。

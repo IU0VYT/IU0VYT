@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.12.0 - un solo archivo ejecutable, sin instalación, interfaz en 11 idiomas.
+Versión 4.13.0 - un solo archivo ejecutable, sin instalación, interfaz en 11 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -8,8 +8,17 @@ Licencia: GNU General Public License versión 3 o posterior (software libre, SIN
 NINGUNA GARANTÍA): consulta LICENSE.txt y AUTORES_Y_LICENCIAS.txt.
 Esta es la traducción al español de LEGGIMI.txt (el original italiano es el texto de
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
-italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.12
+italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.13.0:
+- FIRMWARE IJV para las Quansheng UV-K5, UV-K5 V3 y UV-K1 (firmware no original de
+  IU0IJV, www.ijvradio.com): cuatro fichas nuevas, una por versión del firmware. V3 de
+  200 o 999 canales en la UV-K5 clásica; V4 y V5 («FW5») en la UV-K5 V3 y la UV-K1, con
+  los 500 canales del banco elegido en la radio. Se leen y escriben canales, nombres de
+  grupos y bancos y los ajustes principales; la V6 se reconoce (se gestiona con
+  RadioManager de IJV). Ver «FIRMWARE IJV» en LEGGIMI.txt;
+- actualización del firmware: un archivo .bin con una versión IJV se señala, con la
+  ficha para los canales y un aviso para V5 y V6.
 Novedades de la 4.12.0:
 - IDIOMA EN EL PRIMER ARRANQUE: el programa arranca en el idioma de Windows del
   usuario (en inglés si no es uno de los 11 del programa). Si después se elige otro
@@ -203,8 +212,9 @@ RADIOS GESTIONADAS CON LOS CONTROLADORES DE CHIRP
   CHIRP): con un firmware modificado, que usa la memoria de otra forma, se detiene sin
   leer ni escribir, como CHIRP. Desde la 4.9 los firmwares egzumer, F4HWN y
   LOSEHU/LTS/UVE tienen sus pestañas (UV-K5 firmware egzumer, F4HWN, LOSEHU): cada una
-  lee y escribe solo su firmware; para los demás (p. ej. IJV) usa el programa indicado
-  por el autor del firmware.
+  lee y escribe solo su firmware; desde la 4.13 también el firmware IJV (ver
+  «FIRMWARE IJV» en LEGGIMI.txt); para los demás usa el programa indicado por el autor
+  del firmware.
 - Se trabaja con los canales: "Leer de la radio" (o abre un archivo .img, también
   guardado con CHIRP), modifica, "Escribir en la radio" y/o "Guardar" (archivo .img
   que se abre con CHIRP). Los ajustes de la radio son los leídos (se modifican con "⚙

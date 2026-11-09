@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**Version 4.12.0** · Windows · Oberfläche in 11 Sprachen (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · eine einzige ausführbare Datei, keine Installation
+**Version 4.13.0** · Windows · Oberfläche in 11 Sprachen (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · eine einzige ausführbare Datei, keine Installation
 
 Programm für Funkamateure und Nutzer von Funkgeräten von **44 Marken** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): es liest und schreibt Kanäle, Frequenzen und Einstellungen über das Programmierkabel, verwaltet ein Archiv der italienischen Relais und aktualisiert die Firmware der unterstützten Funkgeräte.
 
@@ -38,7 +38,7 @@ Programm für Funkamateure und Nutzer von Funkgeräten von **44 Marken** (**Baof
 ## Funktionen
 
 - **Kanäle und Frequenzen** von 451 Modellen (einschließlich digitaler PMR- und DMR-Funkgeräte, auch per USB): Lesen und Schreiben per Kabel, mit CHIRP verträgliche `.img`-Dateien, Originaldateien des Baofeng K67 Pro (`.xlc`) und der Bajeton 8300 (`.dat`).
-- **Einstellungen der Funkgeräte** (Menüs, Display, VOX, Squelch, TOT, DTMF, Tasten…) für 396 Modelle, mit der Beschreibung jedes Eintrags und einer zu bestätigenden Warnung bei heiklen Einträgen.
+- **Einstellungen der Funkgeräte** (Menüs, Display, VOX, Squelch, TOT, DTMF, Tasten…) für 397 Modelle, mit der Beschreibung jedes Eintrags und einer zu bestätigenden Warnung bei heiklen Einträgen.
 - **Identifizierung des angeschlossenen Funkgeräts**: das Programm erkennt es selbst und zeigt Marke, Modell, Typ, Firmware und die übrigen Angaben, die es meldet (bei USB-DMR-Funkgeräten auch DMR-ID und Name). Mit der **automatischen Identifizierung** (Schaltfläche in der Registerkarte „Identifizieren“, Wahl gespeichert) genügt es, das Kabel anzuschließen, egal in welcher Registerkarte man ist: das Programm hört an allen Kabelanschlüssen zugleich, erkennt auch ein erst nach dem Anschließen eingeschaltetes Funkgerät und mehrere an verschiedenen Kabeln angeschlossene Funkgeräte, probiert zuerst die früher schon erkannten und die verbreitetsten, lässt sich von Funkgeräten im Firmware-Aktualisierungsmodus nicht täuschen und öffnet für jedes die Registerkarte mit den gelesenen Kanälen; das Feld „Funkgerät wird identifiziert“ erscheint nur für das Kabel mit einem antwortenden Funkgerät; für ein weiteres Funkgerät gibt es oben rechts die Schaltfläche **„🔎 Funkgerät identifizieren“**.
 - **Weitergabe an ein anderes Funkgerät**: die in einem Funkgerät abgehakten Kanäle werden direkt in ein anderes angeschlossenes Funkgerät geschrieben, gewählt nach Marke und Modell, mit Verträglichkeitsprüfung, Anpassung, Sicherungskopie und Prüfung.
 - **Universeller Konverter**: die Kanäle jedes Funkgeräts oder jeder Datei (K67 `.xlc`, Bajeton `.dat`, `.img`-Abbilder auch von CHIRP, CHIRP-CSV, Excel/CSV) im Format jedes anderen Funkgeräts, an dessen Regeln angepasst.

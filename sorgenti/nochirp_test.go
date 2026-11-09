@@ -56,6 +56,9 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	if _, ok := m.Opt.(*drOpt); ok {
 		mem = drSynthImage()
 	}
+	if _, ok := m.Fam.(ijvFam); ok { // 4.13: firmware IJV
+		mem = ijvSynthImage(m)
+	}
 	if _, ok := m.Opt.(*rdtyOpt); ok {
 		mem = rdtySynthImage(m)
 	}

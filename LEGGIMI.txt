@@ -1,11 +1,20 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.12.0 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
+Versione 4.13.0 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.13.0:
+- FIRMWARE IJV per le Quansheng UV-K5, UV-K5 V3 e UV-K1 (firmware non originale di
+  IU0IJV, www.ijvradio.com): quattro schede nuove, una per versione del firmware.
+  V3 da 200 o 999 canali sulla UV-K5 classica; V4 e V5 («FW5») sulla UV-K5 V3 e sulla
+  UV-K1, con i 500 canali del banco scelto sulla radio. Si leggono e si scrivono
+  canali, nomi dei gruppi e dei banchi e le impostazioni principali; la V6 viene
+  riconosciuta (si gestisce con RadioManager di IJV). Vedi «FIRMWARE IJV»;
+- aggiornamento del firmware: un file .bin con una versione IJV viene segnalato, con
+  l'indicazione della scheda per i canali e un avviso per V5 e V6.
 Novità della 4.12.0:
 - LINGUA AL PRIMO AVVIO: il programma parte nella lingua di Windows dell'utente (se
   non è fra le 11 del programma, in inglese). Se poi si sceglie un'altra lingua con le
@@ -790,8 +799,9 @@ RADIO GESTITE CON I DRIVER DI CHIRP
   Quansheng (versioni conosciute da CHIRP): con un firmware modificato, che usa la
   memoria in modo diverso, si ferma senza leggere né scrivere, come CHIRP. Dalla 4.9
   i firmware egzumer, F4HWN e LOSEHU/LTS/UVE hanno le loro schede (UV-K5 firmware
-  egzumer, F4HWN, LOSEHU): ognuna legge e scrive solo il suo firmware; per gli altri
-  (es. IJV) usa il programma indicato da chi ha scritto il firmware.
+  egzumer, F4HWN, LOSEHU): ognuna legge e scrive solo il suo firmware. Dalla 4.13
+  anche il firmware IJV (vedi «FIRMWARE IJV»); per gli altri usa il programma
+  indicato da chi ha scritto il firmware.
 - Si lavora sui canali: "Leggi dalla radio" (oppure apri un file .img, anche salvato
   con CHIRP), modifica, "Scrivi nella radio" e/o "Salva" (file .img apribile con CHIRP).
   Le impostazioni della radio sono quelle lette (si modificano con "⚙ Impostazioni…",
@@ -1081,13 +1091,41 @@ AGGIORNAMENTO DEL FIRMWARE QUANSHENG UV-K5 (4.1)
   simulata. Dalla 4.4 anche le radio con il caricatore 7.x (UV-K5 V3, UV-K1, Retevis
   RA79 V3): vedi "AGGIORNAMENTO DEL FIRMWARE RETEVIS".
 - Un firmware non di Quansheng si può installare. Dalla 4.9, dopo un firmware egzumer,
-  F4HWN o LOSEHU i canali si leggono con la scheda di quel firmware; con altri firmware
-  questo programma (come CHIRP) non legge più i canali della radio.
+  F4HWN o LOSEHU i canali si leggono con la scheda di quel firmware (dalla 4.13 anche
+  IJV); con altri firmware questo programma (come CHIRP) non legge più i canali della
+  radio.
 - Dalla 4.2 anche Radtel RT-590 / RT-590 Plus (la stessa radio della UV-K5) e RT-600 /
   RT-600 Plus (della UV-5R Plus) con i file .bin di Radtel (radtels.com, es.
   RT590_update_file_v2.01.32.rar e RT600_update_file_v4.00.06.rar, liberi da
   scaricare): stessa procedura (PTT + accensione, torcia accesa). I due file veri sono
   stati provati: decifratura e byte inviati identici al programma uvtools.
+
+FIRMWARE IJV (4.13)
+IJV è un firmware non originale per le Quansheng UV-K5 di IU0IJV (www.ijvradio.com),
+che lo distribuisce con il suo programma RadioManager. Il programma ha una scheda per
+ogni versione; «Identifica» o la scheda sbagliata indicano quella giusta dalla versione
+che la radio comunica:
+- «Quansheng UV-K5 (firmware IJV V3, 200 canali)» e «… V3 X, 999 canali»: UV-K5
+  classica (hardware V1). Si legge tutta la memoria; si scrivono canali, nomi dei
+  gruppi e impostazioni, mai le tarature (da 0x1E00).
+- «Quansheng UV-K5 V3 / UV-K1 (firmware IJV V4)» e «… (firmware IJV V5)»: la radio ha
+  16 banchi da 500 canali. Si leggono e si scrivono i 500 canali del banco scelto sulla
+  radio, i 16 nomi dei gruppi, i nomi dei banchi e le impostazioni principali (menu,
+  display, VOX, tasti laterali della V4…). Per un altro banco sceglilo sulla radio e
+  rileggi. Prima di scrivere il programma controlla che sulla radio sia ancora scelto
+  lo stesso banco (altrimenti non scrive nulla) e scrive solo i blocchi cambiati.
+  Con la V5, se la radio rifiuta la scrittura, abilita sulla radio la scrittura dei
+  banchi dal PC.
+- Restano a RadioManager di IJV: le tarature, la VFO, le selettive e i contatti, i
+  tasti, gli SMS e il blocco SYSTEM della V5, i moduli e tutta la V6 (il programma la
+  riconosce e lo dice), la licenza e i firmware su misura del server IJV.
+- Gruppo, AGC, compander, scrambler, selettiva, blocco della trasmissione e canale
+  occupato di ogni canale si conservano quando lo modifichi; un canale nuovo parte con
+  passo 12,5 kHz, squelch 1 e (nella banda aerea) modulazione AM.
+- Il codice è scritto da zero per l'interoperabilità: la memoria e i comandi sono
+  ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
+  RadioManager 4.3.2, e provati con radio simulate. Le radio vere con IJV non sono
+  ancora state provate: segnala ogni problema.
 
 AGGIORNAMENTO DEL FIRMWARE RADTEL RT-470 / RT-495 / RT-630 (4.3)
 - Radtel RT-470, RT-470L, RT-470X, RT-495 e RT-630, file .kdhx pubblicati da Radtel

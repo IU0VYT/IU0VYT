@@ -2065,8 +2065,6 @@ bc7c87a1	信道和设置使用 CHIRP 驱动（类 {0}），已通过自动测试
 7fe47b79	UV-K5 / UV-K6 / UV-5R Plus
 321bd12e	UV-5R Plus
 fadd6ee1	F4HWN 固件（armel）
-cbf67c96	{0} 每个标签页只读写对应的固件：Quansheng 原厂固件（k5_2.01、3.00、4.00、5.00、7.00/7.01、1.02、“1o11”）、egzumer（CHIRP 驱动）、F4HWN（armel 为 CHIRP 编写的驱动，含 F4HWN 设置）、OSFW（CHIRP 驱动）或中文固件 LOSEHU / LTS / UVE（CHIRP 驱动，中文名称）。如果打开了错误的标签页，程序会读取固件版本，停止且不写入，并提示正确的标签页；“识别”可自动找到它。固件：Quansheng 的 .bin 文件（如 k5_v2.01.26_publish.bin），通过电台的引导程序写入（按住 PTT 开机）；程序会检查固件是否适用于电台的引导程序类型（UV-K5、UV-K5(8)/UV-K6 或 UV-5R Plus）。Quansheng 的下载需要经销商提供的密码。
-6eb513d0	{0} 仅支持信道（CHIRP 尚不支持设置），且仅适用于固件 7.03。
 06fd3af1	即 Quansheng UV-K5。{0} 固件：Quansheng 格式的 Retevis .bin 文件（如“RA79 V3.bin”，RA79 V3 的 7.00.16 版，使用 UV-K5 V3 的 7.x 引导程序）：关机后按住 PTT 重新开机。程序会读取引导程序版本，只有同一系列时才发送固件（使用经典 UV-K5 引导程序的 RA79 会拒绝 7.x 文件）。
 1a11a260	即 Quansheng UV-K5。{0}
 f1e53be6	RT-590 / RT-590 Plus
@@ -4904,3 +4902,146 @@ b68d60bf	接收
 906d004b	频差
 ce833f64	scrambler
 9e6db4fe	发射
+c7d04685	IJV 固件（IU0IJV）
+f26fc2a8	{0} 每个标签页只读写对应的固件：Quansheng 原厂固件（k5_2.01、3.00、4.00、5.00、7.00/7.01、1.02、“1o11”）、egzumer（CHIRP 驱动）、F4HWN（armel 为 CHIRP 编写的驱动，含 F4HWN 设置）、OSFW（CHIRP 驱动）或中文固件 LOSEHU / LTS / UVE（CHIRP 驱动，中文名称）。如果打开了错误的标签页，程序会读取固件版本，停止且不写入，并提示正确的标签页；“识别”可自动找到它。固件：Quansheng 的 .bin 文件（如 k5_v2.01.26_publish.bin），通过电台的引导程序写入（按住 PTT 开机）；程序会检查固件是否适用于电台的引导程序类型（UV-K5、UV-K5(8)/UV-K6 或 UV-5R Plus）。Quansheng 的下载需要经销商提供的密码。 也支持 IJV（经典 UV-K5 上 200 或 999 信道的 V3；UV-K5 V3 上的 V4 和 V5：电台上选定的存储库、信道、分组和主要设置；V6 可被识别，但需使用 IJV 的 RadioManager 管理）。
+fd90554c	{0} 原厂固件：仅支持信道（CHIRP 尚不支持设置），且仅适用于版本 7.03。IJV V4 和 V5 固件：电台上选定存储库的信道、分组名称和主要设置（“IJV 固件”卡片）。
+eee8f7c6	打开电台，然后将数据线插入麦克风/扬声器接口（插紧）。
+07b28617	IJV V3
+37f9648b	Quansheng UV-K5（IJV V3 固件，200 信道）
+4f1300d1	用于经典 UV-K5（硬件 V1）的 IJV V3 固件，200 信道版本。{0}读取全部存储器（8 KiB）；写入信道、分组和设置，从不写入校准数据（自 0x1E00 起）。协议和存储器取自 IJV 发布的 CHIRP 3.60 模块。
+aa9d9ab7	IJV V3 X
+cc704dd8	Quansheng UV-K5（IJV V3 X 固件，999 信道）
+3c6b4e38	用于经典 UV-K5（硬件 V1）的 IJV V3“X”固件（999 信道）。{0}读写电台上选定存储库的信道（0x2000-0x9FFF）和设置；从不写入校准数据。协议和存储器取自 IJV 发布的 CHIRP X3.60 模块。
+04b2815e	IJV V4
+af250eb2	Quansheng UV-K5 V3 / UV-K1（IJV V4 固件）
+710979cc	用于 UV-K5 V3 和 UV-K1 的 IJV V4 固件（完整版）。{0}读写电台上选定存储库的 500 个信道，以及分组名称和设置：如需其他存储库，请在电台上选择后重新读取。仅写入有变化的块；从不写入校准数据。写入前，程序会检查电台上仍选定同一存储库。使用 RadioManager 和 IJV 的 CHIRP V4.0 模块的协议。
+1f09196a	IJV FW5
+cb22fc2f	Quansheng UV-K5 V3 / UV-K1（IJV V5 固件）
+6a99f4ea	用于 UV-K5 V3 和 UV-K1 的 IJV V5 固件（“FW5”，模块化）。{0}读写电台上选定存储库的 500 个信道，以及分组名称和主要设置。13 MHz 以下仅在装有 HF 板时才能接收。如果电台拒绝写入，请在电台上启用从电脑写入存储库。模块、短信、按键、SYSTEM 和许可仍由 IJV 的 RadioManager 管理。
+bc636746	位置 {0} 超出存储器
+ae6fd0c4	频率 {0} MHz 超出 IJV 固件的频段
+c12189a6	发射频率 {0} MHz 超出 IJV 固件的频段
+dcd51e55	电台应答的 CRC 无效
+91d3a3bf	地址 0x{0} 的存储器读取无效
+f8238f6c	地址 0x{0} 的存储器读取失败
+1361ec4b	电台拒绝在 0x{0} 写入：请在电台上启用从电脑写入存储库后重试
+01ebafa6	电台未确认保存存储器
+6dc6b2d1	电台为 IJV V6 固件（{0}）：V6 的信道和设置需使用 IJV 的 RadioManager 管理，本程序不读取也不写入
+49843f26	电台固件为 {0}：请打开“{1}”卡片（此卡片用于其他固件，不读取也不写入）
+783a8fd7	电台固件为 {0}：V6 的信道和设置需使用 IJV 的 RadioManager 管理
+ac521e8e	电台固件（{0}）不是 {1}：为安全起见不读取也不写入
+a4d09196	IJV {0}
+fc748038	电台未报告选定的存储库（“CFG5”配置无效）
+889213e1	存储器未指明存储库
+ec4de955	— 存储库 {0}“{1}”
+936cc2a9	BANK {0}
+a2fd4971	镜像为 {0} 字节：此固件需要 {1} 字节（请先读取电台）
+f5ff0307	电台上选定的是存储库 {0}，但要写入的信道属于存储库 {1}：请在电台上选择存储库 {2}（或重新读取电台）。电台未被修改
+ffb1ef86	（电台未确认最终保存：写入后的校验会显示数据是否存在）
+95aebe7a	— 已写入的变更块：{0}
+c7c034c7	，版本 {0}.{1}.{2}
+df5b3443	IJV 固件 {0}：写入固件后电台还需要 SYSTEM 块（V5）或模块（V6），只有 IJV 的 RadioManager 能加载；否则电台不完整。此固件请使用 IJV 的 RadioManager
+e6cb1155	IJV 固件 {0}：IJV 文件通常由 IJV 的 RadioManager 生成和安装；更新后，用 IJV 卡片读取信道和设置
+0f04dab2	运行
+7edbe3f2	接收与音频
+e414d862	侧键
+2c56ad74	名称
+af91da8c	5 min
+daf3fb64	超过此时间发射会自动停止。
+b2dcc4f3	VOX 打开时，电台一听到声音就会发射。
+cadc28e4	小名称大频率
+dac33b20	大名称小频率
+c7ed3a37	信道显示
+ef7d3d0c	接收和发射时
+273f9c70	发射尾音消除
+33d26562	隐藏 VFO
+eaadd05d	6 min
+95cf3da0	10 min
+425fabdf	20 min
+ad041638	信标 / CQ 呼叫
+5f41b595	信标打开时，电台会定时自动发射。
+0106fa1f	允许发射
+e877e9e6	关闭：电台不发射（仅接收）。
+8cea9c35	50 MHz
+c48e61f8	125 MHz
+2881c886	自定义
+197ad3a4	上变频器
+96a38ed1	反色
+6fdc46de	显示屏（颜色）
+94c4bb4e	开机信息，第 1 行
+93c4b9bb	开机信息，第 2 行
+4e643083	呼号（QRZ）
+10b2dc1e	固件名称
+3832a716	单
+b2557f98	双
+15a6c14a	双守锁定（DW LOCK）
+fe8f7e3e	双守联动（DW LINK）
+16a15383	Split
+55f8df9d	1 VFO
+1f5b4ad8	2 VFO
+88a0c1f7	3 VFO
+173b1c17	三守锁定（TW LOCK）
+390406c1	三守联动（TW LINK）
+deaff3e7	开机画面
+a7ca2115	VFO 模式
+83508657	切换 VFO
+7a31c960	交换 VFO
+aed0c96b	Squelch +
+b4d0d2dd	Squelch -
+d7245baa	REGA 测试
+aa11a5ea	REGA 报警
+c91eb13e	Preset
+5f460773	手动 AGC
+de6829ef	信道列表
+f3122804	加扰
+2f6a861f	通讯录
+9f3ff85c	CW 的 CQ 呼叫
+9d56b202	发射频偏（0 正常，9 最大）
+acc5a606	麦克风增益
+0b30eeb1	按键音
+9e7c5071	AFC（自动频率控制）
+f8d83637	FCC
+a8b566a5	发射频率锁定（F-Lock）
+c2809dfe	定时（5 秒）
+0c17a34b	慢
+de51b225	快
+bd953f25	遇到信号停止
+24559ba4	记录
+b85a9c20	扫描恢复
+bff748e2	麦克风电平条
+e6d98fbd	自动保存
+e204413c	发射 VFO
+b0f0de9f	NFM-
+2e9923dd	HAM
+f8549e54	AFSK
+4affa6b9	AUDIO
+f98cc52a	WIDE
+ab0e4047	WFM
+21567a7f	发射频偏
+2b8ed2af	加扰频率
+56d2561a	开机提示音
+eb704baf	低
+df0fe0ad	中
+ac0e88f0	最大
+e87e157a	切换式 PTT（按一次即发射）
+e8f7eb74	使用切换式 PTT 时，发射会一直持续，直到再次按下 PTT。
+efd9f2db	下一个 VFO
+0c7a6644	快速扫描
+1c6c11ac	频率复制（FCOPY）
+79e2f37c	1，短按
+c4bbedbd	1，长按
+10613743	2，短按
+6746f742	2，长按
+45c21662	侧键 {0}
+ad8b8e2c	存储库 {0} 名称
+71ab3858	分组 {0} 名称
+5a9831df	分组 0 名称（全部）
+450a71ed	（存储库 0）
+5d8afcae	IJV RadioManager 4.3.2 的设置表（V4 固件）
+3988856b	IJV RadioManager 4.3.2 的设置表（V5 固件）
+b4fcd8ba	IJV 发布的 CHIRP 3.60 模块（V3 固件）
+ef53c837	IJV-{0}
+4f21c9a6	IJV V3 固件，200 信道
+447dca6b	IJV V3 X 固件，999 信道
+1c75d52b	IJV V4 固件
+1b75d398	IJV V5 固件

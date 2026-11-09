@@ -2065,8 +2065,6 @@ bc7c87a1	Kanäle und Einstellungen mit dem CHIRP-Treiber (Klasse {0}), mit den a
 7fe47b79	UV-K5 / UV-K6 / UV-5R Plus
 321bd12e	UV-5R Plus
 fadd6ee1	Firmware F4HWN (armel)
-cbf67c96	{0} Jede Registerkarte liest und schreibt nur ihre eigene Firmware: Original von Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP-Treiber), F4HWN (Treiber von armel für CHIRP, mit den F4HWN-Einstellungen), OSFW (CHIRP-Treiber) oder die chinesischen Firmwares LOSEHU / LTS / UVE (CHIRP-Treiber, chinesische Namen). Öffnet man die falsche Registerkarte, liest das Programm die Firmware-Version, hält ohne zu schreiben an und nennt die richtige Registerkarte; «Identifizieren» findet sie selbst. Firmware: .bin-Dateien von Quansheng (z. B. k5_v2.01.26_publish.bin) mit dem Lader des Funkgeräts (mit gedrückter PTT eingeschaltet); das Programm prüft, ob die Firmware zum Ladertyp des Funkgeräts passt (UV-K5, UV-K5(8)/UV-K6 oder UV-5R Plus). Quansheng schützt die Downloads mit einem Passwort, das der Händler mitteilt.
-6eb513d0	{0} Nur Kanäle (CHIRP verwaltet die Einstellungen noch nicht) und nur mit Firmware 7.03.
 06fd3af1	Es ist eine Quansheng UV-K5. {0} Firmware: .bin-Datei von Retevis im Quansheng-Format (z. B. «RA79 V3.bin», Version 7.00.16 für die RA79 V3, mit dem 7.x-Lader der UV-K5 V3): Funkgerät aus- und mit gedrückter PTT wieder einschalten. Das Programm liest die Laderversion und sendet die Firmware nur, wenn sie zur selben Familie gehört (RA79 mit dem Lader der klassischen UV-K5 lehnen 7.x-Dateien ab).
 1a11a260	Es ist eine Quansheng UV-K5. {0}
 f1e53be6	RT-590 / RT-590 Plus
@@ -4904,3 +4902,146 @@ b68d60bf	Empfang
 906d004b	Ablage
 ce833f64	scrambler
 9e6db4fe	Senden
+c7d04685	IJV-Firmware (IU0IJV)
+f26fc2a8	{0} Jede Registerkarte liest und schreibt nur ihre eigene Firmware: Original von Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP-Treiber), F4HWN (Treiber von armel für CHIRP, mit den F4HWN-Einstellungen), OSFW (CHIRP-Treiber) oder die chinesischen Firmwares LOSEHU / LTS / UVE (CHIRP-Treiber, chinesische Namen). Öffnet man die falsche Registerkarte, liest das Programm die Firmware-Version, hält ohne zu schreiben an und nennt die richtige Registerkarte; «Identifizieren» findet sie selbst. Firmware: .bin-Dateien von Quansheng (z. B. k5_v2.01.26_publish.bin) mit dem Lader des Funkgeräts (mit gedrückter PTT eingeschaltet); das Programm prüft, ob die Firmware zum Ladertyp des Funkgeräts passt (UV-K5, UV-K5(8)/UV-K6 oder UV-5R Plus). Quansheng schützt die Downloads mit einem Passwort, das der Händler mitteilt. Auch IJV wird unterstützt (V3 mit 200 oder 999 Kanälen auf der klassischen UV-K5; V4 und V5 auf der UV-K5 V3: am Funkgerät gewählte Bank, Kanäle, Gruppen und wichtigste Einstellungen; V6 wird erkannt, aber mit RadioManager von IJV verwaltet).
+fd90554c	{0} Originalfirmware: nur Kanäle (CHIRP verwaltet die Einstellungen noch nicht) und nur mit Version 7.03. IJV-Firmware V4 und V5: Kanäle der am Funkgerät gewählten Bank, Gruppennamen und wichtigste Einstellungen (Karten «IJV-Firmware»).
+eee8f7c6	Schalte das Funkgerät ein und stecke dann das Kabel fest in die Mikrofon-/Lautsprecherbuchse.
+07b28617	IJV V3
+37f9648b	Quansheng UV-K5 (IJV-Firmware V3, 200 Kanäle)
+4f1300d1	IJV-Firmware V3 für die klassische UV-K5 (Hardware V1), Version mit 200 Kanälen. {0}Der ganze Speicher (8 KiB) wird gelesen; Kanäle, Gruppen und Einstellungen werden geschrieben, die Kalibrierung (ab 0x1E00) nie. Protokoll und Speicher aus den von IJV veröffentlichten CHIRP-Modulen 3.60.
+aa9d9ab7	IJV V3 X
+cc704dd8	Quansheng UV-K5 (IJV-Firmware V3 X, 999 Kanäle)
+3c6b4e38	IJV-Firmware V3 «X» (999 Kanäle) für die klassische UV-K5 (Hardware V1). {0}Die Kanäle der am Funkgerät gewählten Bank (0x2000-0x9FFF) und die Einstellungen werden gelesen und geschrieben; die Kalibrierung nie. Protokoll und Speicher aus den von IJV veröffentlichten CHIRP-Modulen X3.60.
+04b2815e	IJV V4
+af250eb2	Quansheng UV-K5 V3 / UV-K1 (IJV-Firmware V4)
+710979cc	IJV-Firmware V4 (vollständig) für UV-K5 V3 und UV-K1. {0}Die 500 Kanäle der am Funkgerät gewählten Bank werden mit Gruppennamen und Einstellungen gelesen und geschrieben: für eine andere Bank diese am Funkgerät wählen und neu lesen. Nur geänderte Blöcke werden geschrieben, die Kalibrierung nie. Vor dem Schreiben prüft das Programm, dass am Funkgerät noch dieselbe Bank gewählt ist. Protokoll von RadioManager und des CHIRP-Moduls V4.0 von IJV.
+1f09196a	IJV FW5
+cb22fc2f	Quansheng UV-K5 V3 / UV-K1 (IJV-Firmware V5)
+6a99f4ea	IJV-Firmware V5 («FW5», modular) für UV-K5 V3 und UV-K1. {0}Die 500 Kanäle der am Funkgerät gewählten Bank werden mit Gruppennamen und wichtigsten Einstellungen gelesen und geschrieben. Unter 13 MHz empfängt das Gerät nur mit der KW-Platine. Lehnt das Funkgerät das Schreiben ab, am Gerät das Schreiben der Bänke vom PC freigeben. Module, SMS, Tasten, SYSTEM und Lizenz bleiben bei RadioManager von IJV.
+bc636746	Position {0} außerhalb des Speichers
+ae6fd0c4	Frequenz {0} MHz außerhalb der Bereiche der IJV-Firmware
+c12189a6	Sendefrequenz {0} MHz außerhalb der Bereiche der IJV-Firmware
+dcd51e55	Antwort des Funkgeräts mit ungültigem CRC
+91d3a3bf	Speicherlesen bei 0x{0} ungültig
+f8238f6c	Speicherlesen bei 0x{0} fehlgeschlagen
+1361ec4b	das Funkgerät hat das Schreiben bei 0x{0} abgelehnt: am Gerät das Schreiben der Bänke vom PC freigeben und erneut versuchen
+01ebafa6	das Funkgerät hat das Speichern nicht bestätigt
+6dc6b2d1	das Funkgerät hat die IJV-Firmware V6 ({0}): Kanäle und Einstellungen der V6 werden mit RadioManager von IJV verwaltet, dieses Programm liest und schreibt sie nicht
+49843f26	das Funkgerät hat die Firmware {0}: öffne die Karte «{1}» (diese Karte ist für eine andere Firmware und liest und schreibt nicht)
+783a8fd7	das Funkgerät hat die Firmware {0}: Kanäle und Einstellungen der V6 werden mit RadioManager von IJV verwaltet
+ac521e8e	die Firmware des Funkgeräts ({0}) ist nicht {1}: aus Sicherheitsgründen wird nichts gelesen oder geschrieben
+a4d09196	IJV {0}
+fc748038	das Funkgerät meldet die gewählte Speicherbank nicht (Konfiguration «CFG5» ungültig)
+889213e1	der Speicher nennt die Bank nicht
+ec4de955	— Bank {0} «{1}»
+936cc2a9	BANK {0}
+a2fd4971	das Abbild hat {0} Byte: für diese Firmware muss es {1} Byte haben (zuerst das Funkgerät lesen)
+f5ff0307	am Funkgerät ist Bank {0} gewählt, die zu schreibenden Kanäle gehören aber zu Bank {1}: wähle am Gerät Bank {2} (oder lies das Funkgerät neu). Das Funkgerät wurde nicht verändert
+ffb1ef86	(das Funkgerät hat das abschließende Speichern nicht bestätigt: die Prüfung nach dem Schreiben zeigt, ob die Daten da sind)
+95aebe7a	— geänderte Blöcke geschrieben: {0}
+c7c034c7	, Version {0}.{1}.{2}
+df5b3443	IJV-Firmware {0}: nach der Firmware braucht das Funkgerät auch den SYSTEM-Block (V5) oder die Module (V6), die nur RadioManager von IJV lädt; ohne sie bleibt das Gerät unvollständig. Für diese Firmware RadioManager von IJV verwenden
+e6cb1155	IJV-Firmware {0}: IJV-Dateien werden meist mit RadioManager von IJV erstellt und installiert; nach dem Update werden Kanäle und Einstellungen mit der IJV-Karte gelesen
+0f04dab2	Betrieb
+7edbe3f2	Empfang und Audio
+e414d862	Seitentasten
+2c56ad74	Namen
+af91da8c	5 min
+daf3fb64	Nach dieser Zeit endet die Sendung von selbst.
+b2dcc4f3	Mit eingeschaltetem VOX sendet das Funkgerät, sobald es ein Geräusch hört.
+cadc28e4	Kleiner Name und große Frequenz
+dac33b20	Großer Name und kleine Frequenz
+c7ed3a37	Kanalanzeige
+ef7d3d0c	Bei Empfang und Senden
+273f9c70	Unterdrückung des Sendeendes
+33d26562	VFO ausgeblendet
+eaadd05d	6 min
+95cf3da0	10 min
+425fabdf	20 min
+ad041638	Bake / CQ-Ruf
+5f41b595	Mit eingeschalteter Bake sendet das Funkgerät selbstständig in regelmäßigen Abständen.
+0106fa1f	Senden aktiviert
+e877e9e6	Aus: das Funkgerät sendet nicht (nur Empfang).
+8cea9c35	50 MHz
+c48e61f8	125 MHz
+2881c886	Benutzerdefiniert
+197ad3a4	Upconverter
+96a38ed1	Invertiert
+6fdc46de	Display (Farben)
+94c4bb4e	Einschaltmeldung, Zeile 1
+93c4b9bb	Einschaltmeldung, Zeile 2
+4e643083	Rufzeichen (QRZ)
+10b2dc1e	Name der Firmware
+3832a716	Einzeln
+b2557f98	Doppelt
+15a6c14a	Doppelt gesperrt (DW LOCK)
+fe8f7e3e	Doppelt verbunden (DW LINK)
+16a15383	Split
+55f8df9d	1 VFO
+1f5b4ad8	2 VFO
+88a0c1f7	3 VFO
+173b1c17	Dreifach gesperrt (TW LOCK)
+390406c1	Dreifach verbunden (TW LINK)
+deaff3e7	Einschaltbildschirm
+a7ca2115	VFO-Modus
+83508657	VFO wechseln
+7a31c960	VFO tauschen
+aed0c96b	Squelch +
+b4d0d2dd	Squelch -
+d7245baa	REGA-Test
+aa11a5ea	REGA-Alarm
+c91eb13e	Preset
+5f460773	Manuelle AGC
+de6829ef	Kanalliste
+f3122804	Scrambler
+2f6a861f	Telefonbuch
+9f3ff85c	CQ-Ruf in CW
+9d56b202	Sendehub (0 normal, 9 maximal)
+acc5a606	Mikrofonverstärkung
+0b30eeb1	Tastenton
+9e7c5071	AFC (automatische Frequenzregelung)
+f8d83637	FCC
+a8b566a5	Sperre der Sendefrequenzen (F-Lock)
+c2809dfe	Zeitgesteuert (5 s)
+0c17a34b	Langsam
+de51b225	Schnell
+bd953f25	Bleibt beim Signal stehen
+24559ba4	Protokoll
+b85a9c20	Fortsetzung des Suchlaufs
+bff748e2	Mikrofonbalken
+e6d98fbd	Automatisches Speichern
+e204413c	Sende-VFO
+b0f0de9f	NFM-
+2e9923dd	HAM
+f8549e54	AFSK
+4affa6b9	AUDIO
+f98cc52a	WIDE
+ab0e4047	WFM
+21567a7f	Sendehub
+2b8ed2af	Scrambler-Frequenz
+56d2561a	Einschaltton
+eb704baf	Niedrig
+df0fe0ad	Mittel
+ac0e88f0	Maximal
+e87e157a	Umschalt-PTT (einmal drücken zum Senden)
+e8f7eb74	Mit Umschalt-PTT bleibt das Senden an, bis du die PTT erneut drückst.
+efd9f2db	Nächster VFO
+0c7a6644	Schneller Suchlauf
+1c6c11ac	Frequenzkopie (FCOPY)
+79e2f37c	1, kurz drücken
+c4bbedbd	1, lang drücken
+10613743	2, kurz drücken
+6746f742	2, lang drücken
+45c21662	Seitentaste {0}
+ad8b8e2c	Name der Bank {0}
+71ab3858	Name der Gruppe {0}
+5a9831df	Name der Gruppe 0 (alle)
+450a71ed	(Bank 0)
+5d8afcae	Einstellungstabelle von RadioManager 4.3.2 von IJV (Firmware V4)
+3988856b	Einstellungstabelle von RadioManager 4.3.2 von IJV (Firmware V5)
+b4fcd8ba	von IJV veröffentlichtes CHIRP-Modul 3.60 (Firmware V3)
+ef53c837	IJV-{0}
+4f21c9a6	IJV-Firmware V3, 200 Kanäle
+447dca6b	IJV-Firmware V3 X, 999 Kanäle
+1c75d52b	IJV-Firmware V4
+1b75d398	IJV-Firmware V5

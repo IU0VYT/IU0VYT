@@ -2065,8 +2065,6 @@ bc7c87a1	Canaux et réglages avec le pilote de CHIRP (classe {0}), vérifié par
 7fe47b79	UV-K5 / UV-K6 / UV-5R Plus
 321bd12e	UV-5R Plus
 fadd6ee1	Firmware F4HWN (armel)
-cbf67c96	{0} Chaque onglet lit et écrit uniquement son propre firmware : d'origine Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, « 1o11 »), egzumer (pilote de CHIRP), F4HWN (pilote d'armel pour CHIRP, avec les réglages F4HWN), OSFW (pilote de CHIRP) ou les firmwares chinois LOSEHU / LTS / UVE (pilote de CHIRP, noms chinois). Si vous ouvrez le mauvais onglet, le programme lit la version du firmware, s'arrête sans écrire et indique le bon onglet ; « Identifier » le trouve tout seul. Firmware : fichiers .bin de Quansheng (ex. k5_v2.01.26_publish.bin) avec le chargeur de la radio (allumée en maintenant le PTT) ; le programme vérifie que le firmware est pour le type de chargeur de la radio (UV-K5, UV-K5(8)/UV-K6 ou UV-5R Plus). Quansheng protège les téléchargements par un mot de passe fourni par le revendeur.
-6eb513d0	{0} Canaux uniquement (CHIRP ne gère pas encore les réglages) et seulement avec le firmware 7.03.
 06fd3af1	C'est une Quansheng UV-K5. {0} Firmware : fichier .bin de Retevis au format de Quansheng (ex. « RA79 V3.bin », version 7.00.16 pour la RA79 V3, avec le chargeur 7.x de la UV-K5 V3) : radio éteinte et rallumée en maintenant le PTT. Le programme lit la version du chargeur et n'envoie le firmware que s'il est de la même famille (les RA79 avec le chargeur de la UV-K5 classique refusent les fichiers 7.x).
 1a11a260	C'est une Quansheng UV-K5. {0}
 f1e53be6	RT-590 / RT-590 Plus
@@ -4904,3 +4902,146 @@ b68d60bf	réception
 906d004b	décalage
 ce833f64	scrambler
 9e6db4fe	émission
+c7d04685	Firmware IJV (IU0IJV)
+f26fc2a8	{0} Chaque onglet lit et écrit uniquement son propre firmware : d'origine Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, « 1o11 »), egzumer (pilote de CHIRP), F4HWN (pilote d'armel pour CHIRP, avec les réglages F4HWN), OSFW (pilote de CHIRP) ou les firmwares chinois LOSEHU / LTS / UVE (pilote de CHIRP, noms chinois). Si vous ouvrez le mauvais onglet, le programme lit la version du firmware, s'arrête sans écrire et indique le bon onglet ; « Identifier » le trouve tout seul. Firmware : fichiers .bin de Quansheng (ex. k5_v2.01.26_publish.bin) avec le chargeur de la radio (allumée en maintenant le PTT) ; le programme vérifie que le firmware est pour le type de chargeur de la radio (UV-K5, UV-K5(8)/UV-K6 ou UV-5R Plus). Quansheng protège les téléchargements par un mot de passe fourni par le revendeur. IJV est aussi géré (V3 à 200 ou 999 canaux sur l'UV-K5 classique ; V4 et V5 sur l'UV-K5 V3 : banque choisie sur la radio, canaux, groupes et réglages principaux ; la V6 est reconnue mais se gère avec RadioManager d'IJV).
+fd90554c	{0} Firmware d'origine : canaux uniquement (CHIRP ne gère pas encore les réglages) et seulement avec la version 7.03. Firmware IJV V4 et V5 : canaux de la banque choisie sur la radio, noms des groupes et réglages principaux (onglets « firmware IJV »).
+eee8f7c6	Allume la radio, puis branche le câble sur le connecteur micro/haut-parleur (bien enfoncé).
+07b28617	IJV V3
+37f9648b	Quansheng UV-K5 (firmware IJV V3, 200 canaux)
+4f1300d1	Firmware IJV V3 pour l'UV-K5 classique (matériel V1), version à 200 canaux. {0}Toute la mémoire (8 Kio) est lue ; canaux, groupes et réglages sont écrits, jamais les étalonnages (à partir de 0x1E00). Protocole et mémoire tirés des modules CHIRP 3.60 publiés par IJV.
+aa9d9ab7	IJV V3 X
+cc704dd8	Quansheng UV-K5 (firmware IJV V3 X, 999 canaux)
+3c6b4e38	Firmware IJV V3 « X » (999 canaux) pour l'UV-K5 classique (matériel V1). {0}Les canaux de la banque choisie sur la radio (0x2000-0x9FFF) et les réglages sont lus et écrits ; jamais les étalonnages. Protocole et mémoire tirés des modules CHIRP X3.60 publiés par IJV.
+04b2815e	IJV V4
+af250eb2	Quansheng UV-K5 V3 / UV-K1 (firmware IJV V4)
+710979cc	Firmware IJV V4 (complet) pour UV-K5 V3 et UV-K1. {0}Les 500 canaux de la banque choisie sur la radio sont lus et écrits, avec les noms des groupes et les réglages : pour une autre banque, choisis-la sur la radio et relis. Seuls les blocs modifiés sont écrits ; jamais les étalonnages. Avant d'écrire, le programme vérifie que la même banque est toujours choisie sur la radio. Protocole de RadioManager et du module CHIRP V4.0 d'IJV.
+1f09196a	IJV FW5
+cb22fc2f	Quansheng UV-K5 V3 / UV-K1 (firmware IJV V5)
+6a99f4ea	Firmware IJV V5 (« FW5 », modulaire) pour UV-K5 V3 et UV-K1. {0}Les 500 canaux de la banque choisie sur la radio sont lus et écrits, avec les noms des groupes et les réglages principaux. Sous 13 MHz la radio ne reçoit qu'avec la carte HF. Si la radio refuse l'écriture, active sur la radio l'écriture des banques depuis le PC. Modules, SMS, touches, SYSTEM et licence restent à RadioManager d'IJV.
+bc636746	position {0} hors de la mémoire
+ae6fd0c4	fréquence {0} MHz hors des gammes du firmware IJV
+c12189a6	fréquence d'émission {0} MHz hors des gammes du firmware IJV
+dcd51e55	réponse de la radio avec un CRC non valide
+91d3a3bf	lecture de la mémoire à 0x{0} non valide
+f8238f6c	lecture de la mémoire à 0x{0} échouée
+1361ec4b	la radio a refusé l'écriture à 0x{0} : active sur la radio l'écriture des banques depuis le PC et réessaie
+01ebafa6	la radio n'a pas confirmé l'enregistrement de la mémoire
+6dc6b2d1	la radio a le firmware IJV V6 ({0}) : canaux et réglages de la V6 se gèrent avec RadioManager d'IJV, ce programme ne les lit pas et ne les écrit pas
+49843f26	la radio a le firmware {0} : ouvre l'onglet « {1} » (cet onglet est pour un autre firmware et ne lit ni n'écrit)
+783a8fd7	la radio a le firmware {0} : canaux et réglages de la V6 se gèrent avec RadioManager d'IJV
+ac521e8e	le firmware de la radio ({0}) n'est pas {1} : par sécurité rien n'est lu ni écrit
+a4d09196	IJV {0}
+fc748038	la radio n'indique pas la banque de mémoire choisie (configuration « CFG5 » non valide)
+889213e1	la mémoire n'indique pas la banque
+ec4de955	— banque {0} « {1} »
+936cc2a9	BANK {0}
+a2fd4971	l'image fait {0} octets : pour ce firmware elle doit faire {1} octets (lis d'abord la radio)
+f5ff0307	la banque {0} est choisie sur la radio, mais les canaux à écrire sont de la banque {1} : choisis la banque {2} sur la radio (ou relis la radio). La radio n'a pas été modifiée
+ffb1ef86	(la radio n'a pas confirmé l'enregistrement final : la vérification après l'écriture dira si les données y sont)
+95aebe7a	— blocs modifiés écrits : {0}
+c7c034c7	, version {0}.{1}.{2}
+df5b3443	Firmware IJV {0} : après le firmware la radio a aussi besoin du bloc SYSTEM (V5) ou des modules (V6), que seul RadioManager d'IJV charge ; sans eux la radio reste incomplète. Pour ce firmware utilise RadioManager d'IJV
+e6cb1155	Firmware IJV {0} : les fichiers IJV se préparent et s'installent en général avec RadioManager d'IJV ; après la mise à jour, canaux et réglages se lisent avec l'onglet IJV
+0f04dab2	Fonctionnement
+7edbe3f2	Réception et audio
+e414d862	Touches latérales
+2c56ad74	Noms
+af91da8c	5 min
+daf3fb64	Après ce délai l'émission s'arrête d'elle-même.
+b2dcc4f3	Avec le VOX activé la radio émet dès qu'elle entend un son.
+cadc28e4	Petit nom et grande fréquence
+dac33b20	Grand nom et petite fréquence
+c7ed3a37	Affichage du canal
+ef7d3d0c	En réception et en émission
+273f9c70	Suppression de la queue en émission
+33d26562	VFO masqué
+eaadd05d	6 min
+95cf3da0	10 min
+425fabdf	20 min
+ad041638	Balise / appel CQ
+5f41b595	Avec la balise activée la radio émet seule à intervalles réguliers.
+0106fa1f	Émission activée
+e877e9e6	Désactivé : la radio n'émet pas (réception seule).
+8cea9c35	50 MHz
+c48e61f8	125 MHz
+2881c886	Personnalisé
+197ad3a4	Upconverter
+96a38ed1	Inversé
+6fdc46de	Écran (couleurs)
+94c4bb4e	Message à l'allumage, ligne 1
+93c4b9bb	Message à l'allumage, ligne 2
+4e643083	Indicatif (QRZ)
+10b2dc1e	Nom du firmware
+3832a716	Simple
+b2557f98	Double
+15a6c14a	Double verrouillé (DW LOCK)
+fe8f7e3e	Double lié (DW LINK)
+16a15383	Split
+55f8df9d	1 VFO
+1f5b4ad8	2 VFO
+88a0c1f7	3 VFO
+173b1c17	Triple verrouillé (TW LOCK)
+390406c1	Triple lié (TW LINK)
+deaff3e7	Écran à l'allumage
+a7ca2115	Mode VFO
+83508657	Changement de VFO
+7a31c960	Échange de VFO
+aed0c96b	Squelch +
+b4d0d2dd	Squelch -
+d7245baa	Test REGA
+aa11a5ea	Alarme REGA
+c91eb13e	Preset
+5f460773	AGC manuel
+de6829ef	Liste des canaux
+f3122804	Brouilleur
+2f6a861f	Répertoire
+9f3ff85c	Appel CQ en CW
+9d56b202	Excursion en émission (0 normale, 9 maximale)
+acc5a606	Gain du micro
+0b30eeb1	Bip des touches
+9e7c5071	AFC (contrôle automatique de fréquence)
+f8d83637	FCC
+a8b566a5	Verrouillage des fréquences d'émission (F-Lock)
+c2809dfe	Temporisé (5 s)
+0c17a34b	Lente
+de51b225	Rapide
+bd953f25	S'arrête sur le signal
+24559ba4	Journal
+b85a9c20	Reprise du balayage
+bff748e2	Barre du micro
+e6d98fbd	Enregistrement automatique
+e204413c	VFO d'émission
+b0f0de9f	NFM-
+2e9923dd	HAM
+f8549e54	AFSK
+4affa6b9	AUDIO
+f98cc52a	WIDE
+ab0e4047	WFM
+21567a7f	Excursion en émission
+2b8ed2af	Fréquence du brouilleur
+56d2561a	Bip à l'allumage
+eb704baf	Bas
+df0fe0ad	Moyen
+ac0e88f0	Maximum
+e87e157a	PTT à bascule (appuie une fois pour émettre)
+e8f7eb74	Avec le PTT à bascule l'émission reste active jusqu'à ce que tu appuies de nouveau sur le PTT.
+efd9f2db	VFO suivant
+0c7a6644	Balayage rapide
+1c6c11ac	Copie de fréquence (FCOPY)
+79e2f37c	1, appui bref
+c4bbedbd	1, appui long
+10613743	2, appui bref
+6746f742	2, appui long
+45c21662	Touche latérale {0}
+ad8b8e2c	Nom de la banque {0}
+71ab3858	Nom du groupe {0}
+5a9831df	Nom du groupe 0 (tous)
+450a71ed	(banque 0)
+5d8afcae	table des réglages de RadioManager 4.3.2 d'IJV (firmware V4)
+3988856b	table des réglages de RadioManager 4.3.2 d'IJV (firmware V5)
+b4fcd8ba	module CHIRP 3.60 publié par IJV (firmware V3)
+ef53c837	IJV-{0}
+4f21c9a6	firmware IJV V3, 200 canaux
+447dca6b	firmware IJV V3 X, 999 canaux
+1c75d52b	firmware IJV V4
+1b75d398	firmware IJV V5

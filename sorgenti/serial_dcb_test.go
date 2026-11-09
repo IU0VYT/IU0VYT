@@ -26,12 +26,19 @@ func TestDCBParity(t *testing.T) {
 	if f := dcbFlags(true, true); f&dcbRTSEnable != 0 || f&dcbFParity == 0 || f&dcbDTREnable == 0 || f&dcbFBinary == 0 {
 		t.Fatalf("RTS spento: Flags %#x", f)
 	}
+	// 4.13: DTR spento (firmware IJV V6): gli altri bit restano
+	if f := dcbFlagsDTR(true, true, true); f&dcbDTREnable != 0 || f&dcbRTSEnable != 0 || f&dcbFParity == 0 || f&dcbFBinary == 0 {
+		t.Fatalf("DTR spento: Flags %#x", f)
+	}
+	if dcbFlagsDTR(false, false, false) != dcbFlags(false, false) {
+		t.Fatal("dcbFlagsDTR senza DTR spento diversa da dcbFlags")
+	}
 	src, err := os.ReadFile("serial_windows.go")
 	if err != nil {
 		t.Fatal(err)
 	}
 	s := string(src)
-	if strings.Count(s, "dcb.Flags") != 1 || !strings.Contains(s, "dcb.Flags = dcbFlags(p.even, p.noRTS)") {
-		t.Fatal("serial_windows.go deve impostare Flags una volta sola, con dcbFlags")
+	if strings.Count(s, "dcb.Flags") != 1 || !strings.Contains(s, "dcb.Flags = dcbFlagsDTR(p.even, p.noRTS, p.noDTR)") {
+		t.Fatal("serial_windows.go deve impostare Flags una volta sola, con dcbFlagsDTR")
 	}
 }

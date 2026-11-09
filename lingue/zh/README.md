@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**版本 4.12.0** · Windows · 界面支持 11 种语言（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 只有一个可执行文件，无需安装
+**版本 4.13.0** · Windows · 界面支持 11 种语言（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية）· 只有一个可执行文件，无需安装
 
 面向业余无线电爱好者和 **44 个品牌**对讲机用户的程序（**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone）：通过编程线读取和写入信道、频率和设置，管理意大利中继台档案，并为支持的电台升级固件。
 
@@ -38,7 +38,7 @@
 ## 功能
 
 - 451 个型号的**信道和频率**（包括数字 PMR 和 DMR 电台，也支持 USB）：通过数据线读写，兼容 CHIRP 的 `.img` 文件，Baofeng K67 Pro（`.xlc`）和 Bajeton 8300（`.dat`）的原始文件。
-- 396 个型号的**电台设置**（菜单、显示、VOX、静噪、TOT、DTMF、按键……），每一项都有说明，敏感项需确认警告。
+- 397 个型号的**电台设置**（菜单、显示、VOX、静噪、TOT、DTMF、按键……），每一项都有说明，敏感项需确认警告。
 - **识别连接的电台**：程序会自动识别，并显示品牌、型号、类型、固件以及电台报告的其他信息（USB DMR 电台还有 DMR ID 和名称）。使用**自动识别**（“识别”标签页中的按钮，选择会被记住），无论在哪个标签页，只需连接数据线：程序同时监听所有数据线端口，也能识别连接数据线后才开机的电台以及连接在不同数据线上的多台电台，优先尝试以前识别过的和最常见的电台，不会被处于固件升级模式的电台误导，并为每台电台打开显示已读取信道的标签页；“正在识别电台”框只在有电台响应的数据线上出现；要识别另一台电台，可使用右上角的 **“🔎 识别电台”** 按钮。
 - **转发到其他电台**：一台电台中勾选的信道可直接写入另一台已连接的电台（按品牌和型号选择），带兼容性检查、调整、备份和校验。
 - **通用转换器**：任何电台或文件（K67 `.xlc`、Bajeton `.dat`、包括 CHIRP 的 `.img` 映像、CHIRP 的 CSV、Excel/CSV）的信道，转换为任何其他电台的格式，并按其规则调整。

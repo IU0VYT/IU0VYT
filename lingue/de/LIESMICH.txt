@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.12.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 11
+Version 4.13.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 11
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -10,7 +10,16 @@ GEWÄHRLEISTUNG): siehe LICENSE.txt und AUTOREN_UND_LIZENZEN.txt.
 Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original ist der
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
-4.12).
+4.13).
+Neu in 4.13.0:
+- IJV-FIRMWARE für Quansheng UV-K5, UV-K5 V3 und UV-K1 (nicht originale Firmware von
+  IU0IJV, www.ijvradio.com): vier neue Karten, eine pro Firmware-Version. V3 mit 200
+  oder 999 Kanälen auf der klassischen UV-K5; V4 und V5 («FW5») auf UV-K5 V3 und UV-K1
+  mit den 500 Kanälen der am Funkgerät gewählten Bank. Kanäle, Gruppen- und Banknamen
+  und die wichtigsten Einstellungen werden gelesen und geschrieben; V6 wird erkannt
+  (sie wird mit RadioManager von IJV verwaltet). Siehe «FIRMWARE IJV» in LEGGIMI.txt;
+- Firmware-Update: eine .bin-Datei mit IJV-Version wird gemeldet, mit der Karte für
+  die Kanäle und einem Hinweis für V5 und V6.
 Neu in 4.12.0:
 - SPRACHE BEIM ERSTEN START: Das Programm startet in der Windows-Sprache des Benutzers
   (auf Englisch, wenn sie nicht zu den 11 des Programms gehört). Wird danach mit den
@@ -209,8 +218,9 @@ MIT DEN CHIRP-TREIBERN UNTERSTÜTZTE FUNKGERÄTE
   einer veränderten Firmware, die den Speicher anders nutzt, hält es an, ohne zu lesen
   oder zu schreiben, wie CHIRP. Seit 4.9 haben die Firmwares egzumer, F4HWN und
   LOSEHU/LTS/UVE eigene Registerkarten (UV-K5 Firmware egzumer, F4HWN, LOSEHU): Jede
-  liest und schreibt nur ihre Firmware; für andere (z. B. IJV) das vom Autor der
-  Firmware angegebene Programm verwenden.
+  liest und schreibt nur ihre Firmware; ab 4.13 auch die IJV-Firmware (siehe
+  «FIRMWARE IJV» in LEGGIMI.txt); für andere das vom Autor der Firmware angegebene
+  Programm verwenden.
 - Man arbeitet mit den Kanälen: "Vom Funkgerät lesen" (oder eine .img-Datei öffnen,
   auch mit CHIRP gespeichert), bearbeiten, "In das Funkgerät schreiben" und/oder
   "Speichern" (.img-Datei, die sich mit CHIRP öffnen lässt). Die Einstellungen des

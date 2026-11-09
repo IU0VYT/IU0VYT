@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**Version 4.12.0** · Windows · interface in 11 languages (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · a single executable file, no installation
+**Version 4.13.0** · Windows · interface in 11 languages (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · a single executable file, no installation
 
 A program for radio amateurs and users of transceivers of **44 brands** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): it reads and writes channels, frequencies and settings via the programming cable, manages an archive of Italian repeaters and updates the firmware of the supported radios.
 
@@ -43,7 +43,7 @@ A program for radio amateurs and users of transceivers of **44 brands** (**Baofe
 ## Features
 
 - **Channels and frequencies** of 451 models (including digital PMR and DMR radios, also via USB): read and write via cable, CHIRP-compatible `.img` files, original files of the Baofeng K67 Pro (`.xlc`) and the Bajeton 8300 (`.dat`).
-- **Radio settings** (menus, display, VOX, squelch, TOT, DTMF, keys…) for 396 models, with a description of every item and a warning to confirm for the sensitive ones.
+- **Radio settings** (menus, display, VOX, squelch, TOT, DTMF, keys…) for 397 models, with a description of every item and a warning to confirm for the sensitive ones.
 - **Identification of the connected radio**: the program recognizes it by itself and shows make, model, type, firmware and the other information it reports (for USB DMR radios also DMR ID and name). With **automatic identification** (button in the «Identify» tab, choice remembered) you just connect the cable, whatever tab you are in: the program listens to all the cable ports together, also recognizes a radio turned on after connecting the cable and several radios connected to different cables, tries first the radios already recognized in the past and the most common ones, is not fooled by radios in firmware update mode and opens each one's tab with the channels read; the «Identifying radio» box appears only for the cable with a radio that answers; for another radio there is the **«🔎 Identify radio»** button at the top right.
 - **Forwarding to another radio**: the channels ticked in one radio are written directly to another connected radio, chosen by make and model, with compatibility check, adaptation, backup copy and verification.
 - **Universal converter**: the channels of any radio or file (K67 `.xlc`, Bajeton `.dat`, `.img` images also from CHIRP, CHIRP CSV, Excel/CSV) in the format of any other radio, adapted to its rules.

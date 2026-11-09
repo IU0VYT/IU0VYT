@@ -29,6 +29,7 @@ type winPort struct {
 	even  bool // 4.8: parità pari (Lanchonlh HG-UV98)
 	stop2 bool // 4.8: due bit di stop (Quansheng TG-UV2+)
 	noRTS bool // 4.9: RTS spento (Retevis C2)
+	noDTR bool // 4.13: DTR spento (firmware IJV V6)
 }
 
 func init() {
@@ -80,7 +81,7 @@ func (p *winPort) SetBaud(baud int) error {
 	dcb.ByteSize = 8
 	// binario, DTR e RTS attivi, nessun controllo di flusso (come SerialPort .NET);
 	// con la parità pari anche il controllo degli errori di parità (dcbFlags)
-	dcb.Flags = dcbFlags(p.even, p.noRTS)
+	dcb.Flags = dcbFlagsDTR(p.even, p.noRTS, p.noDTR)
 	dcb.Parity = windows.NOPARITY
 	if p.even {
 		dcb.Parity = windows.EVENPARITY
@@ -110,6 +111,12 @@ func (p *winPort) SetTwoStopBits(on bool) error {
 // SetRTS (4.9): RTS attivo o spento, come pipe.rts di CHIRP
 func (p *winPort) SetRTS(on bool) error {
 	p.noRTS = !on
+	return p.SetBaud(p.baud)
+}
+
+// SetDTR (4.13): DTR attivo o spento (il firmware IJV V6 vuole DTR spento)
+func (p *winPort) SetDTR(on bool) error {
+	p.noDTR = !on
 	return p.SetBaud(p.baud)
 }
 

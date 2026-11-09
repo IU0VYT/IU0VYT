@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**버전 4.12.0** · Windows · 11개 언어의 인터페이스(italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · 실행 파일 하나, 설치 필요 없음
+**버전 4.13.0** · Windows · 11개 언어의 인터페이스(italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · 실행 파일 하나, 설치 필요 없음
 
 **44개 브랜드**(**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone)의 무전기를 쓰는 아마추어 무선사와 사용자를 위한 프로그램입니다. 프로그래밍 케이블로 채널, 주파수, 설정을 읽고 쓰며, 이탈리아 중계기 보관함을 관리하고, 지원하는 무전기의 펌웨어를 업데이트합니다.
 
@@ -38,7 +38,7 @@
 ## 기능
 
 - 451개 모델의 **채널과 주파수**(디지털 PMR과 DMR 무전기 포함, USB로도): 케이블로 읽기와 쓰기, CHIRP와 호환되는 `.img` 파일, Baofeng K67 Pro(`.xlc`)와 Bajeton 8300(`.dat`)의 원래 파일.
-- 396개 모델의 **무전기 설정**(메뉴, 디스플레이, VOX, 스켈치, TOT, DTMF, 키…), 모든 항목의 설명과 민감한 항목의 확인 경고와 함께.
+- 397개 모델의 **무전기 설정**(메뉴, 디스플레이, VOX, 스켈치, TOT, DTMF, 키…), 모든 항목의 설명과 민감한 항목의 확인 경고와 함께.
 - **연결된 무전기 식별**: 프로그램이 스스로 알아보고 제조사, 모델, 종류, 펌웨어와 무전기가 알려 주는 다른 정보를 보여 줍니다(USB DMR 무전기는 DMR ID와 이름도). **자동 식별**(«식별» 탭의 버튼, 선택 기억)을 켜면 어느 탭에 있든 케이블만 연결하면 됩니다. 프로그램은 모든 케이블 포트를 함께 듣고, 케이블을 연결한 뒤에 켠 무전기와 서로 다른 케이블에 연결한 여러 무전기도 알아보며, 예전에 알아본 무전기와 가장 흔한 무전기를 먼저 시도하고, 펌웨어 업데이트 모드의 무전기에 속지 않으며, 읽은 채널과 함께 각 무전기의 탭을 엽니다. «무전기를 식별하는 중» 상자는 응답하는 무전기가 있는 케이블에만 나옵니다. 다른 무전기를 찾으려면 오른쪽 위의 **«🔎 무전기 식별»** 버튼이 있습니다.
 - **다른 무전기로 보내기**: 한 무전기에서 체크한 채널을 제조사와 모델로 고른 다른 연결된 무전기에 바로 씁니다. 호환성 확인, 맞추기, 백업 사본, 확인과 함께.
 - **범용 변환기**: 어떤 무전기나 파일(K67 `.xlc`, Bajeton `.dat`, CHIRP의 것도 포함한 `.img` 이미지, CHIRP CSV, Excel/CSV)의 채널을 다른 어떤 무전기의 형식으로, 그 규칙에 맞추어 바꿉니다.

@@ -218,6 +218,16 @@ CHIRP della RT-950 Pro (https://github.com/pe1hvh/chirp_radtel_rt950pro, licenza
 risposta della radio al comando «F» uguale con il firmware 0.18 e 0.29) e nella
 segnalazione 12180 di CHIRP: nessun codice di quei progetti è incluso.
 
+FIRMWARE IJV DELLA QUANSHENG UV-K5 (4.13)
+Il firmware IJV è di IU0IJV (https://www.ijvradio.com). La memoria dei canali, le
+impostazioni e i comandi del collegamento sono ricavati, per l'interoperabilità, dai
+moduli CHIRP pubblicati sul sito IJV («IJV N3_60», «IJV X3.60 – MBank 0/1_2», «IJV X3.60
+Settings», derivati da uvk5.py, GNU GPL v2 o successiva; «IJV V4.0 Unified» e «IJV
+V5.0 Memory») e dall'analisi del programma RadioManager 4.3.2 di IJV (tabelle,
+costanti e codice dell'assembly .NET, letti solo in memoria). Nessun codice, programma
+o firmware di IJV è incluso: drv_ijv.go e settings_ijv.go sono scritti da zero in
+IU0VYT Flash. Programma indipendente, non affiliato a IJV.
+
 NOMI DELLE ZONE (4.11)
 Il formato dei nomi delle zone è ricavato, per l'interoperabilità, dal codice dei
 programmi del costruttore: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 e Bajeton BJ-9000_CPS

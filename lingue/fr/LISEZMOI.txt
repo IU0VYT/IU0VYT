@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.12.0 - un seul fichier exécutable, aucune installation, interface en 11
+Version 4.13.0 - un seul fichier exécutable, aucune installation, interface en 11
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -9,7 +9,17 @@ Licence : GNU General Public License version 3 ou ultérieure (logiciel libre, S
 AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
-italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.12 traduite).
+italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.13.0 :
+- FIRMWARE IJV pour les Quansheng UV-K5, UV-K5 V3 et UV-K1 (firmware non d'origine
+  d'IU0IJV, www.ijvradio.com) : quatre nouveaux onglets, un par version du firmware.
+  V3 à 200 ou 999 canaux sur l'UV-K5 classique ; V4 et V5 (« FW5 ») sur l'UV-K5 V3 et
+  l'UV-K1, avec les 500 canaux de la banque choisie sur la radio. Canaux, noms des
+  groupes et des banques et réglages principaux sont lus et écrits ; la V6 est
+  reconnue (elle se gère avec RadioManager d'IJV). Voir « FIRMWARE IJV » dans
+  LEGGIMI.txt ;
+- mise à jour du firmware : un fichier .bin avec une version IJV est signalé, avec
+  l'onglet pour les canaux et un avertissement pour V5 et V6.
 Nouveautés de la 4.12.0 :
 - LANGUE AU PREMIER DÉMARRAGE : le programme démarre dans la langue de Windows de
   l'utilisateur (en anglais si elle ne fait pas partie des 11 du programme). Si l'on
@@ -206,8 +216,9 @@ RADIOS GÉRÉES AVEC LES PILOTES DE CHIRP
   firmware modifié, qui utilise la mémoire autrement, il s'arrête sans lire ni écrire,
   comme CHIRP. Depuis la 4.9, les firmwares egzumer, F4HWN et LOSEHU/LTS/UVE ont leurs
   onglets (UV-K5 firmware egzumer, F4HWN, LOSEHU) : chacun ne lit et n'écrit que son
-  firmware ; pour les autres (ex. IJV), utilisez le programme indiqué par l'auteur du
-  firmware.
+  firmware ; depuis la 4.13 aussi le firmware IJV (voir
+  « FIRMWARE IJV » dans LEGGIMI.txt) ; pour les autres, utilisez le programme indiqué
+  par l'auteur du firmware.
 - On travaille sur les canaux : "Lire depuis la radio" (ou ouvrez un fichier .img,
   même enregistré avec CHIRP), modifiez, "Écrire dans la radio" et/ou "Enregistrer"
   (fichier .img qui s'ouvre avec CHIRP). Les réglages de la radio sont ceux lus (ils

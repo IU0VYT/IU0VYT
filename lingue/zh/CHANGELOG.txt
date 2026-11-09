@@ -2,12 +2,26 @@ IU0VYT FLASH - 更新日志
 =======================
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
 
-本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.11）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
+本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.12）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
 
-4.12.0（2026/11/09）
+4.13.0（2026/11/09）
 -------------------
-- 首次启动时的语言（i18n.go、syslang_windows.go）：如果从未用旗帜选择过语言，程序使用用户 Windows 显示语言（GetUserPreferredUILanguages）中第一个属于程序 11 种语言的语言；如果都不是，则使用英语。用旗帜所做的选择会被保存并在重启后有效（现在意大利语也会被保存，以前它与“未选择”混淆）。Windows 消息框使用相同的语言。测试：TestSysLang。
-- 翻译：“是”和“否”（“扫描”列和表格菜单）太短，没有进入待翻译文本列表，在所有语言中都保持意大利语；首页上的许可证名称也保持意大利语。现在都已翻译（每种语言 4905 条文本）。
-- 安全，CodeQL 的报告：bw.go 写入字的字节时不再使用会截断的转换；从变量 GESTIONE_CANALI_DIR（测试使用）获取的数据文件夹会被清理，含有“..”时拒绝；firmware.js 用浏览器而不是正则表达式从 HTML 中取得纯文本；verifica/sito/brandcolors.js 从源代码文件夹读取 ui/gallery.js，而不是从命令行上的路径读取。
-- 仓库：README.md 现在为英文（仓库主页），意大利语原文为 README.it.md；所有 README 中都有带旗帜的语言栏和程序截图；安全策略（.github/SECURITY.md）为英文，其他 10 种语言的译文在 .github/security 中。
-- 网站：更新了识别、指南和许可证的文字；用于社交网络的预览图片（docs/img/social.png）；旗帜和程序截图位于 docs/img；每次发布时都会通过 IndexNow 通知 Bing、Yandex 和其他使用 IndexNow 的搜索引擎。
+- 适用于 Quansheng UV-K5 / UV-K5 V3 / UV-K1 的 IJV 固件（drv_ijv.go，新增）：四个卡片，
+  200 信道的 V3（0x0500，8 KiB 镜像）、999 信道的 V3 X（0x2000-0x9FFF）、V4 和 V5（电台
+  上选定存储库的 500 个信道，24 KiB 镜像：固定区 0x0000-0x1FFF，存储库在
+  0x2000-0x5FFF）。32 字节信道记录；保留分组、AGC、压扩、加扰、选呼、发射锁定和繁忙锁定。
+  连接：V3 使用 UV-K5 原厂协议；V4 和 FW5 使用 IJV 明文协议，无应答时改用原厂协议；FW5
+  使用物理读写（0x0564/0x0566）和最终保存（0x0576）。活动存储库取自字节 0x000B（V4）或
+  “CFG5”（FW5），写入前重新读取：若电台上选的是其他存储库，则不写入任何内容。V4 和 FW5
+  只写入有变化的块；从不写入校准数据（自 0x1E00 起）、FW5 的配置和许可。V6 通过其数据
+  连接识别。格式取自 IJV 发布的 CHIRP 模块（3.60、V4.0、V5.0）和对 RadioManager 4.3.2
+  的分析；代码从零编写。
+- IJV 设置（settings_ijv.go，新增）：主要菜单、显示、VOX、侧键（V3 和 V4）、16 个分组
+  和（V4、FW5）16 个存储库的名称。
+- UV-K5 固件（fwk5.go）：带 IJV 版本的 .bin 文件指向 IJV 卡片并给出警告（V5 和 V6 还需要
+  SYSTEM 和模块）。
+- Windows 串口：可关闭 DTR（SetDTR），用于 V6 数据连接。
+- 目录：在 Quansheng UV-K5 和 UV-K1 中加入 IJV 卡片和 IJV 网站。
+- 翻译：所有语言新增 143 条文本。
+- 测试：模拟 IJV 电台（V3、V4、FW5、V6）、明文和原厂协议、FW5 通告、存储库变化、写入被拒、
+  从不写入校准数据。

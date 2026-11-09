@@ -1,11 +1,18 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.12.0 - 单个可执行文件，无需安装，界面支持 11 种语言。
+版本 4.13.0 - 单个可执行文件，无需安装，界面支持 11 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
-本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.12 条目的译文）。
+本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.13.0 的新内容：
+- 适用于 Quansheng UV-K5、UV-K5 V3 和 UV-K1 的 IJV 固件（IU0IJV 的非原厂固件，
+  www.ijvradio.com）：新增四个卡片，每个固件版本一个。经典 UV-K5 上 200 或 999 信道的
+  V3；UV-K5 V3 和 UV-K1 上的 V4 和 V5（“FW5”），读写电台上选定存储库的 500 个信道。
+  读写信道、分组和存储库名称以及主要设置；可识别 V6（由 IJV 的 RadioManager 管理）。
+  见 LEGGIMI.txt 中的“FIRMWARE IJV”；
+- 固件更新：带 IJV 版本的 .bin 文件会被标出，并给出信道所用卡片，对 V5 和 V6 给出警告。
 4.12.0 的新内容：
 - 首次启动时的语言：程序以用户 Windows 的语言启动（如果不在程序的 11 种语言中，则使用英语）。之后如果用旗帜选择了其他语言，选择会被保存，并在以后的重启中有效（意大利语也是如此）；
 - 翻译：“扫描”列中的“是”和“否”以及首页上的许可证名称现在已翻译成所有语言；

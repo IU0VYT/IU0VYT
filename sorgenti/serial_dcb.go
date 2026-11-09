@@ -22,8 +22,15 @@ const (
 // (Lanchonlh HG-UV98) anche il controllo degli errori di parità.
 // Fino alla 4.8 fParity veniva impostato e subito dopo cancellato.
 // rtsOff (4.9): RTS spento (Retevis C2, WANTS_RTS = False in CHIRP).
-func dcbFlags(even, rtsOff bool) uint32 {
+func dcbFlags(even, rtsOff bool) uint32 { return dcbFlagsDTR(even, rtsOff, false) }
+
+// dcbFlagsDTR (4.13): come dcbFlags, con DTR spento se dtrOff (collegamento dati
+// del firmware IJV V6)
+func dcbFlagsDTR(even, rtsOff, dtrOff bool) uint32 {
 	f := uint32(dcbFlagsSimple)
+	if dtrOff {
+		f &^= dcbDTREnable
+	}
 	if even {
 		f |= dcbFParity
 	}

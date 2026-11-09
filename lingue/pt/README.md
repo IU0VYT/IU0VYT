@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**Versão 4.12.0** · Windows · interface em 11 línguas (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · um só ficheiro executável, sem instalação
+**Versão 4.13.0** · Windows · interface em 11 línguas (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · um só ficheiro executável, sem instalação
 
 Programa para radioamadores e utilizadores de transceptores de **44 marcas** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): lê e escreve canais, frequências e definições pelo cabo de programação, gere um arquivo dos repetidores italianos e atualiza o firmware dos rádios suportados.
 
@@ -38,7 +38,7 @@ Programa para radioamadores e utilizadores de transceptores de **44 marcas** (**
 ## Funções
 
 - **Canais e frequências** de 451 modelos (incluindo rádios PMR digitais e DMR, também por USB): leitura e escrita por cabo, ficheiros `.img` compatíveis com o CHIRP, ficheiros originais do Baofeng K67 Pro (`.xlc`) e do Bajeton 8300 (`.dat`).
-- **Definições dos rádios** (menus, visor, VOX, squelch, TOT, DTMF, teclas…) para 396 modelos, com a descrição de cada item e um aviso a confirmar para os delicados.
+- **Definições dos rádios** (menus, visor, VOX, squelch, TOT, DTMF, teclas…) para 397 modelos, com a descrição de cada item e um aviso a confirmar para os delicados.
 - **Identificação do rádio ligado**: o programa reconhece-o sozinho e mostra marca, modelo, tipo, firmware e as outras informações que comunica (para os rádios DMR USB também ID DMR e nome). Com a **identificação automática** (botão no separador «Identificar», escolha lembrada) basta ligar o cabo, em qualquer separador: o programa escuta todas as portas dos cabos ao mesmo tempo, reconhece também um rádio ligado depois de ligar o cabo e vários rádios ligados a cabos diferentes, experimenta primeiro os rádios já reconhecidos e os mais difundidos, não se deixa enganar pelos rádios em modo de atualização do firmware e abre o separador de cada um com os canais lidos; o quadro «A identificar o rádio» só aparece para o cabo com um rádio que responde; para outro rádio há o botão **«🔎 Identificar rádio»** em cima à direita.
 - **Envio para outro rádio**: os canais marcados num rádio são escritos diretamente noutro rádio ligado, escolhido por marca e modelo, com verificação de compatibilidade, adaptação, cópia de segurança e verificação.
 - **Conversor universal**: os canais de qualquer rádio ou ficheiro (K67 `.xlc`, Bajeton `.dat`, imagens `.img` também do CHIRP, CSV do CHIRP, Excel/CSV) no formato de qualquer outro rádio, adaptados às suas regras.

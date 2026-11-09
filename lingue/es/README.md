@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/languages-11-orange" alt="11 languages">
 </p>
 
-**Versión 4.12.0** · Windows · interfaz en 11 idiomas (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · un solo archivo ejecutable, sin instalación
+**Versión 4.13.0** · Windows · interfaz en 11 idiomas (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية) · un solo archivo ejecutable, sin instalación
 
 Programa para radioaficionados y usuarios de transceptores de **44 marcas** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone): lee y escribe canales, frecuencias y ajustes por el cable de programación, gestiona un archivo de los repetidores italianos y actualiza el firmware de las radios compatibles.
 
@@ -38,7 +38,7 @@ Programa para radioaficionados y usuarios de transceptores de **44 marcas** (**B
 ## Funciones
 
 - **Canales y frecuencias** de 451 modelos (incluidas radios PMR digitales y DMR, también por USB): lectura y escritura por cable, archivos `.img` compatibles con CHIRP, archivos originales del Baofeng K67 Pro (`.xlc`) y de la Bajeton 8300 (`.dat`).
-- **Ajustes de las radios** (menús, pantalla, VOX, squelch, TOT, DTMF, teclas…) para 396 modelos, con la descripción de cada elemento y un aviso que confirmar para los delicados.
+- **Ajustes de las radios** (menús, pantalla, VOX, squelch, TOT, DTMF, teclas…) para 397 modelos, con la descripción de cada elemento y un aviso que confirmar para los delicados.
 - **Identificación de la radio conectada**: el programa la reconoce solo y muestra marca, modelo, tipo, firmware y la demás información que comunica (para las radios DMR USB también ID DMR y nombre). Con la **identificación automática** (botón en la pestaña «Identificar», elección recordada) basta con conectar el cable, en cualquier pestaña: el programa escucha todos los puertos de los cables a la vez, reconoce también una radio encendida después de conectar el cable y varias radios conectadas a cables distintos, prueba primero las radios ya reconocidas y las más difundidas, no se deja engañar por las radios en modo de actualización del firmware y abre la pestaña de cada una con los canales leídos; el recuadro «Identificando la radio» solo aparece para el cable con una radio que responde; para otra radio está el botón **«🔎 Identificar radio»** arriba a la derecha.
 - **Envío a otra radio**: los canales marcados en una radio se escriben directamente en otra radio conectada, elegida por marca y modelo, con control de compatibilidad, adaptación, copia de seguridad y verificación.
 - **Convertidor universal**: los canales de cualquier radio o archivo (K67 `.xlc`, Bajeton `.dat`, imágenes `.img` también de CHIRP, CSV de CHIRP, Excel/CSV) en el formato de cualquier otra radio, adaptados a sus reglas.

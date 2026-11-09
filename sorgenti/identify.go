@@ -190,6 +190,14 @@ func (p probePort) SetRTS(on bool) error {
 	return nil
 }
 
+// SetDTR (4.13): DTR spento per il firmware IJV V6
+func (p probePort) SetDTR(on bool) error {
+	if x, ok := p.Port.(interface{ SetDTR(bool) error }); ok {
+		return x.SetDTR(on)
+	}
+	return nil
+}
+
 func (p probePort) unwrapPort() Port { return p.Port }
 
 type probeState struct {

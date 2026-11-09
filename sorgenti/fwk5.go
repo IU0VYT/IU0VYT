@@ -226,6 +226,17 @@ func analyzeK5(name, origin string, raw []byte) *fwImage {
 	case strings.Contains(up, "LOSEHU") || strings.Contains(up, "UVE") || strings.Contains(up, "LTS"):
 		add("ok", "Firmware cinese ampliato: dopo l'aggiornamento i canali si leggono con la scheda «Quansheng UV-K5 (firmware LOSEHU, LTS, UVE)» se la versione è tra quelle gestite")
 		img.Info.Models = []string{"qs-uvk5-losehu"}
+	case ijvFamily(vs) != "":
+		// 4.13: firmware IJV (IU0IJV): canali e impostazioni con le schede IJV
+		fam := ijvFamily(vs)
+		ids := map[string][]string{"V3": {"qs-uvk5-ijv3"}, "V3X": {"qs-uvk5-ijv3x"}, "V4": {"qs-uvk5v3-ijv4"}, "FW5": {"qs-uvk5v3-ijv5"}}[fam]
+		if fam == "FW5" || fam == "V6" {
+			add("warn", "Firmware IJV %s: dopo il firmware la radio ha bisogno anche del blocco SYSTEM (V5) o dei moduli (V6), che carica solo RadioManager di IJV; senza, la radio resta incompleta. Per questo firmware usa RadioManager di IJV", fam)
+		} else {
+			add("warn", "Firmware IJV %s: i file IJV si preparano e si installano di solito con RadioManager di IJV; dopo l'aggiornamento canali e impostazioni si leggono con la scheda IJV", fam)
+		}
+		info.Warnings = true
+		img.Info.Models = ids
 	case vs[0] == '*':
 		add("warn", "Firmware non di Quansheng: i canali si leggono solo con le schede dei firmware liberi gestiti (egzumer, F4HWN, LOSEHU); con altri firmware il programma, come CHIRP, non li legge")
 		info.Warnings = true
@@ -235,7 +246,7 @@ func analyzeK5(name, origin string, raw []byte) *fwImage {
 	}
 	img.Dec = fw
 	info.Hw = "caricatore " + strings.TrimSuffix(fam, " (versione «*»)")
-	if vs[0] == '7' {
+	if vs[0] == '7' && ijvFamily(vs) == "" {
 		img.Info.Models = []string{"rt-ra79", "qs-uvk1"}
 	}
 	img.Ver = ver
