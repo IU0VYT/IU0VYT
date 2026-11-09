@@ -285,7 +285,7 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
 .hb-grid li { display: flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   font: 700 11px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #cfe6ff; text-align: start; }
 .hb-dot { flex: none; width: 6px; height: 6px; }
-@media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(2, minmax(0, max-content)); justify-content: center; column-gap: 28px; } }
 @media (prefers-reduced-motion: reduce) { .hb-inv { animation: none; } }
 
 /* ---------- testo leggibile su schermi stretti */
