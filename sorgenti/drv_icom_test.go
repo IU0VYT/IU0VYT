@@ -182,3 +182,49 @@ func TestIcomCable(t *testing.T) {
 		}
 	})
 }
+
+// 4.15: CHIRP distingue il salto «P» (scansione programmata e di memoria) dal salto
+// «S»; qui il canale è in entrambi i casi escluso dalla scansione
+func (id31Fam) chirpRefFix(m *genModel, g *Chan, c *chirpChan) {
+	if c.Skip == "P" {
+		c.Scan = false
+	}
+}
+
+// 4.15: un canale con il salto «P» modificato e ancora escluso dalla scansione
+// resta «P» (CHIRP lo porta a «S»)
+func (f id31Fam) chirpEncodeFix(m *genModel, base, ref, out []byte) {
+	e := f.mem(m)
+	for i := 0; i < m.Slots; i++ {
+		if icomBit(e.F("pskp_flags"), base, i) && icomBit(e.F("pskp_flags"), out, i) && icomBit(e.F("skip_flags"), ref, i) {
+			icomSetBit(e.F("pskp_flags"), ref, i, true)
+		}
+	}
+}
+
+func (icx90Fam) chirpRefFix(m *genModel, g *Chan, c *chirpChan) {
+	if c.Skip == "P" {
+		c.Scan = false
+	}
+}
+
+func (f icx90Fam) chirpEncodeFix(m *genModel, base, ref, out []byte) {
+	for i := 0; i < m.Slots; i++ {
+		p := f.bank(i).F("prog_skip")
+		if p.Bool(base) && p.Bool(out) && f.bank(i).F("mem_skip").Bool(ref) {
+			p.SetBool(ref, true)
+		}
+	}
+}
+
+func (ysfFam) chirpRefFix(m *genModel, g *Chan, c *chirpChan) {
+	if c.Skip == "P" {
+		c.Scan = false
+	}
+}
+
+// 4.15 Kenwood TH-D72: CHIRP non scrive nome e salto di scansione del canale 999
+func (f thd72Fam) chirpEncodeFix(m *genModel, base, ref, out []byte) {
+	copy(f.name(999).Raw(ref), f.name(999).Raw(out))
+	f.flag(999).F("skip").SetInt(ref, f.flag(999).F("skip").Int(out))
+}

@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.14.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.15.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,23 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.15.0:
+- D-STAR UND C4FM: Kanäle per Kabel für die digitalen Amateurfunk-Handfunkgeräte. Icom
+  ID-31, ID-51, ID-51 Plus, ID-51 Plus2 und IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D,
+  FT1D, FT2D, FT3D und FT5D; Kenwood TH-D72, TH-D74 und TH-D75 (neue Marke, insgesamt
+  47). Die Spalte «Modus» zeigt «D-STAR» oder «C4FM». Einstellungen für IC-E90, VX-6,
+  VX-3, FT-70D, FT1D, FT2D, FT3D, FT5D und TH-D72. Bei den Yaesu-Geräten wird die Kopie
+  am Funkgerät gestartet: Die Anleitung steht im Kabelfenster.
+- FREIE FIRMWARE: nicFW 2.x für das TIDRADIO TD-H3 (Kanäle und wichtigste
+  Einstellungen), nicFW880 / nicFW950 für Radtel RT-880, RT-880G und RT-950 Pro
+  (Kanäle), F4HWN Fusion 5.x für Quansheng UV-K1 und UV-K5 V3 (1024 Kanäle und
+  Einstellungen). Mit nicFW wird die Kalibrierung des Funkgeräts nie geschrieben.
+- Kenwood: Die Galerie führt auch die PMR446- und DMR/NXDN-Handfunkgeräte unter den
+  nicht kompatiblen auf; sie werden nur mit der KPG-Software programmiert, die Händlern
+  vorbehalten ist.
+- Galerie: 537 Modelle von 47 Marken (483 mit Kanälen, 419 mit Einstellungen).
+- Einstellungen: Ein nie benutztes Textfeld wird leer gelesen, statt einen Fehler zu
+  melden; ein nicht geänderter Wert wird nicht neu geschrieben.
 Neu in 4.14.0:
 - YAESU UND ICOM: zwei neue Marken (insgesamt 46) und 13 weitere Funkgeräte, mit Kanälen
   per Kabel und CHIRP-kompatiblen .img-Dateien. Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R,

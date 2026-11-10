@@ -1,11 +1,17 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.14.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.15.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.15.0 的新内容：
+- D-STAR 和 C4FM：通过线缆管理业余数字手持机的信道。Icom ID-31、ID-51、ID-51 Plus、ID-51 Plus2 和 IC-E90/IC-T90；Yaesu VX-6、VX-3、FT-70D、FT1D、FT2D、FT3D 和 FT5D；Kenwood TH-D72、TH-D74 和 TH-D75（新品牌，共 47 个）。“模式”列显示“D-STAR”或“C4FM”。IC-E90、VX-6、VX-3、FT-70D、FT1D、FT2D、FT3D、FT5D 和 TH-D72 支持设置。Yaesu 电台的复制由电台发起：说明在线缆窗口中。
+- 自由固件：TIDRADIO TD-H3 的 nicFW 2.x（信道和主要设置），Radtel RT-880、RT-880G 和 RT-950 Pro 的 nicFW880 / nicFW950（信道），Quansheng UV-K1 和 UV-K5 V3 的 F4HWN Fusion 5.x（1024 个信道和设置）。使用 nicFW 时，电台的校准数据从不写入。
+- Kenwood：图库中还列出了 PMR446 和 DMR/NXDN 手持机，归入不兼容型号；它们只能用仅提供给经销商的 KPG 软件编程。
+- 图库：47 个品牌的 537 款型号（483 款支持信道，419 款支持设置）。
+- 设置：从未使用过的文本字段读取为空，而不再报错；未更改的值不会重新写入。
 4.14.0 的新内容：
 - YAESU 和 ICOM：新增两个品牌（共 46 个）和 13 款电台，支持通过编程线读写信道，.img 文件与 CHIRP 兼容。Yaesu FT-4XR、FT-4XE、FT-4VR、FT-65R、FT-65E 和 FT-25R（SCU-35 编程线插在话筒插孔；报告“子类型 3”的电台有单独的选项卡，程序会指出正确的那个），Yaesu FT-60R/E（由电台发起克隆，“F8 CLONE”模式）；Icom IC-V86、IC-T10、IC-V80、IC-T70、IC-V82 和 IC-U82（OPC-478 编程线插在扬声器插孔；克隆时电台显示“CLONE”）。除 IC-T70 外都有设置。这些电台不支持固件升级。全部用模拟电台测试，并与 CHIRP 逐字节比对；真实电台尚未测试：请保留备份并报告任何问题。
 - 语言：新增两种语言，马来语（Bahasa Melayu，马来西亚国旗）和印地语（हिन्दी，印度国旗），共 13 种：程序、网站、“lingue”文件夹中的说明文件、README 和安全策略。

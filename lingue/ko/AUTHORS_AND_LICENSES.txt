@@ -139,6 +139,21 @@ dcf5d2519310. 4.6과 4.7에서 추가한 무전기는 2026/11/04의 리비전 ba
   drivers/icf.py, drivers/icv86.py,
   drivers/icv80.py, drivers/icx8x.py,
   drivers/ict10.py                          Copyright 2008 Dan Smith
+  4.15 (CHIRP 337b385, 09/11/2026), D-STAR / C4FM / Kenwood:
+  drivers/id31.py, drivers/id51.py          Copyright 2012 Dan Smith
+  drivers/id51plus.py                       Copyright 2015 Eric Dropps
+  drivers/icx90.py                          Copyright 2018-2020 Jaroslav Škarvada
+  drivers/yaesu_clone.py, drivers/vx6.py    Copyright 2010 Dan Smith
+  drivers/vx3.py                            Copyright 2011 Rick Farina
+  drivers/ft70.py                           Copyright 2010 Dan Smith, 2017 Nicolas Pike
+  drivers/ft1d.py                           Copyright 2010 Dan Smith, 2014 Angus
+                                            Ainslie, 2023, 2025 Declan Rieb
+  drivers/ft2d.py                           Copyright 2010 Dan Smith, 2017 Declan Rieb
+  drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
+                                            Ainslie
+  drivers/thd74.py                          CHIRP
+  F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
+  egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
 펌웨어 업데이트 프로토콜과 DMR 설정(4.10)
 다음 자유 프로그램의 설명과 코드를 바탕으로 Go로 처음부터 다시 썼습니다(복사한 파일 없음. 시험에 쓴 제조사 펌웨어는 패키지에 없음):
@@ -173,6 +188,8 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 CHIRP의 작성자들, armel F4HWN, M7OCM, JuantAldea, v0l(radio_tool), OpenGD77 프로젝트, Hannes
 Matuschek DM3MAT(qdmr), Serge Vakulenko KK6ABQ에게 감사드립니다.
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
+4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 
 QUANSHENG UV-K5 펌웨어 업데이트(4.1)
 Quansheng .bin 파일의 형식과 UV-K5 로더의 프로토콜은 자유 프로그램 k5prog(Copyright 2023 Jacek Lipkowski
@@ -208,6 +225,8 @@ v1.3.3과 RT-950_EnCPS «BT-9000_CPS» v1.3.0, radtels.com; Bajeton BJ-9000_CPS 
 Radtel 펌웨어 메모에서 얻었습니다. 그 프로그램은 패키지에 들어 있지 않습니다. JA van Hernen(PE1HVH)이 RT-950 Pro용
 CHIRP 드라이버를 위해 공개한 메모(https://github.com/pe1hvh/chirp_radtel_rt950pro, MIT 라이선스. «F»
 명령에 대한 무전기의 응답은 펌웨어 0.18과 0.29에서 같음)와 CHIRP 보고 12180도 참고했습니다. 그 프로젝트의 코드는 들어 있지 않습니다.
+
+NICFW 펌웨어(4.15): nicFW는 nicsure(https://nicsure.co.uk)의 것입니다. 채널 메모리, 설정, 연결 명령은 상호 운용을 위해 작성자가 공개한 문서(https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs)에서 가져왔습니다. nicsure의 코드, 프로그램, 펌웨어는 포함되어 있지 않습니다. drv_nicfw.go와 settings_nicfw.go는 처음부터 작성했습니다. 독립적인 프로그램이며 nicsure와 관련이 없습니다.
 
 구역 이름(4.11)
 구역 이름의 형식은 상호 운용성을 위해 제조사 프로그램의 코드에서 얻었습니다: Radtel RT-950PRO_CPS v1.2.0-v1.3.3과

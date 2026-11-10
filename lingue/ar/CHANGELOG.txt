@@ -6,6 +6,14 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 أو أي إصدار �
 - 4.12) موجود في الأصل الإيطالي CHANGELOG.txt في المجلد الرئيسي للحزمة؛ وأهم مستجدات
 كل إصدار ملخّصة أيضًا في GUIDE.txt.
 
+4.15.0 (2026/11/10)
+-------------------
+- Icom ID-31 و ID-51 و ID-51 Plus و ID-51 Plus2 (drv_id31.go، جديد؛ مشغّلات CHIRP id31.py و id51.py و id51plus.py) و IC-E90 / IC-T90 (drv_icx90.go، جديد؛ icx90.py): نسخ Icom السريع، 500 قناة، تماثلية أو D-STAR.
+- Yaesu VX-6 و VX-3 (drv_yaesuclone.go و drv_vx6.go، جديدان؛ yaesu_clone.py و vx6.py و vx3.py) و FT-70D و FT1D و FT2D و FT3D و FT5D (drv_ysf.go، جديد؛ ft70.py و ft1d.py و ft2d.py): نسخ يبدأ من الجهاز، 999 أو 900 قناة، تماثلية أو C4FM.
+- Kenwood TH-D74 و TH-D75 (drv_thd74.go، جديد؛ thd74.py) و TH-D72 (drv_thd72.go، جديد؛ thd72.py): بروتوكول «MCP» عبر كابل USB، 1000 قناة.
+- برامج ثابتة حرة: nicFW 2.x لجهاز TD-H3 و nicFW880 / nicFW950 لأجهزة RT-880 و RT-880G و RT-950 Pro (drv_nicfw.go و settings_nicfw.go، جديدان؛ كُتبا من الصفر اعتمادًا على الوثائق التي نشرها nicsure)؛ F4HWN Fusion 5.x لجهازي UV-K1 و UV-K5 V3 (drv_uvk5x.go): 1024 قناة والإعدادات.
+- إعدادات من CHIRP لـ 10 فئات جديدة. الفهرس: علامة Kenwood (483 جهازًا، 419 مع الإعدادات، 537 في المعرض، 47 علامة). الترجمات: 147 نصًا جديدًا. الاختبارات: المقارنة مع CHIRP وأجهزة محاكاة لكل الطرازات الجديدة.
+
 4.14.0 (2026/11/10)
 -------------------
 - Yaesu FT-4XR وFT-4XE وFT-4VR وFT-65R وFT-65E وFT-25R (drv_ft4.go، جديد؛ مشغّل CHIRP ft4.py): بروتوكول كابل SCU-35 مع الصدى، 200 قناة؛ الأجهزة ذات النوع الفرعي 3 لها تبويبات خاصة والتعرّف يختار الصحيح. Yaesu FT-60R/E (drv_ft60.go، جديد؛ ft60.py): النسخ يبدأ من الجهاز، 1000 قناة.

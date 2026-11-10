@@ -130,6 +130,21 @@ https://www.qrz.com/db/IU0VYT
   drivers/icf.py, drivers/icv86.py,
   drivers/icv80.py, drivers/icx8x.py,
   drivers/ict10.py                          Copyright 2008 Dan Smith
+  4.15 (CHIRP 337b385, 09/11/2026), D-STAR / C4FM / Kenwood:
+  drivers/id31.py, drivers/id51.py          Copyright 2012 Dan Smith
+  drivers/id51plus.py                       Copyright 2015 Eric Dropps
+  drivers/icx90.py                          Copyright 2018-2020 Jaroslav Škarvada
+  drivers/yaesu_clone.py, drivers/vx6.py    Copyright 2010 Dan Smith
+  drivers/vx3.py                            Copyright 2011 Rick Farina
+  drivers/ft70.py                           Copyright 2010 Dan Smith, 2017 Nicolas Pike
+  drivers/ft1d.py                           Copyright 2010 Dan Smith, 2014 Angus
+                                            Ainslie, 2023, 2025 Declan Rieb
+  drivers/ft2d.py                           Copyright 2010 Dan Smith, 2017 Declan Rieb
+  drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
+                                            Ainslie
+  drivers/thd74.py                          CHIRP
+  F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
+  egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
 固件升级协议和 DMR 设置（4.10）
 根据以下自由程序的说明和代码，用 Go 从零重写（未复制任何文件；测试所用的厂家固件不在软件包中）：
@@ -155,6 +170,8 @@ drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、
 4.11：zonenames.go（RT-920 名称的格式依据 radtel_rt900.py）。
 感谢 CHIRP 的作者、armel F4HWN、M7OCM、JuantAldea、v0l（radio_tool）、OpenGD77 项目、Hannes Matuschek DM3MAT（qdmr）和 Serge Vakulenko KK6ABQ。
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
+4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 
 QUANSHENG UV-K5 固件升级（4.1）
 Quansheng .bin 文件的格式和 UV-K5 引导程序的协议由自由程序 k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF，GNU GPL v3，https://github.com/sq5bpf/k5prog）和 uvtools（egzumer，https://github.com/egzumer/uvtools）记录。为实现互操作性，fwk5.go 根据这些资料从零编写；软件包中不包含这些程序的任何代码。verifica/k5/k5ref.js 只用于测试，它从执行验证者指定的文件夹加载 uvtools 的代码。感谢 SQ5BPF 和 egzumer。
@@ -171,6 +188,8 @@ RETEVIS RA89（4.4）和 RT85（4.5）固件升级
 RADTEL RT-950 PRO、BAJETON BJ-9000 和 RADTEL RT-950（4.6、4.7）
 4.7：还比对了 Radtel RT-950PRO_CPS v1.2.1 和 Bajeton BJ-9000_CPS v1.3.3（bajeton.cn）程序，以及引导程序“RT-950_EnUPDATE”“BJ9000_EnUPDATE”和“Radtel ANC Bootloader V1.2”（升级协议，用于互操作性）；固件（Radtel radtels.com，Bajeton bajeton.com 和 bajeton.cn）只通过 SHA-256 指纹识别。软件包中不包含任何程序或固件。
 为实现互操作性，信道存储和设置取自厂家程序的代码（Radtel RT-950PRO_CPS v1.1.1、v1.2.0、v1.2.1、v1.3.3 和 RT-950_EnCPS“BT-9000_CPS”v1.3.0，radtels.com；Bajeton BJ-9000_CPS v1.1.1）以及 Radtel 固件的说明；这些程序不包含在软件包中。还参考了 JA van Hernen（PE1HVH）为其 RT-950 Pro 的 CHIRP 驱动发布的说明（https://github.com/pe1hvh/chirp_radtel_rt950pro，MIT 许可证；固件 0.18 和 0.29 对“F”命令的响应相同）以及 CHIRP 的第 12180 号报告：不包含这些项目的任何代码。
+
+NICFW 固件（4.15）：nicFW 由 nicsure 开发（https://nicsure.co.uk）。为实现互操作，信道存储、设置和连接命令均取自作者公布的文档（https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs）。未包含 nicsure 的任何代码、程序或固件：drv_nicfw.go 和 settings_nicfw.go 均从零编写。本程序为独立程序，与 nicsure 无关联。
 
 区域名称（4.11）
 为了互操作性，区域名称的格式取自厂家程序的代码：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 和 Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS“BT-9000_CPS”v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）和 RT910_EnCPS v1.0.3（无蓝牙的 RT-910），来自 radtels.com 和 bajeton.cn；RT-920 的格式还取自 CHIRP 的驱动程序 radtel_rt900.py（Fred Trimble，GNU GPL，见上文）。不包含任何厂家程序。

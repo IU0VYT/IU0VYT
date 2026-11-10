@@ -148,6 +148,21 @@ Auteurs indiqués dans les fichiers de CHIRP utilisés :
   drivers/icf.py, drivers/icv86.py,
   drivers/icv80.py, drivers/icx8x.py,
   drivers/ict10.py                          Copyright 2008 Dan Smith
+  4.15 (CHIRP 337b385, 09/11/2026), D-STAR / C4FM / Kenwood:
+  drivers/id31.py, drivers/id51.py          Copyright 2012 Dan Smith
+  drivers/id51plus.py                       Copyright 2015 Eric Dropps
+  drivers/icx90.py                          Copyright 2018-2020 Jaroslav Škarvada
+  drivers/yaesu_clone.py, drivers/vx6.py    Copyright 2010 Dan Smith
+  drivers/vx3.py                            Copyright 2011 Rick Farina
+  drivers/ft70.py                           Copyright 2010 Dan Smith, 2017 Nicolas Pike
+  drivers/ft1d.py                           Copyright 2010 Dan Smith, 2014 Angus
+                                            Ainslie, 2023, 2025 Declan Rieb
+  drivers/ft2d.py                           Copyright 2010 Dan Smith, 2017 Declan Rieb
+  drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
+                                            Ainslie
+  drivers/thd74.py                          CHIRP
+  F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
+  egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
 PROTOCOLES DE MISE À JOUR DU FIRMWARE ET RÉGLAGES DMR (4.10)
 Réécrits de zéro en Go à partir des descriptions et du code de ces programmes libres
@@ -186,6 +201,8 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go ;
 Merci aux auteurs de CHIRP, à armel F4HWN, à M7OCM, à JuantAldea, à v0l (radio_tool),
 au projet OpenGD77, à Hannes Matuschek DM3MAT (qdmr) et à Serge Vakulenko KK6ABQ.
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
+4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 
 MISE À JOUR DU FIRMWARE DE LA QUANSHENG UV-K5 (4.1)
 Le format des fichiers .bin de Quansheng et le protocole du chargeur de l'UV-K5 sont
@@ -236,6 +253,13 @@ consultées les notes publiées par JA van Hernen (PE1HVH) pour son pilote CHIRP
 RT-950 Pro (https://github.com/pe1hvh/chirp_radtel_rt950pro, licence MIT ; réponse de
 la radio à la commande « F » identique avec les firmwares 0.18 et 0.29) et dans le
 signalement 12180 de CHIRP : aucun code de ces projets n'est inclus.
+
+FIRMWARE NICFW (4.15) : nicFW est de nicsure (https://nicsure.co.uk). La mémoire des
+canaux, les réglages et les commandes de la liaison sont tirés, pour l'interopérabilité,
+de la documentation publiée par l'auteur (https://github.com/nicsure/nicfw2docs,
+https://github.com/nicsure/nicFW880_950_Docs). Aucun code, programme ou firmware de
+nicsure n'est inclus : drv_nicfw.go et settings_nicfw.go sont écrits de zéro. Programme
+indépendant, non affilié à nicsure.
 
 NOMS DES ZONES (4.11)
 Le format des noms des zones est tiré, pour l'interopérabilité, du code des programmes

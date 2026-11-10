@@ -112,6 +112,10 @@ var chirpTestImage = map[string]string{
 	"bt-gmrsv2":        "BTECH_GMRS-V2.img",
 	"bt-mursv1":        "BTECH_MURS-V1.img",
 	"bt-mursv2":        "BTECH_MURS-V2.img",
+	// 4.15: immagini con la variante nel nome
+	"ys-ft1d": "Yaesu_FT-1D_R.img", "ys-ft2d": "Yaesu_FT2D_R.img", "ys-ft2dv2": "Yaesu_FT2D_R.img",
+	"ys-ft3d": "Yaesu_FT3D_R.img", "ys-ft5d": "Yaesu_FT5D_R.img",
+	"kw-thd74": "Kenwood_TH-D74_clone_mode.img", "kw-thd72": "Kenwood_TH-D72_clone_mode.img",
 }
 
 // 4.9: metadati cambiati nell'immagine di prova (il driver di CHIRP la carica
@@ -130,6 +134,8 @@ var chirpImageMeta = map[string]map[string]interface{}{
 var chirpExtraClass = map[string]string{
 	"UVK5RadioEgzumerF4HWN":    "driver F4HWN di armel (uvk5_egzumer_f4hwn_ver_4_3_0.py)",
 	"RuyageUV58PlusRadioM7OCM": "driver di M7OCM per la RT-890 (chirp-next-radtel-rt-890-m7ocm.py)",
+	// 4.15: driver pubblicato da F4HWN con il firmware «Fusion» (suffisso «Fusion»)
+	"UVK5RadioEgzumerFusion": "driver F4HWN Fusion (f4hwn.fusion.chirp.v5.9.0.py:Fusion)",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {
@@ -208,6 +214,11 @@ func chirpImageFor(t *testing.T, m *genModel) string {
 // prove (Retevis HA1G: firmware 1.1.11.1, che CHIRP rifiuta via cavo; qui 1.1.12.0)
 var chirpImagePatch = map[string]func([]byte){
 	"rt-ha1g": func(b []byte) { copy(b[82+2:], []byte{1, 1, 12, 0}) },
+	// 4.15: l'immagine di prova della FT5D viene da un file ADMS e non comincia con
+	// la sigla che la radio manda via cavo; quella della FT2D serve anche per la
+	// seconda serie
+	"ys-ft5d":   func(b []byte) { copy(b, "AH82M") },
+	"ys-ft2dv2": func(b []byte) { copy(b, "AH60G") },
 }
 
 // chirpExtraImage (4.9): immagini di prova che accompagnano i driver esterni
@@ -218,6 +229,8 @@ var chirpExtraImage = map[string]string{
 // chirpBlankImage (4.9): dimensione della memoria dei modelli senza immagine di prova
 var chirpBlankImage = map[string]int{
 	"rt-rt76p": 0x2000,
+	// 4.15: F4HWN Fusion (il driver non ha un'immagine di prova)
+	"qs-uvk1-f4hwn5": uvk5f5MemSize,
 }
 
 // immagine di riferimento per i modelli della famiglia senza un'immagine propria
@@ -238,6 +251,7 @@ type chirpChan struct {
 	RxTone string `json:"rxTone"`
 	Power  int    `json:"power"`
 	Mode   string `json:"mode"`
+	Skip   string `json:"skip"` // 4.15: salto di scansione come lo dà CHIRP ("", "S", "P")
 	Scan   bool   `json:"scan"`
 	Name   string `json:"name"`
 	Dup    string `json:"dup,omitempty"`
@@ -661,6 +675,13 @@ func TestChirpEncode(t *testing.T) {
 			ref, err := os.ReadFile(of)
 			if err != nil {
 				t.Fatal(err)
+			}
+			// 4.15: differenze volute e documentate nei byte scritti (es. Icom ID-51:
+			// il salto «P» che resta sui canali modificati)
+			if fx, ok := m.Fam.(interface {
+				chirpEncodeFix(m *genModel, base, ref, out []byte)
+			}); ok && len(ref) == len(out) {
+				fx.chirpEncodeFix(m, img, ref, out)
 			}
 			if !bytes.Equal(ref, out) {
 				t.Errorf("immagine diversa da quella di CHIRP: %s", diffRanges(ref, out))

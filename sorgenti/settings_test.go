@@ -214,12 +214,13 @@ func TestSettingsChirp(t *testing.T) {
 				}
 				got, err := readSetting(d, base)
 				w := want[d.Key]
+				// testi con caratteri non ASCII (es. nomi in cinese dell'immagine di
+				// prova, o 0xFF che CHIRP mostra come «ÿ»): qui sono «valore non
+				// previsto» o un campo vuoto, si possono riscrivere
+				if x, ok := w.(string); ok && d.Type == "str" && strings.IndexFunc(x, func(r rune) bool { return r > 126 }) >= 0 {
+					continue
+				}
 				if err != nil {
-					// testi con caratteri non ASCII (es. nomi in cinese dell'immagine di
-					// prova): mostrati come «valore non previsto», si possono riscrivere
-					if x, ok := w.(string); ok && d.Type == "str" && strings.IndexFunc(x, func(r rune) bool { return r > 126 }) >= 0 {
-						continue
-					}
 					t.Errorf("%s: %v", d.Key, err)
 					continue
 				}
@@ -244,7 +245,11 @@ func TestSettingsChirp(t *testing.T) {
 				}
 			}
 			// 2) modifiche casuali
-			rnd := rand.New(rand.NewSource(int64(len(cls)) * 7919))
+			seed := int64(len(cls)) * 7919
+			if x, err := strconv.ParseInt(os.Getenv("IU0VYT_SEME_IMPOSTAZIONI"), 10, 64); err == nil {
+				seed += x // 4.15: altre combinazioni di modifiche, per cercare differenze nascoste
+			}
+			rnd := rand.New(rand.NewSource(seed))
 			var mutable []*setDef
 			for i := range tb.Settings {
 				if d := &tb.Settings[i]; d.Type != "info" && !d.RO {
@@ -261,9 +266,9 @@ func TestSettingsChirp(t *testing.T) {
 						break
 					}
 					d := mutable[k]
-					cur, _ := readSetting(d, mine)
+					cur, cerr := readSetting(d, mine)
 					v, ok := randSetVal(rnd, d, cur)
-					if !ok {
+					if !ok || (cerr == nil && v == cur) { // 4.15: uguale a prima, non si scrive
 						continue
 					}
 					if err := writeSetting(d, mine, v); err != nil {

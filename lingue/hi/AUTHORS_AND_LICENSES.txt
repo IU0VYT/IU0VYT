@@ -146,6 +146,21 @@ ba67ff4 से, 4.8 और 4.9 के रेडियो 06/11/2026 के स�
   drivers/icf.py, drivers/icv86.py,
   drivers/icv80.py, drivers/icx8x.py,
   drivers/ict10.py                          Copyright 2008 Dan Smith
+  4.15 (CHIRP 337b385, 09/11/2026), D-STAR / C4FM / Kenwood:
+  drivers/id31.py, drivers/id51.py          Copyright 2012 Dan Smith
+  drivers/id51plus.py                       Copyright 2015 Eric Dropps
+  drivers/icx90.py                          Copyright 2018-2020 Jaroslav Škarvada
+  drivers/yaesu_clone.py, drivers/vx6.py    Copyright 2010 Dan Smith
+  drivers/vx3.py                            Copyright 2011 Rick Farina
+  drivers/ft70.py                           Copyright 2010 Dan Smith, 2017 Nicolas Pike
+  drivers/ft1d.py                           Copyright 2010 Dan Smith, 2014 Angus
+                                            Ainslie, 2023, 2025 Declan Rieb
+  drivers/ft2d.py                           Copyright 2010 Dan Smith, 2017 Declan Rieb
+  drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
+                                            Ainslie
+  drivers/thd74.py                          CHIRP
+  F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
+  egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
 फ़र्मवेयर अपडेट के प्रोटोकॉल और DMR सेटिंग्स (4.10)
 इन मुक्त प्रोग्रामों के विवरण और कोड के आधार पर Go में शुरू से दोबारा लिखा गया (कोई फ़ाइल
@@ -183,6 +198,8 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 CHIRP के लेखकों, armel F4HWN, M7OCM, JuantAldea, v0l (radio_tool), OpenGD77 प्रोजेक्ट,
 Hannes Matuschek DM3MAT (qdmr) और Serge Vakulenko KK6ABQ को धन्यवाद।
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
+4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 
 QUANSHENG UV-K5 का फ़र्मवेयर अपडेट (4.1)
 Quansheng की .bin फ़ाइलों का फ़ॉर्मेट और UV-K5 के लोडर का प्रोटोकॉल मुक्त प्रोग्रामों
@@ -230,6 +247,8 @@ RT-950 Pro के अपने CHIRP ड्राइवर के लिए प�
 (https://github.com/pe1hvh/chirp_radtel_rt950pro, MIT लाइसेंस; «F» कमांड पर रेडियो का
 उत्तर फ़र्मवेयर 0.18 और 0.29 में एक जैसा है) और CHIRP की रिपोर्ट 12180 भी देखी गईं: उन
 प्रोजेक्टों का कोई कोड शामिल नहीं है।
+
+NICFW फ़र्मवेयर (4.15): nicFW nicsure (https://nicsure.co.uk) का है। चैनल मेमोरी, सेटिंग्स और कनेक्शन के कमांड, अंतरसंचालनीयता के लिए, लेखक के प्रकाशित दस्तावेज़ों (https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs) से लिए गए हैं। nicsure का कोई कोड, प्रोग्राम या फ़र्मवेयर शामिल नहीं है: drv_nicfw.go और settings_nicfw.go शून्य से लिखे गए हैं। स्वतंत्र प्रोग्राम, nicsure से संबद्ध नहीं।
 
 ज़ोन के नाम (4.11)
 ज़ोन के नामों का फ़ॉर्मेट, इंटरऑपरेबिलिटी के लिए, निर्माता के प्रोग्रामों के कोड से निकाला

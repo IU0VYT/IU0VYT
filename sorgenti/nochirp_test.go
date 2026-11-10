@@ -16,6 +16,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/binary"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -64,6 +65,13 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	}
 	if _, ok := m.Opt.(*tytOpt); ok {
 		mem = tytSynthImage()
+	}
+	switch m.Fam.(type) { // 4.15: firmware nicFW
+	case nicfwFam:
+		mem = nicfwTestImg(true)
+	case nicfw880Fam:
+		mem = bytes.Repeat([]byte{0xFF}, nicfw880Size)
+		binary.LittleEndian.PutUint16(mem[nicfw880SetAt:], 0xABC6)
 	}
 	first := &Chan{Rx: 145500000, Tx: 145500000, Scan: true, Name: "S20"}
 	if m.NameMax == 0 {

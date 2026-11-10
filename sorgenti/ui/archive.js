@@ -486,10 +486,15 @@ const Archive = {
   },
 };
 
-// ponte → canale; sulle radio DMR un ponte solo DMR diventa un canale DMR
+// 4.15: tipo dei ponti digitali che la radio gestisce (DMR, D-Star, C4FM; '' = solo analogica)
+function digTipo(def) {
+  return def ? ({ DMR: 'DMR', 'D-STAR': 'D-Star', C4FM: 'C4FM' })[def.digital] || '' : '';
+}
+
+// ponte → canale; sulle radio digitali un ponte solo digitale del loro tipo (DMR, D-Star, C4FM) diventa un canale digitale
 function pontiToChan(p, def) {
   const c = { rx: p.rx, tx: p.tx, txTone: p.txTone || '', rxTone: p.rxTone || '', power: p.power || 0, narrow: !!p.narrow, scan: true, name: p.nome || '' };
-  if (def && def.digital === 'DMR' && ponteSoloDigitale(p) && (p.tipi || []).includes('DMR')) {
+  if (digTipo(def) && ponteSoloDigitale(p) && (p.tipi || []).includes(digTipo(def))) {
     c.dig = true;
     c.txTone = c.rxTone = '';
   }
@@ -539,8 +544,8 @@ function radioCompat(kind, ponti, chosenType, words) {
   const gamme = bands.map(b => mhz(b.lo) + '-' + mhz(b.hi)).join(', ');
   for (const p of ponti) {
     let why = '', soft = '';
-    if (ponteSoloDigitale(p) && !(def.digital === 'DMR' && (p.tipi || []).includes('DMR'))) {
-      why = `${W.dig} (${(p.tipi || []).join(', ')}): ${def.digital === 'DMR' ? 'la radio gestisce solo DMR' : 'la radio è solo analogica'}`;
+    if (ponteSoloDigitale(p) && !(digTipo(def) && (p.tipi || []).includes(digTipo(def)))) {
+      why = `${W.dig} (${(p.tipi || []).join(', ')}): ${def.digital === 'DMR' ? 'la radio gestisce solo DMR' : def.digital ? 'la radio non gestisce questo modo digitale' : 'la radio è solo analogica'}`;
     } else if (!inBand(p.rx) || !inBand(p.tx)) {
       const fq = mhz(inBand(p.rx) ? p.tx : p.rx);
       why = cat === 'pmr' || cat === 'kids'

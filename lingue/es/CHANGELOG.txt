@@ -7,6 +7,24 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.15.0 (10/11/2026)
+-------------------
+- Icom ID-31, ID-51, ID-51 Plus, ID-51 Plus2 (drv_id31.go, nuevo; controladores de CHIRP
+  id31.py, id51.py, id51plus.py) e IC-E90 / IC-T90 (drv_icx90.go, nuevo; icx90.py):
+  copia Icom rápida, 500 canales, analógicos o D-STAR.
+- Yaesu VX-6, VX-3 (drv_yaesuclone.go, drv_vx6.go, nuevos; yaesu_clone.py, vx6.py,
+  vx3.py) y FT-70D, FT1D, FT2D, FT3D, FT5D (drv_ysf.go, nuevo; ft70.py, ft1d.py,
+  ft2d.py): copia iniciada desde la radio, 999 o 900 canales, analógicos o C4FM.
+- Kenwood TH-D74, TH-D75 (drv_thd74.go, nuevo; thd74.py) y TH-D72 (drv_thd72.go, nuevo;
+  thd72.py): protocolo «MCP» por el cable USB, 1000 canales.
+- Firmware libre: nicFW 2.x de la TD-H3 y nicFW880 / nicFW950 de las RT-880, RT-880G y
+  RT-950 Pro (drv_nicfw.go, settings_nicfw.go, nuevos; escritos desde cero a partir de
+  la documentación publicada por nicsure); F4HWN Fusion 5.x de las UV-K1 y UV-K5 V3
+  (drv_uvk5x.go): 1024 canales y ajustes.
+- Ajustes tomados de CHIRP para 10 clases nuevas. Catálogo: marca Kenwood (483 radios,
+  419 con ajustes, 537 en la galería, 47 marcas). Traducciones: 147 textos nuevos.
+  Pruebas: comparación con CHIRP y radios simuladas para todos los modelos nuevos.
+
 4.14.0 (10/11/2026)
 -------------------
 - Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R, FT-65E, FT-25R (drv_ft4.go, nuevo; controlador

@@ -14,9 +14,7 @@ package main
 
 import (
 	"bytes"
-	"encoding/hex"
 	"fmt"
-	"strings"
 	"sync"
 )
 
@@ -36,11 +34,13 @@ func newIcomEmu(o *icomOpt, img []byte) *icomEmu {
 	return &icomEmu{o: o, img: mem}
 }
 
-func (icv86Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(icv86Opt, img) }
-func (icv80Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(icv80Opt, img) }
-func (ict70Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(ict70Opt, img) }
-func (ict10Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(ict10Opt, img) }
-func (icx8xFam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(icx8xClone, img) }
+func (icv86Fam) emu(m *genModel, img []byte) genEmu  { return newIcomEmu(icv86Opt, img) }
+func (icv80Fam) emu(m *genModel, img []byte) genEmu  { return newIcomEmu(icv80Opt, img) }
+func (ict70Fam) emu(m *genModel, img []byte) genEmu  { return newIcomEmu(ict70Opt, img) }
+func (ict10Fam) emu(m *genModel, img []byte) genEmu  { return newIcomEmu(ict10Opt, img) }
+func (f id31Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(f.icom(m), img) }
+func (icx90Fam) emu(m *genModel, img []byte) genEmu  { return newIcomEmu(icx90Opt, img) }
+func (icx8xFam) emu(m *genModel, img []byte) genEmu  { return newIcomEmu(icx8xClone, img) }
 
 func (e *icomEmu) image() []byte {
 	e.mu.Lock()
@@ -98,7 +98,7 @@ func (e *icomEmu) serve(p Port) error {
 			if !bytes.Equal(pl, model) || fast != e.o.fast {
 				continue
 			}
-			src := e.image()
+			src := icomFlip(e.o, e.image())
 			blk := 0
 			for a := 0; a < len(src); a += 32 {
 				n := 32
@@ -116,7 +116,7 @@ func (e *icomEmu) serve(p Port) error {
 				if blk++; blk == e.badSum {
 					sum++
 				}
-				reply(icomDat, []byte(strings.ToUpper(hex.EncodeToString(append(d, sum)))))
+				reply(icomDat, icomPack(e.o, append(d, sum)))
 			}
 			reply(icomEnd, []byte(e.o.end))
 		case icomIn:
@@ -126,8 +126,8 @@ func (e *icomEmu) serve(p Port) error {
 			if !writing {
 				continue
 			}
-			d := make([]byte, len(pl)/2)
-			if _, err := hex.Decode(d, pl[:len(d)*2]); err != nil || len(d) < alen+2 {
+			d, valid := icomUnpack(e.o, pl)
+			if !valid || len(d) < alen+2 {
 				writing = false
 				continue
 			}
@@ -140,7 +140,7 @@ func (e *icomEmu) serve(p Port) error {
 				writing = false
 				continue
 			}
-			pending[a] = d[alen+1 : alen+1+n]
+			pending[a] = icomFlip(e.o, d[alen+1:alen+1+n])
 		case icomEnd:
 			if !writing || e.reject || string(pl) != e.o.end {
 				reply(icomOK, []byte{1})

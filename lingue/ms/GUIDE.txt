@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.14.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.15.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,23 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Apa yang baharu dalam 4.15.0:
+- D-STAR DAN C4FM: saluran melalui kabel untuk radio mudah alih digital amatur. Icom
+  ID-31, ID-51, ID-51 Plus, ID-51 Plus2 dan IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D,
+  FT1D, FT2D, FT3D dan FT5D; Kenwood TH-D72, TH-D74 dan TH-D75 (jenama baharu, 47
+  kesemuanya). Lajur «Mod» memaparkan «D-STAR» atau «C4FM». Tetapan untuk IC-E90, VX-6,
+  VX-3, FT-70D, FT1D, FT2D, FT3D, FT5D dan TH-D72. Pada radio Yaesu, salinan dimulakan
+  dari radio: arahannya ada dalam tetingkap kabel.
+- PERISIAN TEGAR BEBAS: nicFW 2.x untuk TIDRADIO TD-H3 (saluran dan tetapan utama),
+  nicFW880 / nicFW950 untuk Radtel RT-880, RT-880G dan RT-950 Pro (saluran), F4HWN
+  Fusion 5.x untuk Quansheng UV-K1 dan UV-K5 V3 (1024 saluran dan tetapan). Dengan
+  nicFW, penentukuran radio tidak pernah ditulis.
+- Kenwood: galeri turut menyenaraikan radio mudah alih PMR446 dan DMR/NXDN antara yang
+  tidak serasi; radio ini hanya diprogram dengan perisian KPG yang dikhaskan untuk
+  pengedar.
+- Galeri: 537 model daripada 47 jenama (483 dengan saluran, 419 dengan tetapan).
+- Tetapan: medan teks yang tidak pernah digunakan dibaca sebagai kosong dan bukannya
+  memberi ralat; nilai yang tidak diubah tidak ditulis semula.
 Apa yang baharu dalam 4.14.0:
 - YAESU DAN ICOM: dua jenama baharu (46 kesemuanya) dan 13 radio tambahan, dengan
   saluran melalui kabel dan fail .img yang serasi dengan CHIRP. Yaesu FT-4XR, FT-4XE,

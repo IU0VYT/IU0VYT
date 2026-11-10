@@ -5046,7 +5046,6 @@ ef53c837	IJV-{0}
 1c75d52b	IJV-Firmware V4
 1b75d398	IJV-Firmware V5
 7c2fdf6f	{0} Jede Registerkarte liest und schreibt nur ihre eigene Firmware: Original von Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP-Treiber), F4HWN (Treiber von armel für CHIRP, mit den F4HWN-Einstellungen), OSFW (CHIRP-Treiber) oder die chinesischen Firmwares LOSEHU / LTS / UVE (CHIRP-Treiber, chinesische Namen). Öffnet man die falsche Registerkarte, liest das Programm die Firmware-Version, hält ohne zu schreiben an und nennt die richtige Registerkarte; «Identifizieren» findet sie selbst. Firmware: .bin-Dateien von Quansheng (z. B. k5_v2.01.26_publish.bin) mit dem Lader des Funkgeräts (mit gedrückter PTT eingeschaltet); das Programm prüft, ob die Firmware zum Ladertyp des Funkgeräts passt (UV-K5, UV-K5(8)/UV-K6 oder UV-5R Plus). Quansheng schützt die Downloads mit einem Passwort, das der Händler mitteilt. Auch IJV wird unterstützt (V3 mit 200 oder 999 Kanälen auf der klassischen UV-K5; V4, V5 und V6 auf der UV-K5 V3: am Funkgerät gewählte Bank, Kanäle, Gruppen und wichtigste Einstellungen).
-5f4e346a	{0} Originalfirmware: nur Kanäle (CHIRP verwaltet die Einstellungen noch nicht) und nur mit Version 7.03. IJV-Firmware V4, V5 und V6: Kanäle der am Funkgerät gewählten Bank, Gruppennamen und wichtigste Einstellungen (Karten «IJV-Firmware»).
 02b27e38	IJV V6
 4b2a8174	Quansheng UV-K5 V3 / UV-K1 (IJV-Firmware V6)
 81db67f1	IJV-Firmware V6 (modular) für UV-K5 V3 und UV-K1. {0}Datenverbindung der V6 (DTR und RTS niedrig): meldet das Gerät, dass die Datenverbindung fehlt, mit FLASH V6 von RadioManager aktualisieren. Die 500 Kanäle der am Gerät gewählten Bank werden mit Gruppennamen und wichtigsten Einstellungen in 4-KiB-Sektoren gelesen und geschrieben, jeder neu gelesen und geprüft; Kalibrierung, Lizenz, Module, Sprachen und Moduldateien nie. Module und Firmware bleiben bei RadioManager von IJV.
@@ -5161,3 +5160,150 @@ d487a1bd	Frequenz {0} MHz außerhalb der Grenzen des Funkgeräts
 f5084846	das Funkgerät ist das andere Modell der Serie: öffne die Karte «Icom {0}»
 e6282e24	das Abbild stammt nicht von einem {0}
 a7bdcadb	Subtyp 3
+024bedf4	das Funkgerät unterstützt diese digitale Betriebsart nicht
+0c8c64ea	Die Kanäle sind analog oder digital D-STAR (Spalte «Modus»); Rufzeichen und Digitalcode der D-STAR-Kanäle bleiben erhalten.
+fb482f3c	Die Kopie wird am Funkgerät gestartet (Modus «CLONE»): Die Anleitung steht im Kabelfenster.
+d3450e14	Professionelles Funkgerät: Es wird mit der KPG-Software von Kenwood programmiert, die Händlern vorbehalten ist; das Protokoll ist nicht öffentlich.
+46b77f34	500 Kanäle mit 16-stelligen Namen, schnelle Kopie.{0}
+a57318f1	900 Kanäle mit 16-stelligen Namen, analog oder digital C4FM (Spalte «Modus»).{0}
+5cfb1ae7	999 Kanäle mit 6-stelligen Namen.{0}
+eeeb3e52	1000 Kanäle mit 16-stelligen Namen, USB-Kabel (das Funkgerät erscheint als serielle Schnittstelle).{0}
+16b721a5	Freie Firmware F4HWN Fusion ab Version 5: 1024 Kanäle (Karte «Firmware F4HWN Fusion 5.x»).
+435d1e5f	Freie Firmware von nicsure: Kanäle von Grund auf nach der vom Autor veröffentlichten Dokumentation geschrieben und mit dem simulierten Funkgerät geprüft (mit einem echten Funkgerät noch zu prüfen). Die Kalibrierung des Funkgeräts wird nie geschrieben.
+e39bdf53	ID-51 Plus
+b9377b94	ID-51A Plus
+38569eb0	ID-51E Plus
+b2aea350	ID-51 50th Anniversary
+af60a5b3	ID-51 Plus2
+3857a652	ID-51A Plus2
+325b86a6	ID-51E Plus2
+b9069b70	{0} Tribander 50/144/430 MHz mit Breitbandempfänger: 500 Kanäle mit 6-stelligen Namen.
+e5788f1f	{0} 900 Kanäle mit 6-stelligen Namen; die digitale Betriebsart C4FM jedes Kanals bleibt wie am Funkgerät eingestellt.{1}
+9b0bc80c	Kenwood
+632708c2	Kenwood-Seite des TH-D75E
+2e4583af	Kenwood-Website
+9a76efe2	{0} 1000 Kanäle mit 8-stelligen Namen, USB-Kabel.
+b8e61191	ProTalk TK-3701D
+452bf662	Kenwood-Seite (PMR446)
+27700ca5	ProTalk TK-3501
+8f1177f3	PKT-300E
+aa842c64	PKT-300
+f72256ec	UBZ-LJ9
+91e37f04	UBZ-LJ9SET
+d5e7f8fb	Anmeldefreies analoges PMR446: Die Kanäle werden am Funkgerät gewählt, es gibt keine Programmiersoftware.
+44c10e89	DMR-Handfunkgeräte von Kenwood
+badf093c	TD-H3 (Firmware nicFW)
+6ec3b7f8	TD-H3 nicFW
+56a2991a	Dokumentation zu nicFW 2.x (nicsure)
+7a651194	Website von nicsure
+d4a810ff	RT-880 (ohne G)
+d7ffe954	iRadio UV-98
+539599ba	Dokumentation zu nicFW880 (nicsure)
+bd2f0310	Mit der Originalfirmware von Radtel wird das RT-880 (ohne GPS) mit der Software von Radtel programmiert: Sein Protokoll wird noch nicht unterstützt (das RT-880G schon, mit eigener Karte). {0}
+4a49f494	RT-880 / RT-880G (Firmware nicFW880)
+9ab35be3	RT-880 nicFW
+33526df2	RT-880G nicFW
+e48ce43e	RT-950 Pro (Firmware nicFW950)
+429f8f4e	RT-950 Pro nicFW
+34fa366d	Dokumentation zu nicFW880 / 950 (nicsure)
+880016c5	Firmware F4HWN Fusion für UV-K5 V3 (armel)
+bde55f43	Firmware F4HWN Fusion (armel)
+0f0af4d1	{0} Originalfirmware: nur Kanäle (CHIRP verwaltet die Einstellungen noch nicht) und nur mit Version 7.03. IJV-Firmware V4, V5 und V6: Kanäle der am Funkgerät gewählten Bank, Gruppennamen und wichtigste Einstellungen (Karten «IJV-Firmware»).{1}
+a936d75d	Icom Inc.
+ecbb6013	Icom IC-E90 / IC-T90
+c21daaea	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()*+-,/|=
+0db26069	500 Kanäle (0 bis 499) mit 6-stelligen Namen; Breitbandempfänger. {0}Die Betriebsart (FM, Breit-FM, AM) folgt der Frequenz. CHIRP-Treiber.
+729fa53d	das Funkgerät kann eine Ablage von {0} Hz nicht speichern (Vielfache von 5 oder 6,25 kHz)
+7839b844	Icom Inc.A8
+ad31bcee	Icom Inc.DA
+aedc7408	Icom-Datenkabel OPC-2350LU (USB) oder OPC-2218LU an der Buchse «DATA»; das Funkgerät wird normal eingeschaltet und zeigt während der Kopie «CLONE». Schnelle Kopie mit 38400 Baud.
+2257eeef	500 Kanäle {0} (0 bis 499) mit 16-stelligen Namen, analog oder D-STAR. {1}Ein neuer D-STAR-Kanal entsteht mit «CQCQCQ». CHIRP-Treiber.
+6c223c47	VHF/UHF (Flugfunkband in AM)
+514eb061	CQCQCQ
+0de6d70b	Hoch (Maximum)
+88a00d13	Mittel (Hälfte)
+d5db917d	Niedrig (ein Fünftel)
+146afa3f	Leistung: hoch (das Maximum), mittel (Hälfte) oder niedrig (ein Fünftel); eine am Funkgerät bereits eingestellte Leistung bleibt, wie sie ist.
+8926693f	Die Kalibrierung des Funkgeräts wird nie geschrieben; vor dem Schreiben liest das Programm das Funkgerät erneut und schreibt nur, was sich geändert hat. Nach der vom Autor der Firmware veröffentlichten Dokumentation.
+4c2258d6	nicFW 2.x
+cba883fa	TIDRADIO TD-H3 (Firmware nicFW)
+f1141652	TD-H3 mit der freien Firmware nicFW 2.x (Versionen 2.0x und 2.5x): 198 Kanäle mit 12-stelligen Namen, 38400 Baud, Funkgerät eingeschaltet. {0}{1}
+ff211be1	der Speicher ist nicht der der Firmware nicFW 2.x
+0104eb8c	das Funkgerät kann die Sendefrequenz {0} MHz nicht speichern
+8cf36282	das Funkgerät hat nicht die Firmware nicFW 2.x (magische Zahl {0}{1})
+f43a6ffd	Funkgerät wird vor dem Schreiben gelesen…
+ce16cafd	das Funkgerät hat eine andere Version der Firmware nicFW als das Abbild: Lies das Funkgerät und übertrage die Kanäle auf diese Lesung
+d7c84c5d	{0} mit der freien Firmware nicFW880 / nicFW950: 999 Kanäle mit Namen bis 30 Zeichen. Programmierkabel des Funkgeräts, 38400 Baud, Funkgerät eingeschaltet. Nach dem Schreiben startet das Funkgerät neu. {1}{2}
+af95c12e	Radtel RT-880 / RT-880G (Firmware nicFW880)
+d95de8c6	Radtel RT-880 und RT-880G (und iRadio UV-98)
+91fd00ac	Radtel RT-950 Pro (Firmware nicFW950)
+82ebbc1d	Radtel RT-950 Pro
+dbc6ef8c	TH-D72 (clone mode)
+e5b0d8dd	Kenwood TH-D72A / TH-D72E
+beac0f40	1000 Kanäle (0 bis 999) mit 8-stelligen Namen. {0}Kenwood-Subtöne (159,8 165,5 171,3 177,3 183,5 189,9 196,6 und 199,5 Hz fehlen). CHIRP-Treiber.
+56136e41	das Funkgerät hat diese Tonkombination nicht (unterschiedliche DCS-Codes in den beiden Richtungen oder invertierte Codes)
+bc98c743	USB-Kabel des Funkgeräts (das Funkgerät erscheint als serielle Schnittstelle); während der Kopie zeigt das Funkgerät «PROG MCP».
+c6a5c2d5	1000 Kanäle (0 bis 999) mit 16-stelligen Namen, analog oder D-STAR. {0}Ein neuer D-STAR-Kanal entsteht mit «CQCQCQ». CHIRP-Treiber.
+6365ac36	TH-D74 (clone mode)
+b831a835	Kenwood TH-D74A / TH-D74E
+e8ad684d	Kenwood TH-D75A / TH-D75E
+a0e87eb4	das Funkgerät hat diese Tonkombination nicht (nie nur ein Ton im Empfang und keine invertierten Codes)
+c2efd81a	das Funkgerät ist ein anderes Modell ({0})
+274c56f2	0M PROGRAM
+6ca36cb4	UV-K1 & UV-K5 V3 (F4HWN Fusion)
+0592f4f9	Quansheng UV-K1 / UV-K5 V3 (Firmware F4HWN Fusion 5.x)
+722e44a6	F4HWN v5.9.0
+e902a558	Freie Firmware F4HWN «Fusion» ab Version 5 für UV-K1 und UV-K5 V3: 1024 Kanäle. Funkgerät einschalten, dann das Kabel anschließen. Geschrieben wird wie mit dem Treiber von F4HWN für CHIRP; die Kalibrierung wird nie geschrieben.
+056bfdb5	[V/M] («-WAIT-»)
+c50cf2a6	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]u_{0}{1}{2}{3}{4}{5}{6}{7}{8}$%{9}*#.|=\o@
+a5351dc0	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/{0}[](){}{1}{2}_{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}*{16}{17},'|
+10f76a9c	Die Kopie wird am Funkgerät gestartet: ausschalten, das Kabel an die Buchse {0} anschließen und mit gedrückter Taste {1} einschalten («CLONE» erscheint). Zum Lesen: hier das Lesen starten und dann am Funkgerät {2} drücken. Zum Schreiben: am Funkgerät {3} drücken («-WAIT-» erscheint) und dann hier das Schreiben starten; am Ende bestätigt das Funkgerät nicht, das Ergebnis steht auf seinem Display.
+b69d230d	999 Kanäle mit 6-stelligen Namen, Yaesu-Programmierkabel, 19200 Baud.
+357d7fd6	Yaesu VX-6R / VX-6E
+ea03477f	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]_$%*#.|=\@
+ce744b54	Minimal 0,3 W
+297fe1ba	Yaesu VX-3R / VX-3E
+d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
+4fc7572e	Hoch 1,5 W
+fa4647fb	Niedrig 0,1 W
+d9bcac02	das Funkgerät kann die Frequenz {0} MHz nicht speichern
+dc9c52ec	Warten auf das Funkgerät: Starte das Senden am Funkgerät…
+8808a930	das Funkgerät hat nichts gesendet: Versetze es in den Modus «CLONE» und drücke {0}, nachdem du das Lesen gestartet hast
+afdae93d	das Funkgerät bestätigt die Daten nicht: Versetze es in den Modus «CLONE» und drücke {0}, bevor du das Schreiben startest
+c522b72a	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz.,:;*#_-/&()@!?^
+c407fae5	DATA
+55b67acf	Zulässige Töne: Subton beim Senden oder in beiden Richtungen, derselbe DCS-Code in beiden Richtungen. CHIRP-Treiber.
+1e34eed5	Mittel 2,5 W (L3)
+bbe720f8	Niedrig 1 W (L2)
+630ca8b6	Minimal (L1)
+df92ae0c	900 Kanäle mit 16-stelligen Namen, analog oder digital C4FM (ein neuer Digitalkanal entsteht in «AMS»), USB-Datenkabel, 38400 Baud. {0}{1}
+648aab46	[RECEIVE] («-WAIT-»)
+801ff122	Yaesu FT-70DR / FT-70DE
+897c92a5	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ .,:;*#_-/&()@!?^
+a63400d4	[MODE] («-WAIT-»)
+1821b2ee	900 Kanäle mit 6-stelligen Namen, USB-Datenkabel, 38400 Baud. Die Kopie wird am Funkgerät gestartet: Akku abnehmen und mit gedrückten Tasten [AMS] und Ein/Aus wieder einsetzen («ADMS» erscheint); zum Lesen [BAND] drücken, nachdem das Lesen gestartet wurde, zum Schreiben [MODE] («-WAIT-») drücken, bevor das Schreiben gestartet wird. Ein neuer Kanal entsteht in analogem FM. {0}
+4056f37e	Yaesu FT1DR / FT1DE
+bbbaceb3	[Dx] («-WAIT-»)
+66d6893e	Yaesu FT2DR / FT2DE
+b11557d4	Yaesu FT2DR / FT2DE (zweite Serie)
+61483556	Yaesu FT3DR / FT3DE
+9d6379ee	Yaesu FT5DR / FT5DE
+17921f64	F4HWN v{0}
+064b5b01	Freie Firmware F4HWN Fusion: Nach der Aktualisierung werden Kanäle und Einstellungen mit der Karte «Quansheng UV-K1 / UV-K5 V3 (Firmware F4HWN Fusion 5.x)» gelesen
+0f59247c	Minimal
+48573d19	Zweikanalüberwachung (Dual Watch)
+c37e6b8b	Empfangenen Ton anzeigen
+86a5ea41	Empfangenen Ton zum Senden übernehmen
+70b0b3c1	Kontrolle des empfangenen Tons
+945242e3	Symbol
+7a9f4017	Prozent
+06f13811	Akkuanzeige
+4d79a23b	Displayhelligkeit
+62130d36	Invertierte Displayfarben
+56af356e	Tastensperre
+c556b943	vom Autor der Firmware nicFW veröffentlichte Dokumentation (nicsure/nicfw2docs)
+e3af4e9c	Firmware F4HWN Fusion 5.x
+1bead84b	Firmware nicFW880
+ab73dbd5	Firmware nicFW950
+8382cca1	Firmware nicFW
+d36b19e0	zweite Serie

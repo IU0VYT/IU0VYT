@@ -41,6 +41,7 @@ type uvk5xKind int
 const (
 	k5Egz uvk5xKind = iota // egzumer
 	k5F4                   // F4HWN
+	k5F5                   // 4.15: F4HWN «Fusion» 5.x e successive (UV-K1 e UV-K5 V3): memoria nuova, 1024 canali
 	k5CN                   // LOSEHU e derivati (firmware cinesi)
 )
 
@@ -153,6 +154,84 @@ u8 __UNUSED5:1,
 } BUILD_OPTIONS;
 `
 
+// 4.15: F4HWN «Fusion» 5.x per UV-K1 e UV-K5 V3 (driver per CHIRP pubblicato da
+// F4HWN con il firmware: f4hwn.fusion.chirp.v5.9.0.py): 1024 canali, nomi a
+// 0x4000, attributi di due byte (banda e compander; lista di scansione) a 0x8000
+const uvk5f5Format = `
+struct {
+  ul32 freq;
+  ul32 offset;
+  u8 rxcode;
+  u8 txcode;
+  u8 txcodeflag:4,
+  rxcodeflag:4;
+  u8 modulation:4,
+  offsetDir:4;
+  u8 __UNUSED01:1,
+  txLock:1,
+  busyChLockout:1,
+  txpower:3,
+  bandwidth:1,
+  freq_reverse:1;
+  u8 __UNUSED02:4,
+  dtmf_pttid:3,
+  dtmf_decode:1;
+  u8 step;
+  u8 __UNUSED03;
+} channel[1024];
+#seekto 0x004000;
+struct {
+char name[16];
+} channelname[1024];
+#seekto 0x008000;
+struct {
+  u8 __UNUSED04:3,
+     compander:2,
+     band:3;
+  u8 scanlist;
+} ch_attr[1031];
+#seekto 0x00A158;
+struct {
+u8 ENABLE_DTMF_CALLING:1,
+   ENABLE_PWRON_PASSWORD:1,
+   ENABLE_TX1750:1,
+   ENABLE_ALARM:1,
+   ENABLE_VOX:1,
+   ENABLE_VOICE:1,
+   ENABLE_NOAA:1,
+   ENABLE_FMRADIO:1;
+u8 __UNUSED12:1,
+   ENABLE_FEAT_F4HWN_RESCUE_OPS:1,
+   ENABLE_BANDSCOPE:1,
+   ENABLE_AM_FIX:1,
+   ENABLE_FEAT_F4HWN_GAME:1,
+   ENABLE_RAW_DEMODULATORS:1,
+   ENABLE_WIDE_RX:1,
+   ENABLE_FLASHLIGHT:1;
+} BUILD_OPTIONS;
+`
+
+const (
+	uvk5f5MemSize  = 0xB200 // il driver legge blocchi interi oltre 0xB190
+	uvk5f5ProgSize = 0xA171 // zona scritta (canali, nomi, attributi, impostazioni); la taratura a 0xB000 non si scrive
+)
+
+// f4Major: numero principale della versione F4HWN («F4HWN v5.9.0» → 5; 0 se non c'è)
+func f4Major(fw string) int {
+	i := strings.Index(fw, " v")
+	if !strings.HasPrefix(fw, "F4HWN") || i < 0 {
+		return 0
+	}
+	n := 0
+	for _, ch := range fw[i+2:] {
+		if ch < '0' || ch > '9' {
+			break
+		}
+		n = n*10 + int(ch-'0')
+	}
+	return n
+}
+
 // gamme dei firmware egzumer e F4HWN (BANDS_STANDARD / BANDS_WIDE)
 var (
 	uvk5egzBandsStd  = []band{{50000000, 76000000}, {108000000, 600000000}}
@@ -220,7 +299,7 @@ func init() {
 		"microfono/altoparlante (ben inserito). Si legge e si scrive solo con il firmware egzumer; modulazione (FM, AM, USB), passo, " +
 		"compander e liste di scansione di ogni canale si conservano. Driver di CHIRP."
 	f4 := mk("qs-uvk5-f4hwn", "UV-K5 (egzumer + f4hwn)", "", "UVK5RadioEgzumerF4HWN", "Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware F4HWN)", k5F4,
-		func(fw string) bool { return strings.HasPrefix(fw, "F4HWN") }, "F4HWN v4.3")
+		func(fw string) bool { return strings.HasPrefix(fw, "F4HWN") && f4Major(fw) < 5 }, "F4HWN v4.3")
 	f4.NoTxOff = true
 	f4.Powers = []genPower{{"Bassa 1 W (o inferiore, se già impostata)", 1, 2}, {"Media 2 W", 2, 1}, {"Alta 5 W", 5, 0}}
 	f4.Notes = "Firmware libero F4HWN (la radio risponde «F4HWN v4.x»). Accendi la radio, poi collega il cavo al connettore " +
@@ -234,7 +313,13 @@ func init() {
 	cn.Notes = "Firmware cinesi ampliati LOSEHU (dalla 1.18 H/K), LTS e UVE (nomi in caratteri cinesi GB2312). Accendi la radio, poi " +
 		"collega il cavo. Si leggono 256 KiB di memoria (circa 80 secondi) e si scrivono solo i canali e le impostazioni fino a " +
 		"0x1CFF: caratteri, logo, radio FM e il caricatore oltre 0x40000 non si toccano mai. Driver di CHIRP (sperimentale)."
-	genRegister(egz, f4, cn)
+	// 4.15
+	f5 := mk("qs-uvk1-f4hwn5", "UV-K1 & UV-K5 V3 (F4HWN Fusion)", "", "UVK5RadioEgzumerFusion", "Quansheng UV-K1 / UV-K5 V3 (firmware F4HWN Fusion 5.x)", k5F5,
+		func(fw string) bool { return f4Major(fw) >= 5 }, "F4HWN v5.9.0")
+	f5.Slots, f5.NoTxOff, f5.Powers = 1024, true, f4.Powers
+	f5.Notes = "Firmware libero F4HWN «Fusion» dalla versione 5 per UV-K1 e UV-K5 V3: 1024 canali. Accendi la radio, poi collega il cavo. " +
+		"Si scrive come il driver di F4HWN per CHIRP; la taratura non si scrive mai."
+	genRegister(egz, f4, cn, f5)
 }
 
 func uvk5xFmt(k uvk5xKind) string {
@@ -243,6 +328,8 @@ func uvk5xFmt(k uvk5xKind) string {
 		return uvk5egzFormat
 	case k5F4:
 		return uvk5f4Format
+	case k5F5:
+		return uvk5f5Format
 	}
 	return uvk5Format
 }
@@ -251,7 +338,7 @@ func (f uvk5xFam) mem() *bwEl               { return bwMust(uvk5xFmt(f.kind)) }
 func (f uvk5xFam) layout(m *genModel) *bwEl { return f.mem() }
 
 func (f uvk5xFam) attrName() string {
-	if f.kind == k5F4 {
+	if f.kind == k5F4 || f.kind == k5F5 {
 		return "ch_attr"
 	}
 	return "channel_attributes"
@@ -285,7 +372,7 @@ func (f uvk5xFam) wide(img []byte) bool {
 	if f.kind == k5CN {
 		return true
 	}
-	if len(img) < 0x2000 {
+	if len(img) < 0x2000 || f.kind == k5F5 && len(img) < uvk5f5ProgSize {
 		return true
 	}
 	return f.mem().F("BUILD_OPTIONS").F("ENABLE_WIDE_RX").Int(img) > 0
@@ -437,7 +524,7 @@ func (f uvk5xFam) f4PowerKeep(img []byte, i int, sem int) int64 {
 // chirpPower: indice della potenza in CHIRP (valid_power_levels del driver
 // F4HWN: USER, LOW1-LOW5, MID, HIGH = indici 0-7, cioè il valore del campo)
 func (f uvk5xFam) chirpPower(m *genModel, img []byte, i int, sem int) int {
-	if f.kind != k5F4 {
+	if f.kind != k5F4 && f.kind != k5F5 {
 		return m.powerIndex(sem)
 	}
 	return int(f.f4PowerKeep(img, i, sem))
@@ -452,7 +539,7 @@ func (f uvk5xFam) empty(img []byte, i int) bool {
 		return true
 	}
 	// egzumer e LOSEHU (get_memory di uvk5.py): posizione segnata come libera
-	return f.kind != k5F4 && a.F("is_free").Int(img) > 0
+	return f.kind != k5F4 && f.kind != k5F5 && a.F("is_free").Int(img) > 0
 }
 
 func (f uvk5xFam) Get(m *genModel, img []byte, i int) *Chan {
@@ -461,13 +548,14 @@ func (f uvk5xFam) Get(m *genModel, img []byte, i int) *Chan {
 	}
 	r, _, n := f.recs(i)
 	raw := r.F("freq").Int(img)
+	f4 := f.kind == k5F4 || f.kind == k5F5
 	c := &Chan{Rx: raw * 10, Scan: true}
-	if f.kind != k5F4 {
+	if !f4 {
 		c.Rx = uvk5LegalAir(raw * 10)
 	}
 	off := r.F("offset").Int(img)
 	c.Tx = c.Rx
-	if f.kind == k5F4 {
+	if f4 {
 		switch r.F("offsetDir").Int(img) {
 		case 2:
 			c.Tx = c.Rx - off*10
@@ -491,7 +579,16 @@ func (f uvk5xFam) Get(m *genModel, img []byte, i int) *Chan {
 	c.TxTone = uvk5ToneDec(tf, r.F("txcode").Int(img))
 	c.RxTone = uvk5ToneDec(rf, r.F("rxcode").Int(img))
 	c.Narrow = r.F("bandwidth").Int(img) > 0
-	if f.kind == k5F4 {
+	if f.kind == k5F5 && (tf > 3 || rf > 3) {
+		// record mai inizializzato (_get_tone del driver)
+		if tf > 3 {
+			c.TxTone = ""
+		}
+		if rf > 3 {
+			c.RxTone = ""
+		}
+	}
+	if f4 {
 		c.Power = f4PowerSem(r.F("txpower").Int(img))
 	} else {
 		switch r.F("txpower").Int(img) {
@@ -514,7 +611,7 @@ func (f uvk5xFam) Get(m *genModel, img []byte, i int) *Chan {
 
 func (f uvk5xFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	switch f.kind {
-	case k5F4:
+	case k5F4, k5F5:
 		return f.setF4(m, img, i, c)
 	}
 	return f.setEgzCN(m, img, i, c)
@@ -699,14 +796,18 @@ func (f uvk5xFam) setF4(m *genModel, img []byte, i int, c *Chan) error {
 			pttid = 0
 		}
 		frev = r.F("freq_reverse").Int(img)
-		if f.mem().F("BUILD_OPTIONS").F("ENABLE_DTMF_CALLING").Int(img) > 0 {
+		if f.kind == k5F4 && f.mem().F("BUILD_OPTIONS").F("ENABLE_DTMF_CALLING").Int(img) > 0 {
 			dtmf = r.F("dtmf_decode").Int(img)
 		}
-		if scr = r.F("scrambler").Int(img); scr >= 11 {
-			scr = 0
-		}
 		comp = a.F("compander").Int(img)
-		scan = a.F("is_scanlistx").Int(img)
+		if f.kind == k5F5 {
+			scan = a.F("scanlist").Int(img)
+		} else {
+			if scr = r.F("scrambler").Int(img); scr >= 11 {
+				scr = 0
+			}
+			scan = a.F("is_scanlistx").Int(img)
+		}
 		if step = r.F("step").Int(img); step >= uvk5xSteps {
 			step = 0
 		}
@@ -721,13 +822,25 @@ func (f uvk5xFam) setF4(m *genModel, img []byte, i int, c *Chan) error {
 			mod = 1
 		}
 	}
-	a.F("is_scanlistx").SetInt(img, 7)
-	a.F("compander").SetInt(img, 0)
-	a.F("band").SetInt(img, 7)
-	if c == nil {
-		r.Fill(img, 0xFF)
-		n.Fill(img, 0xFF)
-		return nil
+	if f.kind == k5F5 {
+		a.F("scanlist").SetInt(img, 0)
+		a.F("compander").SetInt(img, 0)
+		if c == nil {
+			// posizione libera: canale FF, nome di spazi, attributi FF FF (come il driver)
+			r.Fill(img, 0xFF)
+			n.Fill(img, 0x20)
+			a.Fill(img, 0xFF)
+			return nil
+		}
+	} else {
+		a.F("is_scanlistx").SetInt(img, 7)
+		a.F("compander").SetInt(img, 0)
+		a.F("band").SetInt(img, 7)
+		if c == nil {
+			r.Fill(img, 0xFF)
+			n.Fill(img, 0xFF)
+			return nil
+		}
 	}
 	tt, err := genToneParse(c.TxTone)
 	if err != nil {
@@ -780,8 +893,12 @@ func (f uvk5xFam) setF4(m *genModel, img []byte, i int, c *Chan) error {
 	r.F("dtmf_pttid").SetInt(img, pttid)
 	r.F("freq_reverse").SetInt(img, frev)
 	r.F("dtmf_decode").SetInt(img, dtmf)
-	r.F("scrambler").SetInt(img, scr)
 	a.F("compander").SetInt(img, comp)
+	if f.kind == k5F5 {
+		a.F("scanlist").SetInt(img, scan)
+		return nil
+	}
+	r.F("scrambler").SetInt(img, scr)
 	a.F("is_scanlistx").SetInt(img, scan)
 	return nil
 }
@@ -840,8 +957,11 @@ func (s *uvk5Sess) cnWriteMem(off int, data []byte) error {
 }
 
 func (f uvk5xFam) memSize() int {
-	if f.kind == k5CN {
+	switch f.kind {
+	case k5CN:
 		return uvk5cnMemSize
+	case k5F5:
+		return uvk5f5MemSize
 	}
 	return uvk5MemSize
 }
@@ -888,8 +1008,11 @@ func (f uvk5xFam) DownloadMeta(ctx context.Context, m *genModel, port string, pr
 // zone scritte: i canali e le impostazioni fino a 0x1CFF; con F4HWN anche le
 // sue impostazioni a 0x1FF2-0x1FFF (do_upload del driver F4HWN)
 func (f uvk5xFam) writeRanges() [][2]int {
-	if f.kind == k5F4 {
+	switch f.kind {
+	case k5F4:
 		return [][2]int{{0, uvk5ProgSize}, {0x1FF2, uvk5MemSize}}
+	case k5F5:
+		return [][2]int{{0, uvk5f5ProgSize}}
 	}
 	return [][2]int{{0, uvk5ProgSize}}
 }
@@ -899,7 +1022,7 @@ func (f uvk5xFam) Upload(ctx context.Context, m *genModel, port string, img []by
 		if f.kind == k5CN {
 			return "", fmt.Errorf("l'immagine è di %d byte: per questi firmware deve essere di %d byte (leggi prima la radio)", len(img), uvk5cnMemSize)
 		}
-		if len(img) < uvk5MemSize {
+		if len(img) < uvk5MemSize || f.kind == k5F5 {
 			return "", fmt.Errorf("immagine della memoria incompleta")
 		}
 	}
@@ -929,6 +1052,9 @@ func (f uvk5xFam) Upload(ctx context.Context, m *genModel, port string, img []by
 			end := min(a+blk, len(img))
 			if f.kind == k5F4 {
 				end = min(a+blk, uvk5MemSize) // come il driver: il blocco finisce con la memoria
+			}
+			if f.kind == k5F5 {
+				end = min(a+blk, rg[1]) // l'ultimo blocco finisce con la zona scritta
 			}
 			if f.kind == k5CN {
 				err = s.cnWriteMem(a, img[a:end])

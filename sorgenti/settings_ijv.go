@@ -144,12 +144,18 @@ func ijvSetTable(kind ijvKind) *setTable {
 		src = "modulo CHIRP 3.60 pubblicato da IJV (firmware V3)"
 	}
 	t := &setTable{Class: "IJV-" + kind.family(), Size: ijvFam{kind}.imgSize(), Source: src}
+	return setTableAdd(t, ijvSetDefs(kind))
+}
+
+// setTableAdd (4.15): aggiunge alla tabella le voci descritte in modo semplice
+// (scelte, interruttori, testi), usato anche per il firmware nicFW
+func setTableAdd(t *setTable, defs []ijvSetDef) *setTable {
 	ascii := map[string]int{}
 	for c := 0x20; c <= 0x7E; c++ {
 		ascii[string(rune(c))] = c
 	}
 	pad := 0
-	for _, b := range ijvSetDefs(kind) {
+	for _, b := range defs {
 		sd := setDef{Key: b.key, Group: b.group, Label: b.label, ItLabel: b.label, ItDesc: b.desc, ItWarn: b.warn}
 		if b.str > 0 {
 			offs := make([]int, b.str)

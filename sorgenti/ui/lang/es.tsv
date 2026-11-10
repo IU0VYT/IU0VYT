@@ -5046,7 +5046,6 @@ ef53c837	IJV-{0}
 1c75d52b	firmware IJV V4
 1b75d398	firmware IJV V5
 7c2fdf6f	{0} Cada pestaña lee y escribe solo su propio firmware: original de Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (controlador de CHIRP), F4HWN (controlador de armel para CHIRP, con los ajustes F4HWN), OSFW (controlador de CHIRP) o los firmwares chinos LOSEHU / LTS / UVE (controlador de CHIRP, nombres chinos). Si abres la pestaña equivocada el programa lee la versión del firmware, se detiene sin escribir e indica la pestaña correcta; «Identificar» la encuentra solo. Firmware: archivos .bin de Quansheng (p. ej. k5_v2.01.26_publish.bin) con el cargador de la radio (encendida manteniendo pulsado el PTT); el programa comprueba que el firmware sea para el tipo de cargador de la radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). Quansheng protege las descargas con una contraseña que proporciona el vendedor. También se gestiona IJV (V3 de 200 o 999 canales en la UV-K5 clásica; V4, V5 y V6 en la UV-K5 V3: banco elegido en la radio, canales, grupos y ajustes principales).
-5f4e346a	{0} Firmware original: solo canales (CHIRP aún no gestiona los ajustes) y solo con la versión 7.03. Firmware IJV V4, V5 y V6: canales del banco elegido en la radio, nombres de los grupos y ajustes principales (fichas «firmware IJV»).
 02b27e38	IJV V6
 4b2a8174	Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)
 81db67f1	Firmware IJV V6 (modular) para UV-K5 V3 y UV-K1. {0}Enlace de datos de la V6 (DTR y RTS bajos): si la radio dice que falta el enlace de datos, actualízala con FLASH V6 de RadioManager. Se leen y escriben los 500 canales del banco elegido en la radio, con nombres de los grupos y ajustes principales, en sectores de 4 KiB releídos y verificados uno a uno; nunca las calibraciones, la licencia, los módulos, las voces ni los archivos de los módulos. Módulos y firmware quedan en RadioManager de IJV.
@@ -5161,3 +5160,150 @@ d487a1bd	frecuencia {0} MHz fuera de los límites de la radio
 f5084846	la radio es el otro modelo de la serie: abre la ficha «Icom {0}»
 e6282e24	la imagen no es de una {0}
 a7bdcadb	subtipo 3
+024bedf4	la radio no gestiona este modo digital
+0c8c64ea	Los canales son analógicos o digitales D-STAR (columna «Modo»); de los canales D-STAR se conservan los indicativos y el código digital.
+fb482f3c	La copia parte de la radio (modo «CLONE»): las instrucciones están en la ventana del cable.
+d3450e14	Radio profesional: se programa con el programa KPG de Kenwood, reservado a los distribuidores; el protocolo no es público.
+46b77f34	500 canales con nombres de 16 caracteres, copia rápida.{0}
+a57318f1	900 canales con nombres de 16 caracteres, analógicos o digitales C4FM (columna «Modo»).{0}
+5cfb1ae7	999 canales con nombres de 6 caracteres.{0}
+eeeb3e52	1000 canales con nombres de 16 caracteres, cable USB (la radio aparece como puerto serie).{0}
+16b721a5	Firmware libre F4HWN Fusion desde la versión 5: 1024 canales (ficha «firmware F4HWN Fusion 5.x»).
+435d1e5f	Firmware libre de nicsure: canales escritos desde cero a partir de la documentación publicada por el autor y verificados con la radio simulada (por verificar con una radio real). La calibración de la radio no se escribe nunca.
+e39bdf53	ID-51 Plus
+b9377b94	ID-51A Plus
+38569eb0	ID-51E Plus
+b2aea350	ID-51 50th Anniversary
+af60a5b3	ID-51 Plus2
+3857a652	ID-51A Plus2
+325b86a6	ID-51E Plus2
+b9069b70	{0} Tribanda 50/144/430 MHz con receptor de banda ancha: 500 canales con nombres de 6 caracteres.
+e5788f1f	{0} 900 canales con nombres de 6 caracteres; el modo digital C4FM de cada canal queda como está ajustado en la radio.{1}
+9b0bc80c	Kenwood
+632708c2	Página Kenwood de la TH-D75E
+2e4583af	Sitio de Kenwood
+9a76efe2	{0} 1000 canales con nombres de 8 caracteres, cable USB.
+b8e61191	ProTalk TK-3701D
+452bf662	Página Kenwood (PMR446)
+27700ca5	ProTalk TK-3501
+8f1177f3	PKT-300E
+aa842c64	PKT-300
+f72256ec	UBZ-LJ9
+91e37f04	UBZ-LJ9SET
+d5e7f8fb	PMR446 analógico de uso libre: los canales se eligen en la radio, no hay programa de programación.
+44c10e89	Portátiles DMR Kenwood
+badf093c	TD-H3 (firmware nicFW)
+6ec3b7f8	TD-H3 nicFW
+56a2991a	Documentación de nicFW 2.x (nicsure)
+7a651194	Sitio de nicsure
+d4a810ff	RT-880 (no G)
+d7ffe954	iRadio UV-98
+539599ba	Documentación de nicFW880 (nicsure)
+bd2f0310	Con el firmware original de Radtel la RT-880 (sin GPS) se programa con el programa de Radtel: su protocolo aún no está gestionado (la RT-880G sí, con su ficha). {0}
+4a49f494	RT-880 / RT-880G (firmware nicFW880)
+9ab35be3	RT-880 nicFW
+33526df2	RT-880G nicFW
+e48ce43e	RT-950 Pro (firmware nicFW950)
+429f8f4e	RT-950 Pro nicFW
+34fa366d	Documentación de nicFW880 / 950 (nicsure)
+880016c5	Firmware F4HWN Fusion para UV-K5 V3 (armel)
+bde55f43	Firmware F4HWN Fusion (armel)
+0f0af4d1	{0} Firmware original: solo canales (CHIRP aún no gestiona los ajustes) y solo con la versión 7.03. Firmware IJV V4, V5 y V6: canales del banco elegido en la radio, nombres de los grupos y ajustes principales (fichas «firmware IJV»).{1}
+a936d75d	Icom Inc.
+ecbb6013	Icom IC-E90 / IC-T90
+c21daaea	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()*+-,/|=
+0db26069	500 canales (de 0 a 499) con nombres de 6 caracteres; receptor de banda ancha. {0}El modo (FM, FM ancha, AM) sigue la frecuencia. Controlador de CHIRP.
+729fa53d	la radio no puede memorizar un desplazamiento de {0} Hz (múltiplos de 5 o de 6,25 kHz)
+7839b844	Icom Inc.A8
+ad31bcee	Icom Inc.DA
+aedc7408	Cable de datos Icom OPC-2350LU (USB) u OPC-2218LU, en la toma «DATA»; la radio se enciende normalmente y durante la copia muestra «CLONE». Copia rápida a 38400 baudios.
+2257eeef	500 canales {0} (de 0 a 499) con nombres de 16 caracteres, analógicos o D-STAR. {1}Un canal D-STAR nuevo nace con «CQCQCQ». Controlador de CHIRP.
+6c223c47	VHF/UHF (banda aérea en AM)
+514eb061	CQCQCQ
+0de6d70b	Alta (máxima)
+88a00d13	Media (mitad)
+d5db917d	Baja (un quinto)
+146afa3f	Potencia: alta (el máximo), media (mitad) o baja (un quinto); una potencia ya ajustada en la radio queda como está.
+8926693f	La calibración de la radio no se escribe nunca; antes de escribir, el programa vuelve a leer la radio y escribe solo lo que ha cambiado. Según la documentación publicada por el autor del firmware.
+4c2258d6	nicFW 2.x
+cba883fa	TIDRADIO TD-H3 (firmware nicFW)
+f1141652	TD-H3 con el firmware libre nicFW 2.x (versiones 2.0x y 2.5x): 198 canales con nombres de 12 caracteres, 38400 baudios, radio encendida. {0}{1}
+ff211be1	la memoria no es la del firmware nicFW 2.x
+0104eb8c	la radio no puede memorizar la frecuencia de transmisión {0} MHz
+8cf36282	la radio no tiene el firmware nicFW 2.x (número mágico {0}{1})
+f43a6ffd	Leyendo la radio antes de escribir…
+ce16cafd	la radio tiene otra versión del firmware nicFW distinta de la imagen: lee la radio y pasa los canales a esa lectura
+d7c84c5d	{0} con el firmware libre nicFW880 / nicFW950: 999 canales con nombres de hasta 30 caracteres. Cable de programación de la radio, 38400 baudios, radio encendida. Después de la escritura la radio se reinicia. {1}{2}
+af95c12e	Radtel RT-880 / RT-880G (firmware nicFW880)
+d95de8c6	Radtel RT-880 y RT-880G (e iRadio UV-98)
+91fd00ac	Radtel RT-950 Pro (firmware nicFW950)
+82ebbc1d	Radtel RT-950 Pro
+dbc6ef8c	TH-D72 (clone mode)
+e5b0d8dd	Kenwood TH-D72A / TH-D72E
+beac0f40	1000 canales (de 0 a 999) con nombres de 8 caracteres. {0}Subtonos Kenwood (faltan 159,8 165,5 171,3 177,3 183,5 189,9 196,6 y 199,5 Hz). Controlador de CHIRP.
+56136e41	la radio no tiene esta combinación de tonos (códigos DCS distintos en los dos sentidos o invertidos)
+bc98c743	Cable USB de la radio (la radio aparece como puerto serie); durante la copia la radio muestra «PROG MCP».
+c6a5c2d5	1000 canales (de 0 a 999) con nombres de 16 caracteres, analógicos o D-STAR. {0}Un canal D-STAR nuevo nace con «CQCQCQ». Controlador de CHIRP.
+6365ac36	TH-D74 (clone mode)
+b831a835	Kenwood TH-D74A / TH-D74E
+e8ad684d	Kenwood TH-D75A / TH-D75E
+a0e87eb4	la radio no tiene esta combinación de tonos (nunca solo el tono en recepción ni códigos invertidos)
+c2efd81a	la radio es otro modelo ({0})
+274c56f2	0M PROGRAM
+6ca36cb4	UV-K1 & UV-K5 V3 (F4HWN Fusion)
+0592f4f9	Quansheng UV-K1 / UV-K5 V3 (firmware F4HWN Fusion 5.x)
+722e44a6	F4HWN v5.9.0
+e902a558	Firmware libre F4HWN «Fusion» desde la versión 5 para UV-K1 y UV-K5 V3: 1024 canales. Enciende la radio y luego conecta el cable. Se escribe como el controlador de F4HWN para CHIRP; la calibración no se escribe nunca.
+056bfdb5	[V/M] («-WAIT-»)
+c50cf2a6	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]u_{0}{1}{2}{3}{4}{5}{6}{7}{8}$%{9}*#.|=\o@
+a5351dc0	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/{0}[](){}{1}{2}_{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}*{16}{17},'|
+10f76a9c	La copia parte de la radio: apágala, conecta el cable a la toma {0} y enciéndela manteniendo pulsado {1} (aparece «CLONE»). Para leer: inicia la lectura aquí y luego pulsa {2} en la radio. Para escribir: pulsa {3} en la radio (aparece «-WAIT-») y luego inicia la escritura aquí; al final la radio no confirma, el resultado se ve en su pantalla.
+b69d230d	999 canales con nombres de 6 caracteres, cable de programación Yaesu, 19200 baudios.
+357d7fd6	Yaesu VX-6R / VX-6E
+ea03477f	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]_$%*#.|=\@
+ce744b54	Mínima 0,3 W
+297fe1ba	Yaesu VX-3R / VX-3E
+d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
+4fc7572e	Alta 1,5 W
+fa4647fb	Baja 0,1 W
+d9bcac02	la radio no puede memorizar la frecuencia {0} MHz
+dc9c52ec	Esperando a la radio: inicia el envío en la radio…
+8808a930	la radio no ha enviado nada: ponla en modo «CLONE» y pulsa {0} después de iniciar la lectura
+afdae93d	la radio no confirma los datos: ponla en modo «CLONE» y pulsa {0} antes de iniciar la escritura
+c522b72a	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz.,:;*#_-/&()@!?^
+c407fae5	DATA
+55b67acf	Tonos admitidos: subtono en transmisión o en los dos sentidos, el mismo código DCS en los dos sentidos. Controlador de CHIRP.
+1e34eed5	Media 2,5 W (L3)
+bbe720f8	Baja 1 W (L2)
+630ca8b6	Mínima (L1)
+df92ae0c	900 canales con nombres de 16 caracteres, analógicos o digitales C4FM (un canal digital nuevo nace en «AMS»), cable de datos USB, 38400 baudios. {0}{1}
+648aab46	[RECEIVE] («-WAIT-»)
+801ff122	Yaesu FT-70DR / FT-70DE
+897c92a5	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ .,:;*#_-/&()@!?^
+a63400d4	[MODE] («-WAIT-»)
+1821b2ee	900 canales con nombres de 6 caracteres, cable de datos USB, 38400 baudios. La copia parte de la radio: quita la batería y vuelve a ponerla manteniendo pulsados [AMS] y la tecla de encendido (aparece «ADMS»); para leer pulsa [BAND] después de iniciar la lectura, para escribir pulsa [MODE] («-WAIT-») antes de iniciar la escritura. Un canal nuevo nace en FM analógica. {0}
+4056f37e	Yaesu FT1DR / FT1DE
+bbbaceb3	[Dx] («-WAIT-»)
+66d6893e	Yaesu FT2DR / FT2DE
+b11557d4	Yaesu FT2DR / FT2DE (segunda serie)
+61483556	Yaesu FT3DR / FT3DE
+9d6379ee	Yaesu FT5DR / FT5DE
+17921f64	F4HWN v{0}
+064b5b01	Firmware libre F4HWN Fusion: después de la actualización, los canales y los ajustes se leen con la ficha «Quansheng UV-K1 / UV-K5 V3 (firmware F4HWN Fusion 5.x)»
+0f59247c	Mínima
+48573d19	Doble escucha (Dual Watch)
+c37e6b8b	Mostrar el tono recibido
+86a5ea41	Copiar el tono recibido a la transmisión
+70b0b3c1	Control del tono recibido
+945242e3	Icono
+7a9f4017	Porcentaje
+06f13811	Indicador de batería
+4d79a23b	Brillo de la pantalla
+62130d36	Colores de la pantalla invertidos
+56af356e	Bloqueo de teclas
+c556b943	documentación publicada por el autor del firmware nicFW (nicsure/nicfw2docs)
+e3af4e9c	firmware F4HWN Fusion 5.x
+1bead84b	firmware nicFW880
+ab73dbd5	firmware nicFW950
+8382cca1	firmware nicFW
+d36b19e0	segunda serie

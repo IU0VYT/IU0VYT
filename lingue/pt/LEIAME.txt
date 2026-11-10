@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.14.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.15.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,22 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.15.0:
+- D-STAR E C4FM: canais por cabo para os portáteis digitais de radioamador. Icom ID-31,
+  ID-51, ID-51 Plus, ID-51 Plus2 e IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D, FT1D, FT2D,
+  FT3D e FT5D; Kenwood TH-D72, TH-D74 e TH-D75 (marca nova, 47 no total). A coluna
+  «Modo» mostra «D-STAR» ou «C4FM». Definições para IC-E90, VX-6, VX-3, FT-70D, FT1D,
+  FT2D, FT3D, FT5D e TH-D72. Nos Yaesu a cópia parte do rádio: as instruções estão na
+  janela do cabo.
+- FIRMWARE LIVRE: nicFW 2.x do TIDRADIO TD-H3 (canais e definições principais), nicFW880
+  / nicFW950 dos Radtel RT-880, RT-880G e RT-950 Pro (canais), F4HWN Fusion 5.x dos
+  Quansheng UV-K1 e UV-K5 V3 (1024 canais e definições). Com o nicFW a calibração do
+  rádio nunca é escrita.
+- Kenwood: a galeria inclui também os portáteis PMR446 e DMR/NXDN entre os não
+  compatíveis; só se programam com o programa KPG reservado aos revendedores.
+- Galeria: 537 modelos de 47 marcas (483 com canais, 419 com definições).
+- Definições: um campo de texto nunca usado lê-se vazio em vez de dar erro; um valor que
+  não mudou não volta a ser escrito.
 Novidades da 4.14.0:
 - YAESU E ICOM: duas marcas novas (46 ao todo) e mais 13 rádios, com canais por cabo e
   ficheiros .img compatíveis com o CHIRP. Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R, FT-65E e

@@ -47,6 +47,7 @@ const BRAND_COLOR = {
   Wouxun: '#d6336c', AnyTone: '#1c7ed6', QYT: '#f76707', Rugged: '#795548', Baojie: '#099268', MTC: '#ae3ec9',
   Zartek: '#e64980', Ruyage: '#74b816', TDXone: '#4263eb',
   Yaesu: '#0d5c9e', Icom: '#b3261e', // 4.14
+  Kenwood: '#1a1a1a', // 4.15
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];

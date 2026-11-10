@@ -312,7 +312,8 @@ func TestUniversalChirpOpens(t *testing.T) {
 		}
 		p := filepath.Join(t.TempDir(), m.ID+".img")
 		_ = os.WriteFile(p, out, 0o644)
-		mine := genChans(m, loadImg(t, p))
+		img := loadImg(t, p)
+		mine := genChans(m, img)
 		ref := chirpDecode(t, m, p)
 		ci, _ := m.Fam.(interface {
 			chirpInvalid(*genModel, *Chan) bool
@@ -324,7 +325,13 @@ func TestUniversalChirpOpens(t *testing.T) {
 				n++
 				continue
 			}
-			if d := cmpChan(m, i+m.First, mine[i], ref[i]); d != "" {
+			// 4.15: indice della potenza come nelle altre prove di confronto (il
+			// firmware F4HWN ha otto potenze: la tabella è nel driver)
+			pi := -1
+			if mine[i] != nil {
+				pi = chirpPowerOf(m, img, i, mine[i].Power)
+			}
+			if d := cmpChanP(m, i+m.First, mine[i], ref[i], pi); d != "" {
 				t.Errorf("%s: %s", m.ID, d)
 			}
 			if mine[i] != nil {

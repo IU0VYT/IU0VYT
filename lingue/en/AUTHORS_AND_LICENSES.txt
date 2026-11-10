@@ -146,6 +146,21 @@ with revision 0a9e92c of 06/11/2026). Authors stated in the CHIRP files used:
   drivers/icf.py, drivers/icv86.py,
   drivers/icv80.py, drivers/icx8x.py,
   drivers/ict10.py                          Copyright 2008 Dan Smith
+  4.15 (CHIRP 337b385, 09/11/2026), D-STAR / C4FM / Kenwood:
+  drivers/id31.py, drivers/id51.py          Copyright 2012 Dan Smith
+  drivers/id51plus.py                       Copyright 2015 Eric Dropps
+  drivers/icx90.py                          Copyright 2018-2020 Jaroslav Škarvada
+  drivers/yaesu_clone.py, drivers/vx6.py    Copyright 2010 Dan Smith
+  drivers/vx3.py                            Copyright 2011 Rick Farina
+  drivers/ft70.py                           Copyright 2010 Dan Smith, 2017 Nicolas Pike
+  drivers/ft1d.py                           Copyright 2010 Dan Smith, 2014 Angus
+                                            Ainslie, 2023, 2025 Declan Rieb
+  drivers/ft2d.py                           Copyright 2010 Dan Smith, 2017 Declan Rieb
+  drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
+                                            Ainslie
+  drivers/thd74.py                          CHIRP
+  F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
+  egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
 FIRMWARE UPDATE PROTOCOLS AND DMR SETTINGS (4.10)
 Rewritten from scratch in Go from the descriptions and the code of these free programs
@@ -184,6 +199,8 @@ Thanks to the authors of CHIRP, to armel F4HWN, to M7OCM, to JuantAldea, to v0l
 (radio_tool), to the OpenGD77 project, to Hannes Matuschek DM3MAT (qdmr) and to Serge
 Vakulenko KK6ABQ.
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
+4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 
 QUANSHENG UV-K5 FIRMWARE UPDATE (4.1)
 The format of Quansheng's .bin files and the protocol of the UV-K5 loader are
@@ -231,6 +248,13 @@ notes published by JA van Hernen (PE1HVH) for his CHIRP driver of the RT-950 Pro
 (https://github.com/pe1hvh/chirp_radtel_rt950pro, MIT license; the radio's answer to
 the «F» command is the same with firmware 0.18 and 0.29) and in CHIRP report 12180
 were also consulted: no code of those projects is included.
+
+NICFW FIRMWARE (4.15): nicFW is by nicsure (https://nicsure.co.uk). The channel memory,
+the settings and the link commands come, for interoperability, from the documentation
+published by the author (https://github.com/nicsure/nicfw2docs,
+https://github.com/nicsure/nicFW880_950_Docs). No code, program or firmware by nicsure
+is included: drv_nicfw.go and settings_nicfw.go are written from scratch. Independent
+program, not affiliated with nicsure.
 
 ZONE NAMES (4.11)
 The format of the zone names is derived, for interoperability, from the code of the

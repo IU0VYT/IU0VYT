@@ -36,6 +36,63 @@ type icomOpt struct {
 	ranges [][3]int // zone da scrivere: inizio, fine, lunghezza dei blocchi
 	twice  bool     // la radio vuole l'identificazione due volte prima della scrittura
 	fast   bool     // copia veloce: dopo l'identificazione si passa a 38400 baud
+	// 4.15: blocchi «grezzi» (ID-51 Plus2): byte così come sono, con quelli da FA a
+	// FF scritti come FF seguito dalle 4 cifre basse, al posto delle cifre esadecimali
+	raw bool
+	// 4.15: la radio scambia i dati con il bit più alto di ogni byte rovesciato
+	flip bool
+}
+
+// icomPack: dati di un blocco (indirizzo, lunghezza, dati, somma) come viaggiano
+// sul cavo
+func icomPack(o *icomOpt, d []byte) []byte {
+	if !o.raw {
+		return []byte(strings.ToUpper(hex.EncodeToString(d)))
+	}
+	out := make([]byte, 0, len(d)+8)
+	for _, b := range d {
+		if b > 0xF9 {
+			out = append(out, 0xFF, b&0x0F)
+		} else {
+			out = append(out, b)
+		}
+	}
+	return out
+}
+
+// icomUnpack: il contrario di icomPack; false se i dati non sono validi
+func icomUnpack(o *icomOpt, p []byte) ([]byte, bool) {
+	if !o.raw {
+		d := make([]byte, len(p)/2)
+		if _, err := hex.Decode(d, p[:len(d)*2]); err != nil {
+			return nil, false
+		}
+		return d, true
+	}
+	d := make([]byte, 0, len(p))
+	for i := 0; i < len(p); i++ {
+		b := p[i]
+		if b == 0xFF {
+			if i++; i >= len(p) {
+				return nil, false
+			}
+			b = 0xF0 | p[i]
+		}
+		d = append(d, b)
+	}
+	return d, true
+}
+
+// icomFlip: bit più alto di ogni byte rovesciato (solo con flip)
+func icomFlip(o *icomOpt, b []byte) []byte {
+	if !o.flip {
+		return b
+	}
+	out := make([]byte, len(b))
+	for i, x := range b {
+		out[i] = x ^ 0x80
+	}
+	return out
 }
 
 const (
@@ -218,8 +275,8 @@ func icomDownload(ctx context.Context, port string, baud int, o *icomOpt, prog P
 		if cmd != icomDat {
 			continue
 		}
-		d := make([]byte, len(p)/2)
-		if _, err := hex.Decode(d, p[:len(d)*2]); err != nil || len(d) < alen+2 {
+		d, valid := icomUnpack(o, p)
+		if !valid || len(d) < alen+2 {
 			return nil, rErr("blocco della radio non valido (0x%04X)", addr)
 		}
 		a := 0
@@ -241,7 +298,7 @@ func icomDownload(ctx context.Context, port string, baud int, o *icomOpt, prog P
 		return nil, rErr("lettura incompleta: %d byte su %d", addr, o.size)
 	}
 	prog(o.size, o.size, "Lettura completata")
-	return img, nil
+	return icomFlip(o, img), nil
 }
 
 func icomUpload(ctx context.Context, port string, baud int, o *icomOpt, img []byte, prog Progress) error {
@@ -270,6 +327,7 @@ func icomUpload(ctx context.Context, port string, baud int, o *icomOpt, img []by
 	if o.size >= 0x10000 {
 		alen = 4
 	}
+	img = icomFlip(o, img)
 	for _, rg := range o.ranges {
 		for a := rg[0]; a < rg[1]; a += rg[2] {
 			n := rg[2]
@@ -284,7 +342,7 @@ func icomUpload(ctx context.Context, port string, baud int, o *icomOpt, img []by
 			}
 			d = append(d, img[a:a+n]...)
 			d = append(d, icomSum(d))
-			frame := icomFrame(icomPC, icomRadio, icomDat, []byte(strings.ToUpper(hex.EncodeToString(d))))
+			frame := icomFrame(icomPC, icomRadio, icomDat, icomPack(o, d))
 			if err := s.sendFrame(frame); err != nil {
 				return err
 			}

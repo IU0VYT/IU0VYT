@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.14.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.15.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,23 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.15.0 :
+- D-STAR ET C4FM : canaux par câble pour les portatifs radioamateurs numériques. Icom
+  ID-31, ID-51, ID-51 Plus, ID-51 Plus2 et IC-E90/IC-T90 ; Yaesu VX-6, VX-3, FT-70D,
+  FT1D, FT2D, FT3D et FT5D ; Kenwood TH-D72, TH-D74 et TH-D75 (nouvelle marque, 47 en
+  tout). La colonne « Mode » indique « D-STAR » ou « C4FM ». Réglages pour IC-E90, VX-6,
+  VX-3, FT-70D, FT1D, FT2D, FT3D, FT5D et TH-D72. Sur les Yaesu la copie est lancée
+  depuis la radio : les instructions sont dans la fenêtre du câble.
+- FIRMWARES LIBRES : nicFW 2.x de la TIDRADIO TD-H3 (canaux et réglages principaux),
+  nicFW880 / nicFW950 des Radtel RT-880, RT-880G et RT-950 Pro (canaux), F4HWN Fusion
+  5.x des Quansheng UV-K1 et UV-K5 V3 (1024 canaux et réglages). Avec nicFW l'étalonnage
+  de la radio n'est jamais écrit.
+- Kenwood : la galerie liste aussi les portatifs PMR446 et DMR/NXDN parmi les non
+  compatibles ; ils se programment uniquement avec le logiciel KPG réservé aux
+  revendeurs.
+- Galerie : 537 modèles de 47 marques (483 avec canaux, 419 avec réglages).
+- Réglages : un champ de texte jamais utilisé se lit vide au lieu de donner une erreur ;
+  une valeur non modifiée n'est pas réécrite.
 Nouveautés de la 4.14.0 :
 - YAESU ET ICOM : deux nouvelles marques (46 en tout) et 13 radios de plus, avec les
   canaux par câble et des fichiers .img compatibles avec CHIRP. Yaesu FT-4XR, FT-4XE,

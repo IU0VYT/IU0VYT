@@ -217,6 +217,10 @@ func analyzeK5(name, origin string, raw []byte) *fwImage {
 	// 4.9: canali e impostazioni dei firmware liberi (schede egzumer, F4HWN, LOSEHU)
 	up := strings.ToUpper(vs)
 	switch {
+	case strings.Contains(up, "F4HWN") && f4Major("F4HWN v"+strings.TrimLeft(vs[strings.Index(up, "F4HWN")+5:], " vV")) >= 5:
+		// 4.15: F4HWN «Fusion» dalla versione 5 (UV-K1 e UV-K5 V3): memoria nuova
+		add("ok", "Firmware libero F4HWN Fusion: dopo l'aggiornamento canali e impostazioni si leggono con la scheda «Quansheng UV-K1 / UV-K5 V3 (firmware F4HWN Fusion 5.x)»")
+		img.Info.Models = []string{"qs-uvk1-f4hwn5"}
 	case strings.Contains(up, "F4HWN"):
 		add("ok", "Firmware libero F4HWN: dopo l'aggiornamento canali e impostazioni si leggono con la scheda «Quansheng UV-K5 (firmware F4HWN)»")
 		img.Info.Models = []string{"qs-uvk5-f4hwn"}

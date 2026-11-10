@@ -5046,7 +5046,6 @@ ef53c837	IJV-{0}
 1c75d52b	IJV V4 固件
 1b75d398	IJV V5 固件
 7c2fdf6f	{0} 每个标签页只读写对应的固件：Quansheng 原厂固件（k5_2.01、3.00、4.00、5.00、7.00/7.01、1.02、“1o11”）、egzumer（CHIRP 驱动）、F4HWN（armel 为 CHIRP 编写的驱动，含 F4HWN 设置）、OSFW（CHIRP 驱动）或中文固件 LOSEHU / LTS / UVE（CHIRP 驱动，中文名称）。如果打开了错误的标签页，程序会读取固件版本，停止且不写入，并提示正确的标签页；“识别”可自动找到它。固件：Quansheng 的 .bin 文件（如 k5_v2.01.26_publish.bin），通过电台的引导程序写入（按住 PTT 开机）；程序会检查固件是否适用于电台的引导程序类型（UV-K5、UV-K5(8)/UV-K6 或 UV-5R Plus）。Quansheng 的下载需要经销商提供的密码。 也支持 IJV（经典 UV-K5 上 200 或 999 信道的 V3；UV-K5 V3 上的 V4、V5 和 V6：电台上选定的存储库、信道、分组和主要设置）。
-5f4e346a	{0} 原厂固件：仅支持信道（CHIRP 尚不支持设置），且仅适用于版本 7.03。IJV V4、V5 和 V6 固件：电台上选定存储库的信道、分组名称和主要设置（“IJV 固件”卡片）。
 02b27e38	IJV V6
 4b2a8174	Quansheng UV-K5 V3 / UV-K1（IJV V6 固件）
 81db67f1	用于 UV-K5 V3 和 UV-K1 的 IJV V6 固件（模块化）。{0}V6 数据连接（DTR 和 RTS 低电平）：如果电台提示缺少数据连接，请用 RadioManager 的 FLASH V6 更新。以 4 KiB 扇区读写电台上选定存储库的 500 个信道以及分组名称和主要设置，每个扇区都会重新读取并校验；从不写入校准、许可、模块、语音和模块文件。模块和固件仍由 IJV 的 RadioManager 管理。
@@ -5161,3 +5160,150 @@ d487a1bd	频率 {0} MHz 超出电台的范围
 f5084846	电台是该系列的另一个型号：请打开“Icom {0}”卡片
 e6282e24	该映像不是 {0} 的
 a7bdcadb	子类型 3
+024bedf4	电台不支持这种数字模式
+0c8c64ea	信道为模拟或数字 D-STAR（“模式”列）；D-STAR 信道的呼号和数字码会保留。
+fb482f3c	复制由电台发起（“CLONE”模式）：说明在线缆窗口中。
+d3450e14	专业电台：使用 Kenwood 的 KPG 软件编程，该软件只提供给经销商；协议未公开。
+46b77f34	500 个信道，名称 16 个字符，快速复制。{0}
+a57318f1	900 个信道，名称 16 个字符，模拟或数字 C4FM（“模式”列）。{0}
+5cfb1ae7	999 个信道，名称 6 个字符。{0}
+eeeb3e52	1000 个信道，名称 16 个字符，USB 线（电台显示为串口）。{0}
+16b721a5	自由固件 F4HWN Fusion 5 及以上版本：1024 个信道（“F4HWN Fusion 5.x 固件”卡片）。
+435d1e5f	nicsure 的自由固件：信道部分根据作者公布的文档从零编写，并用模拟电台验证（尚待用真实电台验证）。电台的校准数据从不写入。
+e39bdf53	ID-51 Plus
+b9377b94	ID-51A Plus
+38569eb0	ID-51E Plus
+b2aea350	ID-51 50th Anniversary
+af60a5b3	ID-51 Plus2
+3857a652	ID-51A Plus2
+325b86a6	ID-51E Plus2
+b9069b70	{0} 50/144/430 MHz 三频段，带宽带接收机：500 个信道，名称 6 个字符。
+e5788f1f	{0} 900 个信道，名称 6 个字符；每个信道的 C4FM 数字模式保持电台上的设置。{1}
+9b0bc80c	Kenwood
+632708c2	Kenwood 的 TH-D75E 页面
+2e4583af	Kenwood 网站
+9a76efe2	{0} 1000 个信道，名称 8 个字符，USB 线。
+b8e61191	ProTalk TK-3701D
+452bf662	Kenwood 页面（PMR446）
+27700ca5	ProTalk TK-3501
+8f1177f3	PKT-300E
+aa842c64	PKT-300
+f72256ec	UBZ-LJ9
+91e37f04	UBZ-LJ9SET
+d5e7f8fb	免执照的模拟 PMR446：信道在电台上选择，没有编程软件。
+44c10e89	Kenwood DMR 手持机
+badf093c	TD-H3（nicFW 固件）
+6ec3b7f8	TD-H3 nicFW
+56a2991a	nicFW 2.x 文档（nicsure）
+7a651194	nicsure 的网站
+d4a810ff	RT-880（非 G）
+d7ffe954	iRadio UV-98
+539599ba	nicFW880 文档（nicsure）
+bd2f0310	使用 Radtel 原厂固件时，RT-880（无 GPS）用 Radtel 的软件编程：其协议尚未支持（RT-880G 已支持，有自己的卡片）。{0}
+4a49f494	RT-880 / RT-880G（nicFW880 固件）
+9ab35be3	RT-880 nicFW
+33526df2	RT-880G nicFW
+e48ce43e	RT-950 Pro（nicFW950 固件）
+429f8f4e	RT-950 Pro nicFW
+34fa366d	nicFW880 / 950 文档（nicsure）
+880016c5	适用于 UV-K5 V3 的 F4HWN Fusion 固件（armel）
+bde55f43	F4HWN Fusion 固件（armel）
+0f0af4d1	{0} 原厂固件：仅支持信道（CHIRP 尚不支持设置），且仅适用于版本 7.03。IJV V4、V5 和 V6 固件：电台上选定存储库的信道、分组名称和主要设置（“IJV 固件”卡片）。{1}
+a936d75d	Icom Inc.
+ecbb6013	Icom IC-E90 / IC-T90
+c21daaea	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()*+-,/|=
+0db26069	500 个信道（0 到 499），名称 6 个字符；宽带接收机。{0}模式（FM、宽带 FM、AM）随频率而定。CHIRP 驱动。
+729fa53d	电台无法存储 {0} Hz 的频差（只能是 5 或 6.25 kHz 的倍数）
+7839b844	Icom Inc.A8
+ad31bcee	Icom Inc.DA
+aedc7408	Icom 数据线 OPC-2350LU（USB）或 OPC-2218LU，接“DATA”插孔；电台正常开机，复制期间显示“CLONE”。38400 波特快速复制。
+2257eeef	500 个信道 {0}（0 到 499），名称 16 个字符，模拟或 D-STAR。{1}新建的 D-STAR 信道带“CQCQCQ”。CHIRP 驱动。
+6c223c47	VHF/UHF（航空波段为 AM）
+514eb061	CQCQCQ
+0de6d70b	高（最大）
+88a00d13	中（一半）
+d5db917d	低（五分之一）
+146afa3f	功率：高（最大）、中（一半）或低（五分之一）；电台上已设置的功率保持不变。
+8926693f	电台的校准数据从不写入；写入前程序会重新读取电台，只写入有变化的部分。依据固件作者公布的文档。
+4c2258d6	nicFW 2.x
+cba883fa	TIDRADIO TD-H3（nicFW 固件）
+f1141652	装有自由固件 nicFW 2.x（2.0x 和 2.5x 版）的 TD-H3：198 个信道，名称 12 个字符，38400 波特，电台开机。{0}{1}
+ff211be1	存储内容不是 nicFW 2.x 固件的
+0104eb8c	电台无法存储发射频率 {0} MHz
+8cf36282	电台没有 nicFW 2.x 固件（魔数 {0}{1}）
+f43a6ffd	写入前读取电台…
+ce16cafd	电台的 nicFW 固件版本与映像不同：请读取电台，再把信道转到这次读取中
+d7c84c5d	装有自由固件 nicFW880 / nicFW950 的 {0}：999 个信道，名称最多 30 个字符。电台的编程线，38400 波特，电台开机。写入后电台会重启。{1}{2}
+af95c12e	Radtel RT-880 / RT-880G（nicFW880 固件）
+d95de8c6	Radtel RT-880 和 RT-880G（以及 iRadio UV-98）
+91fd00ac	Radtel RT-950 Pro（nicFW950 固件）
+82ebbc1d	Radtel RT-950 Pro
+dbc6ef8c	TH-D72 (clone mode)
+e5b0d8dd	Kenwood TH-D72A / TH-D72E
+beac0f40	1000 个信道（0 到 999），名称 8 个字符。{0}Kenwood 亚音（没有 159.8 165.5 171.3 177.3 183.5 189.9 196.6 和 199.5 Hz）。CHIRP 驱动。
+56136e41	电台没有这种亚音组合（两个方向的 DCS 码不同，或为反相码）
+bc98c743	电台的 USB 线（电台显示为串口）；复制期间电台显示“PROG MCP”。
+c6a5c2d5	1000 个信道（0 到 999），名称 16 个字符，模拟或 D-STAR。{0}新建的 D-STAR 信道带“CQCQCQ”。CHIRP 驱动。
+6365ac36	TH-D74 (clone mode)
+b831a835	Kenwood TH-D74A / TH-D74E
+e8ad684d	Kenwood TH-D75A / TH-D75E
+a0e87eb4	电台没有这种亚音组合（不能只有接收亚音，也不支持反相码）
+c2efd81a	电台是另一种型号（{0}）
+274c56f2	0M PROGRAM
+6ca36cb4	UV-K1 & UV-K5 V3 (F4HWN Fusion)
+0592f4f9	Quansheng UV-K1 / UV-K5 V3（F4HWN Fusion 5.x 固件）
+722e44a6	F4HWN v5.9.0
+e902a558	适用于 UV-K1 和 UV-K5 V3 的自由固件 F4HWN“Fusion”5 及以上版本：1024 个信道。先开机，再接线。写入方式与 F4HWN 的 CHIRP 驱动相同；校准数据从不写入。
+056bfdb5	[V/M] («-WAIT-»)
+c50cf2a6	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]u_{0}{1}{2}{3}{4}{5}{6}{7}{8}$%{9}*#.|=\o@
+a5351dc0	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/{0}[](){}{1}{2}_{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}*{16}{17},'|
+10f76a9c	复制由电台发起：关机，把线接到 {0} 插孔，按住 {1} 开机（显示“CLONE”）。读取：先在这里开始读取，再按电台上的 {2}。写入：先按电台上的 {3}（显示“-WAIT-”），再在这里开始写入；结束时电台不作确认，结果显示在它的屏幕上。
+b69d230d	999 个信道，名称 6 个字符，Yaesu 编程线，19200 波特。
+357d7fd6	Yaesu VX-6R / VX-6E
+ea03477f	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]_$%*#.|=\@
+ce744b54	最低 0.3 W
+297fe1ba	Yaesu VX-3R / VX-3E
+d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
+4fc7572e	高 1.5 W
+fa4647fb	低 0.1 W
+d9bcac02	电台无法存储频率 {0} MHz
+dc9c52ec	正在等待电台：请在电台上开始发送…
+8808a930	电台没有发送任何数据：请把它置于“CLONE”模式，并在开始读取后按 {0}
+afdae93d	电台没有确认数据：请把它置于“CLONE”模式，并在开始写入前按 {0}
+c522b72a	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz.,:;*#_-/&()@!?^
+c407fae5	DATA
+55b67acf	允许的亚音：发射亚音或双向亚音，双向相同的 DCS 码。CHIRP 驱动。
+1e34eed5	中 2.5 W（L3）
+bbe720f8	低 1 W（L2）
+630ca8b6	最低（L1）
+df92ae0c	900 个信道，名称 16 个字符，模拟或数字 C4FM（新建的数字信道为“AMS”），USB 数据线，38400 波特。{0}{1}
+648aab46	[RECEIVE] («-WAIT-»)
+801ff122	Yaesu FT-70DR / FT-70DE
+897c92a5	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ .,:;*#_-/&()@!?^
+a63400d4	[MODE] («-WAIT-»)
+1821b2ee	900 个信道，名称 6 个字符，USB 数据线，38400 波特。复制由电台发起：取下电池，按住 [AMS] 和电源键重新装上（显示“ADMS”）；读取时在开始读取后按 [BAND]，写入时在开始写入前按 [MODE]（“-WAIT-”）。新建的信道为模拟 FM。{0}
+4056f37e	Yaesu FT1DR / FT1DE
+bbbaceb3	[Dx] («-WAIT-»)
+66d6893e	Yaesu FT2DR / FT2DE
+b11557d4	Yaesu FT2DR / FT2DE（第二批）
+61483556	Yaesu FT3DR / FT3DE
+9d6379ee	Yaesu FT5DR / FT5DE
+17921f64	F4HWN v{0}
+064b5b01	自由固件 F4HWN Fusion：更新后，信道和设置用“Quansheng UV-K1 / UV-K5 V3（F4HWN Fusion 5.x 固件）”卡片读取
+0f59247c	最低
+48573d19	双守候（Dual Watch）
+c37e6b8b	显示收到的亚音
+86a5ea41	把收到的亚音复制到发射
+70b0b3c1	收到亚音的检查
+945242e3	图标
+7a9f4017	百分比
+06f13811	电池指示
+4d79a23b	屏幕亮度
+62130d36	屏幕反色
+56af356e	键盘锁
+c556b943	nicFW 固件作者公布的文档（nicsure/nicfw2docs）
+e3af4e9c	F4HWN Fusion 5.x 固件
+1bead84b	nicFW880 固件
+ab73dbd5	nicFW950 固件
+8382cca1	nicFW 固件
+d36b19e0	第二批

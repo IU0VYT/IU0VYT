@@ -229,3 +229,100 @@ func (e *ft60Emu) serve(p Port) error {
 	e.mu.Unlock()
 	return nil
 }
+
+// 4.15: palmari Yaesu con la copia in due blocchi (VX-3, VX-6, FT-70D, FT1D…):
+// come il cavo a un filo, ogni byte ricevuto torna indietro
+type yaesuEmu struct {
+	mu     sync.Mutex
+	o      *yaesuOpt
+	img    []byte
+	writes int
+	silent bool // radio non in modalità clone
+	noEcho bool // cavo a due fili
+}
+
+func newYaesuEmu(o *yaesuOpt, img []byte) *yaesuEmu {
+	mem := make([]byte, o.size)
+	copy(mem, img)
+	yaesuSums(o, mem) // la radio manda sempre le somme di controllo giuste
+	return &yaesuEmu{o: o, img: mem}
+}
+
+func (e *yaesuEmu) image() []byte {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]byte{}, e.img...)
+}
+
+func (e *yaesuEmu) serve(p Port) error {
+	if e.silent {
+		for {
+			if _, err := emuRead(p, 1); err != nil {
+				return nil
+			}
+		}
+	}
+	get := func(n int) ([]byte, error) {
+		b, err := emuRead(p, n)
+		if err == nil && !e.noEcho {
+			p.Write(b)
+		}
+		return b, err
+	}
+	first := make([]byte, 1)
+	// la radio vera parte quando si preme il tasto: qui, se entro un secondo e mezzo
+	// non arriva nulla, è la radio a inviare
+	if err := p.ReadFull(context.Background(), first, 1500*time.Millisecond); err != nil {
+		if err != errTimeout {
+			return nil
+		}
+		// invio: primo blocco, conferma, tutto il resto
+		src := e.image()
+		p.Write(src[:e.o.head])
+		b, err := get(1)
+		if err != nil {
+			return err
+		}
+		if b[0] != 0x06 {
+			return fmt.Errorf("attesa la conferma, ricevuto %02X", b[0])
+		}
+		p.Write(src[e.o.head:])
+		return nil
+	}
+	// ricezione
+	if !e.noEcho {
+		p.Write(first)
+	}
+	rest, err := get(e.o.head - 1)
+	if err != nil {
+		return err
+	}
+	buf := append(first, rest...)
+	if string(buf[:len(e.o.model)]) != e.o.model {
+		return fmt.Errorf("intestazione %q", buf[:5])
+	}
+	p.Write([]byte{0x06})
+	for len(buf) < e.o.size {
+		n := e.o.chunk
+		if e.o.size-len(buf) < n {
+			n = e.o.size - len(buf)
+		}
+		b, err := get(n)
+		if err != nil {
+			return err
+		}
+		buf = append(buf, b...)
+	}
+	if !yaesuSumsOK(e.o, buf) {
+		return fmt.Errorf("somma di controllo errata")
+	}
+	e.mu.Lock()
+	copy(e.img, buf)
+	e.writes++
+	e.mu.Unlock()
+	return nil
+}
+
+func (f vxFam) emu(m *genModel, img []byte) genEmu { return newYaesuEmu(f.opt(m).clone, img) }
+
+func (f ysfFam) emu(m *genModel, img []byte) genEmu { return newYaesuEmu(f.opt(m).clone, img) }

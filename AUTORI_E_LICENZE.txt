@@ -32,7 +32,7 @@ https://github.com/kk7ds/chirp), software libero distribuito con la GNU General
 Public License (versione 2 o successiva, oppure 3 o successiva, secondo il file).
 Sono stati riscritti in Go e confrontati con CHIRP (revisione dcf5d2519310 del
 01/11/2026; le radio aggiunte nella 4.6 e nella 4.7 con la revisione ba67ff4 del 04/11/2026, quelle
-della 4.8 e della 4.9 con la revisione 0a9e92c del 06/11/2026, quelle della 4.14 con la
+della 4.8 e della 4.9 con la revisione 0a9e92c del 06/11/2026, quelle della 4.14 e della 4.15 con la
 revisione 337b385 del 09/11/2026). Autori indicati nei file di CHIRP usati:
 
   chirp/bitwise.py, chirp/chirp_common.py   Copyright 2008-2010 Dan Smith
@@ -145,6 +145,22 @@ revisione 337b385 del 09/11/2026). Autori indicati nei file di CHIRP usati:
   drivers/icf.py, drivers/icv86.py,
   drivers/icv80.py, drivers/icx8x.py,
   drivers/ict10.py                          Copyright 2008 Dan Smith
+  4.15 (CHIRP 337b385, 09/11/2026), D-STAR, C4FM e Kenwood:
+  drivers/id31.py, drivers/id51.py          Copyright 2012 Dan Smith
+  drivers/id51plus.py                       Copyright 2015 Eric Dropps
+  drivers/icx90.py                          Copyright 2018-2020 Jaroslav Škarvada
+  drivers/yaesu_clone.py, drivers/vx6.py    Copyright 2010 Dan Smith
+  drivers/vx3.py                            Copyright 2011 Rick Farina
+  drivers/ft70.py                           Copyright 2010 Dan Smith, 2017 Nicolas Pike
+  drivers/ft1d.py                           Copyright 2010 Dan Smith, 2014 Angus
+                                            Ainslie, 2023, 2025 Declan Rieb
+  drivers/ft2d.py                           Copyright 2010 Dan Smith, 2017 Declan Rieb
+  drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
+                                            Ainslie
+  drivers/thd74.py                          autori di CHIRP (file senza nota propria)
+  Fuori da CHIRP (GNU GPL v2 o successiva): driver «Quansheng UV-K1 / UV-K5 V3» di
+  F4HWN Fusion 5.9.0 (VE2ZJM e armel F4HWN, sul driver di egzumer e JOC2;
+  https://github.com/armel/uv-k1-k5v3-firmware-custom).
 
 PROTOCOLLI DI AGGIORNAMENTO DEL FIRMWARE E IMPOSTAZIONI DMR (4.10)
 Riscritti da zero in Go dalle descrizioni e dal codice di questi programmi liberi (nessun
@@ -177,7 +193,9 @@ drv_rt26.go, drv_rt76p.go, drv_rt87.go, drv_anytoneht.go, drv_rh5rv2.go,
 drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.10: fwrt890.go, fwdm1701.go, fwsgl.go, settings_rdty.go;
 4.11: zonenames.go (formato dei nomi della RT-920 da radtel_rt900.py);
-4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go;
+4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 Grazie agli autori di CHIRP, ad armel F4HWN, a M7OCM, a JuantAldea, a v0l (radio_tool),
 al progetto OpenGD77, a Hannes Matuschek DM3MAT (qdmr) e a Serge Vakulenko KK6ABQ.
 
@@ -237,6 +255,15 @@ costanti e codice dell'assembly .NET, compreso il collegamento dati della V6, le
 solo in memoria). Nessun codice, programma
 o firmware di IJV è incluso: drv_ijv.go e settings_ijv.go sono scritti da zero in
 IU0VYT Flash. Programma indipendente, non affiliato a IJV.
+
+FIRMWARE NICFW (4.15)
+Il firmware nicFW è di nicsure (https://nicsure.co.uk). La memoria dei canali, le
+impostazioni e i comandi del collegamento sono ricavati, per l'interoperabilità, dalla
+documentazione che l'autore ha pubblicato: nicfw2docs (TD-H3, nicFW 2.x:
+https://github.com/nicsure/nicfw2docs) e nicFW880_950_Docs (RT-880 e RT-950 Pro:
+https://github.com/nicsure/nicFW880_950_Docs). Nessun codice, programma o firmware di
+nicsure è incluso: drv_nicfw.go e settings_nicfw.go sono scritti da zero in IU0VYT
+Flash. Programma indipendente, non affiliato a nicsure.
 
 NOMI DELLE ZONE (4.11)
 Il formato dei nomi delle zone è ricavato, per l'interoperabilità, dal codice dei

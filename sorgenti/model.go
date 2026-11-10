@@ -208,6 +208,8 @@ func powerName(p int) string {
 		return "Media"
 	case 2:
 		return "Bassa"
+	case 3:
+		return "Minima" // 4.15: radio con quattro potenze (Yaesu VX-6)
 	}
 	return "Alta"
 }

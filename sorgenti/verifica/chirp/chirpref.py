@@ -57,9 +57,15 @@ MAGIC = chirp_common.CloneModeRadio.MAGIC
 
 
 def find_class(name):
-    for cls in directory.DRV_TO_RADIO.values():
-        if cls.__name__ == name:
-            return cls
+    found = [cls for cls in directory.DRV_TO_RADIO.values() if cls.__name__ == name]
+    # 4.15: due classi con lo stesso nome (Kenwood TH-D74 e TH-D72: copia della
+    # memoria in thd74.py / thd72.py, comandi diretti in kenwood_live.py): vale
+    # quella che copia la memoria
+    clone = [cls for cls in found if issubclass(cls, chirp_common.CloneModeRadio)]
+    if clone:
+        return clone[0]
+    if found:
+        return found[0]
     raise SystemExit("classe sconosciuta: " + name)
 
 
@@ -86,6 +92,10 @@ def load(cls, path):
 
 def raw_mmap(r):
     m = r.get_mmap()
+    if getattr(r, "_highbit_flip", False):
+        # 4.15 Icom ID-51 Plus2: get_mmap() restituisce i dati come viaggiano sul
+        # cavo (bit alto rovesciato); il file .img contiene la memoria in chiaro
+        m = r._mmap
     if hasattr(m, "get_byte_compatible"):
         m = m.get_byte_compatible()
     return m.get_packed()
@@ -143,7 +153,7 @@ def mem_to_json(r, mem):
     power = levels.index(str(mem.power)) if mem.power is not None and str(mem.power) in levels else -1
     # 4.9: int(): retevis_ha1g.py lascia in mem.freq il campo della memoria
     return {"rx": int(mem.freq), "tx": int(tx), "txOff": txoff, "txTone": t, "rxTone": rxt,
-            "power": power, "mode": mem.mode, "scan": mem.skip != "S", "name": mem.name}
+            "power": power, "mode": mem.mode, "scan": mem.skip != "S", "skip": mem.skip, "name": mem.name}
 
 
 def decode(r):
@@ -346,7 +356,8 @@ def layout(r):
             nb = getattr(el, "_nbits", 0) if isinstance(el, bitwise.bitDataElement) else 0
             sh = getattr(el, "_shift", 0) if nb else 0
             out[path] = [el._offset, el.size() // 8 if not nb else 0, nb, sh, type(el).__name__]
-    walk("", r._memobj)
+    # 4.15: icx90.py chiama la mappa «memobj»
+    walk("", getattr(r, "_memobj", None) or r.memobj)
     return out
 
 

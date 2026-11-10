@@ -2090,7 +2090,6 @@ bc7c87a1	Saluran dan tetapan dengan pemacu CHIRP (kelas {0}), disahkan dengan uj
 fadd6ee1	Perisian tegar F4HWN (armel)
 c7d04685	Perisian tegar IJV (IU0IJV)
 7c2fdf6f	{0} Setiap tab membaca dan menulis hanya perisian tegarnya sendiri: asal Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (pemacu CHIRP), F4HWN (pemacu armel untuk CHIRP, dengan tetapan F4HWN), OSFW (pemacu CHIRP) atau perisian tegar Cina LOSEHU / LTS / UVE (pemacu CHIRP, nama Cina). Jika anda membuka tab yang salah, program membaca versi perisian tegar, berhenti tanpa menulis dan menunjukkan tab yang betul; «Kenal pasti» menemuinya sendiri. Perisian tegar: fail .bin Quansheng (cth. k5_v2.01.26_publish.bin) dengan pemuat radio (dihidupkan sambil menekan PTT); program menyemak bahawa perisian tegar adalah untuk jenis pemuat radio (UV-K5, UV-K5(8)/UV-K6 atau UV-5R Plus). Quansheng melindungi muat turun dengan kata laluan yang diberikan oleh penjual. IJV juga dikendalikan (V3 dengan 200 atau 999 saluran pada UV-K5 klasik; V4, V5 dan V6 pada UV-K5 V3: bank yang dipilih pada radio, saluran, kumpulan dan tetapan utama).
-5f4e346a	{0} Perisian tegar asal: saluran sahaja (CHIRP belum mengendalikan tetapan) dan hanya dengan versi 7.03. Perisian tegar IJV V4, V5 dan V6: saluran bank yang dipilih pada radio, nama kumpulan dan tetapan utama (tab «perisian tegar IJV»).
 06fd3af1	Ia ialah Quansheng UV-K5. {0} Perisian tegar: fail .bin Retevis dalam format Quansheng (cth. «RA79 V3.bin», versi 7.00.16 untuk RA79 V3, dengan pemuat 7.x UV-K5 V3): radio dimatikan dan dihidupkan semula sambil menekan PTT. Program membaca versi pemuat dan menghantar perisian tegar hanya jika ia daripada keluarga yang sama (RA79 dengan pemuat UV-K5 klasik menolak fail 7.x).
 1a11a260	Ia ialah Quansheng UV-K5. {0}
 f1e53be6	RT-590 / RT-590 Plus
@@ -5161,3 +5160,150 @@ b68d60bf	penerimaan
 906d004b	ofset
 ce833f64	scrambler
 9e6db4fe	pancaran
+024bedf4	radio tidak mengendalikan mod digital ini
+0c8c64ea	Saluran adalah analog atau digital D-STAR (lajur «Mod»); bagi saluran D-STAR, tanda panggilan dan kod digital dikekalkan.
+fb482f3c	Salinan dimulakan dari radio (mod «CLONE»): arahannya ada dalam tetingkap kabel.
+d3450e14	Radio profesional: diprogram dengan perisian KPG Kenwood yang dikhaskan untuk pengedar; protokolnya tidak didedahkan.
+46b77f34	500 saluran dengan nama 16 aksara, salinan pantas.{0}
+a57318f1	900 saluran dengan nama 16 aksara, analog atau digital C4FM (lajur «Mod»).{0}
+5cfb1ae7	999 saluran dengan nama 6 aksara.{0}
+eeeb3e52	1000 saluran dengan nama 16 aksara, kabel USB (radio muncul sebagai port bersiri).{0}
+16b721a5	Perisian tegar bebas F4HWN Fusion dari versi 5: 1024 saluran (tab «perisian tegar F4HWN Fusion 5.x»).
+435d1e5f	Perisian tegar bebas oleh nicsure: saluran ditulis dari awal berdasarkan dokumentasi yang diterbitkan oleh pengarangnya dan disahkan dengan radio simulasi (belum disahkan dengan radio sebenar). Penentukuran radio tidak pernah ditulis.
+e39bdf53	ID-51 Plus
+b9377b94	ID-51A Plus
+38569eb0	ID-51E Plus
+b2aea350	ID-51 50th Anniversary
+af60a5b3	ID-51 Plus2
+3857a652	ID-51A Plus2
+325b86a6	ID-51E Plus2
+b9069b70	{0} Tiga jalur 50/144/430 MHz dengan penerima jalur lebar: 500 saluran dengan nama 6 aksara.
+e5788f1f	{0} 900 saluran dengan nama 6 aksara; mod digital C4FM setiap saluran kekal seperti yang ditetapkan pada radio.{1}
+9b0bc80c	Kenwood
+632708c2	Halaman Kenwood untuk TH-D75E
+2e4583af	Laman Kenwood
+9a76efe2	{0} 1000 saluran dengan nama 8 aksara, kabel USB.
+b8e61191	ProTalk TK-3701D
+452bf662	Halaman Kenwood (PMR446)
+27700ca5	ProTalk TK-3501
+8f1177f3	PKT-300E
+aa842c64	PKT-300
+f72256ec	UBZ-LJ9
+91e37f04	UBZ-LJ9SET
+d5e7f8fb	PMR446 analog tanpa lesen: saluran dipilih pada radio, tiada perisian pengaturcaraan.
+44c10e89	Radio mudah alih DMR Kenwood
+badf093c	TD-H3 (perisian tegar nicFW)
+6ec3b7f8	TD-H3 nicFW
+56a2991a	Dokumentasi nicFW 2.x (nicsure)
+7a651194	Laman nicsure
+d4a810ff	RT-880 (bukan G)
+d7ffe954	iRadio UV-98
+539599ba	Dokumentasi nicFW880 (nicsure)
+bd2f0310	Dengan perisian tegar asal Radtel, RT-880 (tanpa GPS) diprogram dengan perisian Radtel: protokolnya belum dikendalikan (RT-880G sudah, dengan tabnya sendiri). {0}
+4a49f494	RT-880 / RT-880G (perisian tegar nicFW880)
+9ab35be3	RT-880 nicFW
+33526df2	RT-880G nicFW
+e48ce43e	RT-950 Pro (perisian tegar nicFW950)
+429f8f4e	RT-950 Pro nicFW
+34fa366d	Dokumentasi nicFW880 / 950 (nicsure)
+880016c5	Perisian tegar F4HWN Fusion untuk UV-K5 V3 (armel)
+bde55f43	Perisian tegar F4HWN Fusion (armel)
+0f0af4d1	{0} Perisian tegar asal: saluran sahaja (CHIRP belum mengendalikan tetapan) dan hanya dengan versi 7.03. Perisian tegar IJV V4, V5 dan V6: saluran bank yang dipilih pada radio, nama kumpulan dan tetapan utama (tab «perisian tegar IJV»).{1}
+a936d75d	Icom Inc.
+ecbb6013	Icom IC-E90 / IC-T90
+c21daaea	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()*+-,/|=
+0db26069	500 saluran (0 hingga 499) dengan nama 6 aksara; penerima jalur lebar. {0}Mod (FM, FM lebar, AM) mengikut frekuensi. Pemacu CHIRP.
+729fa53d	radio tidak dapat menyimpan anjakan {0} Hz (gandaan 5 atau 6.25 kHz sahaja)
+7839b844	Icom Inc.A8
+ad31bcee	Icom Inc.DA
+aedc7408	Kabel data Icom OPC-2350LU (USB) atau OPC-2218LU, pada soket «DATA»; radio dihidupkan seperti biasa dan memaparkan «CLONE» semasa salinan. Salinan pantas pada 38400 baud.
+2257eeef	500 saluran {0} (0 hingga 499) dengan nama 16 aksara, analog atau D-STAR. {1}Saluran D-STAR baharu dicipta dengan «CQCQCQ». Pemacu CHIRP.
+6c223c47	VHF/UHF (jalur penerbangan dalam AM)
+514eb061	CQCQCQ
+0de6d70b	Tinggi (maksimum)
+88a00d13	Sederhana (separuh)
+d5db917d	Rendah (satu perlima)
+146afa3f	Kuasa: tinggi (maksimum), sederhana (separuh) atau rendah (satu perlima); kuasa yang sudah ditetapkan pada radio kekal seperti sedia ada.
+8926693f	Penentukuran radio tidak pernah ditulis; sebelum menulis, program membaca semula radio dan menulis hanya apa yang berubah. Mengikut dokumentasi yang diterbitkan oleh pengarang perisian tegar.
+4c2258d6	nicFW 2.x
+cba883fa	TIDRADIO TD-H3 (perisian tegar nicFW)
+f1141652	TD-H3 dengan perisian tegar bebas nicFW 2.x (versi 2.0x dan 2.5x): 198 saluran dengan nama 12 aksara, 38400 baud, radio dihidupkan. {0}{1}
+ff211be1	memori ini bukan memori perisian tegar nicFW 2.x
+0104eb8c	radio tidak dapat menyimpan frekuensi pemancaran {0} MHz
+8cf36282	radio tidak mempunyai perisian tegar nicFW 2.x (nombor ajaib {0}{1})
+f43a6ffd	Membaca radio sebelum menulis…
+ce16cafd	radio mempunyai versi perisian tegar nicFW yang berbeza daripada imej: baca radio dan pindahkan saluran ke bacaan itu
+d7c84c5d	{0} dengan perisian tegar bebas nicFW880 / nicFW950: 999 saluran dengan nama sehingga 30 aksara. Kabel pengaturcaraan radio, 38400 baud, radio dihidupkan. Selepas penulisan, radio dimulakan semula. {1}{2}
+af95c12e	Radtel RT-880 / RT-880G (perisian tegar nicFW880)
+d95de8c6	Radtel RT-880 dan RT-880G (serta iRadio UV-98)
+91fd00ac	Radtel RT-950 Pro (perisian tegar nicFW950)
+82ebbc1d	Radtel RT-950 Pro
+dbc6ef8c	TH-D72 (clone mode)
+e5b0d8dd	Kenwood TH-D72A / TH-D72E
+beac0f40	1000 saluran (0 hingga 999) dengan nama 8 aksara. {0}Subton Kenwood (tiada 159.8 165.5 171.3 177.3 183.5 189.9 196.6 dan 199.5 Hz). Pemacu CHIRP.
+56136e41	radio tidak mempunyai gabungan ton ini (kod DCS berbeza dalam dua arah atau songsang)
+bc98c743	Kabel USB radio (radio muncul sebagai port bersiri); semasa salinan radio memaparkan «PROG MCP».
+c6a5c2d5	1000 saluran (0 hingga 999) dengan nama 16 aksara, analog atau D-STAR. {0}Saluran D-STAR baharu dicipta dengan «CQCQCQ». Pemacu CHIRP.
+6365ac36	TH-D74 (clone mode)
+b831a835	Kenwood TH-D74A / TH-D74E
+e8ad684d	Kenwood TH-D75A / TH-D75E
+a0e87eb4	radio tidak mempunyai gabungan ton ini (tiada ton pada penerimaan sahaja dan tiada kod songsang)
+c2efd81a	radio ialah model lain ({0})
+274c56f2	0M PROGRAM
+6ca36cb4	UV-K1 & UV-K5 V3 (F4HWN Fusion)
+0592f4f9	Quansheng UV-K1 / UV-K5 V3 (perisian tegar F4HWN Fusion 5.x)
+722e44a6	F4HWN v5.9.0
+e902a558	Perisian tegar bebas F4HWN «Fusion» dari versi 5 untuk UV-K1 dan UV-K5 V3: 1024 saluran. Hidupkan radio, kemudian sambungkan kabel. Penulisan dibuat seperti pemacu F4HWN untuk CHIRP; penentukuran tidak pernah ditulis.
+056bfdb5	[V/M] («-WAIT-»)
+c50cf2a6	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]u_{0}{1}{2}{3}{4}{5}{6}{7}{8}$%{9}*#.|=\o@
+a5351dc0	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/{0}[](){}{1}{2}_{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}*{16}{17},'|
+10f76a9c	Salinan dimulakan dari radio: matikan radio, sambungkan kabel ke soket {0} dan hidupkan sambil menekan {1} («CLONE» dipaparkan). Untuk membaca: mulakan bacaan di sini, kemudian tekan {2} pada radio. Untuk menulis: tekan {3} pada radio («-WAIT-» dipaparkan), kemudian mulakan penulisan di sini; pada akhirnya radio tidak mengesahkan, hasilnya dilihat pada skrinnya.
+b69d230d	999 saluran dengan nama 6 aksara, kabel pengaturcaraan Yaesu, 19200 baud.
+357d7fd6	Yaesu VX-6R / VX-6E
+ea03477f	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]_$%*#.|=\@
+ce744b54	Minimum 0.3 W
+297fe1ba	Yaesu VX-3R / VX-3E
+d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
+4fc7572e	Tinggi 1.5 W
+fa4647fb	Rendah 0.1 W
+d9bcac02	radio tidak dapat menyimpan frekuensi {0} MHz
+dc9c52ec	Menunggu radio: mulakan penghantaran pada radio…
+8808a930	radio tidak menghantar apa-apa: letakkannya dalam mod «CLONE» dan tekan {0} selepas memulakan bacaan
+afdae93d	radio tidak mengesahkan data: letakkannya dalam mod «CLONE» dan tekan {0} sebelum memulakan penulisan
+c522b72a	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz.,:;*#_-/&()@!?^
+c407fae5	DATA
+55b67acf	Ton yang dibenarkan: subton pada pemancaran atau dalam dua arah, kod DCS yang sama dalam dua arah. Pemacu CHIRP.
+1e34eed5	Sederhana 2.5 W (L3)
+bbe720f8	Rendah 1 W (L2)
+630ca8b6	Minimum (L1)
+df92ae0c	900 saluran dengan nama 16 aksara, analog atau digital C4FM (saluran digital baharu dicipta dalam «AMS»), kabel data USB, 38400 baud. {0}{1}
+648aab46	[RECEIVE] («-WAIT-»)
+801ff122	Yaesu FT-70DR / FT-70DE
+897c92a5	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ .,:;*#_-/&()@!?^
+a63400d4	[MODE] («-WAIT-»)
+1821b2ee	900 saluran dengan nama 6 aksara, kabel data USB, 38400 baud. Salinan dimulakan dari radio: tanggalkan bateri dan pasang semula sambil menekan [AMS] dan kekunci kuasa («ADMS» dipaparkan); untuk membaca tekan [BAND] selepas memulakan bacaan, untuk menulis tekan [MODE] («-WAIT-») sebelum memulakan penulisan. Saluran baharu dicipta dalam FM analog. {0}
+4056f37e	Yaesu FT1DR / FT1DE
+bbbaceb3	[Dx] («-WAIT-»)
+66d6893e	Yaesu FT2DR / FT2DE
+b11557d4	Yaesu FT2DR / FT2DE (siri kedua)
+61483556	Yaesu FT3DR / FT3DE
+9d6379ee	Yaesu FT5DR / FT5DE
+17921f64	F4HWN v{0}
+064b5b01	Perisian tegar bebas F4HWN Fusion: selepas kemas kini, saluran dan tetapan dibaca dengan tab «Quansheng UV-K1 / UV-K5 V3 (perisian tegar F4HWN Fusion 5.x)»
+0f59247c	Minimum
+48573d19	Pemantauan dwi (Dual Watch)
+c37e6b8b	Tunjukkan ton yang diterima
+86a5ea41	Salin ton yang diterima ke pemancaran
+70b0b3c1	Semakan ton yang diterima
+945242e3	Ikon
+7a9f4017	Peratus
+06f13811	Penunjuk bateri
+4d79a23b	Kecerahan skrin
+62130d36	Warna skrin songsang
+56af356e	Kunci kekunci
+c556b943	dokumentasi yang diterbitkan oleh pengarang perisian tegar nicFW (nicsure/nicfw2docs)
+e3af4e9c	perisian tegar F4HWN Fusion 5.x
+1bead84b	perisian tegar nicFW880
+ab73dbd5	perisian tegar nicFW950
+8382cca1	perisian tegar nicFW
+d36b19e0	siri kedua

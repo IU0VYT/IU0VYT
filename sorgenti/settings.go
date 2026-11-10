@@ -409,7 +409,7 @@ func readSetting(d *setDef, img []byte) (string, error) {
 			rev[b] = []rune(c)[0]
 		}
 		var out []rune
-		for _, off := range e.Offs {
+		for i, off := range e.Offs {
 			if off >= len(img) {
 				return "", errors.New("impostazione fuori dalla memoria")
 			}
@@ -419,6 +419,11 @@ func readSetting(d *setDef, img []byte) (string, error) {
 			}
 			c, ok := rev[b]
 			if !ok {
+				// 4.15: campo mai scritto o riempito dalla radio (solo 0xFF, 0x00 o
+				// spazi fino alla fine): il testo finisce qui
+				if setTailEmpty(img, e.Offs[i:]) {
+					break
+				}
 				// carattere fuori dalla tabella (es. ideogrammi scritti dal programma
 				// del costruttore): il testo si può solo sostituire
 				return strings.TrimRight(string(out), " "), errors.New("testo con caratteri non gestiti")
@@ -447,6 +452,19 @@ func setScale(e *setEnc) int64 {
 // ---------------------------------------------------------------- scrittura
 
 // writeSetting scrive il valore v (testo come lo mostra l'interfaccia)
+// setTailEmpty dice se da qui alla fine del campo ci sono solo byte di riempimento.
+func setTailEmpty(img []byte, offs []int) bool {
+	for _, off := range offs {
+		if off >= len(img) {
+			return false
+		}
+		if b := img[off]; b != 0xFF && b != 0x00 && b != 0x20 {
+			return false
+		}
+	}
+	return true
+}
+
 func writeSetting(d *setDef, img []byte, v string) error {
 	if d.RO || d.Type == "info" || d.Enc == nil {
 		return errors.New("impostazione di sola lettura")
@@ -691,6 +709,11 @@ func (a *App) apiRadioSettingsSet(r *http.Request) (interface{}, error) {
 		d := byKey[k]
 		if d == nil {
 			errs = append(errs, k+": impostazione sconosciuta")
+			continue
+		}
+		// 4.15: un valore uguale a quello letto non si riscrive (come CHIRP): un
+		// campo di testo mai usato resta com'è invece di riempirsi di spazi
+		if cur, err := readSetting(d, img); err == nil && cur == req.Values[k] {
 			continue
 		}
 		if err := writeSetting(d, img, req.Values[k]); err != nil {

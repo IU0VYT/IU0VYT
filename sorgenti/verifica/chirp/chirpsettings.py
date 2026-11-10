@@ -59,9 +59,15 @@ SKIP_GROUP = re.compile(r"(?i)service|calibrat|factory|tuning|engineer|test mode
 
 
 def find_class(name):
-    for cls in directory.DRV_TO_RADIO.values():
-        if cls.__name__ == name:
-            return cls
+    found = [cls for cls in directory.DRV_TO_RADIO.values() if cls.__name__ == name]
+    # 4.15: due classi con lo stesso nome (Kenwood TH-D74 e TH-D72: copia della
+    # memoria in thd74.py / thd72.py, comandi diretti in kenwood_live.py): vale
+    # quella che copia la memoria
+    clone = [cls for cls in found if issubclass(cls, chirp_common.CloneModeRadio)]
+    if clone:
+        return clone[0]
+    if found:
+        return found[0]
     raise SystemExit("classe sconosciuta: " + name)
 
 

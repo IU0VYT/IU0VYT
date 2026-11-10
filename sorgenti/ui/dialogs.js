@@ -116,7 +116,7 @@ const Dialogs = {
       // controllo di compatibilità (gamme di frequenza, PMR446 / GMRS, canali digitali)
       let send = chans;
       const pseudo = chans.map(ch => ({ nome: ch.name, rx: ch.rx, tx: ch.txOff ? ch.rx : ch.tx,
-        tipi: ch.dig && src.def.digital === 'DMR' ? ['DMR'] : ['Analogico'], ch }));
+        tipi: ch.dig && digTipo(src.def) ? [digTipo(src.def)] : ['Analogico'], ch }));
       const chk = radioCompat(pick.kind, pseudo, pick.type, COMPAT_CANALI);
       if (chk.bad.length || chk.warn.length) {
         const r = await compatBanner(pick.label, chk, COMPAT_CANALI);

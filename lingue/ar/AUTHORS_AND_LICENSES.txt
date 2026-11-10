@@ -145,6 +145,21 @@ https://www.gnu.org/licenses/gpl-3.0.txt؛ SHA-256
   drivers/icf.py, drivers/icv86.py,
   drivers/icv80.py, drivers/icx8x.py,
   drivers/ict10.py                          Copyright 2008 Dan Smith
+  4.15 (CHIRP 337b385, 09/11/2026), D-STAR / C4FM / Kenwood:
+  drivers/id31.py, drivers/id51.py          Copyright 2012 Dan Smith
+  drivers/id51plus.py                       Copyright 2015 Eric Dropps
+  drivers/icx90.py                          Copyright 2018-2020 Jaroslav Škarvada
+  drivers/yaesu_clone.py, drivers/vx6.py    Copyright 2010 Dan Smith
+  drivers/vx3.py                            Copyright 2011 Rick Farina
+  drivers/ft70.py                           Copyright 2010 Dan Smith, 2017 Nicolas Pike
+  drivers/ft1d.py                           Copyright 2010 Dan Smith, 2014 Angus
+                                            Ainslie, 2023, 2025 Declan Rieb
+  drivers/ft2d.py                           Copyright 2010 Dan Smith, 2017 Declan Rieb
+  drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
+                                            Ainslie
+  drivers/thd74.py                          CHIRP
+  F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
+  egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
 بروتوكولات تحديث البرنامج الثابت وإعدادات DMR (4.10)
 أعيدت كتابتها من الصفر بلغة Go انطلاقًا من أوصاف هذه البرامج الحرة وشيفرتها (دون نسخ
@@ -181,6 +196,8 @@ drv.go وbw.go وdrv_uv5r.go وdrv_uv17pro.go وdrv_uv17.go وdrv_bfcommon.go و
 شكرًا لمؤلفي CHIRP، ولـ armel F4HWN، ولـ M7OCM، ولـ JuantAldea، ولـ v0l (radio_tool)،
 ولمشروع OpenGD77، ولـ Hannes Matuschek DM3MAT (qdmr) ولـ Serge Vakulenko KK6ABQ.
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
+4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 
 تحديث البرنامج الثابت لـ QUANSHENG UV-K5 (4.1)
 صيغة ملفات .bin من Quansheng وبروتوكول محمّل UV-K5 موثّقان في البرنامجين الحرّين
@@ -226,6 +243,8 @@ Radtel؛ والبرامج غير مضمّنة في الحزمة. رُوجعت أ
 (https://github.com/pe1hvh/chirp_radtel_rt950pro، رخصة MIT؛ ورد الجهاز على الأمر «F»
 هو نفسه مع البرنامج الثابت 0.18 و0.29) وفي تقرير CHIRP رقم 12180: لا تُضمَّن أي شيفرة
 من تلك المشاريع.
+
+البرنامج الثابت NICFW (4.15): nicFW من إعداد nicsure (https://nicsure.co.uk). ذاكرة القنوات والإعدادات وأوامر الاتصال مأخوذة، لأغراض التوافق، من الوثائق التي نشرها المؤلف (https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs). لا يتضمن البرنامج أي شيفرة أو برنامج أو برنامج ثابت من nicsure: الملفان drv_nicfw.go و settings_nicfw.go مكتوبان من الصفر. برنامج مستقل غير تابع لـ nicsure.
 
 أسماء المناطق (4.11)
 صيغة أسماء المناطق مستخرجة، لأغراض التوافق، من شيفرة برامج الشركة المصنّعة: Radtel
