@@ -12,7 +12,7 @@ f8218bc1	Kostenloses, freies (GPL) Programm für Windows, das Kanäle, Frequenze
 cd611275	KANALVERWALTUNG<span class="tag-sep"> - </span><span class="tag-b">FREQUENZEN - RELAIS - FIRMWARE</span>
 540321f7	Unterstützte Funkgerätemarken: #
 e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> MARKEN
-5998daca	Das kostenlose Windows-Programm, das die Kanäle und Frequenzen Ihrer Funkgeräte per Kabel liest und schreibt, <br>die italienischen Relais einfügt und die Firmware aktualisiert. <br>Eine einzige Datei, keine Installation, auf Italienisch und in 10 weiteren Sprachen.
+c06671f0	Das kostenlose Windows-Programm, das die Kanäle und Frequenzen Ihrer Funkgeräte per Kabel liest und schreibt, <br>die italienischen Relais einfügt und die Firmware aktualisiert. <br>Eine einzige Datei, keine Installation, auf Italienisch und in 12 weiteren Sprachen.
 65c3ed2e	NEUESTE VERSION:
 4fc59698	Die Schaltfläche lädt immer das Paket der neuesten veröffentlichten Version herunter.
 b6a8d2e0	NEUESTE VERSION
@@ -45,8 +45,8 @@ ecd4b3ef	Firmware-Update
 d72d8b35	Firmware von <span data-n="firmware">#</span> Modellen mit den Protokollen der offiziellen Programme, Prüfung der Datei und Sicherungskopie.
 620c0164	Modellgalerie
 fd632a2d	<span data-n="galleria">#</span> Funkgeräte von <span data-n="marche">#</span> Marken, nach Art (Amateurfunk, DMR, GMRS/FRS, PMR446, für Kinder) und nach Marke geordnet, mit Suche und Links zu den offiziellen Programmen und Handbüchern.
-c86bd7e2	In 11 Sprachen
-7bf9a67c	Neben Italienisch ist das Programm auf Englisch, Französisch, Deutsch, Spanisch, Portugiesisch, Russisch, Chinesisch, Japanisch, Koreanisch und Arabisch verfügbar: Wählen Sie die Flagge neben «Info», und das ganze Programm wechselt sofort die Sprache. Anleitung und Informationen übersetzt im Ordner <code>lingue</code> des Pakets.
+c7b2d824	In 13 Sprachen
+016db81f	Neben Italienisch ist das Programm auf Englisch, Französisch, Deutsch, Spanisch, Portugiesisch, Russisch, Chinesisch, Japanisch, Koreanisch, Arabisch, Malaiisch und Hindi verfügbar: Wählen Sie die Flagge neben «Info», und das ganze Programm wechselt sofort die Sprache. Anleitung und Informationen übersetzt im Ordner <code>lingue</code> des Pakets.
 e60a286e	Sicherungskopie
 adfe4a55	Vor jedem Schreiben speichert das Programm den Inhalt des Funkgeräts und prüft danach, ob die Daten richtig geschrieben wurden.
 ab670cd6	Immer aktuell

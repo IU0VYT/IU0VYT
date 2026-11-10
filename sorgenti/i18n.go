@@ -22,7 +22,8 @@ import (
 	"sync/atomic"
 )
 
-var uiLangs = []string{"it", "en", "fr", "de", "es", "pt", "ru", "zh", "ja", "ko", "ar"} // 4.11: coreano e arabo
+// 4.11: coreano e arabo; 4.14: malese e hindi
+var uiLangs = []string{"it", "en", "fr", "de", "es", "pt", "ru", "zh", "ja", "ko", "ar", "ms", "hi"}
 
 func uiLangKnown(l string) bool {
 	for _, x := range uiLangs {

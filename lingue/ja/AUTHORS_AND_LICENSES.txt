@@ -124,6 +124,12 @@ CHIRP に由来する部分
                                             M7OCM (https://github.com/M7OCM/890)
   4.10、CHIRP からの設定：drivers/fd268.py（Copyright 2015 Pavel Milanes CO7WT）
   と drivers/retevis_rt76p.py（Copyright 2021-2022 Jim Unroe KC9HI）、上記と同じ。
+  4.14 (CHIRP 337b385, 09/11/2026), Yaesu / Icom:
+  drivers/ft4.py                            Copyright 2019 Dan Clemmensen
+  drivers/ft60.py, drivers/ict70.py         Copyright 2011 Dan Smith
+  drivers/icf.py, drivers/icv86.py,
+  drivers/icv80.py, drivers/icx8x.py,
+  drivers/ict10.py                          Copyright 2008 Dan Smith
 
 ファームウェア更新のプロトコルと DMR の設定（4.10）
 次のフリーソフトの説明とコードをもとに、Go でゼロから書き直しました（ファイルはコピーしていません。試験に使ったメーカーのファームウェアはパッケージに含まれていません）：
@@ -140,6 +146,7 @@ CHIRP に由来する部分
   dmrconfig（名前、ID、電源オン時のテキスト）Serge Vakulenko KK6ABQ、BSD ライセンス
                                             (https://github.com/OpenRTX/dmrconfig)
 言語選択の旗はプログラム内で描いています（国旗、パブリックドメイン。4.11：韓国語には韓国、アラビア語にはアラブ首長国連邦の旗）。
+4.14：マレー語にはマレーシア、ヒンディー語にはインド。
 
 派生部分を含む IU0VYT Flash のファイル（各ファイルの先頭にも記載）：
 drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、drv_h777.go、drv_small.go、drv_rt900.go、drv_ga510.go、drv_gm30.go、drv_dm32.go、drv_uvk5.go、drv_jc8810.go、drv_tdh8.go、drv_thuv88.go、drv_rt490.go、drv_rt21.go、drv_tk11.go、drv_bfd.go（相互参照）と模擬無線機 genemu_*.go。
@@ -147,6 +154,7 @@ drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、
 4.10：fwrt890.go、fwdm1701.go、fwsgl.go、settings_rdty.go。
 4.11：zonenames.go（RT-920 の名前の形式は radtel_rt900.py による）。
 CHIRP の作者の皆さん、armel F4HWN、M7OCM、JuantAldea、v0l（radio_tool）、OpenGD77 プロジェクト、Hannes Matuschek DM3MAT（qdmr）、Serge Vakulenko KK6ABQ に感謝します。
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 
 QUANSHENG UV-K5 のファームウェア更新（4.1）
 Quansheng の .bin ファイルの形式と UV-K5 のローダーのプロトコルは、フリーソフト k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF、GNU GPL v3、https://github.com/sq5bpf/k5prog）と uvtools（egzumer、https://github.com/egzumer/uvtools）が記述しています。fwk5.go は相互運用のためにその記述をもとにゼロから書いたもので、それらのプログラムのコードはパッケージに含まれていません。試験専用の verifica/k5/k5ref.js は、検証する人が指定したフォルダーから uvtools のコードを読み込みます。SQ5BPF と egzumer に感謝します。
@@ -242,5 +250,5 @@ CHIRP のドライバーで扱う無線機の設定の表（sorgenti/settings_ch
 
 商標と相互運用性
 ----------------
-IU0VYT Flash は独立したプログラムであり、Baofeng、Bajeton、その他記載のメーカー（例：Quansheng、Retevis、Radtel、Radioddity、TIDRADIO、Hiroyasu、Talkpod、Anysecu、BTECH、Abbree、MaxTalker、Intek、Maverick、WLN、Zastone、Luiton）とは提携しておらず、承認も受けていません。機種名は、このプログラムがどの無線機で動作するかを示すためだけに使っています。商標はそれぞれの所有者に帰属します。
+IU0VYT Flash は独立したプログラムであり、Baofeng、Bajeton、その他記載のメーカー（例：Quansheng、Retevis、Radtel、Radioddity、TIDRADIO、Hiroyasu、Talkpod、Anysecu、BTECH、Abbree、MaxTalker、Intek、Maverick、WLN、Zastone、Luiton、Yaesu、Icom）とは提携しておらず、承認も受けていません。機種名は、このプログラムがどの無線機で動作するかを示すためだけに使っています。商標はそれぞれの所有者に帰属します。
 データのプロトコルと形式は、無線機との相互運用のためにメーカーのプログラムから再構成しました（3.3 以降は「BF Series CPS」「T17-T18 PMR446 PRO / FRS」「DM-32UV CPS」と Bajeton の BJ-8200 のパッケージも。3.4 以降は「BF-Ts」「BAOFENG GT18 PMR」「BAJETON DM-5000 CPS」。3.5 以降は「DR-1801A6」とファームウェアのファミリー用の更新プログラム「Baofeng Bootloader Pro」「T6UV Series CPS」。3.6 以降は設定のための「GT-22」「BF_V1_FH」（GT-68）「BT-11_CPS」v1.0.8 と v1.0.9、「BJ-9000_CPS」「5RH PRO」。3.8 以降は BTECH DMR-6X2 の更新ファイルの構造。4.0 以降は CHIRP のドライバーが記述するほかのブランドの無線機のプロトコル）（イタリア法 633/1941 第 64 条の 4、指令 2009/24/EC 第 6 条）。パッケージにはメーカーのコード、プログラム、ファームウェアは含まれていません。機種のギャラリーはメーカーの公式サイトへ案内します。

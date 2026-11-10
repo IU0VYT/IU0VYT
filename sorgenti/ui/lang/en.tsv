@@ -419,6 +419,7 @@ d5c68701	{0} rows cannot be imported
 f001d2b1	Row {0}: {1} — {2}
 7c7b2650	repeaters selected for import · preset filters: only repeaters usable in analog, inactive ones excluded (can be changed)
 5c4ce47f	Downloading the list…
+aaea5743	files
 257b0e9d	Choose the file and load…
 2fb51da1	Download list
 e7666a7f	Replace archive
@@ -491,6 +492,7 @@ ba1633c1	In the Bajeton 8300 tab (from the model gallery) press «⬆ Update fir
 c8eda081	from the PC or download it from the Internet (also Google Drive or Dropbox links): it can be inside archives
 6256ae35	, even one inside another. The program checks the file format, the platform, the name and the fingerprint of the known official firmware; downloaded firmware is kept in the «firmware» folder next to the archive.
 58d0b832	Before sending the firmware the radio is
+49bcaffa	identified
 0b797285	with the Bajeton 8300 programming protocol (and, by default, a copy of its channels is saved); if it does not respond like a Bajeton 8300 the update does not start. You must still confirm that the radio is a BJ-8300.
 6ae9726c	Recovery mode, for a radio that does not start: the radio cannot be identified, so it must be confirmed by typing BJ8300.
 9ea5d63a	During the update do not switch off the radio and do not disconnect the cable. The protocol is that of the original program «BinTe ANC Bootloader» V1.1.
@@ -654,6 +656,7 @@ a0753d3c	Identification
 d62d069e	Recovery mode.
 bcf2b581	The radio cannot be identified: the program (like the original one) waits for about 12 seconds for the radio to show up in update mode.
 59ffb6db	Connect the cable to the radio
+323b6aa6	switched off
 e8909194	Press «Start update».
 11f8e314	Straight afterwards put the radio into update mode following the dealer's instructions (usually by switching it on while holding a key, often the PTT).
 1180f6bb	115200 baud (default of the original program)
@@ -698,6 +701,7 @@ b355f97c	(Retevis procedure):
 6da125d0	Radio switched off: hold down
 45f1c0ab	PTT and P1
 e0b2092b	and switch it on; the indicator turns
+d2a54155	green
 ce8a9d58	Connect the cable, choose the power of your RT85 and press «Start update».
 f58aa906	The file is encrypted and the radio does not check the model: that is why the model must be typed.
 8872885f	If sending is interrupted do not switch the radio on
@@ -982,6 +986,7 @@ c3b3e3b4	The choice is remembered.
 b6e9ddea	🔎 Identify the radio
 6dbdda03	Radio not found?
 c803172d	Switch it on with the volume at half, push the plug all the way in and check the port. UV-17, UV-13Pro and GM-15 Pro must be switched on
+1cbbc3b9	after
 1bcec61d	connecting the cable. DMR radios with a direct USB cable (RD-5R, DM-1801, DM-1701): «USB» port.
 d9d58141	USB — DMR radios connected directly (RD-5R, DM-1801, DM-1701)
 10c99eed	The readings are also saved in: {0}
@@ -5063,3 +5068,96 @@ bc8910a2	check failed: the V6 radio does not contain what was written (0x{0})
 a2a643a8	Radio firmware: IJV V6 {0} {1}, version {2} — changed sectors written: {3}
 85102cf4	settings table of IJV's RadioManager 4.3.2 (V5 and V6 firmware)
 1e75d851	IJV V6 firmware
+2d5d8109	200 channels, SCU-35 cable in the microphone jack. Unlike CHIRP, the simplex written by the radio stays simplex and an offset that is not a multiple of the radio's step becomes a separate transmit frequency.
+06a3659f	Radios that report subtype 3 have their own tab: the program points to the right one.
+88465fa6	Yaesu
+8f0b59d9	Yaesu website
+40716138	{0}{1} Version for the United States.
+3edcec10	{0}{1} European version.
+9215ffd3	{0}{1} VHF only.
+88588031	{0}{1} Version for the United States and Asia.{2}
+ecb75d4c	{0}{1} European version.{2}
+3fb19db9	{0}{1} VHF only.{2}
+667d4978	{0} 1000 channels; the clone is started from the radio («F8 CLONE» mode). Unlike CHIRP, frequencies the radio cannot store are refused instead of being rounded.
+6be6cfc9	Icom
+d509a298	Icom website
+3fa74331	{0} 200 VHF channels with 5-character names.
+5fb5bb65	{0} 200 VHF channels with 5-character names, fast clone.
+483908ff	{0} 300 VHF/UHF channels with 6-character names.
+83999770	{0} 200 VHF/UHF channels with 6-character names.
+949def0a	{0} 200 UHF channels with 5-character names.
+f4c6bc85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz*+-/@
+f76fe334	Yaesu {0}
+bd0cacfc	(subtype 3)
+557df12b	200 channels with {0}-character names. Yaesu SCU-35 cable (or compatible) in the microphone jack, 9600 baud: the cable echoes back every byte sent. Tuning step, banks, PMS channels, VFOs and programmable keys are kept.
+d9cf5870	The radio has no per-channel transmit lock.
+6289c3e3	Transmit disabled is obtained, as in CHIRP, with an offset that falls outside the band.
+e5a27085	{0}{1}CHIRP driver.
+e8175def	Tab for radios that report subtype 3 (offset in 25 kHz units): if the radio is of another type the program says so.
+91a94a11	IFT-35R
+bf511637	IFT-15R
+f44f8eb2	IFT-25R
+9ce9efb9	the radio has no inverted DCS codes
+5c733725	the radio does not allow a CTCSS subtone in one direction and a DCS code in the other
+48f650b7	the cable does not echo back the data sent: check the cable and that it is pushed all the way in
+5ff01c76	the cable does not echo back the data sent as it should: radio off or unsuitable cable
+87e6b091	the radio did not acknowledge the command
+53cacdee	the radio did not enter programming mode (expected the «QX» reply)
+a9d84203	empty radio identifier
+d58f256a	the radio is another model ({0}): open the «{1}» tab or the one of the same series
+c477c1e6	the radio reports subtype {0}: open the «{1}» tab
+d8f8cbdf	invalid memory image ({0} bytes)
+6e71b0e3	Writing block 0x{0}
+5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
+3c19e63e	Yaesu FT-60R / FT-60E
+0e7079a8	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !$%&'()*+,-./|;=>?@[]^_
+5cee59d0	1000 channels with 6-character names. The clone is started from the radio: switch it off, connect the cable to the MIC/SP jack, switch it on while holding [MONI], select «F8 CLONE» with the dial and press [F/W]. To read: start the read here and then hold [PTT] for one second. To write: press [MONI] on the radio («--RX--» appears) and then start the write here. Banks, PMS channels and tuning step are kept. Frequencies are stored in 5 or 12.5 kHz steps. CHIRP driver.
+6065d4a7	the radio does not have this tone combination (allowed: subtone on transmit or in both directions, DCS on transmit or in both directions, subtone and DCS mixed; never a receive-only tone or inverted codes)
+1f61babd	the radio cannot store the frequency {0} MHz (5 or 12.5 kHz steps)
+8280dc40	tone not available on this radio
+4315d197	the radio cannot store the transmit frequency {0} MHz (5 or 12.5 kHz steps)
+b02e4292	the cable does not echo back the data sent as it should: unsuitable cable or interference
+7f40ae2b	Waiting for the radio: hold [PTT] for one second…
+d4da2fa7	the radio sent nothing: put it in «F8 CLONE» and hold [PTT] after starting the read
+307ded2d	the radio is not an FT-60 (identifier {0})
+f9d04bad	block {0} incomplete ({1} bytes)
+400237ed	wrong checksum: repeat the read
+d02a30f9	memory image not valid for the FT-60
+5185086a	the radio does not acknowledge the data: put it in «F8 CLONE» and press [MONI] («--RX--») before starting the write
+9ab44350	unexpected reply from the radio ({0}) during the write
+2c926f56	data from the radio not recognised: check the cable
+e8ae8fa2	the radio is another model: open the «{0}» tab
+eb1316d4	the radio is another model (identifier {0})
+0cb25873	the radio stopped sending data before the end (0x{0})
+2bb37bb5	invalid block from the radio (0x{0})
+d02456ba	wrong checksum in block 0x{0}: repeat the read
+43be7cd5	the radio sent more data than expected (0x{0})
+c1a108a1	incomplete read: {0} bytes of {1}
+2ea938b0	the radio refused the data written
+cccf8e56	Icom OPC-478 cable (or compatible) in the speaker jack, 9600 baud; the radio is switched on normally and shows «CLONE» during the copy.
+b3fa7827	Icom Inc.7C
+03a68a88	Icom IC-V80
+215302ea	200 VHF channels (0 to 199) with 5-character names. {0}The clone is the fast one (38400 baud after identification). Tuning step, scan-edge and call channels and channel reverse are kept. CHIRP driver.
+52b58449	Icom IC-T70
+c4d1c0f5	300 VHF/UHF channels (0 to 299) with 6-character names. {0}Banks are kept. CHIRP driver.
+da70894a	the radio does not have this tone combination (allowed: subtone on transmit, the same subtone in both directions, the same DCS code in both directions)
+bed9a66d	the radio cannot store the frequency {0} MHz (multiples of 5 or 6.25 kHz)
+efa0c310	with the frequency {0} MHz the radio cannot store an offset of {1} Hz
+ae0e8e43	frequency or offset outside the radio's limits
+ee3eef34	Icom Inc.CF
+f63ad748	the radio cannot store an offset of {0} Hz (multiples of 5 kHz)
+d0a1c599	offset outside the radio's limits
+a339fbf5	Icom Inc.AC
+09a693fa	Icom IC-V86
+4deb5042	Maximum 7 W
+7551248e	200 VHF channels (0 to 199) with 5-character names. {0}Tuning step, scan-edge and call channels, channel reverse and transmit permission are kept. CHIRP driver.
+fa4140af	Icom Inc.B8
+d6c3cb9f	Icom IC-T10
+160df882	200 VHF/UHF channels (0 to 199) with 6-character names. {0}Tuning step, scan-edge and call channels, channel reverse and transmit lock are kept. CHIRP driver.
+f03ef25a	Icom Inc.CD
+fe5c79a7	Icom {0}
+2972bf65	200 {0} channels (0 to 199) with 5-character names. {1}Power is not stored in the channel. Banks, D-STAR call signs, tuning step and channels in DV digital mode are kept. CHIRP driver.
+d487a1bd	frequency {0} MHz outside the radio's limits
+f5084846	the radio is the other model of the series: open the «Icom {0}» tab
+e6282e24	the image is not from a {0}
+a7bdcadb	subtype 3

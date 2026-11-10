@@ -12,7 +12,7 @@ f8218bc1	Programma gratuito e libero (GPL) per Windows che legge e scrive canali
 cd611275	GESTIONE CANALI<span class="tag-sep"> - </span><span class="tag-b">FREQUENZE - PONTI RADIO - FIRMWARE</span>
 540321f7	Marche di radio gestite: #
 e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> MARCHE
-5998daca	Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, <br>inserisce i ponti radio italiani e aggiorna il firmware. <br>Un solo file, nessuna installazione, in italiano e in altre 10 lingue.
+c06671f0	Il programma gratuito per Windows che legge e scrive canali e frequenze delle tue radio via cavo, <br>inserisce i ponti radio italiani e aggiorna il firmware. <br>Un solo file, nessuna installazione, in italiano e in altre 12 lingue.
 65c3ed2e	ULTIMA VERSIONE:
 4fc59698	Il pulsante scarica sempre il pacchetto dell'ultima versione pubblicata.
 b6a8d2e0	ULTIMA VERSIONE
@@ -45,8 +45,8 @@ ecd4b3ef	Aggiornamento firmware
 d72d8b35	Firmware di <span data-n="firmware">#</span> modelli con i protocolli dei programmi ufficiali, controllo del file e copia di sicurezza.
 620c0164	Galleria dei modelli
 fd632a2d	<span data-n="galleria">#</span> radio di <span data-n="marche">#</span> marche divise per tipologia (radioamatoriali, DMR, GMRS/FRS, PMR446, per bambini) e per marca, con ricerca e link a programmi e manuali ufficiali.
-c86bd7e2	In 11 lingue
-7bf9a67c	Oltre all'italiano, il programma è disponibile in inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese, coreano e arabo: si sceglie la bandiera accanto a «Info» e tutto il programma cambia lingua all'istante. Guida e informazioni tradotte nella cartella <code>lingue</code> del pacchetto.
+c7b2d824	In 13 lingue
+016db81f	Oltre all'italiano, il programma è disponibile in inglese, francese, tedesco, spagnolo, portoghese, russo, cinese, giapponese, coreano, arabo, malese e hindi: si sceglie la bandiera accanto a «Info» e tutto il programma cambia lingua all'istante. Guida e informazioni tradotte nella cartella <code>lingue</code> del pacchetto.
 e60a286e	Copia di sicurezza
 adfe4a55	Prima di ogni scrittura il programma salva il contenuto della radio e dopo verifica che i dati siano stati scritti correttamente.
 ab670cd6	Sempre aggiornato

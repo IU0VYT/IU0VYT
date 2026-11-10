@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.13.1 - un seul fichier exécutable, aucune installation, interface en 11
+Version 4.14.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,29 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.14.0 :
+- YAESU ET ICOM : deux nouvelles marques (46 en tout) et 13 radios de plus, avec les
+  canaux par câble et des fichiers .img compatibles avec CHIRP. Yaesu FT-4XR, FT-4XE,
+  FT-4VR, FT-65R, FT-65E et FT-25R (câble SCU-35 dans la prise du microphone ; les
+  radios qui déclarent le « sous-type 3 » ont un onglet à part et le programme indique
+  le bon), Yaesu FT-60R/E (copie lancée depuis la radio, mode « F8 CLONE ») ; Icom
+  IC-V86, IC-T10, IC-V80, IC-T70, IC-V82 et IC-U82 (câble OPC-478 dans la prise du
+  haut-parleur ; la radio affiche « CLONE » pendant la copie). Réglages pour toutes sauf
+  l'IC-T70. Pas de mise à jour du firmware pour ces radios. Tout est testé avec des
+  radios simulées et comparé octet par octet avec CHIRP ; les vraies radios n'ont pas
+  encore été testées : conservez la copie de sauvegarde et signalez tout problème.
+- LANGUES : deux langues de plus, le malais (Bahasa Melayu, drapeau de la Malaisie) et
+  le hindi (हिन्दी, drapeau de l'Inde), 13 en tout : programme, site, fichiers
+  d'information du dossier « lingue », README et politique de sécurité.
+- Galerie : 502 modèles de 46 marques (464 avec canaux, 409 avec réglages).
+- Wouxun KG-UV8D : noms internes des champs alignés sur le CHIRP d'aujourd'hui (aucun
+  effet sur les canaux).
+- Corrigé : cinq mots en gras des guides du programme restaient en italien dans toutes
+  les langues.
+- Convertisseur et transfert vers une autre radio, vers les radios Yaesu et Icom : les
+  tons que la radio n'a pas sont retirés avec un avertissement et les canaux qu'elle ne
+  peut pas mémoriser sont ignorés avec un avertissement, au lieu d'arrêter toute
+  l'opération.
 Nouveautés de la 4.13.1 :
 - FIRMWARE IJV V6 : nouvel onglet « Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6) ».
   Par la liaison de données de la V6, les 500 canaux de la banque choisie sur la radio,
@@ -834,6 +857,9 @@ LANGUE DE L'INTERFACE (4.10)
   liste des langues : italiano, English, Français, Deutsch, Español, Português,
   Русский, 中文, 日本語, 한국어 (coréen, 4.11, drapeau de la Corée du Sud), العربية (arabe,
   4.11, drapeau des Émirats arabes unis).
+- Depuis la 4.14 aussi Bahasa Melayu (malais, drapeau de la Malaisie) et हिन्दी (hindi,
+  drapeau de l'Inde) ; leurs fichiers traduits sont dans les sous-dossiers « ms » et «
+  hi » de « lingue ».
 - Avec l'arabe, la page se lit de droite à gauche ; les fréquences, les nombres et les
   codes restent de gauche à droite. Pour l'arabe on utilise le drapeau des Émirats
   arabes unis, car celui de l'Arabie saoudite contient un texte religieux (la

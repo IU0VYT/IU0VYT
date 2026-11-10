@@ -544,6 +544,8 @@ func init() {
 	// 4.8: radio aggiunte da CHIRP (catalog_48.go)
 	catalog = append(catalog, catalog48...)
 	catalog = append(catalog, catalog49...)
+	// 4.14: Yaesu e Icom (catalog_414.go)
+	catalog = append(catalog, catalog414...)
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

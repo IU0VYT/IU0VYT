@@ -419,6 +419,7 @@ d5c68701	{0} filas no importables
 f001d2b1	Fila {0}: {1} — {2}
 7c7b2650	repetidores seleccionados para importar · filtros predefinidos: solo repetidores utilizables en analógico, excluidos los no activos (modificables)
 5c4ce47f	Descargando la lista…
+aaea5743	archivos
 257b0e9d	Elegir el archivo y cargar…
 2fb51da1	Descargar lista
 e7666a7f	Sustituir archivo
@@ -491,6 +492,7 @@ ba1633c1	En la pestaña Bajeton 8300 (desde la galería de modelos) pulsa «⬆ 
 c8eda081	del PC o descárgalo de Internet (también enlaces de Google Drive o Dropbox): puede estar dentro de archivos comprimidos
 6256ae35	, incluso uno dentro de otro. El programa comprueba el formato del archivo, la plataforma, el nombre y la huella de los firmwares oficiales conocidos; los firmwares descargados se guardan en la carpeta «firmware» junto al archivo.
 58d0b832	Antes de enviar el firmware, la radio se
+49bcaffa	identifica
 0b797285	con el protocolo de programación de la Bajeton 8300 (y, por defecto, se guarda una copia de sus canales); si no responde como una Bajeton 8300 la actualización no empieza. Igualmente debes confirmar que la radio es una BJ-8300.
 6ae9726c	Modo de recuperación, para una radio que no arranca: la radio no puede identificarse, así que hay que confirmarla escribiendo BJ8300.
 9ea5d63a	Durante la actualización no apagues la radio ni desconectes el cable. El protocolo es el del programa original «BinTe ANC Bootloader» V1.1.
@@ -654,6 +656,7 @@ a0753d3c	Identificación
 d62d069e	Modo de recuperación.
 bcf2b581	La radio no puede identificarse: el programa (como el original) espera unos 12 segundos a que la radio aparezca en modo de actualización.
 59ffb6db	Conecta el cable a la radio
+323b6aa6	apagada
 e8909194	Pulsa «Iniciar actualización».
 11f8e314	Justo después pon la radio en modo de actualización según las instrucciones del vendedor (normalmente encendiéndola mientras mantienes pulsada una tecla, a menudo el PTT).
 1180f6bb	115200 baudios (predeterminada del programa original)
@@ -698,6 +701,7 @@ b355f97c	(procedimiento de Retevis):
 6da125d0	Radio apagada: mantén pulsados
 45f1c0ab	PTT y P1
 e0b2092b	y enciéndela; el indicador se pone
+d2a54155	verde
 ce8a9d58	Conecta el cable, elige la potencia de tu RT85 y pulsa «Iniciar actualización».
 f58aa906	El archivo está cifrado y la radio no comprueba el modelo: por eso hay que escribir el modelo.
 8872885f	Si el envío se interrumpe no enciendas la radio
@@ -982,6 +986,7 @@ c3b3e3b4	La elección queda memorizada.
 b6e9ddea	🔎 Identificar la radio
 6dbdda03	¿No se encuentra la radio?
 c803172d	Enciéndela con el volumen a la mitad, mete el conector hasta el fondo y comprueba el puerto. UV-17, UV-13Pro y GM-15 Pro deben encenderse
+1cbbc3b9	después de
 1bcec61d	conectar el cable. Radios DMR con cable USB directo (RD-5R, DM-1801, DM-1701): puerto «USB».
 d9d58141	USB — radios DMR conectadas directamente (RD-5R, DM-1801, DM-1701)
 10c99eed	Las lecturas también se guardan en: {0}
@@ -5063,3 +5068,96 @@ bc8910a2	verificación fallida: en la radio V6 no está lo que se ha escrito (0x
 a2a643a8	Firmware de la radio: IJV V6 {0} {1}, versión {2} — sectores cambiados escritos: {3}
 85102cf4	tabla de ajustes de RadioManager 4.3.2 de IJV (firmware V5 y V6)
 1e75d851	firmware IJV V6
+2d5d8109	200 canales, cable SCU-35 en la toma del micrófono. A diferencia de CHIRP, el símplex escrito por la radio sigue siendo símplex y un desplazamiento que no es múltiplo del paso de la radio pasa a ser una frecuencia de transmisión separada.
+06a3659f	Las radios que declaran el subtipo 3 tienen una ficha aparte: el programa indica la correcta.
+88465fa6	Yaesu
+8f0b59d9	Sitio de Yaesu
+40716138	{0}{1} Versión para Estados Unidos.
+3edcec10	{0}{1} Versión europea.
+9215ffd3	{0}{1} Solo VHF.
+88588031	{0}{1} Versión para Estados Unidos y Asia.{2}
+ecb75d4c	{0}{1} Versión europea.{2}
+3fb19db9	{0}{1} Solo VHF.{2}
+667d4978	{0} 1000 canales; la copia parte de la radio (modo «F8 CLONE»). A diferencia de CHIRP, las frecuencias que la radio no puede memorizar se rechazan en lugar de redondearse.
+6be6cfc9	Icom
+d509a298	Sitio de Icom
+3fa74331	{0} 200 canales VHF con nombres de 5 caracteres.
+5fb5bb65	{0} 200 canales VHF con nombres de 5 caracteres, copia rápida.
+483908ff	{0} 300 canales VHF/UHF con nombres de 6 caracteres.
+83999770	{0} 200 canales VHF/UHF con nombres de 6 caracteres.
+949def0a	{0} 200 canales UHF con nombres de 5 caracteres.
+f4c6bc85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz*+-/@
+f76fe334	Yaesu {0}
+bd0cacfc	(subtipo 3)
+557df12b	200 canales con nombres de {0} caracteres. Cable Yaesu SCU-35 (o compatible) en la toma del micrófono, 9600 baudios: el cable devuelve cada byte enviado. Paso de sintonía, bancos, canales PMS, VFO y teclas programables se conservan.
+d9cf5870	La radio no tiene bloqueo de transmisión por canal.
+6289c3e3	La transmisión desactivada se obtiene, como en CHIRP, con un desplazamiento que cae fuera de banda.
+e5a27085	{0}{1}Controlador de CHIRP.
+e8175def	Ficha para las radios que declaran el subtipo 3 (desplazamiento en unidades de 25 kHz): si la radio es de otro tipo, el programa lo dice.
+91a94a11	IFT-35R
+bf511637	IFT-15R
+f44f8eb2	IFT-25R
+9ce9efb9	la radio no tiene códigos DCS invertidos
+5c733725	la radio no permite un subtono en un sentido y un código DCS en el otro
+48f650b7	el cable no devuelve los datos enviados: comprueba el cable y que esté insertado hasta el fondo
+5ff01c76	el cable no devuelve los datos enviados como debería: radio apagada o cable no adecuado
+87e6b091	la radio no ha confirmado el comando
+53cacdee	la radio no ha entrado en programación (se esperaba la respuesta «QX»)
+a9d84203	identificador de la radio vacío
+d58f256a	la radio es otro modelo ({0}): abre la ficha «{1}» o la de la misma serie
+c477c1e6	la radio declara el subtipo {0}: abre la ficha «{1}»
+d8f8cbdf	imagen de la memoria no válida ({0} bytes)
+6e71b0e3	Escritura del bloque 0x{0}
+5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
+3c19e63e	Yaesu FT-60R / FT-60E
+0e7079a8	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !$%&'()*+,-./|;=>?@[]^_
+5cee59d0	1000 canales con nombres de 6 caracteres. La copia parte de la radio: apágala, conecta el cable a la toma MIC/SP, enciéndela manteniendo pulsado [MONI], elige «F8 CLONE» con el mando y pulsa [F/W]. Para leer: inicia aquí la lectura y luego mantén pulsado [PTT] un segundo. Para escribir: pulsa [MONI] en la radio (aparece «--RX--») y luego inicia aquí la escritura. Bancos, canales PMS y paso de sintonía se conservan. Las frecuencias se memorizan en pasos de 5 o 12,5 kHz. Controlador de CHIRP.
+6065d4a7	la radio no tiene esta combinación de tonos (admitidos: subtono en transmisión o en ambos sentidos, DCS en transmisión o en ambos sentidos, subtono y DCS mezclados; nunca solo el tono en recepción ni códigos invertidos)
+1f61babd	la radio no puede memorizar la frecuencia {0} MHz (pasos de 5 o 12,5 kHz)
+8280dc40	tono no disponible en esta radio
+4315d197	la radio no puede memorizar la frecuencia de transmisión {0} MHz (pasos de 5 o 12,5 kHz)
+b02e4292	el cable no devuelve los datos enviados como debería: cable no adecuado o interferencias
+7f40ae2b	Esperando a la radio: mantén pulsado [PTT] un segundo…
+d4da2fa7	la radio no ha enviado nada: ponla en «F8 CLONE» y mantén pulsado [PTT] después de iniciar la lectura
+307ded2d	la radio no es una FT-60 (identificador {0})
+f9d04bad	bloque {0} incompleto ({1} bytes)
+400237ed	suma de comprobación errónea: repite la lectura
+d02a30f9	imagen de la memoria no válida para la FT-60
+5185086a	la radio no confirma los datos: ponla en «F8 CLONE» y pulsa [MONI] («--RX--») antes de iniciar la escritura
+9ab44350	respuesta inesperada de la radio ({0}) durante la escritura
+2c926f56	datos de la radio no reconocidos: comprueba el cable
+e8ae8fa2	la radio es otro modelo: abre la ficha «{0}»
+eb1316d4	la radio es otro modelo (identificador {0})
+0cb25873	la radio ha dejado de enviar datos antes del final (0x{0})
+2bb37bb5	bloque de la radio no válido (0x{0})
+d02456ba	suma de comprobación errónea en el bloque 0x{0}: repite la lectura
+43be7cd5	la radio ha enviado más datos de los previstos (0x{0})
+c1a108a1	lectura incompleta: {0} bytes de {1}
+2ea938b0	la radio ha rechazado los datos escritos
+cccf8e56	Cable Icom OPC-478 (o compatible) en la toma del altavoz, 9600 baudios; la radio se enciende normalmente y durante la copia muestra «CLONE».
+b3fa7827	Icom Inc.7C
+03a68a88	Icom IC-V80
+215302ea	200 canales VHF (de 0 a 199) con nombres de 5 caracteres. {0}La copia es la rápida (38400 baudios tras la identificación). Paso de sintonía, canales de exploración y de llamada e inversión del canal se conservan. Controlador de CHIRP.
+52b58449	Icom IC-T70
+c4d1c0f5	300 canales VHF/UHF (de 0 a 299) con nombres de 6 caracteres. {0}Los bancos se conservan. Controlador de CHIRP.
+da70894a	la radio no tiene esta combinación de tonos (admitidos: subtono en transmisión, el mismo subtono en ambos sentidos, el mismo código DCS en ambos sentidos)
+bed9a66d	la radio no puede memorizar la frecuencia {0} MHz (múltiplos de 5 o de 6,25 kHz)
+efa0c310	con la frecuencia {0} MHz la radio no puede memorizar un desplazamiento de {1} Hz
+ae0e8e43	frecuencia o desplazamiento fuera de los límites de la radio
+ee3eef34	Icom Inc.CF
+f63ad748	la radio no puede memorizar un desplazamiento de {0} Hz (múltiplos de 5 kHz)
+d0a1c599	desplazamiento fuera de los límites de la radio
+a339fbf5	Icom Inc.AC
+09a693fa	Icom IC-V86
+4deb5042	Máxima 7 W
+7551248e	200 canales VHF (de 0 a 199) con nombres de 5 caracteres. {0}Paso de sintonía, canales de exploración y de llamada, inversión y permiso de transmisión del canal se conservan. Controlador de CHIRP.
+fa4140af	Icom Inc.B8
+d6c3cb9f	Icom IC-T10
+160df882	200 canales VHF/UHF (de 0 a 199) con nombres de 6 caracteres. {0}Paso de sintonía, canales de exploración y de llamada, inversión y bloqueo de la transmisión del canal se conservan. Controlador de CHIRP.
+f03ef25a	Icom Inc.CD
+fe5c79a7	Icom {0}
+2972bf65	200 canales {0} (de 0 a 199) con nombres de 5 caracteres. {1}La potencia no se memoriza en el canal. Bancos, indicativos D-STAR, paso de sintonía y canales en modo digital DV se conservan. Controlador de CHIRP.
+d487a1bd	frecuencia {0} MHz fuera de los límites de la radio
+f5084846	la radio es el otro modelo de la serie: abre la ficha «Icom {0}»
+e6282e24	la imagen no es de una {0}
+a7bdcadb	subtipo 3

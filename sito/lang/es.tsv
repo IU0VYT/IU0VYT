@@ -12,7 +12,7 @@ f8218bc1	Programa gratuito y libre (GPL) para Windows que lee y escribe canales,
 cd611275	GESTIÓN DE CANALES<span class="tag-sep"> - </span><span class="tag-b">FRECUENCIAS - REPETIDORES - FIRMWARE</span>
 540321f7	Marcas de radio compatibles: #
 e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> MARCAS
-5998daca	El programa gratuito para Windows que lee y escribe los canales y las frecuencias de tus radios por cable, <br>inserta los repetidores italianos y actualiza el firmware. <br>Un solo archivo, sin instalación, en italiano y en otros 10 idiomas.
+c06671f0	El programa gratuito para Windows que lee y escribe los canales y las frecuencias de tus radios por cable, <br>inserta los repetidores italianos y actualiza el firmware. <br>Un solo archivo, sin instalación, en italiano y en otros 12 idiomas.
 65c3ed2e	ÚLTIMA VERSIÓN:
 4fc59698	El botón descarga siempre el paquete de la última versión publicada.
 b6a8d2e0	ÚLTIMA VERSIÓN
@@ -45,8 +45,8 @@ ecd4b3ef	Actualización del firmware
 d72d8b35	Firmware de <span data-n="firmware">#</span> modelos con los protocolos de los programas oficiales, control del archivo y copia de seguridad.
 620c0164	Galería de modelos
 fd632a2d	<span data-n="galleria">#</span> radios de <span data-n="marche">#</span> marcas divididas por tipo (radioaficionado, DMR, GMRS/FRS, PMR446, para niños) y por marca, con búsqueda y enlaces a los programas y manuales oficiales.
-c86bd7e2	En 11 idiomas
-7bf9a67c	Además del italiano, el programa está disponible en inglés, francés, alemán, español, portugués, ruso, chino, japonés, coreano y árabe: se elige la bandera junto a «Info» y todo el programa cambia de idioma al instante. Guía e información traducidas en la carpeta <code>lingue</code> del paquete.
+c7b2d824	En 13 idiomas
+016db81f	Además del italiano, el programa está disponible en inglés, francés, alemán, español, portugués, ruso, chino, japonés, coreano, árabe, malayo e hindi: se elige la bandera junto a «Info» y todo el programa cambia de idioma al instante. Guía e información traducidas en la carpeta <code>lingue</code> del paquete.
 e60a286e	Copia de seguridad
 adfe4a55	Antes de cada escritura el programa guarda el contenido de la radio y después comprueba que los datos se hayan escrito correctamente.
 ab670cd6	Siempre actualizado

@@ -144,6 +144,20 @@ func TestIdentifyEachModel(t *testing.T) {
 		if only != "" && m.ID != only {
 			continue
 		}
+		if _, ok := m.Fam.(interface{ noIdent() }); ok {
+			// 4.14: la copia parte dalla radio (FT-60): fuori da «Identifica»
+			identPortMu.Lock()
+			plan := a.identPlan(&identReq{Port: "COM7"})
+			identPortMu.Unlock()
+			for _, p := range plan {
+				for _, k := range p.kinds {
+					if k == m {
+						t.Errorf("%s: non deve essere fra i tentativi di «Identifica»", m.Name)
+					}
+				}
+			}
+			continue
+		}
 		mem := identModelBase(t, m)
 		if mem == nil {
 			t.Logf("%s: nessuna immagine di prova", m.Name)

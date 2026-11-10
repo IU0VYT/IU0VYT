@@ -65,9 +65,17 @@ def find_class(name):
 
 def load(cls, path):
     data = open(path, "rb").read()
+    meta = {}
     if MAGIC in data:
+        try:
+            meta = json.loads(base64.b64decode(data[data.index(MAGIC) + len(MAGIC):]).decode())
+        except Exception:
+            meta = {}
         data = data[:data.index(MAGIC)]
     r = cls(None)
+    # 4.14: metadati che cambiano la lettura della memoria (Yaesu FT-65: sottotipo)
+    if "ft4_subtype" in meta:
+        r._metadata["ft4_subtype"] = meta["ft4_subtype"]
     if r.NEEDS_COMPAT_SERIAL:
         r._mmap = memmap.MemoryMap(data)
     else:

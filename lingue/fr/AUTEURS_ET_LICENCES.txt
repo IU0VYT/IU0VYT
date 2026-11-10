@@ -142,6 +142,12 @@ Auteurs indiqués dans les fichiers de CHIRP utilisés :
                                             M7OCM (https://github.com/M7OCM/890)
   4.10, réglages depuis CHIRP : drivers/fd268.py (Copyright 2015 Pavel Milanes CO7WT)
   et drivers/retevis_rt76p.py (Copyright 2021-2022 Jim Unroe KC9HI), comme ci-dessus.
+  4.14 (CHIRP 337b385, 09/11/2026), Yaesu / Icom:
+  drivers/ft4.py                            Copyright 2019 Dan Clemmensen
+  drivers/ft60.py, drivers/ict70.py         Copyright 2011 Dan Smith
+  drivers/icf.py, drivers/icv86.py,
+  drivers/icv80.py, drivers/icx8x.py,
+  drivers/ict10.py                          Copyright 2008 Dan Smith
 
 PROTOCOLES DE MISE À JOUR DU FIRMWARE ET RÉGLAGES DMR (4.10)
 Réécrits de zéro en Go à partir des descriptions et du code de ces programmes libres
@@ -162,6 +168,7 @@ pas dans le paquet) :
 Les drapeaux du sélecteur de langue sont dessinés dans le programme (drapeaux
 nationaux, domaine public ; 4.11 : Corée du Sud pour le coréen, Émirats arabes unis
 pour l'arabe).
+4.14 : Malaisie pour le malais, Inde pour le hindi.
 
 Fichiers d'IU0VYT Flash avec des parties dérivées (indiqué aussi en tête de chaque
 fichier) :
@@ -178,6 +185,7 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go ;
 4.11 : zonenames.go (format des noms de la RT-920 d'après radtel_rt900.py).
 Merci aux auteurs de CHIRP, à armel F4HWN, à M7OCM, à JuantAldea, à v0l (radio_tool),
 au projet OpenGD77, à Hannes Matuschek DM3MAT (qdmr) et à Serge Vakulenko KK6ABQ.
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 
 MISE À JOUR DU FIRMWARE DE LA QUANSHENG UV-K5 (4.1)
 Le format des fichiers .bin de Quansheng et le protocole du chargeur de l'UV-K5 sont
@@ -369,7 +377,7 @@ MARQUES ET INTEROPÉRABILITÉ
 IU0VYT Flash est un programme indépendant, ni affilié à Baofeng, à Bajeton ou aux
 autres fabricants cités (p. ex. Quansheng, Retevis, Radtel, Radioddity, TIDRADIO,
 Hiroyasu, Talkpod, Anysecu, BTECH, Abbree, MaxTalker, Intek, Maverick, WLN, Zastone,
-Luiton) ni approuvé par eux. Les noms des modèles servent seulement à indiquer avec
+Luiton, Yaesu, Icom) ni approuvé par eux. Les noms des modèles servent seulement à indiquer avec
 quelles radios fonctionne le programme. Les marques appartiennent à leurs titulaires
 respectifs.
 Les protocoles et formats des données ont été reconstitués, pour l'interopérabilité

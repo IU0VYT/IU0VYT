@@ -124,6 +124,12 @@ https://www.qrz.com/db/IU0VYT
                                             M7OCM (https://github.com/M7OCM/890)
   4.10，来自 CHIRP 的设置：drivers/fd268.py（Copyright 2015 Pavel Milanes CO7WT）
   和 drivers/retevis_rt76p.py（Copyright 2021-2022 Jim Unroe KC9HI），同上。
+  4.14 (CHIRP 337b385, 09/11/2026), Yaesu / Icom:
+  drivers/ft4.py                            Copyright 2019 Dan Clemmensen
+  drivers/ft60.py, drivers/ict70.py         Copyright 2011 Dan Smith
+  drivers/icf.py, drivers/icv86.py,
+  drivers/icv80.py, drivers/icx8x.py,
+  drivers/ict10.py                          Copyright 2008 Dan Smith
 
 固件升级协议和 DMR 设置（4.10）
 根据以下自由程序的说明和代码，用 Go 从零重写（未复制任何文件；测试所用的厂家固件不在软件包中）：
@@ -140,6 +146,7 @@ https://www.qrz.com/db/IU0VYT
   dmrconfig（名称、ID 和开机文字）          Serge Vakulenko KK6ABQ，BSD 许可证
                                             (https://github.com/OpenRTX/dmrconfig)
 语言选择器中的旗帜由程序绘制（国旗，属于公有领域；4.11：韩语用韩国国旗，阿拉伯语用阿拉伯联合酋长国国旗）。
+4.14：马来语用马来西亚国旗，印地语用印度国旗。
 
 IU0VYT Flash 中包含派生部分的文件（每个文件开头也有说明）：
 drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、drv_h777.go、drv_small.go、drv_rt900.go、drv_ga510.go、drv_gm30.go、drv_dm32.go、drv_uvk5.go、drv_jc8810.go、drv_tdh8.go、drv_thuv88.go、drv_rt490.go、drv_rt21.go、drv_tk11.go、drv_bfd.go（交叉参考）以及模拟电台 genemu_*.go；
@@ -147,6 +154,7 @@ drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、
 4.10：fwrt890.go、fwdm1701.go、fwsgl.go、settings_rdty.go。
 4.11：zonenames.go（RT-920 名称的格式依据 radtel_rt900.py）。
 感谢 CHIRP 的作者、armel F4HWN、M7OCM、JuantAldea、v0l（radio_tool）、OpenGD77 项目、Hannes Matuschek DM3MAT（qdmr）和 Serge Vakulenko KK6ABQ。
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 
 QUANSHENG UV-K5 固件升级（4.1）
 Quansheng .bin 文件的格式和 UV-K5 引导程序的协议由自由程序 k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF，GNU GPL v3，https://github.com/sq5bpf/k5prog）和 uvtools（egzumer，https://github.com/egzumer/uvtools）记录。为实现互操作性，fwk5.go 根据这些资料从零编写；软件包中不包含这些程序的任何代码。verifica/k5/k5ref.js 只用于测试，它从执行验证者指定的文件夹加载 uvtools 的代码。感谢 SQ5BPF 和 egzumer。
@@ -242,5 +250,5 @@ dmrconfig 许可证全文：
 
 商标和互操作性
 --------------
-IU0VYT Flash 是独立程序，与 Baofeng、Bajeton 或提及的其他厂家（例如 Quansheng、Retevis、Radtel、Radioddity、TIDRADIO、Hiroyasu、Talkpod、Anysecu、BTECH、Abbree、MaxTalker、Intek、Maverick、WLN、Zastone、Luiton）没有关联，也未获其认可。型号名称仅用于说明本程序适用于哪些电台。商标归各自所有者所有。
+IU0VYT Flash 是独立程序，与 Baofeng、Bajeton 或提及的其他厂家（例如 Quansheng、Retevis、Radtel、Radioddity、TIDRADIO、Hiroyasu、Talkpod、Anysecu、BTECH、Abbree、MaxTalker、Intek、Maverick、WLN、Zastone、Luiton、Yaesu、Icom）没有关联，也未获其认可。型号名称仅用于说明本程序适用于哪些电台。商标归各自所有者所有。
 为实现与电台的互操作性，数据协议和格式根据厂家程序重建（自 3.3 起还有“BF Series CPS”“T17-T18 PMR446 PRO / FRS”“DM-32UV CPS”和 Bajeton 的 BJ-8200 软件包；自 3.4 起有“BF-Ts”“BAOFENG GT18 PMR”“BAJETON DM-5000 CPS”；自 3.5 起有“DR-1801A6”以及固件系列的升级程序“Baofeng Bootloader Pro”和“T6UV Series CPS”；自 3.6 起有用于设置的“GT-22”“BF_V1_FH”（GT-68）“BT-11_CPS”v1.0.8 和 v1.0.9、“BJ-9000_CPS”和“5RH PRO”；自 3.8 起有 BTECH DMR-6X2 升级文件的结构；自 4.0 起有 CHIRP 驱动所记录的其他品牌电台的协议）（意大利第 633/1941 号法律第 64-quater 条，第 2009/24/EC 号指令第 6 条）。软件包中不包含厂家的代码、程序或固件：型号库会链接到厂家的官方网站。

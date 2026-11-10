@@ -133,6 +133,12 @@ dcf5d2519310. 4.6과 4.7에서 추가한 무전기는 2026/11/04의 리비전 ba
                                             M7OCM (https://github.com/M7OCM/890)
   4.10, CHIRP의 설정: drivers/fd268.py (Copyright 2015 Pavel Milanes CO7WT)
   와 drivers/retevis_rt76p.py (Copyright 2021-2022 Jim Unroe KC9HI), 위와 같음.
+  4.14 (CHIRP 337b385, 09/11/2026), Yaesu / Icom:
+  drivers/ft4.py                            Copyright 2019 Dan Clemmensen
+  drivers/ft60.py, drivers/ict70.py         Copyright 2011 Dan Smith
+  drivers/icf.py, drivers/icv86.py,
+  drivers/icv80.py, drivers/icx8x.py,
+  drivers/ict10.py                          Copyright 2008 Dan Smith
 
 펌웨어 업데이트 프로토콜과 DMR 설정(4.10)
 다음 자유 프로그램의 설명과 코드를 바탕으로 Go로 처음부터 다시 썼습니다(복사한 파일 없음. 시험에 쓴 제조사 펌웨어는 패키지에 없음):
@@ -150,6 +156,7 @@ dcf5d2519310. 4.6과 4.7에서 추가한 무전기는 2026/11/04의 리비전 ba
   dmrconfig (이름, ID, 전원 문구)           Serge Vakulenko KK6ABQ, BSD 라이선스
                                             (https://github.com/OpenRTX/dmrconfig)
 언어 선택기의 국기는 프로그램 안에서 그립니다(국기, 퍼블릭 도메인. 4.11: 한국어에는 대한민국, 아랍어에는 아랍에미리트).
+4.14: 말레이어에는 말레이시아, 힌디어에는 인도.
 
 다른 프로그램에서 온 부분이 있는 IU0VYT Flash 파일(각 파일 맨 위에도 적혀 있음):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go, drv_h777.go,
@@ -165,6 +172,7 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.11: zonenames.go(RT-920 이름의 형식은 radtel_rt900.py에서).
 CHIRP의 작성자들, armel F4HWN, M7OCM, JuantAldea, v0l(radio_tool), OpenGD77 프로젝트, Hannes
 Matuschek DM3MAT(qdmr), Serge Vakulenko KK6ABQ에게 감사드립니다.
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 
 QUANSHENG UV-K5 펌웨어 업데이트(4.1)
 Quansheng .bin 파일의 형식과 UV-K5 로더의 프로토콜은 자유 프로그램 k5prog(Copyright 2023 Jacek Lipkowski
@@ -319,7 +327,7 @@ CHIRP 드라이버로 다루는 무전기의 설정 표(sorgenti/settings_chirp.
 -------------------------------
 IU0VYT Flash는 Baofeng, Bajeton 또는 언급한 다른 제조사(예: Quansheng, Retevis, Radtel,
 Radioddity, TIDRADIO, Hiroyasu, Talkpod, Anysecu, BTECH, Abbree, MaxTalker, Intek,
-Maverick, WLN, Zastone, Luiton)와 제휴하거나 그들이 보증하지 않은 독립 프로그램입니다. 모델 이름은 프로그램이 어떤 무전기와
+Maverick, WLN, Zastone, Luiton, Yaesu, Icom)와 제휴하거나 그들이 보증하지 않은 독립 프로그램입니다. 모델 이름은 프로그램이 어떤 무전기와
 동작하는지 나타내는 데만 씁니다. 상표는 각 소유자의 것입니다.
 데이터 프로토콜과 형식은 무전기와의 상호 운용성을 위해 제조사 프로그램에서 재구성했습니다(3.3부터 «BF Series CPS», «T17-T18
 PMR446 PRO / FRS», «DM-32UV CPS»와 Bajeton의 BJ-8200 패키지도; 3.4부터 «BF-Ts», «BAOFENG GT18

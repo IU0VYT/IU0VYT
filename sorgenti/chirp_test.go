@@ -120,7 +120,9 @@ var chirpImageMeta = map[string]map[string]interface{}{
 	"qs-uvk5-osfw":     {"uvk5_firmware": "OSFW-bd90ca3", "variant": "OSFW"},
 	"tdr-tdm11-16v095": {"rclass": "TDM11_16_1", "variant": "16 PMR v0.9.5"},
 	"bj-uv55":          {},
-	"at-obltr8r":       {},
+	// 4.14: Yaesu FT-65/FT-25 con sottotipo 3 (scostamento in unità da 25 kHz)
+	"ys-ft65r-s3": {"ft4_subtype": 3}, "ys-ft65e-s3": {"ft4_subtype": 3}, "ys-ft25r-s3": {"ft4_subtype": 3},
+	"at-obltr8r": {},
 }
 
 // 4.9: classi di driver esterni a CHIRP (vedi verifica/chirp/chirpextra.py):
@@ -272,6 +274,15 @@ func cmpChanP(m *genModel, n int, g *Chan, c *chirpChan, pi int) string {
 	}
 	if g == nil {
 		return ""
+	}
+	// 4.14: differenze volute e documentate rispetto a CHIRP (es. Yaesu FT-4X/FT-65:
+	// il simplex che CHIRP mostra come trasmissione disabilitata)
+	if fx, ok := m.Fam.(interface {
+		chirpRefFix(*genModel, *Chan, *chirpChan)
+	}); ok {
+		cc := *c
+		c = &cc
+		fx.chirpRefFix(m, g, c)
 	}
 	var diffs []string
 	if g.Rx != c.Rx {

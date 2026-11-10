@@ -140,6 +140,12 @@ GNU General Public License (версии 2 или новее либо 3 или �
                                             M7OCM (https://github.com/M7OCM/890)
   4.10, настройки из CHIRP: drivers/fd268.py (Copyright 2015 Pavel Milanes CO7WT)
   и drivers/retevis_rt76p.py (Copyright 2021-2022 Jim Unroe KC9HI), как выше.
+  4.14 (CHIRP 337b385, 09/11/2026), Yaesu / Icom:
+  drivers/ft4.py                            Copyright 2019 Dan Clemmensen
+  drivers/ft60.py, drivers/ict70.py         Copyright 2011 Dan Smith
+  drivers/icf.py, drivers/icv86.py,
+  drivers/icv80.py, drivers/icx8x.py,
+  drivers/ict10.py                          Copyright 2008 Dan Smith
 
 ПРОТОКОЛЫ ОБНОВЛЕНИЯ ПРОШИВКИ И НАСТРОЙКИ DMR (4.10)
 Переписаны с нуля на Go по описаниям и коду этих свободных программ (ни один файл не
@@ -159,6 +165,7 @@ GNU General Public License (версии 2 или новее либо 3 или �
 Флаги переключателя языка нарисованы в самой программе (государственные флаги,
 общественное достояние; 4.11: Южная Корея для корейского, Объединённые Арабские
 Эмираты для арабского).
+4.14: Малайзия для малайского, Индия для хинди.
 
 Файлы IU0VYT Flash с производными частями (указано также в начале каждого файла):
 drv.go, bw.go, drv_uv5r.go, drv_uv17pro.go, drv_uv17.go, drv_bfcommon.go, drv_h777.go,
@@ -174,6 +181,7 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.11: zonenames.go (формат названий RT-920 по radtel_rt900.py).
 Спасибо авторам CHIRP, armel F4HWN, M7OCM, JuantAldea, v0l (radio_tool), проекту
 OpenGD77, Hannes Matuschek DM3MAT (qdmr) и Serge Vakulenko KK6ABQ.
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 
 ОБНОВЛЕНИЕ ПРОШИВКИ QUANSHENG UV-K5 (4.1)
 Формат файлов .bin от Quansheng и протокол загрузчика UV-K5 описаны свободными
@@ -355,7 +363,7 @@ rd5r.c, gd77.c и uv380.c); для проверок — verifica/dmrconfig/tcpde
 IU0VYT Flash — независимая программа, не связанная с Baofeng, Bajeton и другими
 упомянутыми производителями (например, Quansheng, Retevis, Radtel, Radioddity,
 TIDRADIO, Hiroyasu, Talkpod, Anysecu, BTECH, Abbree, MaxTalker, Intek, Maverick, WLN,
-Zastone, Luiton) и не одобренная ими. Названия моделей служат лишь для указания, с
+Zastone, Luiton, Yaesu, Icom) и не одобренная ими. Названия моделей служат лишь для указания, с
 какими радиостанциями работает программа. Товарные знаки принадлежат их владельцам.
 Протоколы и форматы данных восстановлены для обеспечения совместимости с
 радиостанциями по программам производителей (с 3.3 также «BF Series CPS», «T17-T18

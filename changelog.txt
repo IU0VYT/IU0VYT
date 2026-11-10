@@ -3,6 +3,75 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.14.0 (10/11/2026)
+-------------------
+- Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R, FT-65E, FT-25R (drv_ft4.go, nuovo; driver di
+  CHIRP ft4.py): protocollo del cavo SCU-35 con eco («PROGRAM», identificazione di
+  16 byte con il sottotipo, blocchi di 16 byte con somma di controllo, «END»), 200
+  canali con nomi, toni, DCS, potenza, banda stretta e scansione. Le radio con
+  sottotipo 3 (scostamento in unità di 25 kHz) hanno schede a parte (ys-ft65r-s3,
+  ys-ft65e-s3, ys-ft25r-s3): il sottotipo letto si salva nel file e l'identificazione
+  sceglie la scheda giusta (drv.go). Scheda o sottotipo sbagliati: messaggio con il
+  nome della scheda da usare. Scelte diverse da CHIRP: il simplex scritto dalla radio
+  (codice 4) resta simplex; uno scostamento non multiplo del passo si scrive come
+  frequenza di trasmissione separata.
+- Yaesu FT-60R/E (drv_ft60.go, nuovo; driver di CHIRP ft60.py): copia avviata dalla
+  radio («F8 CLONE»), 8 byte di intestazione, 447 blocchi da 64 byte e somma di
+  controllo, ognuno confermato; 1000 canali con nomi di 6 caratteri. Le frequenze
+  non rappresentabili sono rifiutate; un canale si controlla tutto prima di scriverlo.
+- Icom IC-V86, IC-T10, IC-V80, IC-T70, IC-V82, IC-U82 (drv_icom.go, drv_icv86.go,
+  drv_icv80.go, drv_icx8x.go, nuovi; driver di CHIRP icf.py, icv86.py, ict10.py,
+  icv80.py, ict70.py, icx8x.py): copia Icom a pacchetti «FE FE … FD» su cavo a un filo
+  (eco riletto), identificazione del modello, dati in esadecimale con somma di
+  controllo, esito finale; copia veloce a 38400 baud per la IC-V80. IC-V82/IC-U82: i
+  canali D-STAR si conservano, la cancellazione non tocca l'esclusione dalla scansione.
+- Impostazioni da CHIRP per 12 classi nuove (settings_chirp.json: 278 classi); la
+  IC-T70 non ne ha.
+- Catalogo (catalog_414.go, nuovo): marche Yaesu e Icom, 13 modelli; colori delle due
+  marche in ui/gallery.js; riquadro delle marche del sito rigenerato (46 marche).
+  Conteggi: 464 radio, 409 con impostazioni, 502 in galleria, 57 firmware.
+- Lingue: malese (ms) e hindi (hi). Programma: i18n.go, ui/i18n.js (elenco e
+  bandiere), ui/style.css (caratteri per l'hindi), ui/lang/ms.tsv e hi.tsv. Sito:
+  sito/genera.go, sito/lang/ms.tsv e hi.tsv, docs/img/flags/ms.svg e hi.svg,
+  docs/index.html (13 lingue). GitHub: README e politica di sicurezza con le due
+  bandiere in tutte le lingue, lingue/ms e lingue/hi, SECURITY.ms.md e SECURITY.hi.md.
+  Flusso «Sito» (.github/workflows/sito.yml): avviso IndexNow per le 13 pagine.
+- Wouxun KG-UV8D (drv_kguv8.go): nomi dei campi sconosciuti allineati a CHIRP di oggi
+  (stessi bit, nessun effetto sui canali); la prova di confronto della struttura
+  tornava a fallire dopo l'aggiornamento di CHIRP.
+- Convertitore, incolla e «Inoltra ad altra radio» verso le Yaesu e le Icom
+  (genapi.go, genAdapt): le combinazioni di toni che la radio non ha (DCS invertito o
+  subtono e DCS mescolati sulle FT-4/FT-65, tono solo in ricezione sulla FT-60 e sulle
+  Icom, DCS solo in trasmissione sulle Icom) si adattano togliendo prima il tono in
+  ricezione e poi anche l'altro, con un avviso; i canali che la radio non può
+  memorizzare (passi da 6,25 kHz sulla FT-60, frequenze fuori banda sulla IC-V82 e
+  sulla IC-U82, scostamenti non rappresentabili) non vengono copiati, con un avviso.
+  Prima l'operazione si fermava tutta al primo canale rifiutato. Il canale si prova
+  su una memoria di lavoro con lo stesso codice della scrittura (genTrySet).
+- «Identifica» (identify.go): le Yaesu FT-4/FT-65/FT-25 hanno un gruppo di tentativi
+  a parte (ft4Fam.identGroup). Il saluto «PROGRAM» a 9600 baud è lo stesso delle
+  AnyTone TERMN-8R/OBLTR-8R e della KYD NC-630A: provate per prime con il driver
+  AnyTone, i tre byte di risposta («QX» 06) non bastavano a dire che una radio aveva
+  risposto e le Yaesu non venivano riconosciute. La FT-60 non è fra i tentativi
+  (ft60Fam.noIdent): la copia parte dalla radio, che non risponde a nessuna richiesta.
+- Yaesu FT-65/FT-25 con sottotipo 3 (drv.go, makeImg): il file .img dichiara sempre
+  «ft4_subtype» = 3, anche quando l'immagine di partenza non lo aveva; senza, CHIRP
+  apriva il file con lo scostamento in unità di 50 kHz invece di 25 kHz.
+- Traduzioni: 98 testi nuovi in tutte le lingue. Corretto: cinque parole in grassetto
+  delle guide del programma («dopo», «verde», «spenta», «identificata», «file»)
+  restavano in italiano in ogni lingua, perché la prova le scambiava per nomi di codice
+  (i18n_test.go); in coreano e in arabo due frasi dicevano «prima» al posto di «dopo».
+- Prove: confronto con CHIRP di lettura, scrittura, struttura e byte sul cavo per tutti
+  i modelli nuovi; radio simulate Yaesu e Icom (genemu_yaesu_other.go,
+  genemu_icom_other.go) con cavo senza eco, somma sbagliata, modello sbagliato e
+  radio che rifiuta (drv_ft4_test.go, drv_icom_test.go); adattamento dei canali
+  (adapt414_test.go) e convertitore verso tutti i modelli nuovi, con le immagini
+  riaperte da CHIRP (universal_test.go: il caso FT-60 «DCS in trasmissione con
+  subtono in ricezione», che CHIRP legge in modo diverso dalla radio, è escluso dal
+  confronto). Impostazioni della IC-T10: CHIRP rifiuta il testo «Comment» se non ha
+  16 caratteri esatti; nel confronto (verifica/chirp/chirpsettings.py) si riempie con
+  spazi, come fa il programma.
+
 4.13.1 (09/11/2026)
 -------------------
 - Firmware IJV V6 (drv_ijv6.go, nuovo): scheda «Quansheng UV-K5 V3 / UV-K1 (firmware

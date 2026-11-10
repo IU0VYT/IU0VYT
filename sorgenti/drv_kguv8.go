@@ -68,6 +68,11 @@ struct {
 u8          valid[1000];
 `
 
+// KG-UV8D: stessi bit degli altri, con i nomi dei campi usati oggi da CHIRP (scrambler
+// e compander ci sono nella struttura ma la radio non li usa e non vengono toccati)
+var wx8Fmt8D = strings.NewReplacer("unknown2:1", "unknown12b:1", "unknown3:2", "unknown13:2").Replace(
+	fmt.Sprintf(wx8MemFmt, "scrambler:4,\n            unknown12:2,", "unknown13b:1,\n            compander:1,", "", 0x6700))
+
 const wx8Valid = 158
 
 func wx8Lower(img []byte) []byte {
@@ -88,7 +93,7 @@ func init() {
 	}
 	genRegister(
 		mk("wx-kguv8d", "KG-UV8D", "KGUV8DRadio", &wx8Opt{start: 0x7D, model: "KG-UV8D", tBase: 0x2800, tPol: 0x8000, tInit: 0xFFFF,
-			validOff: 0x6700, nameRec: 8, format: fmt.Sprintf(wx8MemFmt, "unknown1:6,", "unknown4:2,", "", 0x6700),
+			validOff: 0x6700, nameRec: 8, format: wx8Fmt8D,
 			ident: func(img []byte) bool { return len(img) >= 0x408 && bytes.Contains(img[0x400:0x408], []byte("KGUV8D")) }}),
 		mk("wx-kguv8dplus", "KG-UV8D Plus", "KGUV8DPlusRadio", &wx8Opt{start: 0x7A, enc: true, model: "KG-UV8D", tBase: 0x4000, tPol: 0x2000,
 			validOff: 0x7670, nameRec: 12, scrReset: true, format: fmt.Sprintf(wx8MemFmt, "scrambler:4,\n            unknown1:2,", "unknown4:1,\n            compander:1,", "u8    unknown[4];", 0x7670),

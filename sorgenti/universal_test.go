@@ -314,7 +314,16 @@ func TestUniversalChirpOpens(t *testing.T) {
 		_ = os.WriteFile(p, out, 0o644)
 		mine := genChans(m, loadImg(t, p))
 		ref := chirpDecode(t, m, p)
+		ci, _ := m.Fam.(interface {
+			chirpInvalid(*genModel, *Chan) bool
+		})
 		for i := 0; i < m.Slots && i < len(ref); i++ {
+			// 4.14: combinazioni che CHIRP legge in modo diverso dalla radio (es.
+			// FT-60, DCS in trasmissione con subtono in ricezione: differenza voluta)
+			if ci != nil && mine[i] != nil && ci.chirpInvalid(m, mine[i]) {
+				n++
+				continue
+			}
 			if d := cmpChan(m, i+m.First, mine[i], ref[i]); d != "" {
 				t.Errorf("%s: %s", m.ID, d)
 			}

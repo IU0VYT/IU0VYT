@@ -7,6 +7,28 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.14.0 (10/11/2026)
+-------------------
+- Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R, FT-65E, FT-25R (drv_ft4.go, novo; controlador do
+  CHIRP ft4.py): protocolo do cabo SCU-35 com eco, 200 canais; os rádios com subtipo 3
+  têm separadores próprios e a identificação escolhe o correto. Yaesu FT-60R/E
+  (drv_ft60.go, novo; ft60.py): cópia iniciada a partir do rádio, 1000 canais.
+- Icom IC-V86, IC-T10, IC-V80, IC-T70, IC-V82, IC-U82 (drv_icom.go, drv_icv86.go,
+  drv_icv80.go, drv_icx8x.go, novos; controladores do CHIRP icf.py, icv86.py, ict10.py,
+  icv80.py, ict70.py, icx8x.py): protocolo de cópia Icom em cabo de um fio, cópia rápida
+  a 38400 baud para o IC-V80.
+- Definições retiradas do CHIRP para 12 classes novas. Catálogo: marcas Yaesu e Icom, 13
+  modelos (464 rádios, 409 com definições, 502 na galeria, 46 marcas).
+- Línguas: malaio (ms) e hindi (hi) no programa, no sítio web e nos ficheiros do GitHub.
+- Wouxun KG-UV8D: nomes dos campos alinhados com o CHIRP de hoje. Traduções: 98 textos
+  novos. Testes: comparação com o CHIRP (leitura, escrita, estrutura, bytes no cabo) e
+  rádios Yaesu e Icom simulados.
+- Corrigido: cinco palavras a negrito dos guias do programa ficavam em italiano em todas
+  as línguas.
+- Conversor e encaminhamento para outro rádio, para os rádios Yaesu e Icom: os tons que
+  o rádio não tem são retirados com um aviso e os canais que não pode memorizar são
+  ignorados com um aviso, em vez de parar toda a operação.
+
 4.13.1 (09/11/2026)
 -------------------
 - Firmware IJV V6 (drv_ijv6.go, novo): separador «Quansheng UV-K5 V3 / UV-K1

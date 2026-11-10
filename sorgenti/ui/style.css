@@ -568,3 +568,4 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .langopt.cur::after { content: '✓'; margin-left: auto; opacity: .7; }
 :root:lang(zh) { font-family: "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif; }
 :root:lang(ja) { font-family: "Segoe UI", "Yu Gothic UI", "Meiryo UI", "Meiryo", "Hiragino Sans", "Noto Sans CJK JP", sans-serif; }
+:root:lang(hi) { font-family: "Segoe UI", "Nirmala UI", "Mangal", "Kohinoor Devanagari", "Noto Sans Devanagari", sans-serif; }

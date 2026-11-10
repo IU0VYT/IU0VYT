@@ -419,6 +419,7 @@ d5c68701	{0} righe non importabili
 f001d2b1	Riga {0}: {1} — {2}
 7c7b2650	ponti selezionati per l'importazione · filtri preimpostati: solo ponti utilizzabili in analogico, esclusi i non attivi (modificabili)
 5c4ce47f	Download dell'elenco…
+aaea5743	file
 257b0e9d	Scegli il file e carica…
 2fb51da1	Scarica elenco
 e7666a7f	Sostituisci archivio
@@ -491,6 +492,7 @@ ba1633c1	Nella scheda Bajeton 8300 (dalla galleria dei modelli) premi «⬆ Aggi
 c8eda081	dal PC o scaricalo da Internet (anche link di Google Drive o Dropbox): può essere dentro archivi
 6256ae35	, anche uno dentro l'altro. Il programma controlla il formato del file, la piattaforma, il nome e l'impronta dei firmware ufficiali conosciuti; i firmware scaricati vengono conservati nella cartella «firmware» accanto all'archivio.
 58d0b832	Prima di inviare il firmware la radio viene
+49bcaffa	identificata
 0b797285	con il protocollo di programmazione della Bajeton 8300 (e, di serie, ne viene salvata una copia dei canali); se non risponde come una Bajeton 8300 l'aggiornamento non parte. Devi comunque confermare che la radio è una BJ-8300.
 6ae9726c	Modalità di recupero, per una radio che non si avvia: la radio non può essere identificata, quindi va confermata scrivendo BJ8300.
 9ea5d63a	Durante l'aggiornamento non spegnere la radio e non scollegare il cavo. Il protocollo è quello del programma originale «BinTe ANC Bootloader» V1.1.
@@ -654,6 +656,7 @@ a0753d3c	Identificazione
 d62d069e	Modalità di recupero.
 bcf2b581	La radio non può essere identificata: il programma (come quello originale) attende per circa 12 secondi che la radio si presenti in modalità aggiornamento.
 59ffb6db	Collega il cavo alla radio
+323b6aa6	spenta
 e8909194	Premi «Avvia aggiornamento».
 11f8e314	Subito dopo porta la radio in modalità aggiornamento secondo le istruzioni del rivenditore (di solito accendendola tenendo premuto un tasto, spesso il PTT).
 1180f6bb	115200 baud (predefinita del programma originale)
@@ -698,6 +701,7 @@ b355f97c	(procedura di Retevis):
 6da125d0	Radio spenta: tieni premuti
 45f1c0ab	PTT e P1
 e0b2092b	e accendila; l'indicatore diventa
+d2a54155	verde
 ce8a9d58	Collega il cavo, scegli la potenza della tua RT85 e premi «Avvia aggiornamento».
 f58aa906	Il file è cifrato e la radio non controlla il modello: per questo si deve scrivere il modello.
 8872885f	Se l'invio si interrompe non accendere la radio
@@ -982,6 +986,7 @@ c3b3e3b4	La scelta resta memorizzata.
 b6e9ddea	🔎 Identifica la radio
 6dbdda03	Radio non trovata?
 c803172d	Accendila con il volume a metà, inserisci lo spinotto fino in fondo e controlla la porta. UV-17, UV-13Pro e GM-15 Pro vanno accese
+1cbbc3b9	dopo
 1bcec61d	aver collegato il cavo. Radio DMR con cavo USB diretto (RD-5R, DM-1801, DM-1701): porta «USB».
 d9d58141	USB — radio DMR collegate direttamente (RD-5R, DM-1801, DM-1701)
 10c99eed	Le letture vengono salvate anche in: {0}
@@ -1924,6 +1929,24 @@ efa406d1	UV-S9T (tre bande)
 f7cfd49b	Firmware: stesso caricatore KDH V1.0 della UV-5RM/UV-5RH (radio del programma del costruttore «T6UV Series CPS», che gestisce anche la 5RH; la K5 Plus e la UV-5RM Plus in CHIRP sono derivate dalla UV-5RM). Baofeng non pubblica firmware .BF: servono i file forniti dal costruttore o dal rivenditore per questa radio. Nella modalità automatica, se la radio non risponde alla richiesta di aggiornamento della UV-5RM, non viene modificata; prima dell'invio si deve scrivere il modello indicato dal nome del file. Se il costruttore fornisce un file .kdhx, la finestra usa il caricatore «Bootloader Pro».
 e8f058d5	Firmware: stesso caricatore «Baofeng Bootloader Pro» della UV-25 Plus (codice di piattaforma H802; la radio usa lo stesso programma del costruttore «BF-UVs Pro CPS» della UV-25 Plus). Baofeng pubblica il firmware .kdhx solo per la UV-25 Plus: per questa radio servono i file forniti dal costruttore o dal rivenditore. Nella modalità automatica la radio si aggiorna solo se risponde come piattaforma H802; prima dell'invio si deve scrivere il modello indicato dal nome del file.
 b5ef553d	Radtel
+2d5d8109	200 canali, cavo SCU-35 nella presa del microfono. A differenza di CHIRP, il simplex scritto dalla radio resta simplex e uno scostamento che non è multiplo del passo della radio diventa una frequenza di trasmissione separata.
+06a3659f	Le radio che dichiarano il sottotipo 3 hanno una scheda a parte: il programma indica quella giusta.
+88465fa6	Yaesu
+8f0b59d9	Sito Yaesu
+40716138	{0}{1} Versione per gli Stati Uniti.
+3edcec10	{0}{1} Versione europea.
+9215ffd3	{0}{1} Solo VHF.
+88588031	{0}{1} Versione per Stati Uniti e Asia.{2}
+ecb75d4c	{0}{1} Versione europea.{2}
+3fb19db9	{0}{1} Solo VHF.{2}
+667d4978	{0} 1000 canali; la copia parte dalla radio (modalità «F8 CLONE»). A differenza di CHIRP, le frequenze che la radio non può memorizzare vengono rifiutate invece di essere arrotondate.
+6be6cfc9	Icom
+d509a298	Sito Icom
+3fa74331	{0} 200 canali VHF con nomi di 5 caratteri.
+5fb5bb65	{0} 200 canali VHF con nomi di 5 caratteri, copia veloce.
+483908ff	{0} 300 canali VHF/UHF con nomi di 6 caratteri.
+83999770	{0} 200 canali VHF/UHF con nomi di 6 caratteri.
+949def0a	{0} 200 canali UHF con nomi di 5 caratteri.
 396e9fce	TYT
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
@@ -2473,6 +2496,47 @@ ac6aeea0	risposta della radio alla fine della scrittura: {0}
 90a4ed8d	Unica
 fd9f6464	Accendi la radio con il cavo collegato. 99 canali senza nomi, senza potenza e banda per canale (sono impostazioni generali); blocco del canale occupato e scrambler si conservano. Driver di CHIRP (sperimentale).
 1886d1b4	la radio non è entrata in modalità di programmazione: controlla il cavo e la radio, poi riprova
+f4c6bc85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz*+-/@
+f76fe334	Yaesu {0}
+bd0cacfc	(sottotipo 3)
+557df12b	200 canali con nomi di {0} caratteri. Cavo Yaesu SCU-35 (o compatibile) nella presa del microfono, 9600 baud: il cavo rimanda indietro ogni byte inviato. Passo di sintonia, banchi, canali PMS, VFO e tasti programmabili si conservano.
+d9cf5870	La radio non ha un blocco della trasmissione per canale.
+6289c3e3	La trasmissione disabilitata si ottiene, come in CHIRP, con uno scostamento che porta fuori gamma.
+e5a27085	{0}{1}Driver di CHIRP.
+e8175def	Scheda per le radio che dichiarano il sottotipo 3 (scostamento in unità da 25 kHz): se la radio è di un altro tipo il programma lo dice.
+91a94a11	IFT-35R
+bf511637	IFT-15R
+f44f8eb2	IFT-25R
+9ce9efb9	la radio non ha i codici DCS invertiti
+5c733725	la radio non permette un subtono in un verso e un codice DCS nell'altro
+48f650b7	il cavo non rimanda indietro i dati inviati: controlla il cavo e che sia inserito fino in fondo
+5ff01c76	il cavo non rimanda indietro i dati inviati come dovrebbe: radio spenta o cavo non adatto
+3f809c4e	risposta della radio troppo lunga
+87e6b091	la radio non ha confermato il comando
+53cacdee	la radio non è entrata in programmazione (attesa la risposta «QX»)
+a9d84203	identificativo della radio vuoto
+d58f256a	la radio è un altro modello ({0}): apri la scheda «{1}» o quella della stessa serie
+c477c1e6	la radio dichiara il sottotipo {0}: apri la scheda «{1}»
+d8f8cbdf	immagine della memoria non valida ({0} byte)
+6e71b0e3	Scrittura del blocco 0x{0}
+5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
+3c19e63e	Yaesu FT-60R / FT-60E
+0e7079a8	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !$%&'()*+,-./|;=>?@[]^_
+5cee59d0	1000 canali con nomi di 6 caratteri. La copia parte dalla radio: spegnila, collega il cavo alla presa MIC/SP, accendila tenendo premuto [MONI], scegli «F8 CLONE» con la manopola e premi [F/W]. Per leggere: avvia la lettura qui e poi tieni premuto [PTT] per un secondo. Per scrivere: premi [MONI] sulla radio (compare «--RX--») e poi avvia la scrittura qui. Banchi, canali PMS e passo di sintonia si conservano. Le frequenze si memorizzano a passi di 5 o 12,5 kHz. Driver di CHIRP.
+6065d4a7	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione o in entrambi i versi, DCS in trasmissione o in entrambi i versi, subtono e DCS misti; mai il solo tono in ricezione o codici invertiti)
+1f61babd	la radio non può memorizzare la frequenza {0} MHz (passi da 5 o 12,5 kHz)
+8280dc40	tono non disponibile su questa radio
+4315d197	la radio non può memorizzare la frequenza di trasmissione {0} MHz (passi da 5 o 12,5 kHz)
+b02e4292	il cavo non rimanda indietro i dati inviati come dovrebbe: cavo non adatto o disturbi
+7f40ae2b	In attesa della radio: tieni premuto [PTT] per un secondo…
+32edc3b4	risposta della radio non valida ({0})
+d4da2fa7	la radio non ha inviato nulla: mettila in «F8 CLONE» e tieni premuto [PTT] dopo aver avviato la lettura
+307ded2d	la radio non è una FT-60 (identificativo {0})
+f9d04bad	blocco {0} incompleto ({1} byte)
+400237ed	somma di controllo errata: ripeti la lettura
+d02a30f9	immagine della memoria non valida per la FT-60
+5185086a	la radio non conferma i dati: mettila in «F8 CLONE» e premi [MONI] («--RX--») prima di avviare la scrittura
+9ab44350	risposta inattesa della radio ({0}) durante la scrittura
 bbf3eb0e	PROGROMBFHU
 16e6f10c	Baofeng serie H (H-31, H-32, BF-H…)
 9f328973	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!"#$%&'()~+-,./:;
@@ -2585,6 +2649,44 @@ f32b31e9	Scrittura ({0})
 337f88dc	Lanchonlh HG-UV98
 62ec1ba4	Accendi la radio con il cavo collegato (9600 baud, parità pari). 128 canali con nomi di 8 caratteri; il blocco del canale occupato si conserva. Driver di CHIRP (versione «alpha»): controlla le impostazioni anche con il programma del costruttore.
 d891419a	modello non corrispondente (identificativo {0})
+2c926f56	dati della radio non riconosciuti: controlla il cavo
+e8ae8fa2	la radio è un altro modello: apri la scheda «{0}»
+eb1316d4	la radio è un altro modello (identificativo {0})
+0cb25873	la radio ha smesso di inviare dati prima della fine (0x{0})
+2bb37bb5	blocco della radio non valido (0x{0})
+d02456ba	somma di controllo errata nel blocco 0x{0}: ripeti la lettura
+43be7cd5	la radio ha inviato più dati del previsto (0x{0})
+c1a108a1	lettura incompleta: {0} byte su {1}
+7d04058b	la radio non ha confermato la scrittura
+2ea938b0	la radio ha rifiutato i dati scritti
+cccf8e56	Cavo Icom OPC-478 (o compatibile) nella presa dell'altoparlante, 9600 baud; la radio va accesa normalmente e durante la copia mostra «CLONE».
+b3fa7827	Icom Inc.7C
+910c5b7a	Alta 5,5 W
+03a68a88	Icom IC-V80
+a7b4db17	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890
+215302ea	200 canali VHF (da 0 a 199) con nomi di 5 caratteri. {0}La copia è quella veloce (38400 baud dopo l'identificazione). Passo di sintonia, canali di scansione e di chiamata e inversione del canale si conservano. Driver di CHIRP.
+52b58449	Icom IC-T70
+c4d1c0f5	300 canali VHF/UHF (da 0 a 299) con nomi di 6 caratteri. {0}I banchi si conservano. Driver di CHIRP.
+da70894a	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione, lo stesso subtono nei due versi, lo stesso codice DCS nei due versi)
+bed9a66d	la radio non può memorizzare la frequenza {0} MHz (multipli di 5 o di 6,25 kHz)
+efa0c310	con la frequenza {0} MHz la radio non può memorizzare uno scostamento di {1} Hz
+ae0e8e43	frequenza o scostamento fuori dai limiti della radio
+ee3eef34	Icom Inc.CF
+f63ad748	la radio non può memorizzare uno scostamento di {0} Hz (multipli di 5 kHz)
+d0a1c599	scostamento fuori dai limiti della radio
+a339fbf5	Icom Inc.AC
+09a693fa	Icom IC-V86
+4deb5042	Massima 7 W
+7551248e	200 canali VHF (da 0 a 199) con nomi di 5 caratteri. {0}Passo di sintonia, canali di scansione e di chiamata, inversione e permesso di trasmissione del canale si conservano. Driver di CHIRP.
+fa4140af	Icom Inc.B8
+d6c3cb9f	Icom IC-T10
+160df882	200 canali VHF/UHF (da 0 a 199) con nomi di 6 caratteri. {0}Passo di sintonia, canali di scansione e di chiamata, inversione e blocco della trasmissione del canale si conservano. Driver di CHIRP.
+f03ef25a	Icom Inc.CD
+fe5c79a7	Icom {0}
+2972bf65	200 canali {0} (da 0 a 199) con nomi di 5 caratteri. {1}La potenza non è memorizzata nel canale. Banchi, nominativi D-STAR, passo di sintonia e canali in modo digitale DV si conservano. Driver di CHIRP.
+d487a1bd	frequenza {0} MHz fuori dai limiti della radio
+f5084846	la radio è l'altro modello della serie: apri la scheda «Icom {0}»
+e6282e24	l'immagine non è di una {0}
 eee8f7c6	Accendi la radio, poi collega il cavo al connettore microfono/altoparlante (ben inserito).
 07b28617	IJV V3
 37f9648b	Quansheng UV-K5 (firmware IJV V3, 200 canali)
@@ -2672,7 +2774,6 @@ f8a797f5	Accendi la radio con il cavo collegato. Driver di CHIRP della famiglia 
 8cdd78a1	Accendi la radio con il cavo collegato (19200 baud). 999 canali con nomi di 8 caratteri; mute, scrambler, compander e preferito di ogni canale si conservano. Driver di CHIRP (sperimentale).
 c334ba3b	Wouxun {0}
 d3eca899	Media 4,5 W
-910c5b7a	Alta 5,5 W
 102162b6	Alta 8 W
 affaf9f3	Bassa 5 W
 ea487aee	Alta 20 W
@@ -2682,7 +2783,6 @@ cc976fbb	intestazione della risposta incompleta
 dfcb8681	identificazione non riuscita (somma di controllo errata)
 cf29d9ea	errore di trasmissione leggendo il blocco 0x{0}
 0580b87b	Accendi la radio con il cavo collegato (19200 baud). 999 canali con nomi di 8 caratteri; i canali nella gamma aeronautica (108-136 MHz) si scrivono in AM. Driver di CHIRP (sperimentale).
-32edc3b4	risposta della radio non valida ({0})
 4dfcda37	identificazione non riuscita
 1b1666e7	KSUN M6
 91fb50d3	Accendi la radio con il cavo collegato. 80 canali UHF senza nomi; frequenze a passi di 500 Hz. Salto di frequenza, compander e scrambler di ogni canale si conservano. Driver di CHIRP.
@@ -3050,7 +3150,6 @@ dd733ff8	Quansheng TK11
 803313fa	Accendi la radio con il cavo collegato. 999 canali con nome di 16 caratteri (driver di CHIRP della Quansheng TK11). I canali in AM, SSB e CW restano nel loro modo. La radio non permette di disabilitare la trasmissione sul canale. Dopo la scrittura la radio si riavvia.
 9c299967	nome {0}: la radio accetta solo lettere senza accenti
 fe4cfcf0	risposta al collegamento non valida: è una Quansheng TK11?
-7d04058b	la radio non ha confermato la scrittura
 7e0d9a2f	Radio DMR collegata via USB in modalità DFU: serve il driver USB del costruttore (pacchetto «DM-1701 CPS», cartella «DM-1701 USB Driver», lo stesso usato dal suo programma: si installa con il pulsante «Installa il driver USB…» della finestra «Leggi dalla radio») oppure il driver generico WinUSB installato con Zadig. Memoria e protocollo come nei programmi liberi dmrconfig e qdmr, confrontati con il codice di dmrconfig. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda, toni e solo ricezione; per i canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati (i canali DMR nuovi: color code 1, slot 1, senza contatto). Contatti, gruppi, messaggi, rubrica e impostazioni della radio non si toccano. La scrittura cancella e riscrive la memoria dei canali (circa 1 minuto).
 87b16176	canale {0} fuori dalla memoria
 696a4209	richiesta USB rifiutata dalla radio (errore {0})
@@ -3118,7 +3217,6 @@ ce1cbdbe	i canali 1-30 della UV-5G Mini sono canali GMRS fissi: frequenze non mo
 a2b48d02	la radio si è identificata come «{0}», non come {1}: lettura e scrittura non eseguite
 27cae1e6	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890!@#$%^&*()+-=[]:";'
 9ca3e90a	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890
-a7b4db17	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890
 a4d9b18c	la radio si identifica come BTECH UV-5X3 (Baofeng UV-5RX3)
 2c0d3c9a	la radio si identifica come Radioddity UV-5G
 f46ab49e	BFS
@@ -3184,7 +3282,6 @@ a5ae1852	Alta 15 W
 660b1278	1000 canali (da 0 a 999) con nomi di 16 caratteri. Accendi la radio con il cavo collegato: alla fine di ogni lettura e scrittura la radio si riavvia. Se sulla radio c'è una password di lettura o scrittura, toglila prima. Si scrive solo un'immagine letta dalla radio (contiene tutta la zona dati). Modulazione AM dei canali che non cambiano frequenza, passo, canale prioritario in scansione, BCL, scrambler, compander, PTT ID e APRS si conservano; un canale cancellato esce dalle zone e dalle liste di scansione. Driver di CHIRP (sperimentale).
 bc528da5	risposta della radio troncata
 1866d2ff	somma di controllo errata nella risposta
-3f809c4e	risposta della radio troppo lunga
 b606f39a	la radio ha segnalato un errore: {0}
 da480aca	risposta {0} inattesa al comando {1}
 e6ed7181	la radio non ha accettato il comando {0}
@@ -5048,6 +5145,7 @@ d1f9e8ef	nuova versione
 8781a829	3ª generazione
 f0a3a6ce	versione USA, nomi di 8 caratteri
 c001d72f	passo 2,5 kHz
+a7bdcadb	sottotipo 3
 f8c9e807	alta
 a15fb723	attesa
 1f743f81	bassa

@@ -16,6 +16,8 @@ sorgenti/gestionecanali
 /docs/ja/
 /docs/ko/
 /docs/ar/
+/docs/ms/
+/docs/hi/
 
 # Eseguibili e file binari di Go
 *.exe

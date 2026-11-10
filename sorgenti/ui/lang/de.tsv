@@ -419,6 +419,7 @@ d5c68701	{0} Zeilen nicht importierbar
 f001d2b1	Zeile {0}: {1} — {2}
 7c7b2650	Relais für den Import ausgewählt · voreingestellte Filter: nur analog nutzbare Relais, nicht aktive ausgeschlossen (änderbar)
 5c4ce47f	Liste wird heruntergeladen…
+aaea5743	Dateien
 257b0e9d	Datei wählen und laden…
 2fb51da1	Liste herunterladen
 e7666a7f	Archiv ersetzen
@@ -491,6 +492,7 @@ ba1633c1	In der Registerkarte Bajeton 8300 (aus der Modellgalerie) «⬆ Firmwar
 c8eda081	vom PC wählen oder aus dem Internet herunterladen (auch Google-Drive- oder Dropbox-Links): sie kann in Archiven liegen
 6256ae35	, auch ineinander verschachtelt. Das Programm prüft Dateiformat, Plattform, Namen und Prüfsumme der bekannten offiziellen Firmwares; heruntergeladene Firmwares werden im Ordner «firmware» neben dem Archiv aufbewahrt.
 58d0b832	Vor dem Senden der Firmware wird das Funkgerät
+49bcaffa	identifiziert
 0b797285	mit dem Programmierprotokoll der Bajeton 8300 (und standardmäßig wird eine Kopie seiner Kanäle gespeichert); antwortet es nicht wie eine Bajeton 8300, startet die Aktualisierung nicht. Sie müssen trotzdem bestätigen, dass das Funkgerät eine BJ-8300 ist.
 6ae9726c	Wiederherstellungsmodus für ein Funkgerät, das nicht startet: Das Funkgerät kann nicht identifiziert werden und muss daher durch Eintippen von BJ8300 bestätigt werden.
 9ea5d63a	Während der Aktualisierung das Funkgerät nicht ausschalten und das Kabel nicht trennen. Das Protokoll ist das des Originalprogramms «BinTe ANC Bootloader» V1.1.
@@ -654,6 +656,7 @@ a0753d3c	Identifizierung
 d62d069e	Wiederherstellungsmodus.
 bcf2b581	Das Funkgerät kann nicht identifiziert werden: Das Programm (wie das Original) wartet etwa 12 Sekunden darauf, dass sich das Funkgerät im Aktualisierungsmodus meldet.
 59ffb6db	Kabel an das Funkgerät anschließen
+323b6aa6	(ausgeschaltet)
 e8909194	«Aktualisierung starten» drücken.
 11f8e314	Gleich danach das Funkgerät nach den Anweisungen des Händlers in den Aktualisierungsmodus bringen (meist durch Einschalten mit gedrückter Taste, oft der PTT).
 1180f6bb	115200 Baud (Standard des Originalprogramms)
@@ -698,6 +701,7 @@ b355f97c	(Verfahren von Retevis):
 6da125d0	Funkgerät ausgeschaltet: gedrückt halten
 45f1c0ab	PTT und P1
 e0b2092b	und es einschalten; die Anzeige wird
+d2a54155	grün
 ce8a9d58	Kabel anschließen, die Leistung Ihrer RT85 wählen und «Aktualisierung starten» drücken.
 f58aa906	Die Datei ist verschlüsselt und das Funkgerät prüft das Modell nicht: Deshalb muss das Modell eingetippt werden.
 8872885f	Bricht die Übertragung ab, das Funkgerät nicht einschalten
@@ -982,6 +986,7 @@ c3b3e3b4	Die Wahl bleibt gespeichert.
 b6e9ddea	🔎 Funkgerät identifizieren
 6dbdda03	Funkgerät nicht gefunden?
 c803172d	Mit halb aufgedrehter Lautstärke einschalten, den Stecker ganz einstecken und den Anschluss prüfen. UV-17, UV-13Pro und GM-15 Pro werden
+1cbbc3b9	nach
 1bcec61d	dem Anschließen des Kabels eingeschaltet. DMR-Funkgeräte mit direktem USB-Kabel (RD-5R, DM-1801, DM-1701): Anschluss «USB».
 d9d58141	USB — direkt angeschlossene DMR-Funkgeräte (RD-5R, DM-1801, DM-1701)
 10c99eed	Die Lesungen werden auch gespeichert in: {0}
@@ -5063,3 +5068,96 @@ bc8910a2	Prüfung fehlgeschlagen: im V6-Funkgerät steht nicht, was geschrieben 
 a2a643a8	Firmware des Funkgeräts: IJV V6 {0} {1}, Version {2} — geänderte Sektoren geschrieben: {3}
 85102cf4	Einstellungstabelle von RadioManager 4.3.2 von IJV (Firmware V5 und V6)
 1e75d851	IJV-Firmware V6
+2d5d8109	200 Kanäle, SCU-35-Kabel in der Mikrofonbuchse. Anders als in CHIRP bleibt das vom Funkgerät geschriebene Simplex Simplex, und eine Ablage, die kein Vielfaches des Geräteschritts ist, wird zu einer getrennten Sendefrequenz.
+06a3659f	Funkgeräte, die Subtyp 3 melden, haben eine eigene Karte: Das Programm nennt die richtige.
+88465fa6	Yaesu
+8f0b59d9	Yaesu-Website
+40716138	{0}{1} Version für die USA.
+3edcec10	{0}{1} Europäische Version.
+9215ffd3	{0}{1} Nur VHF.
+88588031	{0}{1} Version für die USA und Asien.{2}
+ecb75d4c	{0}{1} Europäische Version.{2}
+3fb19db9	{0}{1} Nur VHF.{2}
+667d4978	{0} 1000 Kanäle; das Klonen wird am Funkgerät gestartet (Modus «F8 CLONE»). Anders als in CHIRP werden Frequenzen, die das Gerät nicht speichern kann, abgelehnt statt gerundet.
+6be6cfc9	Icom
+d509a298	Icom-Website
+3fa74331	{0} 200 VHF-Kanäle mit Namen aus 5 Zeichen.
+5fb5bb65	{0} 200 VHF-Kanäle mit Namen aus 5 Zeichen, schnelles Klonen.
+483908ff	{0} 300 VHF/UHF-Kanäle mit Namen aus 6 Zeichen.
+83999770	{0} 200 VHF/UHF-Kanäle mit Namen aus 6 Zeichen.
+949def0a	{0} 200 UHF-Kanäle mit Namen aus 5 Zeichen.
+f4c6bc85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz*+-/@
+f76fe334	Yaesu {0}
+bd0cacfc	(Subtyp 3)
+557df12b	200 Kanäle mit Namen aus {0} Zeichen. Yaesu-Kabel SCU-35 (oder kompatibel) in der Mikrofonbuchse, 9600 Baud: Das Kabel sendet jedes gesendete Byte zurück. Abstimmschritt, Bänke, PMS-Kanäle, VFOs und programmierbare Tasten bleiben erhalten.
+d9cf5870	Das Funkgerät hat keine Sendesperre pro Kanal.
+6289c3e3	Die gesperrte Aussendung wird wie in CHIRP mit einer Ablage erreicht, die aus dem Band führt.
+e5a27085	{0}{1}CHIRP-Treiber.
+e8175def	Karte für Funkgeräte, die Subtyp 3 melden (Ablage in 25-kHz-Einheiten): Ist das Gerät von einem anderen Typ, meldet es das Programm.
+91a94a11	IFT-35R
+bf511637	IFT-15R
+f44f8eb2	IFT-25R
+9ce9efb9	das Funkgerät hat keine invertierten DCS-Codes
+5c733725	das Funkgerät erlaubt keinen Subton in der einen und einen DCS-Code in der anderen Richtung
+48f650b7	das Kabel sendet die gesendeten Daten nicht zurück: Kabel prüfen und ob es ganz eingesteckt ist
+5ff01c76	das Kabel sendet die gesendeten Daten nicht wie erwartet zurück: Funkgerät aus oder ungeeignetes Kabel
+87e6b091	das Funkgerät hat den Befehl nicht bestätigt
+53cacdee	das Funkgerät ist nicht in den Programmiermodus gegangen (Antwort «QX» erwartet)
+a9d84203	leere Gerätekennung
+d58f256a	das Funkgerät ist ein anderes Modell ({0}): öffne die Karte «{1}» oder die derselben Serie
+c477c1e6	das Funkgerät meldet Subtyp {0}: öffne die Karte «{1}»
+d8f8cbdf	ungültiges Speicherabbild ({0} Byte)
+6e71b0e3	Schreiben von Block 0x{0}
+5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
+3c19e63e	Yaesu FT-60R / FT-60E
+0e7079a8	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !$%&'()*+,-./|;=>?@[]^_
+5cee59d0	1000 Kanäle mit Namen aus 6 Zeichen. Das Klonen wird am Funkgerät gestartet: ausschalten, Kabel an die MIC/SP-Buchse anschließen, mit gedrückter [MONI]-Taste einschalten, mit dem Drehknopf «F8 CLONE» wählen und [F/W] drücken. Zum Lesen: hier das Lesen starten und dann [PTT] eine Sekunde halten. Zum Schreiben: am Gerät [MONI] drücken («--RX--» erscheint) und dann hier das Schreiben starten. Bänke, PMS-Kanäle und Abstimmschritt bleiben erhalten. Frequenzen werden in Schritten von 5 oder 12,5 kHz gespeichert. CHIRP-Treiber.
+6065d4a7	das Funkgerät hat diese Tonkombination nicht (erlaubt: Subton beim Senden oder in beiden Richtungen, DCS beim Senden oder in beiden Richtungen, Subton und DCS gemischt; nie nur ein Empfangston oder invertierte Codes)
+1f61babd	das Funkgerät kann die Frequenz {0} MHz nicht speichern (Schritte von 5 oder 12,5 kHz)
+8280dc40	Ton auf diesem Funkgerät nicht verfügbar
+4315d197	das Funkgerät kann die Sendefrequenz {0} MHz nicht speichern (Schritte von 5 oder 12,5 kHz)
+b02e4292	das Kabel sendet die gesendeten Daten nicht wie erwartet zurück: ungeeignetes Kabel oder Störungen
+7f40ae2b	Warten auf das Funkgerät: [PTT] eine Sekunde halten…
+d4da2fa7	das Funkgerät hat nichts gesendet: auf «F8 CLONE» stellen und nach dem Start des Lesens [PTT] halten
+307ded2d	das Funkgerät ist kein FT-60 (Kennung {0})
+f9d04bad	Block {0} unvollständig ({1} Byte)
+400237ed	falsche Prüfsumme: Lesen wiederholen
+d02a30f9	Speicherabbild für das FT-60 ungültig
+5185086a	das Funkgerät bestätigt die Daten nicht: auf «F8 CLONE» stellen und [MONI] drücken («--RX--»), bevor das Schreiben gestartet wird
+9ab44350	unerwartete Antwort des Funkgeräts ({0}) beim Schreiben
+2c926f56	Daten des Funkgeräts nicht erkannt: Kabel prüfen
+e8ae8fa2	das Funkgerät ist ein anderes Modell: öffne die Karte «{0}»
+eb1316d4	das Funkgerät ist ein anderes Modell (Kennung {0})
+0cb25873	das Funkgerät hat vor dem Ende aufgehört zu senden (0x{0})
+2bb37bb5	ungültiger Block vom Funkgerät (0x{0})
+d02456ba	falsche Prüfsumme in Block 0x{0}: Lesen wiederholen
+43be7cd5	das Funkgerät hat mehr Daten gesendet als erwartet (0x{0})
+c1a108a1	unvollständiges Lesen: {0} von {1} Byte
+2ea938b0	das Funkgerät hat die geschriebenen Daten abgelehnt
+cccf8e56	Icom-Kabel OPC-478 (oder kompatibel) in der Lautsprecherbuchse, 9600 Baud; das Funkgerät wird normal eingeschaltet und zeigt beim Klonen «CLONE».
+b3fa7827	Icom Inc.7C
+03a68a88	Icom IC-V80
+215302ea	200 VHF-Kanäle (0 bis 199) mit Namen aus 5 Zeichen. {0}Es wird schnell geklont (38400 Baud nach der Identifikation). Abstimmschritt, Suchlauf- und Anrufkanäle und Kanalumkehr bleiben erhalten. CHIRP-Treiber.
+52b58449	Icom IC-T70
+c4d1c0f5	300 VHF/UHF-Kanäle (0 bis 299) mit Namen aus 6 Zeichen. {0}Die Bänke bleiben erhalten. CHIRP-Treiber.
+da70894a	das Funkgerät hat diese Tonkombination nicht (erlaubt: Subton beim Senden, derselbe Subton in beiden Richtungen, derselbe DCS-Code in beiden Richtungen)
+bed9a66d	das Funkgerät kann die Frequenz {0} MHz nicht speichern (Vielfache von 5 oder 6,25 kHz)
+efa0c310	mit der Frequenz {0} MHz kann das Funkgerät keine Ablage von {1} Hz speichern
+ae0e8e43	Frequenz oder Ablage außerhalb der Grenzen des Funkgeräts
+ee3eef34	Icom Inc.CF
+f63ad748	das Funkgerät kann keine Ablage von {0} Hz speichern (Vielfache von 5 kHz)
+d0a1c599	Ablage außerhalb der Grenzen des Funkgeräts
+a339fbf5	Icom Inc.AC
+09a693fa	Icom IC-V86
+4deb5042	Maximal 7 W
+7551248e	200 VHF-Kanäle (0 bis 199) mit Namen aus 5 Zeichen. {0}Abstimmschritt, Suchlauf- und Anrufkanäle, Kanalumkehr und Sendeerlaubnis bleiben erhalten. CHIRP-Treiber.
+fa4140af	Icom Inc.B8
+d6c3cb9f	Icom IC-T10
+160df882	200 VHF/UHF-Kanäle (0 bis 199) mit Namen aus 6 Zeichen. {0}Abstimmschritt, Suchlauf- und Anrufkanäle, Kanalumkehr und Sendesperre bleiben erhalten. CHIRP-Treiber.
+f03ef25a	Icom Inc.CD
+fe5c79a7	Icom {0}
+2972bf65	200 {0}-Kanäle (0 bis 199) mit Namen aus 5 Zeichen. {1}Die Leistung wird nicht im Kanal gespeichert. Bänke, D-STAR-Rufzeichen, Abstimmschritt und Kanäle im Digitalmodus DV bleiben erhalten. CHIRP-Treiber.
+d487a1bd	Frequenz {0} MHz außerhalb der Grenzen des Funkgeräts
+f5084846	das Funkgerät ist das andere Modell der Serie: öffne die Karte «Icom {0}»
+e6282e24	das Abbild stammt nicht von einem {0}
+a7bdcadb	Subtyp 3

@@ -7,6 +7,30 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.14.0 (10.11.2026)
+-------------------
+- Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R, FT-65E, FT-25R (drv_ft4.go, neu; CHIRP-Treiber
+  ft4.py): Protokoll des Kabels SCU-35 mit Echo, 200 Kanäle; Geräte mit Untertyp 3 haben
+  eigene Registerkarten, und die Erkennung wählt die richtige. Yaesu FT-60R/E
+  (drv_ft60.go, neu; ft60.py): Kopie vom Funkgerät aus gestartet, 1000 Kanäle.
+- Icom IC-V86, IC-T10, IC-V80, IC-T70, IC-V82, IC-U82 (drv_icom.go, drv_icv86.go,
+  drv_icv80.go, drv_icx8x.go, neu; CHIRP-Treiber icf.py, icv86.py, ict10.py, icv80.py,
+  ict70.py, icx8x.py): Icom-Klonprotokoll über Eindrahtkabel, schnelle Kopie mit 38400
+  Baud für das IC-V80.
+- Einstellungen aus CHIRP für 12 neue Klassen. Katalog: Marken Yaesu und Icom, 13
+  Modelle (464 Funkgeräte, 409 mit Einstellungen, 502 in der Galerie, 46 Marken).
+- Sprachen: Malaiisch (ms) und Hindi (hi) im Programm, auf der Website und in den
+  GitHub-Dateien.
+- Wouxun KG-UV8D: Feldnamen an das heutige CHIRP angepasst. Übersetzungen: 98 neue
+  Texte. Tests: Vergleich mit CHIRP (Lesen, Schreiben, Struktur, Bytes auf dem Kabel)
+  und simulierte Yaesu- und Icom-Funkgeräte.
+- Behoben: Fünf fett gedruckte Wörter in den Anleitungen des Programms blieben in allen
+  Sprachen italienisch.
+- Konverter und Weiterleitung an ein anderes Funkgerät, zu den Yaesu- und Icom-Geräten:
+  Töne, die das Gerät nicht hat, werden mit einem Hinweis entfernt, und Kanäle, die es
+  nicht speichern kann, werden mit einem Hinweis übersprungen, statt den ganzen Vorgang
+  abzubrechen.
+
 4.13.1 (09.11.2026)
 -------------------
 - IJV-Firmware V6 (drv_ijv6.go, neu): Karte «Quansheng UV-K5 V3 / UV-K1 (IJV-Firmware

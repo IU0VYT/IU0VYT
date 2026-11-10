@@ -139,6 +139,12 @@ https://www.gnu.org/licenses/gpl-3.0.txt؛ SHA-256
                                             M7OCM (https://github.com/M7OCM/890)
   4.10، الإعدادات من CHIRP: drivers/fd268.py (Copyright 2015 Pavel Milanes CO7WT)
   وdrivers/retevis_rt76p.py (Copyright 2021-2022 Jim Unroe KC9HI)، كما أعلاه.
+  4.14 (CHIRP 337b385, 09/11/2026), Yaesu / Icom:
+  drivers/ft4.py                            Copyright 2019 Dan Clemmensen
+  drivers/ft60.py, drivers/ict70.py         Copyright 2011 Dan Smith
+  drivers/icf.py, drivers/icv86.py,
+  drivers/icv80.py, drivers/icx8x.py,
+  drivers/ict10.py                          Copyright 2008 Dan Smith
 
 بروتوكولات تحديث البرنامج الثابت وإعدادات DMR (4.10)
 أعيدت كتابتها من الصفر بلغة Go انطلاقًا من أوصاف هذه البرامج الحرة وشيفرتها (دون نسخ
@@ -158,6 +164,7 @@ https://www.gnu.org/licenses/gpl-3.0.txt؛ SHA-256
                                             (https://github.com/OpenRTX/dmrconfig)
 أعلام محدِّد اللغة مرسومة في البرنامج (أعلام وطنية، ملكية عامة؛ 4.11: كوريا الجنوبية
 للكورية، والإمارات العربية المتحدة للعربية).
+4.14: ماليزيا للملايوية، والهند للهندية.
 
 ملفات IU0VYT Flash التي فيها أجزاء مشتقة (مذكورة أيضًا في أعلى كل ملف):
 drv.go وbw.go وdrv_uv5r.go وdrv_uv17pro.go وdrv_uv17.go وdrv_bfcommon.go وdrv_h777.go
@@ -173,6 +180,7 @@ drv.go وbw.go وdrv_uv5r.go وdrv_uv17pro.go وdrv_uv17.go وdrv_bfcommon.go و
 4.11: zonenames.go (صيغة أسماء RT-920 من radtel_rt900.py).
 شكرًا لمؤلفي CHIRP، ولـ armel F4HWN، ولـ M7OCM، ولـ JuantAldea، ولـ v0l (radio_tool)،
 ولمشروع OpenGD77، ولـ Hannes Matuschek DM3MAT (qdmr) ولـ Serge Vakulenko KK6ABQ.
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 
 تحديث البرنامج الثابت لـ QUANSHENG UV-K5 (4.1)
 صيغة ملفات .bin من Quansheng وبروتوكول محمّل UV-K5 موثّقان في البرنامجين الحرّين
@@ -347,7 +355,7 @@ Radtel «New RT470 serial Bootloader Pro».
 IU0VYT Flash برنامج مستقل، غير تابع لـ Baofeng أو Bajeton أو الشركات المصنّعة الأخرى
 المذكورة ولا معتمد منها (مثل Quansheng وRetevis وRadtel وRadioddity وTIDRADIO
 وHiroyasu وTalkpod وAnysecu وBTECH وAbbree وMaxTalker وIntek وMaverick وWLN وZastone
-وLuiton). أسماء الطرازات لا تفيد إلا في الإشارة إلى الأجهزة التي يعمل معها البرنامج.
+وLuiton وYaesu وIcom). أسماء الطرازات لا تفيد إلا في الإشارة إلى الأجهزة التي يعمل معها البرنامج.
 العلامات التجارية ملك أصحابها.
 أعيد بناء بروتوكولات البيانات وصيغها، لأغراض التوافق مع الأجهزة، من برامج الشركات
 المصنّعة (منذ 3.3 أيضًا «BF Series CPS» و«T17-T18 PMR446 PRO / FRS» و«DM-32UV CPS»

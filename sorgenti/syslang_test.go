@@ -23,6 +23,8 @@ func TestSysLang(t *testing.T) {
 		{[]string{"ja-JP"}, "ja"},
 		{[]string{"ko-KR"}, "ko"},
 		{[]string{"ar-SA"}, "ar"},
+		{[]string{"ms-MY"}, "ms"},
+		{[]string{"hi-IN"}, "hi"},
 		{[]string{"nl-NL", "fr-BE"}, "fr"}, // la prima lingua che il programma ha
 		{[]string{"nl-NL"}, "en"},          // nessuna: inglese
 		{[]string{"ru_RU.UTF-8"}, "ru"},    // forma di Linux

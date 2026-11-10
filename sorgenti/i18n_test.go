@@ -53,6 +53,13 @@ func uiCandidate(s string) bool {
 	if s == "Sì" || s == "No" {
 		return true
 	}
+	// 4.14: parole minuscole da sole perché in grassetto dentro una frase
+	// («vanno accese <b>dopo</b> aver collegato il cavo»): senza questa eccezione
+	// sembravano nomi di codice e restavano in italiano in tutte le lingue
+	switch s {
+	case "dopo", "verde", "spenta", "identificata", "file":
+		return true
+	}
 	if !reLetters3.MatchString(s) {
 		return false
 	}

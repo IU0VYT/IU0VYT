@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.13.1 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 11
+Version 4.14.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,29 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.14.0:
+- YAESU UND ICOM: zwei neue Marken (insgesamt 46) und 13 weitere Funkgeräte, mit Kanälen
+  per Kabel und CHIRP-kompatiblen .img-Dateien. Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R,
+  FT-65E und FT-25R (Kabel SCU-35 in der Mikrofonbuchse; Geräte, die den «Untertyp 3»
+  melden, haben eine eigene Registerkarte, und das Programm nennt die richtige), Yaesu
+  FT-60R/E (Kopie vom Funkgerät aus gestartet, Modus «F8 CLONE»); Icom IC-V86, IC-T10,
+  IC-V80, IC-T70, IC-V82 und IC-U82 (Kabel OPC-478 in der Lautsprecherbuchse; das
+  Funkgerät zeigt während der Kopie «CLONE»). Einstellungen für alle außer dem IC-T70.
+  Keine Firmware-Aktualisierung für diese Geräte. Alles ist mit simulierten Funkgeräten
+  getestet und Byte für Byte mit CHIRP verglichen; echte Geräte wurden noch nicht
+  getestet: Sicherungskopie aufbewahren und jedes Problem melden.
+- SPRACHEN: zwei weitere Sprachen, Malaiisch (Bahasa Melayu, Flagge Malaysias) und Hindi
+  (हिन्दी, Flagge Indiens), insgesamt 13: Programm, Website, Informationsdateien des
+  Ordners «lingue», README und Sicherheitsrichtlinie.
+- Galerie: 502 Modelle von 46 Marken (464 mit Kanälen, 409 mit Einstellungen).
+- Wouxun KG-UV8D: interne Feldnamen an das heutige CHIRP angepasst (keine Auswirkung auf
+  die Kanäle).
+- Behoben: Fünf fett gedruckte Wörter in den Anleitungen des Programms blieben in allen
+  Sprachen italienisch.
+- Konverter und Weiterleitung an ein anderes Funkgerät, zu den Yaesu- und Icom-Geräten:
+  Töne, die das Gerät nicht hat, werden mit einem Hinweis entfernt, und Kanäle, die es
+  nicht speichern kann, werden mit einem Hinweis übersprungen, statt den ganzen Vorgang
+  abzubrechen.
 Neu in 4.13.1:
 - IJV-FIRMWARE V6: neue Karte «Quansheng UV-K5 V3 / UV-K1 (IJV-Firmware V6)». Über die
   Datenverbindung der V6 werden die 500 Kanäle der am Funkgerät gewählten Bank, die
@@ -855,6 +878,9 @@ SPRACHE DER OBERFLÄCHE (4.10)
   die Liste der Sprachen: italiano, English, Français, Deutsch, Español, Português,
   Русский, 中文, 日本語, 한국어 (Koreanisch, 4.11, Flagge Südkoreas), العربية (Arabisch, 4.11,
   Flagge der Vereinigten Arabischen Emirate).
+- Ab 4.14 auch Bahasa Melayu (Malaiisch, Flagge Malaysias) und हिन्दी (Hindi, Flagge
+  Indiens); ihre übersetzten Dateien liegen in den Unterordnern «ms» und «hi» von
+  «lingue».
 - Mit Arabisch liest sich die Seite von rechts nach links; Frequenzen, Zahlen und
   Codes bleiben von links nach rechts. Für Arabisch wird die Flagge der Vereinigten
   Arabischen Emirate verwendet, weil die Flagge Saudi-Arabiens einen religiösen Text

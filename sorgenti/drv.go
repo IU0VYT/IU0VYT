@@ -449,6 +449,11 @@ func makeImg(m *genModel, mem []byte, old map[string]interface{}) []byte {
 	if n := genLayoutOf(m); n != 0 {
 		meta["iu0vyt_channels"] = n
 	}
+	// 4.14: Yaesu FT-65/FT-25 con sottotipo 3: il file lo dichiara sempre («ft4_subtype»,
+	// come CHIRP), anche quando l'immagine di partenza non lo aveva
+	if o, ok := m.Opt.(*ft4Opt); ok && o.sub3 {
+		meta["ft4_subtype"] = 3
+	}
 	if _, ok := meta["chirp_version"]; !ok {
 		meta["chirp_version"] = "IU0VYT-Flash-" + appVersion
 	}
@@ -557,6 +562,20 @@ func detectGen0(b []byte, prefer string) (*genModel, []byte, map[string]interfac
 			var ok []*genModel
 			for _, m := range cands {
 				if o, k := m.Opt.(*uvk5Opt); k && o.approve(fw) {
+					ok = append(ok, m)
+				}
+			}
+			if len(ok) > 0 {
+				cands = ok
+			}
+		}
+		// 4.14: Yaesu FT-65/FT-25: il sottotipo scritto nel file («ft4_subtype»,
+		// come in CHIRP) sceglie la scheda; senza, vale quella normale
+		{
+			st, _ := meta["ft4_subtype"].(float64)
+			var ok []*genModel
+			for _, m := range cands {
+				if o, k := m.Opt.(*ft4Opt); !k || o.sub3 == (st == 3 && o.scale == 2) {
 					ok = append(ok, m)
 				}
 			}

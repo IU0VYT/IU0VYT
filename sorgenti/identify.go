@@ -1005,9 +1005,19 @@ func (a *App) identPlan(req *identReq) []identProbe {
 		if usb != (m.Conn != "") || !identWantedAny(req, modelBrands(m), m.Digital != "") {
 			continue
 		}
+		// 4.14: radio che non rispondono a nessuna richiesta (es. Yaesu FT-60: la
+		// copia parte dalla radio, con un tasto): «Identifica» non può riconoscerle
+		if _, ok := m.Fam.(interface{ noIdent() }); ok {
+			continue
+		}
 		key := "usb " + m.ID // via USB: un tentativo per modello (se la radio manca, l'apertura fallisce subito)
 		if !usb {
 			key = keys[m.ID]
+			// 4.14: famiglie con lo stesso saluto di altre ma con un dialogo diverso
+			// subito dopo (vedi ft4Fam.identGroup): gruppo a parte
+			if f, ok := m.Fam.(interface{ identGroup() string }); ok {
+				key += "|" + f.identGroup()
+			}
 		}
 		g := groups[key]
 		if g == nil {

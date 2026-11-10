@@ -419,6 +419,7 @@ d5c68701	{0} linhas não importáveis
 f001d2b1	Linha {0}: {1} — {2}
 7c7b2650	repetidores selecionados para importação · filtros predefinidos: apenas repetidores utilizáveis em analógico, excluídos os inativos (alteráveis)
 5c4ce47f	A descarregar a lista…
+aaea5743	ficheiros
 257b0e9d	Escolher o ficheiro e carregar…
 2fb51da1	Descarregar lista
 e7666a7f	Substituir arquivo
@@ -491,6 +492,7 @@ ba1633c1	No separador Bajeton 8300 (a partir da galeria de modelos) prima «⬆ 
 c8eda081	no PC ou descarregue-o da Internet (também ligações do Google Drive ou Dropbox): pode estar dentro de arquivos
 6256ae35	, mesmo um dentro do outro. O programa verifica o formato do ficheiro, a plataforma, o nome e a impressão digital dos firmwares oficiais conhecidos; os firmwares descarregados ficam na pasta «firmware» junto ao arquivo.
 58d0b832	Antes de enviar o firmware, o rádio é
+49bcaffa	identificado
 0b797285	com o protocolo de programação do Bajeton 8300 (e, por predefinição, é guardada uma cópia dos seus canais); se não responder como um Bajeton 8300 a atualização não começa. Tem na mesma de confirmar que o rádio é um BJ-8300.
 6ae9726c	Modo de recuperação, para um rádio que não arranca: o rádio não pode ser identificado, por isso tem de ser confirmado escrevendo BJ8300.
 9ea5d63a	Durante a atualização não desligue o rádio nem retire o cabo. O protocolo é o do programa original «BinTe ANC Bootloader» V1.1.
@@ -654,6 +656,7 @@ a0753d3c	Identificação
 d62d069e	Modo de recuperação.
 bcf2b581	O rádio não pode ser identificado: o programa (como o original) espera cerca de 12 segundos que o rádio se apresente em modo de atualização.
 59ffb6db	Ligue o cabo ao rádio
+323b6aa6	desligado
 e8909194	Prima «Iniciar atualização».
 11f8e314	Logo a seguir coloque o rádio em modo de atualização segundo as instruções do revendedor (normalmente ligando-o enquanto mantém premida uma tecla, muitas vezes o PTT).
 1180f6bb	115200 baud (predefinida do programa original)
@@ -698,6 +701,7 @@ b355f97c	(procedimento da Retevis):
 6da125d0	Rádio desligado: mantenha premidos
 45f1c0ab	PTT e P1
 e0b2092b	e ligue-o; o indicador fica
+d2a54155	verde
 ce8a9d58	Ligue o cabo, escolha a potência do seu RT85 e prima «Iniciar atualização».
 f58aa906	O ficheiro está cifrado e o rádio não verifica o modelo: por isso é preciso escrever o modelo.
 8872885f	Se o envio for interrompido não ligue o rádio
@@ -982,6 +986,7 @@ c3b3e3b4	A escolha fica memorizada.
 b6e9ddea	🔎 Identificar o rádio
 6dbdda03	Rádio não encontrado?
 c803172d	Ligue-o com o volume a meio, introduza a ficha até ao fim e verifique a porta. UV-17, UV-13Pro e GM-15 Pro devem ser ligados
+1cbbc3b9	depois de
 1bcec61d	ligar o cabo. Rádios DMR com cabo USB direto (RD-5R, DM-1801, DM-1701): porta «USB».
 d9d58141	USB — rádios DMR ligados diretamente (RD-5R, DM-1801, DM-1701)
 10c99eed	As leituras também são guardadas em: {0}
@@ -5063,3 +5068,96 @@ bc8910a2	verificação falhada: no rádio V6 não está o que foi escrito (0x{0}
 a2a643a8	Firmware do rádio: IJV V6 {0} {1}, versão {2} — setores alterados escritos: {3}
 85102cf4	tabela de definições do RadioManager 4.3.2 do IJV (firmware V5 e V6)
 1e75d851	firmware IJV V6
+2d5d8109	200 canais, cabo SCU-35 na tomada do microfone. Ao contrário do CHIRP, o simplex escrito pelo rádio continua simplex e um desvio que não é múltiplo do passo do rádio passa a ser uma frequência de transmissão separada.
+06a3659f	Os rádios que declaram o subtipo 3 têm um separador próprio: o programa indica o correto.
+88465fa6	Yaesu
+8f0b59d9	Site da Yaesu
+40716138	{0}{1} Versão para os Estados Unidos.
+3edcec10	{0}{1} Versão europeia.
+9215ffd3	{0}{1} Só VHF.
+88588031	{0}{1} Versão para os Estados Unidos e a Ásia.{2}
+ecb75d4c	{0}{1} Versão europeia.{2}
+3fb19db9	{0}{1} Só VHF.{2}
+667d4978	{0} 1000 canais; a cópia parte do rádio (modo «F8 CLONE»). Ao contrário do CHIRP, as frequências que o rádio não consegue memorizar são recusadas em vez de arredondadas.
+6be6cfc9	Icom
+d509a298	Site da Icom
+3fa74331	{0} 200 canais VHF com nomes de 5 caracteres.
+5fb5bb65	{0} 200 canais VHF com nomes de 5 caracteres, cópia rápida.
+483908ff	{0} 300 canais VHF/UHF com nomes de 6 caracteres.
+83999770	{0} 200 canais VHF/UHF com nomes de 6 caracteres.
+949def0a	{0} 200 canais UHF com nomes de 5 caracteres.
+f4c6bc85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz*+-/@
+f76fe334	Yaesu {0}
+bd0cacfc	(subtipo 3)
+557df12b	200 canais com nomes de {0} caracteres. Cabo Yaesu SCU-35 (ou compatível) na tomada do microfone, 9600 baud: o cabo devolve cada byte enviado. Passo de sintonia, bancos, canais PMS, VFO e teclas programáveis mantêm-se.
+d9cf5870	O rádio não tem bloqueio de transmissão por canal.
+6289c3e3	A transmissão desativada obtém-se, como no CHIRP, com um desvio que cai fora da banda.
+e5a27085	{0}{1}Driver do CHIRP.
+e8175def	Separador para os rádios que declaram o subtipo 3 (desvio em unidades de 25 kHz): se o rádio for de outro tipo, o programa avisa.
+91a94a11	IFT-35R
+bf511637	IFT-15R
+f44f8eb2	IFT-25R
+9ce9efb9	o rádio não tem códigos DCS invertidos
+5c733725	o rádio não permite um subtom num sentido e um código DCS no outro
+48f650b7	o cabo não devolve os dados enviados: verifica o cabo e se está inserido até ao fundo
+5ff01c76	o cabo não devolve os dados enviados como devia: rádio desligado ou cabo inadequado
+87e6b091	o rádio não confirmou o comando
+53cacdee	o rádio não entrou em programação (esperava-se a resposta «QX»)
+a9d84203	identificador do rádio vazio
+d58f256a	o rádio é outro modelo ({0}): abre o separador «{1}» ou o da mesma série
+c477c1e6	o rádio declara o subtipo {0}: abre o separador «{1}»
+d8f8cbdf	imagem da memória inválida ({0} bytes)
+6e71b0e3	Escrita do bloco 0x{0}
+5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
+3c19e63e	Yaesu FT-60R / FT-60E
+0e7079a8	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !$%&'()*+,-./|;=>?@[]^_
+5cee59d0	1000 canais com nomes de 6 caracteres. A cópia parte do rádio: desliga-o, liga o cabo à tomada MIC/SP, liga-o mantendo premido [MONI], escolhe «F8 CLONE» com o botão rotativo e prime [F/W]. Para ler: inicia aqui a leitura e depois mantém premido [PTT] um segundo. Para escrever: prime [MONI] no rádio (aparece «--RX--») e depois inicia aqui a escrita. Bancos, canais PMS e passo de sintonia mantêm-se. As frequências memorizam-se em passos de 5 ou 12,5 kHz. Driver do CHIRP.
+6065d4a7	o rádio não tem esta combinação de tons (admitidos: subtom na transmissão ou nos dois sentidos, DCS na transmissão ou nos dois sentidos, subtom e DCS misturados; nunca só o tom na receção nem códigos invertidos)
+1f61babd	o rádio não consegue memorizar a frequência {0} MHz (passos de 5 ou 12,5 kHz)
+8280dc40	tom não disponível neste rádio
+4315d197	o rádio não consegue memorizar a frequência de transmissão {0} MHz (passos de 5 ou 12,5 kHz)
+b02e4292	o cabo não devolve os dados enviados como devia: cabo inadequado ou interferências
+7f40ae2b	À espera do rádio: mantém premido [PTT] um segundo…
+d4da2fa7	o rádio não enviou nada: põe-no em «F8 CLONE» e mantém premido [PTT] depois de iniciar a leitura
+307ded2d	o rádio não é um FT-60 (identificador {0})
+f9d04bad	bloco {0} incompleto ({1} bytes)
+400237ed	soma de verificação errada: repete a leitura
+d02a30f9	imagem da memória inválida para o FT-60
+5185086a	o rádio não confirma os dados: põe-no em «F8 CLONE» e prime [MONI] («--RX--») antes de iniciar a escrita
+9ab44350	resposta inesperada do rádio ({0}) durante a escrita
+2c926f56	dados do rádio não reconhecidos: verifica o cabo
+e8ae8fa2	o rádio é outro modelo: abre o separador «{0}»
+eb1316d4	o rádio é outro modelo (identificador {0})
+0cb25873	o rádio deixou de enviar dados antes do fim (0x{0})
+2bb37bb5	bloco do rádio inválido (0x{0})
+d02456ba	soma de verificação errada no bloco 0x{0}: repete a leitura
+43be7cd5	o rádio enviou mais dados do que o previsto (0x{0})
+c1a108a1	leitura incompleta: {0} bytes de {1}
+2ea938b0	o rádio recusou os dados escritos
+cccf8e56	Cabo Icom OPC-478 (ou compatível) na tomada do altifalante, 9600 baud; o rádio liga-se normalmente e durante a cópia mostra «CLONE».
+b3fa7827	Icom Inc.7C
+03a68a88	Icom IC-V80
+215302ea	200 canais VHF (de 0 a 199) com nomes de 5 caracteres. {0}A cópia é a rápida (38400 baud depois da identificação). Passo de sintonia, canais de varrimento e de chamada e inversão do canal mantêm-se. Driver do CHIRP.
+52b58449	Icom IC-T70
+c4d1c0f5	300 canais VHF/UHF (de 0 a 299) com nomes de 6 caracteres. {0}Os bancos mantêm-se. Driver do CHIRP.
+da70894a	o rádio não tem esta combinação de tons (admitidos: subtom na transmissão, o mesmo subtom nos dois sentidos, o mesmo código DCS nos dois sentidos)
+bed9a66d	o rádio não consegue memorizar a frequência {0} MHz (múltiplos de 5 ou de 6,25 kHz)
+efa0c310	com a frequência {0} MHz o rádio não consegue memorizar um desvio de {1} Hz
+ae0e8e43	frequência ou desvio fora dos limites do rádio
+ee3eef34	Icom Inc.CF
+f63ad748	o rádio não consegue memorizar um desvio de {0} Hz (múltiplos de 5 kHz)
+d0a1c599	desvio fora dos limites do rádio
+a339fbf5	Icom Inc.AC
+09a693fa	Icom IC-V86
+4deb5042	Máxima 7 W
+7551248e	200 canais VHF (de 0 a 199) com nomes de 5 caracteres. {0}Passo de sintonia, canais de varrimento e de chamada, inversão e permissão de transmissão do canal mantêm-se. Driver do CHIRP.
+fa4140af	Icom Inc.B8
+d6c3cb9f	Icom IC-T10
+160df882	200 canais VHF/UHF (de 0 a 199) com nomes de 6 caracteres. {0}Passo de sintonia, canais de varrimento e de chamada, inversão e bloqueio da transmissão do canal mantêm-se. Driver do CHIRP.
+f03ef25a	Icom Inc.CD
+fe5c79a7	Icom {0}
+2972bf65	200 canais {0} (de 0 a 199) com nomes de 5 caracteres. {1}A potência não é memorizada no canal. Bancos, indicativos D-STAR, passo de sintonia e canais em modo digital DV mantêm-se. Driver do CHIRP.
+d487a1bd	frequência {0} MHz fora dos limites do rádio
+f5084846	o rádio é o outro modelo da série: abre o separador «Icom {0}»
+e6282e24	a imagem não é de um {0}
+a7bdcadb	subtipo 3

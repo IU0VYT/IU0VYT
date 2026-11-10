@@ -1,0 +1,32 @@
+IU0VYT FLASH - NOTIS LESEN
+==========================
+
+IU0VYT Flash, Hak cipta (C) 2026 Daniele "IU0VYT" Bonifazi.
+
+Program ini diedarkan di bawah GNU General Public License, versi 3 atau (mengikut
+pilihan anda) mana-mana versi yang lebih baharu (SPDX: GPL-3.0-or-later). Satu-satunya
+teks lesen yang sah di sisi undang-undang ialah teks asal bahasa Inggeris dalam
+LICENSE.txt (folder utama pakej), salinan tepat https://www.gnu.org/licenses/gpl-3.0.txt.
+
+Notis ini bukan terjemahan lesen: seperti yang diminta oleh Free Software Foundation,
+ia hanya meringkaskan apa yang dibenarkan oleh lesen, dan jika ada keraguan teks
+bahasa Inggeris yang diguna pakai.
+
+Ringkasnya, anda boleh:
+- menggunakan program untuk apa-apa tujuan;
+- mengkaji cara ia berfungsi dan mengubahnya (kod sumber lengkap ada dalam folder
+  "sorgenti");
+- memberikan salinan kepada orang lain, termasuk menjualnya;
+- mengedarkan versi yang telah anda ubah.
+
+Jika anda mengedarkan program ini, yang asal atau yang diubah, anda mesti:
+- menggunakan lesen yang sama (GPL-3.0-or-later) untuk keseluruhan program;
+- menyediakan kod sumber lengkap, atau tawaran bertulis untuk menyediakannya;
+- mengekalkan notis hak cipta, LICENSE.txt dan fail pengarang dan lesen;
+- menyatakan dengan jelas apa yang anda ubah dan bila.
+
+Program ini disediakan TANPA SEBARANG JAMINAN: pengarang tidak bertanggungjawab atas
+kerosakan pada radio, data atau apa-apa yang lain.
+
+Komponen pihak ketiga mengekalkan lesen masing-masing (MIT, ISC, BSD, GNU GPL),
+semuanya serasi dengan GPL versi 3: lihat AUTHORS_AND_LICENSES.txt.

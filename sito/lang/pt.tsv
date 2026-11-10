@@ -12,7 +12,7 @@ f8218bc1	Programa gratuito e livre (GPL) para Windows que lê e escreve canais, 
 cd611275	GESTÃO DE CANAIS<span class="tag-sep"> - </span><span class="tag-b">FREQUÊNCIAS - REPETIDORES - FIRMWARE</span>
 540321f7	Marcas de rádio suportadas: #
 e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> MARCAS
-5998daca	O programa gratuito para Windows que lê e escreve os canais e as frequências dos seus rádios por cabo, <br>insere os repetidores italianos e atualiza o firmware. <br>Um só ficheiro, sem instalação, em italiano e noutras 10 línguas.
+c06671f0	O programa gratuito para Windows que lê e escreve os canais e as frequências dos seus rádios por cabo, <br>insere os repetidores italianos e atualiza o firmware. <br>Um só ficheiro, sem instalação, em italiano e noutras 12 línguas.
 65c3ed2e	ÚLTIMA VERSÃO:
 4fc59698	O botão transfere sempre o pacote da última versão publicada.
 b6a8d2e0	ÚLTIMA VERSÃO
@@ -45,8 +45,8 @@ ecd4b3ef	Atualização do firmware
 d72d8b35	Firmware de <span data-n="firmware">#</span> modelos com os protocolos dos programas oficiais, verificação do ficheiro e cópia de segurança.
 620c0164	Galeria dos modelos
 fd632a2d	<span data-n="galleria">#</span> rádios de <span data-n="marche">#</span> marcas divididos por tipo (radioamador, DMR, GMRS/FRS, PMR446, para crianças) e por marca, com pesquisa e ligações aos programas e manuais oficiais.
-c86bd7e2	Em 11 línguas
-7bf9a67c	Além do italiano, o programa está disponível em inglês, francês, alemão, espanhol, português, russo, chinês, japonês, coreano e árabe: escolhe-se a bandeira ao lado de «Info» e todo o programa muda de língua instantaneamente. Guia e informações traduzidos na pasta <code>lingue</code> do pacote.
+c7b2d824	Em 13 línguas
+016db81f	Além do italiano, o programa está disponível em inglês, francês, alemão, espanhol, português, russo, chinês, japonês, coreano, árabe, malaio e hindi: escolhe-se a bandeira ao lado de «Info» e todo o programa muda de língua instantaneamente. Guia e informações traduzidos na pasta <code>lingue</code> do pacote.
 e60a286e	Cópia de segurança
 adfe4a55	Antes de cada escrita o programa guarda o conteúdo do rádio e depois verifica se os dados foram escritos corretamente.
 ab670cd6	Sempre atualizado

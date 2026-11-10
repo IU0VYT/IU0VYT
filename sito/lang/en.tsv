@@ -12,7 +12,7 @@ f8218bc1	Free and open-source (GPL) program for Windows that reads and writes ch
 cd611275	CHANNEL MANAGEMENT<span class="tag-sep"> - </span><span class="tag-b">FREQUENCIES - REPEATERS - FIRMWARE</span>
 540321f7	Radio brands supported: #
 e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> BRANDS
-5998daca	The free Windows program that reads and writes the channels and frequencies of your radios via cable, <br>inserts the Italian repeaters and updates the firmware. <br>A single file, no installation, in Italian and 10 other languages.
+c06671f0	The free Windows program that reads and writes the channels and frequencies of your radios via cable, <br>inserts the Italian repeaters and updates the firmware. <br>A single file, no installation, in Italian and 12 other languages.
 65c3ed2e	LATEST VERSION:
 4fc59698	The button always downloads the package of the latest published version.
 b6a8d2e0	LATEST VERSION
@@ -45,8 +45,8 @@ ecd4b3ef	Firmware update
 d72d8b35	Firmware of <span data-n="firmware">#</span> models with the protocols of the official programs, file check and backup copy.
 620c0164	Model gallery
 fd632a2d	<span data-n="galleria">#</span> radios of <span data-n="marche">#</span> brands divided by type (amateur, DMR, GMRS/FRS, PMR446, for children) and by brand, with search and links to the official programs and manuals.
-c86bd7e2	In 11 languages
-7bf9a67c	Besides Italian, the program is available in English, French, German, Spanish, Portuguese, Russian, Chinese, Japanese, Korean and Arabic: choose the flag next to «Info» and the whole program changes language instantly. Guide and information translated in the <code>lingue</code> folder of the package.
+c7b2d824	In 13 languages
+016db81f	Besides Italian, the program is available in English, French, German, Spanish, Portuguese, Russian, Chinese, Japanese, Korean, Arabic, Malay and Hindi: choose the flag next to «Info» and the whole program changes language instantly. Guide and information translated in the <code>lingue</code> folder of the package.
 e60a286e	Backup copy
 adfe4a55	Before every write the program saves the contents of the radio and afterwards checks that the data were written correctly.
 ab670cd6	Always up to date

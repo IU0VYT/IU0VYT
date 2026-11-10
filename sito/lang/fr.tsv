@@ -12,7 +12,7 @@ f8218bc1	Programme gratuit et libre (GPL) pour Windows qui lit et écrit les can
 cd611275	GESTION DES CANAUX<span class="tag-sep"> - </span><span class="tag-b">FRÉQUENCES - RELAIS - FIRMWARE</span>
 540321f7	Marques de radios prises en charge : #
 e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> MARQUES
-5998daca	Le programme gratuit pour Windows qui lit et écrit les canaux et les fréquences de vos radios par câble, <br>insère les relais italiens et met à jour le firmware. <br>Un seul fichier, aucune installation, en italien et en 10 autres langues.
+c06671f0	Le programme gratuit pour Windows qui lit et écrit les canaux et les fréquences de vos radios par câble, <br>insère les relais italiens et met à jour le firmware. <br>Un seul fichier, aucune installation, en italien et en 12 autres langues.
 65c3ed2e	DERNIÈRE VERSION :
 4fc59698	Le bouton télécharge toujours le paquet de la dernière version publiée.
 b6a8d2e0	DERNIÈRE VERSION
@@ -45,8 +45,8 @@ ecd4b3ef	Mise à jour du firmware
 d72d8b35	Firmware de <span data-n="firmware">#</span> modèles avec les protocoles des programmes officiels, contrôle du fichier et copie de sauvegarde.
 620c0164	Galerie des modèles
 fd632a2d	<span data-n="galleria">#</span> radios de <span data-n="marche">#</span> marques classées par type (radioamateur, DMR, GMRS/FRS, PMR446, pour enfants) et par marque, avec recherche et liens vers les programmes et manuels officiels.
-c86bd7e2	En 11 langues
-7bf9a67c	En plus de l'italien, le programme est disponible en anglais, français, allemand, espagnol, portugais, russe, chinois, japonais, coréen et arabe : choisissez le drapeau à côté de « Info » et tout le programme change de langue instantanément. Guide et informations traduits dans le dossier <code>lingue</code> du paquet.
+c7b2d824	En 13 langues
+016db81f	En plus de l'italien, le programme est disponible en anglais, français, allemand, espagnol, portugais, russe, chinois, japonais, coréen, arabe, malais et hindi : choisissez le drapeau à côté de « Info » et tout le programme change de langue instantanément. Guide et informations traduits dans le dossier <code>lingue</code> du paquet.
 e60a286e	Copie de sauvegarde
 adfe4a55	Avant chaque écriture, le programme enregistre le contenu de la radio et vérifie ensuite que les données ont été écrites correctement.
 ab670cd6	Toujours à jour

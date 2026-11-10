@@ -1,0 +1,1495 @@
+IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
+===========================================================================
+Versi 4.14.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
+Laman web: https://iu0vyt.github.io/IU0VYT/
+Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
+Lesen: GNU General Public License versi 3 atau lebih baharu (perisian bebas, TANPA
+SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
+Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
+rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
+utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Apa yang baharu dalam 4.14.0:
+- YAESU DAN ICOM: dua jenama baharu (46 kesemuanya) dan 13 radio tambahan, dengan
+  saluran melalui kabel dan fail .img yang serasi dengan CHIRP. Yaesu FT-4XR, FT-4XE,
+  FT-4VR, FT-65R, FT-65E dan FT-25R (kabel SCU-35 pada soket mikrofon; radio yang
+  mengisytiharkan «subjenis 3» mempunyai tab berasingan dan program menunjukkan tab
+  yang betul), Yaesu FT-60R/E (klon dimulakan dari radio, mod «F8 CLONE»); Icom IC-V86,
+  IC-T10, IC-V80, IC-T70, IC-V82 dan IC-U82 (kabel OPC-478 pada soket pembesar suara;
+  radio menunjukkan «CLONE» semasa penyalinan). Tetapan untuk semua kecuali IC-T70.
+  Tiada kemas kini perisian tegar untuk radio ini. Semuanya diuji dengan radio simulasi
+  dan dibandingkan bait demi bait dengan CHIRP; radio sebenar belum diuji: simpan
+  salinan sandaran dan laporkan sebarang masalah.
+- BAHASA: dua bahasa tambahan, bahasa Melayu (Bahasa Melayu, bendera Malaysia) dan
+  Hindi (हिन्दी, bendera India), 13 kesemuanya: program, laman web, fail maklumat dalam
+  folder «lingue», README dan dasar keselamatan.
+- Galeri: 502 model daripada 46 jenama (464 dengan saluran, 409 dengan tetapan).
+- Wouxun KG-UV8D: nama medan dalaman diselaraskan dengan CHIRP semasa (tiada kesan pada
+  saluran).
+- Dibetulkan: lima perkataan bercetak tebal dalam panduan program kekal dalam bahasa
+  Itali dalam semua bahasa.
+- Penukar dan pemajuan ke radio lain, ke radio Yaesu dan Icom: ton yang tiada pada radio
+  dibuang dengan amaran dan saluran yang tidak dapat disimpannya dilangkau dengan
+  amaran, tanpa menghentikan keseluruhan operasi.
+Apa yang baharu dalam 4.13.1:
+- PERISIAN TEGAR IJV V6: tab baharu «Quansheng UV-K5 V3 / UV-K1 (IJV V6 firmware)».
+  Melalui pautan data V6, 500 saluran bank yang dipilih pada radio, nama kumpulan dan
+  bank serta tetapan utama (sama seperti V5) dibaca dan ditulis. Penulisan dibuat dalam
+  sektor 4 KiB: hanya yang berubah, setiap satu dibaca semula dan disemak. Jika radio
+  menyatakan pautan data tiada, kemas kini dengan FLASH V6 daripada RadioManager.
+Apa yang baharu dalam 4.13.0:
+- PERISIAN TEGAR IJV untuk Quansheng UV-K5, UV-K5 V3 dan UV-K1 (perisian tegar bukan
+  asal oleh IU0IJV, www.ijvradio.com): empat tab baharu, satu bagi setiap versi
+  perisian tegar. V3 dengan 200 atau 999 saluran pada UV-K5 klasik; V4 dan V5 («FW5»)
+  pada UV-K5 V3 dan UV-K1, dengan 500 saluran bank yang dipilih pada radio. Saluran,
+  nama kumpulan dan bank serta tetapan utama dibaca dan ditulis; V6 dikenali (ia
+  diurus dengan RadioManager IJV). Lihat «FIRMWARE IJV» dalam LEGGIMI.txt;
+- kemas kini perisian tegar: fail .bin dengan versi IJV dilaporkan, dengan tab untuk
+  saluran dan amaran untuk V5 dan V6.
+Apa yang baharu dalam 4.12.0:
+- BAHASA PADA PERMULAAN PERTAMA: program bermula dalam bahasa Windows pengguna (bahasa
+  Inggeris jika ia bukan salah satu daripada 11 bahasa program). Jika bahasa lain
+  kemudian dipilih dengan bendera, pilihan itu disimpan dan digunakan pada permulaan
+  berikutnya (bahasa Itali juga);
+- terjemahan: «Ya» dan «Tidak» dalam lajur Imbasan dan nama lesen pada halaman utama
+  kini diterjemahkan dalam semua bahasa;
+- keselamatan: pembetulan bagi laporan analisis kod GitHub (CodeQL);
+- repositori dan laman: README dalam bahasa Inggeris pada halaman utama repositori,
+  dengan bendera bahasa dan gambar program; dasar keselamatan dalam kesemua 11 bahasa;
+  teks laman dikemas kini dan gambar pratonton untuk rangkaian sosial.
+Apa yang baharu dalam 4.11.0:
+- NAMA ZON: menggantikan «Zon 1», «Zon 2»… setiap zon boleh mempunyai nama, seperti
+  dalam program pengeluar (butang «✎ Nama zon…» atau klik dua kali pada zon). Radtel
+  RT-950 Pro, Bajeton BJ-9000 dan Hiroyasu HI-UV850 Pro (kedua-dua versi perisian
+  tegar), Radtel RT-950, Radtel RT-920, Radtel RT-910 / Bajeton BJ-7700 tanpa
+  Bluetooth; zon radio DMR Baofeng RD-5R, DM-1801 dan DM-32UV. Nama dibaca dan ditulis
+  melalui kabel bersama saluran dan disimpan dalam fail .img (lihat «NAMA ZON»);
+- EDIT PUKAL: «✎ Edit pukal…» mengubah kuasa, lebar jalur, imbasan, subton, anjakan
+  atau pancaran saluran yang ditanda (atau dipilih) sekali gus; bahagian lain setiap
+  saluran kekal seperti sedia ada, dan Ctrl+Z membatalkannya;
+- BAHASA: dua bahasa tambahan, bahasa Korea (bendera Korea Selatan) dan bahasa Arab
+  (bendera Emiriah Arab Bersatu, dengan halaman dari kanan ke kiri): 11 kesemuanya,
+  juga untuk fail maklumat dalam folder «lingue»;
+- ujian: ujian juga berjalan pada Windows (i18n_test.go); satu ujian baharu menyemak
+  bahawa dua salinan LEGGIMI.txt, AUTORI_E_LICENZE.txt dan lesen (folder utama dan
+  «sorgenti») kekal serupa.
+Apa yang baharu dalam 4.10.0:
+- BAHASA: di sebelah «ℹ Maklumat» terdapat pemilih bahasa dengan bendera (Itali,
+  Inggeris, Perancis, Jerman, Sepanyol, Portugis, Rusia, Cina, Jepun). Terjemahan
+  dibuat serta-merta dan meliputi seluruh program, termasuk mesej dan dialog Windows;
+  bahasa terakhir yang dipilih diingati apabila dimulakan semula (lihat «BAHASA ANTARA
+  MUKA»). Fail ini dan fail maklumat lain tersedia dalam semua bahasa (folder «lingue»
+  dalam pakej);
+- bar atas: butang «Aggiornamenti» (Kemas kini) telah dibuang (semakan kekal automatik
+  pada setiap permulaan dan dengan «🔄 Semak kemas kini» dalam tab Maklumat); «🔎 Kenal
+  pasti Radio» berada di sebelah «? Panduan»;
+- KEMAS KINI PERISIAN TEGAR untuk 5 radio lagi (57 kesemuanya): Radtel RT-890
+  (perisian tegar Radtel dan perisian tegar bebas M7OCM), Baofeng DM-1701 / Retevis
+  RT84 melalui USB, Baofeng RD-5R dan DM-1801 melalui USB (fail .sgl), lihat bahagian
+  yang berkenaan;
+- TETAPAN untuk 10 radio lagi (396 kesemuanya): Feidaxin FD-288A, FD-150A, FD-160A,
+  FD-450A, FD-460A, FD-460UH dan Retevis RT76P (daripada CHIRP), Baofeng RD-5R dan
+  DM-1801 (31 item: nama dan ID DMR, teks semasa dihidupkan, ton, pemasa, VOX, imbasan,
+  penjimatan kuasa), Baofeng DM-1701 (nama dan ID DMR, teks semasa dihidupkan);
+- ujian: «go test» berfungsi semula pada Windows juga (extra_test.go).
+
+BERMULA
+- Klik dua kali "IU0VYT Flash.exe". Skrin utama "🏠 Utama" terbuka dan di bahagian atas
+  terdapat tab tetap "🏠 Utama", "📻 Model", "Arkib pengulang" dan "ℹ Maklumat"; setiap
+  radio yang dipilih dari galeri (termasuk Baofeng K67 Pro dan Bajeton 8300) dibuka
+  dalam tab tambahan, yang ditutup dengan ×.
+- Apabila mengemas kini daripada versi 2.x, gantikan fail boleh laku sahaja: arkib,
+  tetapan dan salinan kekal di tempatnya.
+- Apabila mengemas kini daripada versi 2.1 atau lebih awal (GestioneCanali.exe): arkib
+  pengulang, tetapan dan salinan kekal sama (folder %APPDATA%\GestioneCanaliRadio);
+  GestioneCanali.exe yang lama boleh dipadam.
+- Program ini tiada tandatangan digital: pada permulaan pertama Windows mungkin
+  memaparkan "Windows protected your PC". Klik "More info" kemudian "Run anyway".
+- Tetingkap menggunakan komponen WebView2, yang sudah ada dalam Windows 11. Jika ia
+  tiada, program dibuka dalam pelayar lalai dan satu tetingkap kecil membolehkan anda
+  menutupnya.
+- Hanya satu salinan program boleh dibuka pada satu-satu masa.
+
+CARA BEKERJA
+Dengan kabel pengaturcaraan:
+1. "📻 Baca dari radio…": saluran radio muncul dalam jadual.
+2. Edit saluran; simpan juga ke fail (Simpan sebagai…), untuk menyimpan salinan.
+3. "📻 Tulis ke radio…".
+Dengan fail (seperti dalam versi 1.0):
+- Buka fail .xlc (K67 Pro) atau fail .dat (Bajeton 8300) yang disimpan dengan program
+  asal atau dengan program ini, edit, simpan (Ctrl+S). Fail yang disimpan di sini juga
+  boleh dibuka dan ditulis dengan program asal.
+Apabila anda menyimpan di atas fail sedia ada, versi sebelumnya disimpan di sebelahnya
+dengan sambungan .bak (cth. k67.xlc.bak).
+
+GALERI MODEL
+- Tab "📻 Model" menunjukkan semua radio Baofeng (katalog dan halaman muat turun
+  baofengradio.com), Bajeton (bajeton.com) dan, sejak 4.0, radio jenama lain yang
+  dikendalikan (Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, MaxTalker, Abbree,
+  Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID dan, sejak 4.1, Hiroyasu, Talkpod,
+  Anysecu). Cari mengikut jenama atau nama, termasuk nama alternatif (cth. UV-5RA,
+  MINI-5, GT-3TP, UV-K5), dan tapis mengikut jenama (menu "Semua jenama"), jenis
+  (amatur radio, DMR, GMRS / FRS, PMR446 dan tanpa lesen, untuk kanak-kanak), radio
+  dengan saluran melalui kabel atau dengan perisian tegar.
+- Di bahagian atas "MODEL SERASI: N", yang dikendalikan oleh program ini (label
+  "Saluran" dan "Perisian tegar"), di bahagian bawah "MODEL TIDAK SERASI: N", yang
+  hanya boleh diprogram dengan program pengeluar atau dengan program bebas: untuk
+  radio ini terdapat pautan rasmi ke program, perisian tegar dan manual. N ialah
+  bilangan model (dengan carian dan penapis, yang ditunjukkan). Sejak 4.3 satu garisan
+  tebal memisahkan kedua-dua bahagian.
+- Dalam setiap bahagian radio dibahagikan mengikut jenis: Radio amatur (VHF/UHF), DMR
+  (digital), GMRS / FRS (AS), PMR446 dan radio tanpa lesen, Untuk kanak-kanak; dalam
+  setiap bahagian radio diasingkan mengikut jenama (Baofeng dahulu, kemudian Bajeton,
+  kemudian yang lain mengikut abjad, dengan bilangan model setiap satu) dan model
+  disusun mengikut abjad (UV-5R sebelum UV-17). Kad setiap radio menunjukkan jenama,
+  masing-masing dengan warnanya sendiri (Baofeng biru, Bajeton jingga, Quansheng
+  hijau, Retevis merah, Radtel ungu…).
+- Setiap model mempunyai kadnya sendiri walaupun ia dikendalikan seperti model lain:
+  contohnya UV-5R, UV-5RA, UV-5RE, GT-3 menggunakan pemacu yang sama, begitu juga
+  BF-888S dan BF-777S. Nota pada kad menyenaraikan model dengan pengendalian yang sama.
+  Bagi model setara yang disenaraikan dalam jadual CHIRP
+  (chirp/share/model_alias_map.yaml, cth. GT-1 = BF-888, GT-5 = UV-82, UV-10R =
+  BF-F8HP) nota menyatakannya: keserasian itu ialah yang ditunjukkan oleh CHIRP, bukan
+  oleh pengeluar.
+- Klik pada radio: tab salurannya, kemas kini perisian tegar atau senarai pautan
+  terbuka. Jika radio wujud dalam beberapa versi (cth. UV-5RX3, UV-5R+Pro) pilih yang
+  anda miliki: jika bukan yang betul, radio tidak menjawab dan tidak diubah.
+
+RADIO YANG DIKENDALIKAN DENGAN PEMACU CHIRP
+- Bagi 61 model, protokol kabel dan peta memori ialah yang terdapat dalam pemacu CHIRP
+  (https://chirpmyradio.com), ditulis semula dalam bahasa program ini. Keluarga:
+  UV-5R (UV-5R, F-11, UV-82, UV-82HP, UV-82X3, UV-6, BF-F8HP, UV-5RX3, GT-5R, UV-5G,
+  UV-5G Pro), UV-17 Pro (UV-17Pro, UV-17Pro GPS, UV-21Pro V2, UV-21Pro GPS, UV-25,
+  UV-28 Plus, UV-32, UV-5RM, UV-5RM Plus, K5 Plus, UV-5RH, GM-5RH, GM-21, UV-5G Plus,
+  UV-17R Plus, BF-F8HP Pro, K6/K63, UV-5R Mini, UV-5G Mini), kalis air (BF-A58,
+  BF-A58S, UV-82WP, GT-3WP, UV-S9X3, UV-5RX, UV-9R, UV-9G, UV-6R, UV-5X3), UV-17 dan
+  UV-13 Pro, BF-888S/BF-M4/MP31/BF-1901/1904/1909, UV-B5/B6, BF-T1, BF-T8/U9, UV-3R,
+  BF-V8A, BF-T20FRS, BF-T20, W31E, Bajeton BJ-7800 dan (sejak 3.1) Bajeton BJ-7700
+  (Radtel RT-910 / RT-910 BT), siri H (H-31, H-32, BF-H…: radio yang sama seperti
+  Radioddity GA-510) dan GM-15 Pro.
+- Sejak 4.0 juga radio jenama lain: keluarga UV-K5 (Quansheng UV-K5, UV-K6, UV-5R Plus,
+  UV-K1, Retevis RA79, MaxTalker TK-6: pemacu uvk5.py), keluarga T18 (Radtel T18,
+  Retevis RT22S, RT20, RB18, RB618, RT68, RT668, RB17, RB617, RB17V, RB85, RB75, RB19,
+  RB19P, RB619, RT47, RT47V, RT647, RB29, RB629, RT15, RB87, H777H, BTECH FRS-B1:
+  radtel_t18.py), keluarga RT22 (Retevis RT22, RT22FRS, RT622, WLN KD-C1, Zastone
+  ZT-X6, Luiton LT-316, TID TD-M8: retevis_rt22.py), keluarga H777 (Retevis H777, H777
+  Plus, Radioddity GA-2S, MaxTalker MT-8S, Maverick RA-100 dan RA-425), keluarga
+  GA-510 (Retevis RA685, RA85, Abbree AR-F5, TIDRADIO TD-H6), keluarga UV-17 Pro
+  (MaxTalker P15, MT-5RM, Radioddity GM-30 Plus dan GM-30 Pro), keluarga RT-900 (Radtel
+  RT-900, RT-900 BT, RT-920, Radioddity GS-10B), Radioddity GM-30, Retevis RT6 dan
+  Intek KT-980HP (keluarga UV-5R).
+- Sejak 4.1: keluarga MML JC-8810 (Radtel RT-470, RT-470L, RT-470X, RT-470X Plus,
+  RT-630, RT-495, Hiroyasu HI-8811, Talkpod A36plus dan A36plus 8 W, Anysecu UV-A37,
+  Abbree AR-730: pemacu mml_jc8810.py; 256 saluran, 512 pada A36plus, nama 12 aksara;
+  pada RT-470X jalur udara 118-136 MHz adalah dalam AM) dan keluarga TD-H8 (TIDRADIO
+  TD-H8 generasi kedua dan ketiga, TD-H3, versi asas, HAM dan GMRS, Radtel RT-730:
+  pemacu tdh8.py; 199 saluran dengan nama 8 aksara; frekuensi yang hanya boleh diterima
+  oleh versi HAM adalah terima sahaja; dalam versi GMRS saluran 1-30 mempunyai
+  frekuensi tetap).
+- Sejak 4.2: keluarga TYT TH-UV88 (TYT TH-UV88 dan TH-UV98, Retevis RT85, RA89, P2 dan
+  P62, Explorer QRZ-1: pemacu th_uv88.py; 200 saluran dengan nama 10 aksara, tiga
+  kuasa; setiap model mempunyai namanya sendiri dalam protokol, «UV88», «UV99»…),
+  keluarga Radtel RT-490 (Radtel RT-490, JC-8629 oleh MMLradio, JJCC dan Socotran,
+  Socotran FB-8629, Jianpai 8800 Plus, Boristone 8RS, Abbree AR-869, HamGeek HG-590:
+  radtel_rt490.py; 256 saluran dengan nama 12 aksara, juga dalam bahasa Cina; saluran
+  AM kekal dalam AM pada jalur udara; radio tidak melaporkan jenama), keluarga Retevis
+  RT21 (RT21, RT21V, RB17A, RB23, RB26, RB626, RB89, RT76, RT29 UHF dan VHF, RT19,
+  RT619, RT40B, RB28B, RB628B, RT86, RT86S, RT86A, Abbree AR-63: retevis_rt21.py;
+  saluran tanpa nama; pada RB28B dan RT19 saluran 1-22 FRS, pada RB628B dan RT619
+  saluran 1-16 PMR446 dan pada RB17A, RB23, RB26, RT76 dan RT40B saluran GMRS
+  mempunyai frekuensi tetap, seperti dalam CHIRP) dan Quansheng TK11 (tk11.py; 999
+  saluran dengan nama 16 aksara, 0.15-1160 MHz; saluran AM, SSB dan CW kekal dalam mod
+  masing-masing; selepas penulisan radio dimulakan semula).
+- Sejak 4.8: TYT TH-UV3R dan TH-UV3R-25 (th_uv3r.py, th_uv3r25.py), TH-UVF1
+  (thuv1f.py) dan TH-UVF8D (th_uvf8d.py); KYD NC-630A (kyd.py) dan IP-620
+  (kyd_IP620.py); KSUN M6 (ksun_m6.py, frekuensi dalam langkah 500 Hz); Puxing PX-777
+  dan PX-2R (puxing.py; julat PX-777 ialah yang tertulis dalam radio); Boblov X3 Plus
+  (boblov_x3plus.py, radio topi keledar: seperti dalam CHIRP kuasa tidak boleh diubah);
+  Lanchonlh HG-UV98 (hg_uv98.py, pariti genap); Radioddity R2, Retevis RT24, RT24V dan
+  H777S (radioddity_r2.py); Retevis RT1 (retevis_rt1.py, versi VHF dan UHF); Retevis
+  H777 V4 dan RT21H (retevis_h777v4.py: tab H777 mengecam V4 dan menunjukkan tabnya);
+  Quansheng TG-UV2+ (tg_uv2p.py, dua bit henti, saluran 0-199); Feidaxin FD-268A/B,
+  FD-288A/B, FD-150A, FD-160A, FD-450A, FD-460A, FD-460UH (fd268.py).
+- Sejak 4.9: Wouxun (wouxun.py, kguv8d.py, kguv8dplus.py, kguv8e.py, kguv9dplus.py,
+  kg935g.py: 20 model; KG-UV8D Plus, KG-UV8E dan KG-935G dengan protokol tersulit);
+  TYT TH-UV8000D/E (th_uv8000.py), UVL-15W (tyt_uvl15w.py, 1000 saluran) dan TH-350 AS
+  (th350.py); Abbree AR-518, Ruyage UV58Plus dan Radtel RT-880G (iradio_*.py,
+  radtel_rt880g.py); Retevis C2 (retevis_c2.py, RTS mati), HA1G, HA1UV dan HA2
+  (retevis_ha1g.py, retevis_ha2.py; saluran 1-30 HA1G adalah tetap), RB15/RB615,
+  RB17P, RB28/RB628/RB48/RB648, RT23, RT26, RT76P, RT87 dan RT16/RB27B/RB27V
+  (bf_t8.py); BTECH GMRS-V1, GMRS-V2, MURS-V1, MURS-V2 (saluran GMRS/MURS dengan
+  peraturan CHIRP, penulisan menyemak bahawa versi perisian tegar sama dengan versi
+  semasa bacaan) dan FRS-A1; AnyTone TERMN-8R/OBLTR-8R (anytone_ht.py); Puxing PX-888K;
+  QYT KT-8R (btech.py); Rugged RH5R-V2; Baojie BJ-UV55 (uv5r.py); MTC UV-5R-3
+  (uv5x3.py); Radioddity MU-5 (saluran MURS tetap); Zartek ZA-758 (h777.py); TIDRADIO
+  TD-M11 (tdm11.py, versi 22 FRS, 16 PMR dan 16 v0.95); TDXone TD-Q8A
+  (tdxone_tdq8a.py). Perbezaan yang disengajakan: RT87 (CHIRP menambah scrambler
+  sebanyak 1 pada setiap perubahan), TERMN-8R/OBLTR-8R (CHIRP tidak pernah membuang
+  «terima sahaja»: saluran tidak memancar semula), TD-M11 (tarikh dan masa radio tidak
+  disentuh). Tanpa tetapan: RH5R-V2 (CHIRP tiada tetapan), BJ-UV55, RT76P, TD-M11 dan
+  RT-890 M7OCM.
+- Quansheng UV-K5 dan yang serupa: 200 memori dengan nama sehingga 10 aksara, kuasa
+  Rendah 1.5 W / Sederhana 3 W / Tinggi 5 W, jalur udara dalam AM (frekuensi
+  dibundarkan kepada langkah 8.33 kHz seperti CHIRP), pancaran pada jalur yang berbeza
+  daripada penerimaan dibenarkan. Perisian tegar yang dilaporkan oleh radio (cth.
+  "k5_2.01.32") muncul dalam butiran bacaan dan dalam pengenalpastian. Program hanya
+  mengendalikan perisian tegar asal Quansheng (versi yang dikenali oleh CHIRP): dengan
+  perisian tegar yang diubah suai, yang menggunakan memori secara berbeza, ia berhenti
+  tanpa membaca atau menulis, seperti CHIRP. Sejak 4.9 perisian tegar egzumer, F4HWN
+  dan LOSEHU/LTS/UVE mempunyai tab sendiri (UV-K5 firmware egzumer, F4HWN, LOSEHU):
+  setiap satu hanya membaca dan menulis perisian tegarnya sendiri; sejak 4.13 juga
+  perisian tegar IJV (lihat «FIRMWARE IJV» dalam LEGGIMI.txt); untuk yang lain gunakan
+  program yang ditunjukkan oleh pengarang perisian tegar.
+- Anda bekerja pada saluran: "Baca dari radio" (atau buka fail .img, juga yang disimpan
+  dengan CHIRP), edit, "Tulis ke radio" dan/atau "Simpan" (fail .img yang boleh dibuka
+  dengan CHIRP). Tetapan radio ialah yang dibaca (ia diubah dengan "⚙ Tetapan…", lihat
+  "TETAPAN RADIO"): sebab itu tiada "Fail baharu".
+- Seperti radio lain: salinan sandaran sebelum menulis (fail .img dalam folder
+  copie_radio) dan bacaan pengesahan selepasnya.
+- Nama disesuaikan dengan aksara dan panjang yang dibenarkan oleh radio, kuasa dengan
+  tahap radio (cth. "Tinggi 5 W"), DCS hanya antara kod radio, julat frekuensi disemak.
+  Dalam lajur TX "OFF" = saluran terima sahaja.
+- Kelakuan khas yang diambil daripada CHIRP: UV-5G Mini (saluran GMRS 1-30 tetap, 8-14
+  sempit pada kuasa rendah), GM-21 (had GMRS), BJ-7800 (15 zon dengan 64 saluran;
+  saluran tambahan FM/AM/HF tidak dikendalikan), UV-5R (penomboran dari 0, seperti
+  radio), GM-15 Pro (radio GMRS: saluran 1-30 tetap, 8-14 dan 55-250 terima sahaja,
+  23-54 pengulang GMRS dengan TX = RX + 5 MHz), siri H (saluran 0-127).
+- Pemacu CHIRP ialah perisian bebas (lesen GNU GPL v3): bahagian program ini yang
+  berasal daripadanya diedarkan di bawah lesen yang sama dan kod sumber lengkap ada
+  dalam folder "sorgenti". Terima kasih kepada pengarang CHIRP.
+
+RADIO YANG DIPEROLEH DARIPADA PROGRAM PENGELUAR (3.1 - 3.6)
+Bagi radio ini CHIRP tiada pemacu: protokol dan memori diperoleh daripada kod program
+rasmi yang dimuat turun dari laman web Baofeng dan Bajeton, dan dibandingkan dengan
+keluarga CHIRP yang mempunyai peta yang sama (fail .img juga boleh dibuka dengan
+CHIRP, di bawah nama model itu).
+- UV-25 Plus, AR-152 Pro, UV-29 Pro / SW-9, UV-7B (program «BF-UVs CPS»): memori dan
+  protokol yang sama seperti UV-17 Pro GPS; radio mesti menjawab dengan modelnya (cth.
+  «UV25PRO», «AR152»), jika tidak bacaan dan penulisan tidak bermula.
+- UV-17R, UV-21R, UV-21L (program «T6UV Series CPS»): seperti UV-17 Pro.
+- T22 (PMR446, versi PMR program): seperti W31E dalam CHIRP, 16 saluran.
+- BF-C2 / BF-V2 dan BF-88ST (program «BF_V1_FH» dan «BF-889»): seperti BF-888S, 16
+  saluran tanpa nama.
+- BF-88A / BF-88E: pakej pengeluar menyatakan supaya menggunakan CHIRP sebagai
+  «BF-888»: pemacu BF-888S digunakan.
+- Bajeton BJ-9000 dan Radtel RT-950 Pro (program «BJ-9000_CPS» dan «RT-950PRO_CPS»):
+  protokol yang sama seperti BJ-7800 dengan semakan model; saluran, nama dan (sejak
+  3.6) tetapan umum ditulis; VFO, DTMF dan APRS dengan program pengeluar. Sejak 4.6
+  dua versi mengikut perisian tegar (lihat "RADTEL RT-950 PRO DAN BAJETON BJ-9000").
+  Saluran dan tetapan disahkan dengan kod asal program yang disambungkan kepada radio
+  simulasi.
+- (4.6) Radtel RT-950 (tanpa «Pro», program «BT-9000_CPS»): radio menjawab «BT-9000»;
+  960 saluran dalam 15 zon dengan 64 saluran atau dalam satu senarai, tetapan yang
+  sama seperti BJ-9000 dengan perisian tegar sehingga 0.23.
+
+RADTEL RT-950 PRO DAN BAJETON BJ-9000 (4.6)
+- Ia dua radio berbeza dengan elektronik dan protokol yang sama: melalui kabel
+  kedua-duanya menjawab dengan cara yang sama ("RT-950"), jadi program menggunakan nama
+  radio yang dipilih dari galeri atau semasa pengenalpastian (dan mengingatinya).
+- Perisian tegar sehingga 0.23 (program pengeluar sehingga v1.2.0): 960 saluran, 15 zon
+  dengan 64 saluran (zon 1: saluran 1-64, zon 2: 65-128, …), atau satu senarai 960
+  saluran. Dalam galeri: "perisian tegar sehingga 0.23: 960 saluran".
+- Perisian tegar 0.24 dan ke atas (program v1.2.1 dan ke atas): 990 saluran, 10 zon
+  dengan 99 saluran (zon 1: saluran 1-99, zon 2: 100-198, …), atau satu senarai 990
+  saluran. Dalam galeri: "perisian tegar 0.24 dan ke atas: 990 saluran".
+- Dalam kedua-dua versi saluran adalah sama dalam dua mod paparan: hanya cara radio
+  menunjukkannya yang berubah (tetapan "Pembahagian saluran").
+- Pengecaman: radio tidak melaporkan versi perisian tegar. Program sentiasa membaca
+  memori sehingga saluran 990 (bacaan yang tidak berbahaya walaupun dengan perisian
+  tegar terdahulu, seperti yang dilakukan oleh program v1.2.1) dan melihat data:
+  saluran melepasi 960 → 0.24 dan ke atas; data yang bukan saluran selepas saluran 960,
+  atau zon aktif melepasi zon kesepuluh → sehingga 0.23. Jika data tidak mencukupi, tab
+  tempat bacaan dibuat digunakan dan satu nota menerangkan cara menyemak versi dalam
+  menu radio.
+- Penulisan: saluran 1-960 dan tetapan umum; saluran 961-990 hanya jika ia berubah,
+  selepas membacanya semula dari radio dalam sesi yang sama. Jika dalam kawasan itu
+  radio mempunyai data yang bukan saluran, penulisan berhenti sebelum menulis apa-apa.
+  Dengan salinan sandaran didayakan, jika radio yang disambungkan adalah versi yang
+  satu lagi, penulisan tidak bermula (salinan kekal disimpan).
+- Fail .img yang disimpan oleh versi ini mengingati versi radio; fail yang disimpan
+  sebelum ini dibuka dalam versi yang dikenali daripada data atau, jika tidak dapat
+  ditentukan, dalam versi tab (dari galeri: 0.24 dan ke atas).
+- Bait pilihan saluran (4.7): bit 0 = pemodulatan (0 FM, 1 AM), bit 1 = "pancaran
+  didayakan", yang sentiasa ditulis sebagai 1 oleh program Radtel sehingga v1.2.x
+  (termasuk v1.2.1 dengan 990 saluran). v1.3.3 hanya membaca bit 0 dan menulis semula
+  bit 1 sebagai 0. Program ini sentiasa menulisnya sebagai 1, dengan kedua-dua versi
+  (dengan perisian tegar sehingga 0.23 saluran tanpa bit itu mungkin tidak memancar;
+  bagi perisian tegar terkini tiada apa yang berubah) dan meletakkannya semula dalam
+  saluran 1-960 yang tidak mempunyainya.
+- Versi perisian tegar pada radio: MENU, item "About" (maklumat): "Software Ver 0.xx"
+  muncul.
+- Versi yang diterbitkan (November 2026): Radtel RT-950 Pro V0.15-V0.29 (program
+  RT-950PRO_CPS sehingga v1.3.3); Bajeton BJ-9000 V0.22 (November 2025), V0.27 (Mac
+  2026) dan V0.29 (Jun 2026, serupa dengan Radtel), program BJ-9000_CPS v1.1.1 (960
+  saluran, untuk digunakan dengan perisian tegar sehingga 0.23) dan v1.3.3 (990
+  saluran). Hiroyasu HI-UV850 Pro ialah radio yang sama (program Radtel v1.3.3
+  merangkumi versinya).
+- (3.2) BF-9700 / BF-S56 Max: memori BF-1909 dalam CHIRP dibaca sehingga 0x0400.
+- (3.3) Siri D (program «BF Series CPS», pakej «Baofeng_V1D_CPS» dan
+  «Baofeng_BF-D_Series_CPS»): memori yang sama seperti BF-888S (16 saluran tanpa nama;
+  30 untuk W31D dan BF-T20D), dengan saluran analog atau digital tersulit. Radio
+  melaporkan modelnya: jika bukan yang dipilih, bacaan dan penulisan tidak bermula dan
+  mesej menyatakan model mana yang disambungkan. Pada BF-V12D buka kunci program
+  pengeluar digunakan. W31D, BF-T20D dan BF-V12D juga ada dalam CHIRP (pemacu «Baofeng
+  digital»), yang bagaimanapun membaca penyertaan imbasan secara terbalik: di sini
+  program pengeluar diikuti.
+- (3.3) BF-T17 / BF-T18 (program «T17-T18 PMR446 PRO» dan «T17-T18 FRS» v1.2.2): 99
+  saluran (PMR446) atau 35 (FRS); jika kata laluan baca/tulis ditetapkan pada radio,
+  buang dahulu dengan program pengeluar.
+- (3.3) DM-32UV, radio DMR: pemacu CHIRP (yang juga diperoleh daripada program
+  pengeluar v1.60 dan diuji pada radio sebenar). Frekuensi, nama (16 aksara), kuasa
+  (1 / 2.5 / 5 W), lebar jalur dan ton boleh diubah; bagi saluran DMR kenalan,
+  kumpulan, slot dan kod warna kekal seperti yang ditetapkan; zon, kenalan, senarai dan
+  tetapan radio tidak disentuh, tetapi saluran yang dipadam juga dibuang daripada zon
+  dan senarai imbasan. Hanya halaman memori yang berubah ditulis, setiap satu dibaca
+  semula untuk semakan. Sesetengah kabel dengan cip CH340 merosakkan data radio ini:
+  lebih baik kabel dengan cip FTDI atau CP2102.
+- (3.3) DM-1801 Pro, dalam percubaan: pengeluar menerbitkan program yang sama seperti
+  DM-32UV (fail boleh laku yang sama, v1.60). Jika radio mengenalkan dirinya dengan
+  model lain, program berhenti sebelum membaca atau menulis.
+- (3.3) Bajeton BJ-8200: pakej yang sama seperti BJ-7700 pada halaman muat turun
+  Bajeton (program «BT-RT910_CPS», perisian tegar BJ7700PRO_….anc): pemacu dan
+  perisian tegar BJ-7700, dengan semakan model.
+- (3.4) BF-T9 (program «BF-Ts» v1.04): 99 saluran tanpa nama, jabat tangan «PROGRAL»,
+  bacaan dan penulisan dalam blok 16 bait. Radio menyimpan julat frekuensinya sendiri
+  (cth. 400-470 MHz, 13 julat yang mungkin): saluran di luar julat ditolak. Disahkan
+  dengan kod asal program yang disambungkan kepada radio simulasi (bacaan, penulisan,
+  memori serupa; program itu sentiasa mengosongkan bit «beat shift», kerana ralat
+  bacaannya sendiri).
+- (3.4) GT-18 PMR446 (program «BAOFENG GT18 PMR» v1.2.1): programnya sama seperti T17
+  PMR446 (kelas protokol yang sama, hanya jabat tangan berubah): 99 saluran, disahkan
+  dengan kod asal program.
+- (3.4) Bajeton DM-5000, radio DMR (program «BAJETON DM-5000 CPS», versi 250726): 1024
+  saluran 48 bait, 115200 baud, blok 1 KB dengan hasil tambah semak. Frekuensi, nama
+  (16 aksara), kuasa, imbasan, lebar jalur dan ton saluran analog boleh diubah; saluran
+  DMR baharu mengambil nilai lalai program (kumpulan pertama, kenalan pertama, slot 1,
+  kod warna 0). Saluran baharu memasuki zon 1 jika ia belum berada dalam mana-mana zon;
+  saluran yang dipadam dibuang daripada zon. Kenalan, kumpulan, mesej dan tetapan tidak
+  disentuh. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program
+  pengeluar. AMARAN: sesetengah program antivirus menandakan pakej «DMR R5000 Update
+  Tool» yang diterbitkan untuk perisian tegar sebagai berbahaya: program ini tidak
+  menggunakannya dan tidak mengandunginya.
+- (3.4) UV-28 Pro: program «BF-UVs CPS» yang sama seperti yang lain (radio mengenalkan
+  dirinya sebagai «UV28PRO»).
+- (3.4) AR-152: program pengeluar menggunakan jabat tangan UV-5R dan CHIRP
+  menyenaraikannya sebagai UV-5R; AR-152 Pro kekal sebagai radio yang berbeza. UV-5R
+  III: radio tiga jalur, bagi CHIRP «UV-5RIII» = Radioddity UV-5RX3. BF-R5: program
+  «BF_480» dengan protokol BF-888S. W31: program pengeluar menggunakan protokol yang
+  sama seperti W31E dalam CHIRP. UV-98 Pro, dalam percubaan: pengeluar menerbitkan
+  program WP970I, asas CHIRP bagi keluarga UV-9R / BF-A58 (pemacu UV-9R digunakan).
+- (3.5) DR-1801UV (BF-1801A6, cip Auctus A6), radio DMR (program «DR-1801A6»): 1024
+  saluran 52 bait dengan nama 16 aksara, analog dan DMR; 9600 baud untuk salam,
+  kemudian 115200; memori dibaca dan ditulis secara keseluruhan dengan hasil tambah
+  semak. Frekuensi, nama, kuasa (tinggi / rendah), lebar jalur dan ton (CTCSS dan DCS,
+  juga yang bukan standard seperti dalam program) boleh diubah; saluran yang dipadam
+  juga dibuang daripada zon, senarai imbasan dan perayauan (zon kosong dipadam),
+  saluran baharu memasuki zon pertama yang mempunyai slot kosong (jika tiada, zon
+  baharu). Seperti dalam program pengeluar, memadam saluran tidak menomborkan semula
+  yang lain. Kenalan, kumpulan dan tetapan DMR tidak disentuh. Disahkan dengan kod ASAL
+  program: bacaan fail kilang, enam perubahan dengan memori yang serupa bait demi bait
+  dengan yang ditulis oleh program, bacaan dan penulisan program dengan radio simulasi
+  sama dengan program ini.
+- (3.5) BF-T60 / TR-988UV: pengeluar menerbitkan program «T6UV Series CPS», sama
+  seperti UV-17R dan UV-21R (pemacu UV-17R). UV-3R+: dalam percubaan dengan pemacu
+  UV-3R dalam CHIRP (laporan CHIRP no. 239).
+- (3.6) GT-22 (PMR446, program «GT-22») dan GT-68 (FRS, program «BF_V1_FH» dalam pakej
+  GT-68): kelas protokol dan memori yang sama seperti BF-888S, 16 saluran tanpa nama.
+  GT-22 sentiasa menulis saluran sebagai jalur sempit dan tiada imbasan (seperti
+  programnya). Disahkan dengan kod asal kedua-dua program yang disambungkan kepada
+  radio simulasi.
+- (3.6) RD-5R dan DM-1801, radio DMR yang disambungkan melalui USB sebagai peranti HID
+  (tiada port COM, tiada pemacu untuk dipasang): memori keluarga Radioddity GD-77 dan
+  protokol program bebas dmrconfig (lesen BSD) dan qdmr (GPL). 1024 saluran analog dan
+  DMR dengan nama 16 aksara; saluran yang dipadam dibuang daripada zon dan senarai
+  imbasan, saluran baharu memasuki satu zon. Kenalan, kumpulan dan tetapan DMR tidak
+  disentuh.
+- (3.6) DM-1701 / Retevis RT84 (keluarga TYT MD-UV380), radio DMR yang disambungkan
+  melalui USB dalam mod DFU: pemacu USB pengeluar diperlukan (folder «DM-1701 USB
+  Driver» dalam pakej «DM-1701 CPS»), sama seperti programnya; tutup program pengeluar
+  sebelum membaca atau menulis. 3000 saluran, nama diwajibkan (saluran tanpa nama
+  menjadi «CH n», seperti dalam dmrconfig).
+- (3.6) RD-5R, DM-1801 dan DM-1701 disahkan dengan dmrconfig sendiri, dikompil dengan
+  sambungan ke radio simulasi: saluran yang sama dibaca, perubahan dengan memori
+  serupa bait demi bait, bacaan dan penulisan melalui USB yang serupa.
+Belum dikendalikan: radio DMR dengan protokol yang tidak didokumenkan atau program
+asli (DM-1702, DM-5R, M20D, DMR-6X2 / 6X2 PRO: untuk DMR-6X2, dmrconfig dan qdmr
+mempunyai peta yang ditulis untuk perisian tegar lama, tidak setanding dengan yang
+semasa), radio PMR tanpa program yang diterbitkan (BF-T3, BF-T6…T57, BF-V1…V6A,
+BF-33C, BF-358…), 5RHam, UV-8D / BF-UV8 dan BJ-98 Plus: pautan ke program rasmi dalam
+galeri jika ada.
+
+TETAPAN RADIO (3.6)
+- Butang "⚙ Tetapan…" dalam tab radio, selepas membaca radio melalui kabel atau membuka
+  salah satu failnya. Di sebelah kiri kumpulan (cth. "Terima dan pancar", "Paparan,
+  bunyi dan kekunci", "DTMF"), di bahagian atas carian. Setiap item mempunyai:
+    ⓘ  huraian item (halakan tetikus; satu klik mengekalkannya terbuka di bawah);
+    ⚠  pada item sensitif: amaran ada dalam huraian dan, sebelum digunakan, satu
+    tetingkap meringkaskan amaran dan meminta pengesahan.
+  Item yang diubah diserlahkan; "Guna" menulisnya ke dalam memori tab (yang menjadi
+  "diubah"): kemudian simpan fail atau tulis ke radio seperti untuk saluran. "Buat asal
+  perubahan" kembali kepada nilai yang dibaca.
+- Item sensitif: kata laluan (semasa dihidupkan, baca, tulis), had frekuensi dan
+  kebenaran pancaran bagi setiap jalur, pancaran dilumpuhkan, had masa pancaran, VOX,
+  set semula dan item menu, PTT-ID dan kod yang dipancarkan, penggera yang memancar,
+  fungsi pengulang, kunci jauh, pengaturcaraan Bluetooth, kunci papan kekunci.
+- K67 Pro / 5RH Pro (53 item): daripada program «5RH PRO», kaedah ConvertSetting dan
+  SettingConvert.
+- Bajeton BJ-8300 (40 item; 41 dalam fail BT-11_CPS v1.0.9, dengan "Pembahagian
+  saluran"): tetingkap «Optional Features» program; setiap item ialah satu nombor
+  objek yang disimpan dalam fail .dat, diubah di tempatnya (fail kekal serupa dengan
+  yang akan disimpan oleh program).
+- Bajeton BJ-9000, Radtel RT-950 Pro dan RT-950 (57 item): tetingkap «Optional
+  Features» program pengeluar; hanya bit setiap item diubah, bait lain kekal seperti
+  yang ada pada radio. Zon aktif bagi jalur ialah 10 atau 15 bergantung pada versi
+  perisian tegar.
+- Radio yang dikendalikan dengan pemacu CHIRP (63 keluarga: UV-5R, UV-17 Pro, model
+  kalis air, BF-888S, UV-B5, BF-T1, BJ-7800, BJ-7700, siri H…): jadual setiap keluarga
+  diperoleh daripada kod CHIRP (bagi setiap item CHIRP diminta menulis setiap nilai dan
+  bit yang berubah diperhatikan) dan item diterjemahkan. Item penentukuran, ujian dan
+  kilang tidak disertakan. Teks dengan aksara bukan Latin (cth. nama Cina yang ditulis
+  oleh program pengeluar) hanya boleh diganti.
+- Baofeng RD-5R dan DM-1801 (4.10, 31 item): tetapan umum keluarga Radioddity GD-77
+  seperti yang dihuraikan oleh qdmr (nama dan ID DMR seperti dalam dmrconfig); kata
+  laluan tidak disentuh. Baofeng DM-1701 (4.10): nama, ID DMR dan teks semasa
+  dihidupkan, satu-satunya medan yang dipersetujui oleh dmrconfig dan qdmr.
+- Belum tersedia: siri D, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST, BF-9700 /
+  BF-S56 Max, DM-5000, DR-1801UV dan model keluarga UV-17 Pro yang tidak disenaraikan
+  oleh CHIRP (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B, UV-17R, UV-21R,
+  UV-21L): untuk radio ini gunakan program pengeluar.
+
+FAIL .DAT BAJETON BJ-8300 (3.6)
+Program BT-11_CPS v1.0.9 menyimpan saluran dalam satu senarai 960 (v1.0.8 dalam 15 zon
+dengan 64) dan mempunyai satu item tambahan ("Pembahagian saluran"): v1.0.9 tidak
+membuka fail v1.0.8 dan begitu juga sebaliknya. IU0VYT Flash membuka kedua-dua format
+dan menyimpan fail dalam format ia dibuka. Dalam tab 8300, "Fail untuk BT-11_CPS"
+memilih versi: fail yang terbuka ditukar (saluran dan tetapan kekal sama) dan fail
+baharu serta bacaan radio akan menggunakan format itu (lalai: v1.0.8, versi yang
+disenaraikan pada halaman muat turun Bajeton untuk 8300).
+Saluran dalam zon atau dalam satu senarai (3.9.2): seperti dalam BT-11_CPS v1.0.9,
+dengan fail v1.0.9 jadual mengikut tetapan "Pembahagian saluran" (Channel Divide):
+"dalam 15 zon dengan 64" (bar zon, nombor 1-64 dalam setiap zon) atau "semua (960)"
+(satu senarai, nombor 1-960). Pilihan ada dalam bar tab ("Saluran") dan dalam
+"⚙ Tetapan"; ia disimpan dalam fail dan ditulis ke radio, yang menunjukkan saluran
+dengan cara yang sama. Fail v1.0.9 baharu bermula dengan "semua saluran", seperti
+dalam program asal; radio yang telah dibaca mengekalkan pilihannya. v1.0.8 tiada
+tetapan ini: failnya sentiasa dalam zon dan, apabila ditulis ke radio, ia
+menetapkannya semula kepada zon.
+
+KEMAS KINI PERISIAN TEGAR RADTEL RT-950 PRO, RT-950, RT-920 DAN RT-910B (4.7)
+- RT-950 Pro, BJ-9000, HI-UV850 Pro dan RT-950: fail .BTF (atau .Firmware) dengan
+  pemuat dan protokol yang sama seperti program "RT-950_EnUPDATE" Radtel, yang serupa
+  dengan "BJ9000_EnUPDATE" Bajeton kecuali tajuk tetingkap. Fail mengandungi kod model
+  ("RT-950" untuk RT-950 Pro / BJ-9000 / HI-UV850 Pro, "BT-9000" untuk RT-950 tanpa
+  "Pro"): radio menyemaknya dan menolak perisian tegar yang bukan miliknya sebelum
+  memadam memori; program menunjukkannya dan meminta pengesahan bertulis jika radio
+  yang dipilih adalah radio lain. Mod manual: radio dimatikan, tahan kekunci sisi 3 dan
+  4 dan hidupkan (skrin "Update").
+- RT-920 dan RT-910B (dengan Bluetooth): fail .anc program "Radtel ANC Bootloader
+  V1.2", protokol yang sama seperti "BinTe ANC Bootloader" Bajeton (kod dibandingkan:
+  arahan, kelajuan dan masa tunggu yang sama). RT-920 ialah BJ-7800 dan RT-910B ialah
+  BJ-7700: pengenalpastian dan salinan sandaran seperti radio tersebut (salinan RT-920
+  dengan pemacunya sendiri). Program Radtel juga meminta kebenaran melalui internet,
+  yang tidak diperlukan di sini. Perisian tegar .BTU bagi RT-910 tanpa Bluetooth boleh
+  dikemas kini sejak 4.8 (lihat "KEMAS KINI PERISIAN TEGAR .BTU").
+- Cap jari yang diketahui: RT-950 Pro V0.15-V0.29, RT-950 V0.27 dan V0.29, BJ-9000
+  V0.22, V0.27 dan V0.29, RT-920 V0.13-V0.18, RT-910B V0.14.
+
+KEMAS KINI PERISIAN TEGAR .BTU (4.8)
+- Radtel RT-910 dan RT-900 tanpa Bluetooth, Bajeton BJ-7700 tanpa Bluetooth: fail .BTU
+  program «Radtel Bootload Tools» (sama untuk RT-900 dan RT-910). Mod automatik: radio,
+  yang dihidupkan, menerima «PROGRAMBT80U» pada 57600 baud, kemudian port bertukar
+  kepada 115200 baud untuk pemuat. Mod manual (juga untuk radio yang tidak dapat
+  dimulakan): radio dimatikan, tahan dua kekunci sisi di bawah PTT dan hidupkan;
+  paparan menunjukkan «UPDATE» (dalam program Radtel ia butang «Update» dengan tulisan
+  hitam). Menurut Radtel, jika radio tidak dimulakan semula: ulangi langkah ini, dan
+  jika masih tidak mencukupi tanggalkan bateri selama 10 minit.
+- Pemuat TIDAK menyemak model perisian tegar: program mendapatkannya daripada nama fail
+  (RT910…, RT900…, BJ7700…) dan sentiasa meminta anda menaipnya. RT-910: papan H1.00
+  (V0.07-V0.09) dan H1.00G (V0.10, V0.11 dengan 15 zon 64 saluran). RT-900: V1.14P (999
+  saluran) adalah untuk papan H3.01 (menu 47); V1.04P adalah untuk papan terdahulu
+  (perisian tegar dari 0x08001000) dan tidak boleh ditukar ganti dengan «OPEN»
+  V1.05P-V1.14P. Salinan sandaran menggunakan protokol yang sama pada RT-900, RT-910
+  dan BJ-7700 dengan dan tanpa Bluetooth: ia mengesahkan bahawa radio tergolong dalam
+  keluarga ini, bukan model yang mana.
+- Cap jari yang diketahui: RT-910 V0.07-V0.11, RT-900 V1.04P, V1.05P, V1.09P dan
+  V1.14P, BJ-7700 tanpa Bluetooth V1.07 (5 W).
+
+KEMAS KINI PERISIAN TEGAR QUANSHENG UV-K5 (4.1)
+- Quansheng UV-K5, UV-K5(8), UV-K6 dan UV-5R Plus, fail .bin yang diterbitkan oleh
+  Quansheng (cth. k5_v2.01.26_publish.bin, k6_v3.00.22_publish.bin). Quansheng
+  melindungi muat turun di lamannya dengan kata laluan yang dibekalkan oleh pengedar.
+- Fail disemak (hasil tambah CRC16, versi) dan dinyahsulit; versi (cth. 2.01.26)
+  menunjukkan jenis radio: 2 = UV-K5, 3 = UV-K5(8) dan UV-K6, 4 = UV-5R Plus.
+- Prosedur: matikan radio, sambungkan kabel, hidupkan semula sambil menahan PTT (lampu
+  suluh menyala dan skrin kekal padam), kemudian "Mulakan kemas kini". Sebelum menulis,
+  program membaca versi pemuat radio: jika ia bukan daripada jenis perisian tegar itu
+  (cth. perisian tegar UV-K6 pada UV-K5) ia berhenti dan radio tidak disentuh. Saluran,
+  tetapan dan penentukuran tidak dipadam.
+- Protokol pemuat (paket 256 bait dengan pengakuan) ialah yang didokumenkan oleh
+  program bebas k5prog dan uvtools, diperoleh daripada program kemas kini Quansheng; di
+  sini ia ditulis semula dari awal dan diuji dengan radio simulasi. Sejak 4.4 juga
+  radio dengan pemuat 7.x (UV-K5 V3, UV-K1, Retevis RA79 V3): lihat "KEMAS KINI
+  PERISIAN TEGAR RETEVIS".
+- Perisian tegar bukan Quansheng boleh dipasang. Sejak 4.9, selepas perisian tegar
+  egzumer, F4HWN atau LOSEHU saluran dibaca dengan tab perisian tegar itu; dengan
+  perisian tegar lain program ini (seperti CHIRP) tidak lagi membaca saluran radio.
+- Sejak 4.2 juga Radtel RT-590 / RT-590 Plus (radio yang sama seperti UV-K5) dan RT-600
+  / RT-600 Plus (radio UV-5R Plus) dengan fail .bin Radtel (radtels.com, cth.
+  RT590_update_file_v2.01.32.rar dan RT600_update_file_v4.00.06.rar, bebas dimuat
+  turun): prosedur yang sama (PTT + hidupkan, lampu suluh menyala). Dua fail sebenar
+  telah diuji: penyahsulitan dan bait yang dihantar serupa dengan program uvtools.
+
+KEMAS KINI PERISIAN TEGAR RADTEL RT-470 / RT-495 / RT-630 (4.3)
+- Radtel RT-470, RT-470L, RT-470X, RT-495 dan RT-630, fail .kdhx yang diterbitkan oleh
+  Radtel (radtels.com, bebas dimuat turun, cth. "470 serial MFM_V2.13C_20240425.kdhx",
+  "RT470_AllBandTx_V1.27A_20240523.kdhx", "495_NUM_ALLBAND_V0.07_20231207.kdhx",
+  "rt-630 8.33AM137_AMFM.kdhx"), juga di dalam arkib .rar yang dimuat turun.
+- Program Radtel ("New RT470 serial Bootloader Pro", sama untuk empat radio itu) ialah
+  "Bootloader Pro" yang sama seperti Baofeng UV-25 Plus dengan platform JJCC: prosedur
+  yang sama, jabat tangan automatik "PROGROMJJCCU".
+- RT-470: terdapat DUA papan litar. Perisian tegar 1.x hanya untuk papan lama (menu 55:
+  FW 1.xx), 2.x hanya untuk papan baharu (FW 2.0 atau lebih baharu): Radtel memberi
+  amaran bahawa fail yang salah merosakkan radio. Semak menu 55 sebelum memilih fail:
+  program menunjukkan fail itu untuk papan yang mana dan meminta anda menaip model
+  untuk mengesahkan.
+- Mod automatik (radio dihidupkan) atau manual: radio dimatikan, dihidupkan sambil
+  menahan kekunci sisi 2 dan 3. Empat fail sebenar telah disemak oleh program dan
+  pemindahan diuji dengan radio simulasi.
+
+KEMAS KINI PERISIAN TEGAR TIDRADIO TD-H3 / TD-H8 DAN RADTEL RT-730 (4.3)
+- TIDRADIO TD-H3, TD-H8 dan Radtel RT-730 (platform TD-H8), fail .BIN pengeluar (cth.
+  "730Step improvement.BIN" dari radtels.com, "H3_240530.BIN").
+- Pemuat adalah sama untuk tiga radio itu (jabat tangan yang serupa dalam program
+  "H8_IAP" TIDRADIO dan "RT730 Update tool" Radtel; protokol diterbitkan oleh nicsure,
+  TD-H3-Engineering): 115200 baud, blok 32 bait yang diakui oleh radio satu demi satu.
+- Prosedur: sambungkan kabel ke radio semasa ia dimatikan, tekan "Mulakan kemas kini"
+  (program menunggu 60 saat) dan hidupkan radio sambil menahan PTT.
+- Pemuat TIDAK menyemak fail itu untuk radio yang mana (TD-H3, TD-H8 dan RT-730
+  mempunyai perisian tegar berbeza): program mendapatkannya daripada nama atau
+  kandungan fail dan meminta anda menaip model (RT730, TDH3, TDH8). Jika pemindahan
+  terganggu radio kekal dalam pemuat: hidupkan semula sambil menahan PTT dan ulangi.
+- Perisian tegar yang diubah suai oleh pihak ketiga (nicsure) dikenali dan dilaporkan:
+  program ini, seperti CHIRP, mungkin tidak lagi membaca salurannya.
+
+KEMAS KINI PERISIAN TEGAR RADTEL RT-890 (4.10)
+- Radtel RT-890: fail .bin Radtel dan perisian tegar bebas (M7OCM, OEFW). Program
+  menyemak bahawa fail itu ialah program untuk mikropengawal radio (AT32F421, paling
+  banyak 59 KB) dan mengecam perisian tegar bebas dan papan (PCB 2.0 atau 2.1).
+- Prosedur: sambungkan kabel ke radio semasa ia dimatikan, hidupkan sambil menahan dua
+  kekunci sisi (skrin padam) dan tekan "Mulakan kemas kini". Pemuat radio kekal utuh;
+  jika pemindahan terganggu hidupkan semula radio dengan cara yang sama dan ulangi.
+- Pemuat tidak menyemak model: anda mesti menaip RT890. Selepas perisian tegar bebas
+  M7OCM saluran dikendalikan dengan tab "Radtel RT-890 (M7OCM firmware)".
+- Protokol seperti dalam program bebas rt_890_flasher oleh JuantAldea (115200 baud,
+  padam, blok 128 bait yang diakui), ditulis semula dari awal dan diuji dengan radio
+  simulasi dan dengan perisian tegar M7OCM v3.2.
+
+KEMAS KINI PERISIAN TEGAR DMR MELALUI USB: DM-1701, RD-5R, DM-1801 (4.10)
+- Baofeng DM-1701 / Retevis RT84: fail .bin Baofeng ("OutSecurityBin", cth.
+  "DM-1701(CSV)-V02.06.bin"), melalui USB dengan pemacu yang sama seperti untuk
+  saluran. Radio dimatikan: tahan PTT dan kekunci di atas PTT dan hidupkan (pemuat),
+  sambungkan kabel dan tekan "Mulakan kemas kini". Hanya memori program ditulis (dari
+  0x0800C000 ke atas): pemuat kekal utuh. Bahagian fail untuk memori SPI (fon dan imej)
+  tidak ditulis, seperti dalam radio_tool. Jujukan program bebas radio_tool (diuji oleh
+  projek itu pada DM-1701 sebenar), ditulis semula dari awal; fail V02.06 pengeluar
+  diuji dengan radio simulasi.
+- Baofeng RD-5R dan DM-1801: fail .sgl pengeluar (cth. "BF-5R_V2.1.6.sgl",
+  "DM-1801_V2.1.9.sgl"), melalui USB sebagai peranti HID (tiada pemacu). Mod kemas kini
+  (skrin padam): RD-5R, kekunci jingga S1 dan kekunci hitam Fn di sebelah PTT; DM-1801,
+  dua kekunci kecil di bawah PTT; ditahan semasa dihidupkan. Radio menyemak kunci model
+  sebelum memadam memori: dengan perisian tegar radio lain kemas kini berhenti tanpa
+  mengubahnya. Jujukan "FirmwareLoader" OpenGD77 dan radio_tool, ditulis semula dari
+  awal; fail pengeluar diuji dengan radio simulasi.
+- Dalam ketiga-tiga kes anda mesti menaip model (DM1701, RD5R, DM1801).
+
+KEMAS KINI PERISIAN TEGAR RETEVIS (4.4, 4.5)
+- Retevis RA79 V3 (serta Quansheng UV-K5 V3 dan UV-K1, mikropengawal PY32F071, pemuat
+  7.x): fail .bin Retevis dalam format Quansheng (cth. "RA79 V3.bin", versi 7.00.16).
+  Prosedur seperti UV-K5: radio dimatikan, dihidupkan semula sambil menahan PTT,
+  kemudian "Mulakan kemas kini". Pemuat 7.x tidak menyemak perisian tegar: program yang
+  menyemaknya, dan menghantarnya hanya jika pemuat mempunyai versi utama yang sama
+  (perisian tegar 7.00.xx hanya pada pemuat 7.00.xx; UV-K1 mempunyai 7.02 atau 7.03)
+  dan menolak radio dengan pemuat UV-K5 klasik (2.x dan 5.x: mikropengawal berbeza).
+  Protokol seperti yang diterbitkan oleh quansheng_toolkit dan Multi-UVTools, ditulis
+  semula dari awal dan diuji dengan radio simulasi dan dengan fail sebenar.
+- Retevis RA89: fail .bin Retevis (cth. "Eng_RA89_Upadat_20250524_B91.38.bin", versi
+  B91.38 bertarikh 24/05/2025). Protokol program "RA89-update-software" Retevis
+  ("TH8600-UpDAta Soft" 2.3): 57600 baud, blok 128 bait yang diakui satu demi satu. Kod
+  asal program dijalankan dengan radio simulasi: arahan yang dihantar serupa bait demi
+  bait (846 langkah dengan fail sebenar, pada 57600 dan 115200 baud, dan juga apabila
+  radio melaporkan ralat), dengan jeda yang sama.
+- RA89: mula-mula letakkan radio dalam mod kemas kini seperti yang ditunjukkan oleh
+  Retevis. Fail itu disulitkan dan radio tidak menyemak model: anda mesti menaip RA89
+  untuk mengesahkan. AMARAN (Retevis): jika kemas kini terganggu JANGAN hidupkan radio
+  seperti biasa, tetapi ulangi kemas kini dengan segera.
+- RA89, pembetulan dalam 4.5: dalam 4.4 program menjangkakan "AA 01 EF" daripada radio
+  selepas jabat tangan "AA 09 EF", sedangkan program Retevis (apabila memilih RA89)
+  menjangkakan "AA 09 EF": dengan radio sebenar kemas kini 4.4 berhenti serta-merta
+  dengan "radio tidak berada dalam mod kemas kini", tanpa menulis apa-apa. Ujian 4.4
+  tidak menjalankan bahagian program Retevis yang menetapkan jawapan yang dijangka
+  (pilihan model dalam tetingkap); kini ia menjalankannya.
+- Retevis RT85 (4.5): fail .hex Retevis (cth. "RT85-Firmware-V1.53.hex"). Protokol
+  program "RT85 10W_5W_UpData" Retevis ("TH8600-UpDAta Soft" 2.1), sama seperti RA89
+  dengan jeda yang lebih pendek: daripada fail .hex (ia bukan perisian tegar biasa: ia
+  disulitkan) program menyediakan blok dengan data 4 baris (64 bait) dan hasil
+  tambahnya; 1024 blok untuk fail 1.53. Kod asal dijalankan dengan radio simulasi: blok
+  dan arahan serupa bait demi bait, pada 57600 dan 115200 baud, dengan 5 W dan dengan
+  10 W, dan juga apabila radio melaporkan ralat.
+- RT85, prosedur Retevis: radio dimatikan, dihidupkan sambil menahan PTT dan P1:
+  penunjuk bertukar hijau. Sambungkan kabel, pilih kuasa radio dan tekan "Mulakan kemas
+  kini". Kuasa dipilih seperti dalam program Retevis ("5W" atau "10W"): radio hanya
+  menjawab jabat tangan modelnya sendiri, jika tidak program berhenti serta-merta tanpa
+  menulis apa-apa (kemudian cuba pilihan yang satu lagi). RT85 yang diterangkan di
+  laman Retevis ialah yang 5 W (seperti TYT TH-UV88). Anda juga mesti menaip RT85 untuk
+  mengesahkan.
+- RT85, AMARAN (Retevis): jika kemas kini terganggu JANGAN hidupkan radio
+  (mikropengawal terkunci selama-lamanya): biarkan dalam mod kemas kini dan ulangi
+  kemas kini dengan segera.
+- Perisian tegar Retevis dimuat turun dari retevis.com (halaman Firmware). Radio
+  Retevis lain dalam galeri tiada perisian tegar yang diterbitkan oleh Retevis.
+
+KEMAS KINI PERISIAN TEGAR BAOFENG
+- Baofeng UV-5RM / UV-5RH (siri dengan paparan TFT "330L"), fail .BF: protokol program
+  pengeluar "BF Upgrade Tool for TFT 330L Series" (pemuat KDH V1.0). Dua mod, seperti
+  yang asal: automatik (radio dihidupkan: ia dimasukkan ke dalam pemuat; sebelum itu,
+  secara pilihan, satu salinan salurannya disimpan) dan manual (radio dihidupkan sambil
+  menahan PTT, skrin padam: juga untuk radio yang tidak dapat dimulakan). AMARAN:
+  terdapat versi dengan cip radio berbeza (BK4819, AT1846S, FD6818) dan perisian tegar
+  TIDAK boleh ditukar ganti; nama fail biasanya menyatakannya (cth.
+  5RH_BK_V0.14_231123.BF). Program menyemak fail (pengepala, kawasan, program ARM yang
+  sah, bahagian tersulit yang konsisten) dan mengecam perisian tegar yang dikumpulkan
+  oleh komuniti (cap jari SHA-256); Baofeng tidak menerbitkannya di lamannya.
+- Baofeng 5RH Pro (dan radio dengan CPS "5RH_PRO" yang sama, seperti K67 Pro), fail
+  .dat "BF_5RH": protokol program kemas kini pengeluar (Radio.exe). Radio mesti
+  diletakkan dalam mod kemas kini seperti yang ditunjukkan oleh pengeluar; pada
+  permulaan ia mengisytiharkan papannya (V1 = perisian tegar 1.x, V2 = perisian tegar
+  2.x) dan jika ia bukan papan fail itu, kemas kini tidak bermula. Selepas memori
+  dipadam ia tidak lagi boleh diganggu.
+- Bajeton BJ-7800: program yang sama ("BinTe ANC Bootloader") dan fail .anc yang sama
+  seperti BJ-8300 (perisian tegar rasmi BJ7800_CN_EN_V0.17_20251126.anc, pada Google
+  Drive pengeluar); model dikenali daripada nama fail. Salinan sandaran sebelum kemas
+  kini ialah fail .img (pemacu BJ-7800).
+- Sejak 3.1, dengan protokol program kemas kini rasmi (kelas «KDH_Bootloader»,
+  diperoleh daripada kodnya):
+    UV-25 Plus, fail .kdhx («Baofeng Bootloader Pro»; rasmi V0.23 bertarikh
+    22/05/2025);
+    UV-9G, fail .kdh («Bootloader_BaudRate38400», kemas kini untuk memancar pada
+    saluran 15; rasmi T52GMRS_M8_V02_231004.kdh);
+    Bajeton BJ-9000, fail .Firmware («BJ9000_EnUPDATE»; rasmi V0.27 bertarikh
+    13/03/2026; radio juga menyemak model yang tertulis dalam fail).
+  Mod automatik (radio dihidupkan) atau manual (radio dihidupkan dengan kekunci yang
+  ditunjukkan oleh pengeluar, dipaparkan dalam tetingkap: UV-25 Plus SK2+SK3, UV-9G
+  kekunci 12+13, BJ-9000 kekunci sisi 3+4). Fail disemak (program ARM yang sah, model
+  dalam nama, cap jari SHA-256 perisian tegar rasmi).
+- Bajeton BJ-7700 dengan Bluetooth: fail .anc seperti BJ-8300/BJ-7800 (rasmi
+  BJ7700PRO_V0.06_251124.anc); radio dikenal pasti dengan protokol BJ-7700 dan salinan
+  sandaran ialah fail .img.
+- BJ-8200 (3.3): perisian tegar dan program yang sama seperti BJ-7700 dengan Bluetooth.
+- Sejak 3.5, pemuat yang sama untuk radio daripada keluarga yang sama (protokol sudah
+  disahkan di atas dengan kod asal; hanya radio sasaran berubah):
+    fail .BF (pemuat KDH V1.0 UV-5RM): K5 Plus, UV-5RM Plus, UV-17R, UV-17R Plus,
+    UV-21R, UV-21L, UV-21, BF-T60 / TR-988UV. Ia radio program «T6UV Series CPS», yang
+    juga mengendalikan UV-5RH (dalam CHIRP K5 Plus dan UV-5RM Plus berasal daripada
+    UV-5RM);
+    fail .kdhx (pemuat «Bootloader Pro», kod platform H802): UV-28 Pro, UV-29 Pro /
+    SW-9, AR-152 Pro, UV-7B, UV-32. Ia menggunakan program pengeluar yang sama seperti
+    UV-25 Plus («BF-UVs Pro CPS»); pemuat «Bootloader Pro» ditulis untuk platform
+    «BF_H802», nama dalaman yang sama seperti «T6UV Series CPS»: untuk radio ini
+    tetingkap juga menerima fail .kdhx.
+  Baofeng hanya menerbitkan perisian tegar untuk UV-25 Plus dan UV-9G: untuk radio lain
+  anda memerlukan fail yang dibekalkan oleh pengeluar atau pengedar. Model sasaran
+  dikenali daripada nama fail (cth. «UV29Pro_…kdhx», «K5Plus_…BF»): jika ia bukan radio
+  tab itu satu amaran muncul, dan jika ia bukan UV-25 Plus (fail .kdhx) atau UV-5RM /
+  UV-5RH (fail .BF) anda mesti menaip model untuk memulakan kemas kini (cth. UV29PRO,
+  K5PLUS; H802 jika nama fail tidak menyatakannya). Pengesahan bertulis juga diperlukan
+  apabila radio yang dipilih dalam tetingkap bukan radio fail itu. Fail yang diketahui
+  (cap jari SHA-256) lebih diutamakan daripada namanya: perisian tegar rasmi UV-25 Plus
+  yang dinamakan semula kekal "untuk UV-25 Plus". Dalam mod automatik, radio yang tidak
+  menjawab permintaan kemas kini tidak diubah.
+- DM-32UV, DM-5000, M20D: kemas kini hanya dengan program pengeluar (pautan dalam
+  galeri). Untuk DM-32UV kemas kini berada dalam program asli pengeluar (protokol tidak
+  dapat diperoleh daripada kod dengan cara yang boleh disahkan), M20D dan DM-5000
+  menggunakan program yang dipadatkan atau program yang ditandakan oleh perisian
+  antivirus. Tanpa perbandingan dengan kod asal, kemas kini yang salah boleh menjadikan
+  radio tidak boleh digunakan: sebab itu ia tidak dikendalikan. BJ-7700 tanpa Bluetooth
+  (fail .BTU) boleh dikemas kini sejak 4.8, RD-5R, DM-1801 dan DM-1701 sejak 4.10
+  (lihat di atas).
+
+MEMBACA DAN MENULIS MELALUI KABEL
+- Sambungkan kabel, hidupkan radio, pilih port COM kabel dalam tetingkap (nama pemacu
+  membantu mengecamnya, cth. "USB-SERIAL CH340 (COM3)"). Jika port tidak muncul, pasang
+  pemacu kabel dan tekan "Muat semula".
+- Protokol ialah protokol program asal pengeluar (K67 Pro CPS, 5RH_PRO, dan BT-11_CPS
+  Bajeton), diperoleh daripada kodnya: arahan yang sama, penyulitan yang sama, semakan
+  yang sama, jeda yang sama.
+    K67 Pro: 19200 baud (radio mungkin meminta 115200 dengan sendirinya, seperti yang
+    asal), kata laluan pengaturcaraan pilihan (maks. 8 aksara).
+    Bajeton 8300: 57600 baud.
+- Sebelum menulis, secara lalai, program membaca radio dan menyimpan salinan
+  sandarannya; selepas menulis ia membaca radio sekali lagi dan membandingkan saluran.
+  Jika radio dimulakan semula pada akhir penulisan, bacaan semula menunggu dan mencuba
+  lagi sehingga radio menjawab semula (sehingga 45 saat, 3.9.2).
+  Salinan dan bacaan berada dalam %APPDATA%\GestioneCanaliRadio\copie_radio (ia dibuka
+  seperti fail .xlc/.dat biasa). Jika salinan sandaran gagal, tiada apa yang ditulis.
+- Seluruh memori ditulis seperti yang dilakukan oleh program asal: bersama saluran,
+  juga tetapan umum yang terkandung dalam fail atau bacaan yang sedang anda kerjakan
+  (menu, VFO, zon, DTMF…). Untuk membiarkannya tidak berubah, mulakan daripada bacaan
+  radio. Pada K67, 128 bait pertama (data radio, model, julat) tidak pernah ditulis
+  ganti: program membacanya dari radio, seperti yang asal.
+- Semakan sebelum menulis (seperti yang asal): K67 dengan jalur frekuensi berbeza
+  daripada fail atau model "BF-K6" yang tidak dibaca dahulu → penulisan ditolak; data
+  yang tidak dapat ditukar → ralat sebelum menyambung ke radio.
+- Bacaan dan salinan sandaran boleh diganggu; penulisan tidak boleh (radio akan
+  ditinggalkan dengan data tidak lengkap). Jika penulisan terganggu (kabel tercabut,
+  radio dimatikan) ulangi: salinan sandaran ada dalam folder yang ditunjukkan di atas.
+- Selepas bacaan, saluran "belum disimpan ke fail".
+- Apabila radio disambungkan ke PC jangan gunakan program asal pada masa yang sama
+  (port COM hanya boleh dibuka oleh satu program).
+
+KEMAS KINI PERISIAN TEGAR (BAJETON 8300)
+Dalam tab "Bajeton 8300" tekan "⬆ Kemas kini perisian tegar…". Tetingkap mempunyai tiga
+langkah.
+1. Perisian tegar
+   - "Fail pada PC…": pilih fail perisian tegar (.anc, cth.
+     BJ8300_V0.12_20251112.anc) atau arkib .zip atau .rar yang mengandunginya, malah
+     arkib yang bersarang di dalam satu sama lain (seperti pakej pengeluar: .rar yang
+     mengandungi .zip dengan .anc).
+   - "Dari Internet": tampal alamat fail (.anc, .zip atau .rar) dan tekan "Muat turun".
+     Pautan kongsi satu fail Google Drive atau Dropbox juga berfungsi. Pautan ke FOLDER
+     Google Drive tidak boleh dimuat turun: buka folder dalam pelayar dan salin pautan
+     fail, atau muat turun dan muatkan dari PC. Perisian tegar yang dimuat turun
+     disimpan dalam %APPDATA%\GestioneCanaliRadio\firmware.
+   - Jika arkib mengandungi beberapa fail perisian tegar, program bertanya yang mana
+     hendak digunakan.
+   - Semakan pada fail: format (tandatangan "JLUFW" perisian tegar radio),
+     penyahsulitan (fail .anc disulitkan: program menyahsulitnya seperti yang asal dan
+     menyemak bahawa kandungan boleh dibaca), platform yang sama seperti perisian tegar
+     rasmi BJ-8300 (YHD15C8_soundbox), nama fail, cap jari SHA-256 perisian tegar rasmi
+     yang diketahui. Perisian tegar BJ8300 V0.12 bertarikh 12/11/2025 (yang terkini
+     diterbitkan oleh Bajeton) dikenali sebagai rasmi. Fail yang tidak sah tidak boleh
+     dihantar; fail dengan amaran (cth. platform berbeza) memerlukan pengesahan
+     tambahan.
+2. Radio
+   - Pilih port kabel dan keadaan radio:
+     "Berfungsi seperti biasa" (seperti butang "Update" program asal): mula-mula radio
+     DIKENAL PASTI dengan protokol pengaturcaraan Bajeton 8300 (sama seperti "Baca dari
+     radio") dan, secara lalai, satu salinan saluran dan tetapannya dibaca dan disimpan
+     (Bajeton_prima_del_firmware_….dat dalam copie_radio). Jika radio tidak menjawab
+     seperti Bajeton 8300 kemas kini TIDAK bermula dan radio tidak disentuh. Kemudian
+     radio diletakkan dalam mod kemas kini dan menerima perisian tegar.
+       "Kenal pasti radio" hanya membuat semakan, tanpa mengemas kini.
+     "Tidak dapat dihidupkan" (mod pemulihan, seperti butang "Click Here If Your Radio
+     Can't Work"): untuk radio yang ditinggalkan tanpa perisian tegar yang sah. Radio
+     tidak dapat dikenal pasti: program, seperti yang asal, menunggu kira-kira 12 saat
+     untuk radio muncul dalam mod kemas kini. Tekan "Mulakan kemas kini" dan segera
+     letakkan radio dalam mod kemas kini mengikut arahan pengedar (biasanya dengan
+     menghidupkannya sambil menahan satu kekunci, selalunya PTT: prosedur ini tidak
+     didokumenkan).
+   - Kelajuan pemindahan: 115200 baud (lalai program asal) atau 57600.
+3. Pengesahan
+   - "Saya mengesahkan bahawa radio yang disambungkan ialah Bajeton BJ-8300" mesti
+     sentiasa ditanda.
+   - Apabila radio tidak dikenal pasti oleh program (mod pemulihan, atau "langkau
+     pengenalpastian automatik") anda juga mesti menaip BJ8300 dalam kotak.
+Semasa kemas kini satu tetingkap menunjukkan kemajuan dan mesej. Jangan matikan radio
+dan jangan cabut kabel; gunakan bateri yang dicas penuh. Operasi hanya boleh diganggu
+sehingga radio mula menjawab. Pada akhirnya matikan dan hidupkan semula radio dan
+semak versi semasa dihidupkan; jika saluran atau tetapan telah berubah, tulis ke radio
+salinan yang disimpan sebelum kemas kini. Jika kemas kini terganggu: matikan dan
+hidupkan radio dan ulangi; jika radio tidak lagi dapat dihidupkan, ulangi dalam mod
+pemulihan.
+Protokol: protokol program pengeluar "BinTe ANC Bootloader" V1.1 (BinTalk), diperoleh
+daripada kodnya: paket AA 55 dengan CRC16, 9600 baud, arahan untuk memasuki mod kemas
+kini, tukar kepada 10000 baud dan kemudian kepada kelajuan yang dipilih, penghantaran
+data yang diminta oleh radio, 5 cubaan semula pada selang 2 saat. Program asal tidak
+menyemak fail mahupun model radio: semakan yang diterangkan di atas ditambah oleh
+program ini.
+Arkib .rar (format RAR 1.5-5, juga "solid") dibuka oleh program dengan penyahkod bebas
+rardecode (lesen BSD). Arkib yang dilindungi kata laluan dan arkib yang dipecahkan
+kepada beberapa bahagian tidak disokong.
+
+BAHASA ANTARA MUKA (4.10)
+- Pemilih dengan bendera berada di bahagian atas, betul-betul di sebelah kanan
+  "ℹ Maklumat". Pada permulaan pertama (4.12) program menggunakan bahasa Windows
+  pengguna (Tetapan Windows → Masa & bahasa → Bahasa); jika Windows menggunakan bahasa
+  yang tiada dalam program, ia menggunakan bahasa Inggeris. Satu klik pada bendera
+  membuka senarai bahasa: italiano, English, Français, Deutsch, Español, Português,
+  Русский, 中文, 日本語, 한국어 (bahasa Korea, 4.11, bendera Korea Selatan), العربية (bahasa
+  Arab, 4.11, bendera Emiriah Arab Bersatu).
+- Sejak 4.14 juga Bahasa Melayu (bendera Malaysia) dan हिन्दी (Hindi, bendera India);
+  fail terjemahannya berada dalam subfolder «ms» dan «hi» dalam «lingue».
+- Dengan bahasa Arab halaman dibaca dari kanan ke kiri; frekuensi, nombor dan kod
+  kekal dari kiri ke kanan. Untuk bahasa Arab bendera Emiriah Arab Bersatu digunakan
+  kerana bendera Arab Saudi mengandungi teks keagamaan (kalimah syahadah), yang tidak
+  digunakan sebagai simbol bahasa semata-mata.
+- Terjemahan dibuat serta-merta, tanpa memulakan semula: tab, butang, menu, tetingkap,
+  panduan, mesej dan amaran (juga yang datang daripada radio), kad galeri, tetapan dan
+  tetingkap "Buka" dan "Simpan" Windows.
+- Bahasa yang dipilih dengan bendera disimpan dalam tetapan program dan juga digunakan
+  selepas dimulakan semula, menggantikan bahasa Windows (sejak 4.12 juga bahasa Itali).
+- Nama item CHIRP (lajur "nama asal" dalam tetapan), saluran, nama pengulang dan fail
+  kekal seperti sedia ada.
+- Fail maklumat (GUIDE, CHANGELOG, README, AUTHORS_AND_LICENSES, VERSION,
+  LICENSE_NOTICE) berada dalam folder "lingue" pakej, satu subfolder bagi setiap
+  bahasa. Lesen yang berkuat kuasa ialah teks asal bahasa Inggeris GNU GPL
+  (LICENSE.txt): terjemahan menerangkan apa yang dibenarkannya, seperti yang diminta
+  oleh Free Software Foundation.
+
+TAB MAKLUMAT DAN KEMAS KINI
+- Tab "ℹ Maklumat" menunjukkan nama, versi, tarikh binaan, pengarang, halaman QRZ,
+  laman program (https://iu0vyt.github.io/IU0VYT/, sejak 3.9.3), repositori GitHub
+  (https://github.com/IU0VYT/IU0VYT: kod sumber, keluaran dan kemas kini), lesen, folder
+  data dan nota undang-undang (pautan dibuka dalam pelayar).
+- E-mel (3.9): "✉ Tulis kepada pengarang" membuka program mel PC dengan penerima sudah
+  ditetapkan dan subjek "IU0VYT Flash x.y". Jika tiada program yang terbuka: "📋 Salin
+  alamat" (untuk ditampal dalam medan «Kepada» Gmail, Outlook.com atau mel pelayar lain)
+  atau "👁 Tunjukkan alamat" (sebagai imej, untuk disalin dengan tangan). Alamat tidak
+  ditulis dalam halaman.
+- Folder data: arkib pengulang, tetapan, salinan radio. Ia folder
+  %APPDATA%\GestioneCanaliRadio pengguna Windows yang memulakan program, dikira pada
+  setiap permulaan pada PC itu (cth. C:\Users\<nama
+  pengguna>\AppData\Roaming\GestioneCanaliRadio): setiap pengguna dan setiap PC
+  mempunyai foldernya sendiri. "📂 Buka" membukanya dalam File Explorer.
+- Semakan kemas kini: pada setiap permulaan, secara automatik, dan dengan butang
+  "🔄 Semak kemas kini" dalam tab Maklumat (sejak 4.10 tiada lagi butang "Kemas kini"
+  di bahagian atas).
+  Program membandingkan versinya dengan versi yang diterbitkan oleh pengarang:
+    · jika versi yang digunakan ialah yang terkini, ia menyatakannya dan tidak memuat
+      turun apa-apa;
+    · jika ada versi yang lebih baharu, satu notis kuning muncul di bahagian atas
+      dengan "⬇ Muat turun kemas kini" (dan "Butiran"); × menyembunyikannya sehingga
+      permulaan seterusnya.
+  Semakan hanya membaca nombor versi (beberapa KB), bukan program. Tanpa sambungan
+  Internet, semakan semasa permulaan tidak menunjukkan ralat.
+- "Muat turun kemas kini": pilih tempat menyimpannya (biasanya folder Muat Turun),
+  pakej .zip dimuat turun dan disemak. Kemudian tutup program, ekstrak zip dan
+  gantikan fail boleh laku: arkib pengulang dan tetapan kekal di tempatnya.
+- Alamat tempat kemas kini disemak dan dimuat turun adalah tetap dalam program dan
+  tidak boleh diubah:
+  https://github.com/IU0VYT/IU0VYT/releases/latest/download/IU0VYT.Flash.zip (sejak
+  3.9). GitHub menghalakannya ke fail IU0VYT.Flash.zip keluaran terkini yang
+  diterbitkan.
+- Untuk pengarang, menerbitkan versi baharu: naikkan appVersion (server.go) dan versi
+  dalam res/risorse.rc, bina semula, kemas kini versione.txt (baris "versione=x.y" dan
+  "compilazione=...") dan cipta dalam repositori GitHub (awam) satu keluaran baharu,
+  BUKAN pra-keluaran dan BUKAN draf, dengan fail bernama tepat "IU0VYT.Flash.zip"
+  dilampirkan: ia menjadi "latest release" dan program yang sudah dipasang
+  menemuinya sendiri. Versi dibaca daripada versione.txt, atau daripada baris
+  "Versione x.y" dalam LEGGIMI.txt.
+- Laman https://iu0vyt.github.io/IU0VYT/ (folder docs) mengemas kini dirinya sendiri:
+  pada setiap perubahan cabang main, aliran kerja .github/workflows/sito.yml mengira
+  bilangan model daripada katalog (seperti pada skrin Utama) dan menerbitkannya; versi
+  dan butang muat turun mengikut keluaran terkini yang diterbitkan.
+
+JADUAL SALURAN
+- Klik dua kali, Enter atau F2 untuk mengedit sel; anda juga boleh terus menaip. Esc
+  membatalkan suntingan. Pada baris kosong anda bermula dengan menaip frekuensi RX.
+- Frekuensi dalam MHz (145.600 atau 145,600). Anjakan ditulis -0.6, +1.6, +5: TX
+  dikira. Untuk TX dalam jalur lain taip terus frekuensi TX.
+- Ton: ton CTCSS standard (67.0 … 254.1) atau kod DCS: D023N normal, D023I songsang
+  (D023 = normal); kosong = OFF. "Ton TX" membuka pengulang, "Ton RX" ialah squelch ton
+  semasa penerimaan. K67 menerima sebarang kod DCS oktal; Bajeton menerima 104 kod
+  standard (D023 … D754).
+- Imbasan: saluran disertakan atau tidak dalam imbasan (kini juga pada K67).
+- Mod (hanya radio dengan saluran digital): Analog atau DMR / Digital. Pada saluran
+  digital ton tidak digunakan dan tetapan digital radio kekal.
+- Pemilihan: klik, Shift+klik (julat), Ctrl+klik (tambah), Ctrl+A (semua).
+- Tanda semak (3.9.3): kotak di sebelah kiri setiap saluran (Shift+klik menanda satu
+  julat, bar ruang menanda baris yang dipilih); kotak di kepala lajur menanda saluran
+  yang kelihatan, "☑ Pilih semua" / "☐ Nyahpilih semua" untuk semua saluran radio.
+  "📻 Majukan ke radio lain" dan "→ Arkib" menggunakan saluran yang ditanda atau, jika
+  tiada, yang dipilih. Tanda semak mengikut saluran apabila anda memindah atau
+  mengeditnya; ia tidak disimpan dalam fail.
+- Butang dan kekunci: Tambah; Masukkan baris (Ins); Kosongkan (Del); Padam dan
+  padatkan (Shift+Del); Pindah ke atas/bawah (Alt+↑ / Alt+↓); Isih (mengikut
+  frekuensi, nama, ton: jika anda memilih beberapa saluran ia hanya mengisih saluran
+  itu); Padatkan (membuang ruang kosong); Salin/Potong/Tampal (Ctrl+C/X/V); Buat
+  asal/Buat semula (Ctrl+Z/Y). Klik kanan pada jadual membuka menu dengan operasi yang
+  sama.
+- Apabila menampal pada kedudukan yang telah diisi, program bertanya sama ada hendak
+  menulis ganti, memasukkan dengan menggerakkan ke bawah, atau menggunakan kedudukan
+  kosong sahaja.
+- Bajeton 8300: 15 zon dengan 64 saluran. Pilih zon dari bar di atas jadual, "Semua"
+  untuk melihat kesemuanya; "Pindah ke zon" memindahkan saluran yang dipilih.
+- K67 Pro: 640 saluran. Julat frekuensi radio dibaca daripada fail: frekuensi di luar
+  julat diserlahkan dengan warna merah.
+- Edit pukal (4.11): «✎ Edit pukal…» (juga dari klik kanan) mengubah sekali gus, pada
+  saluran yang ditanda atau, jika tiada, yang dipilih: kuasa, lebar jalur, imbasan, ton
+  TX, ton RX (OFF membuang ton), anjakan dan, jika radio membenarkannya, pancaran
+  (terima sahaja). Item yang dibiarkan pada «jangan ubah» kekal seperti sedia ada pada
+  setiap saluran; subton tidak diletakkan pada saluran digital. Ton dan anjakan disemak
+  sebelum mana-mana saluran diubah; Ctrl+Z membatalkan keseluruhan operasi.
+
+NAMA ZON (4.11)
+Menggantikan «Zon 1», «Zon 2»… setiap zon boleh diberi nama, seperti dalam program
+pengeluar. Butang «✎ Nama zon…» (atau klik dua kali pada zon dalam bar) membuka senarai
+zon dengan namanya; bar zon dan baris status menunjukkan «nombor · nama». Nama berada
+dalam memori radio: ia dibaca dan ditulis melalui kabel bersama saluran dan disimpan
+dalam fail .img.
+- Radtel RT-950 Pro, Bajeton BJ-9000, Hiroyasu HI-UV850 Pro (perisian tegar sehingga
+  0.23: 15 zon; dari 0.24: 10 zon) dan Radtel RT-950 (15 zon): sehingga 12 aksara;
+  huruf tanpa aksen, digit, simbol dan aksara Cina (GB2312, 2 bait setiap satu),
+  seperti dalam program pengeluar RT-950PRO_CPS v1.2.0-v1.3.3, BJ-9000_CPS v1.3.3 dan
+  BT-9000_CPS v1.3.0 (kawasan 0xC000, 16 bait bagi setiap zon).
+- Radtel RT-920 (perisian tegar V0.17 dan ke atas, 10 zon): sehingga 10 aksara, seperti
+  pemacu CHIRP (program pengeluar v1.2.4 membenarkan 12; kawasan 0xC800).
+- Radtel RT-910 / Bajeton BJ-7700 tanpa Bluetooth (15 zon): sehingga 12 aksara tanpa
+  aksen, seperti program pengeluar RT910_EnCPS v1.0.3 (kawasan 0xA200).
+- Radio DMR Baofeng RD-5R, DM-1801 dan DM-32UV: zon sedia ada dinamakan semula
+  (sehingga 16 aksara); setiap zon mesti mempunyai nama.
+- Keselamatan: bagi RT-950 Pro, BJ-9000, HI-UV850 Pro, RT-950 dan RT-910 kawasan nama
+  hanya ditulis jika nama berubah, dan ia dibaca semula dari radio terlebih dahulu:
+  jika ia mengandungi data yang bukan nama (perisian tegar tanpa nama zon) tiada apa
+  yang ditulis dan satu mesej muncul. Nama kosong membiarkan zon seperti yang
+  ditunjukkan oleh radio. Bagi RT-920 kawasan itu termasuk dalam yang sentiasa ditulis,
+  seperti CHIRP.
+- Fail .img RT-950 yang disimpan sebelum 4.11 tidak mengandungi nama: baca radio sekali
+  lagi untuk melihatnya. Jika radio tidak menjawab bacaan nama (perisian tegar lama)
+  fail kekal tanpa nama dan semua yang lain berfungsi seperti sebelumnya.
+
+MENYALIN ANTARA DUA RADIO
+Salin dalam tab pertama dan Tampal dalam tab yang satu lagi (sejak 3.9.3 "Salin ke…"
+telah menjadi "📻 Majukan ke radio lain", yang menulis terus ke radio yang disambungkan:
+lihat "MEMAJUKAN KE RADIO LAIN") menyesuaikan saluran dengan logik penukar dan
+menunjukkan amaran:
+- nama: maks. 16 aksara pada K67, 12 pada Bajeton (singkatan M. S. D. dan nombor akhir
+  dikekalkan, cth. "CAMPOLUNGHINO 3" → "CAMPOLUNGH 3");
+- kuasa: Sederhana pada Bajeton menjadi Tinggi pada K67;
+- ton DCS: dipindahkan jika radio destinasi mempunyai kod itu, jika tidak OFF dengan
+  amaran;
+- frekuensi di luar julat K67.
+Dalam tetingkap sisipan pilih zon (Bajeton), kedudukan permulaan dan sama ada hendak
+menggunakan kedudukan kosong sahaja atau menulis ganti.
+
+MEMAJUKAN KE RADIO LAIN (3.9.3)
+"📻 Majukan ke radio lain" (dalam tab setiap radio dan dalam menu klik kanan) menulis
+saluran yang dipilih terus ke radio lain yang disambungkan dengan kabel:
+1) tanda saluran (kotak di sebelah kiri; "☑ Pilih semua" untuk semua saluran radio):
+   jika anda tidak menanda apa-apa, saluran yang dipilih dengan klik digunakan;
+2) pilih jenama dan model radio destinasi dari dua menu juntai bawah (model dibahagikan
+   mengikut jenis) dan tempat meletakkan saluran: dalam kedudukan kosong (saluran yang
+   sudah ada dalam radio kekal) atau menggantikan semua saluran radio;
+3) sahkan bahawa model itu betul dan radio disambungkan ke kabel serta dihidupkan;
+4) semakan keserasian, seperti untuk arkib pengulang: frekuensi dalam julat radio,
+   tiada saluran amatur pada set PMR446 / GMRS (amaran kuning jika radio tetap menerima
+   frekuensi itu), tiada saluran DMR pada radio analog sahaja. Anda boleh membatalkan,
+   memilih radio lain atau menghantar saluran yang serasi sahaja;
+5) pilih port kabel dan tekan "Majukan dan tulis". Program membaca radio dan menyimpan
+   salinan sandarannya (folder "copie_radio", fail "..._prima_dell_inoltro_..."),
+   menyesuaikan saluran dengan radio (nama, aksara, ton, tahap kuasa, saluran terima
+   sahaja atau digital, kedudukan terkunci seperti saluran GMRS tetap), menulisnya dan
+   membaca radio sekali lagi untuk mengesahkannya.
+Tetapan radio (menu, VFO, kekunci…) kekal seperti yang dibaca dari radio: hanya saluran
+yang berubah. Jika kedudukan kosong tidak mencukupi atau tiada saluran boleh digunakan,
+program berhenti sebelum menulis dan tiada apa yang ditulis ke radio. Pada akhirnya
+tetingkap menunjukkan kedudukan yang digunakan dan penyesuaian; jika tab radio
+destinasi tidak dibuka, "Tunjukkan saluran radio" membukanya dengan saluran seperti
+yang kini ada dalam radio.
+
+APA YANG DIKEKALKAN
+Program hanya mengubah apa yang anda ubah. Fail yang dibuka dan disimpan tanpa
+perubahan kekal serupa bait demi bait. Data yang tidak ditafsirkan oleh program (bait
+lain rekod K67, medan isyarat/PTT ID/sekatan saluran sibuk/dll. Bajeton) kekal tidak
+berubah dan mengikut saluran apabila anda memindah atau menyalinnya dalam radio yang
+sama. Tetapan umum radio hanya berubah dengan "⚙ Tetapan…" (dan hanya item yang anda
+ubah). K67: apabila anda menambah atau memadam saluran, senarai zon, saluran A/B dan
+saluran kecemasan dikemas kini seperti yang dilakukan oleh program asal (zon tidak
+diedit dari sini).
+
+PEMBETULAN RALAT DALAM VERSI 1.0 (K67 Pro)
+Semasa menganalisis program asal didapati bahawa fail .xlc mempunyai dua jadual bit
+bagi setiap saluran ("kedudukan diisi" dan "dalam imbasan"). Versi 1.0 menggunakan
+jadual yang salah: saluran yang ditambah pada kedudukan yang KOSONG mungkin tidak
+kelihatan kepada radio dan kepada program asal (suntingan dan pemadaman saluran sedia
+ada adalah betul). Jika anda menyimpan fail .xlc dengan 1.0 dengan menambah saluran
+pada kedudukan kosong, buka fail itu dengan versi ini: kedudukan yang terjejas
+dilaporkan dan cukup dengan memasukkan semula saluran tersebut (atau mengulangi
+penambahan).
+
+ARKIB PENGULANG
+- Ia dikongsi oleh semua radio dan menyimpan dirinya sendiri, pada PC, dalam:
+  %APPDATA%\GestioneCanaliRadio\archivio_ponti.json (salinan sandaran: .bak)
+- "Import…": dari Internet (alamat pratetap https://www.ik2ane.it/pontixls.xls, boleh
+  diedit; alamat yang digunakan diingati) atau daripada fail .xls, .xlsx, .csv. Ia
+  mengecam senarai IK2ANE (helaian "ponti"), CSV CHIRP, fail yang dieksport oleh
+  program ini dan helaian generik dengan pengepala seperti Frequency, Shift, Tone,
+  Name, Location, Region, Province, Type, Network.
+- Nilai tidak sekata ditafsirkan dengan akal budi dan dilaporkan (baris kuning dengan
+  ⚠):
+    "+5.0MHz", "-600 kHz"         → anjakan biasa
+    "+1.362,5 MHz"                → 1.3625 MHz (dilaporkan)
+    "79,7" "123"                  → 79.7 / 123.0
+    "77.0-141.3" "110.9/162.2 loc"→ ton pertama digunakan, yang lain ditunjukkan dalam
+                                    amaran
+    "82.2" (bukan standard)       → 82.5, dilaporkan
+    "CC1" (kod warna DMR)         → tiada ton, dicatat dalam nota
+    "DCS023", "1750", "DG-ID:10"  → dicatat/dilaporkan
+    "input" / "output"            → simpleks, dilaporkan
+  Nilai asal kekal kelihatan dalam panel butiran. Baris tanpa frekuensi yang sah (cth.
+  pemegang tempat 9999999 dan baris teks akhir) tidak boleh diimport: ia disenaraikan
+  dalam tetingkap, tidak dibuang secara senyap.
+- Warna petunjuk juga dibaca daripada fail IK2ANE: pengulang yang tidak lagi aktif,
+  tidak berfungsi buat sementara, bukan H24, ton bukan serantau, anjakan bukan
+  standard.
+- Penapis (semasa import, semasa eksport dan dalam arkib): jalur (VHF/UHF/Lain), jenis
+  (Analog, EchoLink, SvxLink, DMR, C4FM, D-Star, NXDN, Multimod, HotSpot, Transponder,
+  Winlink), status, wilayah, daerah, rangkaian, teks bebas, hanya baris dengan amaran;
+  ditambah tanda semak bagi setiap baris. Semasa import penapis bermula dengan "hanya
+  pengulang yang boleh digunakan dalam analog, tidak termasuk yang tidak aktif": anda
+  boleh mengubahnya.
+- Nama saluran: templat pilihan anda dengan {LOC} {SIGLA} {NOMINATIVO} {PROV} (lokasi,
+  kod, tanda panggilan, daerah; cth. "{NOMINATIVO} {LOC}" → "IR0XX M.ALTO"). "Jana
+  semula nama…" menggunakannya sekali lagi.
+- Pengulang yang sudah ada (frekuensi, TX, lokasi dan kod yang sama): anda boleh
+  menambah yang baharu sahaja, mengemas kini yang sedia ada (nama yang anda berikan
+  kekal) atau menggantikan semuanya.
+- Tanda pengulang yang anda mahu masukkan ke dalam radio: kotak di sebelah kiri setiap
+  baris (bar ruang menanda baris yang dipilih), atau "☑ Pilih semua" dan "☐ Nyahpilih
+  semua", yang digunakan pada pengulang yang kelihatan dengan penapis semasa. Tanda
+  semak kekal disimpan dalam arkib, juga apabila program ditutup.
+- "📻 Majukan ke radio" menulis pengulang yang ditanda ke radio (jika tiada, yang
+  dipilih dengan klik):
+    · jika radio sudah dipilih (yang ditunjukkan dalam bar biru "Radio destinasi",
+      iaitu yang terakhir digunakan atau tab radio terakhir yang dibuka) satu tetingkap
+      muncul dengan model dan permintaan pengesahan ("Sahkan dan tulis", atau "Pilih
+      radio lain…");
+    · jika tidak, senarai semua radio yang serasi terbuka, dengan carian: dibahagikan
+      mengikut jenama (Baofeng, Bajeton) dan mengikut jenis, dengan setiap model
+      disenaraikan secara berasingan mengikut abjad (dalam kurungan pengendalian yang
+      digunakan, cth. "UV-5RA (dikendalikan sebagai: Baofeng UV-5R)", atau versi, jika
+      radio mempunyai lebih daripada satu).
+  Sebelum menulis, program menyemak bahawa pengulang serasi dengan radio yang dipilih:
+    · frekuensi terima dan pancar dalam julat radio;
+    · tiada pengulang amatur pada set PMR446 / tanpa lesen (446.0-446.2 MHz sahaja) atau
+      set GMRS / FRS (462.55-467.725 MHz sahaja);
+    · tiada pengulang digital sahaja (DMR, C4FM, D-Star, NXDN) pada radio analog sahaja;
+      pada radio DMR (DM-32UV, DM-1801 Pro, DM-5000) pengulang DMR sahaja menjadi
+      saluran DMR.
+  Pengecualian: sesetengah radio yang dijual sebagai PMR446 / tanpa lesen atau GMRS juga
+  menerima frekuensi amatur (julat pemacu ialah julat program pengeluar, cth. BF-T17
+  PMR446 400-480 MHz). Bagi pengulang dalam julat itu satu amaran kuning muncul dengan
+  "Tulis juga N pengulang itu": penulisan dibenarkan (juga dari tab radio, dengan
+  menampal atau memasukkan pengulang). Patuhi peraturan: memancar pada frekuensi amatur
+  memerlukan lesen, dan set PMR446 yang diluluskan tidak boleh digunakan di luar
+  salurannya.
+  Jika tiada masalah pengulang dihantar; jika tidak satu amaran muncul ("Anda memilih
+  peranti yang tidak serasi dengan data yang cuba anda hantar ke radio") dengan senarai
+  masalah, dan tiada apa yang ditulis ke radio: anda boleh membatalkan, memilih radio
+  lain atau, jika sebahagian pengulang serasi, menghantar bahagian itu sahaja.
+  Kemudian tetingkap sisipan biasa terbuka (kedudukan permulaan, kedudukan kosong
+  sahaja atau tulis ganti, penyesuaian untuk radio); jika radio belum dibaca program
+  menawarkan untuk membacanya melalui kabel atau membuka salah satu failnya. "Tukar
+  radio…" dalam bar biru menukar destinasi.
+- "Salin" menyalin pengulang yang ditanda (atau dipilih) untuk ditampal ke dalam radio
+  (Ctrl+V).
+- "🗑 Padam" (3.9.3) membuang daripada arkib pengulang yang ditanda, juga yang
+  disembunyikan oleh penapis (pengesahan menyatakan berapa banyak), atau, jika tiada,
+  yang dipilih dengan klik; kekunci Del memadam baris yang dipilih. "🗑 Padam semua"
+  mengosongkan arkib. Kedua-duanya meminta pengesahan dan boleh dibuat asal dengan ↶
+  (Ctrl+Z) selagi program kekal terbuka; untuk memuatkan semula senarai IK2ANE gunakan
+  "⬇ Import…".
+- "Tanda sebagai disemak" membuang amaran selepas disemak (ia kekal dalam nota).
+
+PENUKAR DAN FORMAT UNIVERSAL (3.7)
+- Tab "🔁 Tukar": 1) pilih fail sumber atau tab yang terbuka; 2) pilih format destinasi
+  (cari mengikut nama); 3) "Tukar dan simpan…". Selepas penukaran senarai menunjukkan
+  semua penyesuaian (nama dipendekkan, tahap kuasa, ton yang tidak tersedia, saluran di
+  luar julat atau dikecualikan) dan "Buka dalam tab radio" membuka fail yang
+  dihasilkan.
+- Fail sumber: .xlc (K67), .dat (Bajeton, v1.0.8 atau v1.0.9), imej .img mana-mana
+  radio yang serasi (juga yang disimpan oleh CHIRP: model dikenali daripada data fail),
+  CSV CHIRP (juga dengan baris komen), jadual Excel atau CSV (dieksport dari sini, dari
+  arkib pengulang atau ditulis dengan tangan: satu lajur dengan frekuensi diperlukan,
+  cth. «RX (MHz)», «Frequenza» atau «Frequency»; pilihan: nama, TX, anjakan, ton, kuasa,
+  lebar jalur, imbasan, RX sahaja, digital).
+- Destinasi: CSV CHIRP (format universal, ia dibuka dengan CHIRP untuk mana-mana radio),
+  Excel .xlsx, CSV untuk Excel, fail .xlc K67, .dat Bajeton untuk v1.0.8 atau v1.0.9
+  BT-11_CPS, imej .img setiap radio yang dikendalikan dengan pemacu. Saluran kekal pada
+  kedudukan yang sama jika radio mempunyainya (atau "padatkan saluran"); yang berlebihan
+  masuk ke kedudukan kosong pertama, yang lain dikecualikan dan dilaporkan. Kedudukan
+  terkunci sesetengah radio (cth. saluran GMRS tetap GM-15 Pro) kekal seperti pada
+  radio.
+- Untuk imej .img sesebuah radio anda memerlukan imej radio yang sama itu, iaitu salinan
+  lengkap memorinya (tab yang dibuka selepas "Baca dari radio" atau "Buka…", atau fail
+  .img yang disimpan lebih awal dari sini atau dari CHIRP; sejak 3.8 juga dengan
+  "📻 Baca radio yang disambungkan sekarang…" terus dari penukar): imej mengandungi
+  tetapan dan penentukuran radio, yang tidak boleh direka, dan menulis imej "kosong"
+  akan merosakkan radio. Untuk K67 dan Bajeton anda juga boleh bermula daripada tetapan
+  lalai program pengeluar.
+- "📥 Import…" (tab setiap radio) dan "Eksport…" → "🔁 Untuk radio lain…" menggunakan
+  penukar yang sama.
+
+PENGENALPASTIAN RADIO (3.8)
+- Tab "🔎 Kenal pasti": pilih port kabel (atau "USB" untuk radio DMR dengan kabel USB
+  terus: RD-5R, DM-1801, DM-1701) dan tekan "Kenal pasti radio". Anda boleh
+  mengecilkan carian mengikut jenama atau jenis (analog / DMR): ia lebih pantas.
+- Program mencuba protokol BACAAN satu demi satu (mula-mula K67 Pro dan Bajeton BJ-8300,
+  kemudian radio dengan pemacu, bermula dengan yang tabnya terbuka). Model yang
+  memulakan sambungan dengan cara yang sama dicuba sekali sahaja (38 cubaan untuk 100
+  radio melalui kabel; sejak 4.1, 60 cubaan untuk semua radio melalui kabel). Apabila
+  radio menjawab ia dibaca sepenuhnya, seperti dengan "Baca dari radio", dan satu
+  salinan bacaan disimpan dalam folder salinan (copie_radio).
+- Model dikenali daripada kandungan memori, seperti yang dilakukan oleh CHIRP dengan
+  fail. Namun banyak radio menggunakan protokol dan memori yang sama tanpa menulis
+  namanya sendiri di mana-mana (cth. radio keluarga UV-17Pro, PMR keluarga BF-888S):
+  dalam kes itu program menyatakannya ("Model tidak dapat dibezakan melalui kabel") dan
+  membolehkan anda memilih model yang betul sebelum membuka saluran.
+- Ditunjukkan: jenama dan model, jenis (FM analog atau DMR, PMR446, GMRS), julat
+  frekuensi, bilangan memori, sambungan yang digunakan, perisian tegar atau pengecam
+  yang dilaporkan oleh radio (cth. UV-5R "BFB297", BJ-8300 "BT-11U V1.00", perisian
+  tegar DM-32UV, K67 "5RH-PRO" atau "BF-K6"), teks yang dihantar oleh radio semasa
+  sambungan, saluran yang ada; untuk RD-5R, DM-1801 dan DM-1701 juga ID DMR, nama
+  radio, tarikh pengaturcaraan terakhir dan (DM-1701) versi program yang menulisnya.
+  Nombor siri: tiada satu pun radio ini melaporkannya dengan protokol pengaturcaraan
+  (ia hanya ada pada label).
+- "Buka saluran dalam tab radio": seperti selepas "Baca dari radio".
+- Masa (4.3): tanpa radio disambungkan carian penuh mengambil masa kira-kira 50 saat
+  (81 cubaan; kurang jika anda mengecilkan carian mengikut jenama atau jenis); mula-mula
+  radio yang pernah dikenali dicuba (24 yang terakhir), kemudian yang tabnya terbuka,
+  kemudian yang lain. Radio yang menjawab ditemui sebaik sahaja tiba gilirannya dan
+  kemudian dibaca.
+- Jika radio menjawab tetapi bacaan tidak berjaya (cth. kata laluan, model berbeza)
+  jawapannya disenaraikan dalam butiran. Jika radio tersekat dalam mod pengaturcaraan,
+  matikan dan hidupkan semula.
+
+PENGENALPASTIAN AUTOMATIK (4.0 - 4.7)
+- Dalam tab "🔎 Kenal pasti" tekan "🔄 Dayakan pengenalpastian automatik". Sejak itu,
+  semasa program terbuka, apabila anda menyambungkan kabel pengaturcaraan (atau radio
+  DMR melalui USB) radio dicari dengan sendirinya, dengan arahan BACA sahaja yang sama
+  seperti "Kenal pasti radio": tiada apa yang ditulis ke radio.
+- Ia berfungsi dalam mana-mana tab program. Kotak "Pengenalpastian Radio Sedang
+  Berjalan. Sila tunggu." (dengan "Henti") muncul di bahagian bawah hanya apabila radio
+  yang disambungkan ke kabel benar-benar menjawab, dan hilang apabila radio dikenali
+  atau carian tamat. Sejak 4.4 hingar talian (0x00, 0xFF dan seumpamanya, yang biasa
+  bagi kabel tanpa radio atau dengan radio dimatikan) dan gema arahan yang dihantar,
+  walaupun tiba lewat, tidak mencukupi: sekurang-kurangnya 4 bait sebenar atau dua
+  jawapan berbeza diperlukan. Dengan beberapa kabel, kotak hanya menunjukkan port
+  dengan radio yang menjawab.
+- Apabila radio dikenali datanya muncul (juga dalam satu tetingkap) dan tabnya dibuka
+  dengan saluran yang dibaca; jika tab itu mempunyai perubahan yang belum disimpan
+  program bertanya sebelum menggantikannya.
+- Sejak 4.2, selepas pengecaman carian BERHENTI (fungsi kekal aktif): untuk mencari
+  radio lain pada kabel yang sama tekan butang kuning "🔎 Kenal pasti Radio" di bahagian
+  atas kanan, di sebelah "? Panduan" (sejak 4.4; ia kelabu dan tidak boleh ditekan jika
+  pengenalpastian automatik dimatikan; dengan banyak tab terbuka ia mengecil kepada
+  kanta pembesar sahaja). Kabel yang disambungkan ke PC kemudian (walaupun kabel yang
+  sama, dicabut dan dipasang semula) dicari dengan sendirinya.
+- Sejak 4.3 program MENDENGAR SECARA BERTERUSAN pada semua port kabel yang disambungkan,
+  setiap satu secara berasingan dan semuanya serentak: radio yang dimatikan atau dengan
+  kelantangan minimum tidak menghentikan carian, yang bermula semula serta-merta (tanpa
+  kotak) selagi kabel kekal disambungkan. Jadi anda boleh menyambungkan kabel dan
+  menghidupkan radio selepas itu: ia dikenali sebaik sahaja ia menjawab. Radio yang
+  menjawab tetapi bukan antara yang dikendalikan dicuba semula setiap 30 saat.
+- Beberapa radio yang disambungkan pada kabel berlainan (cth. COM6 dan COM7) dicari
+  serentak: bagi setiap satu data muncul dan tab dibuka; jika tab sudah terbuka notis
+  "Radio sudah dikenal pasti!! Tab radio sudah terbuka" muncul (dengan beberapa radio,
+  notis yang sama dalam bentuk jamak). Selepas pengecaman hanya port radio itu yang
+  berhenti: yang lain terus mendengar.
+- Radio yang dikenali diingati (juga selepas dimulakan semula): carian kemudian
+  mencubanya dahulu, dan semasa carian ia dicuba semula setiap 8 cubaan, jadi radio yang
+  pernah digunakan (cth. K67 Pro, Bajeton 8300, BJ-9000) dikenali dalam beberapa saat.
+- Hanya port kabel pengaturcaraan yang dicari (penyesuai USB-serial CH340, Prolific,
+  Silicon Labs, FTDI…), tidak sekali-kali port Bluetooth, modem atau port bersiri
+  sistem (COM1, COM2).
+- Carian automatik yang sedang berjalan berhenti dengan sendirinya apabila anda meminta
+  operasi lain (baca, tulis, perisian tegar, pemajuan atau pengenalpastian manual).
+- Pilihan kekal disimpan juga selepas program ditutup dan dimulakan semula. Untuk
+  berhenti menggunakannya kembali ke tab "🔎 Kenal pasti" dan tekan "⏹ Lumpuhkan
+  pengenalpastian automatik".
+- (4.7) Sebelum mencuba model, program mendengar port selama 1 saat (sekali seminit
+  bagi setiap port dan kelajuan). Radio dalam mod kemas kini perisian tegar menghantar
+  mesej berkala dengan sendirinya: bait itu tidak dikira sebagai jawapan, jadi carian
+  tamat dengan cepat dan tab Kenal pasti memberi amaran bahawa radio mungkin berada
+  dalam mod kemas kini (matikan dan hidupkan seperti biasa, atau gunakan tab Perisian
+  tegar).
+- (4.7) Susunan cubaan: radio yang pernah dikenali, yang tabnya terbuka, kemudian yang
+  paling biasa (K67 Pro, BJ-8300, BJ-7800 / RT-920, BJ-7700 / RT-900, BJ-9000 / RT-950
+  Pro, TD-H8, UV-17 / UV-17Pro, UV-K5, UV-5R, BF-888S), kemudian yang lain.
+
+PEMACU USB DM-1701 (3.8)
+- DM-1701 (dan Retevis RT84) disambungkan melalui USB dalam mod DFU (peranti 0483:DF11)
+  dan memerlukan pemacu. Dua kemungkinan:
+  1. pemacu pengeluar (STTub30), folder "DM-1701 USB Driver" dalam pakej "DM-1701 CPS":
+     dalam tetingkap "Baca dari radio" DM-1701, butang "Pasang pemacu USB…" meminta
+     pemasang (dpinst_amd64.exe, atau fail .inf) dan memulakannya dengan kebenaran
+     Windows (dengan .inf ia menggunakan "pnputil /add-driver … /install", Windows 10
+     dan 11);
+  2. pemacu generik WinUSB Windows, dipasang dengan Zadig (https://zadig.akeo.ie,
+     Options → List All Devices, peranti 0483 DF11, pemacu WinUSB): sama seperti yang
+     digunakan oleh dmrconfig dan qdmr. Selepas operasi ini program pengeluar tidak
+     lagi melihat radio sehingga pemacunya dipasang semula.
+- Program menggunakan mana-mana yang dipasang dengan sendirinya; tetingkap menunjukkan
+  sama ada radio disambungkan dan dengan pemacu yang mana.
+- Pemacu Windows tidak boleh disertakan dalam program atau diedarkan semula: sebab itu
+  pemacu rasmi (atau WinUSB, yang merupakan sebahagian daripada Windows) digunakan.
+
+BTECH DMR-6X2: KEMAS KINI PERISIAN TEGAR BERPANDU (3.8)
+- DMR-6X2 (perisian tegar 2.21) dan DMR-6X2 PRO (perisian tegar 1.21) ialah radio DMR
+  jenama BTECH (BaofengTech, Amerika Syarikat). Perisian tegar dipasang dengan program
+  rasmi "Firmware_Update" dalam pakej BTECH (menu Tool → Firmware Upgrade dalam CPS,
+  atau C:\DMR_6X2_2.21\Update\Firmware_Update.exe), dengan radio dalam mod kemas kini:
+  dimatikan, tahan PTT dan Alarm (kekunci jingga) dan hidupkan (LED berkelip merah);
+  port COM "USB Virtual Com Port Driver", 921600 baud, Duplex, "Write". Selepas perisian
+  tegar (dan ikon, PTT + PF2 semasa dihidupkan) set semula mesti dibuat (PTT + PF1
+  semasa dihidupkan) dan codeplug yang disimpan sebelumnya ditulis semula: kemas kini
+  memadam pengaturcaraan. Sumber: "STOP and README FIRST.pdf" dalam pakej rasmi
+  DMR-6X2-221b dan DMR-6X2-PRO-121e (https://baofengtech.com/software/).
+- Dalam galeri, kad radio → "🧭 Kemas kini berpandu…": pilih fail .spi dan program
+  menyemak bahawa fail .spi, .CDI dan .CDD konsisten dan lengkap, untuk radio yang mana
+  (DMR-6X2 atau PRO: perisian tegar tidak boleh ditukar ganti), jenis kemas kini
+  (perisian tegar, ikon, papan APRS) dan versi; ia menunjukkan prosedur yang betul dan
+  memulakan program rasmi (juga sebagai pentadbir).
+- Perisian tegar ditulis oleh program BTECH: protokolnya tidak diterbitkan dan program
+  itu telah dikompil, jadi ia tidak dapat dibandingkan dengan pelaksanaan lain;
+  kesilapan boleh menjadikan radio tidak boleh digunakan.
+
+CARIAN UNTUK RADIO YANG TIDAK SERASI (3.7)
+Carian dalam forum dan laman peminat (CHIRP, RadioReference, miklor.com, RigPix, GitHub)
+untuk program atau jalan penyelesaian bagi radio yang tidak serasi:
+- UV-8D / BF-UV8: CHIRP tidak mengendalikannya (laporan #1225, masih terbuka, dan
+  #4519): radio tidak menunjukkan saluran mana yang kosong dan pemacu ujian 2014
+  menghasilkan saluran bertulis yang tidak ditunjukkan oleh radio; ia hanya boleh
+  diprogram dengan program pengeluar untuk UV-8 (dalam bahasa Cina). Tidak dikendalikan
+  di sini: tanpa program itu hasilnya tidak dapat disahkan.
+- DM-5R (Tier I): dmrconfig mengendalikan TD-5R tetapi menyatakan dengan jelas "bukan
+  DM-5R"; radio menggunakan kabel yang berbeza daripada Baofeng lain dan program asli.
+  Tidak dikendalikan (RD-5R, radio yang berbeza, dikendalikan). Untuk mengendalikannya
+  diperlukan (3.8): program pengeluarnya (ditulis dalam C++Builder, jadi kod mesin: ia
+  dikaji dengan penyahhimpun seperti Ghidra atau IDR, jauh lebih perlahan daripada
+  program .NET) dan terutamanya rakaman dialog antara program itu dengan DM-5R sebenar
+  (baca dan tulis) yang dibuat dengan pemantau port bersiri, bersama fail yang disimpan
+  oleh program dan kabel khusus radio itu.
+- DM-1702 / DM-1703: alat bebas wujud (MD1702-tools) yang membaca dan menulis memori,
+  tetapi pengarangnya sendiri memberi amaran bahawa dengan perisian tegar L05 dan
+  pemuat MD1706-V2 ia menjadikan radio tidak boleh digunakan: tidak dikendalikan, atas
+  dasar berhati-hati.
+- DM-V1: program pengeluar sendiri, kabel mikro-USB dengan penukar di dalam radio;
+  tiada program bebas yang mengendalikannya.
+- PMR446 tanpa program yang diterbitkan (BF-T3, BF-T6…T57, BF-V1…V6A, BF-33C, BF-358…):
+  bagi sesetengah radio serupa pengguna CHIRP telah menggunakan pemacu BF-888 dengan
+  kejayaan separa (cth. BF-M4, laporan #7215, kemudian ditambah ke dalam CHIRP). Ia
+  bukan jalan penyelesaian yang selamat: tanpa program pengeluar anda tidak dapat
+  mengetahui sama ada memorinya sama, dan menulis memori yang berbeza boleh mengunci
+  radio.
+- 5RHam, BJ-98 Plus, M20D: tiada program atau maklumat teknikal ditemui.
+
+EKSPORT
+Dari arkib (dengan penapis dan tanda semak) atau dari saluran radio (semua atau yang
+dipilih):
+- Excel .xlsx dan Excel 97-2003 .xls (baris pertama dibekukan, baris dengan amaran
+  berwarna kuning);
+- CSV untuk Excel Itali (pemisah ";" dan koma perpuluhan);
+- CSV untuk CHIRP: lajur CHIRP standard. Kuasa ditulis dalam watt (High 5.0W, Medium
+  2.0W, Low 1.0W) seperti yang dijangka oleh versi CHIRP terkini; ton menggunakan Tone
+  (TX sahaja), TSQL (TX dan RX sama), DTCS (kod DCS yang sama) atau Cross (berbeza, juga
+  DCS→DCS, Tone→DTCS…); sejak 3.7 juga saluran terima sahaja (Duplex "off"), saluran
+  DMR (Mode "DMR") dan imbasan untuk semua radio. CHIRP kemudian menyesuaikan kuasa
+  dengan tahap radio destinasi.
+
+PERBEZAAN DARIPADA PENUKAR TERDAHULU
+- K67 kini mengekalkan bait yang tidak ditafsirkan bagi setiap saluran dan tidak lagi
+  mensifarkannya.
+- CSV CHIRP: kuasa dalam watt dan bukan lagi High/Mid/Low (ditolak oleh CHIRP terkini)
+  dan ton TX dan RX yang berbeza ditulis sebagai Cross (sebelum ini TSQL, yang dalam
+  CHIRP menggunakan satu ton sahaja).
+
+CARA IA DISAHKAN
+Kod dua program asal dinyahkompil dan dijalankan pada radio simulasi, bersebelahan
+dengan program ini:
+- penulisan: memori radio serupa bait demi bait dan jujukan arahan yang sama (K67: 17
+  arahan, 49,152 bait; Bajeton: 505 arahan, 49,984 bait), dengan fail contoh dan juga
+  dengan fail yang diubah (pemindahan, pemadaman, saluran baharu, DCS);
+- bacaan: fail serupa dengan yang disimpan oleh program asal (kecuali tarikh); Bajeton:
+  kesemua 15,600 medan .dat adalah sama;
+- program asal membuka semula dan menyimpan semula fail program ini tanpa perubahan
+  lain;
+- kata laluan salah, radio dimatikan, jalur berbeza, data ditolak, gangguan, salinan
+  sandaran dan pengesahan diuji dengan ujian automatik.
+IA TIDAK DAPAT DIUJI DENGAN RADIO SEBENAR. Pada percubaan pertama: mulakan dengan
+bacaan, simpan ke fail dan simpan di tempat lain; kemudian cuba menulis.
+Kemas kini perisian tegar (2.1): kod ASAL program "BinTe ANC Bootloader" (dimuatkan
+terus daripada fail boleh lakunya) dan program ini disambungkan kepada Bajeton simulasi
+yang sama dalam 10 situasi (kemas kini pada 115200 dan 57600 baud, mod pemulihan, fail
+dengan sebarang panjang, jawapan hilang, CRC salah, pertukaran kelajuan hilang, radio
+dimatikan, perisian tegar sebenar V0.12 dengan 700 KB data): dalam semua kes radio
+simulasi menerima paket yang sama, pada kelajuan yang sama dan dengan data yang sama,
+dan hasilnya serupa (cubaan semula yang sama, ralat yang sama). Fail boleh laku Windows
+juga diuji di bawah Wine dengan port bersiri sebenar (pseudo-terminal): kemas kini dan
+pemulihan selesai, pertukaran kelajuan betul. Kemas kini perisian tegar juga BELUM
+diuji dengan radio sebenar: kelakuan radio dibina semula daripada apa yang dijangka
+oleh program asal.
+
+Baharu dalam 3.0, semakan yang sama:
+- pemacu CHIRP: CHIRP sebenar (folder sumber) dan program ini dibandingkan pada setiap
+  model: bacaan saluran daripada imej ujian CHIRP (semua saluran sama), sehingga 18
+  perubahan bagi setiap model (saluran baharu, pengulang, ton CTCSS/DCS normal dan
+  songsang, split, terima sahaja, pemadaman, kedudukan terakhir) dengan imej terhasil
+  serupa bait demi bait dengan CHIRP, kedudukan yang sama bagi setiap medan peta, dan
+  baca/tulis melalui kabel dengan radio simulasi: bait yang dihantar ke radio serupa
+  dengan CHIRP dan memori akhir serupa;
+- perisian tegar .BF: kod ASAL "BF Upgrade Tool for TFT 330L Series" (dimuatkan daripada
+  fail boleh lakunya) dan program ini disambungkan kepada radio simulasi yang sama dalam
+  9 situasi (automatik, manual, jawapan hilang, ralat semakan, CRC salah, jabat tangan
+  hilang, ralat tulis, radio dimatikan) dan dengan 7 fail perisian tegar sebenar: paket
+  dan hasil serupa;
+- perisian tegar 5RH Pro: kod kemas kini asal (Radio.exe) dan program ini dibandingkan
+  dengan radio simulasi yang sama (papan V1 dan V2, 115200 dan 38400 baud, papan
+  berbeza daripada fail, blok ditolak) dan dengan 6 fail perisian tegar sebenar: serupa;
+- antara muka diuji dalam pelayar automatik dengan radio simulasi (galeri, bacaan,
+  suntingan, penulisan dengan sandaran dan pengesahan, penyalinan antara radio,
+  perisian tegar).
+Baharu dalam 3.1, semakan yang sama:
+- BJ-7700, siri H, GM-15 Pro: perbandingan penuh dengan CHIRP seperti di atas (bacaan,
+  perubahan, peta, protokol kabel: serupa); untuk GM-15 Pro juga peraturan saluran
+  GMRS;
+- radio yang diperoleh daripada program pengeluar: bacaan, suntingan dan penulisan
+  dengan radio simulasi yang dibina berdasarkan kod program rasmi (memori akhir sama
+  dengan apa yang ditulis; radio yang menjawab dengan model lain ditolak);
+- perisian tegar UV-25 Plus, UV-9G dan BJ-9000: kod ASAL tiga program kemas kini
+  (dimuatkan daripada fail boleh lakunya) dan program ini disambungkan kepada radio
+  simulasi yang sama, dalam mod automatik dan manual, dengan jawapan hilang dan ralat,
+  dan dengan perisian tegar rasmi: paket, kelajuan dan hasil serupa.
+Baharu dalam 3.2 dan 3.3, semakan yang sama:
+- G11S, DM-32UV: perbandingan penuh dengan CHIRP (bacaan imej ujian, perubahan dengan
+  imej serupa bait demi bait, peta, protokol kabel dengan bait serupa); untuk DM-32UV
+  juga pemadaman yang mengosongkan zon dan senarai imbasan, saluran DMR dan saluran
+  baharu selepas yang terakhir: imej serupa dengan CHIRP;
+- siri D: fungsi baca dan tulis saluran program «BF Series CPS» (dijalankan seadanya)
+  memberikan saluran dan bait yang sama seperti program ini; untuk W31D dan BF-V12D
+  saluran imej ujian CHIRP adalah sama (kecuali imbasan) dan bait yang dihantar ke
+  radio serupa dengan CHIRP;
+- BF-T17 / BF-T18: kod ASAL dua program pengeluar (dimuatkan daripada fail boleh
+  lakunya) dan program ini membaca dan menulis radio simulasi yang sama: saluran yang
+  dibaca sama dan memori akhir serupa bait demi bait.
+Baharu dalam 3.4 dan 3.5, semakan yang sama:
+- BF-T9, GT-18 PMR446, DR-1801UV: kod ASAL program pengeluar (dimuatkan daripada fail
+  boleh lakunya) dan program ini membaca dan menulis radio simulasi yang sama: saluran
+  yang dibaca sama dan memori akhir serupa bait demi bait; untuk DR-1801UV juga
+  perubahan (pemadaman saluran dalam zon, senarai dan perayauan, saluran analog dan DMR
+  baharu, ton bukan standard) yang ditulis oleh fungsi simpan program: memori serupa;
+- DM-5000: bait saluran dan zon yang dikira oleh kod program;
+- perisian tegar keluarga (3.5): pengecaman model daripada nama fail, pengesahan yang
+  diperlukan dan radio galeri yang dipautkan kepada setiap pemuat.
+Baharu dalam 3.6, semakan yang sama:
+- RD-5R, DM-1801, DM-1701: dmrconfig (BSD) dibina dengan sambungan TCP menggantikan
+  USB/HID dan DFU, ke arah radio simulasi: saluran yang dibaca sama dengan dmrconfig,
+  tujuh perubahan dengan memori serupa bait demi bait, baca dan tulis melalui USB
+  serupa;
+- GT-22 dan GT-68: kod asal dua program pengeluar dengan radio simulasi: saluran yang
+  dibaca sama dan memori serupa;
+- tetapan: K67 (ConvertSetting / SettingConvert program «5RH PRO»: 53 item dibaca sama,
+  636 perubahan dalam 12 gabungan dengan bait serupa); BJ-8300 v1.0.8 dan v1.0.9 (kod
+  asal BT-11_CPS: item dibaca sama, 400 + 410 perubahan dengan fail serupa bait demi
+  bait; baca dan tulis program dengan radio simulasi sama dengan program ini, juga
+  untuk fail yang ditukar antara dua versi); BJ-9000 (kod asal BJ-9000_CPS dengan radio
+  simulasi: 57 item dibaca sama, 456 perubahan dengan bit serupa; saluran yang ditulis
+  di sini, dibaca dan ditulis semula oleh program: memori serupa); 63 keluarga CHIRP
+  (nilai yang dibaca sama dengan CHIRP dan gabungan rawak perubahan yang digunakan di
+  sini dan oleh CHIRP: memori serupa bait demi bait).
+Baharu dalam 3.7, semakan yang sama:
+- K67 «BF-K6»: bacaan, penulisan dengan salinan sandaran, penulisan selepas bacaan dan
+  penolakan terhadap model berbeza, dengan API kabel dan radio simulasi yang
+  mengenalkan dirinya sebagai «BF-K6» (kes yang sama dilaporkan dengan radio sebenar;
+  pembetulan belum diuji dengan radio sebenar);
+- penukar: 3 sumber (saluran ujian dengan semua kes ton, fail K67 dan Bajeton) ke
+  setiap satu daripada 109 format: fail boleh dibaca semula dan semua saluran diambil
+  daripada sumber (327 penukaran); format universal tanpa kehilangan; imej .img yang
+  dicipta untuk 63 radio CHIRP dibuka dalam CHIRP dengan saluran yang sama (826);
+- CSV CHIRP: ditulis di sini dan dibaca oleh kod CHIRP (pemacu generic_csv) dengan
+  saluran yang sama, termasuk ton DCS; CSV yang ditulis oleh CHIRP daripada imej
+  ujiannya (UV-5R, UV-9G, UV-17Pro, BJ-7800: 186 saluran) dibaca di sini dengan serupa.
+Bahagian ini juga BELUM diuji dengan radio sebenar.
+Baharu dalam 3.8, semakan yang sama:
+- pengenalpastian: setiap satu daripada 103 model pemacu, disimulasikan dengan memori
+  ujiannya, dicari dengan cubaan kumpulannya dan dikenali (atau, apabila memori ujian
+  ialah memori model lain dalam keluarga, dikenali sebagai model itu, seperti yang akan
+  dilakukan oleh CHIRP), dengan saluran yang sama seperti radio simulasi dan memori
+  radio simulasi tidak berubah; carian penuh daripada API dengan K67 Pro (juga
+  «BF-K6»), BJ-8300 dan 9 radio pemacu yang diletakkan di hujung cubaan, termasuk
+  pembukaan dalam tab; tiada radio: carian selesai tanpa pengecaman palsu;
+- ID DMR, nama dan tarikh pengaturcaraan RD-5R, DM-1801 dan DM-1701 sama dengan yang
+  dicetak oleh dmrconfig untuk memori yang dicipta oleh dmrconfig;
+- DM-1701: baca dan tulis lengkap melalui penyesuai permintaan USB yang sama yang
+  digunakan dengan WinUSB dan STTub30 (5,967 permintaan); capaian WinUSB sebenar dan
+  pemasangan pemacu BELUM diuji (Windows dan radio diperlukan);
+- DMR-6X2: semakan fail pada semua fail pakej rasmi 2.21b dan 1.21e (perisian tegar,
+  ikon, papan APRS) dan pada fail yang rosak (data terpotong, model tertukar, permulaan
+  perisian tegar salah, fail hilang).
+Baharu dalam 4.6, semakan yang sama:
+- RT-950 Pro / BJ-9000: kod ASAL program Radtel RT-950PRO_CPS v1.2.0 (960 saluran) dan
+  v1.3.3 (990 saluran) serta Radtel RT-950 BT-9000_CPS v1.3.0 dijalankan dengan radio
+  simulasi: saluran yang ditulis di sini (juga saluran 961, 980 dan 990), dibaca dan
+  ditulis semula oleh program: memori serupa; 57 tetapan dibaca sama dan 456 perubahan
+  dalam 8 gabungan dengan bit serupa bagi setiap satu daripada tiga radio; pengecaman
+  versi perisian tegar daripada data, pilihan tab, fail .img dengan dan tanpa petunjuk
+  versi; penulisan saluran 961-990 ke radio simulasi dengan kawasan kosong dan dengan
+  data yang bukan saluran (tiada bait ditulis);
+- dari antara muka (Chromium automatik, RT-950 Pro simulasi dengan perisian tegar
+  0.24): tab "960 saluran" dibuka dari galeri, baca → saluran dibuka dalam tab "990
+  saluran" dengan nama Radtel RT-950 Pro, tiada amaran data belum disimpan; edit →
+  amaran; tulis dengan sandaran dan pengesahan → tiada amaran; pengenalpastian →
+  "Radtel RT-950 Pro" (pilihan diingati);
+- nama radio dengan pengendalian yang sama (RT-950 Pro / BJ-9000, K67 Pro / 5RH Pro):
+  pengenalpastian pertama dengan pilihan, kemudian nama yang diingati;
+- SenhaiX 8800, Radioddity GS-5B, Cignus XTR-5, Anysecu AC-580, TID TD-UV68: saluran
+  dibaca seperti CHIRP, imej yang ditulis serupa dengan CHIRP, bait yang ditukar dengan
+  radio simulasi serupa dengan CHIRP (TD-UV68: penulisan dibandingkan dengan TD-H8,
+  kerana dalam CHIRP penulisan TD-UV68 berhenti dengan ralat).
+Bahagian ini juga BELUM diuji dengan radio sebenar.
+
+HAD
+- Protokol dan format adalah proprietari dan dibina semula daripada program asal:
+  sentiasa simpan salinan sandaran.
+- Zon K67, DM-32UV, DR-1801UV dan radio DMR USB tidak diedit dari sini (ia hanya
+  dikekalkan konsisten); untuk kenalan, kumpulan dan tetapan DMR gunakan program
+  pengeluar.
+- Tetapan: huraian item radio CHIRP ditulis bermula daripada nama bahasa Inggeris item
+  (banyak pemacu menggunakan nama berbeza untuk fungsi yang sama): nama asal sentiasa
+  ditunjukkan di hujung huraian.
+- Sekurang-kurangnya sesetengah K67 Pro mengenalkan dirinya sebagai "BF-K6" (disahkan
+  dengan radio sebenar, 3.7): penulisan bermula jika radio terakhir yang dibaca adalah
+  daripada model yang sama, seperti dalam program asal (dengan salinan sandaran aktif
+  bacaan berlaku dengan sendirinya).
+- Pengenalpastian: sesetengah radio berbeza menggunakan protokol dan memori yang sama
+  tanpa menunjukkan modelnya: dalam kes itu program menawarkan model yang mungkin dan
+  pilihan terserah kepada anda. Radio yang menjawab protokol keluarga lain mungkin
+  kekal dalam mod pengaturcaraan: matikan dan hidupkan semula.
+- Muat turun dari Internet menggunakan sambungan terus (bukan proksi sistem).
+- Radio yang dikendalikan dengan pemacu CHIRP: had CHIRP untuk model itu terpakai (cth.
+  BJ-7800 ditulis untuk perisian tegar V0.15P; jika radio mempunyai perisian tegar yang
+  lebih baharu dan tidak menjawab seperti yang dijangka, bacaan berhenti tanpa mengubah
+  radio).
+- Perisian tegar: prosedur untuk meletakkan radio yang terkunci ke dalam mod kemas kini
+  tidak didokumenkan oleh pengeluar. Pengenalpastian automatik mengecam radio yang
+  menggunakan protokol pengaturcaraan Bajeton 8300 (BT-11): radio berbeza dengan
+  protokol yang sama tidak dapat dibezakan, sebab itu pengesahan anda juga diperlukan.
+
+MEMBINA SEMULA DARIPADA SUMBER (pilihan)
+Go 1.22 atau lebih baharu diperlukan. Dalam folder "sorgenti":
+      go build -mod=vendor -trimpath -ldflags "-H=windowsgui -s -w -X main.buildDate=YYYY-MM-DDTHH:MM" -o "IU0VYT Flash.exe" .
+(buildDate ialah tarikh binaan yang ditunjukkan dalam tab Maklumat, cth.
+2026-10-20T21:45.)
+Ikon dan sifat fail .exe (nama, versi) ada dalam res/risorse.rc, dikompil ke dalam
+rsrc_windows_amd64.syso (arahannya ditulis di bahagian atas fail .rc).
+(Pustaka sudah disertakan dalam folder vendor; ikon ada dalam
+rsrc_windows_amd64.syso.)
+Pada Linux "go test -mod=vendor ." menjalankan ujian automatik pada fail contoh dalam
+testdata dan dengan radio simulasi. Folder "verifica" mengandungi program untuk
+perbandingan dengan kod asal (lihat verifica/LEGGIMI_VERIFICA.txt).
+Ujian mengimport senarai pengulang IK2ANE memerlukan fail testdata/pontixls.xls (tidak
+disertakan: data pihak ketiga, boleh dimuat turun dari www.ik2ane.it).
+
+LESEN
+IU0VYT Flash, Hak cipta (C) 2026 Daniele "IU0VYT" Bonifazi. Perisian bebas: anda boleh
+mengedarkannya semula dan/atau mengubahnya di bawah syarat GNU General Public License
+seperti yang diterbitkan oleh Free Software Foundation, versi 3 atau (mengikut pilihan
+anda) mana-mana versi yang lebih baharu. Ia diedarkan dengan harapan ia berguna, tetapi
+TANPA SEBARANG JAMINAN; malah tanpa jaminan tersirat tentang KEBOLEHDAGANGAN atau
+KESESUAIAN UNTUK TUJUAN TERTENTU. Teks penuh dalam LICENSE.txt. Sesiapa yang
+mengedarkannya semula (juga yang diubah) mesti menggunakan lesen yang sama, menyediakan
+kod sumber dan mengekalkan notis hak cipta.
+Pemacu radio sebahagian besarnya berasal daripada CHIRP (GNU GPL): pengarang dan lesen
+semua komponen ada dalam AUTHORS_AND_LICENSES.txt.
+Program bebas, tidak bergabung dengan atau disokong oleh Baofeng atau Bajeton: nama
+model hanya menunjukkan radio yang berfungsi dengannya; tanda dagangan adalah milik
+pemilik masing-masing.

@@ -150,7 +150,24 @@ def apply(cls, base, changes):
     idx = {k: e for k, _, e in items}
     for k, val in changes.items():
         idx[k].value.set_value(val)
-    r.set_settings(tree)
+    try:
+        r.set_settings(tree)
+    except ValueError as ex:
+        # 4.14 (Icom IC-T10, «Comment»): il driver passa il testo a un campo char[16]
+        # senza riempirlo e CHIRP si ferma se non sono 16 caratteri esatti. Si ripete
+        # con gli spazi finali, cioè il contenuto che la radio ha in memoria e che il
+        # programma scrive.
+        if "String expects exactly" not in str(ex):
+            raise
+        r = load(cls, base)
+        tree, items = keyed(r)
+        idx = {k: e for k, _, e in items}
+        for k, val in changes.items():
+            v = idx[k].value
+            if kind(v) == "str" and not v._autopad:
+                val = str(val).ljust(v._maxlength)
+            v.set_value(val)
+        r.set_settings(tree)
     return raw(r)
 
 

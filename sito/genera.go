@@ -18,7 +18,7 @@
 //
 //	go run . -scrivi-it   riscrive lang/it.tsv dopo aver cambiato i testi italiani
 //	go run . -check       controlla traduzioni e pagina italiana senza scrivere nulla
-//	go run .              scrive docs/<lingua>/index.html (10 lingue), aggiorna in
+//	go run .              scrive docs/<lingua>/index.html (12 lingue), aggiorna in
 //	                      docs/index.html le parti generate e scrive docs/sitemap.xml
 //
 // Il flusso «Sito» (.github/workflows/sito.yml) esegue «go run .» prima di ogni
@@ -68,6 +68,8 @@ var langs = []lang{
 	{"ja", "日本語", "ja_JP", "ja-JP", "GUIDE.txt", "AUTHORS_AND_LICENSES.txt", "言語"},
 	{"ko", "한국어", "ko_KR", "ko-KR", "GUIDE.txt", "AUTHORS_AND_LICENSES.txt", "언어"},
 	{"ar", "العربية", "ar_AE", "ar-u-nu-latn", "GUIDE.txt", "AUTHORS_AND_LICENSES.txt", "اللغة"},
+	{"ms", "Bahasa Melayu", "ms_MY", "ms-MY", "GUIDE.txt", "AUTHORS_AND_LICENSES.txt", "Bahasa"},
+	{"hi", "हिन्दी", "hi_IN", "hi-IN-u-nu-latn", "GUIDE.txt", "AUTHORS_AND_LICENSES.txt", "भाषा"},
 }
 
 func (l lang) url() string {
@@ -667,7 +669,7 @@ func loadFlags(p string) map[string]string {
 		return nil
 	}
 	m := map[string]string{}
-	for _, x := range regexp.MustCompile(`(?m)^\s*(it|en|fr|de|es|pt|ru|zh|ja|ko|ar): '(<[^']*)',?\s*$`).FindAllStringSubmatch(s, -1) {
+	for _, x := range regexp.MustCompile(`(?m)^\s*(it|en|fr|de|es|pt|ru|zh|ja|ko|ar|ms|hi): '(<[^']*)',?\s*$`).FindAllStringSubmatch(s, -1) {
 		m[x[1]] = `<svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true">` + x[2] +
 			`<rect width="24" height="16" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg>`
 	}

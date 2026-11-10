@@ -225,6 +225,27 @@ func genAdapt(c *Chan, m *genModel, label string, rep *Report) *Chan {
 			n.TxTone = s
 		}
 	}
+	// 4.14: radio che hanno solo alcune combinazioni di toni (Yaesu FT-4, FT-65,
+	// FT-60, Icom): si toglie prima il tono in ricezione, poi anche l'altro, invece
+	// di fermare tutta la conversione o l'inoltro alla scrittura
+	if f, ok := m.Fam.(interface {
+		toneOK(t, r genTone) bool
+	}); ok {
+		t, e1 := genToneParse(n.TxTone)
+		r, e2 := genToneParse(n.RxTone)
+		if e1 == nil && e2 == nil && !f.toneOK(t, r) {
+			drop := []*string{&n.RxTone}
+			if n.RxTone == "" || !f.toneOK(t, genTone{}) {
+				drop = []*string{&n.TxTone, &n.RxTone}
+			}
+			for _, p := range drop {
+				if *p != "" {
+					rep.warn("%s: tono «%s» non disponibile su questa radio, impostato OFF", label, *p)
+					*p = ""
+				}
+			}
+		}
+	}
 	if !m.inBands(n.Rx) {
 		rep.warn("%s: %s MHz fuori dalle gamme della radio", label, fmtMHz(n.Rx))
 	}
@@ -242,7 +263,29 @@ func genAdapt(c *Chan, m *genModel, label string, rep *Report) *Chan {
 			rep.warn("%s: %s", label, why)
 		}
 	}
+	// 4.14 (Yaesu, Icom): prova di scrittura del canale su una memoria di lavoro. Se
+	// la radio non può memorizzarlo (passo della frequenza, limiti della banda,
+	// scostamento) il canale non viene copiato, invece di fermare la conversione o
+	// l'inoltro quando si scrive
+	if _, ok := m.Fam.(interface{ fitBySet() }); ok {
+		if err := genTrySet(m, &n); err != nil {
+			rep.warn("%s: %s: canale non copiato", label, err)
+			return nil
+		}
+	}
 	return &n
+}
+
+// genTrySet scrive il canale nella prima posizione di una memoria vuota, solo per
+// sapere se il driver lo accetta
+func genTrySet(m *genModel, c *Chan) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = nil // la prova non decide: vale il controllo fatto alla scrittura
+		}
+	}()
+	n := *c
+	return m.Fam.Set(m, make([]byte, genMinSize(m)), 0, &n)
 }
 
 // ---------------------------------------------------------------- cavo

@@ -1,11 +1,28 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.13.1 - un solo file eseguibile, nessuna installazione, interfaccia in 11 lingue.
+Versione 4.14.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.14.0:
+- YAESU E ICOM: due marche nuove (46 in tutto) e 13 radio in più, con canali via cavo e
+  file .img compatibili con CHIRP. Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R, FT-65E e
+  FT-25R (cavo SCU-35), Yaesu FT-60R/E (copia avviata dalla radio); Icom IC-V86,
+  IC-T10, IC-V80, IC-T70, IC-V82 e IC-U82 (cavo OPC-478). Impostazioni per tutte
+  tranne la IC-T70. Vedi «YAESU E ICOM».
+- LINGUE: due lingue in più, malese (Bahasa Melayu, bandiera della Malaysia) e hindi
+  (हिन्दी, bandiera dell'India), per un totale di 13: programma, sito, file informativi
+  della cartella «lingue», README e politica di sicurezza.
+- Galleria: 502 modelli di 46 marche (464 con canali, 409 con impostazioni).
+- Corretto un nome interno dei campi della Wouxun KG-UV8D, cambiato in CHIRP (nessun
+  effetto sui canali).
+- Convertitore e «Inoltra ad altra radio» verso le Yaesu e le Icom: i toni che la
+  radio non ha vengono tolti con un avviso e i canali che non può memorizzare
+  vengono saltati con un avviso, invece di fermare tutta l'operazione.
+- Traduzioni: cinque parole in grassetto delle guide del programma restavano in
+  italiano in tutte le lingue; corrette, insieme a due frasi in coreano e in arabo.
 Novità della 4.13.1:
 - FIRMWARE IJV V6: nuova scheda «Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)». Con il
   collegamento dati della V6 si leggono e si scrivono i 500 canali del banco scelto
@@ -1141,6 +1158,37 @@ che la radio comunica:
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
 
+YAESU E ICOM (4.14)
+Palmari analogici gestiti con i driver di CHIRP riscritti nel linguaggio di questo
+programma: stessa memoria, stessi byte sul cavo, file .img che si aprono anche con
+CHIRP. In galleria sono sotto le marche «Yaesu» e «Icom».
+- Yaesu FT-4XR, FT-4XE, FT-4VR, FT-65R, FT-65E, FT-25R (200 canali): cavo SCU-35 (o
+  compatibile) nella presa del microfono, radio accesa normalmente; il programma
+  controlla che il modello sia quello della scheda. Alcune FT-65 e FT-25 dichiarano il
+  «sottotipo 3» (scostamento in unità di 25 kHz): hanno una scheda a parte e il
+  programma indica quella giusta, anche con l'identificazione. A differenza di CHIRP,
+  il simplex scritto dalla radio resta simplex e uno scostamento che non è multiplo
+  del passo della radio diventa una frequenza di trasmissione separata.
+- Yaesu FT-60R / FT-60E (1000 canali, nomi di 6 caratteri): la copia parte dalla
+  radio. Spegnila, collega il cavo alla presa MIC/SP, accendila tenendo premuto
+  [MONI], scegli «F8 CLONE» con la manopola e premi [F/W]. Per leggere avvia la
+  lettura nel programma e poi tieni premuto [PTT] per un secondo; per scrivere premi
+  [MONI] sulla radio (compare «--RX--») e poi avvia la scrittura nel programma.
+  Banchi, canali PMS e passo di sintonia si conservano. Le frequenze che la radio
+  non può memorizzare vengono rifiutate invece di essere arrotondate.
+  «Identifica» non può riconoscere la FT-60, perché è la radio a far partire la
+  copia: scegli la scheda dalla galleria.
+- Icom IC-V86, IC-T10, IC-V80, IC-T70, IC-V82, IC-U82 (200 canali, 300 la IC-T70):
+  cavo OPC-478 (o compatibile) nella presa dell'altoparlante, 9600 baud; la radio va
+  accesa normalmente e durante la copia mostra «CLONE». La IC-V80 usa la copia veloce
+  (38400 baud dopo l'identificazione). Con IC-V82 e IC-U82 la potenza non è nel canale
+  e i canali digitali D-STAR si conservano come sono.
+- Impostazioni (menu, toni, tasti, display…) per tutte tranne la IC-T70, con gli
+  stessi nomi di CHIRP.
+- Non c'è aggiornamento del firmware per queste radio. Tutto è provato con radio
+  simulate e confrontato byte per byte con CHIRP; le radio vere non sono ancora state
+  provate: conserva la copia di sicurezza e segnala ogni problema.
+
 AGGIORNAMENTO DEL FIRMWARE RADTEL RT-470 / RT-495 / RT-630 (4.3)
 - Radtel RT-470, RT-470L, RT-470X, RT-495 e RT-630, file .kdhx pubblicati da Radtel
   (radtels.com, liberi da scaricare, es. "470 serial MFM_V2.13C_20240425.kdhx",
@@ -1414,7 +1462,8 @@ LINGUA DELL'INTERFACCIA (4.10)
   l'inglese. Con un clic sulla bandiera si apre l'elenco delle lingue: italiano,
   English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어
   (coreano, 4.11, bandiera della Corea del Sud), العربية (arabo, 4.11, bandiera degli
-  Emirati Arabi Uniti).
+  Emirati Arabi Uniti), Bahasa Melayu (malese, 4.14, bandiera della Malaysia), हिन्दी
+  (hindi, 4.14, bandiera dell'India).
 - Con l'arabo la pagina si legge da destra a sinistra; frequenze, numeri e codici
   restano da sinistra a destra. Per l'arabo si usa la bandiera degli Emirati Arabi
   Uniti perché quella dell'Arabia Saudita contiene un testo religioso (la professione
@@ -1429,7 +1478,7 @@ LINGUA DELL'INTERFACCIA (4.10)
 - I file informativi tradotti (guida completa, CHANGELOG con le novità dell'ultima versione,
   README, autori e licenze, versione, nota sulla licenza) sono nella cartella
   "lingue" del pacchetto, una sottocartella per lingua (en, fr, de, es, pt, ru, zh,
-  ja, ko, ar); i nomi dei file sono nella lingua della cartella (es. GUIDE.txt, LISEZMOI.txt,
+  ja, ko, ar, ms, hi); i nomi dei file sono nella lingua della cartella (es. GUIDE.txt, LISEZMOI.txt,
   LIESMICH.txt, LEEME.txt, LEIAME.txt). La storia delle versioni precedenti resta in
   italiano in CHANGELOG.txt. La licenza valida è il testo originale inglese della GNU
   GPL (LICENSE.txt): le traduzioni spiegano che cosa permette, come chiede la Free

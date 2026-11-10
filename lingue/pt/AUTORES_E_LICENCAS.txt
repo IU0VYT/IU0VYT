@@ -141,6 +141,12 @@ nos ficheiros do CHIRP usados:
                                             M7OCM (https://github.com/M7OCM/890)
   4.10, definições a partir do CHIRP: drivers/fd268.py (Copyright 2015 Pavel Milanes CO7WT)
   e drivers/retevis_rt76p.py (Copyright 2021-2022 Jim Unroe KC9HI), como acima.
+  4.14 (CHIRP 337b385, 09/11/2026), Yaesu / Icom:
+  drivers/ft4.py                            Copyright 2019 Dan Clemmensen
+  drivers/ft60.py, drivers/ict70.py         Copyright 2011 Dan Smith
+  drivers/icf.py, drivers/icv86.py,
+  drivers/icv80.py, drivers/icx8x.py,
+  drivers/ict10.py                          Copyright 2008 Dan Smith
 
 PROTOCOLOS DE ATUALIZAÇÃO DO FIRMWARE E DEFINIÇÕES DMR (4.10)
 Reescritos de raiz em Go a partir das descrições e do código destes programas livres
@@ -161,6 +167,7 @@ no pacote):
 As bandeiras do seletor de língua são desenhadas no programa (bandeiras nacionais, do
 domínio público; 4.11: Coreia do Sul para o coreano, Emirados Árabes Unidos para o
 árabe).
+4.14: Malásia para o malaio, Índia para o hindi.
 
 Ficheiros do IU0VYT Flash com partes derivadas (indicado também no início de cada
 ficheiro):
@@ -178,6 +185,7 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 Obrigado aos autores do CHIRP, a armel F4HWN, a M7OCM, a JuantAldea, a v0l
 (radio_tool), ao projeto OpenGD77, a Hannes Matuschek DM3MAT (qdmr) e a Serge
 Vakulenko KK6ABQ.
+4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 
 ATUALIZAÇÃO DO FIRMWARE DO QUANSHENG UV-K5 (4.1)
 O formato dos ficheiros .bin da Quansheng e o protocolo do carregador do UV-K5 estão
@@ -364,7 +372,7 @@ MARCAS E INTEROPERABILIDADE
 O IU0VYT Flash é um programa independente, não afiliado nem aprovado pela Baofeng,
 pela Bajeton ou pelos outros fabricantes citados (p. ex. Quansheng, Retevis, Radtel,
 Radioddity, TIDRADIO, Hiroyasu, Talkpod, Anysecu, BTECH, Abbree, MaxTalker, Intek,
-Maverick, WLN, Zastone, Luiton). Os nomes dos modelos servem só para indicar com que
+Maverick, WLN, Zastone, Luiton, Yaesu, Icom). Os nomes dos modelos servem só para indicar com que
 rádios o programa funciona. As marcas pertencem aos respetivos titulares.
 Os protocolos e formatos dos dados foram reconstruídos, para a interoperabilidade com
 os rádios, a partir dos programas dos fabricantes (desde a 3.3 também «BF Series CPS»,

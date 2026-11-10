@@ -1,0 +1,74 @@
+# IU0VYT Flash: testi del sito in «ms» (chiave del testo italiano in it.tsv, TAB, traduzione)
+a5397f2b	IU0VYT Flash — saluran, pengulang dan perisian tegar untuk radio Baofeng, Quansheng, Retevis, Radtel dan jenama lain
+7ee08973	IU0VYT Flash: program percuma dan bebas (GPL) untuk Windows yang membaca dan menulis saluran, frekuensi dan tetapan radio pemancar-penerima pelbagai jenama (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), mengenal pasti radio secara automatik, mengurus pengulang radio Itali dan mengemas kini perisian tegar.
+56e08062	Saluran, pengulang dan perisian tegar untuk radio Baofeng, Bajeton, Quansheng, Retevis, Radtel dan jenama lain. Percuma, perisian bebas, untuk Windows 10/11.
+dc80c138	IU0VYT Flash: halaman utama program dengan jenama radio yang disokong
+f8218bc1	Program percuma dan bebas (GPL) untuk Windows yang membaca dan menulis saluran, frekuensi dan tetapan radio pemancar-penerima pelbagai jenama (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO…), mengurus pengulang radio Itali dan mengemas kini perisian tegar.
+6a0c8bb4	Bahagian
+0c023b2f	Muat turun
+16f0aba9	Fungsi
+8297e0a4	Cara guna
+8fe1e625	Maklumat
+cd611275	PENGURUSAN SALURAN<span class="tag-sep"> - </span><span class="tag-b">FREKUENSI - PENGULANG - PERISIAN TEGAR</span>
+540321f7	Jenama radio yang disokong: #
+e4c69cb1	PLAYER SELECT · <span data-n="marche">#</span> JENAMA
+c06671f0	Program percuma untuk Windows yang membaca dan menulis saluran dan frekuensi radio anda melalui kabel, <br>memasukkan pengulang radio Itali dan mengemas kini perisian tegar. <br>Satu fail sahaja, tanpa pemasangan, dalam bahasa Itali dan 12 bahasa lain.
+65c3ed2e	VERSI TERKINI:
+4fc59698	Butang ini sentiasa memuat turun pakej versi terkini yang diterbitkan.
+b6a8d2e0	VERSI TERKINI
+58eb0261	diterbitkan pada {0}
+232335c3	terkini yang tersedia
+39b13e38	⬇ MUAT TURUN IU0VYT.Flash.zip
+d97f7a86	Nota versi
+3114018a	Log perubahan
+08d24901	Versi terdahulu
+e2d01b09	Kod sumber
+b3944402	Untuk memeriksa bahawa fail itu utuh, dalam Windows buka Command Prompt di folder fail tersebut dan taip <code>certutil -hashfile IU0VYT.Flash.zip SHA256</code>: hasilnya mesti sama.
+15ff1cf6	Ekstrak arkib dan jalankan <code>IU0VYT Flash.exe</code>. Program ini menggunakan komponen WebView2, yang sudah ada dalam Windows 10 yang dikemas kini dan dalam Windows 11.
+32cb457a	Apa yang dilakukannya
+ca302446	Satu alat untuk memprogram, menukar dan mengemas kini radio daripada <span data-n="marche">#</span> jenama (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO, TYT, Hiroyasu, Talkpod, Puxing, Feidaxin, Wouxun, AnyTone dan lain-lain), direka untuk amatur radio dan pengguna radio PMR446.
+ef1bb9fc	Radio boleh diprogram
+52b8232b	Dengan tetapan
+c4a0722d	Model dalam galeri
+c8b8648a	Perisian tegar boleh dikemas kini
+17c25383	Saluran dan frekuensi
+8d4e62cd	Membaca dan menulis melalui kabel untuk <span data-n="radio">#</span> model, termasuk radio PMR digital dan DMR, juga melalui USB. Fail <code>.img</code> yang serasi dengan CHIRP serta fail asal K67 Pro (<code>.xlc</code>) dan Bajeton 8300 (<code>.dat</code>).
+eb86ce5e	Tetapan radio
+6139dc35	Menu, paparan, VOX, squelch, TOT, DTMF, kekunci dan lain-lain untuk <span data-n="impostazioni">#</span> model, dengan penerangan bagi setiap item dan pengesahan untuk item yang sensitif.
+06e1cc67	Kenal pasti radio
+42d20d21	Sambungkan radio: program mengenalinya dan menunjukkan jenama, model, perisian tegar dan, bagi radio DMR, ID dan nama. Dengan pengenalpastian automatik, sambungkan sahaja kabel dan semuanya selesai! Ia juga mengenal pasti beberapa radio serentak!
+66c001f1	Penukar universal
+82ce44a6	Saluran daripada mana-mana radio atau fail (K67, Bajeton, imej CHIRP, CSV CHIRP, Excel) ke format mana-mana radio lain, disesuaikan dengan peraturannya.
+4a61c5a1	Pengulang radio Itali
+a1f35340	Arkib berdasarkan senarai terkini IK2ANE, dengan penapis, nama automatik, semakan keserasian dan pemasukan terus ke dalam radio.
+ecd4b3ef	Kemas kini perisian tegar
+d72d8b35	Perisian tegar untuk <span data-n="firmware">#</span> model dengan protokol program rasmi, semakan fail dan salinan sandaran.
+620c0164	Galeri model
+fd632a2d	<span data-n="galleria">#</span> radio daripada <span data-n="marche">#</span> jenama, dibahagikan mengikut jenis (amatur radio, DMR, GMRS/FRS, PMR446, untuk kanak-kanak) dan mengikut jenama, dengan carian dan pautan ke program dan manual rasmi.
+c7b2d824	Dalam 13 bahasa
+016db81f	Selain bahasa Itali, program ini tersedia dalam bahasa Inggeris, Perancis, Jerman, Sepanyol, Portugis, Rusia, Cina, Jepun, Korea, Arab, Melayu dan Hindi: pilih bendera di sebelah «Maklumat» dan seluruh program bertukar bahasa serta-merta. Panduan dan maklumat yang diterjemahkan ada dalam folder <code>lingue</code> pakej.
+e60a286e	Salinan sandaran
+adfe4a55	Sebelum setiap penulisan, program menyimpan kandungan radio dan selepas itu mengesahkan bahawa data telah ditulis dengan betul.
+ab670cd6	Sentiasa terkini
+60772ac8	Setiap kali dimulakan, program memeriksa sama ada terdapat versi yang lebih baharu dan memuat turunnya dari halaman keluaran yang sama ini.
+473d4aaa	Anda memerlukan PC dengan Windows 10 atau 11 dan kabel pengaturcaraan radio.
+c22ecae0	Muat turun dan ekstrak
+1f5c9d6a	Muat turun <code>IU0VYT.Flash.zip</code> dari halaman ini dan ekstrak arkib ke dalam satu folder. Tiada apa-apa yang perlu dipasang.
+2e1d7bc6	Jalankan dan pilih radio
+3651366b	Buka <code>IU0VYT Flash.exe</code> dan, dari tab <b>📻 Model</b>, pilih radio anda atau gunakan <b>🔎 Kenal pasti</b>.
+4c3f730f	Sambung dan program
+7870de1e	Sambungkan kabel, tekan <b>Baca dari radio</b>, ubah saluran dan pengulang, kemudian tulis semuanya ke radio.
+8eca018b	Panduan lengkap ada dalam fail <code>GUIDE.txt</code> di folder <code>lingue/ms</code> yang disertakan dalam pakej.<br>Teks asal bahasa Itali: LEGGIMI.txt.
+128ac670	Perlu diketahui
+d74f3bcb	Perisian bebas: anda boleh menggunakan, mengkaji, mengubah suai dan mengedarkannya semula mengikut lesen<br>GNU GPL versi 3 atau yang lebih baharu.
+e240d883	⚠ Amaran
+d54cc175	Protokol radio telah dibina semula untuk saling kendali dan disahkan dengan radio simulasi: <b>sentiasa simpan salinan sandaran</b>.
+56e0b4b3	Program ini disediakan <b>tanpa sebarang jaminan</b>.
+f47e8f93	Program bebas, tidak bergabung dengan atau disahkan oleh pengeluar radio (Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO dan lain-lain). Tanda dagangan yang disebut adalah milik pemilik masing-masing dan hanya menunjukkan radio yang serasi.
+88ea8053	Patuhi peraturan penggunaan frekuensi di negara anda.
+50ee767e	★ Penghargaan
+6533bd03	<a href="https://chirpmyradio.com" rel="noopener">CHIRP</a> dan para pengarangnya: sebahagian besar pemacu radio berasal daripada hasil kerja mereka.
+819de25f	<a href="https://www.ik2ane.it" rel="noopener">IK2ANE</a>, yang menyediakan senarai pengulang radio Itali kepada semua orang secara percuma.
+301c5be0	Pengarang dan lesen semua komponen ada dalam fail <a href="https://github.com/IU0VYT/IU0VYT/blob/main/AUTORI_E_LICENZE.txt">AUTHORS_AND_LICENSES.txt</a>.
+dba4cb69	Menemui ralat atau ingin mencadangkan penambahbaikan? Buka satu <a href="https://github.com/IU0VYT/IU0VYT/issues">laporan di GitHub</a>.
+3f1602bf	Diedarkan di bawah lesen <a class="nw" href="https://github.com/IU0VYT/IU0VYT/blob/main/LICENSE">GNU General Public License v3.0 atau yang lebih baharu</a>&nbsp;· <a class="nw" href="https://github.com/IU0VYT/IU0VYT">Sumber di GitHub</a>
