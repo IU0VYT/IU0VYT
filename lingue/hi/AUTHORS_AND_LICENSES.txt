@@ -274,6 +274,8 @@ RADTEL RT-817A / RT-871A (4.19): निर्माता के प्रोग
 
 RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): निर्माता के प्रोग्रामों («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS») के अध्ययन से; उनमें से कुछ भी शामिल नहीं है; कोड शून्य से लिखा गया है।
 
+RADTEL RT-480, RT-68, RT-830, RT-850 (4.22): निर्माता के प्रोग्रामों («Radio Programing Software», «Radtel RT830», «Radtel RT-850 programming software») के अध्ययन से, जिनका कोई भी हिस्सा शामिल नहीं है; कोड शुरू से लिखा गया है।
+
 RADTEL RT-5D, KENWOOD TK-x180 (4.21): Radtel RT-5D निर्माता के प्रोग्राम («RT-5D CPS») के अध्ययन से; उसमें से कुछ भी शामिल नहीं है; कोड शून्य से लिखा गया है। Kenwood TK-2180 / TK-3180 / TK-7180 / TK-8180: drv_kwtk180.go CHIRP के tk8180.py से व्युत्पन्न है (GNU GPL v3)।
 
 ज़ोन के नाम (4.11)

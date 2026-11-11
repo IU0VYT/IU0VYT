@@ -252,6 +252,8 @@ RADTEL RT-817A / RT-871A (4.19): 제조사 프로그램(«Radtel RT-871A CPS»)�
 
 RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): 제조사 프로그램(«RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»)을 연구해 알아냈으며, 그 내용은 아무것도 포함되어 있지 않습니다. 코드는 처음부터 새로 작성했습니다.
 
+RADTEL RT-480, RT-68, RT-830, RT-850 (4.22): 제조사 프로그램(«Radio Programing Software», «Radtel RT830», «Radtel RT-850 programming software»)을 연구해 만든 것으로, 그 프로그램의 어떤 부분도 포함되어 있지 않습니다. 코드는 처음부터 새로 작성했습니다.
+
 RADTEL RT-5D, KENWOOD TK-x180 (4.21): Radtel RT-5D는 제조사 프로그램(«RT-5D CPS»)을 연구해 알아냈으며, 그 내용은 아무것도 포함되어 있지 않습니다. 코드는 처음부터 새로 작성했습니다. Kenwood TK-2180 / TK-3180 / TK-7180 / TK-8180: drv_kwtk180.go는 CHIRP의 tk8180.py에서 파생되었습니다(GNU GPL v3).
 
 구역 이름(4.11)

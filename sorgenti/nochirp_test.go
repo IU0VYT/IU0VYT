@@ -58,6 +58,10 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = rt4dSize
 	case *rt5dOpt: // 4.21: Radtel RT-5D
 		size = rt5dSize()
+	case *rt480Opt: // 4.22: Radtel RT-480 e RT-68
+		size = rt480Size()
+	case *rt830Opt: // 4.22: Radtel RT-830 e RT-850
+		size = o.size()
 	}
 	mem := bytes.Repeat([]byte{0xFF}, size)
 	if _, ok := m.Opt.(*drOpt); ok {

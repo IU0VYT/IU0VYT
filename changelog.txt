@@ -3,6 +3,29 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.22.0 (11/11/2026)
+-------------------
+- Radtel RT-480 e RT-68 (drv_rt480.go, nuovo; modelli rtl-rt480, rtl-rt68): dal
+  programma del costruttore «Radio Programing Software» (1.5.2 e 1.5.3, stesso
+  codice). Famiglia della Radioddity GA-510 con un'altra mappa: aggancio
+  «PROGROMS19U», poi 'F', blocchi 'R' e 'W' da 64 byte, 9600 baud. 256 canali
+  (0-255) di 16 byte da 0x0000, nomi di 12 byte (GB2312) da 0x1000. Si leggono le
+  aree del programma (0x0000-0x1FFF, 0x3A00-0x3A7F, 0x3B00-0x3C3F) e si scrivono
+  solo canali e nomi. Frequenze a passi di 1,25 kHz, come nel programma.
+- Radtel RT-830 e RT-850 (drv_rt830.go, nuovo; modelli rtl-rt830, rtl-rt850): dai
+  programmi del costruttore («UV-83 Radio Program Software» e «UV5118 Radio Program
+  Software»). Protocollo «iRadio» (ingresso 39 33 05 10 81, blocchi da 16 byte con
+  la somma), 9600 baud. 128 canali senza nome; RT-830 con i campi big endian e la
+  memoria da 0x01D0, RT-850 con la memoria della iRadio UV-5118 (da 0x0340). Come i
+  programmi: controllo della password (mai scritta), per la RT-850 controllo del
+  modello, bit di gamma del canale, toni DCS scritti come 0x1000 / 0x2000 + codice.
+- Radtel RT-20M: il programma del costruttore usa collegamento, blocchi e canale
+  della iRadio UV-5118plus: voce di catalogo sulla scheda Ruyage UV58Plus.
+- Catalogo (catalog_422.go, nuovo): 5 voci. Conteggi: 510 radio, 428 con
+  impostazioni, 564 in galleria. Traduzioni: 7 testi nuovi.
+- Non fatti (programmi Radtel ancora da esaminare): RT-13, RT-69, RT-10, DM20, gli
+  installatori e i programmi in codice nativo.
+
 4.21.0 (11/11/2026)
 -------------------
 - Radtel RT-5D, DMR (drv_rt5d.go, nuovo; modello rtl-rt5d): dal programma del

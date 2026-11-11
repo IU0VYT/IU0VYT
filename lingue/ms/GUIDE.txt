@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.21.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.22.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,16 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.22.0:
+- RADTEL RT-480 dan RT-68: saluran dan nama, diperoleh daripada program pengeluar. 256
+  saluran bernombor 0 hingga 255, frekuensi dalam langkah 1.25 kHz; hanya saluran dan
+  nama yang ditulis, tetapan, VFO dan DTMF radio tidak disentuh.
+- RADTEL RT-830 dan RT-850: saluran (128, tanpa nama), diperoleh daripada program
+  pengeluar. Tetapan dan VFO radio ditulis semula seperti sedia ada dan kata laluan
+  tidak pernah ditulis; jika kata laluan ditetapkan pada radio, buang dahulu dengan
+  program Radtel. RADTEL RT-20M: dibuka dengan tab Ruyage UV58Plus. Semuanya diuji hanya
+  dengan radio simulasi: baca dahulu dan laporkan sebarang masalah.
+- Galeri: 564 model daripada 47 jenama (510 dengan saluran, 428 dengan tetapan).
 Baharu dalam 4.21.0:
 - RADTEL RT-5D (DMR): saluran, diperoleh daripada program pengeluar. Pembacaan mengambil
   seluruh memori dan penulisan menghantarnya semula sepenuhnya seperti dalam fail:

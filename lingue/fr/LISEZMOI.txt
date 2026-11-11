@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.21.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.22.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,17 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.22.0 :
+- RADTEL RT-480 et RT-68 : canaux et noms, tirés du programme du constructeur. 256
+  canaux numérotés de 0 à 255, fréquences par pas de 1,25 kHz ; seuls les canaux et les
+  noms sont écrits, les réglages, le VFO et le DTMF de la radio ne sont pas touchés.
+- RADTEL RT-830 et RT-850 : canaux (128, sans nom), tirés des programmes du
+  constructeur. Les réglages et le VFO de la radio reviennent tels quels et le mot de
+  passe n'est jamais écrit ; si un mot de passe est défini sur la radio, retirez-le
+  d'abord avec le programme de Radtel. RADTEL RT-20M : elle s'ouvre avec l'onglet Ruyage
+  UV58Plus. Le tout essayé seulement avec une radio simulée : faites d'abord une lecture
+  et signalez tout problème.
+- Galerie : 564 modèles de 47 marques (510 avec canaux, 428 avec réglages).
 Nouveautés de la 4.21.0 :
 - RADTEL RT-5D (DMR) : canaux, d'après le programme du constructeur. La lecture prend
   toute la mémoire et l'écriture la renvoie entière telle qu'elle est dans le fichier :

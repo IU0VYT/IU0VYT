@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.21.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.22.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,16 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.22.0:
+- RADTEL RT-480 e RT-68: canais e nomes, obtidos do programa do fabricante. 256 canais
+  numerados de 0 a 255, frequências em passos de 1,25 kHz; só se escrevem canais e
+  nomes, as definições, o VFO e o DTMF do rádio não são tocados.
+- RADTEL RT-830 e RT-850: canais (128, sem nome), obtidos dos programas do fabricante.
+  As definições e o VFO do rádio voltam como estão e a palavra-passe nunca é escrita; se
+  o rádio tiver uma palavra-passe, retira-a primeiro com o programa da Radtel. RADTEL
+  RT-20M: abre-se com o separador Ruyage UV58Plus. Tudo testado apenas com um rádio
+  simulado: faz primeiro uma leitura e comunica qualquer problema.
+- Galeria: 564 modelos de 47 marcas (510 com canais, 428 com definições).
 Novidades da 4.21.0:
 - RADTEL RT-5D (DMR): canais, a partir do programa do fabricante. A leitura traz toda a
   memória e a escrita devolve-a inteira tal como está no ficheiro: os contactos, os

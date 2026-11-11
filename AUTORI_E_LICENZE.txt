@@ -319,6 +319,11 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
 Dallo studio dei programmi del costruttore («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000
 Pro CPS»), di cui non è incluso nulla; il codice è scritto da zero.
 
+RADTEL RT-480, RT-68, RT-830, RT-850 (4.22)
+Dallo studio dei programmi del costruttore («Radio Programing Software», «Radtel
+RT830», «Radtel RT-850 programming software»), di cui non è incluso nulla; il codice
+è scritto da zero.
+
 RADTEL RT-5D, KENWOOD TK-x180 (4.21)
 Radtel RT-5D: dallo studio del programma del costruttore («RT-5D CPS»), di cui non è
 incluso nulla; il codice è scritto da zero. Kenwood TK-2180 / TK-3180 / TK-7180 /

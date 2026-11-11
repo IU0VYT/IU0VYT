@@ -2032,6 +2032,9 @@ c1cbfbcc	1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840-1000 MHz, 
 b1f3e299	JJCC-888DMR
 68be2aa3	Radio DMR: 16 zone da 64 canali con nomi di 12 caratteri, 18-1000 MHz, 115200 baud. Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Lettura e scrittura riguardano tutta la memoria, come nel programma del costruttore: contatti, gruppi e impostazioni non si modificano qui, ma scrivendo un file vecchio tornano quelli di allora.
 1c965377	{0} Radio veicolare.{1}
+031746de	256 canali (da 0 a 255) con nomi di 12 caratteri, 9600 baud. Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano.
+8d412538	128 canali senza nome, 9600 baud. Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Si scrivono le aree che scrive il programma del costruttore; la password della radio non si scrive mai.
+5cebd6e9	Il programma del costruttore («RT-20M Radio Program Software») usa lo stesso collegamento, gli stessi blocchi e lo stesso canale di 32 byte della iRadio UV-5118plus: si apre con la scheda Ruyage UV58Plus (999 canali con nomi di 10 caratteri, 115200 baud). Confronto fatto sul programma, non su una radio vera.
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -3122,6 +3125,9 @@ d8ac74e9	128 canali con nomi di 7 caratteri (maiuscole, cifre e simboli). Blocco
 fe1ad29c	PROIUAM
 93e16d7b	Retevis RT26
 66369328	16 canali UHF senza nome. Copia a 4800 baud. Blocco del canale occupato, eliminazione della coda (STE) e PTT ID si conservano. Driver di CHIRP.
+b6bcffc3	Radtel {0}
+1bf618a9	Protocollo e memoria ricavati dal programma del costruttore «Radio Programing Software» (versioni 1.5.2 e 1.5.3). Accendi la radio con il cavo collegato. Canali da 0 a 255, come nel programma del costruttore; frequenze a passi di 1,25 kHz. Qui si modificano frequenze, nome, potenza, banda, scansione e toni; codice di segnalazione, PTT ID, scrambler e blocco su canale occupato restano quelli impostati. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+bc8e418f	la radio non può memorizzare la frequenza {0} MHz (multipli di 1,25 kHz)
 e1f47135	Bassa 3 W
 86691197	Accendi la radio con il cavo collegato. Canali 1-256. Driver di CHIRP della famiglia Radtel RT-490 («sperimentale» in CHIRP). I canali in AM restano in AM se la frequenza resta nella banda aerea (108-136 MHz).{0}
 3079a4e3	Stessa radio della Radtel RT-490: la radio non comunica la marca, scegli il modello giusto.
@@ -3138,7 +3144,6 @@ eeb1014d	HamGeek HG-590
 3d2d8311	la radio non è entrata in programmazione dopo cinque tentativi (risposta {0})
 61774c49	gamme della radio {0}
 88b83d68	Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale cancellato viene tolto dalle zone. Se sulla radio è impostata una password, toglila prima con il programma del costruttore. «Identifica» non distingue questa radio dalle altre Radtel e Bajeton con lo stesso collegamento: scegli tu la scheda giusta.
-b6bcffc3	Radtel {0}
 76b4acd2	Radio DMR. Protocollo e memoria ricavati dai programmi del costruttore «RT-4D CPS» (versione 2.07) e «DMR RT-6D» (versione 2.06). Qui si modificano frequenze, nome, potenza, banda, scansione e toni; le altre voci del canale restano quelle impostate (un canale DMR nuovo prende i valori predefiniti del programma: primo contatto, slot 1, color code 1). Si scrivono solo canali e zone: contatti, gruppi, messaggi e impostazioni della radio non si toccano.{0}
 8d2388c9	Protocollo e memoria ricavati dal programma del costruttore «Radtel RT-1000 Pro CPS» (versione del 6 agosto 2026). Qui si modificano frequenze, nome, potenza, banda e toni; le altre voci del canale, scansione compresa, restano quelle impostate. Si scrivono solo canali e zone: radio FM e impostazioni della radio non si toccano.{0}
 d90df803	Zone{0}
@@ -3157,6 +3162,8 @@ fe1ae2fa	DTMF
 87ab3755	Radio GMRS per gli Stati Uniti: in Italia la banda GMRS non è ammessa. Come in CHIRP: fuori dalle frequenze GMRS solo ricezione, sui canali dei ponti simplex o +5 MHz, sui 467 MHz banda stretta e bassa potenza. Blocco del canale occupato, PTT ID, compander e ANI si conservano. Driver di CHIRP.
 9015bc86	canale {0}: sulle frequenze GMRS la trasmissione non si può disabilitare
 e94e12f6	canale {0}: su questa frequenza GMRS solo simplex o +5 MHz (ponti)
+09c74e1e	Radio senza nomi dei canali (128 canali). Protocollo e memoria ricavati dal programma del costruttore. Qui si modificano frequenze, potenza, banda, scansione e toni; limite di trasmissione, cifratura, tipo di DCS e codice di silenziamento del canale restano quelli impostati. Impostazioni e VFO della radio tornano come sono. Se sulla radio è impostata una password, toglila prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+939f420e	sulla radio è impostata una password: toglila prima con il programma del costruttore
 12fa3a4e	Retevis RT87
 eb030d31	128 canali con nomi di 10 caratteri. Blocco del canale occupato, PTT ID, VOX, compander/scrambler si conservano. Driver di CHIRP.
 9ced82e0	eco della radio non corretta

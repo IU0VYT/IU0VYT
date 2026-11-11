@@ -7,6 +7,27 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.22.0 (11/11/2026)
+-------------------
+- Radtel RT-480 y RT-68 (drv_rt480.go, nuevo), del programa del fabricante «Radio
+  Programing Software» (1.5.2 y 1.5.3, mismo código): familia de la Radioddity GA-510
+  con otro mapa de memoria; entrada «PROGROMS19U», luego 'F', bloques 'R' y 'W' de 64
+  bytes, 9600 baudios; 256 canales de 16 bytes desde 0x0000, nombres de 12 bytes
+  (GB2312) desde 0x1000. Se leen las zonas que lee el programa; solo se escriben canales
+  y nombres.
+- Radtel RT-830 y RT-850 (drv_rt830.go, nuevo), de los programas del fabricante:
+  protocolo «iRadio» (entrada 39 33 05 10 81, bloques de 16 bytes con suma de
+  comprobación), 9600 baudios, 128 canales sin nombre; RT-830 con campos big endian y la
+  memoria desde 0x01D0, RT-850 con la memoria de la iRadio UV-5118. Como en los
+  programas: comprobación de la contraseña (nunca se escribe), comprobación del modelo
+  en la RT-850, bits de banda del canal, tonos DCS escritos como 0x1000 / 0x2000 +
+  código. Radtel RT-20M: misma conexión, mismos bloques y mismo canal que la iRadio
+  UV-5118plus, por eso una entrada de catálogo en la ficha Ruyage UV58Plus.
+- Catálogo (catalog_422.go, nuevo): 5 entradas. Recuentos: 510 radios, 428 con ajustes,
+  564 en la galería. Traducciones: 7 textos nuevos. No hechos (programas de Radtel aún
+  por examinar): RT-13, RT-69, RT-10, DM20, los instaladores y los programas en código
+  nativo.
+
 4.21.0 (11/11/2026)
 -------------------
 - Radtel RT-5D, DMR (drv_rt5d.go, nuevo), a partir del programa del fabricante («RT-5D

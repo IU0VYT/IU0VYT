@@ -6,6 +6,24 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.22.0 (11/11/2026)
+-------------------
+- Radtel RT-480 dan RT-68 (drv_rt480.go, baharu), daripada program pengeluar «Radio
+  Programing Software» (1.5.2 dan 1.5.3, kod yang sama): keluarga Radioddity GA-510
+  dengan peta memori lain; masuk dengan «PROGROMS19U», kemudian 'F', blok 'R' dan 'W' 64
+  bait, 9600 baud; 256 saluran 16 bait dari 0x0000, nama 12 bait (GB2312) dari 0x1000.
+  Kawasan yang dibaca oleh program dibaca; hanya saluran dan nama yang ditulis.
+- Radtel RT-830 dan RT-850 (drv_rt830.go, baharu), daripada program pengeluar: protokol
+  «iRadio» (masuk 39 33 05 10 81, blok 16 bait dengan hasil tambah semak), 9600 baud,
+  128 saluran tanpa nama; RT-830 dengan medan big endian dan memori dari 0x01D0, RT-850
+  dengan memori iRadio UV-5118. Seperti dalam program: semakan kata laluan (tidak pernah
+  ditulis), semakan model untuk RT-850, bit jalur saluran, ton DCS ditulis sebagai
+  0x1000 / 0x2000 + kod. Radtel RT-20M: sambungan, blok dan saluran yang sama seperti
+  iRadio UV-5118plus, maka satu entri katalog pada tab Ruyage UV58Plus.
+- Katalog (catalog_422.go, baharu): 5 entri. Kiraan: 510 radio, 428 dengan tetapan, 564
+  dalam galeri. Terjemahan: 7 teks baharu. Belum dibuat (program Radtel yang masih perlu
+  diperiksa): RT-13, RT-69, RT-10, DM20, pemasang dan program kod natif.
+
 4.21.0 (11/11/2026)
 -------------------
 - Radtel RT-5D, DMR (drv_rt5d.go, baharu), diperoleh daripada program pengeluar («RT-5D

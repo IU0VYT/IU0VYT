@@ -1,11 +1,17 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.21.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.22.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.22.0:
+- RADTEL RT-480 e RT-68: canali e nomi, dal programma del costruttore. Vedi «RADTEL
+  RT-480, RT-68».
+- RADTEL RT-830 e RT-850: canali, dai programmi del costruttore. Vedi «RADTEL RT-830,
+  RT-850». RADTEL RT-20M: si apre con la scheda Ruyage UV58Plus.
+- Galleria: 564 modelli di 47 marche (510 con canali, 428 con impostazioni).
 Novità della 4.21.0:
 - RADTEL RT-5D (DMR): canali, dal programma del costruttore. Vedi «RADTEL RT-5D».
 - KENWOOD TK-2180, TK-3180 e i veicolari TK-7180, TK-8180: canali, con i driver di
@@ -1217,6 +1223,29 @@ che la radio comunica:
   ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
+
+RADTEL RT-480, RT-68 (4.22)
+- 256 canali, numerati da 0 a 255 come nel programma di Radtel, con nomi di 12
+  caratteri. 9600 baud; accendi la radio con il cavo collegato.
+- Si modificano frequenze (a passi di 1,25 kHz), nome, potenza (alta, bassa), banda,
+  scansione e toni. Codice di segnalazione, PTT ID, scrambler e blocco su canale
+  occupato di un canale esistente restano come sono.
+- Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si
+  toccano. Un canale deve avere sempre la frequenza di trasmissione.
+Ricavate dal programma del costruttore e provate solo con una radio simulata: fai
+prima la sola lettura e segnala ogni problema.
+
+RADTEL RT-830, RT-850 (4.22)
+- 128 canali senza nome, 9600 baud. RT-830: 100-520 MHz; RT-850: 20-660 MHz.
+- Si modificano frequenze, potenza (alta, bassa), banda, scansione e toni. Limite di
+  trasmissione, cifratura, tipo di DCS e codice di silenziamento di un canale
+  esistente restano come sono.
+- Si scrivono le stesse aree del programma di Radtel: impostazioni e VFO tornano
+  come sono. La password della radio non si scrive mai.
+- Se sulla radio è impostata una password, lettura e scrittura vengono rifiutate:
+  toglila prima con il programma di Radtel.
+Ricavate dai programmi del costruttore e provate solo con una radio simulata: fai
+prima la sola lettura e segnala ogni problema.
 
 RADTEL RT-5D (4.21)
 - Radio DMR: 16 zone da 64 canali con nomi di 12 caratteri, 18-1000 MHz, 115200 baud.
