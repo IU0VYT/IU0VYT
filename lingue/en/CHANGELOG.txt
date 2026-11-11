@@ -7,6 +7,26 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.21.0 (11/11/2026)
+-------------------
+- Radtel RT-5D, DMR (drv_rt5d.go, new), from the manufacturer's program («RT-5D CPS»
+  2.0.5): packets «A5 command parameter length data CRC» (CRC16 XMODEM) at 115200 baud;
+  entry with «PROGRAMJC8810DU», password and version; sections read and written one
+  packet at a time (DTMF, keys, contacts, groups, channels, VFO, optional functions);
+  the radio data (model name and identifier) are read and never written. 64-byte
+  channel, 16 zones of 64 channels. The whole memory is read and written, as the program
+  does.
+- Kenwood TK-2180, TK-3180K, TK-3180K2, TK-3180E and the mobile TK-7180, TK-8180,
+  TK-7180E, TK-8180E (drv_kwtk180.go, new), from CHIRP's tk8180.py. The memory has no
+  fixed positions: the zones follow one another, each with its channels, and adding or
+  removing a channel moves all the zones that follow (CHIRP's expand_mmap and
+  shuffle_zone redone identically). 9600 baud with two stop bits, then 19200 baud.
+  Channels only. Compared with CHIRP: channels read with no differences, identical image
+  after the edits, identical serial traffic.
+- Catalogue (catalog_421.go, new): 3 entries. Counts: 505 radios, 427 with settings, 559
+  in the gallery. Translations: 23 new texts. Not done: Kenwood TK-481 / TK-981 (900 MHz
+  trunking radios) and the settings of the TK-x180.
+
 4.20.0 (11/11/2026)
 -------------------
 - Radtel RT-4D and RT-6D (DMR) and RT-1000 Pro (drv_rt4d.go, new), from the

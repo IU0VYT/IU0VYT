@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.20.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.21.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,17 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.21.0:
+- RADTEL RT-5D (DMR): canales, a partir del programa del fabricante. La lectura toma
+  toda la memoria y la escritura la devuelve entera tal como está en el archivo: los
+  contactos, los grupos y los ajustes no se modifican aquí, pero al escribir un archivo
+  antiguo vuelven los de entonces. Probado solo con una radio simulada: haz primero la
+  lectura y avisa de cualquier problema.
+- KENWOOD TK-2180, TK-3180 y las móviles TK-7180, TK-8180: canales, con los
+  controladores de CHIRP. La lista tiene 250 posiciones para cada una de las primeras 32
+  zonas (la posición es el número del canal en la zona); solo se pueden usar las zonas
+  que la radio ya tiene, 512 canales en total.
+- Galería: 559 modelos de 47 marcas (505 con canales, 427 con ajustes).
 Novedades de la 4.20.0:
 - RADTEL RT-4D, RT-6D (DMR) y RT-1000 Pro: canales y zonas, a partir de los programas
   del fabricante. Solo se escriben canales y zonas; los contactos, los grupos, los

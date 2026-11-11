@@ -6,6 +6,26 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.21.0 (11/11/2026)
+-------------------
+- Radtel RT-5D, DMR (drv_rt5d.go, baharu), diperoleh daripada program pengeluar («RT-5D
+  CPS» 2.0.5): paket «A5 arahan parameter panjang data CRC» (CRC16 XMODEM) pada 115200
+  baud; masuk dengan «PROGRAMJC8810DU», kata laluan dan versi; bahagian dibaca dan
+  ditulis satu paket pada satu masa (DTMF, kunci, kenalan, kumpulan, saluran, VFO,
+  fungsi pilihan); data radio (nama dan pengecam model) dibaca dan tidak pernah ditulis.
+  Saluran 64 bait, 16 zon dengan 64 saluran setiap satu. Seluruh memori dibaca dan
+  ditulis, seperti yang dilakukan oleh program.
+- Kenwood TK-2180, TK-3180K, TK-3180K2, TK-3180E dan radio kenderaan TK-7180, TK-8180,
+  TK-7180E, TK-8180E (drv_kwtk180.go, baharu), daripada tk8180.py CHIRP. Memori tiada
+  kedudukan tetap: zon tersusun berturutan, setiap satu dengan salurannya, dan menambah
+  atau membuang satu saluran mengalihkan semua zon berikutnya (expand_mmap dan
+  shuffle_zone CHIRP dibina semula dengan cara yang sama). 9600 baud dengan dua bit
+  henti, kemudian 19200 baud. Saluran sahaja. Perbandingan dengan CHIRP: saluran dibaca
+  tanpa perbezaan, imej sama selepas perubahan, trafik bersiri sama.
+- Katalog (catalog_421.go, baharu): 3 entri. Kiraan: 505 radio, 427 dengan tetapan, 559
+  dalam galeri. Terjemahan: 23 teks baharu. Tidak dibuat: Kenwood TK-481 / TK-981 (radio
+  trunking 900 MHz) dan tetapan TK-x180.
+
 4.20.0 (11/11/2026)
 -------------------
 - Radtel RT-4D dan RT-6D (DMR) serta RT-1000 Pro (drv_rt4d.go, baharu), diperoleh

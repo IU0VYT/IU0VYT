@@ -5417,3 +5417,25 @@ b6bcffc3	Radtel {0}
 d90df803	Zone{0}
 2d0e3a60	Schreiben: Kanäle…
 a7f04ce8	Schreiben: Zonen…
+1b180a6e	Professionelles Funkgerät mit in Zonen aufgeteilten Kanälen: die Liste hat 250 Plätze für jede der ersten 32 Zonen, und der Platz ist die Kanalnummer in der Zone. Verwendet werden können nur die Zonen, die das Funkgerät schon hat; insgesamt 512 Kanäle.
+b1f3e299	JJCC-888DMR
+68be2aa3	DMR-Funkgerät: 16 Zonen mit je 64 Kanälen, Namen aus 12 Zeichen, 18-1000 MHz, 115200 Baud. Aus dem Programm des Herstellers abgeleitet und mit einem simulierten Funkgerät geprüft, nicht an einem echten. Lesen und Schreiben betreffen den ganzen Speicher, wie im Programm des Herstellers: Kontakte, Gruppen und Einstellungen werden hier nicht geändert, aber beim Schreiben einer alten Datei kommen die damaligen zurück.
+1c965377	{0} Mobilfunkgerät.{1}
+e5195181	{0} Die Liste hat 250 Plätze für jede der ersten 32 Zonen des Funkgeräts: der Platz ist die Kanalnummer in der Zone. Verwendet werden können nur die Zonen, die das Funkgerät schon hat (sie werden hier nicht angelegt und nicht gelöscht), und insgesamt fasst das Funkgerät 512 Kanäle. PTT-ID und die übrigen Optionen eines vorhandenen Kanals bleiben erhalten. Nicht konventionelle Zonen (Bündelfunk) werden nicht unterstützt: in diesem Fall wird das Lesen abgelehnt. CHIRP-Treiber.
+4f32391c	Professionelles Handfunkgerät: es wird mit dem Kenwood-Programmierkabel programmiert.
+4de7f3b2	Professionelles Mobilfunkgerät: es wird mit dem Kenwood-Programmierkabel programmiert.
+c3c8a0a1	der Speicher hat nicht konventionelle Zonen: er kann nicht geändert werden
+d3e951f1	das Funkgerät hat {0} Zonen: Zone {1} muss mit dem Programm des Herstellers angelegt werden
+f4423cbf	das Funkgerät fasst insgesamt höchstens {0} Kanäle
+81b03eed	das Funkgerät hat den schnellen Programmiermodus abgelehnt
+a3fb98d1	das Funkgerät hat das Ende des Lesens nicht bestätigt
+cc054a8c	das Funkgerät hat nicht konventionelle Zonen (Bündelfunk): sie werden nicht unterstützt
+6bfb46e1	das Funkgerät hat das Ende des Schreibens nicht bestätigt
+1a11c136	VFO
+690a38c4	Gerätedaten
+5fd145a1	unbekannter Abschnitt {0}
+4c88fac5	Radtel RT-5D
+93ad0c85	DMR-Funkgerät: 16 Zonen mit je 64 Kanälen. Protokoll und Speicher aus dem Programm des Herstellers «RT-5D CPS» (Version 2.0.5) abgeleitet. Hier werden Frequenzen, Name, Leistung, Bandbreite, Suchlauf und Töne geändert; die übrigen Angaben des Kanals bleiben, wie sie eingestellt sind (ein neuer DMR-Kanal erhält die Standardwerte des Programms: erster Kontakt, Slot 1, Color Code 1). Das Lesen holt den ganzen Speicher, und das Schreiben sendet ihn vollständig so zurück, wie er in der Datei steht, wie es das Programm des Herstellers tut: Kontakte, Gruppen, Schlüssel und Einstellungen werden hier nicht geändert, aber beim Schreiben einer alten Datei kommen die damaligen zurück. Name und Kennung des Modells werden nie geschrieben.
+9cd943ab	DCS-Code {0} wird von diesem Funkgerät nicht zugelassen
+13b1a26f	das Funkgerät hat den Befehl {0} abgelehnt
+735691ef	Antwort des Funkgeräts zu kurz ({0} Bytes statt {1})

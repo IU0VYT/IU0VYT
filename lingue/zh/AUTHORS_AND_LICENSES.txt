@@ -151,6 +151,8 @@ https://www.qrz.com/db/IU0VYT
   drivers/tk3140.py                         Copyright 2023 Dan Smith
   drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
                                             2024 Dan Smith
+  4.21 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk8180.py                         Copyright 2019 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -182,7 +184,8 @@ drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
-4.18: drv_kwtk140.go, drv_kwtk280.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go;
+4.21: drv_kwtk180.go.
 
 QUANSHENG UV-K5 固件升级（4.1）
 Quansheng .bin 文件的格式和 UV-K5 引导程序的协议由自由程序 k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF，GNU GPL v3，https://github.com/sq5bpf/k5prog）和 uvtools（egzumer，https://github.com/egzumer/uvtools）记录。为实现互操作性，fwk5.go 根据这些资料从零编写；软件包中不包含这些程序的任何代码。verifica/k5/k5ref.js 只用于测试，它从执行验证者指定的文件夹加载 uvtools 的代码。感谢 SQ5BPF 和 egzumer。
@@ -211,6 +214,8 @@ KENWOOD TK-2140/3140、TK-280/380、R3B0RN 固件、RADTEL RT-330 和 RT-400（4
 RADTEL RT-817A / RT-871A（4.19）：根据与厂商软件（“Radtel RT-871A CPS”）的比对得出，其中任何内容都未包含；连接方式和信道记录与 CHIRP 的 radtel_rt880g.py 相同，已用于 RT-880G。
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：根据对厂商软件（“RT-4D CPS”、“DMR RT-6D”、“Radtel RT-1000 Pro CPS”）的研究得出，未包含其中任何内容；代码从零编写。
+
+RADTEL RT-5D、KENWOOD TK-x180 (4.21)：Radtel RT-5D 根据对厂商软件（“RT-5D CPS”）的研究得出，未包含其中任何内容；代码从零编写。Kenwood TK-2180 / TK-3180 / TK-7180 / TK-8180：drv_kwtk180.go 派生自 CHIRP 的 tk8180.py（GNU GPL v3）。
 
 区域名称（4.11）
 为了互操作性，区域名称的格式取自厂家程序的代码：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 和 Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS“BT-9000_CPS”v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）和 RT910_EnCPS v1.0.3（无蓝牙的 RT-910），来自 radtels.com 和 bajeton.cn；RT-920 的格式还取自 CHIRP 的驱动程序 radtel_rt900.py（Fred Trimble，GNU GPL，见上文）。不包含任何厂家程序。

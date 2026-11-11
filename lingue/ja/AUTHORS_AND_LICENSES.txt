@@ -151,6 +151,8 @@ CHIRP に由来する部分
   drivers/tk3140.py                         Copyright 2023 Dan Smith
   drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
                                             2024 Dan Smith
+  4.21 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk8180.py                         Copyright 2019 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -182,7 +184,8 @@ CHIRP の作者の皆さん、armel F4HWN、M7OCM、JuantAldea、v0l（radio_too
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
-4.18: drv_kwtk140.go, drv_kwtk280.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go;
+4.21: drv_kwtk180.go.
 
 QUANSHENG UV-K5 のファームウェア更新（4.1）
 Quansheng の .bin ファイルの形式と UV-K5 のローダーのプロトコルは、フリーソフト k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF、GNU GPL v3、https://github.com/sq5bpf/k5prog）と uvtools（egzumer、https://github.com/egzumer/uvtools）が記述しています。fwk5.go は相互運用のためにその記述をもとにゼロから書いたもので、それらのプログラムのコードはパッケージに含まれていません。試験専用の verifica/k5/k5ref.js は、検証する人が指定したフォルダーから uvtools のコードを読み込みます。SQ5BPF と egzumer に感謝します。
@@ -211,6 +214,8 @@ KENWOOD TK-2140/3140、TK-280/380、R3B0RN ファームウェア、RADTEL RT-330
 RADTEL RT-817A / RT-871A（4.19）：メーカーのソフト（「Radtel RT-871A CPS」）との比較によるもので、その内容は一切含まれていません。接続とチャンネルレコードは CHIRP の radtel_rt880g.py のもので、RT-880G ですでに使っています。
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：メーカーのソフト（「RT-4D CPS」、「DMR RT-6D」、「Radtel RT-1000 Pro CPS」）を調べて求めました。それらの内容は何も含まれておらず、コードは一から書いています。
+
+RADTEL RT-5D、KENWOOD TK-x180 (4.21)：Radtel RT-5D はメーカーのソフト（「RT-5D CPS」）を調べて求めました。その内容は何も含まれておらず、コードは一から書いています。Kenwood TK-2180 / TK-3180 / TK-7180 / TK-8180：drv_kwtk180.go は CHIRP の tk8180.py から派生しています（GNU GPL v3）。
 
 ゾーン名（4.11）
 ゾーン名の形式は、相互運用性のために、メーカーのプログラムのコードから得ました：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 と Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS「BT-9000_CPS」v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）、RT910_EnCPS v1.0.3（Bluetooth なしの RT-910）、radtels.com と bajeton.cn。RT-920 については CHIRP のドライバー radtel_rt900.py（Fred Trimble、GNU GPL、上記参照）からも得ました。メーカーのプログラムは含まれていません。

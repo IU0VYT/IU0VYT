@@ -5417,3 +5417,25 @@ b6bcffc3	Radtel {0}
 d90df803	Zone{0}
 2d0e3a60	Écriture : canaux…
 a7f04ce8	Écriture : zones…
+1b180a6e	Radio professionnelle dont les canaux sont répartis en zones : la liste a 250 positions pour chacune des 32 premières zones et la position est le numéro du canal dans la zone. Seules les zones que la radio a déjà peuvent être utilisées ; 512 canaux en tout.
+b1f3e299	JJCC-888DMR
+68be2aa3	Radio DMR : 16 zones de 64 canaux avec des noms de 12 caractères, 18-1000 MHz, 115200 bauds. Tiré du programme du constructeur et essayé avec une radio simulée, pas sur une vraie radio. La lecture et l'écriture portent sur toute la mémoire, comme dans le programme du constructeur : les contacts, les groupes et les réglages ne se modifient pas ici, mais écrire un ancien fichier remet ceux de l'époque.
+1c965377	{0} Radio mobile.{1}
+e5195181	{0} La liste a 250 positions pour chacune des 32 premières zones de la radio : la position est le numéro du canal dans la zone. Seules les zones que la radio a déjà peuvent être utilisées (elles ne se créent pas et ne se suppriment pas ici) et la radio contient 512 canaux en tout. Le PTT ID et les autres options d'un canal existant sont conservés. Les zones non conventionnelles (trunking) ne sont pas gérées : dans ce cas la lecture est refusée. Pilote de CHIRP.
+4f32391c	Radio professionnelle portative : elle se programme avec le câble de programmation Kenwood.
+4de7f3b2	Radio professionnelle mobile : elle se programme avec le câble de programmation Kenwood.
+c3c8a0a1	la mémoire a des zones non conventionnelles : elle ne peut pas être modifiée
+d3e951f1	la radio a {0} zones : la zone {1} doit être créée avec le programme du constructeur
+f4423cbf	la radio contient au maximum {0} canaux en tout
+81b03eed	la radio a refusé le mode de programmation rapide
+a3fb98d1	la radio n'a pas confirmé la fin de la lecture
+cc054a8c	la radio a des zones non conventionnelles (trunking) : elles ne sont pas gérées
+6bfb46e1	la radio n'a pas confirmé la fin de l'écriture
+1a11c136	VFO
+690a38c4	données de la radio
+5fd145a1	section inconnue {0}
+4c88fac5	Radtel RT-5D
+93ad0c85	Radio DMR : 16 zones de 64 canaux. Protocole et mémoire tirés du programme du constructeur « RT-5D CPS » (version 2.0.5). Ici on modifie les fréquences, le nom, la puissance, la largeur de bande, le balayage et les tonalités ; les autres éléments du canal restent tels qu'ils sont réglés (un canal DMR nouveau prend les valeurs par défaut du programme : premier contact, slot 1, color code 1). La lecture prend toute la mémoire et l'écriture la renvoie entière telle qu'elle est dans le fichier, comme le fait le programme du constructeur : les contacts, les groupes, les clés et les réglages ne se modifient pas ici, mais écrire un ancien fichier remet ceux de l'époque. Le nom et l'identifiant du modèle ne sont jamais écrits.
+9cd943ab	code DCS {0} non admis par cette radio
+13b1a26f	la radio a refusé la commande {0}
+735691ef	réponse de la radio trop courte ({0} octets au lieu de {1})

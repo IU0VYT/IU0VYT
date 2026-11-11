@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.20.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.21.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,17 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.21.0:
+- RADTEL RT-5D (DMR): Kanäle, aus dem Programm des Herstellers abgeleitet. Das Lesen
+  holt den ganzen Speicher, und das Schreiben sendet ihn vollständig so zurück, wie er
+  in der Datei steht: Kontakte, Gruppen und Einstellungen werden hier nicht geändert,
+  aber beim Schreiben einer alten Datei kommen die damaligen zurück. Nur mit einem
+  simulierten Funkgerät getestet: zuerst lesen und jedes Problem melden.
+- KENWOOD TK-2180, TK-3180 und die Mobilgeräte TK-7180, TK-8180: Kanäle, mit den
+  CHIRP-Treibern. Die Liste hat 250 Plätze für jede der ersten 32 Zonen (der Platz ist
+  die Kanalnummer in der Zone); verwendet werden können nur die Zonen, die das Funkgerät
+  schon hat, insgesamt 512 Kanäle.
+- Galerie: 559 Modelle von 47 Marken (505 mit Kanälen, 427 mit Einstellungen).
 Neu in 4.20.0:
 - RADTEL RT-4D, RT-6D (DMR) und RT-1000 Pro: Kanäle und Zonen, aus den Programmen des
   Herstellers abgeleitet. Geschrieben werden nur Kanäle und Zonen; Kontakte, Gruppen,

@@ -5417,3 +5417,25 @@ b6bcffc3	Radtel {0}
 d90df803	Zone{0}
 2d0e3a60	Escrita: canais…
 a7f04ce8	Escrita: zonas…
+1b180a6e	Rádio profissional com os canais divididos em zonas: a lista tem 250 posições para cada uma das primeiras 32 zonas e a posição é o número do canal na zona. Só podem ser usadas as zonas que o rádio já tem; 512 canais no total.
+b1f3e299	JJCC-888DMR
+68be2aa3	Rádio DMR: 16 zonas de 64 canais com nomes de 12 caracteres, 18-1000 MHz, 115200 baud. Obtido a partir do programa do fabricante e testado com um rádio simulado, não com um rádio verdadeiro. A leitura e a escrita abrangem toda a memória, como no programa do fabricante: os contactos, os grupos e as definições não se alteram aqui, mas ao escrever um ficheiro antigo voltam os dessa altura.
+1c965377	{0} Rádio móvel.{1}
+e5195181	{0} A lista tem 250 posições para cada uma das primeiras 32 zonas do rádio: a posição é o número do canal na zona. Só podem ser usadas as zonas que o rádio já tem (não se criam nem se apagam aqui) e no total o rádio guarda 512 canais. O PTT ID e as outras opções de um canal existente são conservados. As zonas não convencionais (trunking) não são geridas: nesse caso a leitura é recusada. Controlador do CHIRP.
+4f32391c	Rádio profissional portátil: programa-se com o cabo de programação Kenwood.
+4de7f3b2	Rádio profissional móvel: programa-se com o cabo de programação Kenwood.
+c3c8a0a1	a memória tem zonas não convencionais: não pode ser alterada
+d3e951f1	o rádio tem {0} zonas: a zona {1} tem de ser criada com o programa do fabricante
+f4423cbf	o rádio guarda no máximo {0} canais no total
+81b03eed	o rádio recusou o modo de programação rápida
+a3fb98d1	o rádio não confirmou o fim da leitura
+cc054a8c	o rádio tem zonas não convencionais (trunking): não são geridas
+6bfb46e1	o rádio não confirmou o fim da escrita
+1a11c136	VFO
+690a38c4	dados do rádio
+5fd145a1	secção desconhecida {0}
+4c88fac5	Radtel RT-5D
+93ad0c85	Rádio DMR: 16 zonas de 64 canais. Protocolo e memória obtidos a partir do programa do fabricante «RT-5D CPS» (versão 2.0.5). Aqui alteram-se frequências, nome, potência, largura de banda, pesquisa e tons; os outros dados do canal ficam como estão definidos (um canal DMR novo recebe os valores predefinidos do programa: primeiro contacto, slot 1, color code 1). A leitura traz toda a memória e a escrita devolve-a inteira tal como está no ficheiro, como faz o programa do fabricante: os contactos, os grupos, as chaves e as definições não se alteram aqui, mas ao escrever um ficheiro antigo voltam os dessa altura. O nome e o identificador do modelo nunca são escritos.
+9cd943ab	código DCS {0} não admitido por este rádio
+13b1a26f	o rádio recusou o comando {0}
+735691ef	resposta do rádio demasiado curta ({0} bytes em vez de {1})

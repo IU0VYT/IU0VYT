@@ -7,6 +7,26 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.21.0 (11/11/2026)
+-------------------
+- Radtel RT-5D, DMR (drv_rt5d.go, nuevo), a partir del programa del fabricante («RT-5D
+  CPS» 2.0.5): paquetes «A5 comando parámetro longitud datos CRC» (CRC16 XMODEM) a
+  115200 baudios; entrada con «PROGRAMJC8810DU», contraseña y versión; secciones leídas
+  y escritas paquete a paquete (DTMF, claves, contactos, grupos, canales, VFO, funciones
+  opcionales); los datos de la radio (nombre e identificador del modelo) se leen y nunca
+  se escriben. Canal de 64 bytes, 16 zonas de 64 canales. Se lee y se escribe toda la
+  memoria, como hace el programa.
+- Kenwood TK-2180, TK-3180K, TK-3180K2, TK-3180E y las móviles TK-7180, TK-8180,
+  TK-7180E, TK-8180E (drv_kwtk180.go, nuevo), a partir de tk8180.py de CHIRP. La memoria
+  no tiene posiciones fijas: las zonas van una tras otra, cada una con sus canales, y
+  añadir o quitar un canal desplaza todas las zonas siguientes (expand_mmap y
+  shuffle_zone de CHIRP rehechos iguales). 9600 baudios con dos bits de parada, luego
+  19200 baudios. Solo canales. Comparación con CHIRP: canales leídos sin diferencias,
+  imagen idéntica tras las modificaciones, tráfico serie idéntico.
+- Catálogo (catalog_421.go, nuevo): 3 entradas. Recuentos: 505 radios, 427 con ajustes,
+  559 en la galería. Traducciones: 23 textos nuevos. No hechos: Kenwood TK-481 / TK-981
+  (radios trunking de 900 MHz) y los ajustes de las TK-x180.
+
 4.20.0 (11/11/2026)
 -------------------
 - Radtel RT-4D y RT-6D (DMR) y RT-1000 Pro (drv_rt4d.go, nuevo), a partir de los

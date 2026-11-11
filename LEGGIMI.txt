@@ -1,11 +1,16 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.20.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.21.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.21.0:
+- RADTEL RT-5D (DMR): canali, dal programma del costruttore. Vedi «RADTEL RT-5D».
+- KENWOOD TK-2180, TK-3180 e i veicolari TK-7180, TK-8180: canali, con i driver di
+  CHIRP. Vedi «KENWOOD TK-2180/3180, TK-7180/8180».
+- Galleria: 559 modelli di 47 marche (505 con canali, 427 con impostazioni).
 Novità della 4.20.0:
 - RADTEL RT-4D, RT-6D (DMR) e RT-1000 Pro: canali e zone, dai programmi del
   costruttore. Vedi «RADTEL RT-4D, RT-6D, RT-1000 PRO».
@@ -1212,6 +1217,33 @@ che la radio comunica:
   ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
+
+RADTEL RT-5D (4.21)
+- Radio DMR: 16 zone da 64 canali con nomi di 12 caratteri, 18-1000 MHz, 115200 baud.
+- Si modificano frequenze, nome, potenza (alta, media, bassa), banda, scansione e
+  toni. Le altre voci di un canale esistente restano come sono; un canale DMR nuovo
+  prende i valori predefiniti del programma di Radtel.
+- La lettura prende tutta la memoria e la scrittura la rimanda tutta com'è nel file,
+  come fa il programma di Radtel. Contatti, gruppi, chiavi e impostazioni non si
+  modificano qui: ma se scrivi un file letto tempo fa, tornano quelli di allora.
+  Prima di scrivere fai sempre una lettura fresca.
+- Nome e identificativo del modello non vengono mai scritti.
+Ricavata dal programma del costruttore e provata solo con una radio simulata: fai
+prima la sola lettura e segnala ogni problema.
+
+KENWOOD TK-2180/3180, TK-7180/8180 (4.21)
+- Radio professionali: palmari TK-2180 (VHF), TK-3180K, K2, E (UHF) e veicolari
+  TK-7180, TK-8180 (anche E). Cavo di programmazione Kenwood.
+- I canali sono divisi in zone. La lista ha 250 posizioni per ognuna delle prime 32
+  zone: la posizione è il numero del canale nella zona (la posizione 251 è il canale
+  1 della zona 2, e così via).
+- Si possono usare solo le zone che la radio ha già: le zone non si creano e non si
+  cancellano da qui. In tutto la radio tiene 512 canali.
+- PTT ID e le altre opzioni di un canale esistente si conservano. Solo i canali: le
+  impostazioni della radio non si modificano.
+- Se la radio ha zone non convenzionali (trunking) la lettura viene rifiutata.
+Driver di CHIRP, provati con le sue immagini e con una radio simulata: fai prima la
+sola lettura e segnala ogni problema.
 
 RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
 - 1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840-1000 MHz, 115200 baud.

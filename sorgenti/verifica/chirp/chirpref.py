@@ -160,7 +160,11 @@ def zoned(r):
     """4.18: radio di CHIRP con una «sotto-radio» per zona e i canali in una
     tabella di posizioni fisiche: in IU0VYT Flash la lista è quella delle
     posizioni fisiche. Restituisce "x140" (Kenwood TK-2140/3140, tk3140.py),
-    "x80" (Kenwood TK-280/380, tk280.py) oppure None."""
+    "x80" (Kenwood TK-280/380, tk280.py), "x180" (4.21: Kenwood TK-x180,
+    tk8180.py: 250 posizioni per ognuna delle prime 32 zone, la posizione è il
+    numero del canale nella zona) oppure None."""
+    if hasattr(r, "probe_layout") and hasattr(r, "expand_mmap") and hasattr(r, "shuffle_zone"):
+        return "x180"
     if hasattr(r, "check_index") and hasattr(r, "_get_zone") and hasattr(r, "next_slot"):
         return "x140"
     if hasattr(r, "_get_memory_mapping") and hasattr(r, "_compact_mappings") and r.get_features().has_sub_devices:
@@ -186,6 +190,12 @@ def zoned_target(r, pos, delete=False):
     del canale presente; per una posizione vuota la zona del canale che la
     precede (la prima zona se non c'è) e il primo numero libero. Restituisce
     (None, None) per la cancellazione di una posizione già vuota."""
+    if zoned(r) == "x180":
+        subs = r.get_sub_devices()
+        z, num = pos // 250, pos % 250 + 1
+        if z >= len(subs) or (delete and subs[z]._get_raw_memory(num) is None):
+            return None, None
+        return subs[z], num
     if zoned(r) == "x80":
         subs = x80_groups(r)
         cur = x80_slot(r, pos)
@@ -243,6 +253,13 @@ def zoned_target(r, pos, delete=False):
 
 
 def decode(r):
+    if zoned(r) == "x180":
+        out = [None] * (32 * 250)
+        for z, sub in enumerate(r.get_sub_devices()[:32]):
+            for i in range(int(sub.raw_zoneinfo.count)):
+                n = int(sub.raw_memories[i].number)
+                out[z * 250 + n - 1] = mem_to_json(sub, sub.get_memory(n))
+        return out
     if zoned(r) == "x80":
         out = [None] * 250
         for group, sub in x80_groups(r).items():

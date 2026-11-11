@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.20.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.21.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,17 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.21.0:
+- RADTEL RT-5D (DMR): saluran, diperoleh daripada program pengeluar. Pembacaan mengambil
+  seluruh memori dan penulisan menghantarnya semula sepenuhnya seperti dalam fail:
+  kenalan, kumpulan dan tetapan tidak diubah di sini, tetapi menulis fail lama akan
+  mengembalikan yang dahulu. Diuji hanya dengan radio simulasi: baca dahulu dan laporkan
+  sebarang masalah.
+- KENWOOD TK-2180, TK-3180 dan radio kenderaan TK-7180, TK-8180: saluran, dengan pemacu
+  CHIRP. Senarai mempunyai 250 kedudukan bagi setiap satu daripada 32 zon pertama
+  (kedudukan ialah nombor saluran dalam zon); hanya zon yang sudah ada pada radio boleh
+  digunakan, 512 saluran kesemuanya.
+- Galeri: 559 model daripada 47 jenama (505 dengan saluran, 427 dengan tetapan).
 Baharu dalam 4.20.0:
 - RADTEL RT-4D, RT-6D (DMR) dan RT-1000 Pro: saluran dan zon, diperoleh daripada program
   pengeluar. Hanya saluran dan zon ditulis; kenalan, kumpulan, mesej, radio FM dan

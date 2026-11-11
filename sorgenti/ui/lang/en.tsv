@@ -5417,3 +5417,25 @@ b6bcffc3	Radtel {0}
 d90df803	Zone{0}
 2d0e3a60	Writing: channels…
 a7f04ce8	Writing: zones…
+1b180a6e	Professional radio with channels divided into zones: the list has 250 positions for each of the first 32 zones and the position is the channel number in the zone. Only the zones the radio already has can be used; 512 channels in all.
+b1f3e299	JJCC-888DMR
+68be2aa3	DMR radio: 16 zones of 64 channels with 12-character names, 18-1000 MHz, 115200 baud. Derived from the manufacturer's program and tested with a simulated radio, not on a real one. Reading and writing cover the whole memory, as in the manufacturer's program: contacts, groups and settings are not edited here, but writing an old file brings back those of that time.
+1c965377	{0} Mobile radio.{1}
+e5195181	{0} The list has 250 positions for each of the first 32 zones of the radio: the position is the channel number in the zone. Only the zones the radio already has can be used (they are not created or deleted here) and the radio holds 512 channels in all. PTT ID and the other options of an existing channel are preserved. Non-conventional (trunking) zones are not handled: in that case reading is refused. CHIRP driver.
+4f32391c	Professional handheld radio: it is programmed with the Kenwood programming cable.
+4de7f3b2	Professional mobile radio: it is programmed with the Kenwood programming cable.
+c3c8a0a1	the memory has non-conventional zones: it cannot be edited
+d3e951f1	the radio has {0} zones: zone {1} must be created with the manufacturer's program
+f4423cbf	the radio holds at most {0} channels in all
+81b03eed	the radio refused the fast programming mode
+a3fb98d1	the radio did not confirm the end of reading
+cc054a8c	the radio has non-conventional (trunking) zones: they are not handled
+6bfb46e1	the radio did not confirm the end of writing
+1a11c136	VFO
+690a38c4	radio data
+5fd145a1	unknown section {0}
+4c88fac5	Radtel RT-5D
+93ad0c85	DMR radio: 16 zones of 64 channels. Protocol and memory derived from the manufacturer's program «RT-5D CPS» (version 2.0.5). Here you edit frequencies, name, power, bandwidth, scan and tones; the other items of the channel stay as they are set (a new DMR channel takes the program's default values: first contact, slot 1, color code 1). Reading takes the whole memory and writing sends it all back as it is in the file, as the manufacturer's program does: contacts, groups, keys and settings are not edited here, but writing an old file brings back those of that time. Model name and identifier are never written.
+9cd943ab	DCS code {0} not allowed by this radio
+13b1a26f	the radio refused command {0}
+735691ef	the radio's reply is too short ({0} bytes instead of {1})

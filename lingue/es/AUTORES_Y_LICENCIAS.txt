@@ -169,6 +169,8 @@ indicados en los archivos de CHIRP usados:
   drivers/tk3140.py                         Copyright 2023 Dan Smith
   drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
                                             2024 Dan Smith
+  4.21 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk8180.py                         Copyright 2019 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -214,7 +216,8 @@ Vakulenko KK6ABQ.
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
-4.18: drv_kwtk140.go, drv_kwtk280.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go;
+4.21: drv_kwtk180.go.
 
 ACTUALIZACIÓN DEL FIRMWARE DE LA QUANSHENG UV-K5 (4.1)
 El formato de los archivos .bin de Quansheng y el protocolo del cargador de la UV-K5
@@ -309,6 +312,11 @@ son los de radtel_rt880g.py de CHIRP, ya usados para la RT-880G.
 RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): a partir del estudio de los programas del
 fabricante («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), de los que no se
 incluye nada; el código está escrito desde cero.
+
+RADTEL RT-5D, KENWOOD TK-x180 (4.21): Radtel RT-5D a partir del estudio del programa del
+fabricante («RT-5D CPS»), del que no se incluye nada; el código está escrito desde cero.
+Kenwood TK-2180 / TK-3180 / TK-7180 / TK-8180: drv_kwtk180.go deriva de tk8180.py de
+CHIRP (GNU GPL v3).
 
 NOMBRES DE LAS ZONAS (4.11)
 El formato de los nombres de las zonas se ha obtenido, para la interoperabilidad, del

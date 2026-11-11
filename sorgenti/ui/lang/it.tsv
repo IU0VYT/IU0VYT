@@ -2028,6 +2028,10 @@ fbb7a5e0	Radio DMR: 1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840
 4dc05ed4	RT-1000 Pro
 250f9f5d	RT1000 Pro
 c1cbfbcc	1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840-1000 MHz, 115200 baud. Stesso canale della RT-4D, solo analogico; l'esclusione dalla scansione non si gestisce (resta com'è sulla radio).{0}
+1b180a6e	Radio professionale con i canali divisi in zone: la lista ha 250 posizioni per ognuna delle prime 32 zone e la posizione è il numero del canale nella zona. Si usano solo le zone che la radio ha già; in tutto 512 canali.
+b1f3e299	JJCC-888DMR
+68be2aa3	Radio DMR: 16 zone da 64 canali con nomi di 12 caratteri, 18-1000 MHz, 115200 baud. Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Lettura e scrittura riguardano tutta la memoria, come nel programma del costruttore: contatti, gruppi e impostazioni non si modificano qui, ma scrivendo un file vecchio tornano quelli di allora.
+1c965377	{0} Radio veicolare.{1}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2933,6 +2937,16 @@ f1f2482e	Kenwood {0}
 154febf8	250 posizioni con nomi di 10 caratteri, divise nei gruppi (zone) della radio. Radio professionale: si programma col cavo di programmazione Kenwood, accendendo la radio dopo aver collegato il cavo. La lista mostra le posizioni della memoria: un canale modificato resta nel suo gruppo con il suo numero; un canale nuovo entra nel gruppo del canale che lo precede nella lista (il primo gruppo se non ce n'è) con il primo numero libero. Segnalazione, compander, blocco del canale occupato e «beat shift» si conservano. I gruppi non si creano e non si cancellano da qui. Driver di CHIRP.
 3241439e	la radio non ha gruppi: creane uno con il programma del costruttore
 20d807b3	il gruppo {0} è pieno
+e5195181	{0} La lista ha 250 posizioni per ognuna delle prime 32 zone della radio: la posizione è il numero del canale nella zona. Si possono usare solo le zone che la radio ha già (non si creano e non si cancellano da qui) e in tutto la radio tiene 512 canali. PTT ID e le altre opzioni di un canale esistente si conservano. Le zone di tipo non convenzionale (trunking) non sono gestite: in quel caso la lettura viene rifiutata. Driver di CHIRP.
+4f32391c	Radio professionale portatile: si programma col cavo di programmazione Kenwood.
+4de7f3b2	Radio professionale veicolare: si programma col cavo di programmazione Kenwood.
+c3c8a0a1	la memoria ha zone non convenzionali: non si può modificare
+d3e951f1	la radio ha {0} zone: la zona {1} va creata con il programma del costruttore
+f4423cbf	la radio tiene al massimo {0} canali in tutto
+81b03eed	la radio ha rifiutato la modalità di programmazione veloce
+a3fb98d1	la radio non ha confermato la fine della lettura
+cc054a8c	la radio ha zone non convenzionali (trunking): non sono gestite
+6bfb46e1	la radio non ha confermato la fine della scrittura
 e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
 04b304aa	Alta 4 W
 991a44e8	Radio professionale: si programma col cavo di programmazione Kenwood, accendendo la radio dopo aver collegato il cavo. La versione della radio (banda e numero dei canali) si legge dalla sua memoria; i limiti di frequenza sono quelli del costruttore allargati del 4%, come in CHIRP.
@@ -3130,6 +3144,15 @@ b6bcffc3	Radtel {0}
 d90df803	Zone{0}
 2d0e3a60	Scrittura: canali…
 a7f04ce8	Scrittura: zone…
+fe1ae2fa	DTMF
+1a11c136	VFO
+690a38c4	dati della radio
+5fd145a1	sezione sconosciuta {0}
+4c88fac5	Radtel RT-5D
+93ad0c85	Radio DMR: 16 zone da 64 canali. Protocollo e memoria ricavati dal programma del costruttore «RT-5D CPS» (versione 2.0.5). Qui si modificano frequenze, nome, potenza, banda, scansione e toni; le altre voci del canale restano quelle impostate (un canale DMR nuovo prende i valori predefiniti del programma: primo contatto, slot 1, color code 1). La lettura prende tutta la memoria e la scrittura la rimanda tutta com'è nel file, come fa il programma del costruttore: contatti, gruppi, chiavi e impostazioni non si modificano qui, ma scrivendo un file vecchio tornano quelli di allora. Nome e identificativo del modello non vengono mai scritti.
+9cd943ab	codice DCS {0} non ammesso da questa radio
+13b1a26f	la radio ha rifiutato il comando {0}
+735691ef	risposta della radio troppo corta ({0} byte invece di {1})
 9b4191c0	Retevis RT76P (GMRS)
 87ab3755	Radio GMRS per gli Stati Uniti: in Italia la banda GMRS non è ammessa. Come in CHIRP: fuori dalle frequenze GMRS solo ricezione, sui canali dei ponti simplex o +5 MHz, sui 467 MHz banda stretta e bassa potenza. Blocco del canale occupato, PTT ID, compander e ANI si conservano. Driver di CHIRP.
 9015bc86	canale {0}: sulle frequenze GMRS la trasmissione non si può disabilitare
@@ -4448,7 +4471,6 @@ ed405cf5	TDR
 254bee10	TOT
 9a73db9b	Language
 aeeb548c	Cinese
-fe1ae2fa	DTMF
 3eb7fb42	PTTID
 c624808c	Display della banda C
 8a294fcd	Cosa mostra il display per i canali della banda C.

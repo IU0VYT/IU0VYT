@@ -7,6 +7,26 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.21.0 (11/11/2026)
+-------------------
+- Radtel RT-5D, DMR (drv_rt5d.go, nouveau), d'après le programme du constructeur («
+  RT-5D CPS » 2.0.5) : paquets « A5 commande paramètre longueur données CRC » (CRC16
+  XMODEM) à 115200 bauds ; entrée avec « PROGRAMJC8810DU », mot de passe et version ;
+  sections lues et écrites un paquet à la fois (DTMF, clés, contacts, groupes, canaux,
+  VFO, fonctions optionnelles) ; les données de la radio (nom et identifiant du modèle)
+  sont lues et jamais écrites. Canal de 64 octets, 16 zones de 64 canaux. Toute la
+  mémoire est lue et écrite, comme le fait le programme.
+- Kenwood TK-2180, TK-3180K, TK-3180K2, TK-3180E et les mobiles TK-7180, TK-8180,
+  TK-7180E, TK-8180E (drv_kwtk180.go, nouveau), d'après tk8180.py de CHIRP. La mémoire
+  n'a pas de positions fixes : les zones se suivent, chacune avec ses canaux, et ajouter
+  ou retirer un canal déplace toutes les zones suivantes (expand_mmap et shuffle_zone de
+  CHIRP refaits à l'identique). 9600 bauds avec deux bits d'arrêt, puis 19200 bauds.
+  Canaux seulement. Comparaison avec CHIRP : canaux lus sans différence, image identique
+  après les modifications, trafic série identique.
+- Catalogue (catalog_421.go, nouveau) : 3 entrées. Comptes : 505 radios, 427 avec
+  réglages, 559 dans la galerie. Traductions : 23 nouveaux textes. Non faits : Kenwood
+  TK-481 / TK-981 (radios trunking à 900 MHz) et les réglages des TK-x180.
+
 4.20.0 (11/11/2026)
 -------------------
 - Radtel RT-4D et RT-6D (DMR) et RT-1000 Pro (drv_rt4d.go, nouveau), d'après les

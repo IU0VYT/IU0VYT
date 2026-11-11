@@ -166,6 +166,8 @@ https://www.gnu.org/licenses/gpl-3.0.txt؛ SHA-256
   drivers/tk3140.py                         Copyright 2023 Dan Smith
   drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
                                             2024 Dan Smith
+  4.21 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk8180.py                         Copyright 2019 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -208,7 +210,8 @@ drv.go وbw.go وdrv_uv5r.go وdrv_uv17pro.go وdrv_uv17.go وdrv_bfcommon.go و
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
-4.18: drv_kwtk140.go, drv_kwtk280.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go;
+4.21: drv_kwtk180.go.
 
 تحديث البرنامج الثابت لـ QUANSHENG UV-K5 (4.1)
 صيغة ملفات .bin من Quansheng وبروتوكول محمّل UV-K5 موثّقان في البرنامجين الحرّين
@@ -266,6 +269,8 @@ KENWOOD TK-2140/3140 وTK-280/380 وبرنامج R3B0RN الثابت وRADTEL RT
 RADTEL RT-817A / RT-871A (4.19): من المقارنة مع برنامج الشركة المصنّعة («Radtel RT-871A CPS») الذي لا يتضمن منه شيء؛ الاتصال وسجل القناة هما ما في radtel_rt880g.py في CHIRP، المستخدمان من قبل لـ RT-880G.
 
 RADTEL RT-4D وRT-6D وRT-1000 PRO (4.20): استنادًا إلى دراسة برامج الشركة المصنّعة («RT-4D CPS» و«DMR RT-6D» و«Radtel RT-1000 Pro CPS»)، ولم يُضمَّن منها شيء؛ والشيفرة مكتوبة من الصفر.
+
+RADTEL RT-5D وKENWOOD TK-x180 (4.21): Radtel RT-5D استنادًا إلى دراسة برنامج الشركة المصنّعة («RT-5D CPS»)، ولم يُضمَّن منه شيء؛ والشيفرة مكتوبة من الصفر. Kenwood TK-2180 / TK-3180 / TK-7180 / TK-8180: الملف drv_kwtk180.go مشتق من tk8180.py في CHIRP (GNU GPL v3).
 
 أسماء المناطق (4.11)
 صيغة أسماء المناطق مستخرجة، لأغراض التوافق، من شيفرة برامج الشركة المصنّعة: Radtel

@@ -3,6 +3,34 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.21.0 (11/11/2026)
+-------------------
+- Radtel RT-5D, DMR (drv_rt5d.go, nuovo; modello rtl-rt5d): dal programma del
+  costruttore («RT-5D CPS» 2.0.5, eseguibile JJCC-888DMR_CPS). Pacchetti «A5 comando
+  parametro lunghezza dati CRC» (CRC16 XMODEM), 115200 baud; ingresso con
+  «PROGRAMJC8810DU», password e versione; sezioni lette e scritte un pacchetto per
+  volta: DTMF, chiavi, contatti (80 pacchetti), gruppi (4), canali (64), VFO,
+  funzioni opzionali; i dati della radio (nome e identificativo del modello) si
+  leggono e non si scrivono mai. Canale di 64 byte, 16 zone da 64 canali. La
+  sequenza è stata ricavata due volte: leggendo il codice e con uno script sulle
+  tabelle dei passi. Lettura e scrittura di tutta la memoria, come il programma.
+- Kenwood TK-2180, TK-3180K, TK-3180K2, TK-3180E e i veicolari TK-7180, TK-8180,
+  TK-7180E, TK-8180E (drv_kwtk180.go, nuovo), da tk8180.py di CHIRP. La memoria non
+  ha posizioni fisse: le zone stanno una dopo l'altra, ognuna con i suoi canali, e
+  aggiungere o togliere un canale sposta tutte le zone che seguono (expand_mmap e
+  shuffle_zone di CHIRP rifatti uguali). La lista ha 250 posizioni per ognuna delle
+  prime 32 zone: la posizione è il numero del canale nella zona; le posizioni delle
+  zone che la radio non ha sono bloccate. Al massimo 512 canali in tutto. 9600 baud
+  con due bit di stop, poi 19200 baud. Solo i canali (niente impostazioni). Le zone
+  non convenzionali (trunking) fanno rifiutare la lettura, come in CHIRP.
+  Confronto con CHIRP: canali letti senza differenze, immagine identica dopo le
+  modifiche (aggiunte e cancellazioni comprese), traffico seriale identico.
+- verifica/chirp/chirpref.py: radio a zone di tipo «x180».
+- Catalogo (catalog_421.go, nuovo): 3 voci. Conteggi: 505 radio, 427 con
+  impostazioni, 559 in galleria. Traduzioni: 23 testi nuovi.
+- Non fatti: Kenwood TK-481 / TK-981 (radio trunking a 900 MHz di tk481.py); le
+  impostazioni dei TK-x180.
+
 4.20.0 (11/11/2026)
 -------------------
 - Radtel RT-4D e RT-6D (DMR) e RT-1000 Pro (drv_rt4d.go, nuovo; modelli rtl-rt4d,
