@@ -5446,3 +5446,15 @@ cc054a8c	das Funkgerät hat nicht konventionelle Zonen (Bündelfunk): sie werden
 bc8e418f	das Funkgerät kann die Frequenz {0} MHz nicht speichern (Vielfache von 1,25 kHz)
 09c74e1e	Funkgerät ohne Kanalnamen (128 Kanäle). Protokoll und Speicher aus dem Programm des Herstellers abgeleitet. Hier werden Frequenzen, Leistung, Bandbreite, Suchlauf und Töne geändert; Sendebegrenzung, Verschlüsselung, DCS-Typ und Stummschaltcode des Kanals bleiben wie eingestellt. Einstellungen und VFO des Funkgeräts kommen unverändert zurück. Ist am Funkgerät ein Passwort gesetzt, entferne es zuerst mit dem Programm des Herstellers. «Identifizieren» erkennt dieses Funkgerät nicht: wähle selbst die richtige Karte.
 939f420e	am Funkgerät ist ein Passwort gesetzt: entferne es zuerst mit dem Programm des Herstellers
+d6d1a0a5	900-MHz-Funkgerät (ein in Italien nicht genutztes Band), immer schmalbandig. Die Kanäle sind in Systeme aufgeteilt: die Liste hat 250 Plätze für jedes der 32 Systeme, und der Platz ist die Kanalnummer im System. Verwendet werden nur die Systeme, die das Funkgerät schon hat; Systeme mit geteilten Ressourcen (Trunking) werden nicht geändert. Es wird mit dem Kenwood-Programmierkabel programmiert.
+7d662f43	RT-69 GPS
+b9c70a35	Hoch 25 W
+ad1777b1	die Systemtabelle des Funkgeräts ist nicht lesbar: der Speicher kann nicht geändert werden
+008a187b	das Funkgerät hat das System {0} nicht: es muss mit dem Programm des Herstellers angelegt werden
+a31f50a7	das System {0} ist ein System mit geteilten Ressourcen (Trunking): es wird von hier aus nicht geändert
+cf3a4d90	das System {0} ist voll
+adf62e1b	der Speicher des Funkgeräts ist voll
+7d0150af	22 Kanäle ohne Namen, 400-480 MHz, 9600 Baud. Protokoll und Speicher aus dem Programm des Herstellers «RT-13» 1.7 abgeleitet und mit einem simulierten Funkgerät geprüft, nicht an einem echten. Hier werden Frequenzen, Töne, Leistung, Bandbreite und Suchlauf geändert; Frequenzsprung, Scrambler und Sperre bei belegtem Kanal bleiben wie eingestellt. Ist am Funkgerät ein Passwort gesetzt, entferne es zuerst mit dem Programm des Herstellers. «Identifizieren» erkennt dieses Funkgerät nicht: wähle selbst die richtige Karte.
+cd92c034	Radtel RT-13
+68a5c963	999 Kanäle mit Namen aus 12 Zeichen, 19200 Baud. Protokoll und Speicher aus dem Programm des Herstellers «RT-69 GPS» abgeleitet und mit einem simulierten Funkgerät geprüft, nicht an einem echten. Hier werden Frequenzen, Name, Töne, Leistung, Bandbreite und Suchlauf geändert; der Rest des Kanals und die Einstellungen des Funkgeräts bleiben, wie sie sind. Vor dem Schreiben wird, wie im Programm des Herstellers, geprüft, dass jeder Kanal in den Bändern des Funkgeräts liegt. Ist am Funkgerät ein Passwort gesetzt, entferne es zuerst mit dem Programm des Herstellers. «Identifizieren» erkennt dieses Funkgerät nicht: wähle selbst die richtige Karte.
+2dedccf9	Radtel RT-69 GPS

@@ -302,7 +302,7 @@ func th350ToneEnc(t genTone) (int64, int64) {
 
 func uvb5ToneDec(v int64, pol bool) string {
 	switch {
-	case v > 155 || v == 0:
+	case v > int64(50+len(dtcsCodes)) || v <= 0: // 4.23: indice fuori dalla tabella dei codici DCS (file rovinato)
 		return ""
 	case v > 50:
 		return genTone{Mode: "DTCS", Code: dtcsCodes[v-51], Inv: pol}.String()
@@ -1497,6 +1497,8 @@ func uv3rToneDec(v int64, inv bool) string {
 		return ""
 	case v < 0x33:
 		return fmtTone(chirpTones[v-1])
+	case v-0x33 >= int64(len(dtcsCodes)): // 4.23: indice fuori dalla tabella dei codici DCS (file rovinato)
+		return ""
 	}
 	return genTone{Mode: "DTCS", Code: dtcsCodes[v-0x33], Inv: inv}.String()
 }

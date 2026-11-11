@@ -6,6 +6,34 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.23.0 (11/11/2026)
+-------------------
+- Kenwood TK-481 dan TK-981 (drv_kwtk481.go, baharu), pemacu tk481.py daripada CHIRP:
+  sambungan dan memori 32 KiB yang sama dengan TK-280; saluran dalam 32 sistem yang
+  disusun berturut-turut (menambah atau membuang satu saluran menganjakkan yang
+  berikutnya sebanyak 32 bait, seperti dalam CHIRP); 250 kedudukan senarai bagi setiap
+  sistem; sistem tidak dicipta dan sistem trunking tidak diubah. Bacaan, penulisan dan
+  bait yang ditukar sama dengan CHIRP. Kenwood TK-780 dan TK-880 (mudah alih): pemacu
+  yang sama dengan TK-280 / TK-380. Tetapan ditambah untuk TK-2180, TK-3180, TK-7180 dan
+  TK-8180 (8 model, 196 hingga 201 butiran); alat yang memperoleh jadual daripada CHIRP
+  kehilangan semua butiran apabila satu percubaan mengubah struktur memori: dibetulkan.
+- Radtel RT-13 (drv_rt13.go, baharu), daripada program pengeluar «RT-13» 1.7: saudara
+  BF-888S (salam 0x6A + «PWPGJC2», 9600 baud dengan dua bit henti, blok 8 bait, 22
+  saluran), dengan semakan kata laluan dan salam berganda semasa menulis seperti yang
+  dilakukan program. Radtel RT-69 GPS (drv_rt69.go, baharu), daripada program pengeluar:
+  paket tanpa sulit Wouxun KG-UV8D, 19200 baud, 999 saluran dengan nama 12 aksara; blok
+  0x0480-0x7FFF dibaca dan ditulis; sebelum menulis, had frekuensi radio dibaca dan
+  setiap saluran disemak, seperti yang dilakukan program.
+- Keteguhan (robust_test.go, baharu): bagi setiap model, saluran memori yang rosak
+  dibaca, diubah dan dipadam serta imej terpotong ditulis, tanpa ranap; dua ranap
+  dibetulkan dalam bacaan ton Baofeng UV-B5 / UV-B6 dan UV-3R (indeks DCS di luar
+  jadual). Penukaran: saluran yang tidak dapat disimpan oleh radio sasaran kini
+  dilangkau dengan amaran, bukannya menghentikan seluruh penukaran (perisian tegar IJV,
+  nicFW, OpenGD77, UV-KX, R3b0rn, Radtel RT-480 / RT-68, RT-830 / RT-850). Katalog
+  (catalog_423.go, baharu): 5 entri. Kiraan: 515 radio, 433 dengan tetapan, 569 dalam
+  galeri. Terjemahan: 12 teks baharu. Belum dibuat: Radtel DM20 (program pengeluar
+  dilindungi dan tidak dianalisis), pemasang dan program kod natif.
+
 4.22.0 (11/11/2026)
 -------------------
 - Radtel RT-480 dan RT-68 (drv_rt480.go, baharu), daripada program pengeluar «Radio

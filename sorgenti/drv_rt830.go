@@ -224,6 +224,10 @@ func (f rt830Fam) PutRec(m *genModel, img []byte, i int, raw []byte) { copy(f.re
 
 func (f rt830Fam) Match(m *genModel, img []byte) bool { return false }
 
+// fit (4.23): nelle conversioni i canali fuori dai limiti del programma non si
+// copiano (con un avviso)
+func (rt830Fam) fit(m *genModel, c *Chan) (bool, string) { return genBandFit(m, c) }
+
 func (f rt830Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	o := rt830o(m)
 	r := f.rec(m, img, i)

@@ -168,6 +168,8 @@ revisione 337b385 del 09/11/2026). Autori indicati nei file di CHIRP usati:
                                             2024 Dan Smith
   4.21 (CHIRP 337b385, 09/11/2026), Kenwood:
   drivers/tk8180.py                         Copyright 2019 Dan Smith
+  4.23 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk481.py                          Copyright 2024 Dan Smith
   Fuori da CHIRP (GNU GPL v2 o successiva): driver «Quansheng UV-K1 / UV-K5 V3» di
   F4HWN Fusion 5.9.0 (VE2ZJM e armel F4HWN, sul driver di egzumer e JOC2;
   https://github.com/armel/uv-k1-k5v3-firmware-custom).
@@ -209,7 +211,8 @@ drv_thd72.go, drv_uvk5x.go (F4HWN Fusion);
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU);
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go;
 4.18: drv_kwtk140.go, drv_kwtk280.go;
-4.21: drv_kwtk180.go.
+4.21: drv_kwtk180.go;
+4.23: drv_kwtk481.go.
 Grazie agli autori di CHIRP, ad armel F4HWN, a M7OCM, a JuantAldea, a v0l (radio_tool),
 al progetto OpenGD77, a Hannes Matuschek DM3MAT (qdmr), a Serge Vakulenko KK6ABQ e a
 fagci (firmware R3b0rn).
@@ -318,6 +321,13 @@ CHIRP, già usati per la RT-880G.
 RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
 Dallo studio dei programmi del costruttore («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000
 Pro CPS»), di cui non è incluso nulla; il codice è scritto da zero.
+
+KENWOOD TK-481 / TK-981, TK-780 / TK-880, RADTEL RT-13, RT-69 GPS (4.23)
+Kenwood TK-481 / TK-981: drv_kwtk481.go deriva da tk481.py e tk280.py di CHIRP (GNU GPL
+v3); TK-780 / TK-880: stessa famiglia delle TK-280 / TK-380 (tk280.py). Radtel RT-13 e
+RT-69 GPS: dallo studio dei programmi del costruttore («RT-13» 1.7 e «RT-69 GPS»), di
+cui non è incluso nulla; il codice è scritto da zero. La RT-69 GPS usa gli stessi
+pacchetti della Wouxun KG-UV8D (kguv8d.py di CHIRP, già usato da drv_kguv8.go).
 
 RADTEL RT-480, RT-68, RT-830, RT-850 (4.22)
 Dallo studio dei programmi del costruttore («Radio Programing Software», «Radtel

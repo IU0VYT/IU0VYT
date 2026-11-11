@@ -7,6 +7,33 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.23.0 (11/11/2026)
+-------------------
+- Kenwood TK-481 and TK-981 (drv_kwtk481.go, new), CHIRP driver tk481.py: same link and
+  32 KiB memory as the TK-280; channels in 32 systems placed one after another (adding
+  or removing a channel moves what follows by 32 bytes, as in CHIRP); 250 list positions
+  per system; systems are not created and trunking systems are not edited. Reading,
+  writing and bytes exchanged identical to CHIRP. Kenwood TK-780 and TK-880 (mobiles):
+  same driver as the TK-280 / TK-380. Settings added for the TK-2180, TK-3180, TK-7180
+  and TK-8180 (8 models, 196 to 201 items); the tool that derives the tables from CHIRP
+  lost every item when a trial changed the memory structure: fixed.
+- Radtel RT-13 (drv_rt13.go, new), from the manufacturer's program «RT-13» 1.7: a
+  relative of the BF-888S (hello 0x6A + «PWPGJC2», 9600 baud with two stop bits, 8-byte
+  blocks, 22 channels), with the password check and the double hello on writing that the
+  program does. Radtel RT-69 GPS (drv_rt69.go, new), from the manufacturer's program:
+  the clear packets of the Wouxun KG-UV8D, 19200 baud, 999 channels with 12-character
+  names; blocks 0x0480-0x7FFF are read and written; before writing, the radio's
+  frequency limits are read and every channel is checked, as the program does.
+- Robustness (robust_test.go, new): for every model the channels of damaged memories are
+  read, edited and deleted and truncated images are written, with no crash; two crashes
+  fixed in the tone reading of the Baofeng UV-B5 / UV-B6 and UV-3R (DCS index outside
+  the table). Conversions: a channel the target radio cannot store is now skipped with a
+  warning instead of stopping the whole conversion (IJV firmware, nicFW, OpenGD77,
+  UV-KX, R3b0rn, Radtel RT-480 / RT-68, RT-830 / RT-850). Catalogue (catalog_423.go,
+  new): 5 entries. Counts: 515 radios, 433 with settings, 569 in the gallery.
+  Translations: 12 new texts. Not done: Radtel DM20 (the manufacturer's program is
+  protected and is not analysed), the installers and the native-code programs.
+
 4.22.0 (11/11/2026)
 -------------------
 - Radtel RT-480 and RT-68 (drv_rt480.go, new), from the manufacturer's program «Radio

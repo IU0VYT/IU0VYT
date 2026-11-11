@@ -7,6 +7,36 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.23.0 (11/11/2026)
+-------------------
+- Kenwood TK-481 et TK-981 (drv_kwtk481.go, nouveau), pilote tk481.py de CHIRP : même
+  liaison et même mémoire de 32 Kio que les TK-280 ; canaux dans 32 systèmes placés l'un
+  après l'autre (ajouter ou retirer un canal déplace de 32 octets ce qui suit, comme
+  dans CHIRP) ; 250 positions de liste par système ; les systèmes ne se créent pas et
+  les systèmes trunking ne se modifient pas. Lecture, écriture et octets échangés
+  identiques à CHIRP. Kenwood TK-780 et TK-880 (mobiles) : même pilote que les TK-280 /
+  TK-380. Réglages ajoutés pour les TK-2180, TK-3180, TK-7180 et TK-8180 (8 modèles, de
+  196 à 201 éléments) ; l'outil qui tire les tables de CHIRP perdait tous les éléments
+  quand un essai changeait la structure de la mémoire : corrigé.
+- Radtel RT-13 (drv_rt13.go, nouveau), d'après le programme du constructeur « RT-13 »
+  1.7 : parente de la BF-888S (salut 0x6A + « PWPGJC2 », 9600 bauds avec deux bits
+  d'arrêt, blocs de 8 octets, 22 canaux), avec le contrôle du mot de passe et le double
+  salut en écriture que fait le programme. Radtel RT-69 GPS (drv_rt69.go, nouveau),
+  d'après le programme du constructeur : paquets en clair de la Wouxun KG-UV8D, 19200
+  bauds, 999 canaux avec des noms de 12 caractères ; on lit et on écrit les blocs
+  0x0480-0x7FFF ; avant d'écrire, on lit les limites de fréquence de la radio et on
+  vérifie chaque canal, comme le fait le programme.
+- Robustesse (robust_test.go, nouveau) : pour chaque modèle, on lit, modifie et efface
+  les canaux de mémoires abîmées et on écrit des images tronquées, sans aucun arrêt ;
+  deux arrêts corrigés dans la lecture des tonalités des Baofeng UV-B5 / UV-B6 et UV-3R
+  (indice DCS hors table). Conversions : un canal que la radio de destination ne peut
+  pas mémoriser est maintenant ignoré avec un avertissement au lieu d'arrêter toute la
+  conversion (firmware IJV, nicFW, OpenGD77, UV-KX, R3b0rn, Radtel RT-480 / RT-68,
+  RT-830 / RT-850). Catalogue (catalog_423.go, nouveau) : 5 entrées. Comptes : 515
+  radios, 433 avec réglages, 569 dans la galerie. Traductions : 12 textes nouveaux. Non
+  faits : Radtel DM20 (le programme du constructeur est protégé et n'est pas analysé),
+  les installateurs et les programmes en code natif.
+
 4.22.0 (11/11/2026)
 -------------------
 - Radtel RT-480 et RT-68 (drv_rt480.go, nouveau), d'après le programme du constructeur «

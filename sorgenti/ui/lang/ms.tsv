@@ -5446,3 +5446,15 @@ cc054a8c	radio mempunyai zon bukan konvensional (trunking): tidak disokong
 bc8e418f	radio tidak dapat menyimpan frekuensi {0} MHz (gandaan 1.25 kHz)
 09c74e1e	Radio tanpa nama saluran (128 saluran). Protokol dan memori diperoleh daripada program pengeluar. Di sini anda mengubah frekuensi, kuasa, lebar jalur, imbasan dan ton; had pemancaran, penyulitan, jenis DCS dan kod senyap saluran kekal seperti yang ditetapkan. Tetapan dan VFO radio ditulis semula seperti sedia ada. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
 939f420e	kata laluan ditetapkan pada radio: buang dahulu dengan program pengeluar
+d6d1a0a5	Radio 900 MHz (jalur yang tidak digunakan di Itali), sentiasa jalur sempit. Saluran dibahagikan kepada sistem: senarai mempunyai 250 kedudukan bagi setiap satu daripada 32 sistem dan kedudukan itu ialah nombor saluran dalam sistem. Hanya sistem yang sudah ada pada radio digunakan; sistem sumber kongsi (trunking) tidak diubah. Ia diprogramkan dengan kabel pengaturcaraan Kenwood.
+7d662f43	RT-69 GPS
+b9c70a35	Tinggi 25 W
+ad1777b1	jadual sistem radio tidak dapat dibaca: memori tidak boleh diubah
+008a187b	radio tidak mempunyai sistem {0}: ia mesti dicipta dengan program pengeluar
+a31f50a7	sistem {0} ialah sistem sumber kongsi (trunking): ia tidak diubah dari sini
+cf3a4d90	sistem {0} penuh
+adf62e1b	memori radio penuh
+7d0150af	22 saluran tanpa nama, 400-480 MHz, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-13» 1.7 dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, ton, kuasa, lebar jalur dan imbasan; lompatan frekuensi, scrambler dan kunci saluran sibuk kekal seperti yang ditetapkan. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
+cd92c034	Radtel RT-13
+68a5c963	999 saluran dengan nama 12 aksara, 19200 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-69 GPS» dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, nama, ton, kuasa, lebar jalur dan imbasan; bahagian lain saluran dan tetapan radio kekal seperti sedia ada. Sebelum menulis, seperti program pengeluar, setiap saluran disemak supaya berada dalam jalur radio. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
+2dedccf9	Radtel RT-69 GPS

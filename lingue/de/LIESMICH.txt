@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.22.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.23.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,15 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.23.0:
+- KENWOOD TK-481 und TK-981 (900 MHz, Kanäle in Systeme aufgeteilt) und die Mobilgeräte
+  TK-780 und TK-880: Kanäle und Einstellungen, mit den CHIRP-Treibern. KENWOOD
+  TK-2180/3180 und TK-7180/8180: jetzt auch die Einstellungen des Funkgeräts.
+- RADTEL RT-13 und RT-69 GPS: Kanäle, aus den Programmen des Herstellers abgeleitet und
+  nur mit einem simulierten Funkgerät geprüft: zuerst nur lesen und jedes Problem
+  melden. Robuster bei beschädigten Dateien: zwei Abstürze beim Lesen der Töne von
+  Baofeng UV-B5 / UV-B6 und UV-3R behoben.
+- Galerie: 569 Modelle von 47 Marken (515 mit Kanälen, 433 mit Einstellungen).
 Neu in 4.22.0:
 - RADTEL RT-480 und RT-68: Kanäle und Namen, aus dem Programm des Herstellers
   abgeleitet. 256 Kanäle mit den Nummern 0 bis 255, Frequenzen in Schritten von 1,25

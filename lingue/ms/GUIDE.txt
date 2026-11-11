@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.22.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.23.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,15 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.23.0:
+- KENWOOD TK-481 dan TK-981 (900 MHz, saluran dibahagikan kepada sistem) serta radio
+  mudah alih TK-780 dan TK-880: saluran dan tetapan, dengan pemacu CHIRP. KENWOOD
+  TK-2180/3180 dan TK-7180/8180: kini tetapan radio juga tersedia.
+- RADTEL RT-13 dan RT-69 GPS: saluran, diperoleh daripada program pengeluar dan diuji
+  hanya dengan radio simulasi: baca dahulu dan laporkan sebarang masalah. Lebih teguh
+  dengan fail yang rosak: dua ranap dibetulkan semasa membaca ton Baofeng UV-B5 / UV-B6
+  dan UV-3R.
+- Galeri: 569 model daripada 47 jenama (515 dengan saluran, 433 dengan tetapan).
 Baharu dalam 4.22.0:
 - RADTEL RT-480 dan RT-68: saluran dan nama, diperoleh daripada program pengeluar. 256
   saluran bernombor 0 hingga 255, frekuensi dalam langkah 1.25 kHz; hanya saluran dan

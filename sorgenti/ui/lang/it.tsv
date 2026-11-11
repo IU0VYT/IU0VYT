@@ -2035,6 +2035,8 @@ b1f3e299	JJCC-888DMR
 031746de	256 canali (da 0 a 255) con nomi di 12 caratteri, 9600 baud. Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano.
 8d412538	128 canali senza nome, 9600 baud. Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Si scrivono le aree che scrive il programma del costruttore; la password della radio non si scrive mai.
 5cebd6e9	Il programma del costruttore («RT-20M Radio Program Software») usa lo stesso collegamento, gli stessi blocchi e lo stesso canale di 32 byte della iRadio UV-5118plus: si apre con la scheda Ruyage UV58Plus (999 canali con nomi di 10 caratteri, 115200 baud). Confronto fatto sul programma, non su una radio vera.
+d6d1a0a5	Radio a 900 MHz (banda non usata in Italia), sempre a banda stretta. I canali sono divisi in sistemi: la lista ha 250 posizioni per ognuno dei 32 sistemi e la posizione è il numero del canale nel sistema. Si usano solo i sistemi che la radio ha già; quelli a risorse condivise (trunking) non si modificano. Si programma col cavo di programmazione Kenwood.
+7d662f43	RT-69 GPS
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2952,6 +2954,13 @@ cc054a8c	la radio ha zone non convenzionali (trunking): non sono gestite
 6bfb46e1	la radio non ha confermato la fine della scrittura
 e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
 04b304aa	Alta 4 W
+b9c70a35	Alta 25 W
+4da54aeb	Alta 2,5 W
+ad1777b1	la tabella dei sistemi della radio non è leggibile: la memoria non si può modificare
+008a187b	la radio non ha il sistema {0}: va creato con il programma del costruttore
+a31f50a7	il sistema {0} è a risorse condivise (trunking): non si modifica da qui
+cf3a4d90	il sistema {0} è pieno
+adf62e1b	la memoria della radio è piena
 991a44e8	Radio professionale: si programma col cavo di programmazione Kenwood, accendendo la radio dopo aver collegato il cavo. La versione della radio (banda e numero dei canali) si legge dalla sua memoria; i limiti di frequenza sono quelli del costruttore allargati del 4%, come in CHIRP.
 fb5fd5d7	Canali senza nome. {0}Blocco del canale occupato e «beat shift» si conservano; la segnalazione DTMF / 2 toni dei canali viene azzerata a ogni scrittura, come fa CHIRP. Driver di CHIRP (sperimentale).
 ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
@@ -3041,7 +3050,6 @@ bd253076	canale {0}: sulle frequenze GMRS dei ponti la trasmissione non si può 
 0c141abb	canale {0}: sui canali GMRS 467 MHz solo banda stretta e bassa potenza
 4cb30e25	identificativo sconosciuto ({0})
 646a1f64	{0} Toni CTCSS e codici DCS della tabella PMR della radio (senza polarità invertita). Compander e blocco del canale occupato si conservano. Driver di CHIRP.
-4da54aeb	Alta 2,5 W
 7cabd40c	Radio FRS per gli Stati Uniti (in Italia la banda FRS non è ammessa): 22 canali FRS fissi a banda stretta, canali 8-14 a bassa potenza.
 bc461ade	0,5 W (alta)
 fdec819e	Radio PMR446 (uso libero in Italia): 16 canali PMR fissi, banda stretta, 0,5 W.
@@ -3084,6 +3092,9 @@ f3601f97	Rugged RH5R-V2
 b29caf71	Alta 9 W
 0755d7ca	Accendi la radio con il cavo collegato. 16 canali senza nomi; la radio è VHF oppure UHF (si riconosce dalla memoria) e la scrittura si ferma se la memoria è dell'altra versione. Blocco del canale occupato, eliminazione della coda, compander e scrambler si conservano. Driver di CHIRP.
 882d6f84	la memoria è di una versione della radio diversa (VHF/UHF) da quella collegata: nessun dato è stato scritto
+7d0150af	22 canali senza nome, 400-480 MHz, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-13» 1.7 e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione; salto di frequenza, scrambler e blocco su canale occupato restano quelli impostati. Se sulla radio è impostata una password va tolta prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+cd92c034	Radtel RT-13
+939f420e	sulla radio è impostata una password: toglila prima con il programma del costruttore
 126a7d24	struct {{0}{1}
 52efbf2e	Bassa {0} W
 b24b9440	Media {0} W
@@ -3158,12 +3169,13 @@ fe1ae2fa	DTMF
 9cd943ab	codice DCS {0} non ammesso da questa radio
 13b1a26f	la radio ha rifiutato il comando {0}
 735691ef	risposta della radio troppo corta ({0} byte invece di {1})
+68a5c963	999 canali con nomi di 12 caratteri, 19200 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-69 GPS» e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, nome, toni, potenza, banda e scansione; il resto del canale e le impostazioni della radio restano come sono. Prima di scrivere si controlla, come fa il programma, che ogni canale stia nelle bande della radio. Se sulla radio è impostata una password va tolta prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+2dedccf9	Radtel RT-69 GPS
 9b4191c0	Retevis RT76P (GMRS)
 87ab3755	Radio GMRS per gli Stati Uniti: in Italia la banda GMRS non è ammessa. Come in CHIRP: fuori dalle frequenze GMRS solo ricezione, sui canali dei ponti simplex o +5 MHz, sui 467 MHz banda stretta e bassa potenza. Blocco del canale occupato, PTT ID, compander e ANI si conservano. Driver di CHIRP.
 9015bc86	canale {0}: sulle frequenze GMRS la trasmissione non si può disabilitare
 e94e12f6	canale {0}: su questa frequenza GMRS solo simplex o +5 MHz (ponti)
 09c74e1e	Radio senza nomi dei canali (128 canali). Protocollo e memoria ricavati dal programma del costruttore. Qui si modificano frequenze, potenza, banda, scansione e toni; limite di trasmissione, cifratura, tipo di DCS e codice di silenziamento del canale restano quelli impostati. Impostazioni e VFO della radio tornano come sono. Se sulla radio è impostata una password, toglila prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
-939f420e	sulla radio è impostata una password: toglila prima con il programma del costruttore
 12fa3a4e	Retevis RT87
 eb030d31	128 canali con nomi di 10 caratteri. Blocco del canale occupato, PTT ID, VOX, compander/scrambler si conservano. Driver di CHIRP.
 9ced82e0	eco della radio non corretta

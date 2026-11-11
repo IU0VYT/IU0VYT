@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.22.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.23.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,15 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.23.0 :
+- KENWOOD TK-481 et TK-981 (900 MHz, canaux répartis en systèmes) et les mobiles TK-780
+  et TK-880 : canaux et réglages, avec les pilotes de CHIRP. KENWOOD TK-2180/3180 et
+  TK-7180/8180 : les réglages de la radio sont maintenant disponibles aussi.
+- RADTEL RT-13 et RT-69 GPS : canaux, tirés des programmes du constructeur et essayés
+  seulement avec une radio simulée : faites d'abord une lecture et signalez tout
+  problème. Plus robuste avec les fichiers abîmés : deux arrêts corrigés dans la lecture
+  des tonalités des Baofeng UV-B5 / UV-B6 et UV-3R.
+- Galerie : 569 modèles de 47 marques (515 avec canaux, 433 avec réglages).
 Nouveautés de la 4.22.0 :
 - RADTEL RT-480 et RT-68 : canaux et noms, tirés du programme du constructeur. 256
   canaux numérotés de 0 à 255, fréquences par pas de 1,25 kHz ; seuls les canaux et les

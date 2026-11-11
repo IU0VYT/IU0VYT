@@ -3,6 +3,51 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.23.0 (11/11/2026)
+-------------------
+- Kenwood TK-481 (palmare) e TK-981 (veicolare), 900 MHz (drv_kwtk481.go, nuovo;
+  modelli kw-tk481, kw-tk981): driver tk481.py di CHIRP. Stesso collegamento e stessa
+  memoria di 32 KiB delle TK-280; i canali sono divisi in 32 «sistemi» messi uno dopo
+  l'altro: aggiungere o togliere un canale sposta di 32 byte quello che segue, come
+  in CHIRP. La lista ha 250 posizioni per sistema; i sistemi non si creano e quelli a
+  risorse condivise (trunking) non si modificano. Lettura, scrittura e byte scambiati
+  uguali a CHIRP. Impostazioni: 43 e 45 voci.
+- Kenwood TK-780 e TK-880 (veicolari; modelli kw-tk780, kw-tk880): stessa famiglia e
+  stesso driver delle TK-280 / TK-380 (tk280.py), con le loro impostazioni.
+- Kenwood TK-2180, TK-3180, TK-7180, TK-8180 (8 modelli): ora anche le impostazioni
+  (comuni, convenzionali e tasti: da 196 a 201 voci), provate anche su una memoria
+  con un altro numero di zone. Lo strumento che ricava le tabelle da CHIRP
+  (verifica/chirp/chirpsettings.py) perdeva tutte le voci quando una prova cambiava
+  la struttura della memoria: corretto.
+- Radtel RT-13 (drv_rt13.go, nuovo; modello rtl-rt13): dal programma del costruttore
+  «RT-13» 1.7. Parente della BF-888S: saluto 0x6A + «PWPGJC2», 9600 baud con due bit
+  di stop, blocchi di 8 byte, 22 canali da 0x0010; controllo della password (0x0180)
+  e, in scrittura, doppio saluto come fa il programma. Salto di frequenza, scrambler
+  e blocco su canale occupato di un canale si conservano.
+- Radtel RT-69 GPS (drv_rt69.go, nuovo; modello rtl-rt69): dal programma del
+  costruttore (889G.exe). Pacchetti in chiaro della Wouxun KG-UV8D, 19200 baud; 999
+  canali da 0x0910, nomi di 12 caratteri in due aree, toni 0x8000 + Hz, DCS 0x4000 +
+  codice. Si leggono e si scrivono i blocchi da 0x0480 a 0x7FFF; prima di scrivere si
+  leggono i limiti di frequenza della radio e si controlla ogni canale, come fa il
+  programma; controllo della password (0x0870).
+- Robustezza (robust_test.go, nuovo): per tutti i modelli si leggono, si modificano e
+  si cancellano i canali di memorie rovinate (byte a caso, tutto a zero, un byte su
+  otto cambiato) e si scrivono immagini troncate: nessun arresto. Trovati e corretti
+  due arresti nella lettura dei toni di Baofeng UV-B5 / UV-B6 e UV-3R con un indice
+  DCS fuori tabella (drv_small.go).
+- Conversioni e inoltri: un canale con una frequenza che la radio di arrivo non può
+  memorizzare ora viene scartato con un avviso, invece di fermare tutta la
+  conversione con l'errore della scrittura. Mancava nei driver del firmware IJV, di
+  nicFW, OpenGD77, UV-KX, R3b0rn di fagci e delle Radtel RT-480 / RT-68 e RT-830 /
+  RT-850 (aggiunto il metodo «fit»; c'è anche nei nuovi RT-13 e RT-69 GPS). Prova
+  nuova TestAdaptThenSet: se l'adattamento tiene un canale, la scrittura deve
+  riuscire (72 modelli, 13 canali di prova da 27 MHz a 2,4 GHz).
+- Catalogo (catalog_423.go, nuovo): 5 voci. Conteggi: 515 radio, 433 con
+  impostazioni, 569 in galleria. Traduzioni: 12 testi nuovi.
+- Non fatti: Radtel DM20 (il programma del costruttore è protetto e non si analizza;
+  il suo file di dati ha la disposizione della memoria della Radioddity GD-77); gli
+  installatori e i programmi in codice nativo (RT-10, RT-610, RT-780 e altri).
+
 4.22.0 (11/11/2026)
 -------------------
 - Radtel RT-480 e RT-68 (drv_rt480.go, nuovo; modelli rtl-rt480, rtl-rt68): dal

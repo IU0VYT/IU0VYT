@@ -5446,3 +5446,15 @@ cc054a8c	the radio has non-conventional (trunking) zones: they are not handled
 bc8e418f	the radio cannot store the frequency {0} MHz (multiples of 1.25 kHz)
 09c74e1e	Radio without channel names (128 channels). Protocol and memory derived from the manufacturer's program. Here you edit frequencies, power, bandwidth, scan and tones; transmit limit, encryption, DCS type and mute code of the channel stay as they are set. The radio's settings and VFO go back as they are. If a password is set on the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right tab yourself.
 939f420e	a password is set on the radio: remove it first with the manufacturer's program
+d6d1a0a5	900 MHz radio (a band not used in Italy), always narrowband. The channels are divided into systems: the list has 250 positions for each of the 32 systems and the position is the channel number in the system. Only the systems the radio already has are used; shared-resource (trunking) systems are not edited. It is programmed with the Kenwood programming cable.
+7d662f43	RT-69 GPS
+b9c70a35	High 25 W
+ad1777b1	the radio's system table cannot be read: the memory cannot be edited
+008a187b	the radio does not have system {0}: it must be created with the manufacturer's program
+a31f50a7	system {0} is a shared-resource (trunking) system: it is not edited from here
+cf3a4d90	system {0} is full
+adf62e1b	the radio's memory is full
+7d0150af	22 channels without names, 400-480 MHz, 9600 baud. Protocol and memory derived from the manufacturer's program «RT-13» 1.7 and tested with a simulated radio, not on a real one. Here you edit frequencies, tones, power, bandwidth and scan; frequency hopping, scrambler and busy channel lockout stay as they are set. If a password is set on the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right tab yourself.
+cd92c034	Radtel RT-13
+68a5c963	999 channels with 12-character names, 19200 baud. Protocol and memory derived from the manufacturer's program «RT-69 GPS» and tested with a simulated radio, not on a real one. Here you edit frequencies, name, tones, power, bandwidth and scan; the rest of the channel and the radio's settings stay as they are. Before writing, as the manufacturer's program does, every channel is checked to be within the radio's bands. If a password is set on the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right tab yourself.
+2dedccf9	Radtel RT-69 GPS

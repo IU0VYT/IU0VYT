@@ -309,6 +309,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): daripada kajian program pengeluar («RT
 «DMR RT-6D», «Radtel RT-1000 Pro CPS»), tiada apa-apa daripadanya disertakan; kod
 ditulis dari awal.
 
+KENWOOD TK-481 / TK-981, TK-780 / TK-880, RADTEL RT-13, RT-69 GPS (4.23): drv_kwtk481.go
+diterbitkan daripada tk481.py dan tk280.py CHIRP (GNU GPL v3), Copyright 2024 Dan Smith;
+TK-780 / TK-880 tergolong dalam keluarga TK-280 / TK-380 (tk280.py). Radtel RT-13 dan
+RT-69 GPS: daripada kajian program pengeluar («RT-13» 1.7 dan «RT-69 GPS»), yang tiada
+satu pun disertakan; kod ditulis dari awal.
+
 RADTEL RT-480, RT-68, RT-830, RT-850 (4.22): daripada kajian program pengeluar («Radio
 Programing Software», «Radtel RT830», «Radtel RT-850 programming software»), yang tiada
 satu pun disertakan; kod ditulis dari awal.

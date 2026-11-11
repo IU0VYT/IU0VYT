@@ -62,6 +62,10 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = rt480Size()
 	case *rt830Opt: // 4.22: Radtel RT-830 e RT-850
 		size = o.size()
+	case *rt13Opt: // 4.23: Radtel RT-13
+		size = rt13Size
+	case *rt69Opt: // 4.23: Radtel RT-69 GPS
+		size = rt69Size
 	}
 	mem := bytes.Repeat([]byte{0xFF}, size)
 	if _, ok := m.Opt.(*drOpt); ok {
@@ -102,6 +106,9 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	first := &Chan{Rx: 145500000, Tx: 145500000, Scan: true, Name: "S20"}
 	if m.NameMax == 0 {
 		first.Name = ""
+	}
+	if !m.inBands(first.Rx) { // 4.23: radio che rifiutano le frequenze fuori banda (Radtel RT-13, solo UHF)
+		first.Rx, first.Tx = m.Bands[0].Lo+500000, m.Bands[0].Lo+500000
 	}
 	if err := m.Fam.Set(m, mem, 0, first); err != nil {
 		t.Fatal(err)

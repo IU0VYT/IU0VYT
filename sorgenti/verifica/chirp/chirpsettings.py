@@ -227,12 +227,24 @@ class FastApply:
         r = self.r
         m = r._mmap
         m._data[:] = list(self.b0)
-        tree, items = keyed(r)
-        idx = {k: e for k, _, e in items}
-        for k, val in changes.items():
-            idx[k].value.set_value(val)
-        r.set_settings(tree)
-        return raw(r)
+        before = (id(r._mmap), id(getattr(r, "_memobj", None)))
+        try:
+            tree, items = keyed(r)
+            idx = {k: e for k, _, e in items}
+            for k, val in changes.items():
+                idx[k].value.set_value(val)
+            r.set_settings(tree)
+            out = raw(r)
+        except Exception:
+            # 4.23 (Kenwood TK-x180): una modifica rifiutata a metà lascia l'oggetto
+            # radio in uno stato che non è più quello di partenza
+            self.r = load(self.cls, self.b0)
+            raise
+        if before != (id(r._mmap), id(getattr(r, "_memobj", None))):
+            # 4.23 (Kenwood TK-x180, numero delle zone): il driver ha ricostruito la
+            # memoria e la sua struttura; rimettere i byte di partenza non basta
+            self.r = load(self.cls, self.b0)
+        return out
 
 
 FAST = None

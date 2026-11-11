@@ -227,6 +227,12 @@ func (f uvkxFam) Get(m *genModel, img []byte, i int) *Chan {
 	return c
 }
 
+// fit (4.23): nelle conversioni un canale con una frequenza che la radio non può
+// memorizzare non viene copiato (con un avviso), invece di fermare tutto
+func (uvkxFam) fit(m *genModel, c *Chan) (bool, string) {
+	return genRangeFit(c, uvkxMinHz, uvkxMaxHz)
+}
+
 func (f uvkxFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	r := img[f.at(i) : f.at(i)+uvkxRec]
 	le := binary.LittleEndian

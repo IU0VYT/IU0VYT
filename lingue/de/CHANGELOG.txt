@@ -7,6 +7,36 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.23.0 (11.11.2026)
+-------------------
+- Kenwood TK-481 und TK-981 (drv_kwtk481.go, neu), CHIRP-Treiber tk481.py: gleiche
+  Verbindung und gleicher 32-KiB-Speicher wie beim TK-280; Kanäle in 32 Systemen, die
+  hintereinander liegen (ein Kanal mehr oder weniger verschiebt das Folgende um 32 Byte,
+  wie in CHIRP); 250 Listenplätze je System; Systeme werden nicht angelegt und
+  Trunking-Systeme nicht geändert. Lesen, Schreiben und ausgetauschte Bytes identisch
+  mit CHIRP. Kenwood TK-780 und TK-880 (Mobilgeräte): gleicher Treiber wie TK-280 /
+  TK-380. Einstellungen für TK-2180, TK-3180, TK-7180 und TK-8180 ergänzt (8 Modelle,
+  196 bis 201 Einträge); das Werkzeug, das die Tabellen aus CHIRP ableitet, verlor alle
+  Einträge, wenn ein Versuch die Speicherstruktur änderte: behoben.
+- Radtel RT-13 (drv_rt13.go, neu), aus dem Programm des Herstellers «RT-13» 1.7: ein
+  Verwandter des BF-888S (Gruß 0x6A + «PWPGJC2», 9600 Baud mit zwei Stoppbits,
+  8-Byte-Blöcke, 22 Kanäle), mit der Passwortprüfung und dem doppelten Gruß beim
+  Schreiben wie im Programm. Radtel RT-69 GPS (drv_rt69.go, neu), aus dem Programm des
+  Herstellers: die unverschlüsselten Pakete des Wouxun KG-UV8D, 19200 Baud, 999 Kanäle
+  mit Namen aus 12 Zeichen; gelesen und geschrieben werden die Blöcke 0x0480-0x7FFF; vor
+  dem Schreiben werden die Frequenzgrenzen des Funkgeräts gelesen und jeder Kanal
+  geprüft, wie im Programm.
+- Robustheit (robust_test.go, neu): für jedes Modell werden die Kanäle beschädigter
+  Speicher gelesen, geändert und gelöscht und abgeschnittene Abbilder geschrieben, ohne
+  Absturz; zwei Abstürze beim Lesen der Töne von Baofeng UV-B5 / UV-B6 und UV-3R behoben
+  (DCS-Index außerhalb der Tabelle). Umwandlungen: ein Kanal, den das Zielfunkgerät
+  nicht speichern kann, wird jetzt mit einer Warnung übersprungen, statt die ganze
+  Umwandlung abzubrechen (IJV-Firmware, nicFW, OpenGD77, UV-KX, R3b0rn, Radtel RT-480 /
+  RT-68, RT-830 / RT-850). Katalog (catalog_423.go, neu): 5 Einträge. Zahlen: 515
+  Funkgeräte, 433 mit Einstellungen, 569 in der Galerie. Übersetzungen: 12 neue Texte.
+  Nicht gemacht: Radtel DM20 (das Programm des Herstellers ist geschützt und wird nicht
+  untersucht), die Installationsprogramme und die Programme in nativem Code.
+
 4.22.0 (11.11.2026)
 -------------------
 - Radtel RT-480 und RT-68 (drv_rt480.go, neu), aus dem Programm des Herstellers «Radio

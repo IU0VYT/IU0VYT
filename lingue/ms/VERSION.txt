@@ -1,6 +1,6 @@
 IU0VYT Flash
-Versi: 4.22.0
-Binaan: 2026-11-11T09:52
+Versi: 4.23.0
+Binaan: 2026-11-11T14:56
 
 Program membaca versinya daripada versione.txt dalam folder utama; fail ini hanya
 untuk makluman.

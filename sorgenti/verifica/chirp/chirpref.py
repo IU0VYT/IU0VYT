@@ -165,6 +165,9 @@ def zoned(r):
     numero del canale nella zona) oppure None."""
     if hasattr(r, "probe_layout") and hasattr(r, "expand_mmap") and hasattr(r, "shuffle_zone"):
         return "x180"
+    if hasattr(r, "_expand_system") and hasattr(r, "_reduce_system"):
+        # 4.23: Kenwood TK-481 / TK-981 (tk481.py): 250 posizioni per ognuno dei 32 sistemi
+        return "x481"
     if hasattr(r, "check_index") and hasattr(r, "_get_zone") and hasattr(r, "next_slot"):
         return "x140"
     if hasattr(r, "_get_memory_mapping") and hasattr(r, "_compact_mappings") and r.get_features().has_sub_devices:
@@ -190,6 +193,17 @@ def zoned_target(r, pos, delete=False):
     del canale presente; per una posizione vuota la zona del canale che la
     precede (la prima zona se non c'è) e il primo numero libero. Restituisce
     (None, None) per la cancellazione di una posizione già vuota."""
+    if zoned(r) == "x481":
+        z, num = pos // 250, pos % 250 + 1
+        for sub in r.get_sub_devices():
+            if sub._system == z + 1:
+                if delete:
+                    try:
+                        sub._get_memory(num)
+                    except IndexError:
+                        return None, None
+                return sub, num
+        return None, None
     if zoned(r) == "x180":
         subs = r.get_sub_devices()
         z, num = pos // 250, pos % 250 + 1
@@ -253,6 +267,18 @@ def zoned_target(r, pos, delete=False):
 
 
 def decode(r):
+    if zoned(r) == "x481":
+        out = [None] * (32 * 250)
+        for sub in r.get_sub_devices():
+            z = sub._system - 1
+            system = getattr(r._memobj, "system%i" % z)
+            for i in range(int(system.sys.channels)):
+                n = int(system.channels[i].number)
+                # l'immagine di prova della TK-981 ha nei sistemi 2 e 3 un record
+                # tutto a FF (numero 255): CHIRP mostra solo i numeri da 1 a 250
+                if 1 <= n <= 250:
+                    out[z * 250 + n - 1] = mem_to_json(sub, sub.get_memory(n))
+        return out
     if zoned(r) == "x180":
         out = [None] * (32 * 250)
         for z, sub in enumerate(r.get_sub_devices()[:32]):

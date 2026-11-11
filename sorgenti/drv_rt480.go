@@ -161,6 +161,17 @@ func rt480Name(s string) []byte {
 	return out
 }
 
+// fit (4.23): nelle conversioni i canali fuori dalle bande del programma o con
+// una frequenza che non è multipla di 1,25 kHz non si copiano (con un avviso)
+func (rt480Fam) fit(m *genModel, c *Chan) (bool, string) {
+	for _, hz := range []int64{c.Rx, c.Tx} {
+		if hz%1250 != 0 {
+			return false, fmt.Sprintf("la radio non può memorizzare la frequenza %s MHz (multipli di 1,25 kHz)", fmtMHz(hz))
+		}
+	}
+	return genBandFit(m, c)
+}
+
 func (f rt480Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	r, nm := f.rec(img, i), f.name(img, i)
 	if c == nil {

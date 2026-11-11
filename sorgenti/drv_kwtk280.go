@@ -113,6 +113,9 @@ func init() {
 	genRegister(
 		mk("kw-tk280", "TK-280", "TK280_Radios", "P0280", 136000000, 174000000, kwtkPowers),
 		mk("kw-tk380", "TK-380", "TK380_Radios", "P0380", 400000000, 520000000, []genPower{{"Bassa 1 W", 1, 2}, {"Alta 4 W", 4, 0}}),
+		// 4.23: le veicolari della stessa famiglia (stessa memoria, altra sigla)
+		mk("kw-tk780", "TK-780", "TK780_Radios", "M0780", 136000000, 174000000, []genPower{{"Bassa 5 W", 5, 2}, {"Alta 25 W", 25, 0}}),
+		mk("kw-tk880", "TK-880", "TK880_Radios", "M0880", 400000000, 520000000, []genPower{{"Bassa 5 W", 5, 2}, {"Alta 25 W", 25, 0}}),
 	)
 }
 

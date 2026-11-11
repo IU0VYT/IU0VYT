@@ -296,6 +296,18 @@ func ijvBlankRec(r []byte) {
 	}
 }
 
+// fit (4.23): nelle conversioni un canale con una frequenza che la radio non può
+// memorizzare non viene copiato (con un avviso), invece di fermare tutto
+func (f ijvFam) fit(m *genModel, c *Chan) (bool, string) {
+	if f.band(c.Rx) < 0 {
+		return false, fmt.Sprintf("frequenza %s MHz fuori dalle gamme del firmware IJV", fmtMHz(c.Rx))
+	}
+	if !c.TxOff && c.Tx != c.Rx && f.band(c.Tx) < 0 {
+		return false, fmt.Sprintf("frequenza di trasmissione %s MHz fuori dalle gamme del firmware IJV", fmtMHz(c.Tx))
+	}
+	return true, ""
+}
+
 func (f ijvFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	r := f.rec(img, i)
 	if r == nil {

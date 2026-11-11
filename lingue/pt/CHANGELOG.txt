@@ -7,6 +7,34 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.23.0 (11/11/2026)
+-------------------
+- Kenwood TK-481 e TK-981 (drv_kwtk481.go, novo), controlador tk481.py do CHIRP: mesma
+  ligação e mesma memória de 32 KiB dos TK-280; canais em 32 sistemas colocados uns a
+  seguir aos outros (acrescentar ou retirar um canal desloca 32 bytes o que se segue,
+  como no CHIRP); 250 posições de lista por sistema; os sistemas não se criam e os de
+  trunking não se alteram. Leitura, escrita e bytes trocados idênticos ao CHIRP. Kenwood
+  TK-780 e TK-880 (móveis): mesmo controlador dos TK-280 / TK-380. Definições
+  acrescentadas para os TK-2180, TK-3180, TK-7180 e TK-8180 (8 modelos, de 196 a 201
+  itens); a ferramenta que obtém as tabelas do CHIRP perdia todos os itens quando um
+  ensaio mudava a estrutura da memória: corrigido.
+- Radtel RT-13 (drv_rt13.go, novo), do programa do fabricante «RT-13» 1.7: parente do
+  BF-888S (saudação 0x6A + «PWPGJC2», 9600 baud com dois bits de paragem, blocos de 8
+  bytes, 22 canais), com a verificação da palavra-passe e a dupla saudação na escrita
+  que o programa faz. Radtel RT-69 GPS (drv_rt69.go, novo), do programa do fabricante:
+  os pacotes não cifrados do Wouxun KG-UV8D, 19200 baud, 999 canais com nomes de 12
+  caracteres; leem-se e escrevem-se os blocos 0x0480-0x7FFF; antes de escrever leem-se
+  os limites de frequência do rádio e verifica-se cada canal, como faz o programa.
+- Robustez (robust_test.go, novo): para cada modelo leem-se, alteram-se e apagam-se os
+  canais de memórias danificadas e escrevem-se imagens truncadas, sem nenhuma falha;
+  corrigidas duas falhas na leitura dos tons dos Baofeng UV-B5 / UV-B6 e UV-3R (índice
+  DCS fora da tabela). Conversões: um canal que o rádio de destino não consegue guardar
+  é agora ignorado com um aviso em vez de parar toda a conversão (firmware IJV, nicFW,
+  OpenGD77, UV-KX, R3b0rn, Radtel RT-480 / RT-68, RT-830 / RT-850). Catálogo
+  (catalog_423.go, novo): 5 entradas. Contagens: 515 rádios, 433 com definições, 569 na
+  galeria. Traduções: 12 textos novos. Não feitos: Radtel DM20 (o programa do fabricante
+  está protegido e não é analisado), os instaladores e os programas em código nativo.
+
 4.22.0 (11/11/2026)
 -------------------
 - Radtel RT-480 e RT-68 (drv_rt480.go, novo), do programa do fabricante «Radio

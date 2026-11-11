@@ -5446,3 +5446,15 @@ cc054a8c	la radio a des zones non conventionnelles (trunking) : elles ne sont pa
 bc8e418f	la radio ne peut pas mémoriser la fréquence {0} MHz (multiples de 1,25 kHz)
 09c74e1e	Radio sans noms de canaux (128 canaux). Protocole et mémoire tirés du programme du constructeur. Ici on modifie les fréquences, la puissance, la largeur de bande, le balayage et les tonalités ; la limite d'émission, le chiffrement, le type de DCS et le code de silencieux du canal restent tels qu'ils sont réglés. Les réglages et le VFO de la radio reviennent tels quels. Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur. « Identifier » ne reconnaît pas cette radio : choisissez vous-même le bon onglet.
 939f420e	un mot de passe est défini sur la radio : retirez-le d'abord avec le programme du constructeur
+d6d1a0a5	Radio 900 MHz (bande non utilisée en Italie), toujours en bande étroite. Les canaux sont répartis en systèmes : la liste a 250 positions pour chacun des 32 systèmes et la position est le numéro du canal dans le système. Seuls les systèmes que la radio possède déjà sont utilisés ; les systèmes à ressources partagées (trunking) ne sont pas modifiés. Elle se programme avec le câble de programmation Kenwood.
+7d662f43	RT-69 GPS
+b9c70a35	Haute 25 W
+ad1777b1	la table des systèmes de la radio est illisible : la mémoire ne peut pas être modifiée
+008a187b	la radio n'a pas le système {0} : il faut le créer avec le programme du constructeur
+a31f50a7	le système {0} est à ressources partagées (trunking) : il ne se modifie pas d'ici
+cf3a4d90	le système {0} est plein
+adf62e1b	la mémoire de la radio est pleine
+7d0150af	22 canaux sans nom, 400-480 MHz, 9600 bauds. Protocole et mémoire tirés du programme du constructeur « RT-13 » 1.7 et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie les fréquences, les tonalités, la puissance, la largeur de bande et le balayage ; le saut de fréquence, le brouilleur et le blocage sur canal occupé restent tels qu'ils sont réglés. Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur. « Identifier » ne reconnaît pas cette radio : choisissez vous-même le bon onglet.
+cd92c034	Radtel RT-13
+68a5c963	999 canaux avec des noms de 12 caractères, 19200 bauds. Protocole et mémoire tirés du programme du constructeur « RT-69 GPS » et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie les fréquences, le nom, les tonalités, la puissance, la largeur de bande et le balayage ; le reste du canal et les réglages de la radio restent tels quels. Avant d'écrire, on vérifie, comme le fait le programme du constructeur, que chaque canal est dans les bandes de la radio. Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur. « Identifier » ne reconnaît pas cette radio : choisissez vous-même le bon onglet.
+2dedccf9	Radtel RT-69 GPS

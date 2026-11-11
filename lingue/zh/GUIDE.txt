@@ -1,11 +1,15 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.22.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.23.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.23.0 的新内容：
+- KENWOOD TK-481 和 TK-981（900 MHz，信道分为若干系统）以及车载台 TK-780 和 TK-880：信道和设置，使用 CHIRP 的驱动。KENWOOD TK-2180/3180 和 TK-7180/8180：现在也可以修改电台的设置。
+- RADTEL RT-13 和 RT-69 GPS：信道，根据厂商软件得出，只用模拟电台测试过：请先只读取，并报告任何问题。对损坏的文件更稳健：修正了读取 Baofeng UV-B5 / UV-B6 和 UV-3R 亚音时的两处崩溃。
+- 图库：47 个品牌的 569 个型号（515 个支持信道，433 个支持设置）。
 4.22.0 的新内容：
 - RADTEL RT-480 和 RT-68：信道和名称，根据厂商软件得出。256 个信道，编号 0 到 255，频率步进 1.25 kHz；只写入信道和名称，电台的设置、VFO 和 DTMF 不会被改动。
 - RADTEL RT-830 和 RT-850：信道（128 个，无名称），根据厂商软件得出。电台的设置和 VFO 原样写回，密码从不写入；如果电台设置了密码，请先用 Radtel 的软件取消。RADTEL RT-20M：用 Ruyage UV58Plus 卡片打开。以上都只用模拟电台测试过：请先只读取，并报告任何问题。
