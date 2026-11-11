@@ -163,6 +163,10 @@ GNU General Public License (версии 2 или новее либо 3 или �
   drivers/kenwood_live.py,
   drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
   drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
+  4.18 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk3140.py                         Copyright 2023 Dan Smith
+  drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
+                                            2024 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -205,6 +209,7 @@ OpenGD77, Hannes Matuschek DM3MAT (qdmr) и Serge Vakulenko KK6ABQ.
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go.
 
 ОБНОВЛЕНИЕ ПРОШИВКИ QUANSHENG UV-K5 (4.1)
 Формат файлов .bin от Quansheng и протокол загрузчика UV-K5 описаны свободными
@@ -275,6 +280,17 @@ KENWOOD TH-F6/F7, TH-G71, TH-D7, TH-K2 И НОСИМЫЕ РАЦИИ TK (4.17): d
 Smith); drv_kwtk60.go и drv_kwtk_var.go получены из tk270.py и tk760g.py из CHIRP
 (Copyright 2016 Pavel Milanes CO7WT), GNU GPL v3. Запись каталога о Radtel RT-860
 основана на сравнении с программой производителя, из которой ничего не включено.
+
+KENWOOD TK-2140/3140, TK-280/380, ПРОШИВКА R3B0RN, RADTEL RT-330 И RT-400 (4.18):
+drv_kwtk140.go основан на tk3140.py из CHIRP (Copyright 2023 Dan Smith), drv_kwtk280.go
+— на tk280.py из CHIRP (Copyright 2016 Pavel Milanes CO7WT, 2024 Dan Smith), GNU GPL v3.
+Прошивка R3b0rn от fagci (https://github.com/fagci/uvk5-fagci-reborn, лицензия Apache
+2.0, на основе прошивки DualTachyon): drv_fagci.go написан в IU0VYT Flash по структуре
+памяти и командам, описанным в исходных текстах прошивки; никакие прошивки и программы
+автора не включены; независимая программа, с ним не связанная. Radtel RT-330 и RT-400:
+по сравнению с программами производителя («Radio CPS» и «JJCC-7700 CPS»), из которых
+ничего не включено; запись канала — как в mml_jc8810.py из CHIRP. Спасибо fagci за
+прошивку R3b0rn.
 
 НАЗВАНИЯ ЗОН (4.11)
 Формат названий зон получен, ради совместимости, из кода программ производителя:

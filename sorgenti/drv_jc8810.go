@@ -219,18 +219,69 @@ func init() {
 			fp("\x00\x00\x00\x24\x00\x20\xD0\x04", "\x00\x00\x00\x32\x00\x20\xD8\x04"),
 			rng(0x2000, [2]int{0xB000, 0xB2C0}, [2]int{0xB500, 0xB740}), 0xB740, h3(5, 4, 2), p3, bands(18, 108, 108, 136, 136, 300, 300, 660, 840, 1000), nil},
 	}
+	// 4.18: Radtel RT-330 e RT-400, dai programmi del costruttore («Radio CPS» e
+	// «JJCC-7700 CPS», stessa base di codice): stesso protocollo e stesso record
+	// dei canali della famiglia. Il programma non controlla l'identificativo: la
+	// RT-330 ha un saluto solo suo («PROGRAMYF68U», 115200 baud, 512 canali, potenze
+	// alta 0 - media 1 - bassa 2); la RT-400 usa il saluto delle RT-470
+	// («PROGRAMJC81U»), per cui si rifiutano gli identificativi degli altri modelli.
+	var jc81 [][]byte
 	for _, x := range list {
-		o := &jc8810Opt{rt900Opt: rt900Opt{magic: []byte(x.magic), fp1: x.fps, ranges: x.ranges, memsize: x.memsize, format: jc8810Format, plain: true},
+		if x.magic == "PROGRAMJC81U" {
+			jc81 = append(jc81, x.fps...)
+		}
+	}
+	pn := func(l ...string) []genPower {
+		sem := map[string]int{"Alta": 0, "Media": 1, "Bassa": 2}
+		var out []genPower
+		for _, s := range l {
+			out = append(out, genPower{s, 0, sem[s]})
+		}
+		return out
+	}
+	type vx struct {
+		baud  int      // velocità (0: 57600)
+		fpNot [][]byte // identificativi di altri modelli con lo stesso saluto: rifiutati
+		note  string
+	}
+	extra := map[string]vx{
+		"rt-rt330": {baud: 115200,
+			note: "Accendi la radio con il cavo collegato. 512 canali, 115200 baud. Protocollo e memoria ricavati dal programma del " +
+				"costruttore («Radio CPS» della RT-330), che usa lo stesso record dei canali della famiglia MML JC-8810 (Radtel RT-470). " +
+				"Si leggono e si scrivono le stesse aree del programma del costruttore."},
+		"rt-rt400": {fpNot: jc81,
+			note: "Accendi la radio con il cavo collegato. 256 canali. Protocollo e memoria ricavati dal programma del costruttore " +
+				"(«JJCC-7700 CPS» della RT-400), che usa lo stesso saluto e lo stesso record dei canali delle Radtel RT-470. Il programma " +
+				"del costruttore non controlla l'identificativo della radio: questa scheda rifiuta le radio che si identificano come " +
+				"uno degli altri modelli della famiglia (RT-470, RT-630, RT-495, HI-8811) e accetta le altre. Si leggono e si scrivono " +
+				"le stesse aree del programma del costruttore."},
+	}
+	list = append(list,
+		v{"rt-rt330", "Radtel", "RT-330", "IU0VYT_Radtel_RT330", "Radtel RT-330", 512, "PROGRAMYF68U", nil,
+			rng(0x4000, [2]int{0xB000, 0xB180}), 0xB180, pn("Alta", "Media", "Bassa"), []int64{0, 1, 2}, bands(100, 520), nil},
+		v{"rt-rt400", "Radtel", "RT-400", "IU0VYT_Radtel_RT400", "Radtel RT-400", 256, "PROGRAMJC81U", nil,
+			rng(0x2000, [2]int{0xB000, 0xB2C0}), 0xB300, pn("Alta", "Media", "Bassa"), p3, bands(18, 1000), nil})
+	for _, x := range list {
+		ex, isNew := extra[x.id]
+		o := &jc8810Opt{rt900Opt: rt900Opt{magic: []byte(x.magic), fp1: x.fps, fpNot: ex.fpNot, ranges: x.ranges, memsize: x.memsize, format: jc8810Format, plain: true},
 			pow: x.pow, airband: x.air}
 		note := "Accendi la radio con il cavo collegato. Driver di CHIRP della famiglia MML JC-8810 (Radtel RT-470)."
 		if x.air != nil {
 			note += " In banda aerea (118-136 MHz) la radio riceve in AM."
 		}
+		baud := 57600
+		if isNew {
+			// si leggono solo le aree che il programma del costruttore legge
+			o.reads, note = x.ranges, ex.note
+			if ex.baud != 0 {
+				baud = ex.baud
+			}
+		}
 		genRegister(&genModel{ID: x.id, Vendor: x.vendor, Model: x.model, RClass: x.rclass,
 			Name: x.name, Slots: x.slots, First: 1, NameMax: 12,
 			Charset: charsetAlnum + "`~!@#$%^&*()-=_+[]\\{}|;':\",./<>?",
-			Powers:  x.powers, Bands: x.bands, Narrow: true, HasScan: true,
-			DCS: uv5rDTCS, Baud: 57600, Fam: jc8810Fam{}, Opt: o, Notes: note})
+			Powers:  x.powers, Bands: x.bands, Narrow: true, HasScan: true, NoChirp: isNew,
+			DCS: uv5rDTCS, Baud: baud, Fam: jc8810Fam{}, Opt: o, Notes: note})
 	}
 }
 

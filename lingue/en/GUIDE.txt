@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.17.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.18.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,20 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.18.0:
+- KENWOOD TK-2140, TK-3140, TK-280, TK-380: professional handhelds with the channels
+  divided into zones (groups): channels and settings, with the CHIRP drivers. The list
+  shows the 250 memory positions; an edited channel keeps its zone and number, a new
+  channel goes into the zone of the channel before it. Zones cannot be created or
+  deleted from here.
+- QUANSHENG UV-K5 / UV-K6 WITH FAGCI'S R3B0RN FIRMWARE: channels only (298 with the
+  original memory chip, up to 1024 with a larger one); settings, VFOs, presets and the
+  SSB patch are never written. Tested only with a simulated radio: read first and report
+  any problem.
+- RADTEL RT-330 and RT-400: channels, derived from the manufacturer's programs. The
+  RT-400 tab refuses radios that identify themselves as an RT-470, RT-630, RT-495 or
+  HI-8811. Tested only with a simulated radio.
+- Gallery: 552 models of 47 brands (498 with channels, 427 with settings).
 What's new in 4.17.0:
 - KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: channels read and written one at a time
   with the radio switched on normally (9600 baud, programming cable); only the changed

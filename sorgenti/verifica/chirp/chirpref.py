@@ -156,7 +156,112 @@ def mem_to_json(r, mem):
             "power": power, "mode": mem.mode, "scan": mem.skip != "S", "skip": mem.skip, "name": mem.name}
 
 
+def zoned(r):
+    """4.18: radio di CHIRP con una «sotto-radio» per zona e i canali in una
+    tabella di posizioni fisiche: in IU0VYT Flash la lista è quella delle
+    posizioni fisiche. Restituisce "x140" (Kenwood TK-2140/3140, tk3140.py),
+    "x80" (Kenwood TK-280/380, tk280.py) oppure None."""
+    if hasattr(r, "check_index") and hasattr(r, "_get_zone") and hasattr(r, "next_slot"):
+        return "x140"
+    if hasattr(r, "_get_memory_mapping") and hasattr(r, "_compact_mappings") and r.get_features().has_sub_devices:
+        return "x80"
+    return None
+
+
+def x80_groups(r):
+    return dict((int(s.group), s) for s in r.get_sub_devices())
+
+
+def x80_slot(r, pos):
+    """Voce della tabella dei gruppi che usa la posizione fisica pos."""
+    for k in range(250):
+        m = r._memobj.group_mapping[k]
+        if int(m.group) < 255 and int(m.number) < 255 and int(m.index) == pos:
+            return m
+    return None
+
+
+def zoned_target(r, pos, delete=False):
+    """Sotto-radio e numero del canale per la posizione fisica pos (da 0): quelli
+    del canale presente; per una posizione vuota la zona del canale che la
+    precede (la prima zona se non c'è) e il primo numero libero. Restituisce
+    (None, None) per la cancellazione di una posizione già vuota."""
+    if zoned(r) == "x80":
+        subs = x80_groups(r)
+        cur = x80_slot(r, pos)
+        if cur is not None:
+            return subs[int(cur.group)], int(cur.number)
+        if delete:
+            return None, None
+        group = None
+        for k in range(pos - 1, -1, -1):
+            m = x80_slot(r, k)
+            if m is not None:
+                group = int(m.group)
+                break
+        gi = None
+        for i in range(250):
+            n = int(r._memobj.groups[i].number)
+            if n > 250:
+                continue
+            if group is None:
+                group = n
+            if n == group:
+                gi = i
+                break
+        used = set(int(m.number) for m in r._memobj.group_mapping
+                   if int(m.group) == group and int(m.number) < 255)
+        num = min(n for n in range(1, 251) if n not in used)
+        # come _get_memory_mapping(allocate=True) di CHIRP, ma nella posizione
+        # fisica scelta dalla lista (CHIRP prende la prima libera)
+        for i in range(250):
+            m = r._memobj.group_mapping[i]
+            if int(m.group) == 0xFF:
+                m.group = group
+                m.number = num
+                m.group_index = gi
+                m.index = pos
+                break
+        r._memobj.groups[gi].channels += 1
+        r._compact_mappings()
+        return subs[group], num
+    mems = r._memobj.memories
+    if int(mems[pos].memory) != 0xFF:
+        return r._get_zone(int(mems[pos].zone)), int(mems[pos].memory)
+    if delete:
+        return None, None
+    zone = int(r._memobj.zoneinfo[0].zone)
+    for k in range(pos - 1, -1, -1):
+        if int(mems[k].memory) != 0xFF:
+            zone = int(mems[k].zone)
+            break
+    used = set(int(x.memory) for x in mems if int(x.memory) != 0xFF and int(x.zone) == zone)
+    num = min(n for n in range(1, 251) if n not in used)
+    sub = r._get_zone(zone)
+    sub.next_slot = lambda number, p=pos: p
+    return sub, num
+
+
 def decode(r):
+    if zoned(r) == "x80":
+        out = [None] * 250
+        for group, sub in x80_groups(r).items():
+            for n in range(1, 251):
+                try:
+                    mapping = r._get_memory_mapping(group, n)
+                except IndexError:
+                    continue
+                out[int(mapping.index)] = mem_to_json(sub, sub.get_memory(n))
+        return out
+    if zoned(r):
+        out = [None] * len(r._memobj.memories)
+        for zone in r._get_zone_info():
+            sub = r._get_zone(zone)
+            for n in range(1, 251):
+                _i, slot = sub.check_index(n)
+                if slot is not None:
+                    out[int(slot)] = mem_to_json(sub, sub.get_memory(n))
+        return out
     rf = r.get_features()
     lo, hi = rf.memory_bounds
     out = []
@@ -379,13 +484,23 @@ def main():
         r = load(cls, sys.argv[3])
         edits = json.load(open(sys.argv[4]))
         errs = []
+        top = r
         for e in edits:
             try:
+                if zoned(top):
+                    r, num = zoned_target(top, e["n"] - 1, e["chan"] is None)
+                    if r is None:
+                        continue
+                    e = dict(e, n=num)
                 if e["chan"] is None:
                     # cancellazione come nell'interfaccia di CHIRP
                     r.erase_memory(e["n"])
                     continue
                 mem = json_to_mem(r, e["n"], e["chan"])
+                if zoned(top) == "x80":
+                    # la posizione appena assegnata è ancora vuota (FF): il numero
+                    # è quello chiesto, come nell'interfaccia di CHIRP
+                    mem.number = e["n"]
                 ex0 = r.__dict__.pop("_chirpref_existing", None)
                 if ex0 is not None:
                     r.check_set_memory_immutable_policy(ex0, mem)
@@ -408,7 +523,7 @@ def main():
                     r._memobj.memory[e["n"]].tx_off = False
             except Exception as ex:
                 errs.append([e["n"], ["%s: %s" % (type(ex).__name__, ex)]])
-        open(sys.argv[5], "wb").write(raw_mmap(r))
+        open(sys.argv[5], "wb").write(raw_mmap(top))
         print(json.dumps({"errors": errs}))
     elif cmd == "clone":
         addr, op = sys.argv[3], sys.argv[4]

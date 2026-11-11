@@ -1,11 +1,20 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.17.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.18.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.18.0:
+- KENWOOD TK-2140, TK-3140, TK-280, TK-380: palmari professionali con i canali divisi
+  in zone (gruppi): canali e impostazioni, con i driver di CHIRP. Vedi «KENWOOD
+  TK-2140/3140, TK-280/380».
+- QUANSHENG UV-K5 / UV-K6 CON IL FIRMWARE R3B0RN DI FAGCI: canali (298 con la memoria
+  originale, fino a 1024 con una memoria più grande). Vedi «FIRMWARE R3B0RN DI FAGCI».
+- RADTEL RT-330 e RT-400: canali, dai programmi del costruttore. Vedi «RADTEL RT-330
+  E RT-400».
+- Galleria: 552 modelli di 47 marche (498 con canali, 427 con impostazioni).
 Novità della 4.17.0:
 - KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: canali letti e scritti un canale per
   volta con la radio accesa normalmente (9600 baud); si inviano solo i canali cambiati.
@@ -1195,6 +1204,63 @@ che la radio comunica:
   ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
+
+KENWOOD TK-2140/3140, TK-280/380 (4.18)
+Palmari professionali Kenwood con i canali divisi in zone (TK-2140, TK-3140) o in
+gruppi (TK-280, TK-380):
+- si programmano col cavo di programmazione Kenwood, accendendo la radio dopo aver
+  collegato il cavo;
+- la lista mostra le 250 posizioni della memoria, non i numeri dei canali della
+  radio: ogni posizione occupata ha la sua zona e il suo numero dentro la zona;
+- un canale che modifichi resta nella sua zona con il suo numero;
+- un canale nuovo entra nella zona del canale che lo precede nella lista (la prima
+  zona se non ce n'è nessuno) e prende il primo numero libero di quella zona;
+- le zone non si creano, non si cancellano e non si rinominano da qui: per questo
+  serve il programma del costruttore; se la radio non ha zone non si possono
+  aggiungere canali;
+- segnalazione, compander, blocco del canale occupato e le altre opzioni del canale
+  restano come sono;
+- TK-280 / TK-380: le impostazioni dei singoli gruppi non sono comprese fra le
+  impostazioni modificabili.
+I palmari TK-2180 / TK-3180 non sono gestiti.
+
+FIRMWARE R3B0RN DI FAGCI (4.18)
+Quansheng UV-K5 / UV-K6 con il firmware libero R3b0rn di fagci
+(https://github.com/fagci/uvk5-fagci-reborn): scheda «Quansheng UV-K5 / UV-K6
+(firmware R3b0rn di fagci)».
+- Accendi la radio normalmente e collega il cavo; 38400 baud.
+- Si leggono e si scrivono solo i canali. Impostazioni, VFO, preset e correzione SSB
+  non vengono mai scritti.
+- I canali dipendono dalla memoria montata nella radio: 298 con quella originale da
+  8 KiB, 654 con 16 KiB, 678 con 32 KiB, 1024 con le memorie più grandi. Le posizioni
+  oltre quelle della radio sono bloccate.
+- Nomi di 9 caratteri. Per questo firmware un canale senza nome non esiste: se lasci
+  il nome vuoto, sulla radio il canale prende come nome la frequenza.
+- «Scan» mette il canale nella lista di scansione 1; le altre liste del canale e la
+  lista nera si conservano.
+- Modulazione e ricevitore (BK4819, BK1080, SI4732) di un canale restano quelli
+  impostati sulla radio; un canale nuovo nasce in FM (AM fra 108 e 137 MHz) con il
+  ricevitore scelto dalla radio.
+- Il firmware non ha la trasmissione disabilitata per canale: la decide il preset
+  della banda.
+- Un file letto da una radio si può scrivere solo su una radio con la memoria della
+  stessa dimensione.
+- Il programma rifiuta le versioni del firmware con la memoria disposta in altro modo
+  (comandi vecchi, numero di preset diverso da 40) e la radio su cui non è stato
+  fatto il «reset» del firmware.
+Provato solo con una radio simulata scritta da me sui sorgenti del firmware: fai
+prima la sola lettura e segnala ogni problema.
+
+RADTEL RT-330 E RT-400 (4.18)
+- RT-330: 512 canali, 100-520 MHz, 115200 baud.
+- RT-400: 256 canali, 18-1000 MHz, 57600 baud. Il programma di Radtel non controlla
+  l'identificativo della radio e la RT-400 saluta come le RT-470: la scheda rifiuta
+  le radio che si identificano come RT-470, RT-630, RT-495 o HI-8811 e accetta le
+  altre. Usala solo con la RT-400.
+- Solo i canali: le impostazioni lette dalla radio si riscrivono come sono.
+- Le potenze sono indicate come alta, media e bassa (i watt non sono noti).
+Ricavate dai programmi del costruttore e provate solo con una radio simulata: fai
+prima la sola lettura e segnala ogni problema.
 
 KENWOOD TH-F6/F7, TH-G71, TH-D7, TH-K2 E PALMARI TK (4.17)
 Palmari Kenwood che si programmano un canale per volta (TH-F6A, TH-F7E, TH-G71A/E,

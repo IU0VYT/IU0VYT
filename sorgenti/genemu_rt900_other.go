@@ -59,7 +59,10 @@ func (e *rt900Emu) serve(p Port) error {
 	if b, err := emuByte(p); err != nil || b != 'F' {
 		return fmt.Errorf("comando F atteso (%v)", err)
 	}
-	if o.plain {
+	if o.plain && o.fp1 == nil {
+		// 4.18: modelli senza identificativo conosciuto (Radtel RT-330, RT-400)
+		p.Write([]byte{0x00, 0x00, 0x00, 0x11, 0x00, 0x20, 0x99, 0x04})
+	} else if o.plain {
 		p.Write(o.fp1[0])
 	} else if o.fp1 != nil {
 		p.Write(append(append([]byte{}, o.fp1[0]...), o.fp2[0]...))

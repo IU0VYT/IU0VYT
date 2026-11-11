@@ -3,6 +3,50 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.18.0 (11/11/2026)
+-------------------
+- Kenwood TK-2140 e TK-3140 (drv_kwtk140.go, nuovo; tk3140.py di CHIRP): TK-2140K,
+  TK-3140K, TK-3140K2, TK-3140K3. Memoria di 0x8020 byte, 250 posizioni da 48 byte
+  divise in zone, blocchi di 256 byte a 9600 baud con due bit di stop. La lista del
+  programma è quella delle posizioni fisiche: un canale modificato resta nella sua
+  zona con il suo numero, un canale nuovo entra nella zona del canale che lo precede
+  con il primo numero libero; la tabella delle posizioni si riordina come in CHIRP.
+- Kenwood TK-280 e TK-380 (drv_kwtk280.go, nuovo; tk280.py di CHIRP): memoria di
+  0x8000 byte, 250 posizioni da 48 byte divise in gruppi, blocchi di 256 byte con
+  somma di controllo, parità pari; i blocchi da 0x51 a 0x5F non si scrivono. Stessa
+  regola delle posizioni; tabella dei gruppi e conteggi ricostruiti come in CHIRP.
+- Arnese di confronto con CHIRP (verifica/chirp/chirpref.py): gestisce le radio che in
+  CHIRP hanno una «sotto-radio» per zona. Lettura, 15 modifiche, disposizione della
+  memoria, byte scambiati e memoria finale identici a CHIRP per i sei modelli.
+  Impostazioni: 6 classi nuove (314 in tutto); le 750 voci dei singoli gruppi delle
+  TK-280/380 non sono comprese.
+- Quansheng UV-K5 / UV-K6 con il firmware R3b0rn di fagci (drv_fagci.go, nuovo): dai
+  sorgenti del firmware. Impostazioni, VFO e 40 preset da 0x0000 a 0x052E; canali da
+  23 byte in fondo alla EEPROM all'indietro (canale n a «fine − (n+1)·23», dove «fine»
+  è la dimensione meno i 15832 byte della correzione SSB quando ci sta); tipo di
+  EEPROM nei tre bit bassi del primo byte (da 8 a 256 KiB: 298, 654, 678 o 1024
+  canali); indirizzi a 32 bit, scrittura a gruppi di 8 byte, 38400 baud. Si leggono
+  la testa e i canali, si scrivono solo i canali. Rifiutati: firmware che non
+  risponde alla lettura a 32 bit, numero di preset diverso da 40, memoria non
+  preparata, memoria di dimensione diversa da quella dei canali da scrivere. Il
+  record è stato verificato anche compilando le strutture del firmware. Differenze
+  volute dal driver per CHIRP pubblicato con il firmware: frequenza di trasmissione
+  sempre scritta per intero (quel driver scrive 0 e il firmware sceglie il ricevitore
+  dalla frequenza di trasmissione), nomi di 9 caratteri.
+- Radtel RT-330 e RT-400 (drv_jc8810.go): dai programmi del costruttore («Radio CPS»
+  e «JJCC-7700 CPS»), che usano protocollo e record dei canali della famiglia MML
+  JC-8810. RT-330: saluto «PROGRAMYF68U», 115200 baud, 512 canali, 100-520 MHz, potenze
+  alta 0, media 1, bassa 2. RT-400: saluto «PROGRAMJC81U» (quello delle RT-470), 57600
+  baud, 256 canali, 18-1000 MHz; il programma del costruttore non controlla
+  l'identificativo, per cui la scheda rifiuta gli identificativi degli altri modelli
+  con lo stesso saluto (rt900Opt.fpNot). Si leggono e si scrivono le aree del
+  programma del costruttore. Provate solo con una radio simulata.
+- Catalogo (catalog_418.go, nuovo): 4 voci, e la scheda R3b0rn sulla UV-K5. Conteggi:
+  498 radio, 427 con impostazioni, 552 in galleria. Traduzioni: 29 testi nuovi.
+- Non fatti in questa versione: Kenwood TK-2180 / TK-3180 (in CHIRP ogni aggiunta o
+  cancellazione sposta tutta la memoria); Radtel RT-871A, RT-1000 Pro, RT-4D, RT-6D,
+  RT-5D (aree o record diversi da quelli già gestiti).
+
 4.17.0 (11/11/2026)
 -------------------
 - Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,

@@ -165,6 +165,10 @@ verwendeten CHIRP-Dateien angegebene Autoren:
   drivers/kenwood_live.py,
   drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
   drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
+  4.18 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk3140.py                         Copyright 2023 Dan Smith
+  drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
+                                            2024 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -209,6 +213,7 @@ Vakulenko KK6ABQ.
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go.
 
 FIRMWARE-AKTUALISIERUNG DER QUANSHENG UV-K5 (4.1)
 Das Format der .bin-Dateien von Quansheng und das Protokoll des Laders der UV-K5 sind
@@ -286,6 +291,19 @@ Smith); drv_kwtk60.go und drv_kwtk_var.go sind von tk270.py und tk760g.py von CH
 abgeleitet (Copyright 2016 Pavel Milanes CO7WT), GNU GPL v3. Der Katalogeintrag des
 Radtel RT-860 stammt aus dem Vergleich mit dem Programm des Herstellers, von dem nichts
 enthalten ist.
+
+KENWOOD TK-2140/3140, TK-280/380, FIRMWARE R3B0RN, RADTEL RT-330 UND RT-400 (4.18):
+drv_kwtk140.go ist von tk3140.py von CHIRP abgeleitet (Copyright 2023 Dan Smith),
+drv_kwtk280.go von tk280.py von CHIRP (Copyright 2016 Pavel Milanes CO7WT, 2024 Dan
+Smith), GNU GPL v3. Firmware R3b0rn von fagci
+(https://github.com/fagci/uvk5-fagci-reborn, Apache-2.0-Lizenz, auf der Firmware von
+DualTachyon aufbauend): drv_fagci.go ist in IU0VYT Flash nach dem Speicheraufbau und den
+Befehlen geschrieben, die in den Quelltexten der Firmware beschrieben sind; keine
+Firmware und kein Programm des Autors ist enthalten; unabhängiges Programm, nicht mit
+ihm verbunden. Radtel RT-330 und RT-400: aus dem Vergleich mit den Programmen des
+Herstellers («Radio CPS» und «JJCC-7700 CPS»), von denen nichts enthalten ist; der
+Kanaldatensatz ist der von mml_jc8810.py von CHIRP. Dank an fagci für die Firmware
+R3b0rn.
 
 ZONENNAMEN (4.11)
 Das Format der Zonennamen ist, zur Interoperabilität, aus dem Code der

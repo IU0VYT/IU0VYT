@@ -1,2 +1,7 @@
-versione=4.17.0
-compilazione=2026-11-11T02:35
+versione=4.18.0
+compilazione=2026-11-11T04:50
+radio=498
+impostazioni=427
+galleria=552
+firmware=58
+marche=47

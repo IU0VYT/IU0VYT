@@ -7,6 +7,40 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.18.0 (11/11/2026)
+-------------------
+- Kenwood TK-2140 and TK-3140 (drv_kwtk140.go, new; CHIRP's tk3140.py: TK-2140K,
+  TK-3140K, TK-3140K2, TK-3140K3) and Kenwood TK-280 and TK-380 (drv_kwtk280.go, new;
+  CHIRP's tk280.py): 250 positions of 48 bytes divided into zones or groups. The
+  program's list is the list of physical positions: an edited channel stays in its zone
+  with its number, a new channel goes into the zone of the channel before it with the
+  first free number; the position table is rebuilt as in CHIRP.
+- Comparison tool with CHIRP (verifica/chirp/chirpref.py): it now handles the radios
+  that have one «sub-radio» per zone in CHIRP. Reading, 15 edits, memory layout, bytes
+  exchanged and final memory are identical to CHIRP for the six models. Settings: 6 new
+  classes (314 in all); the 750 per-group entries of the TK-280/380 are not included.
+- Quansheng UV-K5 / UV-K6 with fagci's R3b0rn firmware (drv_fagci.go, new), from the
+  firmware sources: settings, VFOs and 40 presets at 0x0000-0x052E; 23-byte channels at
+  the end of the EEPROM going backwards; EEPROM type in the low three bits of the first
+  byte (8 to 256 KiB: 298, 654, 678 or 1024 channels); 32-bit addresses, writes in
+  groups of 8 bytes, 38400 baud. Only the channel area is written. Refused: firmware
+  that does not answer the 32-bit read, a number of presets other than 40, memory not
+  prepared, memory of a different size. The record was also checked by compiling the
+  firmware's structures. Intended differences from the CHIRP driver published with the
+  firmware: the transmit frequency is always written in full, names of 9 characters.
+- Radtel RT-330 and RT-400 (drv_jc8810.go), from the manufacturer's programs («Radio
+  CPS» and «JJCC-7700 CPS»), which use the protocol and channel record of the MML
+  JC-8810 family. RT-330: handshake «PROGRAMYF68U», 115200 baud, 512 channels, 100-520
+  MHz. RT-400: handshake «PROGRAMJC81U» (that of the RT-470), 57600 baud, 256 channels,
+  18-1000 MHz; the manufacturer's program does not check the identifier, so the tab
+  refuses the identifiers of the other models with the same handshake. Tested only with
+  a simulated radio.
+- Catalogue (catalog_418.go, new): 4 entries, and the R3b0rn tab on the UV-K5. Counts:
+  498 radios, 427 with settings, 552 in the gallery. Translations: 29 new texts.
+- Not done in this version: Kenwood TK-2180 / TK-3180 (in CHIRP every addition or
+  deletion moves the whole memory); Radtel RT-871A, RT-1000 Pro, RT-4D, RT-6D, RT-5D
+  (areas or records different from those already handled).
+
 4.17.0 (11/11/2026)
 -------------------
 - Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,

@@ -163,6 +163,10 @@ with revision 0a9e92c of 06/11/2026). Authors stated in the CHIRP files used:
   drivers/kenwood_live.py,
   drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
   drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
+  4.18 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk3140.py                         Copyright 2023 Dan Smith
+  drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
+                                            2024 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -207,6 +211,7 @@ Vakulenko KK6ABQ.
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go.
 
 QUANSHENG UV-K5 FIRMWARE UPDATE (4.1)
 The format of Quansheng's .bin files and the protocol of the UV-K5 loader are
@@ -279,6 +284,17 @@ Smith); drv_kwtk60.go and drv_kwtk_var.go derive from CHIRP's tk270.py and tk760
 (Copyright 2016 Pavel Milanes CO7WT), GNU GPL v3. The catalogue entry of the Radtel
 RT-860 comes from the comparison with the manufacturer's program, of which nothing is
 included.
+
+KENWOOD TK-2140/3140, TK-280/380, R3B0RN FIRMWARE, RADTEL RT-330 AND RT-400 (4.18):
+drv_kwtk140.go derives from CHIRP's tk3140.py (Copyright 2023 Dan Smith) and
+drv_kwtk280.go from CHIRP's tk280.py (Copyright 2016 Pavel Milanes CO7WT, 2024 Dan
+Smith), GNU GPL v3. fagci's R3b0rn firmware (https://github.com/fagci/uvk5-fagci-reborn,
+Apache 2.0 licence, based on DualTachyon's firmware): drv_fagci.go is written in IU0VYT
+Flash from the memory layout and the commands described in the firmware sources; no
+firmware or program of the author is included; independent program, not affiliated with
+him. Radtel RT-330 and RT-400: from the comparison with the manufacturer's programs
+(«Radio CPS» and «JJCC-7700 CPS»), of which nothing is included; the channel record is
+that of CHIRP's mml_jc8810.py. Thanks to fagci for the R3b0rn firmware.
 
 ZONE NAMES (4.11)
 The format of the zone names is derived, for interoperability, from the code of the

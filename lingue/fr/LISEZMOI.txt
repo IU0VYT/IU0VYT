@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.17.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.18.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,20 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.18.0 :
+- KENWOOD TK-2140, TK-3140, TK-280, TK-380 : portatifs professionnels dont les canaux
+  sont répartis en zones (groupes) : canaux et réglages, avec les pilotes CHIRP. La
+  liste montre les 250 positions de la mémoire ; un canal modifié garde sa zone et son
+  numéro, un nouveau canal entre dans la zone du canal qui le précède. Les zones ne se
+  créent pas et ne se suppriment pas d'ici.
+- QUANSHENG UV-K5 / UV-K6 AVEC LE FIRMWARE R3B0RN DE FAGCI : canaux seulement (298 avec
+  la mémoire d'origine, jusqu'à 1024 avec une mémoire plus grande) ; réglages, VFO,
+  presets et correctif SSB ne sont jamais écrits. Testé uniquement avec une radio
+  simulée : commence par une lecture et signale tout problème.
+- RADTEL RT-330 et RT-400 : canaux, d'après les programmes du constructeur. L'onglet
+  RT-400 refuse les radios qui s'identifient comme RT-470, RT-630, RT-495 ou HI-8811.
+  Testé uniquement avec une radio simulée.
+- Galerie : 552 modèles de 47 marques (498 avec canaux, 427 avec réglages).
 Nouveautés de la 4.17.0 :
 - KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2 : canaux lus et écrits un par un avec la
   radio allumée normalement (9600 bauds, câble de programmation) ; seuls les canaux

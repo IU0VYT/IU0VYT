@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.17.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.18.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,20 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.18.0:
+- KENWOOD TK-2140, TK-3140, TK-280, TK-380: Betriebsfunk-Handgeräte mit in Zonen
+  (Gruppen) aufgeteilten Kanälen: Kanäle und Einstellungen, mit den CHIRP-Treibern. Die
+  Liste zeigt die 250 Speicherplätze; ein geänderter Kanal behält Zone und Nummer, ein
+  neuer Kanal kommt in die Zone des Kanals davor. Zonen lassen sich von hier aus weder
+  anlegen noch löschen.
+- QUANSHENG UV-K5 / UV-K6 MIT DER FIRMWARE R3B0RN VON FAGCI: nur die Kanäle (298 mit dem
+  Originalspeicher, bis zu 1024 mit einem größeren); Einstellungen, VFOs, Presets und
+  SSB-Patch werden nie geschrieben. Nur mit einem simulierten Funkgerät getestet: zuerst
+  lesen und jedes Problem melden.
+- RADTEL RT-330 und RT-400: Kanäle, aus den Programmen des Herstellers abgeleitet. Die
+  Karte RT-400 lehnt Funkgeräte ab, die sich als RT-470, RT-630, RT-495 oder HI-8811
+  ausweisen. Nur mit einem simulierten Funkgerät getestet.
+- Galerie: 552 Modelle von 47 Marken (498 mit Kanälen, 427 mit Einstellungen).
 Neu in 4.17.0:
 - KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: Kanäle werden einzeln bei normal
   eingeschaltetem Funkgerät gelesen und geschrieben (9600 Baud, Programmierkabel);

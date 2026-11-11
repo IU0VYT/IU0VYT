@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.17.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.18.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,20 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Yang baharu dalam 4.18.0:
+- KENWOOD TK-2140, TK-3140, TK-280, TK-380: radio genggam profesional dengan saluran
+  yang dibahagikan kepada zon (kumpulan): saluran dan tetapan, dengan pemacu CHIRP.
+  Senarai menunjukkan 250 kedudukan memori; saluran yang diubah mengekalkan zon dan
+  nombornya, saluran baharu masuk ke zon saluran sebelumnya. Zon tidak boleh dicipta
+  atau dipadam dari sini.
+- QUANSHENG UV-K5 / UV-K6 DENGAN PERISIAN TEGAR R3B0RN OLEH FAGCI: saluran sahaja (298
+  dengan memori asal, sehingga 1024 dengan memori yang lebih besar); tetapan, VFO,
+  praset dan tampalan SSB tidak pernah ditulis. Diuji dengan radio simulasi sahaja: baca
+  dahulu dan laporkan sebarang masalah.
+- RADTEL RT-330 dan RT-400: saluran, diperoleh daripada program pengeluar. Tab RT-400
+  menolak radio yang mengenalkan diri sebagai RT-470, RT-630, RT-495 atau HI-8811. Diuji
+  dengan radio simulasi sahaja.
+- Galeri: 552 model daripada 47 jenama (498 dengan saluran, 427 dengan tetapan).
 Apa yang baharu dalam 4.17.0:
 - KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: saluran dibaca dan ditulis satu demi
   satu dengan radio dihidupkan seperti biasa (9600 baud, kabel pengaturcaraan); hanya

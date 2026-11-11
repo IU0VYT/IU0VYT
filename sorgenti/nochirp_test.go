@@ -42,6 +42,8 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = o.total
 	case *rt900Opt:
 		size = o.memsize
+	case *jc8810Opt: // 4.18: Radtel RT-330 e RT-400
+		size = o.memsize
 	case *h777Opt:
 		size = o.memsize
 	case *rt22Opt:
@@ -75,6 +77,9 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	}
 	if _, ok := m.Fam.(kwlFam); ok { // 4.17: Kenwood programmate un canale per volta
 		mem = kwlBlank(m)
+	}
+	if _, ok := m.Fam.(fagciFam); ok { // 4.18: firmware R3b0rn di fagci (EEPROM originale di 8 KiB)
+		mem = fagciBlank(2)
 	}
 	switch m.Fam.(type) { // 4.15: firmware nicFW
 	case nicfwFam:

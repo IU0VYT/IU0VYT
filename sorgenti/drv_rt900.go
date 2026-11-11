@@ -98,9 +98,12 @@ struct {
 // il firmware fino a 0.23 potrebbe non trasmettere su quel canale.
 
 type rt900Opt struct {
-	magic   []byte
-	fp1     [][]byte // risposta al comando 'F' (nil: non controllata)
-	fp2     [][]byte // secondo identificativo
+	magic []byte
+	fp1   [][]byte // risposta al comando 'F' (nil: non controllata)
+	fp2   [][]byte // secondo identificativo
+	// fpNot (4.18, Radtel RT-400): identificativi di altri modelli che usano lo
+	// stesso saluto, rifiutati (il modello non ha un identificativo conosciuto)
+	fpNot   [][]byte
 	crypt   []byte   // pacchetto "SEND …"
 	memsize int      // area letta (CHIRP _memsize)
 	ranges  [][2]int // aree scritte (CHIRP _ranges, nell'ordine)
@@ -721,6 +724,9 @@ func (s *rt900Sess) enter() error {
 	}
 	if o.fp1 != nil && !bytesIn(o.fp1, id) {
 		return rErr("identificativo della radio sconosciuto (% X): è il modello giusto?", id)
+	}
+	if o.fpNot != nil && bytesIn(o.fpNot, id) {
+		return rErr("la radio si identifica come un altro modello della stessa famiglia (% X): apri la scheda di quel modello", id)
 	}
 	if o.plain {
 		return nil

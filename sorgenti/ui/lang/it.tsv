@@ -2015,6 +2015,12 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (firmware OpenGD77)
 b3a8e214	Canali letti e scritti un canale per volta con i comandi del PC, come fanno i driver di CHIRP per queste radio: la radio resta accesa normalmente (9600 baud) e si scrivono solo i canali cambiati. Provato con una radio simulata, non su una radio vera.
 51b9b9e9	Radio professionale: banda e numero dei canali dipendono dalla versione, letta dalla memoria della radio.
 5aae083d	La RT-860 si legge e si scrive con la scheda «Radtel RT-880G»: il programma di Radtel usa lo stesso collegamento e la stessa memoria dei canali della RT-880G (confronto con il programma del costruttore, non provato su una radio vera).
+4eb7ae1b	Radio professionale con i canali divisi in zone (gruppi): la lista mostra le posizioni della memoria, un canale nuovo entra nella zona del canale che lo precede. Le zone non si creano e non si cancellano da qui.
+1d172e2a	Dalla 4.18 anche il firmware R3b0rn di fagci (solo i canali: 298 con la memoria originale, fino a 1024 con una memoria più grande).
+66e52182	Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Solo i canali: le impostazioni lette dalla radio si riscrivono come sono.
+6c261fe0	512 canali con nomi di 12 caratteri, 100-520 MHz, 115200 baud. Stesso protocollo e stesso record dei canali delle Radtel RT-470 (famiglia MML JC-8810 di CHIRP), con un saluto proprio.{0}
+9b189840	JJCC-7700
+62547ae1	256 canali con nomi di 12 caratteri, 18-1000 MHz. Stesso saluto, stesso protocollo e stesso record dei canali delle Radtel RT-470 (famiglia MML JC-8810 di CHIRP). Il programma del costruttore non controlla l'identificativo della radio: la scheda rifiuta le radio che si identificano come un altro modello della famiglia.{0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2153,7 +2159,8 @@ bc7c87a1	Canali e impostazioni con il driver di CHIRP (classe {0}), verificato c
 fadd6ee1	Firmware F4HWN (armel)
 880016c5	Firmware F4HWN Fusion per UV-K5 V3 (armel)
 c7d04685	Firmware IJV (IU0IJV)
-3784fb7e	{0} Ogni scheda legge e scrive solo il suo firmware: originale Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (driver di CHIRP), F4HWN (driver di armel per CHIRP, con le impostazioni F4HWN), OSFW (driver di CHIRP), i firmware cinesi LOSEHU / LTS / UVE (driver di CHIRP, nomi cinesi) o IJV (V3 da 200 o 999 canali sulla UV-K5 classica; V4, V5 e V6 sulla UV-K5 V3: banco scelto sulla radio, canali, gruppi e impostazioni principali). Se apri la scheda sbagliata il programma legge la versione del firmware, si ferma senza scrivere e indica la scheda giusta; «Identifica» la trova da solo. Firmware: file .bin di Quansheng (es. k5_v2.01.26_publish.bin) con il caricatore della radio (accesa tenendo premuto il PTT); il programma controlla che il firmware sia per il tipo di caricatore della radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). Quansheng protegge i download con una password che fornisce il rivenditore.{1}
+5fd881a8	Firmware R3b0rn (fagci)
+631b3dde	{0} Ogni scheda legge e scrive solo il suo firmware: originale Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (driver di CHIRP), F4HWN (driver di armel per CHIRP, con le impostazioni F4HWN), OSFW (driver di CHIRP), i firmware cinesi LOSEHU / LTS / UVE (driver di CHIRP, nomi cinesi) o IJV (V3 da 200 o 999 canali sulla UV-K5 classica; V4, V5 e V6 sulla UV-K5 V3: banco scelto sulla radio, canali, gruppi e impostazioni principali). Se apri la scheda sbagliata il programma legge la versione del firmware, si ferma senza scrivere e indica la scheda giusta; «Identifica» la trova da solo. Firmware: file .bin di Quansheng (es. k5_v2.01.26_publish.bin) con il caricatore della radio (accesa tenendo premuto il PTT); il programma controlla che il firmware sia per il tipo di caricatore della radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). Quansheng protegge i download con una password che fornisce il rivenditore.{1}{2}
 bde55f43	Firmware F4HWN Fusion (armel)
 0f0af4d1	{0} Firmware originale: solo canali (CHIRP non gestisce ancora le impostazioni) e solo con la versione 7.03. Firmware IJV V4, V5 e V6: canali del banco scelto sulla radio, nomi dei gruppi e impostazioni principali (schede «firmware IJV»).{1}
 06fd3af1	È una Quansheng UV-K5. {0} Firmware: file .bin di Retevis nel formato di Quansheng (es. «RA79 V3.bin», versione 7.00.16 per la RA79 V3, con il caricatore 7.x della UV-K5 V3): radio spenta e riaccesa tenendo premuto il PTT. Il programma legge la versione del caricatore e invia il firmware solo se è della stessa famiglia (le RA79 con il caricatore della UV-K5 classica rifiutano i file 7.x).
@@ -2557,6 +2564,25 @@ ab6b4ce6	lunghezza dei dati non valida ({0})
 4f11a7c5	memoria dei canali diversa da quella prevista ({0} canali da {1} byte)
 b5408213	Richiesta di scrittura
 ac6aeea0	risposta della radio alla fine della scrittura: {0}
+07d279b5	IU0VYT-FAGCI-R3{0}
+82c10882	fagci R3b0rn
+a7cffaf9	Quansheng UV-K5 / UV-K6 (firmware R3b0rn di fagci)
+0f59247c	Minima
+612fe095	Firmware libero R3b0rn di fagci (la radio risponde «R3b0rn»). Accendi la radio, poi collega il cavo al connettore microfono/altoparlante. I canali dipendono dalla memoria montata: 298 con quella originale, fino a 1024 con una memoria più grande; le posizioni oltre quelle della radio non si possono usare. Nomi di 9 caratteri; un canale senza nome prende come nome la frequenza, perché per il firmware un canale senza nome non esiste. «Scan» mette il canale nella lista di scansione 1 (le altre liste si conservano). Modulazione e ricevitore del canale restano quelli impostati sulla radio (FM per un canale nuovo, AM nella banda aerea). Si leggono e si scrivono solo i canali: impostazioni, VFO, preset e correzione SSB non si toccano. Le versioni vecchie del firmware, con la memoria disposta in altro modo, vengono rifiutate. Ricavato dai sorgenti del firmware.
+baa18d66	la memoria di questa radio ha {0} canali
+d487a1bd	frequenza {0} MHz fuori dai limiti della radio
+0104eb8c	la radio non può memorizzare la frequenza di trasmissione {0} MHz
+67cbd442	carattere non ammesso nel nome
+05e30fdf	lettura della memoria a 0x{0} incompleta
+34a24db7	blocco di scrittura non multiplo di 8 byte
+e6da29d2	la radio non ha confermato la scrittura a 0x{0}
+4cb56472	questa versione del firmware R3b0rn non risponde ai comandi conosciuti: per sicurezza non si legge e non si scrive
+bdfdc7f9	la memoria della radio non è stata preparata dal firmware R3b0rn: fai prima il «reset» dal menu della radio
+32e680ea	questa versione del firmware R3b0rn ha la memoria disposta in un altro modo ({0} preset invece di {1}): per sicurezza non si legge e non si scrive
+6bee758a	Firmware della radio: {0}; memoria di {1} KiB, {2} canali
+d8f8cbdf	immagine della memoria non valida ({0} byte)
+73eb6bcc	la memoria di questa radio ({0} KiB) è diversa da quella da cui vengono i canali ({1} KiB): leggi prima questa radio
+b212ef93	Firmware della radio: {0}
 95f83ee1	Feidaxin {0}
 90a4ed8d	Unica
 fd9f6464	Accendi la radio con il cavo collegato. 99 canali senza nomi, senza potenza e banda per canale (sono impostazioni generali); blocco del canale occupato e scrambler si conservano. Driver di CHIRP (sperimentale).
@@ -2582,7 +2608,6 @@ f44f8eb2	IFT-25R
 a9d84203	identificativo della radio vuoto
 d58f256a	la radio è un altro modello ({0}): apri la scheda «{1}» o quella della stessa serie
 c477c1e6	la radio dichiara il sottotipo {0}: apri la scheda «{1}»
-d8f8cbdf	immagine della memoria non valida ({0} byte)
 6e71b0e3	Scrittura del blocco 0x{0}
 5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
 3c19e63e	Yaesu FT-60R / FT-60E
@@ -2749,7 +2774,6 @@ d6c3cb9f	Icom IC-T10
 f03ef25a	Icom Inc.CD
 fe5c79a7	Icom {0}
 2972bf65	200 canali {0} (da 0 a 199) con nomi di 5 caratteri. {1}La potenza non è memorizzata nel canale. Banchi, nominativi D-STAR, passo di sintonia e canali in modo digitale DV si conservano. Driver di CHIRP.
-d487a1bd	frequenza {0} MHz fuori dai limiti della radio
 f5084846	la radio è l'altro modello della serie: apri la scheda «Icom {0}»
 e6282e24	l'immagine non è di una {0}
 a936d75d	Icom Inc.
@@ -2786,7 +2810,6 @@ e65453b1	risposta della radio non valida
 28db6715	risposta della radio incompleta
 dcd51e55	risposta della radio con CRC non valido
 91d3a3bf	lettura della memoria a 0x{0} non valida
-e6da29d2	la radio non ha confermato la scrittura a 0x{0}
 f8238f6c	lettura della memoria a 0x{0} non riuscita
 1361ec4b	la radio ha rifiutato la scrittura a 0x{0}: abilita sulla radio la scrittura dei banchi dal PC e riprova
 01ebafa6	la radio non ha confermato il salvataggio della memoria
@@ -2797,7 +2820,6 @@ ac521e8e	il firmware della radio ({0}) non è {1}: per sicurezza non si legge e 
 a4d09196	IJV {0}
 fc748038	la radio non indica il banco di memoria scelto (configurazione «CFG5» non valida)
 889213e1	la memoria non indica il banco
-b212ef93	Firmware della radio: {0}
 ec4de955	— banco {0} «{1}»
 936cc2a9	BANK {0}
 a2fd4971	l'immagine è di {0} byte: per questo firmware deve essere di {1} byte (leggi prima la radio)
@@ -2845,6 +2867,10 @@ b1746253	A36plus_8w
 7a3b97e5	Talkpod A36plus 8 W
 7105d41d	Radtel RT-630
 11b2d27a	Radtel RT-495
+d2312023	Accendi la radio con il cavo collegato. 512 canali, 115200 baud. Protocollo e memoria ricavati dal programma del costruttore («Radio CPS» della RT-330), che usa lo stesso record dei canali della famiglia MML JC-8810 (Radtel RT-470). Si leggono e si scrivono le stesse aree del programma del costruttore.
+db4b865f	Accendi la radio con il cavo collegato. 256 canali. Protocollo e memoria ricavati dal programma del costruttore («JJCC-7700 CPS» della RT-400), che usa lo stesso saluto e lo stesso record dei canali delle Radtel RT-470. Il programma del costruttore non controlla l'identificativo della radio: questa scheda rifiuta le radio che si identificano come uno degli altri modelli della famiglia (RT-470, RT-630, RT-495, HI-8811) e accetta le altre. Si leggono e si scrivono le stesse aree del programma del costruttore.
+76edaf26	Radtel RT-330
+f89ce4d0	Radtel RT-400
 f8a797f5	Accendi la radio con il cavo collegato. Driver di CHIRP della famiglia MML JC-8810 (Radtel RT-470).
 7c5fbfdc	In banda aerea (118-136 MHz) la radio riceve in AM.
 8cdd78a1	Accendi la radio con il cavo collegato (19200 baud). 999 canali con nomi di 8 caratteri; mute, scrambler, compander e preferito di ogni canale si conservano. Driver di CHIRP (sperimentale).
@@ -2889,14 +2915,18 @@ eaf549cd	{0}100 canali (0-99); i nomi ci sono solo se la radio è impostata a 50
 cce84c13	tono «{0}» non disponibile su questa radio, impostato OFF
 a0e87eb4	la radio non ha questa combinazione di toni (mai il solo tono in ricezione o codici invertiti)
 d9bcac02	la radio non può memorizzare la frequenza {0} MHz
-0104eb8c	la radio non può memorizzare la frequenza di trasmissione {0} MHz
 c4fad8d7	MNA {0}
 3abf08e3	MNA 0,{0}
 c2efd81a	la radio è un altro modello ({0})
 f43a6ffd	Lettura della radio prima della scrittura…
 665b771a	la radio ha rifiutato la scrittura ({0})
-991a44e8	Radio professionale: si programma col cavo di programmazione Kenwood, accendendo la radio dopo aver collegato il cavo. La versione della radio (banda e numero dei canali) si legge dalla sua memoria; i limiti di frequenza sono quelli del costruttore allargati del 4%, come in CHIRP.
 f1f2482e	Kenwood {0}
+154febf8	250 posizioni con nomi di 10 caratteri, divise nei gruppi (zone) della radio. Radio professionale: si programma col cavo di programmazione Kenwood, accendendo la radio dopo aver collegato il cavo. La lista mostra le posizioni della memoria: un canale modificato resta nel suo gruppo con il suo numero; un canale nuovo entra nel gruppo del canale che lo precede nella lista (il primo gruppo se non ce n'è) con il primo numero libero. Segnalazione, compander, blocco del canale occupato e «beat shift» si conservano. I gruppi non si creano e non si cancellano da qui. Driver di CHIRP.
+3241439e	la radio non ha gruppi: creane uno con il programma del costruttore
+20d807b3	il gruppo {0} è pieno
+e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
+04b304aa	Alta 4 W
+991a44e8	Radio professionale: si programma col cavo di programmazione Kenwood, accendendo la radio dopo aver collegato il cavo. La versione della radio (banda e numero dei canali) si legge dalla sua memoria; i limiti di frequenza sono quelli del costruttore allargati del 4%, come in CHIRP.
 fb5fd5d7	Canali senza nome. {0}Blocco del canale occupato e «beat shift» si conservano; la segnalazione DTMF / 2 toni dei canali viene azzerata a ogni scrittura, come fa CHIRP. Driver di CHIRP (sperimentale).
 ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
 1bbcb671	Canali con nomi di 8 caratteri. {0}Gruppo del canale, compander, blocco del canale occupato e «beat shift» si conservano; i canali nuovi vanno nel gruppo 1. A ogni modifica dei canali le tabelle dei gruppi vengono ricostruite e la segnalazione DTMF / 2 toni dei canali azzerata, come fa CHIRP. Driver di CHIRP (sperimentale).
@@ -2940,7 +2970,6 @@ c1ba3e92	Bassa 500 mW
 fbde8d37	OpenGD77 (Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R)
 5da23611	OpenGD77 (Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84)
 5a30f7a7	OpenGD77 per la famiglia MD-UV380 (OpenUV380, OpenDM1701)
-67cbd442	carattere non ammesso nel nome
 a7739de5	risposta della radio non valida per il blocco 0x{0}
 32306b70	OpenGD77 {0} ({1})
 3d94f8a1	0123456789- ABCDEFGHIJKLMNOPQRSTUVWXYZ +
@@ -3090,7 +3119,6 @@ eeb1014d	HamGeek HG-590
 9015bc86	canale {0}: sulle frequenze GMRS la trasmissione non si può disabilitare
 e94e12f6	canale {0}: su questa frequenza GMRS solo simplex o +5 MHz (ponti)
 12fa3a4e	Retevis RT87
-04b304aa	Alta 4 W
 eb030d31	128 canali con nomi di 10 caratteri. Blocco del canale occupato, PTT ID, VOX, compander/scrambler si conservano. Driver di CHIRP.
 9ced82e0	eco della radio non corretta
 a0700f06	Media 4 W
@@ -3124,6 +3152,7 @@ e8fcbbef	Firmware 0.24 o successivo ({0}): canali gestiti come 10 zone da 99 (99
 2b2b830d	firmware fino a 0.23 (960 canali, 15 zone da 64)
 8c83bceb	firmware 0.24 e successivi (990 canali, 10 zone da 99)
 8046cb1d	la radio non ha accettato la modalità di programmazione dopo 5 tentativi: controlla il cavo e riaccendi la radio
+f733bbbd	la radio si identifica come un altro modello della stessa famiglia ({0}): apri la scheda di quel modello
 6370b54b	la radio si è identificata come «{0}», non come {1}: è il modello giusto?
 6f96413b	errore nell'impostazione della cifratura
 c7b15fc5	identificativo secondario della radio sconosciuto ({0})
@@ -3409,7 +3438,6 @@ ebc98c0d	Firmware libero OSFW (versione bd90ca3) e firmware originali modificati
 1e59b74c	Retevis RA79
 4ac7138a	MaxTalker TK-6
 a11b84a6	la radio è in modalità aggiornamento del firmware: spegnila e riaccendila normalmente
-05e30fdf	lettura della memoria a 0x{0} incompleta
 d9e1ebd2	la radio ha il firmware {0}: apri la scheda «{1}» (questa scheda è per un altro firmware e, come CHIRP, non legge e non scrive)
 372e321d	il firmware della radio ({0}) non è tra quelli conosciuti per la {1}: per sicurezza non si legge e non si scrive (come in CHIRP)
 bcf5258c	Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware egzumer)
@@ -4100,7 +4128,6 @@ a7761a12	Monti
 22f6b9b5	SAN
 42a73a35	San
 540f0f6a	DEL
-0f59247c	Minima
 b4ae1213	Stessa gestione di
 06390bdd	Versione del firmware: sulla radio premi MENU e apri la voce «About» (informazioni): compare «Software Ver 0.xx». Fino alla 0.23 la radio ha 960 canali (15 zone da 64), dalla 0.24 990 canali (10 zone da 99).
 6fd7b418	Versione del firmware: di solito compare per un attimo all'accensione, oppure nel menu della radio alla voce «Version», «Info» o «About» (vedi il manuale). Il modello esatto è scritto sull'etichetta sotto la batteria.
@@ -5338,6 +5365,7 @@ ec8cdbd9	firmware fino a 0.23: 960 canali
 e3af4e9c	firmware F4HWN Fusion 5.x
 810324ef	firmware egzumer
 087d5c7b	firmware F4HWN
+8a4bc126	firmware R3b0rn di fagci
 4f21c9a6	firmware IJV V3, 200 canali
 447dca6b	firmware IJV V3 X, 999 canali
 fb975e6f	firmware LOSEHU, LTS, UVE

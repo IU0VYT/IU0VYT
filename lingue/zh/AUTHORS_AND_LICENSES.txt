@@ -147,6 +147,10 @@ https://www.qrz.com/db/IU0VYT
   drivers/kenwood_live.py,
   drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
   drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
+  4.18 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk3140.py                         Copyright 2023 Dan Smith
+  drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
+                                            2024 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -178,6 +182,7 @@ drv.go、bw.go、drv_uv5r.go、drv_uv17pro.go、drv_uv17.go、drv_bfcommon.go、
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go.
 
 QUANSHENG UV-K5 固件升级（4.1）
 Quansheng .bin 文件的格式和 UV-K5 引导程序的协议由自由程序 k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF，GNU GPL v3，https://github.com/sq5bpf/k5prog）和 uvtools（egzumer，https://github.com/egzumer/uvtools）记录。为实现互操作性，fwk5.go 根据这些资料从零编写；软件包中不包含这些程序的任何代码。verifica/k5/k5ref.js 只用于测试，它从执行验证者指定的文件夹加载 uvtools 的代码。感谢 SQ5BPF 和 egzumer。
@@ -200,6 +205,8 @@ NICFW 固件（4.15）：nicFW 由 nicsure 开发（https://nicsure.co.uk）。�
 OPENGD77 和 UV-K5 的其他固件（4.16）：OpenGD77 由 Roger Clark VK3KYY 等人开发；连接方式和存储结构取自 Hannes Matuschek DM3MAT 的自由软件 qdmr（GNU GPL v3）。kamilsss655 的 NUNU 固件和 joaquim.org 的 UV-KX 固件（Apache 2.0）：存储结构和写入方式与其作者发布的 CHIRP 驱动相同（源自 Jacek Lipkowski SQ5BPF 的 uvk5.py，GNU GPL v2 或更高版本）。未包含这些作者的任何固件或程序；drv_ogd77.go 和 drv_uvkx.go 在 IU0VYT Flash 中编写。本程序为独立程序，与他们无关联（https://www.opengd77.com, https://github.com/hmatuschek/qdmr, https://github.com/kamilsss655/uv-k5-firmware-custom, https://github.com/joaquimorg/UV-KX）。
 
 KENWOOD TH-F6/F7、TH-G71、TH-D7、TH-K2 和 TK 手持机（4.17）：drv_kwlive.go 使用 CHIRP 的 kenwood_live.py 和 kenwood_d7.py 驱动的命令（Copyright 2010 Dan Smith）；drv_kwtk60.go 和 drv_kwtk_var.go 源自 CHIRP 的 tk270.py 和 tk760g.py（Copyright 2016 Pavel Milanes CO7WT），GNU GPL v3。Radtel RT-860 的目录条目来自与厂商软件的比对，未包含该软件的任何内容。
+
+KENWOOD TK-2140/3140、TK-280/380、R3B0RN 固件、RADTEL RT-330 和 RT-400（4.18）：drv_kwtk140.go 源自 CHIRP 的 tk3140.py（Copyright 2023 Dan Smith），drv_kwtk280.go 源自 CHIRP 的 tk280.py（Copyright 2016 Pavel Milanes CO7WT, 2024 Dan Smith），GNU GPL v3。fagci 的 R3b0rn 固件（https://github.com/fagci/uvk5-fagci-reborn，Apache 2.0 许可，基于 DualTachyon 的固件）：drv_fagci.go 是在 IU0VYT Flash 中根据固件源代码所描述的存储结构和命令编写的；不包含该作者的任何固件或程序；本程序是独立程序，与其无关联。Radtel RT-330 和 RT-400：根据与厂商软件（“Radio CPS”和“JJCC-7700 CPS”）的比对得出，其中任何内容都未包含；信道记录与 CHIRP 的 mml_jc8810.py 相同。感谢 fagci 提供 R3b0rn 固件。
 
 区域名称（4.11）
 为了互操作性，区域名称的格式取自厂家程序的代码：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 和 Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS“BT-9000_CPS”v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）和 RT910_EnCPS v1.0.3（无蓝牙的 RT-910），来自 radtels.com 和 bajeton.cn；RT-920 的格式还取自 CHIRP 的驱动程序 radtel_rt900.py（Fred Trimble，GNU GPL，见上文）。不包含任何厂家程序。

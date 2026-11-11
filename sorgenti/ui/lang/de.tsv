@@ -5316,7 +5316,6 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (Firmware OpenGD77)
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
 850cccbc	{0} Mit der Originalfirmware von TYT werden diese Funkgeräte nicht unterstützt.
-3784fb7e	{0} Jede Registerkarte liest und schreibt nur ihre eigene Firmware: Original von Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP-Treiber), F4HWN (Treiber von armel für CHIRP, mit den F4HWN-Einstellungen), OSFW (CHIRP-Treiber) oder die chinesischen Firmwares LOSEHU / LTS / UVE (CHIRP-Treiber, chinesische Namen). Öffnet man die falsche Registerkarte, liest das Programm die Firmware-Version, hält ohne zu schreiben an und nennt die richtige Registerkarte; «Identifizieren» findet sie selbst. Firmware: .bin-Dateien von Quansheng (z. B. k5_v2.01.26_publish.bin) mit dem Lader des Funkgeräts (mit gedrückter PTT eingeschaltet); das Programm prüft, ob die Firmware zum Ladertyp des Funkgeräts passt (UV-K5, UV-K5(8)/UV-K6 oder UV-5R Plus). Quansheng schützt die Downloads mit einem Passwort, das der Händler mitteilt. Auch IJV wird unterstützt (V3 mit 200 oder 999 Kanälen auf der klassischen UV-K5; V4, V5 und V6 auf der UV-K5 V3: am Funkgerät gewählte Bank, Kanäle, Gruppen und wichtigste Einstellungen).{1}
 b9ae89b8	Radioddity GD-77
 38c31cf1	Radioddity GD-77S
 829ca215	Baofeng RD-5R
@@ -5373,3 +5372,32 @@ ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
 23a23be9	unbekannte Version des Funkgeräts ({0})
 47b188ff	diese Version des Funkgeräts hat {0} Kanäle
 cce84c13	Ton «{0}» bei diesem Funkgerät nicht verfügbar, auf OFF gesetzt
+4eb7ae1b	Betriebsfunkgerät mit in Zonen (Gruppen) aufgeteilten Kanälen: Die Liste zeigt die Speicherplätze, ein neuer Kanal kommt in die Zone des Kanals davor. Zonen lassen sich von hier aus weder anlegen noch löschen.
+1d172e2a	Ab 4.18 auch die Firmware R3b0rn von fagci (nur die Kanäle: 298 mit dem Originalspeicher, bis zu 1024 mit einem größeren Speicher).
+66e52182	Aus dem Programm des Herstellers abgeleitet und mit einem simulierten Funkgerät getestet, nicht an einem echten. Nur die Kanäle: Die aus dem Funkgerät gelesenen Einstellungen werden unverändert zurückgeschrieben.
+6c261fe0	512 Kanäle mit Namen von 12 Zeichen, 100-520 MHz, 115200 Baud. Gleiches Protokoll und gleicher Kanaldatensatz wie die Radtel RT-470 (Familie MML JC-8810 von CHIRP), mit eigener Begrüßung.{0}
+9b189840	JJCC-7700
+62547ae1	256 Kanäle mit Namen von 12 Zeichen, 18-1000 MHz. Gleiche Begrüßung, gleiches Protokoll und gleicher Kanaldatensatz wie die Radtel RT-470 (Familie MML JC-8810 von CHIRP). Das Programm des Herstellers prüft die Kennung des Funkgeräts nicht: Die Karte lehnt Funkgeräte ab, die sich als ein anderes Modell der Familie ausweisen.{0}
+5fd881a8	Firmware R3b0rn (fagci)
+631b3dde	{0} Jede Registerkarte liest und schreibt nur ihre eigene Firmware: Original von Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP-Treiber), F4HWN (Treiber von armel für CHIRP, mit den F4HWN-Einstellungen), OSFW (CHIRP-Treiber) oder die chinesischen Firmwares LOSEHU / LTS / UVE (CHIRP-Treiber, chinesische Namen). Öffnet man die falsche Registerkarte, liest das Programm die Firmware-Version, hält ohne zu schreiben an und nennt die richtige Registerkarte; «Identifizieren» findet sie selbst. Firmware: .bin-Dateien von Quansheng (z. B. k5_v2.01.26_publish.bin) mit dem Lader des Funkgeräts (mit gedrückter PTT eingeschaltet); das Programm prüft, ob die Firmware zum Ladertyp des Funkgeräts passt (UV-K5, UV-K5(8)/UV-K6 oder UV-5R Plus). Quansheng schützt die Downloads mit einem Passwort, das der Händler mitteilt. Auch IJV wird unterstützt (V3 mit 200 oder 999 Kanälen auf der klassischen UV-K5; V4, V5 und V6 auf der UV-K5 V3: am Funkgerät gewählte Bank, Kanäle, Gruppen und wichtigste Einstellungen).{1}{2}
+07d279b5	IU0VYT-FAGCI-R3{0}
+82c10882	fagci R3b0rn
+a7cffaf9	Quansheng UV-K5 / UV-K6 (Firmware R3b0rn von fagci)
+612fe095	Freie Firmware R3b0rn von fagci (das Funkgerät antwortet «R3b0rn»). Schalte das Funkgerät ein und stecke dann das Kabel in die Mikrofon-/Lautsprecherbuchse. Die Zahl der Kanäle hängt vom eingebauten Speicher ab: 298 mit dem Originalspeicher, bis zu 1024 mit einem größeren; Plätze jenseits derer des Funkgeräts können nicht benutzt werden. Namen mit 9 Zeichen; ein Kanal ohne Namen bekommt die Frequenz als Namen, weil für die Firmware ein Kanal ohne Namen nicht existiert. «Scan» setzt den Kanal in die Suchlaufliste 1 (die anderen Listen bleiben erhalten). Modulation und Empfänger des Kanals bleiben wie am Funkgerät eingestellt (FM für einen neuen Kanal, AM im Flugfunkband). Es werden nur die Kanäle gelesen und geschrieben: Einstellungen, VFOs, Presets und SSB-Patch werden nie angetastet. Alte Firmwareversionen mit anders aufgebautem Speicher werden abgelehnt. Aus den Quelltexten der Firmware abgeleitet.
+baa18d66	der Speicher dieses Funkgeräts hat {0} Kanäle
+34a24db7	Schreibblock ist kein Vielfaches von 8 Byte
+4cb56472	diese Version der Firmware R3b0rn antwortet nicht auf die bekannten Befehle: sicherheitshalber wird nichts gelesen und nichts geschrieben
+bdfdc7f9	der Speicher des Funkgeräts wurde nicht von der Firmware R3b0rn vorbereitet: führe zuerst den «Reset» im Menü des Funkgeräts aus
+32e680ea	diese Version der Firmware R3b0rn baut den Speicher anders auf ({0} Presets statt {1}): sicherheitshalber wird nichts gelesen und nichts geschrieben
+6bee758a	Firmware des Funkgeräts: {0}; Speicher mit {1} KiB, {2} Kanäle
+73eb6bcc	der Speicher dieses Funkgeräts ({0} KiB) ist anders als der, aus dem die Kanäle stammen ({1} KiB): lies zuerst dieses Funkgerät
+d2312023	Schalte das Funkgerät mit angeschlossenem Kabel ein. 512 Kanäle, 115200 Baud. Protokoll und Speicher aus dem Programm des Herstellers («Radio CPS» des RT-330) abgeleitet, das denselben Kanaldatensatz wie die Familie MML JC-8810 (Radtel RT-470) verwendet. Gelesen und geschrieben werden dieselben Bereiche wie im Programm des Herstellers.
+db4b865f	Schalte das Funkgerät mit angeschlossenem Kabel ein. 256 Kanäle. Protokoll und Speicher aus dem Programm des Herstellers («JJCC-7700 CPS» des RT-400) abgeleitet, das dieselbe Begrüßung und denselben Kanaldatensatz wie die Radtel RT-470 verwendet. Das Programm des Herstellers prüft die Kennung des Funkgeräts nicht: Diese Karte lehnt Funkgeräte ab, die sich als eines der anderen Modelle der Familie ausweisen (RT-470, RT-630, RT-495, HI-8811), und nimmt die übrigen an. Gelesen und geschrieben werden dieselben Bereiche wie im Programm des Herstellers.
+76edaf26	Radtel RT-330
+f89ce4d0	Radtel RT-400
+154febf8	250 Plätze mit Namen von 10 Zeichen, aufgeteilt in die Gruppen (Zonen) des Funkgeräts. Betriebsfunkgerät: Es wird mit dem Kenwood-Programmierkabel programmiert; das Funkgerät erst nach dem Anschließen des Kabels einschalten. Die Liste zeigt die Speicherplätze: Ein geänderter Kanal bleibt mit seiner Nummer in seiner Gruppe; ein neuer Kanal kommt in die Gruppe des Kanals, der in der Liste davor steht (die erste Gruppe, wenn es keinen gibt), mit der ersten freien Nummer. Signalisierung, Kompander, Sperre bei belegtem Kanal und «Beat Shift» bleiben erhalten. Gruppen lassen sich von hier aus weder anlegen noch löschen. CHIRP-Treiber.
+3241439e	das Funkgerät hat keine Gruppen: lege eine mit dem Programm des Herstellers an
+20d807b3	die Gruppe {0} ist voll
+e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
+f733bbbd	das Funkgerät weist sich als ein anderes Modell derselben Familie aus ({0}): öffne die Karte dieses Modells
+8a4bc126	Firmware R3b0rn von fagci

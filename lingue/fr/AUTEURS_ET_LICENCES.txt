@@ -165,6 +165,10 @@ Auteurs indiqués dans les fichiers de CHIRP utilisés :
   drivers/kenwood_live.py,
   drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
   drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
+  4.18 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk3140.py                         Copyright 2023 Dan Smith
+  drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
+                                            2024 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -209,6 +213,7 @@ au projet OpenGD77, à Hannes Matuschek DM3MAT (qdmr) et à Serge Vakulenko KK6A
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go.
 
 MISE À JOUR DU FIRMWARE DE LA QUANSHENG UV-K5 (4.1)
 Le format des fichiers .bin de Quansheng et le protocole du chargeur de l'UV-K5 sont
@@ -284,6 +289,18 @@ Smith) ; drv_kwtk60.go et drv_kwtk_var.go dérivent de tk270.py et tk760g.py de 
 (Copyright 2016 Pavel Milanes CO7WT), GNU GPL v3. L'entrée de catalogue de la Radtel
 RT-860 vient de la comparaison avec le programme du constructeur, dont rien n'est
 inclus.
+
+KENWOOD TK-2140/3140, TK-280/380, FIRMWARE R3B0RN, RADTEL RT-330 ET RT-400 (4.18) :
+drv_kwtk140.go dérive de tk3140.py de CHIRP (Copyright 2023 Dan Smith) et drv_kwtk280.go
+de tk280.py de CHIRP (Copyright 2016 Pavel Milanes CO7WT, 2024 Dan Smith), GNU GPL v3.
+Firmware R3b0rn de fagci (https://github.com/fagci/uvk5-fagci-reborn, licence Apache
+2.0, basé sur le firmware de DualTachyon) : drv_fagci.go est écrit dans IU0VYT Flash
+d'après l'organisation de la mémoire et les commandes décrites dans les sources du
+firmware ; aucun firmware ni programme de l'auteur n'est inclus ; programme indépendant,
+non affilié à lui. Radtel RT-330 et RT-400 : d'après la comparaison avec les programmes
+du constructeur (« Radio CPS » et « JJCC-7700 CPS »), dont rien n'est inclus ;
+l'enregistrement des canaux est celui de mml_jc8810.py de CHIRP. Merci à fagci pour le
+firmware R3b0rn.
 
 NOMS DES ZONES (4.11)
 Le format des noms des zones est tiré, pour l'interopérabilité, du code des programmes

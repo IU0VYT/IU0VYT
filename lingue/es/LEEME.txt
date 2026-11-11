@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.17.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.18.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,20 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.18.0:
+- KENWOOD TK-2140, TK-3140, TK-280, TK-380: portátiles profesionales con los canales
+  repartidos en zonas (grupos): canales y ajustes, con los drivers de CHIRP. La lista
+  muestra las 250 posiciones de la memoria; un canal modificado conserva su zona y su
+  número, un canal nuevo entra en la zona del canal que lo precede. Las zonas no se
+  crean ni se borran desde aquí.
+- QUANSHENG UV-K5 / UV-K6 CON EL FIRMWARE R3B0RN DE FAGCI: solo los canales (298 con la
+  memoria original, hasta 1024 con una memoria más grande); ajustes, VFO, presets y
+  parche SSB no se escriben nunca. Probado solo con una radio simulada: haz primero una
+  lectura y avisa de cualquier problema.
+- RADTEL RT-330 y RT-400: canales, a partir de los programas del fabricante. La ficha
+  RT-400 rechaza las radios que se identifican como RT-470, RT-630, RT-495 o HI-8811.
+  Probado solo con una radio simulada.
+- Galería: 552 modelos de 47 marcas (498 con canales, 427 con ajustes).
 Novedades de la 4.17.0:
 - KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: canales leídos y escritos de uno en uno
   con la radio encendida normalmente (9600 baudios, cable de programación); solo se

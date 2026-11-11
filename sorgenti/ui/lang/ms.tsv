@@ -5316,7 +5316,6 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (perisian tegar OpenGD
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
 850cccbc	{0} Dengan perisian tegar asal TYT, radio ini tidak dikendalikan.
-3784fb7e	{0} Setiap tab membaca dan menulis hanya perisian tegarnya sendiri: asal Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (pemacu CHIRP), F4HWN (pemacu armel untuk CHIRP, dengan tetapan F4HWN), OSFW (pemacu CHIRP) atau perisian tegar Cina LOSEHU / LTS / UVE (pemacu CHIRP, nama Cina). Jika anda membuka tab yang salah, program membaca versi perisian tegar, berhenti tanpa menulis dan menunjukkan tab yang betul; «Kenal pasti» menemuinya sendiri. Perisian tegar: fail .bin Quansheng (cth. k5_v2.01.26_publish.bin) dengan pemuat radio (dihidupkan sambil menekan PTT); program menyemak bahawa perisian tegar adalah untuk jenis pemuat radio (UV-K5, UV-K5(8)/UV-K6 atau UV-5R Plus). Quansheng melindungi muat turun dengan kata laluan yang diberikan oleh penjual. IJV juga dikendalikan (V3 dengan 200 atau 999 saluran pada UV-K5 klasik; V4, V5 dan V6 pada UV-K5 V3: bank yang dipilih pada radio, saluran, kumpulan dan tetapan utama).{1}
 b9ae89b8	Radioddity GD-77
 38c31cf1	Radioddity GD-77S
 829ca215	Baofeng RD-5R
@@ -5373,3 +5372,32 @@ ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
 23a23be9	versi radio tidak diketahui ({0})
 47b188ff	versi radio ini mempunyai {0} saluran
 cce84c13	ton «{0}» tidak tersedia pada radio ini, ditetapkan kepada OFF
+4eb7ae1b	Radio profesional dengan saluran yang dibahagikan kepada zon (kumpulan): senarai menunjukkan kedudukan memori, saluran baharu masuk ke zon saluran sebelumnya. Zon tidak boleh dicipta atau dipadam dari sini.
+1d172e2a	Mulai 4.18 juga perisian tegar R3b0rn oleh fagci (saluran sahaja: 298 dengan memori asal, sehingga 1024 dengan memori yang lebih besar).
+66e52182	Diperoleh daripada program pengeluar dan diuji dengan radio simulasi, bukan pada radio sebenar. Saluran sahaja: tetapan yang dibaca dari radio ditulis semula seadanya.
+6c261fe0	512 saluran dengan nama 12 aksara, 100-520 MHz, 115200 baud. Protokol dan rekod saluran yang sama seperti Radtel RT-470 (keluarga MML JC-8810 dalam CHIRP), dengan salam pengenalan tersendiri.{0}
+9b189840	JJCC-7700
+62547ae1	256 saluran dengan nama 12 aksara, 18-1000 MHz. Salam pengenalan, protokol dan rekod saluran yang sama seperti Radtel RT-470 (keluarga MML JC-8810 dalam CHIRP). Program pengeluar tidak memeriksa pengecam radio: tab ini menolak radio yang mengenalkan diri sebagai model lain dalam keluarga itu.{0}
+5fd881a8	Firmware R3b0rn (fagci)
+631b3dde	{0} Setiap tab membaca dan menulis hanya perisian tegarnya sendiri: asal Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (pemacu CHIRP), F4HWN (pemacu armel untuk CHIRP, dengan tetapan F4HWN), OSFW (pemacu CHIRP) atau perisian tegar Cina LOSEHU / LTS / UVE (pemacu CHIRP, nama Cina). Jika anda membuka tab yang salah, program membaca versi perisian tegar, berhenti tanpa menulis dan menunjukkan tab yang betul; «Kenal pasti» menemuinya sendiri. Perisian tegar: fail .bin Quansheng (cth. k5_v2.01.26_publish.bin) dengan pemuat radio (dihidupkan sambil menekan PTT); program menyemak bahawa perisian tegar adalah untuk jenis pemuat radio (UV-K5, UV-K5(8)/UV-K6 atau UV-5R Plus). Quansheng melindungi muat turun dengan kata laluan yang diberikan oleh penjual. IJV juga dikendalikan (V3 dengan 200 atau 999 saluran pada UV-K5 klasik; V4, V5 dan V6 pada UV-K5 V3: bank yang dipilih pada radio, saluran, kumpulan dan tetapan utama).{1}{2}
+07d279b5	IU0VYT-FAGCI-R3{0}
+82c10882	fagci R3b0rn
+a7cffaf9	Quansheng UV-K5 / UV-K6 (perisian tegar R3b0rn oleh fagci)
+612fe095	Perisian tegar bebas R3b0rn oleh fagci (radio menjawab «R3b0rn»). Hidupkan radio, kemudian sambungkan kabel ke penyambung mikrofon/pembesar suara. Bilangan saluran bergantung pada memori yang dipasang: 298 dengan memori asal, sehingga 1024 dengan memori yang lebih besar; kedudukan yang melebihi bilangan radio tidak boleh digunakan. Nama 9 aksara; saluran tanpa nama mengambil frekuensinya sebagai nama, kerana bagi perisian tegar saluran tanpa nama tidak wujud. «Scan» memasukkan saluran ke senarai imbasan 1 (senarai lain dikekalkan). Modulasi dan penerima saluran kekal seperti yang ditetapkan pada radio (FM untuk saluran baharu, AM dalam jalur penerbangan). Hanya saluran dibaca dan ditulis: tetapan, VFO, praset dan tampalan SSB tidak pernah disentuh. Versi lama perisian tegar, yang menyusun memori dengan cara lain, ditolak. Diperoleh daripada kod sumber perisian tegar.
+baa18d66	memori radio ini mempunyai {0} saluran
+34a24db7	blok tulisan bukan gandaan 8 bait
+4cb56472	versi perisian tegar R3b0rn ini tidak menjawab arahan yang diketahui: demi keselamatan tiada bacaan atau tulisan dibuat
+bdfdc7f9	memori radio belum disediakan oleh perisian tegar R3b0rn: lakukan «reset» dari menu radio dahulu
+32e680ea	versi perisian tegar R3b0rn ini menyusun memori dengan cara lain ({0} praset dan bukannya {1}): demi keselamatan tiada bacaan atau tulisan dibuat
+6bee758a	Perisian tegar radio: {0}; memori {1} KiB, {2} saluran
+73eb6bcc	memori radio ini ({0} KiB) berbeza daripada memori asal saluran tersebut ({1} KiB): baca radio ini dahulu
+d2312023	Hidupkan radio dengan kabel tersambung. 512 saluran, 115200 baud. Protokol dan memori diperoleh daripada program pengeluar («Radio CPS» bagi RT-330), yang menggunakan rekod saluran yang sama seperti keluarga MML JC-8810 (Radtel RT-470). Kawasan yang dibaca dan ditulis sama seperti program pengeluar.
+db4b865f	Hidupkan radio dengan kabel tersambung. 256 saluran. Protokol dan memori diperoleh daripada program pengeluar («JJCC-7700 CPS» bagi RT-400), yang menggunakan salam pengenalan dan rekod saluran yang sama seperti Radtel RT-470. Program pengeluar tidak memeriksa pengecam radio: tab ini menolak radio yang mengenalkan diri sebagai salah satu model lain dalam keluarga itu (RT-470, RT-630, RT-495, HI-8811) dan menerima yang lain. Kawasan yang dibaca dan ditulis sama seperti program pengeluar.
+76edaf26	Radtel RT-330
+f89ce4d0	Radtel RT-400
+154febf8	250 kedudukan dengan nama 10 aksara, dibahagikan kepada kumpulan (zon) radio. Radio profesional: diprogram dengan kabel pengaturcaraan Kenwood, dengan menghidupkan radio selepas kabel disambungkan. Senarai menunjukkan kedudukan memori: saluran yang diubah kekal dalam kumpulannya dengan nombornya; saluran baharu masuk ke kumpulan saluran sebelumnya dalam senarai (kumpulan pertama jika tiada) dengan nombor kosong yang pertama. Pengisyaratan, kompander, kunci saluran sibuk dan «beat shift» dikekalkan. Kumpulan tidak boleh dicipta atau dipadam dari sini. Pemacu CHIRP.
+3241439e	radio tidak mempunyai kumpulan: cipta satu dengan program pengeluar
+20d807b3	kumpulan {0} sudah penuh
+e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
+f733bbbd	radio mengenalkan diri sebagai model lain dalam keluarga yang sama ({0}): buka tab model itu
+8a4bc126	perisian tegar R3b0rn oleh fagci

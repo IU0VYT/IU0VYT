@@ -6,6 +6,42 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.18.0 (11/11/2026)
+-------------------
+- Kenwood TK-2140 dan TK-3140 (drv_kwtk140.go, baharu; tk3140.py CHIRP: TK-2140K,
+  TK-3140K, TK-3140K2, TK-3140K3) serta Kenwood TK-280 dan TK-380 (drv_kwtk280.go,
+  baharu; tk280.py CHIRP): 250 kedudukan 48 bait yang dibahagikan kepada zon atau
+  kumpulan. Senarai program ialah senarai kedudukan fizikal: saluran yang diubah kekal
+  dalam zonnya dengan nombornya, saluran baharu masuk ke zon saluran sebelumnya dengan
+  nombor kosong yang pertama; jadual kedudukan dibina semula seperti dalam CHIRP.
+- Alat perbandingan dengan CHIRP (verifica/chirp/chirpref.py): kini mengendalikan radio
+  yang dalam CHIRP mempunyai satu «sub-radio» bagi setiap zon. Bacaan, 15
+  pengubahsuaian, susunan memori, bait yang ditukar dan memori akhir sama dengan CHIRP
+  bagi enam model itu. Tetapan: 6 kelas baharu (314 semuanya); 750 entri setiap kumpulan
+  bagi TK-280/380 tidak disertakan.
+- Quansheng UV-K5 / UV-K6 dengan perisian tegar R3b0rn oleh fagci (drv_fagci.go,
+  baharu), daripada kod sumber perisian tegar: tetapan, VFO dan 40 praset di
+  0x0000-0x052E; saluran 23 bait di hujung EEPROM secara terbalik; jenis EEPROM dalam
+  tiga bit rendah bait pertama (8 hingga 256 KiB: 298, 654, 678 atau 1024 saluran);
+  alamat 32 bit, tulisan dalam kumpulan 8 bait, 38400 baud. Hanya kawasan saluran
+  ditulis. Ditolak: perisian tegar yang tidak menjawab bacaan 32 bit, bilangan praset
+  selain 40, memori yang belum disediakan, memori bersaiz lain. Rekod juga disemak
+  dengan mengkompil struktur perisian tegar. Perbezaan yang disengajakan daripada pemacu
+  CHIRP yang diterbitkan bersama perisian tegar: frekuensi pancaran sentiasa ditulis
+  penuh, nama 9 aksara.
+- Radtel RT-330 dan RT-400 (drv_jc8810.go), daripada program pengeluar («Radio CPS» dan
+  «JJCC-7700 CPS»), yang menggunakan protokol dan rekod saluran keluarga MML JC-8810.
+  RT-330: salam pengenalan «PROGRAMYF68U», 115200 baud, 512 saluran, 100-520 MHz.
+  RT-400: salam pengenalan «PROGRAMJC81U» (sama seperti RT-470), 57600 baud, 256
+  saluran, 18-1000 MHz; program pengeluar tidak memeriksa pengecam, maka tab ini menolak
+  pengecam model lain yang mempunyai salam pengenalan yang sama. Diuji dengan radio
+  simulasi sahaja.
+- Katalog (catalog_418.go, baharu): 4 entri, dan tab R3b0rn pada UV-K5. Kiraan: 498
+  radio, 427 dengan tetapan, 552 dalam galeri. Terjemahan: 29 teks baharu.
+- Tidak dibuat dalam versi ini: Kenwood TK-2180 / TK-3180 (dalam CHIRP setiap tambahan
+  atau pemadaman menganjakkan seluruh memori); Radtel RT-871A, RT-1000 Pro, RT-4D,
+  RT-6D, RT-5D (kawasan atau rekod berbeza daripada yang sudah disokong).
+
 4.17.0 (11/11/2026)
 -------------------
 - Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,

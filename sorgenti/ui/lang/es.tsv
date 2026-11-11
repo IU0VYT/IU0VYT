@@ -5316,7 +5316,6 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (firmware OpenGD77)
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
 850cccbc	{0} Con el firmware original de TYT estas radios no están gestionadas.
-3784fb7e	{0} Cada pestaña lee y escribe solo su propio firmware: original de Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (controlador de CHIRP), F4HWN (controlador de armel para CHIRP, con los ajustes F4HWN), OSFW (controlador de CHIRP) o los firmwares chinos LOSEHU / LTS / UVE (controlador de CHIRP, nombres chinos). Si abres la pestaña equivocada el programa lee la versión del firmware, se detiene sin escribir e indica la pestaña correcta; «Identificar» la encuentra solo. Firmware: archivos .bin de Quansheng (p. ej. k5_v2.01.26_publish.bin) con el cargador de la radio (encendida manteniendo pulsado el PTT); el programa comprueba que el firmware sea para el tipo de cargador de la radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). Quansheng protege las descargas con una contraseña que proporciona el vendedor. También se gestiona IJV (V3 de 200 o 999 canales en la UV-K5 clásica; V4, V5 y V6 en la UV-K5 V3: banco elegido en la radio, canales, grupos y ajustes principales).{1}
 b9ae89b8	Radioddity GD-77
 38c31cf1	Radioddity GD-77S
 829ca215	Baofeng RD-5R
@@ -5373,3 +5372,32 @@ ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
 23a23be9	versión de la radio desconocida ({0})
 47b188ff	esta versión de la radio tiene {0} canales
 cce84c13	tono «{0}» no disponible en esta radio, ajustado a OFF
+4eb7ae1b	Radio profesional con los canales repartidos en zonas (grupos): la lista muestra las posiciones de la memoria, un canal nuevo entra en la zona del canal que lo precede. Las zonas no se crean ni se borran desde aquí.
+1d172e2a	Desde la 4.18 también el firmware R3b0rn de fagci (solo los canales: 298 con la memoria original, hasta 1024 con una memoria más grande).
+66e52182	Obtenido del programa del fabricante y probado con una radio simulada, no con una radio real. Solo los canales: los ajustes leídos de la radio se vuelven a escribir tal como están.
+6c261fe0	512 canales con nombres de 12 caracteres, 100-520 MHz, 115200 baudios. Mismo protocolo y mismo registro de canales que las Radtel RT-470 (familia MML JC-8810 de CHIRP), con un saludo propio.{0}
+9b189840	JJCC-7700
+62547ae1	256 canales con nombres de 12 caracteres, 18-1000 MHz. Mismo saludo, mismo protocolo y mismo registro de canales que las Radtel RT-470 (familia MML JC-8810 de CHIRP). El programa del fabricante no comprueba el identificador de la radio: la ficha rechaza las radios que se identifican como otro modelo de la familia.{0}
+5fd881a8	Firmware R3b0rn (fagci)
+631b3dde	{0} Cada pestaña lee y escribe solo su propio firmware: original de Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (controlador de CHIRP), F4HWN (controlador de armel para CHIRP, con los ajustes F4HWN), OSFW (controlador de CHIRP) o los firmwares chinos LOSEHU / LTS / UVE (controlador de CHIRP, nombres chinos). Si abres la pestaña equivocada el programa lee la versión del firmware, se detiene sin escribir e indica la pestaña correcta; «Identificar» la encuentra solo. Firmware: archivos .bin de Quansheng (p. ej. k5_v2.01.26_publish.bin) con el cargador de la radio (encendida manteniendo pulsado el PTT); el programa comprueba que el firmware sea para el tipo de cargador de la radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). Quansheng protege las descargas con una contraseña que proporciona el vendedor. También se gestiona IJV (V3 de 200 o 999 canales en la UV-K5 clásica; V4, V5 y V6 en la UV-K5 V3: banco elegido en la radio, canales, grupos y ajustes principales).{1}{2}
+07d279b5	IU0VYT-FAGCI-R3{0}
+82c10882	fagci R3b0rn
+a7cffaf9	Quansheng UV-K5 / UV-K6 (firmware R3b0rn de fagci)
+612fe095	Firmware libre R3b0rn de fagci (la radio responde «R3b0rn»). Enciende la radio y luego conecta el cable al conector de micrófono/altavoz. El número de canales depende de la memoria montada: 298 con la original, hasta 1024 con una memoria más grande; las posiciones más allá de las de la radio no se pueden usar. Nombres de 9 caracteres; un canal sin nombre toma como nombre la frecuencia, porque para el firmware un canal sin nombre no existe. «Scan» pone el canal en la lista de escaneo 1 (las demás listas se conservan). La modulación y el receptor del canal quedan como están ajustados en la radio (FM para un canal nuevo, AM en la banda aérea). Solo se leen y se escriben los canales: ajustes, VFO, presets y parche SSB no se tocan nunca. Las versiones antiguas del firmware, con la memoria dispuesta de otro modo, se rechazan. Obtenido de las fuentes del firmware.
+baa18d66	la memoria de esta radio tiene {0} canales
+34a24db7	el bloque de escritura no es múltiplo de 8 bytes
+4cb56472	esta versión del firmware R3b0rn no responde a los comandos conocidos: por seguridad no se lee ni se escribe
+bdfdc7f9	la memoria de la radio no ha sido preparada por el firmware R3b0rn: haz primero el «reset» desde el menú de la radio
+32e680ea	esta versión del firmware R3b0rn dispone la memoria de otro modo ({0} presets en lugar de {1}): por seguridad no se lee ni se escribe
+6bee758a	Firmware de la radio: {0}; memoria de {1} KiB, {2} canales
+73eb6bcc	la memoria de esta radio ({0} KiB) es distinta de aquella de la que vienen los canales ({1} KiB): lee primero esta radio
+d2312023	Enciende la radio con el cable conectado. 512 canales, 115200 baudios. Protocolo y memoria obtenidos del programa del fabricante («Radio CPS» de la RT-330), que usa el mismo registro de canales que la familia MML JC-8810 (Radtel RT-470). Se leen y se escriben las mismas áreas que el programa del fabricante.
+db4b865f	Enciende la radio con el cable conectado. 256 canales. Protocolo y memoria obtenidos del programa del fabricante («JJCC-7700 CPS» de la RT-400), que usa el mismo saludo y el mismo registro de canales que las Radtel RT-470. El programa del fabricante no comprueba el identificador de la radio: esta ficha rechaza las radios que se identifican como uno de los otros modelos de la familia (RT-470, RT-630, RT-495, HI-8811) y acepta las demás. Se leen y se escriben las mismas áreas que el programa del fabricante.
+76edaf26	Radtel RT-330
+f89ce4d0	Radtel RT-400
+154febf8	250 posiciones con nombres de 10 caracteres, repartidas en los grupos (zonas) de la radio. Radio profesional: se programa con el cable de programación Kenwood, encendiendo la radio después de conectar el cable. La lista muestra las posiciones de la memoria: un canal modificado se queda en su grupo con su número; un canal nuevo entra en el grupo del canal que lo precede en la lista (el primer grupo si no hay ninguno) con el primer número libre. Señalización, compander, bloqueo por canal ocupado y «beat shift» se conservan. Los grupos no se crean ni se borran desde aquí. Driver de CHIRP.
+3241439e	la radio no tiene grupos: crea uno con el programa del fabricante
+20d807b3	el grupo {0} está lleno
+e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
+f733bbbd	la radio se identifica como otro modelo de la misma familia ({0}): abre la ficha de ese modelo
+8a4bc126	firmware R3b0rn de fagci

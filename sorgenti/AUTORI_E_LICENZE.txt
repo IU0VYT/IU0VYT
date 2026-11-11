@@ -162,6 +162,10 @@ revisione 337b385 del 09/11/2026). Autori indicati nei file di CHIRP usati:
   drivers/kenwood_live.py,
   drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
   drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
+  4.18 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk3140.py                         Copyright 2023 Dan Smith
+  drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
+                                            2024 Dan Smith
   Fuori da CHIRP (GNU GPL v2 o successiva): driver «Quansheng UV-K1 / UV-K5 V3» di
   F4HWN Fusion 5.9.0 (VE2ZJM e armel F4HWN, sul driver di egzumer e JOC2;
   https://github.com/armel/uv-k1-k5v3-firmware-custom).
@@ -201,9 +205,11 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion);
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU);
-4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
+4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go;
+4.18: drv_kwtk140.go, drv_kwtk280.go.
 Grazie agli autori di CHIRP, ad armel F4HWN, a M7OCM, a JuantAldea, a v0l (radio_tool),
-al progetto OpenGD77, a Hannes Matuschek DM3MAT (qdmr) e a Serge Vakulenko KK6ABQ.
+al progetto OpenGD77, a Hannes Matuschek DM3MAT (qdmr), a Serge Vakulenko KK6ABQ e a
+fagci (firmware R3b0rn).
 
 AGGIORNAMENTO DEL FIRMWARE DELLA QUANSHENG UV-K5 (4.1)
 Il formato dei file .bin di Quansheng e il protocollo del caricatore della UV-K5 sono
@@ -289,6 +295,17 @@ drv_kwlive.go usa i comandi dei driver kenwood_live.py e kenwood_d7.py di CHIRP;
 drv_kwtk60.go e drv_kwtk_var.go derivano da tk270.py e tk760g.py di CHIRP (GNU GPL v3).
 La voce di catalogo della Radtel RT-860 nasce dal confronto con il programma del
 costruttore («RT-860 Radio CPS»), di cui non è incluso nulla.
+
+KENWOOD TK-2140/3140, TK-280/380, FIRMWARE R3B0RN, RADTEL RT-330 E RT-400 (4.18)
+drv_kwtk140.go deriva da tk3140.py e drv_kwtk280.go da tk280.py di CHIRP (GNU GPL v3).
+Firmware R3b0rn di fagci (https://github.com/fagci/uvk5-fagci-reborn, licenza Apache
+2.0, sul firmware di DualTachyon): drv_fagci.go è scritto in IU0VYT Flash sulla
+disposizione della memoria e sui comandi descritti nei sorgenti del firmware
+(src/settings.h, src/helper/channels.c, src/driver/uart.c). Nessun firmware o
+programma dell'autore è incluso. Programma indipendente, non affiliato a lui.
+Radtel RT-330 e RT-400: dal confronto con i programmi del costruttore («Radio CPS»
+della RT-330 e «JJCC-7700 CPS» della RT-400), di cui non è incluso nulla; il record
+dei canali è quello di mml_jc8810.py di CHIRP.
 
 NOMI DELLE ZONE (4.11)
 Il formato dei nomi delle zone è ricavato, per l'interoperabilità, dal codice dei

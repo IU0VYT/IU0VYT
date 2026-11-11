@@ -434,3 +434,265 @@ func (e *kw60gEmu) serve(p Port) error {
 		}
 	}
 }
+
+// 4.18: Kenwood TK-2140 / TK-3140 (blocchi di 256 byte, bit della scansione a parte)
+type kwx140Emu struct {
+	mu  sync.Mutex
+	img []byte
+}
+
+func (kwx140Fam) emu(m *genModel, img []byte) genEmu {
+	mem := bytes.Repeat([]byte{0xFF}, kwx140Size)
+	copy(mem, img)
+	return &kwx140Emu{img: mem[:kwx140Size]}
+}
+
+func (e *kwx140Emu) image() []byte {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]byte{}, e.img...)
+}
+
+func (e *kwx140Emu) serve(p Port) error {
+	for {
+		if err := emuWaitFor(p, "PROGRAM"); err != nil {
+			return nil
+		}
+		p.Write([]byte{0x06})
+		if err := emuExpect(p, "\x02"); err != nil {
+			return err
+		}
+		e.mu.Lock()
+		id := append([]byte{}, e.img[kwx140ID:kwx140ID+8]...)
+		e.mu.Unlock()
+		p.Write(id)
+		if err := emuExpect(p, "\x06"); err != nil {
+			return err
+		}
+		p.Write([]byte{0x06})
+		if err := emuExpect(p, "P"); err != nil {
+			return err
+		}
+		p.Write([]byte("V1.00\x00\x00\x00\x00\x00"))
+		if err := emuExpect(p, "\x06"); err != nil {
+			return err
+		}
+		p.Write([]byte{0x06})
+	session:
+		for {
+			c, err := emuRead(p, 1)
+			if err != nil {
+				return nil
+			}
+			switch c[0] {
+			case 'E':
+				break session
+			case 'R', 'W', 'Z':
+				h, err := emuRead(p, 2)
+				if err != nil {
+					return nil
+				}
+				blk := int(h[1])
+				if h[0] != 0 || blk >= 0x80 {
+					return fmt.Errorf("blocco non valido % X", h)
+				}
+				e.mu.Lock()
+				d := append([]byte{}, e.img[blk*256:blk*256+256]...)
+				e.mu.Unlock()
+				if c[0] == 'R' {
+					if bytes.Equal(d, bytes.Repeat(d[:1], 256)) {
+						p.Write([]byte{'Z', d[0]})
+					} else {
+						p.Write(append(append([]byte{'W'}, d...), kwtkSum(d)))
+					}
+					if err := emuExpect(p, "\x06"); err != nil {
+						return err
+					}
+					p.Write([]byte{0x06})
+					continue
+				}
+				if blk >= 0x54 && blk < 0x60 {
+					return fmt.Errorf("scrittura di un blocco protetto (0x%02X)", blk)
+				}
+				if c[0] == 'W' {
+					b, err := emuRead(p, 257)
+					if err != nil {
+						return nil
+					}
+					if kwtkSum(b[:256]) != b[256] {
+						p.Write([]byte{0x15})
+						continue
+					}
+					d = b[:256]
+				} else {
+					b, err := emuRead(p, 1)
+					if err != nil {
+						return nil
+					}
+					d = bytes.Repeat(b, 256)
+				}
+				e.mu.Lock()
+				copy(e.img[blk*256:], d)
+				e.mu.Unlock()
+				p.Write([]byte{0x06})
+			case 'S', 'X':
+				h, err := emuRead(p, 3)
+				if err != nil {
+					return nil
+				}
+				a := int(h[0])<<8 | int(h[1])
+				if h[2] != 0x10 || (a != 0x320 && a != 0x330) {
+					return fmt.Errorf("zona della scansione non valida % X", h)
+				}
+				off := kwx140Scan + a - 0x320
+				if c[0] == 'S' {
+					e.mu.Lock()
+					p.Write(append([]byte{'X'}, e.img[off:off+16]...))
+					e.mu.Unlock()
+					if err := emuExpect(p, "\x06"); err != nil {
+						return err
+					}
+					p.Write([]byte{0x06})
+					continue
+				}
+				b, err := emuRead(p, 17)
+				if err != nil {
+					return nil
+				}
+				sum := 0
+				for _, x := range b[:16] {
+					sum += int(x)
+				}
+				if byte(sum%255) != b[16] {
+					p.Write([]byte{0x15})
+					continue
+				}
+				e.mu.Lock()
+				copy(e.img[off:], b[:16])
+				e.mu.Unlock()
+				p.Write([]byte{0x06})
+				if err := emuExpect(p, "\x06"); err != nil {
+					return err
+				}
+			default:
+				return fmt.Errorf("comando sconosciuto %02X", c[0])
+			}
+		}
+	}
+}
+
+// 4.18: Kenwood TK-280 / TK-380 (blocchi di 256 byte con somma, conferma 06/06
+// dopo ogni blocco)
+type kwx80Emu struct {
+	mu  sync.Mutex
+	img []byte
+}
+
+func (kwx80Fam) emu(m *genModel, img []byte) genEmu {
+	mem := bytes.Repeat([]byte{0xFF}, kwx80Size)
+	copy(mem, img)
+	return &kwx80Emu{img: mem[:kwx80Size]}
+}
+
+func (e *kwx80Emu) image() []byte {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]byte{}, e.img...)
+}
+
+func (e *kwx80Emu) serve(p Port) error {
+	ack := func() error {
+		if err := emuExpect(p, "\x06"); err != nil {
+			return err
+		}
+		p.Write([]byte{0x06})
+		return nil
+	}
+	for {
+		if err := emuWaitFor(p, "PROGRAM"); err != nil {
+			return nil
+		}
+		p.Write([]byte{0x06})
+		if err := emuExpect(p, "\x02"); err != nil {
+			return err
+		}
+		e.mu.Lock()
+		id := append([]byte{}, e.img[kwx80ID:kwx80ID+8]...)
+		e.mu.Unlock()
+		p.Write(id)
+		if err := ack(); err != nil {
+			return err
+		}
+		if err := emuExpect(p, "P"); err != nil {
+			return err
+		}
+		p.Write([]byte("v2.00k\xff\xff\xff\xff"))
+		if err := ack(); err != nil {
+			return err
+		}
+		if err := emuExpect(p, "O"); err != nil {
+			return err
+		}
+	session:
+		for {
+			c, err := emuRead(p, 1)
+			if err != nil {
+				return nil
+			}
+			if c[0] == 'E' {
+				break session
+			}
+			h, err := emuRead(p, 2)
+			if err != nil {
+				return nil
+			}
+			blk := int(h[0])<<8 | int(h[1])
+			if blk >= kwx80Size/256 {
+				return fmt.Errorf("blocco non valido %d", blk)
+			}
+			switch c[0] {
+			case 'R':
+				e.mu.Lock()
+				d := append([]byte{}, e.img[blk*256:blk*256+256]...)
+				e.mu.Unlock()
+				if bytes.Equal(d, bytes.Repeat([]byte{0xFF}, 256)) {
+					p.Write([]byte{'Z', 0xFF})
+				} else {
+					p.Write(append(append([]byte{'W'}, d...), kwtkSum(d)))
+				}
+				if err := ack(); err != nil {
+					return err
+				}
+			case 'W', 'Z':
+				d := bytes.Repeat([]byte{0xFF}, 256)
+				if c[0] == 'W' {
+					b, err := emuRead(p, 257)
+					if err != nil {
+						return nil
+					}
+					if err := emuExpect(p, "\x06"); err != nil {
+						return err
+					}
+					if kwtkSum(b[:256]) != b[256] || (blk > 0x50 && blk < 0x60) {
+						p.Write([]byte{0x15})
+						continue
+					}
+					d = b[:256]
+				} else {
+					if _, err := emuRead(p, 1); err != nil {
+						return nil
+					}
+					if err := emuExpect(p, "\x06"); err != nil {
+						return err
+					}
+				}
+				e.mu.Lock()
+				copy(e.img[blk*256:], d)
+				e.mu.Unlock()
+				p.Write([]byte{0x06})
+			default:
+				return fmt.Errorf("comando sconosciuto %02X", c[0])
+			}
+		}
+	}
+}

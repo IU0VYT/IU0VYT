@@ -164,6 +164,10 @@ Pengarang yang dinyatakan dalam fail CHIRP yang digunakan:
   drivers/kenwood_live.py,
   drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
   drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
+  4.18 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/tk3140.py                         Copyright 2023 Dan Smith
+  drivers/tk280.py                          Copyright 2016 Pavel Milanes CO7WT,
+                                            2024 Dan Smith
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -207,6 +211,7 @@ projek OpenGD77, Hannes Matuschek DM3MAT (qdmr) dan Serge Vakulenko KK6ABQ.
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
+4.18: drv_kwtk140.go, drv_kwtk280.go.
 
 KEMAS KINI PERISIAN TEGAR QUANSHENG UV-K5 (4.1)
 Format fail .bin Quansheng dan protokol pemuat UV-K5 didokumenkan oleh program bebas
@@ -280,6 +285,18 @@ menggunakan arahan pemacu kenwood_live.py dan kenwood_d7.py CHIRP (Copyright 201
 Smith); drv_kwtk60.go dan drv_kwtk_var.go diterbitkan daripada tk270.py dan tk760g.py
 CHIRP (Copyright 2016 Pavel Milanes CO7WT), GNU GPL v3. Entri katalog Radtel RT-860
 berasal daripada perbandingan dengan program pengeluar, yang tiada satu pun disertakan.
+
+KENWOOD TK-2140/3140, TK-280/380, PERISIAN TEGAR R3B0RN, RADTEL RT-330 DAN RT-400
+(4.18): drv_kwtk140.go berasal daripada tk3140.py CHIRP (Copyright 2023 Dan Smith) dan
+drv_kwtk280.go daripada tk280.py CHIRP (Copyright 2016 Pavel Milanes CO7WT, 2024 Dan
+Smith), GNU GPL v3. Perisian tegar R3b0rn oleh fagci
+(https://github.com/fagci/uvk5-fagci-reborn, lesen Apache 2.0, berasaskan perisian tegar
+DualTachyon): drv_fagci.go ditulis dalam IU0VYT Flash berdasarkan susunan memori dan
+arahan yang diterangkan dalam kod sumber perisian tegar; tiada perisian tegar atau
+program pengarang disertakan; program bebas, tidak bergabung dengannya. Radtel RT-330
+dan RT-400: daripada perbandingan dengan program pengeluar («Radio CPS» dan «JJCC-7700
+CPS»), yang tiada satu pun disertakan; rekod saluran ialah rekod mml_jc8810.py CHIRP.
+Terima kasih kepada fagci atas perisian tegar R3b0rn.
 
 NAMA ZON (4.11)
 Format nama zon diperoleh, untuk saling kendali, daripada kod program pengeluar: Radtel

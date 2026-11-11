@@ -7,6 +7,42 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.18.0 (11.11.2026)
+-------------------
+- Kenwood TK-2140 und TK-3140 (drv_kwtk140.go, neu; tk3140.py von CHIRP: TK-2140K,
+  TK-3140K, TK-3140K2, TK-3140K3) sowie Kenwood TK-280 und TK-380 (drv_kwtk280.go, neu;
+  tk280.py von CHIRP): 250 Plätze zu 48 Byte, in Zonen bzw. Gruppen aufgeteilt. Die
+  Liste des Programms ist die der physischen Plätze: Ein geänderter Kanal bleibt mit
+  seiner Nummer in seiner Zone, ein neuer Kanal kommt mit der ersten freien Nummer in
+  die Zone des Kanals davor; die Platztabelle wird wie in CHIRP neu aufgebaut.
+- Vergleichswerkzeug mit CHIRP (verifica/chirp/chirpref.py): Es behandelt jetzt die
+  Funkgeräte, die in CHIRP ein «Unter-Funkgerät» pro Zone haben. Lesen, 15 Änderungen,
+  Speicheraufbau, ausgetauschte Bytes und Endspeicher sind für die sechs Modelle
+  identisch mit CHIRP. Einstellungen: 6 neue Klassen (insgesamt 314); die 750
+  gruppenweisen Einträge der TK-280/380 sind nicht enthalten.
+- Quansheng UV-K5 / UV-K6 mit der Firmware R3b0rn von fagci (drv_fagci.go, neu), aus den
+  Quelltexten der Firmware: Einstellungen, VFOs und 40 Presets von 0x0000 bis 0x052E;
+  Kanäle zu 23 Byte am Ende des EEPROMs, rückwärts; EEPROM-Typ in den unteren drei Bits
+  des ersten Bytes (8 bis 256 KiB: 298, 654, 678 oder 1024 Kanäle); 32-Bit-Adressen,
+  Schreiben in Gruppen von 8 Byte, 38400 Baud. Geschrieben wird nur der Kanalbereich.
+  Abgelehnt: Firmware, die auf das 32-Bit-Lesen nicht antwortet, eine andere Zahl von
+  Presets als 40, nicht vorbereiteter Speicher, Speicher anderer Größe. Der Datensatz
+  wurde zusätzlich durch Kompilieren der Strukturen der Firmware geprüft. Gewollte
+  Unterschiede zum CHIRP-Treiber, der mit der Firmware veröffentlicht wird: Die
+  Sendefrequenz wird immer vollständig geschrieben, Namen mit 9 Zeichen.
+- Radtel RT-330 und RT-400 (drv_jc8810.go), aus den Programmen des Herstellers («Radio
+  CPS» und «JJCC-7700 CPS»), die Protokoll und Kanaldatensatz der Familie MML JC-8810
+  verwenden. RT-330: Begrüßung «PROGRAMYF68U», 115200 Baud, 512 Kanäle, 100-520 MHz.
+  RT-400: Begrüßung «PROGRAMJC81U» (die der RT-470), 57600 Baud, 256 Kanäle, 18-1000
+  MHz; das Programm des Herstellers prüft die Kennung nicht, daher lehnt die Karte die
+  Kennungen der anderen Modelle mit derselben Begrüßung ab. Nur mit einem simulierten
+  Funkgerät getestet.
+- Katalog (catalog_418.go, neu): 4 Einträge und die Karte R3b0rn beim UV-K5. Zahlen: 498
+  Funkgeräte, 427 mit Einstellungen, 552 in der Galerie. Übersetzungen: 29 neue Texte.
+- In dieser Version nicht gemacht: Kenwood TK-2180 / TK-3180 (in CHIRP verschiebt jedes
+  Hinzufügen oder Löschen den ganzen Speicher); Radtel RT-871A, RT-1000 Pro, RT-4D,
+  RT-6D, RT-5D (Bereiche oder Datensätze anders als die bereits unterstützten).
+
 4.17.0 (11.11.2026)
 -------------------
 - Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,
