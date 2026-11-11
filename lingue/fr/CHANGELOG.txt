@@ -7,6 +7,29 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.17.0 (11/11/2026)
+-------------------
+- Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,
+  nouveau ; commandes des pilotes kenwood_live.py et kenwood_d7.py de CHIRP) : radio
+  allumée normalement, 9600 bauds, un canal à la fois ; format d'image propre ; les
+  champs que le programme ne change pas restent tels que la radio les a donnés ; le pas
+  et le mode restent tant que la fréquence ne change pas ; en écriture la radio est
+  relue et seuls les canaux modifiés sont envoyés. Testé uniquement avec une radio
+  simulée.
+- Portatifs professionnels Kenwood de la série 60 (drv_kwtk60.go, nouveau ; tk270.py de
+  CHIRP : TK-260, TK-270, TK-272, TK-278, TK-360, TK-370, TK-372, TK-378) et de la série
+  60G (tk760g.py de CHIRP : TK-260G, TK-270G, TK-272G, TK-278G, TK-360G, TK-370G,
+  TK-372G, TK-378G, TK-388G). Différences voulues par rapport à CHIRP : blocage sur
+  canal occupé, beat shift, groupe et position d'un canal modifié restent tels quels.
+- Radtel RT-860 (catalogue) : le programme de Radtel utilise les mêmes commandes, les
+  mêmes blocs et le même canal de 48 octets que le pilote CHIRP de la RT-880G, la RT-860
+  utilise donc cet onglet (comparaison avec le programme du constructeur, non testé sur
+  une vraie radio).
+- Catalogue : 494 radios, 425 avec réglages, 548 dans la galerie, 47 marques. Réglages :
+  17 nouvelles classes. Traductions : 13 nouveaux textes. Tests : radios simulées pour
+  les trois nouvelles familles Kenwood ; comparaison avec CHIRP pour les séries 60 et
+  60G.
+
 4.16.0 (10/11/2026)
 -------------------
 - Firmware OpenGD77 (drv_ogd77.go, nouveau ; protocole et mémoire décrits dans le

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.16.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.17.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,17 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.17.0 :
+- KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2 : canaux lus et écrits un par un avec la
+  radio allumée normalement (9600 bauds, câble de programmation) ; seuls les canaux
+  modifiés sont envoyés. Testé uniquement avec une radio simulée : commence par une
+  lecture et signale tout problème.
+- PORTATIFS PROFESSIONNELS KENWOOD TK des séries 60 (TK-260, 270, 272, 278, 360, 370,
+  372, 378) et 60G (TK-260G, 270G, 272G, 278G, 360G, 370G, 372G, 378G, 388G) : canaux et
+  réglages, avec les pilotes CHIRP.
+- RADTEL RT-860 : utilise l'onglet « Radtel RT-880G » (même liaison et même mémoire des
+  canaux, d'après la comparaison avec le programme de Radtel).
+- Galerie : 548 modèles de 47 marques (494 avec canaux, 425 avec réglages).
 Nouveautés de la 4.16.0 :
 - OPENGD77 : canaux des radios DMR avec le firmware libre OpenGD77 : Radioddity GD-77 et
   GD-77S, Baofeng DM-1801, RD-5R et DM-1701, TYT MD-UV380, MD-380, MD-9600 et MD-2017,

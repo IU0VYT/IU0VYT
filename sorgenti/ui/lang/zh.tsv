@@ -5346,3 +5346,30 @@ d94d723a	JOAQUIM V0.0.1
 df7880d4	kamilsss655 的 NUNU 固件
 ef8de76c	OSFW 或修改版原厂固件，扩展频段
 300b8fba	joaquim.org 的 UV-KX 固件
+b3a8e214	用电脑命令逐个信道读写，与这些电台的 CHIRP 驱动做法相同：电台保持正常开机（9600 波特），只写入有变化的信道。仅用模拟电台测试过，未在真机上测试。
+51b9b9e9	专业电台：频段和信道数取决于型号版本，版本从电台存储器中读取。
+5aae083d	RT-860 使用“Radtel RT-880G”卡片读写：Radtel 的软件使用与 RT-880G 相同的连接方式和信道存储结构（根据厂商软件比对得出，未在真机上测试）。
+1a7a7917	IU0VYT-KENWOOD-LIVE{0}
+ccf6ca1d	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/
+506a68f6	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890/.-+*)('&%$#!~}|{
+53be7926	编程时电台正常开机（不是克隆模式），使用写频线，电台的电脑端口为 9600 波特：程序用电脑命令逐个信道读写。写入前会重新读取电台，只发送有变化的信道。
+b716a12b	频率不变时，信道的步进和模式保持原设置。使用 CHIRP 驱动的命令，用模拟电台测试过。
+ec5de174	{0}400 个信道（0-399）；发射亚音，或收发相同的亚音或 DCS 码；中继频差最大 59.95 MHz，超出时使用单独的发射频率。{1}
+da7e5a10	{0}200 个信道（0-199）；发射亚音或收发相同的亚音（无 DCS）；中继频差最大 29.95 MHz，超出时使用单独的发射频率。{1}
+fa131822	Kenwood TH-F6A
+d2109a93	Kenwood TH-F7E
+511fa485	Kenwood TH-G71A / TH-G71E
+b74bc2f5	Kenwood TH-D7A / TH-D7E
+84020a5d	Kenwood TH-D7A(G) / TH-D7E(G)
+80b609f1	Kenwood TH-K2AT / TH-K2E / TH-K2ET
+eaf549cd	{0}100 个信道（0-99）；只有电台设为 50 个带名称信道时才有名称（此时 50 及以上的信道不存在，电台会拒绝）。发射亚音，或收发相同的亚音或 DCS 码；中继频差最大 69.95 MHz。使用 CHIRP 驱动的命令，用模拟电台测试过。
+c4fad8d7	MNA {0}
+3abf08e3	MNA 0,{0}
+991a44e8	专业电台：使用 Kenwood 写频线编程，先接好线再开机。电台的版本（频段和信道数）从其存储器中读取；频率范围为厂商范围放宽 4%，与 CHIRP 相同。
+f1f2482e	Kenwood {0}
+fb5fd5d7	信道无名称。{0}繁忙信道锁定和“beat shift”保留；信道的 DTMF / 双音信令在每次写入时清除，与 CHIRP 的做法相同。CHIRP 驱动（实验性）。
+ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
+1bbcb671	信道名称为 8 个字符。{0}信道的组、压扩器、繁忙信道锁定和“beat shift”保留；新信道归入第 1 组。每次修改信道时都会重建组表并清除信道的 DTMF / 双音信令，与 CHIRP 的做法相同。CHIRP 驱动（实验性）。
+23a23be9	未知的电台版本（{0}）
+47b188ff	此版本的电台有 {0} 个信道
+cce84c13	此电台不支持亚音“{0}”，已设为 OFF

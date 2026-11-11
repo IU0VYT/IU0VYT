@@ -6,6 +6,27 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.17.0 (11/11/2026)
+-------------------
+- Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,
+  baharu; arahan pemacu kenwood_live.py dan kenwood_d7.py CHIRP): radio dihidupkan
+  seperti biasa, 9600 baud, satu saluran pada satu masa; format imej sendiri; medan yang
+  tidak diubah oleh program kekal seperti yang diberikan radio; langkah dan mod kekal
+  selagi frekuensi tidak berubah; semasa menulis, radio dibaca semula dan hanya saluran
+  yang berubah dihantar. Diuji dengan radio simulasi sahaja.
+- Radio genggam profesional Kenwood siri 60 (drv_kwtk60.go, baharu; tk270.py CHIRP:
+  TK-260, TK-270, TK-272, TK-278, TK-360, TK-370, TK-372, TK-378) dan siri 60G
+  (tk760g.py CHIRP: TK-260G, TK-270G, TK-272G, TK-278G, TK-360G, TK-370G, TK-372G,
+  TK-378G, TK-388G). Perbezaan yang disengajakan daripada CHIRP: kunci saluran sibuk,
+  beat shift, kumpulan dan kedudukan saluran yang diubah kekal seperti asal.
+- Radtel RT-860 (katalog): program Radtel menggunakan arahan yang sama, blok yang sama
+  dan saluran 48 bait yang sama seperti pemacu CHIRP bagi RT-880G, maka RT-860
+  menggunakan tab itu (perbandingan dengan program pengeluar, tidak diuji pada radio
+  sebenar).
+- Katalog: 494 radio, 425 dengan tetapan, 548 dalam galeri, 47 jenama. Tetapan: 17 kelas
+  baharu. Terjemahan: 13 teks baharu. Ujian: radio simulasi untuk tiga keluarga Kenwood
+  baharu; perbandingan dengan CHIRP untuk siri 60 dan 60G.
+
 4.16.0 (10/11/2026)
 -------------------
 - Perisian tegar OpenGD77 (drv_ogd77.go, baharu; protokol dan memori seperti yang

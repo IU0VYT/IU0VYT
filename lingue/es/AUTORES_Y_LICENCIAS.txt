@@ -161,6 +161,10 @@ indicados en los archivos de CHIRP usados:
   drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
                                             Ainslie
   drivers/thd74.py                          CHIRP
+  4.17 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/kenwood_live.py,
+  drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
+  drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -205,6 +209,7 @@ Vakulenko KK6ABQ.
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
+4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
 
 ACTUALIZACIÓN DEL FIRMWARE DE LA QUANSHENG UV-K5 (4.1)
 El formato de los archivos .bin de Quansheng y el protocolo del cargador de la UV-K5
@@ -273,6 +278,13 @@ drv_uvkx.go están escritos en IU0VYT Flash. Programa independiente, no afiliado
 (https://www.opengd77.com, https://github.com/hmatuschek/qdmr,
 https://github.com/kamilsss655/uv-k5-firmware-custom,
 https://github.com/joaquimorg/UV-KX).
+
+KENWOOD TH-F6/F7, TH-G71, TH-D7, TH-K2 Y PORTÁTILES TK (4.17): drv_kwlive.go usa los
+comandos de los controladores kenwood_live.py y kenwood_d7.py de CHIRP (Copyright 2010
+Dan Smith); drv_kwtk60.go y drv_kwtk_var.go derivan de tk270.py y tk760g.py de CHIRP
+(Copyright 2016 Pavel Milanes CO7WT), GNU GPL v3. La entrada de catálogo de la Radtel
+RT-860 procede de la comparación con el programa del fabricante, del que no se incluye
+nada.
 
 NOMBRES DE LAS ZONAS (4.11)
 El formato de los nombres de las zonas se ha obtenido, para la interoperabilidad, del

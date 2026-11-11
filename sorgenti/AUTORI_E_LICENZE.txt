@@ -158,6 +158,10 @@ revisione 337b385 del 09/11/2026). Autori indicati nei file di CHIRP usati:
   drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
                                             Ainslie
   drivers/thd74.py                          autori di CHIRP (file senza nota propria)
+  4.17 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/kenwood_live.py,
+  drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
+  drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
   Fuori da CHIRP (GNU GPL v2 o successiva): driver «Quansheng UV-K1 / UV-K5 V3» di
   F4HWN Fusion 5.9.0 (VE2ZJM e armel F4HWN, sul driver di egzumer e JOC2;
   https://github.com/armel/uv-k1-k5v3-firmware-custom).
@@ -196,7 +200,8 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go;
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion);
-4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU);
+4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
 Grazie agli autori di CHIRP, ad armel F4HWN, a M7OCM, a JuantAldea, a v0l (radio_tool),
 al progetto OpenGD77, a Hannes Matuschek DM3MAT (qdmr) e a Serge Vakulenko KK6ABQ.
 
@@ -278,6 +283,12 @@ Firmware UV-KX di joaquim.org (https://github.com/joaquimorg/UV-KX, licenza Apac
 2.0): drv_uvkx.go è riscritto dal driver per CHIRP pubblicato con il firmware
 (chirp/CHIRP_uvkx.py). Nessun firmware o programma di questi autori è incluso.
 Programma indipendente, non affiliato a loro.
+
+KENWOOD TH-F6/F7, TH-G71, TH-D7, TH-K2 E PALMARI TK (4.17)
+drv_kwlive.go usa i comandi dei driver kenwood_live.py e kenwood_d7.py di CHIRP;
+drv_kwtk60.go e drv_kwtk_var.go derivano da tk270.py e tk760g.py di CHIRP (GNU GPL v3).
+La voce di catalogo della Radtel RT-860 nasce dal confronto con il programma del
+costruttore («RT-860 Radio CPS»), di cui non è incluso nulla.
 
 NOMI DELLE ZONE (4.11)
 Il formato dei nomi delle zone è ricavato, per l'interoperabilità, dal codice dei

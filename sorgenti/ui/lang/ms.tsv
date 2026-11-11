@@ -5346,3 +5346,30 @@ d94d723a	JOAQUIM V0.0.1
 df7880d4	perisian tegar NUNU oleh kamilsss655
 ef8de76c	perisian tegar OSFW atau asal yang diubah suai, jalur diperluas
 300b8fba	perisian tegar UV-KX oleh joaquim.org
+b3a8e214	Saluran dibaca dan ditulis satu demi satu dengan arahan PC, seperti yang dilakukan oleh pemacu CHIRP bagi radio ini: radio kekal dihidupkan seperti biasa (9600 baud) dan hanya saluran yang berubah ditulis. Diuji dengan radio simulasi, bukan pada radio sebenar.
+51b9b9e9	Radio profesional: jalur dan bilangan saluran bergantung pada versi, yang dibaca daripada memori radio.
+5aae083d	RT-860 dibaca dan ditulis dengan tab «Radtel RT-880G»: program Radtel menggunakan sambungan yang sama dan memori saluran yang sama seperti RT-880G (perbandingan dengan program pengeluar, tidak diuji pada radio sebenar).
+1a7a7917	IU0VYT-KENWOOD-LIVE{0}
+ccf6ca1d	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/
+506a68f6	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890/.-+*)('&%$#!~}|{
+53be7926	Ia diprogram dengan radio dihidupkan seperti biasa (bukan dalam mod klon), dengan kabel pengaturcaraan dan port PC radio pada 9600 baud: program membaca dan menulis satu saluran pada satu masa dengan arahan PC. Sebelum menulis, radio dibaca semula dan hanya saluran yang berubah dihantar.
+b716a12b	Langkah dan mod saluran kekal seperti yang ditetapkan selagi frekuensi tidak berubah. Arahan pemacu CHIRP, diuji dengan radio simulasi.
+ec5de174	{0}400 saluran (0-399); subton semasa memancar, subton atau kod DCS yang sama pada kedua-dua arah; pengulang sehingga ofset 59.95 MHz, lebih daripada itu frekuensi pancaran berasingan digunakan. {1}
+da7e5a10	{0}200 saluran (0-199); subton semasa memancar atau sama pada kedua-dua arah (tiada DCS); pengulang sehingga ofset 29.95 MHz, lebih daripada itu frekuensi pancaran berasingan digunakan. {1}
+fa131822	Kenwood TH-F6A
+d2109a93	Kenwood TH-F7E
+511fa485	Kenwood TH-G71A / TH-G71E
+b74bc2f5	Kenwood TH-D7A / TH-D7E
+84020a5d	Kenwood TH-D7A(G) / TH-D7E(G)
+80b609f1	Kenwood TH-K2AT / TH-K2E / TH-K2ET
+eaf549cd	{0}100 saluran (0-99); nama hanya ada jika radio ditetapkan kepada 50 saluran dengan nama (dalam keadaan itu saluran dari 50 ke atas tidak wujud dan radio menolaknya). Subton semasa memancar, subton atau kod DCS yang sama pada kedua-dua arah; pengulang sehingga ofset 69.95 MHz. Arahan pemacu CHIRP, diuji dengan radio simulasi.
+c4fad8d7	MNA {0}
+3abf08e3	MNA 0,{0}
+991a44e8	Radio profesional: ia diprogram dengan kabel pengaturcaraan Kenwood, dengan menghidupkan radio selepas kabel disambung. Versi radio (jalur dan bilangan saluran) dibaca daripada memorinya; had frekuensi ialah had pengeluar yang diluaskan 4%, seperti dalam CHIRP.
+f1f2482e	Kenwood {0}
+fb5fd5d7	Saluran tanpa nama. {0}Kunci saluran sibuk dan «beat shift» dikekalkan; isyarat DTMF / 2 ton saluran dikosongkan pada setiap penulisan, seperti yang dilakukan CHIRP. Pemacu CHIRP (eksperimen).
+ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
+1bbcb671	Saluran dengan nama 8 aksara. {0}Kumpulan saluran, compander, kunci saluran sibuk dan «beat shift» dikekalkan; saluran baharu masuk ke kumpulan 1. Pada setiap perubahan saluran, jadual kumpulan dibina semula dan isyarat DTMF / 2 ton saluran dikosongkan, seperti yang dilakukan CHIRP. Pemacu CHIRP (eksperimen).
+23a23be9	versi radio tidak diketahui ({0})
+47b188ff	versi radio ini mempunyai {0} saluran
+cce84c13	ton «{0}» tidak tersedia pada radio ini, ditetapkan kepada OFF

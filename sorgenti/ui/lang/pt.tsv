@@ -5346,3 +5346,30 @@ d94d723a	JOAQUIM V0.0.1
 df7880d4	firmware NUNU de kamilsss655
 ef8de76c	firmware OSFW ou original modificado, bandas alargadas
 300b8fba	firmware UV-KX de joaquim.org
+b3a8e214	Canais lidos e escritos um de cada vez com os comandos do PC, como fazem os drivers do CHIRP destes rádios: o rádio fica ligado normalmente (9600 baud) e só se escrevem os canais alterados. Testado com um rádio simulado, não num rádio verdadeiro.
+51b9b9e9	Rádio profissional: a banda e o número de canais dependem da versão, lida da memória do rádio.
+5aae083d	O RT-860 lê-se e escreve-se com o separador «Radtel RT-880G»: o programa da Radtel usa a mesma ligação e a mesma memória dos canais do RT-880G (comparação com o programa do fabricante, não testado num rádio verdadeiro).
+1a7a7917	IU0VYT-KENWOOD-LIVE{0}
+ccf6ca1d	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/
+506a68f6	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890/.-+*)('&%$#!~}|{
+53be7926	Programa-se com o rádio ligado normalmente (não em modo de clonagem), com o cabo de programação e a porta de PC do rádio a 9600 baud: o programa lê e escreve um canal de cada vez com os comandos do PC. Antes de escrever, o rádio é lido de novo e só se enviam os canais alterados.
+b716a12b	O passo e o modo de um canal ficam como definidos enquanto a frequência não mudar. Comandos dos drivers do CHIRP, testados com um rádio simulado.
+ec5de174	{0}400 canais (0-399); subtom na transmissão, subtom ou código DCS igual nos dois sentidos; repetidores até 59,95 MHz de desvio, acima disso usa-se a frequência de transmissão separada. {1}
+da7e5a10	{0}200 canais (0-199); subtom na transmissão ou igual nos dois sentidos (sem DCS); repetidores até 29,95 MHz de desvio, acima disso usa-se a frequência de transmissão separada. {1}
+fa131822	Kenwood TH-F6A
+d2109a93	Kenwood TH-F7E
+511fa485	Kenwood TH-G71A / TH-G71E
+b74bc2f5	Kenwood TH-D7A / TH-D7E
+84020a5d	Kenwood TH-D7A(G) / TH-D7E(G)
+80b609f1	Kenwood TH-K2AT / TH-K2E / TH-K2ET
+eaf549cd	{0}100 canais (0-99); os nomes só existem se o rádio estiver definido para 50 canais com nome (nesse caso os canais a partir do 50 não existem e o rádio recusa-os). Subtom na transmissão, subtom ou código DCS igual nos dois sentidos; repetidores até 69,95 MHz de desvio. Comandos do driver do CHIRP, testados com um rádio simulado.
+c4fad8d7	MNA {0}
+3abf08e3	MNA 0,{0}
+991a44e8	Rádio profissional: programa-se com o cabo de programação Kenwood, ligando o rádio depois de ligar o cabo. A versão do rádio (banda e número de canais) é lida da sua memória; os limites de frequência são os do fabricante alargados em 4%, como no CHIRP.
+f1f2482e	Kenwood {0}
+fb5fd5d7	Canais sem nome. {0}O bloqueio de canal ocupado e o «beat shift» conservam-se; a sinalização DTMF / 2 tons dos canais é apagada em cada escrita, como faz o CHIRP. Driver do CHIRP (experimental).
+ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
+1bbcb671	Canais com nomes de 8 caracteres. {0}O grupo do canal, o compander, o bloqueio de canal ocupado e o «beat shift» conservam-se; os canais novos vão para o grupo 1. Em cada alteração dos canais as tabelas dos grupos são reconstruídas e a sinalização DTMF / 2 tons dos canais apagada, como faz o CHIRP. Driver do CHIRP (experimental).
+23a23be9	versão do rádio desconhecida ({0})
+47b188ff	esta versão do rádio tem {0} canais
+cce84c13	tom «{0}» não disponível neste rádio, definido OFF

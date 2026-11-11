@@ -2012,6 +2012,9 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (firmware OpenGD77)
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
 850cccbc	{0} Con il firmware originale di TYT queste radio non sono gestite.
+b3a8e214	Canali letti e scritti un canale per volta con i comandi del PC, come fanno i driver di CHIRP per queste radio: la radio resta accesa normalmente (9600 baud) e si scrivono solo i canali cambiati. Provato con una radio simulata, non su una radio vera.
+51b9b9e9	Radio professionale: banda e numero dei canali dipendono dalla versione, letta dalla memoria della radio.
+5aae083d	La RT-860 si legge e si scrive con la scheda «Radtel RT-880G»: il programma di Radtel usa lo stesso collegamento e la stessa memoria dei canali della RT-880G (confronto con il programma del costruttore, non provato su una radio vera).
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2869,6 +2872,36 @@ f17ef567	la radio non risponde ({0})
 5ed7c71f	conferma errata della radio nel blocco 0x{0}
 64eecfb1	intestazione non valida nel blocco 0x{0}
 81a27bca	la radio non ha confermato il blocco 0x{0}
+1a7a7917	IU0VYT-KENWOOD-LIVE{0}
+ccf6ca1d	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/
+506a68f6	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890/.-+*)('&%$#!~}|{
+53be7926	Si programma con la radio accesa normalmente (non in modalità di copia), col cavo di programmazione e la porta del PC della radio a 9600 baud: il programma legge e scrive un canale per volta con i comandi del PC. Prima di scrivere la radio viene riletta e si inviano solo i canali cambiati.
+b716a12b	Passo e modo di un canale restano quelli impostati finché la frequenza non cambia. Comandi dei driver di CHIRP, provati con una radio simulata.
+ec5de174	{0}400 canali (0-399); subtono in trasmissione, subtono o codice DCS uguale nei due versi; ponti fino a 59,95 MHz di scostamento, oltre si usa la frequenza di trasmissione separata. {1}
+da7e5a10	{0}200 canali (0-199); subtono in trasmissione o uguale nei due versi (niente DCS); ponti fino a 29,95 MHz di scostamento, oltre si usa la frequenza di trasmissione separata. {1}
+fa131822	Kenwood TH-F6A
+d2109a93	Kenwood TH-F7E
+511fa485	Kenwood TH-G71A / TH-G71E
+b74bc2f5	Kenwood TH-D7A / TH-D7E
+84020a5d	Kenwood TH-D7A(G) / TH-D7E(G)
+80b609f1	Kenwood TH-K2AT / TH-K2E / TH-K2ET
+eaf549cd	{0}100 canali (0-99); i nomi ci sono solo se la radio è impostata a 50 canali con nome (in quel caso i canali da 50 in su non esistono e la radio li rifiuta). Subtono in trasmissione, subtono o codice DCS uguale nei due versi; ponti fino a 69,95 MHz di scostamento. Comandi del driver di CHIRP, provati con una radio simulata.
+cce84c13	tono «{0}» non disponibile su questa radio, impostato OFF
+a0e87eb4	la radio non ha questa combinazione di toni (mai il solo tono in ricezione o codici invertiti)
+d9bcac02	la radio non può memorizzare la frequenza {0} MHz
+0104eb8c	la radio non può memorizzare la frequenza di trasmissione {0} MHz
+c4fad8d7	MNA {0}
+3abf08e3	MNA 0,{0}
+c2efd81a	la radio è un altro modello ({0})
+f43a6ffd	Lettura della radio prima della scrittura…
+665b771a	la radio ha rifiutato la scrittura ({0})
+991a44e8	Radio professionale: si programma col cavo di programmazione Kenwood, accendendo la radio dopo aver collegato il cavo. La versione della radio (banda e numero dei canali) si legge dalla sua memoria; i limiti di frequenza sono quelli del costruttore allargati del 4%, come in CHIRP.
+f1f2482e	Kenwood {0}
+fb5fd5d7	Canali senza nome. {0}Blocco del canale occupato e «beat shift» si conservano; la segnalazione DTMF / 2 toni dei canali viene azzerata a ogni scrittura, come fa CHIRP. Driver di CHIRP (sperimentale).
+ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
+1bbcb671	Canali con nomi di 8 caratteri. {0}Gruppo del canale, compander, blocco del canale occupato e «beat shift» si conservano; i canali nuovi vanno nel gruppo 1. A ogni modifica dei canali le tabelle dei gruppi vengono ricostruite e la segnalazione DTMF / 2 toni dei canali azzerata, come fa CHIRP. Driver di CHIRP (sperimentale).
+23a23be9	versione della radio sconosciuta ({0})
+47b188ff	questa versione della radio ha {0} canali
 2df201f8	KYD NC-630A (Plant-Tours MT-700)
 deae1ad9	Accendi la radio con il cavo collegato. 16 canali UHF senza nomi. Driver di CHIRP.
 44431168	KYD IP-620 (Argut A-36)
@@ -2883,9 +2916,7 @@ d5db917d	Bassa (un quinto)
 cba883fa	TIDRADIO TD-H3 (firmware nicFW)
 f1141652	TD-H3 con il firmware libero nicFW 2.x (versioni 2.0x e 2.5x): 198 canali con nomi di 12 caratteri, 38400 baud, radio accesa. {0}{1}
 ff211be1	la memoria non è quella del firmware nicFW 2.x
-0104eb8c	la radio non può memorizzare la frequenza di trasmissione {0} MHz
 8cf36282	la radio non ha il firmware nicFW 2.x (numero magico {0}{1})
-f43a6ffd	Lettura della radio prima della scrittura…
 ce16cafd	la radio ha un'altra versione del firmware nicFW rispetto all'immagine: leggi la radio e riporta i canali su quella lettura
 d7c84c5d	{0} con il firmware libero nicFW880 / nicFW950: 999 canali con nomi fino a 30 caratteri. Cavo di programmazione della radio, 38400 baud, radio accesa. Dopo la scrittura la radio si riavvia. {1}{2}
 af95c12e	Radtel RT-880 / RT-880G (firmware nicFW880)
@@ -2909,11 +2940,9 @@ c1ba3e92	Bassa 500 mW
 fbde8d37	OpenGD77 (Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R)
 5da23611	OpenGD77 (Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84)
 5a30f7a7	OpenGD77 per la famiglia MD-UV380 (OpenUV380, OpenDM1701)
-d9bcac02	la radio non può memorizzare la frequenza {0} MHz
 67cbd442	carattere non ammesso nel nome
 a7739de5	risposta della radio non valida per il blocco 0x{0}
 32306b70	OpenGD77 {0} ({1})
-c2efd81a	la radio è un altro modello ({0})
 3d94f8a1	0123456789- ABCDEFGHIJKLMNOPQRSTUVWXYZ +
 b66c4a44	Puxing PX-777
 38ead791	Accendi la radio con il cavo collegato. 128 canali con nomi di 6 caratteri; la gamma di frequenze è quella scritta nella radio. Toni: CTCSS in trasmissione, TSQL (stesso tono) o DCS (stesso codice); il blocco del canale occupato si azzera, come in CHIRP. Driver di CHIRP.
@@ -3246,7 +3275,6 @@ c6a5c2d5	1000 canali (da 0 a 999) con nomi di 16 caratteri, analogici o D-STAR. 
 6365ac36	TH-D74 (clone mode)
 b831a835	Kenwood TH-D74A / TH-D74E
 e8ad684d	Kenwood TH-D75A / TH-D75E
-a0e87eb4	la radio non ha questa combinazione di toni (mai il solo tono in ricezione o codici invertiti)
 274c56f2	0M PROGRAM
 985a4d56	TYT TH-UV8000D / TH-UV8000E
 cf4bf731	Spegni la radio, collega il cavo, riaccendila con il volume a metà (4800 baud). 128 canali con nomi di 7 caratteri; blocco del canale occupato, VOX, ANI, PTT ID e coda di ogni canale si conservano. Driver di CHIRP.
@@ -3426,7 +3454,6 @@ d34f28a5	blocco 0x{0} non valido
 c131b7ff	La memoria letta ha una versione che questo programma (come CHIRP) non conosce: i canali si leggono, ma prima di scrivere controlla il firmware della radio.
 f3783eba	l'immagine non è una memoria letta da una UVL-15W con un firmware conosciuto: leggi prima la radio
 c3a805aa	WRITE START OK
-665b771a	la radio ha rifiutato la scrittura ({0})
 42cf6c5b	Write Complete
 056bfdb5	[V/M] («-WAIT-»)
 c50cf2a6	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]u_{0}{1}{2}{3}{4}{5}{6}{7}{8}$%{9}*#.|=\o@

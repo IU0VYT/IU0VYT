@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.16.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.17.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,17 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Apa yang baharu dalam 4.17.0:
+- KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: saluran dibaca dan ditulis satu demi
+  satu dengan radio dihidupkan seperti biasa (9600 baud, kabel pengaturcaraan); hanya
+  saluran yang berubah dihantar. Diuji dengan radio simulasi sahaja: baca dahulu dan
+  laporkan sebarang masalah.
+- RADIO GENGGAM PROFESIONAL KENWOOD TK siri 60 (TK-260, 270, 272, 278, 360, 370, 372,
+  378) dan siri 60G (TK-260G, 270G, 272G, 278G, 360G, 370G, 372G, 378G, 388G): saluran
+  dan tetapan, dengan pemacu CHIRP.
+- RADTEL RT-860: gunakan tab «Radtel RT-880G» (sambungan yang sama dan memori saluran
+  yang sama, daripada perbandingan dengan program Radtel).
+- Galeri: 548 model daripada 47 jenama (494 dengan saluran, 425 dengan tetapan).
 Apa yang baharu dalam 4.16.0:
 - OPENGD77: saluran radio DMR dengan perisian tegar bebas OpenGD77: Radioddity GD-77 dan
   GD-77S, Baofeng DM-1801, RD-5R dan DM-1701, TYT MD-UV380, MD-380, MD-9600 dan MD-2017,

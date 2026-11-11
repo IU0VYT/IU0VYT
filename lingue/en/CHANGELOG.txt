@@ -7,6 +7,26 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.17.0 (11/11/2026)
+-------------------
+- Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,
+  new; commands of CHIRP's kenwood_live.py and kenwood_d7.py): radio switched on
+  normally, 9600 baud, one channel at a time; own image format; the fields the program
+  does not change stay as the radio gave them; step and mode stay until the frequency
+  changes; when writing, the radio is read again and only the changed channels are sent.
+  Tested only with a simulated radio.
+- Kenwood professional handhelds of the 60 series (drv_kwtk60.go, new; CHIRP's tk270.py:
+  TK-260, TK-270, TK-272, TK-278, TK-360, TK-370, TK-372, TK-378) and of the 60G series
+  (CHIRP's tk760g.py: TK-260G, TK-270G, TK-272G, TK-278G, TK-360G, TK-370G, TK-372G,
+  TK-378G, TK-388G). Intended differences from CHIRP: busy channel lockout, beat shift,
+  group and position of an edited channel stay as they were.
+- Radtel RT-860 (catalogue): Radtel's program uses the same commands, the same blocks
+  and the same 48-byte channel as the CHIRP driver of the RT-880G, so the RT-860 uses
+  that tab (comparison with the manufacturer's program, not tested on a real radio).
+- Catalogue: 494 radios, 425 with settings, 548 in the gallery, 47 brands. Settings: 17
+  new classes. Translations: 13 new texts. Tests: simulated radios for the three new
+  Kenwood families; comparison with CHIRP for the 60 and 60G series.
+
 4.16.0 (10/11/2026)
 -------------------
 - OpenGD77 firmware (drv_ogd77.go, new; protocol and memory as described in the free

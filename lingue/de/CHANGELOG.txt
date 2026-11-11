@@ -7,6 +7,29 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.17.0 (11.11.2026)
+-------------------
+- Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,
+  neu; Befehle der CHIRP-Treiber kenwood_live.py und kenwood_d7.py): Funkgerät normal
+  eingeschaltet, 9600 Baud, ein Kanal nach dem anderen; eigenes Abbildformat; die
+  Felder, die das Programm nicht ändert, bleiben so, wie das Funkgerät sie geliefert
+  hat; Schrittweite und Betriebsart bleiben, solange sich die Frequenz nicht ändert;
+  beim Schreiben wird das Funkgerät erneut gelesen und nur die geänderten Kanäle werden
+  gesendet. Nur mit einem simulierten Funkgerät getestet.
+- Kenwood-Betriebsfunk-Handgeräte der Serie 60 (drv_kwtk60.go, neu; tk270.py von CHIRP:
+  TK-260, TK-270, TK-272, TK-278, TK-360, TK-370, TK-372, TK-378) und der Serie 60G
+  (tk760g.py von CHIRP: TK-260G, TK-270G, TK-272G, TK-278G, TK-360G, TK-370G, TK-372G,
+  TK-378G, TK-388G). Gewollte Unterschiede zu CHIRP: Besetztkanalsperre, Beat Shift,
+  Gruppe und Position eines geänderten Kanals bleiben unverändert.
+- Radtel RT-860 (Katalog): Das Programm von Radtel verwendet dieselben Befehle,
+  dieselben Blöcke und denselben 48-Byte-Kanal wie der CHIRP-Treiber des RT-880G, das
+  RT-860 verwendet daher diese Karte (Vergleich mit dem Programm des Herstellers, nicht
+  an einem echten Funkgerät getestet).
+- Katalog: 494 Funkgeräte, 425 mit Einstellungen, 548 in der Galerie, 47 Marken.
+  Einstellungen: 17 neue Klassen. Übersetzungen: 13 neue Texte. Tests: simulierte
+  Funkgeräte für die drei neuen Kenwood-Familien; Vergleich mit CHIRP für die Serien 60
+  und 60G.
+
 4.16.0 (10.11.2026)
 -------------------
 - Firmware OpenGD77 (drv_ogd77.go, neu; Protokoll und Speicher wie im freien Programm

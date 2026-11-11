@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.16.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.17.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,17 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.17.0:
+- KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: channels read and written one at a time
+  with the radio switched on normally (9600 baud, programming cable); only the changed
+  channels are sent. Tested only with a simulated radio: read first and report any
+  problem.
+- KENWOOD TK PROFESSIONAL HANDHELDS of the 60 series (TK-260, 270, 272, 278, 360, 370,
+  372, 378) and 60G series (TK-260G, 270G, 272G, 278G, 360G, 370G, 372G, 378G, 388G):
+  channels and settings, with the CHIRP drivers.
+- RADTEL RT-860: use the «Radtel RT-880G» tab (same link and same channel memory, from
+  the comparison with Radtel's program).
+- Gallery: 548 models of 47 brands (494 with channels, 425 with settings).
 What's new in 4.16.0:
 - OPENGD77: channels of the DMR radios running the free OpenGD77 firmware: Radioddity
   GD-77 and GD-77S, Baofeng DM-1801, RD-5R and DM-1701, TYT MD-UV380, MD-380, MD-9600

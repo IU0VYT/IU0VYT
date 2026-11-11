@@ -143,6 +143,10 @@ CHIRP に由来する部分
   drivers/thd72.py                          Copyright 2010 Vernon Mauery, 2016 Angus
                                             Ainslie
   drivers/thd74.py                          CHIRP
+  4.17 (CHIRP 337b385, 09/11/2026), Kenwood:
+  drivers/kenwood_live.py,
+  drivers/kenwood_d7.py                     Copyright 2010 Dan Smith
+  drivers/tk270.py, drivers/tk760g.py       Copyright 2016 Pavel Milanes CO7WT
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
@@ -173,6 +177,7 @@ CHIRP の作者の皆さん、armel F4HWN、M7OCM、JuantAldea、v0l（radio_too
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
 4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
+4.17: drv_kwlive.go, drv_kwtk60.go, drv_kwtk_var.go.
 
 QUANSHENG UV-K5 のファームウェア更新（4.1）
 Quansheng の .bin ファイルの形式と UV-K5 のローダーのプロトコルは、フリーソフト k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF、GNU GPL v3、https://github.com/sq5bpf/k5prog）と uvtools（egzumer、https://github.com/egzumer/uvtools）が記述しています。fwk5.go は相互運用のためにその記述をもとにゼロから書いたもので、それらのプログラムのコードはパッケージに含まれていません。試験専用の verifica/k5/k5ref.js は、検証する人が指定したフォルダーから uvtools のコードを読み込みます。SQ5BPF と egzumer に感謝します。
@@ -193,6 +198,8 @@ RADTEL RT-950 PRO、BAJETON BJ-9000、RADTEL RT-950（4.6、4.7）
 NICFW ファームウェア（4.15）：nicFW は nicsure（https://nicsure.co.uk）によるものです。チャンネルのメモリー、設定、接続のコマンドは、相互運用のために作者が公開した資料（https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs）から得ています。nicsure のコード、プログラム、ファームウェアは一切含まれていません。drv_nicfw.go と settings_nicfw.go はゼロから書いたものです。独立したプログラムであり、nicsure とは無関係です。
 
 OPENGD77 と UV-K5 のその他のファームウェア（4.16）：OpenGD77 は Roger Clark VK3KYY らによるものです。接続とメモリー構成は Hannes Matuschek DM3MAT のフリーソフト qdmr（GNU GPL v3）から得ています。kamilsss655 の NUNU ファームウェアと joaquim.org の UV-KX ファームウェア（Apache 2.0）：メモリーと書き込みは作者が公開した CHIRP 用ドライバー（Jacek Lipkowski SQ5BPF の uvk5.py から派生、GNU GPL v2 以降）と同じです。これらの作者のファームウェアやプログラムは一切含まれていません。drv_ogd77.go と drv_uvkx.go は IU0VYT Flash で書いたものです。独立したプログラムであり、彼らとは無関係です（https://www.opengd77.com, https://github.com/hmatuschek/qdmr, https://github.com/kamilsss655/uv-k5-firmware-custom, https://github.com/joaquimorg/UV-KX）。
+
+KENWOOD TH-F6/F7、TH-G71、TH-D7、TH-K2 と TK ハンディ機（4.17）：drv_kwlive.go は CHIRP の kenwood_live.py と kenwood_d7.py ドライバー（Copyright 2010 Dan Smith）のコマンドを使います。drv_kwtk60.go と drv_kwtk_var.go は CHIRP の tk270.py と tk760g.py（Copyright 2016 Pavel Milanes CO7WT）から派生したものです（GNU GPL v3）。Radtel RT-860 のカタログ項目はメーカーのソフトとの比較によるもので、そのソフトは一切含まれていません。
 
 ゾーン名（4.11）
 ゾーン名の形式は、相互運用性のために、メーカーのプログラムのコードから得ました：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 と Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS「BT-9000_CPS」v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）、RT910_EnCPS v1.0.3（Bluetooth なしの RT-910）、radtels.com と bajeton.cn。RT-920 については CHIRP のドライバー radtel_rt900.py（Fred Trimble、GNU GPL、上記参照）からも得ました。メーカーのプログラムは含まれていません。

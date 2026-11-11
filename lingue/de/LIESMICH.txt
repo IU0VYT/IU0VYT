@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.16.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.17.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,17 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.17.0:
+- KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: Kanäle werden einzeln bei normal
+  eingeschaltetem Funkgerät gelesen und geschrieben (9600 Baud, Programmierkabel);
+  gesendet werden nur die geänderten Kanäle. Nur mit einem simulierten Funkgerät
+  getestet: zuerst lesen und jedes Problem melden.
+- KENWOOD-TK-BETRIEBSFUNK-HANDGERÄTE der Serien 60 (TK-260, 270, 272, 278, 360, 370,
+  372, 378) und 60G (TK-260G, 270G, 272G, 278G, 360G, 370G, 372G, 378G, 388G): Kanäle
+  und Einstellungen, mit den CHIRP-Treibern.
+- RADTEL RT-860: die Karte «Radtel RT-880G» verwenden (dieselbe Verbindung und derselbe
+  Kanalspeicher, laut Vergleich mit dem Programm von Radtel).
+- Galerie: 548 Modelle von 47 Marken (494 mit Kanälen, 425 mit Einstellungen).
 Neu in 4.16.0:
 - OPENGD77: Kanäle der DMR-Funkgeräte mit der freien Firmware OpenGD77: Radioddity GD-77
   und GD-77S, Baofeng DM-1801, RD-5R und DM-1701, TYT MD-UV380, MD-380, MD-9600 und

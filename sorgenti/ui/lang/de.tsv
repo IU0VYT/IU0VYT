@@ -5346,3 +5346,30 @@ d94d723a	JOAQUIM V0.0.1
 df7880d4	Firmware NUNU von kamilsss655
 ef8de76c	Firmware OSFW oder geändertes Original, erweiterte Bänder
 300b8fba	Firmware UV-KX von joaquim.org
+b3a8e214	Die Kanäle werden einzeln mit den PC-Befehlen gelesen und geschrieben, wie es die CHIRP-Treiber dieser Funkgeräte tun: Das Funkgerät bleibt normal eingeschaltet (9600 Baud) und nur die geänderten Kanäle werden geschrieben. Mit einem simulierten Funkgerät getestet, nicht an einem echten.
+51b9b9e9	Betriebsfunkgerät: Band und Kanalzahl hängen von der Version ab, die aus dem Speicher des Funkgeräts gelesen wird.
+5aae083d	Das RT-860 wird mit der Karte «Radtel RT-880G» gelesen und geschrieben: Das Programm von Radtel verwendet dieselbe Verbindung und denselben Kanalspeicher wie das RT-880G (Vergleich mit dem Programm des Herstellers, nicht an einem echten Funkgerät getestet).
+1a7a7917	IU0VYT-KENWOOD-LIVE{0}
+ccf6ca1d	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/
+506a68f6	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890/.-+*)('&%$#!~}|{
+53be7926	Programmiert wird bei normal eingeschaltetem Funkgerät (nicht im Klonmodus), mit dem Programmierkabel und dem PC-Anschluss des Funkgeräts auf 9600 Baud: Das Programm liest und schreibt einen Kanal nach dem anderen mit den PC-Befehlen. Vor dem Schreiben wird das Funkgerät erneut gelesen und nur die geänderten Kanäle werden gesendet.
+b716a12b	Schrittweite und Betriebsart eines Kanals bleiben wie eingestellt, solange sich die Frequenz nicht ändert. Befehle der CHIRP-Treiber, mit einem simulierten Funkgerät getestet.
+ec5de174	{0}400 Kanäle (0-399); Subton beim Senden, Subton oder DCS-Code in beiden Richtungen gleich; Relais bis 59,95 MHz Ablage, darüber wird die getrennte Sendefrequenz verwendet. {1}
+da7e5a10	{0}200 Kanäle (0-199); Subton beim Senden oder in beiden Richtungen gleich (kein DCS); Relais bis 29,95 MHz Ablage, darüber wird die getrennte Sendefrequenz verwendet. {1}
+fa131822	Kenwood TH-F6A
+d2109a93	Kenwood TH-F7E
+511fa485	Kenwood TH-G71A / TH-G71E
+b74bc2f5	Kenwood TH-D7A / TH-D7E
+84020a5d	Kenwood TH-D7A(G) / TH-D7E(G)
+80b609f1	Kenwood TH-K2AT / TH-K2E / TH-K2ET
+eaf549cd	{0}100 Kanäle (0-99); Namen gibt es nur, wenn das Funkgerät auf 50 Kanäle mit Namen eingestellt ist (dann gibt es die Kanäle ab 50 nicht und das Funkgerät lehnt sie ab). Subton beim Senden, Subton oder DCS-Code in beiden Richtungen gleich; Relais bis 69,95 MHz Ablage. Befehle des CHIRP-Treibers, mit einem simulierten Funkgerät getestet.
+c4fad8d7	MNA {0}
+3abf08e3	MNA 0,{0}
+991a44e8	Betriebsfunkgerät: Programmiert wird mit dem Kenwood-Programmierkabel; das Funkgerät erst nach dem Anschließen des Kabels einschalten. Die Version des Funkgeräts (Band und Kanalzahl) wird aus seinem Speicher gelesen; die Frequenzgrenzen sind die des Herstellers, um 4 % erweitert, wie in CHIRP.
+f1f2482e	Kenwood {0}
+fb5fd5d7	Kanäle ohne Namen. {0}Besetztkanalsperre und «Beat Shift» bleiben erhalten; die DTMF-/2-Ton-Signalisierung der Kanäle wird bei jedem Schreiben gelöscht, wie CHIRP es tut. CHIRP-Treiber (experimentell).
+ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
+1bbcb671	Kanäle mit Namen aus 8 Zeichen. {0}Kanalgruppe, Compander, Besetztkanalsperre und «Beat Shift» bleiben erhalten; neue Kanäle kommen in Gruppe 1. Bei jeder Kanaländerung werden die Gruppentabellen neu aufgebaut und die DTMF-/2-Ton-Signalisierung der Kanäle gelöscht, wie CHIRP es tut. CHIRP-Treiber (experimentell).
+23a23be9	unbekannte Version des Funkgeräts ({0})
+47b188ff	diese Version des Funkgeräts hat {0} Kanäle
+cce84c13	Ton «{0}» bei diesem Funkgerät nicht verfügbar, auf OFF gesetzt

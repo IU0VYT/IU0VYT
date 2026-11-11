@@ -549,6 +549,7 @@ func init() {
 	// 4.15: Icom D-STAR, Yaesu VX e System Fusion, Kenwood, firmware nicFW (catalog_415.go)
 	catalog = append(catalog, catalog415...)
 	catalog = append(catalog, catalog416...) // 4.16
+	catalog = append(catalog, catalog417...) // 4.17
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

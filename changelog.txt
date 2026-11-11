@@ -3,6 +3,46 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.17.0 (11/11/2026)
+-------------------
+- Kenwood TH-F6A, TH-F7E, TH-G71A/E, TH-D7A/E, TH-D7A(G)/E(G), TH-K2 (drv_kwlive.go,
+  nuovo; comandi dei driver kenwood_live.py e kenwood_d7.py di CHIRP): radio accesa
+  normalmente, 9600 baud, righe «ID», «AI 0», «MR» / «MW» / «MNA» («ME» / «MN» sulla
+  TH-K2), un canale per volta. Immagine propria (32 byte di intestazione e 128 byte
+  per canale con il testo della risposta della radio, il nome e la frequenza di
+  trasmissione separata): i campi che il programma non cambia restano scritti come li
+  ha dati la radio; passo e modo restano finché la frequenza non cambia. In scrittura
+  la radio viene riletta e si inviano solo i canali cambiati. Toni ammessi: subtono in
+  trasmissione, subtono uguale nei due versi, codice DCS uguale nei due versi (solo
+  TH-F6/F7 e TH-K2). Provato solo con una radio simulata.
+- Palmari professionali Kenwood della serie 60 (drv_kwtk60.go, nuovo; tk270.py di
+  CHIRP): TK-260, TK-270, TK-272, TK-278, TK-360, TK-370, TK-372, TK-378. Memoria di
+  0x400 byte, fino a 32 canali senza nome, blocchi di 8 byte a 9600 baud. Differenza
+  voluta da CHIRP: «blocco del canale occupato» e «beat shift» di un canale modificato
+  restano com'erano (CHIRP li rovescia a ogni modifica).
+- Palmari professionali Kenwood della serie 60G (drv_kwtk60.go; tk760g.py di CHIRP):
+  TK-260G, TK-270G, TK-272G, TK-278G, TK-360G, TK-370G, TK-372G, TK-378G, TK-388G.
+  Memoria di 0x8000 byte, fino a 128 canali con nome, blocchi di 256 byte con somma
+  di controllo, parità pari. Le tabelle dei gruppi e dei canali si ricostruiscono a
+  ogni modifica come in CHIRP. Differenze volute: gruppo e posizione di un canale
+  modificato restano i suoi (CHIRP li azzera), e la sigla del programma che ha
+  scritto la radio non viene toccata (CHIRP ci scrive «Chirp»).
+- Versioni delle radio TK (drv_kwtk_var.go, nuovo): sigla, numero dei canali e limiti
+  di frequenza di ogni versione, dalle tabelle di CHIRP; i canali oltre quelli della
+  versione sono bloccati. Impostazioni: 17 classi nuove (308 in tutto).
+- Radtel RT-860 (catalogo): il programma di Radtel («RT-860 Radio CPS» V1.06) usa gli
+  stessi comandi, gli stessi blocchi e lo stesso canale di 48 byte del driver di CHIRP
+  della RT-880G, con gli stessi limiti di frequenza: la RT-860 usa la scheda «Radtel
+  RT-880G». Confronto con il programma del costruttore, non provato su una radio vera.
+- Convertitore e inoltro verso le Kenwood a comandi: i toni che il modello non ha (DCS
+  su TH-G71 e TH-D7, subtoni fuori tabella) si tolgono con un avviso; un canale che la
+  radio non può memorizzare non viene copiato. Lettura tollerante: nome del canale in
+  due o tre campi, risposte con meno campi del previsto.
+- Catalogo (catalog_417.go, nuovo): 9 voci. Conteggi: 494 radio, 425 con impostazioni,
+  548 in galleria. Prove: radio simulate per le tre famiglie Kenwood nuove; confronto
+  con CHIRP (lettura, scrittura, byte inviati, memoria finale) per le serie 60 e 60G.
+  Traduzioni: 14 testi nuovi.
+
 4.16.0 (10/11/2026)
 -------------------
 - Firmware OpenGD77 (drv_ogd77.go, nuovo; protocollo e memoria descritti nel programma

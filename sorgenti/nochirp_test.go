@@ -73,6 +73,9 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		}
 		copy(mem[rdtyZoneTab:], make([]byte, 32))
 	}
+	if _, ok := m.Fam.(kwlFam); ok { // 4.17: Kenwood programmate un canale per volta
+		mem = kwlBlank(m)
+	}
 	switch m.Fam.(type) { // 4.15: firmware nicFW
 	case nicfwFam:
 		mem = nicfwTestImg(true)

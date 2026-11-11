@@ -1,11 +1,21 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.16.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.17.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.17.0:
+- KENWOOD TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2: canali letti e scritti un canale per
+  volta con la radio accesa normalmente (9600 baud); si inviano solo i canali cambiati.
+  Vedi «KENWOOD TH-F6/F7, TH-G71, TH-D7, TH-K2 E PALMARI TK».
+- PALMARI PROFESSIONALI KENWOOD TK delle serie 60 (TK-260, 270, 272, 278, 360, 370,
+  372, 378) e 60G (TK-260G, 270G, 272G, 278G, 360G, 370G, 372G, 378G, 388G): canali e
+  impostazioni, con i driver di CHIRP.
+- RADTEL RT-860: si usa la scheda «Radtel RT-880G» (stesso collegamento e stessa
+  memoria dei canali, dal confronto con il programma di Radtel).
+- Galleria: 548 modelli di 47 marche (494 con canali, 425 con impostazioni).
 Novità della 4.16.0:
 - OPENGD77: canali delle radio DMR con il firmware libero OpenGD77: Radioddity GD-77 e
   GD-77S, Baofeng DM-1801, RD-5R e DM-1701, TYT MD-UV380, MD-380, MD-9600 e MD-2017,
@@ -1185,6 +1195,37 @@ che la radio comunica:
   ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
+
+KENWOOD TH-F6/F7, TH-G71, TH-D7, TH-K2 E PALMARI TK (4.17)
+Palmari Kenwood che si programmano un canale per volta (TH-F6A, TH-F7E, TH-G71A/E,
+TH-D7A/E, TH-D7A(G)/E(G), TH-K2AT/E/ET):
+- la radio resta accesa normalmente (non in modalità di copia), col cavo di
+  programmazione (PG-4Y, PG-4W o equivalente) e la porta del PC della radio a 9600 baud;
+- la lettura chiede i canali uno per volta: per 400 canali servono un paio di minuti;
+- in scrittura il programma rilegge la radio e invia solo i canali cambiati;
+- toni: subtono in trasmissione, lo stesso subtono nei due versi, lo stesso codice
+  DCS nei due versi (TH-F6/F7 e TH-K2; TH-G71 e TH-D7 non hanno il DCS);
+- ponti con lo scostamento della radio (multipli di 50 kHz, fino a 59,95 MHz sulle
+  TH-F6/F7, 29,95 sulle TH-G71 e TH-D7, 69,95 sulla TH-K2); oltre, sulle radio che
+  l'hanno, si usa la frequenza di trasmissione separata;
+- passo e modo (FM, AM, SSB…) di un canale restano quelli impostati finché non cambi
+  la frequenza; un canale nuovo nasce in FM (AM nella banda aeronautica);
+- TH-K2: i nomi ci sono solo se la radio è impostata a 50 canali con nome;
+- canali di chiamata, limiti di scansione e impostazioni della radio non sono gestiti;
+- il file salvato è nel formato di IU0VYT Flash (CHIRP non ha file per queste radio).
+Queste radio sono provate solo con una radio simulata scritta da me sui comandi dei
+driver di CHIRP: prima fai la sola lettura e segnala ogni problema.
+Palmari professionali TK delle serie 60 e 60G:
+- si programmano col cavo Kenwood (KPG-22 o equivalente), accendendo la radio dopo
+  aver collegato il cavo;
+- la versione della radio (banda, numero dei canali) si legge dalla sua memoria: i
+  limiti di frequenza sono quelli del costruttore allargati del 4%, come in CHIRP, e
+  i canali oltre quelli della versione non si possono riempire;
+- serie 60: canali senza nome; a ogni scrittura la segnalazione DTMF / 2 toni dei
+  canali viene azzerata, come fa CHIRP;
+- serie 60G: nomi di 8 caratteri; i canali nuovi vanno nel gruppo 1 e le tabelle dei
+  gruppi si ricostruiscono a ogni modifica, come in CHIRP;
+- i driver di CHIRP di queste radio sono dichiarati sperimentali.
 
 OPENGD77 (4.16)
 Radio DMR con il firmware libero OpenGD77 (www.opengd77.com). In galleria: «GD-77 /

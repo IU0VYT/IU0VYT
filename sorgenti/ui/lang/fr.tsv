@@ -5346,3 +5346,30 @@ d94d723a	JOAQUIM V0.0.1
 df7880d4	firmware NUNU de kamilsss655
 ef8de76c	firmware OSFW ou d'origine modifié, bandes étendues
 300b8fba	firmware UV-KX de joaquim.org
+b3a8e214	Canaux lus et écrits un par un avec les commandes du PC, comme le font les pilotes CHIRP de ces radios : la radio reste allumée normalement (9600 bauds) et seuls les canaux modifiés sont écrits. Testé avec une radio simulée, pas sur une vraie radio.
+51b9b9e9	Radio professionnelle : la bande et le nombre de canaux dépendent de la version, lue dans la mémoire de la radio.
+5aae083d	La RT-860 se lit et s'écrit avec l'onglet « Radtel RT-880G » : le programme de Radtel utilise la même liaison et la même mémoire des canaux que la RT-880G (comparaison avec le programme du constructeur, non testé sur une vraie radio).
+1a7a7917	IU0VYT-KENWOOD-LIVE{0}
+ccf6ca1d	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/
+506a68f6	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890/.-+*)('&%$#!~}|{
+53be7926	Elle se programme avec la radio allumée normalement (pas en mode clonage), avec le câble de programmation et le port PC de la radio à 9600 bauds : le programme lit et écrit un canal à la fois avec les commandes du PC. Avant d'écrire, la radio est relue et seuls les canaux modifiés sont envoyés.
+b716a12b	Le pas et le mode d'un canal restent ceux réglés tant que la fréquence ne change pas. Commandes des pilotes CHIRP, testées avec une radio simulée.
+ec5de174	{0}400 canaux (0-399) ; sous-ton en émission, sous-ton ou code DCS identique dans les deux sens ; relais jusqu'à 59,95 MHz de décalage, au-delà on utilise la fréquence d'émission séparée. {1}
+da7e5a10	{0}200 canaux (0-199) ; sous-ton en émission ou identique dans les deux sens (pas de DCS) ; relais jusqu'à 29,95 MHz de décalage, au-delà on utilise la fréquence d'émission séparée. {1}
+fa131822	Kenwood TH-F6A
+d2109a93	Kenwood TH-F7E
+511fa485	Kenwood TH-G71A / TH-G71E
+b74bc2f5	Kenwood TH-D7A / TH-D7E
+84020a5d	Kenwood TH-D7A(G) / TH-D7E(G)
+80b609f1	Kenwood TH-K2AT / TH-K2E / TH-K2ET
+eaf549cd	{0}100 canaux (0-99) ; les noms n'existent que si la radio est réglée sur 50 canaux avec nom (dans ce cas les canaux à partir de 50 n'existent pas et la radio les refuse). Sous-ton en émission, sous-ton ou code DCS identique dans les deux sens ; relais jusqu'à 69,95 MHz de décalage. Commandes du pilote CHIRP, testées avec une radio simulée.
+c4fad8d7	MNA {0}
+3abf08e3	MNA 0,{0}
+991a44e8	Radio professionnelle : elle se programme avec le câble de programmation Kenwood, en allumant la radio après avoir branché le câble. La version de la radio (bande et nombre de canaux) est lue dans sa mémoire ; les limites de fréquence sont celles du constructeur élargies de 4 %, comme dans CHIRP.
+f1f2482e	Kenwood {0}
+fb5fd5d7	Canaux sans nom. {0}Le blocage sur canal occupé et le « beat shift » sont conservés ; la signalisation DTMF / 2 tons des canaux est effacée à chaque écriture, comme le fait CHIRP. Pilote CHIRP (expérimental).
+ec4724db	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890_-*()/\+=
+1bbcb671	Canaux avec noms de 8 caractères. {0}Le groupe du canal, le compander, le blocage sur canal occupé et le « beat shift » sont conservés ; les nouveaux canaux vont dans le groupe 1. À chaque modification des canaux, les tables des groupes sont reconstruites et la signalisation DTMF / 2 tons des canaux effacée, comme le fait CHIRP. Pilote CHIRP (expérimental).
+23a23be9	version de la radio inconnue ({0})
+47b188ff	cette version de la radio a {0} canaux
+cce84c13	ton « {0} » non disponible sur cette radio, réglé sur OFF
