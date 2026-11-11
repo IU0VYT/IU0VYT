@@ -203,6 +203,7 @@ Vakulenko KK6ABQ.
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 
 ATUALIZAÇÃO DO FIRMWARE DO QUANSHENG UV-K5 (4.1)
 O formato dos ficheiros .bin da Quansheng e o protocolo do carregador do UV-K5 estão
@@ -257,6 +258,17 @@ da documentação publicada pelo autor (https://github.com/nicsure/nicfw2docs,
 https://github.com/nicsure/nicFW880_950_Docs). Nenhum código, programa ou firmware de
 nicsure está incluído: drv_nicfw.go e settings_nicfw.go são escritos de raiz. Programa
 independente, não afiliado a nicsure.
+
+OPENGD77 E OUTROS FIRMWARES DO UV-K5 (4.16): o OpenGD77 é de Roger Clark VK3KYY e
+outros; a ligação e a disposição da memória vêm do programa livre qdmr de Hannes
+Matuschek DM3MAT (GNU GPL v3). Firmware NUNU de kamilsss655 e firmware UV-KX de
+joaquim.org (Apache 2.0): memória e escrita como nos drivers do CHIRP publicados pelos
+seus autores (derivados de uvk5.py de Jacek Lipkowski SQ5BPF, GNU GPL v2 ou posterior).
+Nenhum firmware ou programa destes autores está incluído; drv_ogd77.go e drv_uvkx.go são
+escritos no IU0VYT Flash. Programa independente, não afiliado a eles
+(https://www.opengd77.com, https://github.com/hmatuschek/qdmr,
+https://github.com/kamilsss655/uv-k5-firmware-custom,
+https://github.com/joaquimorg/UV-KX).
 
 NOMES DAS ZONAS (4.11)
 O formato dos nomes das zonas foi obtido, para a interoperabilidade, do código dos

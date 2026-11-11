@@ -4,6 +4,13 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
 
 本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.12）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
 
+4.16.0（2026/11/10）
+-------------------
+- OpenGD77 固件（drv_ogd77.go，新增；协议和存储结构依据自由软件 qdmr 的说明）：两个卡片，分别用于 GD-77 / GD-77S / DM-1801 / RD-5R 和 MD-UV380 系列（DM-1701、MD-UV380、MD-380、MD-9600、MD-2017、RT3S、RT84）；1024 个模拟或 DMR 信道；写入前重新读取电台，只写入信道和区域中有变化的块。
+- Quansheng UV-K5：kamilsss655 的 NUNU 固件（drv_uvk5x.go；egzumer 的存储结构，115200 波特，71 项设置）和 joaquim.org 的 UV-KX 固件（drv_uvkx.go，新增；230 个信道，14 项设置，校准数据从不写入）；“OSFW”卡片也接受原厂固件版本，用于修改版原厂固件。
+- Radtel RT-880（无 GPS）：Radtel 的软件使用与 CHIRP 的 RT-880G 驱动相同的命令，因此 RT-880 使用该卡片。已确认 amnemonic 固件合集中的 34 个文件均可被 UV-K5 固件更新接受。
+- 目录：485 款电台，419 款有设置，图库 539 款，47 个品牌。翻译：47 条新文本。测试：与 kamilsss655 和 joaquim.org 的 CHIRP 驱动比对，OpenGD77 模拟电台。
+
 4.15.0（2026/11/10）
 -------------------
 - Icom ID-31、ID-51、ID-51 Plus、ID-51 Plus2（drv_id31.go，新增；CHIRP 驱动 id31.py、id51.py、id51plus.py）和 IC-E90 / IC-T90（drv_icx90.go，新增；icx90.py）：Icom 快速复制，500 个信道，模拟或 D-STAR。

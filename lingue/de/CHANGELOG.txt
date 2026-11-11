@@ -7,6 +7,26 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.16.0 (10.11.2026)
+-------------------
+- Firmware OpenGD77 (drv_ogd77.go, neu; Protokoll und Speicher wie im freien Programm
+  qdmr beschrieben): zwei Karten, für GD-77 / GD-77S / DM-1801 / RD-5R und für die
+  MD-UV380-Familie (DM-1701, MD-UV380, MD-380, MD-9600, MD-2017, RT3S, RT84); 1024
+  analoge oder DMR-Kanäle; vor dem Schreiben wird das Funkgerät erneut gelesen,
+  geschrieben werden nur die geänderten Blöcke von Kanälen und Zonen.
+- Quansheng UV-K5: Firmware NUNU von kamilsss655 (drv_uvk5x.go; Speicher von egzumer,
+  115200 Baud, 71 Einstellungen) und Firmware UV-KX von joaquim.org (drv_uvkx.go, neu;
+  230 Kanäle, 14 Einstellungen, Kalibrierung wird nie geschrieben); die Karte «OSFW»
+  akzeptiert auch die Versionen der Originalfirmware, für die veränderten
+  Originalfirmwares.
+- Radtel RT-880 ohne GPS: Das Programm von Radtel verwendet dieselben Befehle wie der
+  CHIRP-Treiber des RT-880G, das RT-880 verwendet daher diese Karte. Geprüft, dass die
+  34 Dateien der Firmware-Sammlung von amnemonic von der Firmware-Aktualisierung des
+  UV-K5 akzeptiert werden.
+- Katalog: 485 Funkgeräte, 419 mit Einstellungen, 539 in der Galerie, 47 Marken.
+  Übersetzungen: 47 neue Texte. Tests: Vergleich mit den CHIRP-Treibern von kamilsss655
+  und joaquim.org, simuliertes OpenGD77-Funkgerät.
+
 4.15.0 (10.11.2026)
 -------------------
 - Icom ID-31, ID-51, ID-51 Plus, ID-51 Plus2 (drv_id31.go, neu; CHIRP-Treiber id31.py,

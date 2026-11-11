@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**版本 4.15.0** · Windows · 界面支持 13 种语言（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية、Bahasa Melayu、हिन्दी）· 只有一个可执行文件，无需安装
+**版本 4.16.0** · Windows · 界面支持 13 种语言（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية、Bahasa Melayu、हिन्दी）· 只有一个可执行文件，无需安装
 
 面向业余无线电爱好者和 **47 个品牌**对讲机用户的程序（**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood）：通过编程线读取和写入信道、频率和设置，管理意大利中继台档案，并为支持的电台升级固件。
 
@@ -38,7 +38,7 @@
 
 ## 功能
 
-- 483 个型号的**信道和频率**（包括数字 PMR 和 DMR 电台，也支持 USB）：通过数据线读写，兼容 CHIRP 的 `.img` 文件，Baofeng K67 Pro（`.xlc`）和 Bajeton 8300（`.dat`）的原始文件。
+- 485 个型号的**信道和频率**（包括数字 PMR 和 DMR 电台，也支持 USB）：通过数据线读写，兼容 CHIRP 的 `.img` 文件，Baofeng K67 Pro（`.xlc`）和 Bajeton 8300（`.dat`）的原始文件。
 - 419 个型号的**电台设置**（菜单、显示、VOX、静噪、TOT、DTMF、按键……），每一项都有说明，敏感项需确认警告。
 - **识别连接的电台**：程序会自动识别，并显示品牌、型号、类型、固件以及电台报告的其他信息（USB DMR 电台还有 DMR ID 和名称）。使用**自动识别**（“识别”标签页中的按钮，选择会被记住），无论在哪个标签页，只需连接数据线：程序同时监听所有数据线端口，也能识别连接数据线后才开机的电台以及连接在不同数据线上的多台电台，优先尝试以前识别过的和最常见的电台，不会被处于固件升级模式的电台误导，并为每台电台打开显示已读取信道的标签页；“正在识别电台”框只在有电台响应的数据线上出现；要识别另一台电台，可使用右上角的 **“🔎 识别电台”** 按钮。
 - **转发到其他电台**：一台电台中勾选的信道可直接写入另一台已连接的电台（按品牌和型号选择），带兼容性检查、调整、备份和校验。
@@ -46,7 +46,7 @@
 - **13 种语言的界面**，旗帜选择器位于“ℹ Info”旁：整个程序立即翻译（阿拉伯语从右到左），重启后记住语言；说明文件的译本位于 `lingue` 文件夹。
 - **区域名称**，代替“区域 1”“区域 2”……（Radtel RT-950 Pro、RT-950、RT-920、RT-910，Bajeton BJ-9000 和 BJ-7700，Hiroyasu HI-UV850 Pro；DMR 电台 RD-5R、DM-1801 和 DM-32UV 的区域），与信道一起通过数据线读取和写入。
 - **批量修改**已勾选的信道：同时修改功率、带宽、扫描、亚音、频差或发射，每个信道的其余部分保持不变。
-- **型号库**收录 47 个品牌的 537 个型号，分为兼容和不兼容，按类型（业余、DMR、GMRS/FRS、PMR446、儿童）和品牌分类，带搜索、筛选以及官方程序和手册的链接。
+- **型号库**收录 47 个品牌的 539 个型号，分为兼容和不兼容，按类型（业余、DMR、GMRS/FRS、PMR446、儿童）和品牌分类，带搜索、筛选以及官方程序和手册的链接。
 - **中继台档案**，基于 [IK2ANE](https://www.ik2ane.it) 的最新列表，带筛选和写入电台功能，写入前检查中继台与电台的兼容性。
 - 57 个型号的**固件升级**（包括 Quansheng UV-K5、UV-K6 和 UV-5R Plus，使用 Quansheng 和 Radtel .bin 文件的 Radtel RT-590 和 RT-600，使用 Radtel .kdhx 文件的 Radtel RT-470、RT-470L、RT-470X、RT-495 和 RT-630，使用厂家 .BIN 文件的 TIDRADIO TD-H3、TD-H8 和 Radtel RT-730，使用 .bin 文件的 Retevis RA79 V3 和 RA89，以及使用 Retevis .hex 文件的 Retevis RT85，使用 .BTF 文件的 Radtel RT-950 Pro、RT-950 和 Bajeton BJ-9000，使用 .anc 文件的 Radtel RT-920 和 RT-910B，使用 .BTU 文件的 Radtel RT-910、RT-900 和无蓝牙 Bajeton BJ-7700，使用 Radtel 和 M7OCM .bin 文件的 Radtel RT-890，通过 USB 使用 Baofeng .bin 文件的 Baofeng DM-1701，通过 USB 使用 .sgl 文件的 Baofeng RD-5R 和 DM-1801），带文件检查和电台备份；BTECH DMR-6X2 和 DMR-6X2 PRO 可使用官方程序进行引导式升级。
 - 每次写入前自动**备份**，写入后校验。

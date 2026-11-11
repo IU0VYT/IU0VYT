@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.15.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.16.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,19 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.16.0:
+- OPENGD77: canales de las radios DMR con el firmware libre OpenGD77: Radioddity GD-77 y
+  GD-77S, Baofeng DM-1801, RD-5R y DM-1701, TYT MD-UV380, MD-380, MD-9600 y MD-2017,
+  Retevis RT3S y RT84. La radio aparece como puerto serie USB; solo se escriben los
+  canales y las zonas cambiados, nunca los ajustes, los contactos, los grupos ni la
+  calibración.
+- QUANSHENG UV-K5, OTROS FIRMWARES LIBRES: fichas nuevas para NUNU de kamilsss655 y
+  UV-KX de joaquim.org (canales y ajustes); la ficha «OSFW» vale ahora también para los
+  firmwares originales modificados con las bandas ampliadas (uvmod-kitchen, colección de
+  Tunas1337).
+- RADTEL RT-880 sin GPS con el firmware original: usa la ficha «Radtel RT-880G» (Radtel
+  publica un solo programa para las dos radios).
+- Galería: 539 modelos de 47 marcas (485 con canales, 419 con ajustes).
 Novedades de la 4.15.0:
 - D-STAR Y C4FM: canales por cable para los portátiles digitales de radioaficionado.
   Icom ID-31, ID-51, ID-51 Plus, ID-51 Plus2 e IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D,

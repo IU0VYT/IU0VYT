@@ -200,6 +200,7 @@ Hannes Matuschek DM3MAT (qdmr) और Serge Vakulenko KK6ABQ को धन्य
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 
 QUANSHENG UV-K5 का फ़र्मवेयर अपडेट (4.1)
 Quansheng की .bin फ़ाइलों का फ़ॉर्मेट और UV-K5 के लोडर का प्रोटोकॉल मुक्त प्रोग्रामों
@@ -249,6 +250,8 @@ RT-950 Pro के अपने CHIRP ड्राइवर के लिए प�
 प्रोजेक्टों का कोई कोड शामिल नहीं है।
 
 NICFW फ़र्मवेयर (4.15): nicFW nicsure (https://nicsure.co.uk) का है। चैनल मेमोरी, सेटिंग्स और कनेक्शन के कमांड, अंतरसंचालनीयता के लिए, लेखक के प्रकाशित दस्तावेज़ों (https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs) से लिए गए हैं। nicsure का कोई कोड, प्रोग्राम या फ़र्मवेयर शामिल नहीं है: drv_nicfw.go और settings_nicfw.go शून्य से लिखे गए हैं। स्वतंत्र प्रोग्राम, nicsure से संबद्ध नहीं।
+
+OPENGD77 और UV-K5 के अन्य फ़र्मवेयर (4.16): OpenGD77 Roger Clark VK3KYY और अन्य का है; कनेक्शन और मेमोरी की बनावट Hannes Matuschek DM3MAT के मुक्त प्रोग्राम qdmr (GNU GPL v3) से ली गई है। kamilsss655 का फ़र्मवेयर NUNU और joaquim.org का फ़र्मवेयर UV-KX (Apache 2.0): मेमोरी और लिखना उनके लेखकों के प्रकाशित CHIRP ड्राइवरों जैसा (Jacek Lipkowski SQ5BPF के uvk5.py से व्युत्पन्न, GNU GPL v2 या बाद का)। इन लेखकों का कोई फ़र्मवेयर या प्रोग्राम शामिल नहीं है; drv_ogd77.go और drv_uvkx.go IU0VYT Flash में लिखे गए हैं। स्वतंत्र प्रोग्राम, उनसे संबद्ध नहीं (https://www.opengd77.com, https://github.com/hmatuschek/qdmr, https://github.com/kamilsss655/uv-k5-firmware-custom, https://github.com/joaquimorg/UV-KX)।
 
 ज़ोन के नाम (4.11)
 ज़ोन के नामों का फ़ॉर्मेट, इंटरऑपरेबिलिटी के लिए, निर्माता के प्रोग्रामों के कोड से निकाला

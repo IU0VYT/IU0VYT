@@ -172,6 +172,7 @@ CHIRP の作者の皆さん、armel F4HWN、M7OCM、JuantAldea、v0l（radio_too
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 
 QUANSHENG UV-K5 のファームウェア更新（4.1）
 Quansheng の .bin ファイルの形式と UV-K5 のローダーのプロトコルは、フリーソフト k5prog（Copyright 2023 Jacek Lipkowski SQ5BPF、GNU GPL v3、https://github.com/sq5bpf/k5prog）と uvtools（egzumer、https://github.com/egzumer/uvtools）が記述しています。fwk5.go は相互運用のためにその記述をもとにゼロから書いたもので、それらのプログラムのコードはパッケージに含まれていません。試験専用の verifica/k5/k5ref.js は、検証する人が指定したフォルダーから uvtools のコードを読み込みます。SQ5BPF と egzumer に感謝します。
@@ -190,6 +191,8 @@ RADTEL RT-950 PRO、BAJETON BJ-9000、RADTEL RT-950（4.6、4.7）
 チャンネルのメモリーと設定は、相互運用のためにメーカーのプログラムのコード（Radtel RT-950PRO_CPS v1.1.1、v1.2.0、v1.2.1、v1.3.3 と RT-950_EnCPS「BT-9000_CPS」v1.3.0、radtels.com。Bajeton BJ-9000_CPS v1.1.1）と Radtel のファームウェアの説明から得ました。これらのプログラムはパッケージに含まれていません。JA van Hernen（PE1HVH）が RT-950 Pro 用の CHIRP ドライバーについて公開した説明（https://github.com/pe1hvh/chirp_radtel_rt950pro、MIT ライセンス。「F」コマンドへの無線機の応答はファームウェア 0.18 と 0.29 で同じ）と CHIRP の報告 12180 も参考にしましたが、それらのプロジェクトのコードは含まれていません。
 
 NICFW ファームウェア（4.15）：nicFW は nicsure（https://nicsure.co.uk）によるものです。チャンネルのメモリー、設定、接続のコマンドは、相互運用のために作者が公開した資料（https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs）から得ています。nicsure のコード、プログラム、ファームウェアは一切含まれていません。drv_nicfw.go と settings_nicfw.go はゼロから書いたものです。独立したプログラムであり、nicsure とは無関係です。
+
+OPENGD77 と UV-K5 のその他のファームウェア（4.16）：OpenGD77 は Roger Clark VK3KYY らによるものです。接続とメモリー構成は Hannes Matuschek DM3MAT のフリーソフト qdmr（GNU GPL v3）から得ています。kamilsss655 の NUNU ファームウェアと joaquim.org の UV-KX ファームウェア（Apache 2.0）：メモリーと書き込みは作者が公開した CHIRP 用ドライバー（Jacek Lipkowski SQ5BPF の uvk5.py から派生、GNU GPL v2 以降）と同じです。これらの作者のファームウェアやプログラムは一切含まれていません。drv_ogd77.go と drv_uvkx.go は IU0VYT Flash で書いたものです。独立したプログラムであり、彼らとは無関係です（https://www.opengd77.com, https://github.com/hmatuschek/qdmr, https://github.com/kamilsss655/uv-k5-firmware-custom, https://github.com/joaquimorg/UV-KX）。
 
 ゾーン名（4.11）
 ゾーン名の形式は、相互運用性のために、メーカーのプログラムのコードから得ました：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 と Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS「BT-9000_CPS」v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）、RT910_EnCPS v1.0.3（Bluetooth なしの RT-910）、radtels.com と bajeton.cn。RT-920 については CHIRP のドライバー radtel_rt900.py（Fred Trimble、GNU GPL、上記参照）からも得ました。メーカーのプログラムは含まれていません。

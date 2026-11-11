@@ -201,6 +201,7 @@ projek OpenGD77, Hannes Matuschek DM3MAT (qdmr) dan Serge Vakulenko KK6ABQ.
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 
 KEMAS KINI PERISIAN TEGAR QUANSHENG UV-K5 (4.1)
 Format fail .bin Quansheng dan protokol pemuat UV-K5 didokumenkan oleh program bebas
@@ -256,6 +257,18 @@ dokumentasi yang diterbitkan oleh pengarangnya (https://github.com/nicsure/nicfw
 https://github.com/nicsure/nicFW880_950_Docs). Tiada kod, program atau perisian tegar
 nicsure disertakan: drv_nicfw.go dan settings_nicfw.go ditulis dari awal. Program bebas,
 tidak bergabung dengan nicsure.
+
+OPENGD77 DAN PERISIAN TEGAR UV-K5 YANG LAIN (4.16): OpenGD77 ialah hasil Roger Clark
+VK3KYY dan lain-lain; sambungan dan susun atur memori diambil daripada program bebas
+qdmr oleh Hannes Matuschek DM3MAT (GNU GPL v3). Perisian tegar NUNU oleh kamilsss655 dan
+perisian tegar UV-KX oleh joaquim.org (Apache 2.0): memori dan penulisan seperti dalam
+pemacu CHIRP yang diterbitkan oleh pengarangnya (terbitan daripada uvk5.py oleh Jacek
+Lipkowski SQ5BPF, GNU GPL v2 atau lebih baharu). Tiada perisian tegar atau program
+pengarang ini disertakan; drv_ogd77.go dan drv_uvkx.go ditulis dalam IU0VYT Flash.
+Program bebas, tidak bergabung dengan mereka (https://www.opengd77.com,
+https://github.com/hmatuschek/qdmr,
+https://github.com/kamilsss655/uv-k5-firmware-custom,
+https://github.com/joaquimorg/UV-KX).
 
 NAMA ZON (4.11)
 Format nama zon diperoleh, untuk saling kendali, daripada kod program pengeluar: Radtel

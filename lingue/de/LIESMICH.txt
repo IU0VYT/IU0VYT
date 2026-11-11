@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.15.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.16.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,19 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.16.0:
+- OPENGD77: Kanäle der DMR-Funkgeräte mit der freien Firmware OpenGD77: Radioddity GD-77
+  und GD-77S, Baofeng DM-1801, RD-5R und DM-1701, TYT MD-UV380, MD-380, MD-9600 und
+  MD-2017, Retevis RT3S und RT84. Das Funkgerät erscheint als serielle
+  USB-Schnittstelle; geschrieben werden nur die geänderten Kanäle und Zonen, nie
+  Einstellungen, Kontakte, Gruppen oder Kalibrierung.
+- QUANSHENG UV-K5, WEITERE FREIE FIRMWARES: neue Karten für NUNU von kamilsss655 und
+  UV-KX von joaquim.org (Kanäle und Einstellungen); die Karte «OSFW» gilt jetzt auch für
+  die mit erweiterten Bändern veränderten Originalfirmwares (uvmod-kitchen, Sammlung von
+  Tunas1337).
+- RADTEL RT-880 ohne GPS mit der Originalfirmware: die Karte «Radtel RT-880G» verwenden
+  (Radtel veröffentlicht ein einziges Programm für beide Funkgeräte).
+- Galerie: 539 Modelle von 47 Marken (485 mit Kanälen, 419 mit Einstellungen).
 Neu in 4.15.0:
 - D-STAR UND C4FM: Kanäle per Kabel für die digitalen Amateurfunk-Handfunkgeräte. Icom
   ID-31, ID-51, ID-51 Plus, ID-51 Plus2 und IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D,

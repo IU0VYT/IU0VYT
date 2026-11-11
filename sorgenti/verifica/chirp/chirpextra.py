@@ -44,7 +44,22 @@ def load_extra(directory):
         sp = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(sp)
         sys.modules[name] = mod
-        sp.loader.exec_module(mod)
+        # 4.16: un driver esterno con lo stesso identificativo di uno di CHIRP
+        # (es. quello di kamilsss655, «Quansheng_UV-K5_egzumer») si registra con
+        # il suffisso, senza sostituire quello di CHIRP
+        orig_id = directory.radio_class_id
+
+        def class_id(cls, _orig=orig_id, _suffix=suffix):
+            ident = _orig(cls)
+            if _suffix and ident in directory.DRV_TO_RADIO and directory.DRV_TO_RADIO[ident] is not cls \
+                    and cls.__module__.startswith("chirp_extra_"):
+                ident = ident + "_" + _suffix
+            return ident
+        directory.radio_class_id = class_id
+        try:
+            sp.loader.exec_module(mod)
+        finally:
+            directory.radio_class_id = orig_id
         for cls in set(directory.DRV_TO_RADIO.values()) - before:
             if cls.__name__ in known and suffix:
                 cls.__name__ = cls.__name__ + suffix

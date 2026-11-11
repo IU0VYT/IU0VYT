@@ -66,6 +66,13 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	if _, ok := m.Opt.(*tytOpt); ok {
 		mem = tytSynthImage()
 	}
+	if _, ok := m.Fam.(ogdFam); ok { // 4.16: OpenGD77 (memoria vuota: nessun canale valido)
+		mem = bytes.Repeat([]byte{0xFF}, ogdSize)
+		for b := 0; b < 8; b++ {
+			copy(mem[ogdBank(b):], make([]byte, 16))
+		}
+		copy(mem[rdtyZoneTab:], make([]byte, 32))
+	}
 	switch m.Fam.(type) { // 4.15: firmware nicFW
 	case nicfwFam:
 		mem = nicfwTestImg(true)

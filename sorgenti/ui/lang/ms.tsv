@@ -1864,7 +1864,6 @@ e5124f3c	Radio FRS (AS), 16 saluran. Diperoleh daripada program «BF_V1_FH» pen
 11fa38bb	Retevis RT84
 5bf2511f	qdmr (program bebas untuk radio DMR, GPL)
 19de537d	dmrconfig (program baris arahan bebas, lesen BSD)
-d65f0982	Radio DMR keluarga TYT MD-UV380, disambungkan melalui USB dalam mod DFU: anda memerlukan pemacu USB pengeluar (folder «DM-1701 USB Driver» dalam pakej «DM-1701 CPS», boleh dipasang dari sini dengan «Pasang pemacu USB…»), sama seperti programnya, atau pemacu WinUSB generik (Zadig). Memori dan protokol program bebas dmrconfig dan qdmr, disahkan dengan kod asal dmrconfig (bacaan, perubahan, pemadaman dan penulisan yang sama). Dengan perisian tegar bebas OpenGD77, radio menggunakan protokol lain: dalam hal itu gunakan qdmr.
 9595e894	DMR-6X2 (BTECH)
 b82b0847	BTECH DMR-6X2
 2725c619	BaofengTech DMR-6X2
@@ -1879,7 +1878,6 @@ c224a773	DMR-6X2II
 03d4eaa7	Siri kedua DMR-6X2 (perisian tegar «DMR_6X2II», penomboran 1.x; 1.21 dikeluarkan bersama 2.21 bagi DMR-6X2). Perisian tegarnya ialah fail yang berbeza daripada DMR-6X2 (pengecam «D6X2UV2»): jangan gunakan perisian tegar radio yang satu lagi. Ikon (DMR_6X2_PIC) adalah sama. Kemas kini berpandu dengan program rasmi, seperti untuk DMR-6X2.
 5f81c272	Program «DM-1702 MD Setup» v1.00.76 (halaman muat turun Baofeng)
 9fc225b8	Radio DMR: program pengeluar («DM-1702 MD Setup», keluarga TYT MD) tidak didokumenkan; codeplug diurus dengan program itu.
-2fc473f4	Radio DMR (platform Radioddity GD-77), disambungkan melalui USB sebagai peranti HID: tiada port COM dan tiada pemacu untuk dipasang. Memori dan protokol program bebas dmrconfig dan qdmr, disahkan dengan kod asal dmrconfig (bacaan, perubahan dan penulisan yang sama). Dengan perisian tegar bebas OpenGD77, radio menggunakan protokol lain: dalam hal itu gunakan qdmr.
 8f42ee90	DM-1801 Pro
 9eccd68c	Program «CPS DMR Radio» v1.60 (halaman muat turun Radioddity)
 bb8e3c94	Eksperimen. Untuk DM-1801 Pro pengeluar menerbitkan program yang sama dengan DM-32UV (fail boleh laku «DMR CPS.exe» yang sama, v1.60): pemacu DM-32UV digunakan. Jika radio mengenal pasti dirinya sebagai model lain, program berhenti sebelum membaca atau menulis.
@@ -1892,7 +1890,6 @@ a3a1d678	Program «CPS_5R» (arkib «DM_5R_Programming_Software», kata laluan 1
 d2346d94	DM-5R Tier II
 72336e09	Radioddity RD5R
 a8f94ecd	Program «RD-5R Program Software» V1.0.0.4 dan perisian tegar V2.1.6 (halaman muat turun Baofeng)
-39f27629	Radio DMR disambungkan melalui USB sebagai peranti HID: tiada port COM dan tiada pemacu untuk dipasang. Memori dan protokol program bebas dmrconfig dan qdmr (radio mengenal pasti dirinya sebagai «BF-5R», begitu juga TD-5R), disahkan dengan kod asal dmrconfig (bacaan, perubahan dan penulisan yang sama). Dengan perisian tegar bebas OpenGD77 (OpenRD5R), radio menggunakan protokol lain: dalam hal itu gunakan qdmr.
 95b17c64	Program «DM-32UV CPS» v1.60 dan perisian tegar v1.01.048 (halaman muat turun Radioddity)
 27733ab8	CHIRP (pemacu Baofeng DM-32UV)
 42f2657e	Saluran (analog dan DMR) dengan pemacu CHIRP, diperoleh daripada program pengeluar v1.60 dan diuji pada radio sebenar: frekuensi, nama, kuasa dan ton diubah; tetapan DMR saluran, zon, kenalan dan senarai kekal seperti sedia ada. Perisian tegar dikemas kini dengan program pengeluar.
@@ -2089,7 +2086,6 @@ bc7c87a1	Saluran dan tetapan dengan pemacu CHIRP (kelas {0}), disahkan dengan uj
 321bd12e	UV-5R Plus
 fadd6ee1	Perisian tegar F4HWN (armel)
 c7d04685	Perisian tegar IJV (IU0IJV)
-7c2fdf6f	{0} Setiap tab membaca dan menulis hanya perisian tegarnya sendiri: asal Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (pemacu CHIRP), F4HWN (pemacu armel untuk CHIRP, dengan tetapan F4HWN), OSFW (pemacu CHIRP) atau perisian tegar Cina LOSEHU / LTS / UVE (pemacu CHIRP, nama Cina). Jika anda membuka tab yang salah, program membaca versi perisian tegar, berhenti tanpa menulis dan menunjukkan tab yang betul; «Kenal pasti» menemuinya sendiri. Perisian tegar: fail .bin Quansheng (cth. k5_v2.01.26_publish.bin) dengan pemuat radio (dihidupkan sambil menekan PTT); program menyemak bahawa perisian tegar adalah untuk jenis pemuat radio (UV-K5, UV-K5(8)/UV-K6 atau UV-5R Plus). Quansheng melindungi muat turun dengan kata laluan yang diberikan oleh penjual. IJV juga dikendalikan (V3 dengan 200 atau 999 saluran pada UV-K5 klasik; V4, V5 dan V6 pada UV-K5 V3: bank yang dipilih pada radio, saluran, kumpulan dan tetapan utama).
 06fd3af1	Ia ialah Quansheng UV-K5. {0} Perisian tegar: fail .bin Retevis dalam format Quansheng (cth. «RA79 V3.bin», versi 7.00.16 untuk RA79 V3, dengan pemuat 7.x UV-K5 V3): radio dimatikan dan dihidupkan semula sambil menekan PTT. Program membaca versi pemuat dan menghantar perisian tegar hanya jika ia daripada keluarga yang sama (RA79 dengan pemuat UV-K5 klasik menolak fail 7.x).
 1a11a260	Ia ialah Quansheng UV-K5. {0}
 f1e53be6	RT-590 / RT-590 Plus
@@ -3252,10 +3248,8 @@ d6c2626f	imej tidak sesuai untuk radio ini (versi perisian tegar berbeza): baca 
 6374ed8d	Hidupkan radio, kemudian sambungkan kabel ke penyambung mikrofon/pembesar suara (dimasukkan dengan kemas). Seperti dalam CHIRP, bacaan dan penulisan hanya dilakukan dengan versi perisian tegar asal yang diketahui: dengan perisian tegar yang diubah suai, program berhenti tanpa menulis.
 f39051f7	Quansheng UV-K5 / UV-K6 / UV-5R Plus
 e247f543	Quansheng UV-K1
-b37044a6	Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware OSFW)
 54727d95	OSFW-bd90ca3
 4b4e923c	OSFW
-4a42b6ef	Perisian tegar bebas OSFW (versi bd90ca3, satu-satunya yang disokong oleh CHIRP). Hidupkan radio, kemudian sambungkan kabel ke penyambung mikrofon/pembesar suara. Memori yang sama dengan perisian tegar asal; julat tanpa had. Pemacu CHIRP.
 1e59b74c	Retevis RA79
 4ac7138a	MaxTalker TK-6
 a11b84a6	radio berada dalam mod kemas kini perisian tegar: matikan dan hidupkan semula seperti biasa
@@ -5134,7 +5128,6 @@ ec8cdbd9	perisian tegar sehingga 0.23: 960 saluran
 4f21c9a6	Perisian tegar IJV V3, 200 saluran
 447dca6b	Perisian tegar IJV V3 X, 999 saluran
 fb975e6f	Perisian tegar LOSEHU, LTS, UVE
-6c3baeb5	Perisian tegar OSFW
 1c75d52b	Perisian tegar IJV V4
 1b75d398	Perisian tegar IJV V5
 1e75d851	Perisian tegar IJV V6
@@ -5199,7 +5192,6 @@ badf093c	TD-H3 (perisian tegar nicFW)
 d4a810ff	RT-880 (bukan G)
 d7ffe954	iRadio UV-98
 539599ba	Dokumentasi nicFW880 (nicsure)
-bd2f0310	Dengan perisian tegar asal Radtel, RT-880 (tanpa GPS) diprogram dengan perisian Radtel: protokolnya belum dikendalikan (RT-880G sudah, dengan tabnya sendiri). {0}
 4a49f494	RT-880 / RT-880G (perisian tegar nicFW880)
 9ab35be3	RT-880 nicFW
 33526df2	RT-880G nicFW
@@ -5307,3 +5299,50 @@ e3af4e9c	perisian tegar F4HWN Fusion 5.x
 ab73dbd5	perisian tegar nicFW950
 8382cca1	perisian tegar nicFW
 d36b19e0	siri kedua
+0f1c8c46	Radio DMR keluarga TYT MD-UV380, disambungkan melalui USB dalam mod DFU: anda memerlukan pemacu USB pengeluar (folder «DM-1701 USB Driver» dalam pakej «DM-1701 CPS», boleh dipasang dari sini dengan «Pasang pemacu USB…»), sama seperti programnya, atau pemacu WinUSB generik (Zadig). Memori dan protokol program bebas dmrconfig dan qdmr, disahkan dengan kod asal dmrconfig (bacaan, perubahan, pemadaman dan penulisan yang sama).{0}
+b6763080	Radio DMR (platform Radioddity GD-77), disambungkan melalui USB sebagai peranti HID: tiada port COM dan tiada pemacu untuk dipasang. Memori dan protokol program bebas dmrconfig dan qdmr, disahkan dengan kod asal dmrconfig (bacaan, perubahan dan penulisan yang sama).{0}
+5e2468d7	Radio DMR disambungkan melalui USB sebagai peranti HID: tiada port COM dan tiada pemacu untuk dipasang. Memori dan protokol program bebas dmrconfig dan qdmr (radio mengenal pasti dirinya sebagai «BF-5R», begitu juga TD-5R), disahkan dengan kod asal dmrconfig (bacaan, perubahan dan penulisan yang sama).{0}
+056f6cc4	Dengan perisian tegar asal, RT-880 (tanpa GPS) dibaca dan ditulis dengan tab «Radtel RT-880G»: Radtel menerbitkan satu program sahaja untuk kedua-dua radio, dengan sambungan yang sama seperti pemacu CHIRP bagi RT-880G. Dengan perisian tegar nicFW880 gunakan tab nicFW. {0}
+40bc82d1	Dengan perisian tegar bebas OpenGD77, radio muncul sebagai port bersiri USB dan menggunakan protokol lain: buka tab «OpenGD77».
+b11d1334	Dari 4.16 juga perisian tegar NUNU oleh kamilsss655 (memori egzumer, 115200 baud), UV-KX oleh joaquim.org (230 saluran) dan, dengan tab «OSFW atau asal yang diubah suai», perisian tegar asal yang diubah dengan jalur diperluas (uvmod-kitchen, koleksi Tunas1337).
+445a11ea	Dengan perisian tegar bebas OpenGD77, radio yang dihidupkan muncul sebagai port bersiri USB: 1024 saluran analog atau DMR, dibaca dan ditulis seperti dalam program bebas qdmr. Hanya saluran dan zon ditulis; kenalan, kumpulan, tetapan dan penentukuran tidak pernah disentuh.
+45b42fc6	GD-77 / GD-77S (perisian tegar OpenGD77)
+9bf2d4d9	TYT MD-760
+9aae2a08	Laman OpenGD77
+396d6da3	{0} Dengan perisian tegar asal Radioddity, GD-77 tidak dikendalikan.
+b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (perisian tegar OpenGD77)
+76df013d	Retevis RT3S
+9785f3bc	Retevis RT3
+17fa422d	Retevis RT82
+8ff72d7e	Retevis RT90
+850cccbc	{0} Dengan perisian tegar asal TYT, radio ini tidak dikendalikan.
+3784fb7e	{0} Setiap tab membaca dan menulis hanya perisian tegarnya sendiri: asal Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (pemacu CHIRP), F4HWN (pemacu armel untuk CHIRP, dengan tetapan F4HWN), OSFW (pemacu CHIRP) atau perisian tegar Cina LOSEHU / LTS / UVE (pemacu CHIRP, nama Cina). Jika anda membuka tab yang salah, program membaca versi perisian tegar, berhenti tanpa menulis dan menunjukkan tab yang betul; «Kenal pasti» menemuinya sendiri. Perisian tegar: fail .bin Quansheng (cth. k5_v2.01.26_publish.bin) dengan pemuat radio (dihidupkan sambil menekan PTT); program menyemak bahawa perisian tegar adalah untuk jenis pemuat radio (UV-K5, UV-K5(8)/UV-K6 atau UV-5R Plus). Quansheng melindungi muat turun dengan kata laluan yang diberikan oleh penjual. IJV juga dikendalikan (V3 dengan 200 atau 999 saluran pada UV-K5 klasik; V4, V5 dan V6 pada UV-K5 V3: bank yang dipilih pada radio, saluran, kumpulan dan tetapan utama).{1}
+b9ae89b8	Radioddity GD-77
+38c31cf1	Radioddity GD-77S
+829ca215	Baofeng RD-5R
+d016c282	Baofeng DM-1801A
+123293fe	TYT MD-UV380
+f4a22d9b	TYT MD-380
+a23ee16e	Baofeng DM-1701
+f24ec890	Baofeng DM-1701 (RGB)
+c1ba3e92	Rendah 500 mW
+18565b4f	Minimum 50 mW
+07201eab	Perisian tegar bebas {0}: radio yang dihidupkan seperti biasa muncul sebagai port bersiri USB (115200 baud). 1024 saluran dengan nama 16 aksara, analog atau DMR. Frekuensi, nama, mod, kuasa, lebar jalur, ton, terima sahaja dan pengecualian imbasan boleh diubah; bagi saluran DMR, kod warna, slot, kenalan dan kumpulan kekal seperti yang ditetapkan (saluran DMR baharu: kod warna 1, slot 1). Kuasa yang sudah ditetapkan pada radio (termasuk «kuasa radio») kekal sehingga anda mengubahnya. Saluran yang dipadam turut dikeluarkan daripada zon; saluran baharu berada dalam zon «Semua saluran» pada radio. Sebelum menulis, program membaca semula radio dan menulis hanya blok saluran dan zon yang berubah: tetapan, kenalan, kumpulan dan penentukuran tidak pernah disentuh. Protokol dan memori seperti dalam program bebas qdmr.
+fbde8d37	OpenGD77 (Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R)
+5da23611	OpenGD77 (Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84)
+5a30f7a7	OpenGD77 untuk keluarga MD-UV380 (OpenUV380, OpenDM1701)
+32306b70	OpenGD77 {0} ({1})
+fe225491	Quansheng UV-K5 / UV-K6 / UV-5R Plus (perisian tegar OSFW atau asal yang diubah suai, jalur diperluas)
+ebc98c0d	Perisian tegar bebas OSFW (versi bd90ca3) dan perisian tegar asal yang diubah dengan jalur diperluas (uvmod-kitchen, koleksi Tunas1337), yang menjawab dengan versi asal. Hidupkan radio, kemudian sambungkan kabel ke penyambung mikrofon/pembesar suara. Memori sama seperti perisian tegar asal; julat dari 18 hingga 1300 MHz: di luar jalur asal, saluran hanya berfungsi jika perisian tegar radio benar-benar diubah suai. Pemacu CHIRP.
+0d254ef7	UV-K5 (egzumer)
+759b7361	Quansheng UV-K5 / UV-K6 / UV-5R Plus (perisian tegar NUNU oleh kamilsss655)
+cc5169db	NUNU v26
+1b10f5b3	Perisian tegar bebas NUNU oleh kamilsss655 (radio menjawab «NUNU …»), yang berasal daripada egzumer dan mempunyai memori yang sama. Hidupkan radio, kemudian sambungkan kabel ke penyambung mikrofon/pembesar suara. Program mencuba 115200 baud dan, jika radio tidak menjawab, 38400 (versi awal). Seperti pemacu CHIRP yang diterbitkan oleh kamilsss655.
+14e3071d	Quansheng UV-K5 / UV-K6 (perisian tegar UV-KX oleh joaquim.org)
+d94d723a	JOAQUIM V0.0.1
+05598926	Perisian tegar bebas UV-KX oleh joaquim.org (radio menjawab «JOAQUIM …»): 230 saluran dengan nama 10 aksara, 115200 baud. Hidupkan radio, kemudian sambungkan kabel ke penyambung mikrofon/pembesar suara. Lebar jalur, squelch dan gandaan setiap saluran kekal seperti yang ditetapkan pada radio; modulasi kekal seperti saluran itu jika frekuensi tidak berubah (AM dalam jalur penerbangan bagi saluran baharu). Penentukuran tidak pernah ditulis (pemacu CHIRP menulisnya). Daripada pemacu CHIRP yang diterbitkan bersama perisian tegar.
+9cc1704d	Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R
+1e48a635	Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84
+df7880d4	perisian tegar NUNU oleh kamilsss655
+ef8de76c	perisian tegar OSFW atau asal yang diubah suai, jalur diperluas
+300b8fba	perisian tegar UV-KX oleh joaquim.org

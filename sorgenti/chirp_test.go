@@ -103,6 +103,7 @@ var chirpTestImage = map[string]string{
 	"rd-ga510v2": "Radioddity_GA-510_V2.img",
 	// 4.9: UV-K5 con firmware liberi (F4HWN: memoria dell'egzumer)
 	"qs-uvk5-egz":      "Quansheng_UV-K5_egzumer.img",
+	"qs-uvk5-nunu":     "Quansheng_UV-K5_egzumer.img", // 4.16: stessa memoria
 	"qs-uvk5-f4hwn":    "Quansheng_UV-K5_egzumer.img",
 	"qs-uvk5-losehu":   "Quansheng_UV-K5_losehu.img",
 	"qs-uvk5-osfw":     "Quansheng_UV-K5.img",
@@ -136,6 +137,10 @@ var chirpExtraClass = map[string]string{
 	"RuyageUV58PlusRadioM7OCM": "driver di M7OCM per la RT-890 (chirp-next-radtel-rt-890-m7ocm.py)",
 	// 4.15: driver pubblicato da F4HWN con il firmware «Fusion» (suffisso «Fusion»)
 	"UVK5RadioEgzumerFusion": "driver F4HWN Fusion (f4hwn.fusion.chirp.v5.9.0.py:Fusion)",
+	// 4.16: driver per CHIRP pubblicato da kamilsss655 (uvk5_egzumer_115200_baud.py, suffisso «Nunu»)
+	"UVK5RadioEgzumerNunu": "driver di kamilsss655 (uvk5_egzumer_115200_baud.py:Nunu)",
+	// 4.16: driver per CHIRP pubblicato con il firmware UV-KX di joaquim.org
+	"UVKxRadio": "driver di joaquim.org (CHIRP_uvkx.py)",
 }
 
 func chirpImageFor(t *testing.T, m *genModel) string {
@@ -201,7 +206,15 @@ func chirpImageFor(t *testing.T, m *genModel) string {
 	// con le stesse modifiche qui e con CHIRP
 	if n, ok := chirpBlankImage[m.ID]; ok {
 		q := filepath.Join(t.TempDir(), m.ID+".img")
-		if err := os.WriteFile(q, makeImg(m, bytes.Repeat([]byte{0xFF}, n), map[string]interface{}{}), 0o644); err != nil {
+		fill := byte(0xFF)
+		if b, ok := chirpBlankFill[m.ID]; ok {
+			fill = b
+		}
+		blank := bytes.Repeat([]byte{fill}, n)
+		if patch, ok := chirpImagePatch[m.ID]; ok {
+			patch(blank) // 4.16: canali di partenza scritti qui (confronto di lettura e di modifica)
+		}
+		if err := os.WriteFile(q, makeImg(m, blank, map[string]interface{}{}), 0o644); err != nil {
 			t.Fatal(err)
 		}
 		return q
@@ -219,6 +232,31 @@ var chirpImagePatch = map[string]func([]byte){
 	// seconda serie
 	"ys-ft5d":   func(b []byte) { copy(b, "AH82M") },
 	"ys-ft2dv2": func(b []byte) { copy(b, "AH60G") },
+	// 4.16: UV-KX, memoria di partenza con alcuni canali (larghezza di banda,
+	// squelch, modulazione e guadagno diversi dal canale nuovo)
+	"qs-uvk5-uvkx": func(b []byte) {
+		m := genByID["qs-uvk5-uvkx"]
+		f := m.Fam.(uvkxFam)
+		cs := []*Chan{
+			{Rx: 145600000, Tx: 145000000, TxTone: "88.5", Name: "R0", Scan: true},
+			{Rx: 433500000, Tx: 433500000, TxTone: "D754I", RxTone: "D023N", Name: "DCS", Power: 2, Scan: true},
+			{Rx: 118100000, Tx: 118100000, TxOff: true, Name: "TWR", Power: 1, Scan: true},
+			{Rx: 145500000, Tx: 435500000, RxTone: "123.0", TxTone: "123.0", Name: "SPLIT", Scan: true},
+			{Rx: 446006250, Tx: 446006250, Name: "PMR 1", Power: 2, Scan: true},
+			{Rx: 431000000, Tx: 438600000, TxTone: "D023N", Name: "UP", Scan: true},
+		}
+		for i, c := range cs {
+			if err := f.Set(m, b, i*3, c); err != nil {
+				panic(err)
+			}
+			a := f.at(i * 3)
+			b[a+24] = b[a+24]&0xF0 | byte(i+1)    // squelch
+			b[a+25] = byte(i+2)<<4 | b[a+25]&0x0F // larghezza di banda
+			b[a+26] |= byte(i) & 0x0F             // STE, compander
+			b[a+27] = byte(i) * 0x11
+			b[a+28] = byte(18-i) << 2 // guadagno
+		}
+	},
 }
 
 // chirpExtraImage (4.9): immagini di prova che accompagnano i driver esterni
@@ -231,7 +269,12 @@ var chirpBlankImage = map[string]int{
 	"rt-rt76p": 0x2000,
 	// 4.15: F4HWN Fusion (il driver non ha un'immagine di prova)
 	"qs-uvk1-f4hwn5": uvk5f5MemSize,
+	// 4.16: UV-KX (memoria a zero: per il driver un canale è vuoto con la frequenza 0)
+	"qs-uvk5-uvkx": uvk5MemSize,
 }
+
+// chirpBlankFill (4.16): byte di riempimento della memoria vuota (0xFF se assente)
+var chirpBlankFill = map[string]byte{"qs-uvk5-uvkx": 0}
 
 // immagine di riferimento per i modelli della famiglia senza un'immagine propria
 var chirpFamilyImage = map[string]string{

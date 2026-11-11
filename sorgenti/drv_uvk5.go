@@ -91,6 +91,12 @@ type uvk5Opt struct {
 	// primo saluto prima della lettura (solo la classe UV-K5)
 	detect bool
 	emuFW  string // 4.9: versione del firmware della radio simulata dei test
+	// bauds (4.16): velocità da provare, nell'ordine (vuoto: 38400). Il firmware NUNU
+	// di kamilsss655 usa 115200 baud, le sue prime versioni 38400
+	bauds []int
+	// plain (4.16): scrittura del canale come il driver di kamilsss655 (versione del
+	// 2024 del driver di egzumer): nessun bit conservato tranne quelli non usati
+	plain bool
 }
 
 type uvk5Fam struct{}
@@ -124,13 +130,18 @@ func init() {
 	k1 := mk("qs-uvk1", "Quansheng", "UV-K1", "UVK1Radio", "Quansheng UV-K1", func(fw string) bool { return strings.HasPrefix(fw, "7.03.") })
 	// 4.9: firmware libero «OSFW» (OSFWUVK5Radio di uvk5.py): memoria del
 	// firmware originale, gamme senza limiti
-	osfw := mk("qs-uvk5-osfw", "Quansheng", "UV-K5", "OSFWUVK5Radio", "Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware OSFW)",
-		func(fw string) bool { return fw == "OSFW-bd90ca3" })
+	// 4.16: la scheda vale anche per i firmware originali ritoccati (uvmod-kitchen
+	// di amnemonic, raccolta di Tunas1337: bande ampliate, stessa versione e stessa
+	// memoria dell'originale)
+	osfw := mk("qs-uvk5-osfw", "Quansheng", "UV-K5", "OSFWUVK5Radio", "Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware OSFW o originale modificato, bande estese)",
+		func(fw string) bool { return fw == "OSFW-bd90ca3" || uvk5ApproveK5(fw) })
 	osfw.Variant = "OSFW"
 	osfw.Bands = []band{{18000000, 1300000000}}
 	uvk5o(osfw).emuFW = "OSFW-bd90ca3"
-	osfw.Notes = "Firmware libero OSFW (versione bd90ca3, la sola gestita da CHIRP). Accendi la radio, poi collega il cavo al " +
-		"connettore microfono/altoparlante. Stessa memoria del firmware originale; gamme senza limiti. Driver di CHIRP."
+	osfw.Notes = "Firmware libero OSFW (versione bd90ca3) e firmware originali modificati con le bande ampliate (uvmod-kitchen, " +
+		"raccolta di Tunas1337), che rispondono con la versione dell'originale. Accendi la radio, poi collega il cavo al " +
+		"connettore microfono/altoparlante. Stessa memoria del firmware originale; gamme da 18 a 1300 MHz: fuori dalle bande " +
+		"dell'originale il canale funziona solo se il firmware della radio è davvero modificato. Driver di CHIRP."
 	genRegister(
 		k5,
 		osfw,

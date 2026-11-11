@@ -190,6 +190,7 @@ Matuschek DM3MAT(qdmr), Serge Vakulenko KK6ABQ에게 감사드립니다.
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 
 QUANSHENG UV-K5 펌웨어 업데이트(4.1)
 Quansheng .bin 파일의 형식과 UV-K5 로더의 프로토콜은 자유 프로그램 k5prog(Copyright 2023 Jacek Lipkowski
@@ -227,6 +228,8 @@ CHIRP 드라이버를 위해 공개한 메모(https://github.com/pe1hvh/chirp_ra
 명령에 대한 무전기의 응답은 펌웨어 0.18과 0.29에서 같음)와 CHIRP 보고 12180도 참고했습니다. 그 프로젝트의 코드는 들어 있지 않습니다.
 
 NICFW 펌웨어(4.15): nicFW는 nicsure(https://nicsure.co.uk)의 것입니다. 채널 메모리, 설정, 연결 명령은 상호 운용을 위해 작성자가 공개한 문서(https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs)에서 가져왔습니다. nicsure의 코드, 프로그램, 펌웨어는 포함되어 있지 않습니다. drv_nicfw.go와 settings_nicfw.go는 처음부터 작성했습니다. 독립적인 프로그램이며 nicsure와 관련이 없습니다.
+
+OPENGD77 및 UV-K5의 다른 펌웨어(4.16): OpenGD77은 Roger Clark VK3KYY 등이 만들었습니다. 연결과 메모리 구조는 Hannes Matuschek DM3MAT의 자유 프로그램 qdmr(GNU GPL v3)에서 가져왔습니다. kamilsss655의 NUNU 펌웨어와 joaquim.org의 UV-KX 펌웨어(Apache 2.0): 메모리와 쓰기는 작성자가 공개한 CHIRP용 드라이버(Jacek Lipkowski SQ5BPF의 uvk5.py에서 파생, GNU GPL v2 이상)와 같습니다. 이 작성자들의 펌웨어나 프로그램은 포함되어 있지 않습니다. drv_ogd77.go와 drv_uvkx.go는 IU0VYT Flash에서 작성했습니다. 독립적인 프로그램이며 그들과 관련이 없습니다(https://www.opengd77.com, https://github.com/hmatuschek/qdmr, https://github.com/kamilsss655/uv-k5-firmware-custom, https://github.com/joaquimorg/UV-KX).
 
 구역 이름(4.11)
 구역 이름의 형식은 상호 운용성을 위해 제조사 프로그램의 코드에서 얻었습니다: Radtel RT-950PRO_CPS v1.2.0-v1.3.3과

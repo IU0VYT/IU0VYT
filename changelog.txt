@@ -3,6 +3,42 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.16.0 (10/11/2026)
+-------------------
+- Firmware OpenGD77 (drv_ogd77.go, nuovo; protocollo e memoria descritti nel programma
+  libero qdmr): schede «OpenGD77» per Radioddity GD-77 / GD-77S, Baofeng DM-1801 /
+  RD-5R (scritture 'W', flash da 0x7B000) e per la famiglia MD-UV380: Baofeng DM-1701,
+  TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84 (scritture 'X', flash
+  da 0x9B000). Porta seriale USB a 115200 baud; il tipo di radio si legge dalle
+  informazioni del firmware e la scheda sbagliata viene rifiutata. 1024 canali
+  analogici o DMR (primi 128 nella EEPROM, gli altri nella flash); potenza del canale
+  (byte 25) conservata se il livello non cambia. In scrittura il programma rilegge la
+  radio e scrive solo i blocchi cambiati di canali e zone (flash a settori di 4096
+  byte): impostazioni, contatti, gruppi e taratura mai.
+- Quansheng UV-K5, firmware NUNU di kamilsss655 (drv_uvk5x.go): scheda nuova con la
+  memoria di egzumer a 115200 baud (poi 38400 se la radio non risponde), scrittura
+  del canale come il driver per CHIRP di kamilsss655; 71 voci di impostazioni.
+- Quansheng UV-K5, firmware UV-KX di joaquim.org (drv_uvkx.go, nuovo; dal driver per
+  CHIRP pubblicato con il firmware): 230 canali da 32 byte, 115200 baud; 14 voci di
+  impostazioni. Differenza voluta: la taratura (da 0x1E00) non si scrive mai.
+- Quansheng UV-K5, scheda «OSFW»: ora accetta anche le versioni del firmware originale,
+  per i firmware originali ritoccati con le bande ampliate (uvmod-kitchen di amnemonic,
+  raccolta di Tunas1337), che hanno la memoria dell'originale.
+- Radtel RT-880 senza GPS con il firmware originale: il programma di Radtel («RT-880
+  Program Software» V1.10, uno solo per RT-880 e RT-880G) usa gli stessi comandi di
+  ingresso e di uscita dalla programmazione del driver di CHIRP della RT-880G: la
+  RT-880 usa quindi la scheda «Radtel RT-880G» (catalogo).
+- Controllato che i 34 file della raccolta amnemonic/Quansheng_UV-K5_Firmware/firmware
+  siano accettati dall'aggiornamento del firmware della UV-K5 (tutti validi; i due
+  file «k5_py030» della UV-K5 V2 con l'avviso «tipo di radio non riconosciuto»).
+- Catalogo (catalog_416.go, nuovo): Radioddity GD-77 / GD-77S e TYT MD-UV380 con
+  OpenGD77; scheda OpenGD77 anche su DM-1801, RD-5R e DM-1701. Conteggi: 485 radio,
+  419 con impostazioni, 539 in galleria. Impostazioni: 291 classi.
+- Prove: verifica/chirp/chirpextra.py carica anche i driver esterni con lo stesso
+  identificativo di uno di CHIRP; confronto con i driver di kamilsss655 e di
+  joaquim.org (variabile CHIRP_EXTRA); radio simulata OpenGD77 (genemu_ogd77_other.go)
+  che segnala ogni scrittura fuori da canali e zone. Traduzioni: 47 testi nuovi.
+
 4.15.0 (10/11/2026)
 -------------------
 - Icom D-STAR ID-31A/E, ID-51A/E, ID-51 Plus, ID-51 Plus2 (drv_id31.go, nuovo; driver

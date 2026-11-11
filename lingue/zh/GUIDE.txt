@@ -1,11 +1,16 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.15.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.16.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.16.0 的新内容：
+- OPENGD77：支持装有自由固件 OpenGD77 的 DMR 电台的信道：Radioddity GD-77 和 GD-77S，Baofeng DM-1801、RD-5R 和 DM-1701，TYT MD-UV380、MD-380、MD-9600 和 MD-2017，Retevis RT3S 和 RT84。电台显示为 USB 串口；只写入有变化的信道和区域，从不写入设置、联系人、群组和校准数据。
+- QUANSHENG UV-K5，更多自由固件：新增 kamilsss655 的 NUNU 和 joaquim.org 的 UV-KX 卡片（信道和设置）；“OSFW”卡片现在也适用于扩展频段的修改版原厂固件（uvmod-kitchen、Tunas1337 的合集）。
+- 使用原厂固件的 RADTEL RT-880（无 GPS）：请用“Radtel RT-880G”卡片（Radtel 为这两款电台只发布一个软件）。
+- 图库：47 个品牌的 539 款型号（485 款支持信道，419 款支持设置）。
 4.15.0 的新内容：
 - D-STAR 和 C4FM：通过线缆管理业余数字手持机的信道。Icom ID-31、ID-51、ID-51 Plus、ID-51 Plus2 和 IC-E90/IC-T90；Yaesu VX-6、VX-3、FT-70D、FT1D、FT2D、FT3D 和 FT5D；Kenwood TH-D72、TH-D74 和 TH-D75（新品牌，共 47 个）。“模式”列显示“D-STAR”或“C4FM”。IC-E90、VX-6、VX-3、FT-70D、FT1D、FT2D、FT3D、FT5D 和 TH-D72 支持设置。Yaesu 电台的复制由电台发起：说明在线缆窗口中。
 - 自由固件：TIDRADIO TD-H3 的 nicFW 2.x（信道和主要设置），Radtel RT-880、RT-880G 和 RT-950 Pro 的 nicFW880 / nicFW950（信道），Quansheng UV-K1 和 UV-K5 V3 的 F4HWN Fusion 5.x（1024 个信道和设置）。使用 nicFW 时，电台的校准数据从不写入。

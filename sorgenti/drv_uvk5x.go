@@ -319,7 +319,40 @@ func init() {
 	f5.Slots, f5.NoTxOff, f5.Powers = 1024, true, f4.Powers
 	f5.Notes = "Firmware libero F4HWN «Fusion» dalla versione 5 per UV-K1 e UV-K5 V3: 1024 canali. Accendi la radio, poi collega il cavo. " +
 		"Si scrive come il driver di F4HWN per CHIRP; la taratura non si scrive mai."
-	genRegister(egz, f4, cn, f5)
+	// 4.16: firmware NUNU di kamilsss655 (deriva da egzumer: stessa memoria; il suo
+	// driver per CHIRP è quello di egzumer a 115200 baud)
+	nunu := mk("qs-uvk5-nunu", "UV-K5 (egzumer)", "", "UVK5RadioEgzumerNunu", "Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware NUNU di kamilsss655)", k5Egz,
+		func(fw string) bool { return strings.HasPrefix(fw, "NUNU") }, "NUNU v26")
+	uvk5o(nunu).bauds, uvk5o(nunu).plain = []int{115200, 38400}, true
+	nunu.Notes = "Firmware libero NUNU di kamilsss655 (la radio risponde «NUNU …»), che deriva da egzumer e ne ha la stessa memoria. " +
+		"Accendi la radio, poi collega il cavo al connettore microfono/altoparlante. Il programma prova a 115200 baud e, se la radio " +
+		"non risponde, a 38400 (prime versioni). Come il driver per CHIRP pubblicato da kamilsss655."
+	genRegister(egz, f4, cn, f5, nunu)
+}
+
+// connect (4.16) apre la porta e saluta la radio a ciascuna delle velocità del
+// modello: si passa alla successiva solo se la radio non risponde
+func (f uvk5xFam) connect(ctx context.Context, m *genModel, port string) (Port, *uvk5Sess, string, error) {
+	bauds := uvk5o(m).bauds
+	if len(bauds) == 0 {
+		bauds = []int{38400}
+	}
+	for k, b := range bauds {
+		p, err := openPort(port, b)
+		if err != nil {
+			return nil, nil, "", err
+		}
+		s := &uvk5Sess{ctx: ctx, p: p}
+		fw, err := s.start(m)
+		if err == nil {
+			return p, s, fw, nil
+		}
+		p.Close()
+		if _, radio := err.(radioErr); radio || k == len(bauds)-1 || ctx.Err() != nil {
+			return nil, nil, fw, err
+		}
+	}
+	return nil, nil, "", errCancelled
 }
 
 func uvk5xFmt(k uvk5xKind) string {
@@ -677,7 +710,11 @@ func (f uvk5xFam) setEgzCN(m *genModel, img []byte, i int, c *Chan) error {
 		}
 	}
 	oldAM := f.kind == k5CN && r.F("enable_am").Int(img) > 0
-	if old[0] == 0xFF {
+	if uvk5o(m).plain {
+		// 4.16 (driver di kamilsss655): i bit non usati restano quelli che c'erano,
+		// tutto il resto si riscrive
+		r.SetRaw(img, append(make([]byte, 12), old[12]&0xE0, old[13]&0xF0, 0, 0))
+	} else if old[0] == 0xFF {
 		r.SetRaw(img, make([]byte, 16))
 	} else {
 		r.SetRaw(img, append(make([]byte, 10), old[10]&0xCC, old[11]&0xEC, old[12]&0xE0, old[13]&0xF8, old[14]&0xF1, old[15]&0xF0))
@@ -972,18 +1009,13 @@ func (f uvk5xFam) Download(ctx context.Context, m *genModel, port string, prog P
 }
 
 func (f uvk5xFam) DownloadMeta(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, map[string]interface{}, string, error) {
-	p, err := openPort(port, 38400)
+	size := f.memSize()
+	prog(0, size, "Collegamento con la radio…")
+	p, s, fw, err := f.connect(ctx, m, port)
 	if err != nil {
 		return nil, nil, "", err
 	}
 	defer p.Close()
-	s := &uvk5Sess{ctx: ctx, p: p}
-	size := f.memSize()
-	prog(0, size, "Collegamento con la radio…")
-	fw, err := s.start(m)
-	if err != nil {
-		return nil, nil, "", err
-	}
 	var data []byte
 	for a := 0; a < size; a += uvk5Block {
 		if ctx.Err() != nil {
@@ -1026,21 +1058,16 @@ func (f uvk5xFam) Upload(ctx context.Context, m *genModel, port string, img []by
 			return "", fmt.Errorf("immagine della memoria incompleta")
 		}
 	}
-	p, err := openPort(port, 38400)
-	if err != nil {
-		return "", err
-	}
-	defer p.Close()
-	s := &uvk5Sess{ctx: ctx, p: p}
 	total := 0
 	for _, r := range f.writeRanges() {
 		total += r[1] - r[0]
 	}
 	prog(0, total, "Collegamento con la radio…")
-	fw, err := s.start(m)
+	p, s, fw, err := f.connect(ctx, m, port)
 	if err != nil {
 		return "", err
 	}
+	defer p.Close()
 	done := 0
 	for _, rg := range f.writeRanges() {
 		blk := uvk5Block

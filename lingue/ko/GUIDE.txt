@@ -1,6 +1,6 @@
 IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 =====================================================================
-버전 4.15.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
+버전 4.16.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
 작성자: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 웹사이트: https://iu0vyt.github.io/IU0VYT/
 소스 코드와 릴리스: https://github.com/IU0VYT/IU0VYT
@@ -8,6 +8,11 @@ IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 AUTHORS_AND_LICENSES.txt를 보세요.
 이 파일은 LEGGIMI.txt의 한국어 번역입니다(이탈리아어 원문이 기준이 되는 글입니다). 이전 버전의 새 기능은 메인 폴더의 이탈리아어
 CHANGELOG.txt에 있습니다(여기의 CHANGELOG.txt에는 4.13 항목의 번역이 있습니다).
+4.16.0의 새 기능:
+- OPENGD77: 자유 펌웨어 OpenGD77을 쓰는 DMR 무전기의 채널을 지원합니다. Radioddity GD-77, GD-77S, Baofeng DM-1801, RD-5R, DM-1701, TYT MD-UV380, MD-380, MD-9600, MD-2017, Retevis RT3S, RT84. 무전기는 USB 직렬 포트로 표시됩니다. 바뀐 채널과 존만 쓰며, 설정, 연락처, 그룹, 보정값은 절대 쓰지 않습니다.
+- QUANSHENG UV-K5, 다른 자유 펌웨어: kamilsss655의 NUNU와 joaquim.org의 UV-KX 탭을 추가했습니다(채널과 설정). «OSFW» 탭은 이제 대역을 넓힌 수정 순정 펌웨어(uvmod-kitchen, Tunas1337 모음)에도 쓸 수 있습니다.
+- 순정 펌웨어의 RADTEL RT-880(GPS 없음): «Radtel RT-880G» 탭을 사용하세요(Radtel은 두 무전기용 프로그램을 하나만 배포합니다).
+- 갤러리: 47개 브랜드의 539개 모델(채널 지원 485, 설정 지원 419).
 4.15.0의 새 기능:
 - D-STAR와 C4FM: 아마추어 디지털 휴대용 무전기의 채널을 케이블로 관리합니다. Icom ID-31, ID-51, ID-51 Plus, ID-51 Plus2, IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D, FT1D, FT2D, FT3D, FT5D; Kenwood TH-D72, TH-D74, TH-D75(새 브랜드, 모두 47개). «모드» 열에 «D-STAR» 또는 «C4FM»이 표시됩니다. IC-E90, VX-6, VX-3, FT-70D, FT1D, FT2D, FT3D, FT5D, TH-D72는 설정도 지원합니다. Yaesu 무전기는 복사를 무전기에서 시작합니다. 방법은 케이블 창에 있습니다.
 - 자유 펌웨어: TIDRADIO TD-H3의 nicFW 2.x(채널과 주요 설정), Radtel RT-880, RT-880G, RT-950 Pro의 nicFW880 / nicFW950(채널), Quansheng UV-K1과 UV-K5 V3의 F4HWN Fusion 5.x(1024채널과 설정). nicFW에서는 무전기의 보정값을 절대 쓰지 않습니다.

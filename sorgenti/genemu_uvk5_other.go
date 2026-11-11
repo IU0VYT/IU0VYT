@@ -124,3 +124,13 @@ func (e *uvk5Emu) serve(p Port) error {
 		}
 	}
 }
+
+// 4.16: firmware UV-KX di joaquim.org (stesso protocollo, 8 KiB)
+func (uvkxFam) emu(m *genModel, img []byte) genEmu {
+	e := &uvk5Emu{img: append([]byte{}, img...), fw: uvk5o(m).emuFW}
+	if len(e.img) < uvk5MemSize {
+		e.img = append(e.img, make([]byte, uvk5MemSize-len(e.img))...)
+	}
+	e.img = e.img[:uvk5MemSize]
+	return e
+}

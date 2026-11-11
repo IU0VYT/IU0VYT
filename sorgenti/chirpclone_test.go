@@ -233,6 +233,11 @@ func TestChirpClone(t *testing.T) {
 					recG = bytes.Replace(recG, cmd, nil, 1)
 				}
 			}
+			// 4.16: famiglie che di proposito scrivono meno di CHIRP (es. UV-KX: mai la
+			// taratura): la memoria finale deve comunque essere identica
+			if f, ok := m.Fam.(interface{ chirpOwnWrite() bool }); ok && f.chirpOwnWrite() {
+				hiOwn = true
+			}
 			if !hiOwn && !bytes.Equal(recC, recG) {
 				t.Errorf("scrittura: byte inviati alla radio diversi da CHIRP (%d / %d byte): %s", len(recC), len(recG), diffRanges(recC, recG))
 			}

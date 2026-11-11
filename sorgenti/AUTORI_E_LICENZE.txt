@@ -195,7 +195,8 @@ drv_px888k.go, drv_kt8r.go, drv_ha1g.go, drv_ha1gfmt.go;
 4.11: zonenames.go (formato dei nomi della RT-920 da radtel_rt900.py);
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go;
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
-drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
+drv_thd72.go, drv_uvk5x.go (F4HWN Fusion);
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 Grazie agli autori di CHIRP, ad armel F4HWN, a M7OCM, a JuantAldea, a v0l (radio_tool),
 al progetto OpenGD77, a Hannes Matuschek DM3MAT (qdmr) e a Serge Vakulenko KK6ABQ.
 
@@ -264,6 +265,19 @@ https://github.com/nicsure/nicfw2docs) e nicFW880_950_Docs (RT-880 e RT-950 Pro:
 https://github.com/nicsure/nicFW880_950_Docs). Nessun codice, programma o firmware di
 nicsure è incluso: drv_nicfw.go e settings_nicfw.go sono scritti da zero in IU0VYT
 Flash. Programma indipendente, non affiliato a nicsure.
+
+OPENGD77 E ALTRI FIRMWARE DELLA UV-K5 (4.16)
+OpenGD77 è di Roger Clark VK3KYY e altri (https://www.opengd77.com). Il collegamento e
+la disposizione della memoria sono ricavati dal programma libero qdmr di Hannes
+Matuschek DM3MAT (GNU GPL v3: lib/opengd77_interface.hh, opengd77_codeplug.hh,
+openuv380_codeplug.hh, opengd77base_codeplug.hh): drv_ogd77.go è scritto in IU0VYT Flash.
+Firmware NUNU di kamilsss655 (https://github.com/kamilsss655/uv-k5-firmware-custom):
+memoria e scrittura come il suo driver per CHIRP (uvk5-chirp-driver, derivato dal
+driver di egzumer e da uvk5.py di Jacek Lipkowski SQ5BPF, GNU GPL v2 o successiva).
+Firmware UV-KX di joaquim.org (https://github.com/joaquimorg/UV-KX, licenza Apache
+2.0): drv_uvkx.go è riscritto dal driver per CHIRP pubblicato con il firmware
+(chirp/CHIRP_uvkx.py). Nessun firmware o programma di questi autori è incluso.
+Programma indipendente, non affiliato a loro.
 
 NOMI DELLE ZONE (4.11)
 Il formato dei nomi delle zone è ricavato, per l'interoperabilità, dal codice dei

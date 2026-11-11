@@ -1864,7 +1864,6 @@ e5124f3c	FRS-Funkgerät (USA), 16 Kanäle. Aus dem Herstellerprogramm «BF_V1_FH
 11fa38bb	Retevis RT84
 5bf2511f	qdmr (freies Programm für DMR-Funkgeräte, GPL)
 19de537d	dmrconfig (freies Kommandozeilenprogramm, BSD-Lizenz)
-d65f0982	DMR-Funkgerät der Familie TYT MD-UV380, per USB im DFU-Modus angeschlossen: Man braucht den USB-Treiber des Herstellers (Ordner «DM-1701 USB Driver» des Pakets «DM-1701 CPS», hier mit «USB-Treiber installieren…» installierbar), denselben wie für sein Programm, oder den generischen WinUSB-Treiber (Zadig). Speicher und Protokoll der freien Programme dmrconfig und qdmr, mit dem Originalcode von dmrconfig geprüft (identisches Lesen, Ändern, Löschen und Schreiben). Mit der freien Firmware OpenGD77 verwendet das Funkgerät ein anderes Protokoll: dann qdmr verwenden.
 9595e894	DMR-6X2 (BTECH)
 b82b0847	BTECH DMR-6X2
 2725c619	BaofengTech DMR-6X2
@@ -1879,7 +1878,6 @@ c224a773	DMR-6X2II
 03d4eaa7	Zweite Serie der DMR-6X2 (Firmware «DMR_6X2II», Nummerierung 1.x; 1.21 erschien zusammen mit 2.21 der DMR-6X2). Die Firmware ist eine andere Datei als die der DMR-6X2 (Kennung «D6X2UV2»): nicht die des anderen Funkgeräts verwenden. Die Symbole (DMR_6X2_PIC) sind dieselben. Geführte Aktualisierung mit dem offiziellen Programm, wie bei der DMR-6X2.
 5f81c272	Programm «DM-1702 MD Setup» v1.00.76 (Download-Seite von Baofeng)
 9fc225b8	DMR-Funkgerät: Das Herstellerprogramm («DM-1702 MD Setup», Familie TYT MD) ist nicht dokumentiert; der Codeplug wird mit diesem Programm verwaltet.
-2fc473f4	DMR-Funkgerät (Plattform der Radioddity GD-77), per USB als HID-Gerät angeschlossen: kein COM-Anschluss und kein Treiber nötig. Speicher und Protokoll der freien Programme dmrconfig und qdmr, mit dem Originalcode von dmrconfig geprüft (identisches Lesen, Ändern und Schreiben). Mit der freien Firmware OpenGD77 verwendet das Funkgerät ein anderes Protokoll: dann qdmr verwenden.
 8f42ee90	DM-1801 Pro
 9eccd68c	Programm «CPS DMR Radio» v1.60 (Download-Seite von Radioddity)
 bb8e3c94	Experimentell. Für die DM-1801 Pro veröffentlicht der Hersteller dasselbe Programm wie für die DM-32UV (gleiche Programmdatei «DMR CPS.exe», v1.60): Es wird der Treiber der DM-32UV verwendet. Identifiziert sich das Funkgerät als anderes Modell, hält das Programm vor dem Lesen oder Schreiben an.
@@ -1892,7 +1890,6 @@ a3a1d678	Programm «CPS_5R» (Archiv «DM_5R_Programming_Software», Passwort 12
 d2346d94	DM-5R Tier II
 72336e09	Radioddity RD5R
 a8f94ecd	Programm «RD-5R Program Software» V1.0.0.4 und Firmware V2.1.6 (Download-Seite von Baofeng)
-39f27629	DMR-Funkgerät per USB als HID-Gerät angeschlossen: kein COM-Anschluss und kein Treiber nötig. Speicher und Protokoll der freien Programme dmrconfig und qdmr (das Funkgerät meldet sich als «BF-5R», auch die TD-5R), mit dem Originalcode von dmrconfig geprüft (identisches Lesen, Ändern und Schreiben). Mit der freien Firmware OpenGD77 (OpenRD5R) verwendet das Funkgerät ein anderes Protokoll: dann qdmr verwenden.
 95b17c64	Programm «DM-32UV CPS» v1.60 und Firmware v1.01.048 (Download-Seite von Radioddity)
 27733ab8	CHIRP (Treiber Baofeng DM-32UV)
 42f2657e	Kanäle (analog und DMR) mit dem CHIRP-Treiber, aus dem Herstellerprogramm v1.60 abgeleitet und an einem echten Funkgerät getestet: Geändert werden Frequenzen, Namen, Leistung und Töne; die DMR-Einstellungen der Kanäle, die Zonen, Kontakte und Listen bleiben, wie sie sind. Die Firmware wird mit dem Herstellerprogramm aktualisiert.
@@ -3103,10 +3100,8 @@ d6c2626f	das Abbild passt nicht zu diesem Funkgerät (andere Firmware-Version): 
 6374ed8d	Funkgerät einschalten, dann das Kabel an den Mikrofon-/Lautsprecheranschluss anschließen (fest eingesteckt). Wie in CHIRP wird nur mit den bekannten Versionen der Original-Firmware gelesen und geschrieben: Bei einer veränderten Firmware hält das Programm an, ohne zu schreiben.
 f39051f7	Quansheng UV-K5 / UV-K6 / UV-5R Plus
 e247f543	Quansheng UV-K1
-b37044a6	Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware OSFW)
 54727d95	OSFW-bd90ca3
 4b4e923c	OSFW
-4a42b6ef	Freie Firmware OSFW (Version bd90ca3, die einzige, die CHIRP unterstützt). Funkgerät einschalten, dann das Kabel an den Mikrofon-/Lautsprecheranschluss anschließen. Gleicher Speicher wie die Original-Firmware; Bereiche ohne Grenzen. CHIRP-Treiber.
 1e59b74c	Retevis RA79
 4ac7138a	MaxTalker TK-6
 a11b84a6	das Funkgerät ist im Firmware-Update-Modus: aus- und normal wieder einschalten
@@ -4885,7 +4880,6 @@ ec8cdbd9	Firmware bis 0.23: 960 Kanäle
 810324ef	Firmware egzumer
 087d5c7b	Firmware F4HWN
 fb975e6f	Firmware LOSEHU, LTS, UVE
-6c3baeb5	Firmware OSFW
 d1f9e8ef	neue Version
 37ed5e1e	Freenet
 53826d51	Firmware M7OCM
@@ -5045,7 +5039,6 @@ ef53c837	IJV-{0}
 447dca6b	IJV-Firmware V3 X, 999 Kanäle
 1c75d52b	IJV-Firmware V4
 1b75d398	IJV-Firmware V5
-7c2fdf6f	{0} Jede Registerkarte liest und schreibt nur ihre eigene Firmware: Original von Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP-Treiber), F4HWN (Treiber von armel für CHIRP, mit den F4HWN-Einstellungen), OSFW (CHIRP-Treiber) oder die chinesischen Firmwares LOSEHU / LTS / UVE (CHIRP-Treiber, chinesische Namen). Öffnet man die falsche Registerkarte, liest das Programm die Firmware-Version, hält ohne zu schreiben an und nennt die richtige Registerkarte; «Identifizieren» findet sie selbst. Firmware: .bin-Dateien von Quansheng (z. B. k5_v2.01.26_publish.bin) mit dem Lader des Funkgeräts (mit gedrückter PTT eingeschaltet); das Programm prüft, ob die Firmware zum Ladertyp des Funkgeräts passt (UV-K5, UV-K5(8)/UV-K6 oder UV-5R Plus). Quansheng schützt die Downloads mit einem Passwort, das der Händler mitteilt. Auch IJV wird unterstützt (V3 mit 200 oder 999 Kanälen auf der klassischen UV-K5; V4, V5 und V6 auf der UV-K5 V3: am Funkgerät gewählte Bank, Kanäle, Gruppen und wichtigste Einstellungen).
 02b27e38	IJV V6
 4b2a8174	Quansheng UV-K5 V3 / UV-K1 (IJV-Firmware V6)
 81db67f1	IJV-Firmware V6 (modular) für UV-K5 V3 und UV-K1. {0}Datenverbindung der V6 (DTR und RTS niedrig): meldet das Gerät, dass die Datenverbindung fehlt, mit FLASH V6 von RadioManager aktualisieren. Die 500 Kanäle der am Gerät gewählten Bank werden mit Gruppennamen und wichtigsten Einstellungen in 4-KiB-Sektoren gelesen und geschrieben, jeder neu gelesen und geprüft; Kalibrierung, Lizenz, Module, Sprachen und Moduldateien nie. Module und Firmware bleiben bei RadioManager von IJV.
@@ -5199,7 +5192,6 @@ badf093c	TD-H3 (Firmware nicFW)
 d4a810ff	RT-880 (ohne G)
 d7ffe954	iRadio UV-98
 539599ba	Dokumentation zu nicFW880 (nicsure)
-bd2f0310	Mit der Originalfirmware von Radtel wird das RT-880 (ohne GPS) mit der Software von Radtel programmiert: Sein Protokoll wird noch nicht unterstützt (das RT-880G schon, mit eigener Karte). {0}
 4a49f494	RT-880 / RT-880G (Firmware nicFW880)
 9ab35be3	RT-880 nicFW
 33526df2	RT-880G nicFW
@@ -5307,3 +5299,50 @@ e3af4e9c	Firmware F4HWN Fusion 5.x
 ab73dbd5	Firmware nicFW950
 8382cca1	Firmware nicFW
 d36b19e0	zweite Serie
+0f1c8c46	DMR-Funkgerät der Familie TYT MD-UV380, per USB im DFU-Modus angeschlossen: Man braucht den USB-Treiber des Herstellers (Ordner «DM-1701 USB Driver» des Pakets «DM-1701 CPS», hier mit «USB-Treiber installieren…» installierbar), denselben wie für sein Programm, oder den generischen WinUSB-Treiber (Zadig). Speicher und Protokoll der freien Programme dmrconfig und qdmr, mit dem Originalcode von dmrconfig geprüft (identisches Lesen, Ändern, Löschen und Schreiben).{0}
+b6763080	DMR-Funkgerät (Plattform der Radioddity GD-77), per USB als HID-Gerät angeschlossen: kein COM-Anschluss und kein Treiber nötig. Speicher und Protokoll der freien Programme dmrconfig und qdmr, mit dem Originalcode von dmrconfig geprüft (identisches Lesen, Ändern und Schreiben).{0}
+5e2468d7	DMR-Funkgerät per USB als HID-Gerät angeschlossen: kein COM-Anschluss und kein Treiber nötig. Speicher und Protokoll der freien Programme dmrconfig und qdmr (das Funkgerät meldet sich als «BF-5R», auch die TD-5R), mit dem Originalcode von dmrconfig geprüft (identisches Lesen, Ändern und Schreiben).{0}
+056f6cc4	Mit der Originalfirmware wird das RT-880 (ohne GPS) mit der Karte «Radtel RT-880G» gelesen und geschrieben: Radtel veröffentlicht ein einziges Programm für beide Funkgeräte, mit derselben Verbindung wie der CHIRP-Treiber des RT-880G. Mit der Firmware nicFW880 die nicFW-Karte verwenden. {0}
+40bc82d1	Mit der freien Firmware OpenGD77 erscheint das Funkgerät als serielle USB-Schnittstelle und verwendet ein anderes Protokoll: Öffne die Karte «OpenGD77».
+b11d1334	Ab 4.16 auch die Firmwares NUNU von kamilsss655 (Speicher von egzumer, 115200 Baud), UV-KX von joaquim.org (230 Kanäle) und, mit der Karte «OSFW oder geändertes Original», die mit erweiterten Bändern veränderten Originalfirmwares (uvmod-kitchen, Sammlung von Tunas1337).
+445a11ea	Mit der freien Firmware OpenGD77 erscheint das eingeschaltete Funkgerät als serielle USB-Schnittstelle: 1024 analoge oder DMR-Kanäle, gelesen und geschrieben wie im freien Programm qdmr. Geschrieben werden nur Kanäle und Zonen; Kontakte, Gruppen, Einstellungen und Kalibrierung werden nie angetastet.
+45b42fc6	GD-77 / GD-77S (Firmware OpenGD77)
+9bf2d4d9	TYT MD-760
+9aae2a08	Website von OpenGD77
+396d6da3	{0} Mit der Originalfirmware von Radioddity wird das GD-77 nicht unterstützt.
+b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (Firmware OpenGD77)
+76df013d	Retevis RT3S
+9785f3bc	Retevis RT3
+17fa422d	Retevis RT82
+8ff72d7e	Retevis RT90
+850cccbc	{0} Mit der Originalfirmware von TYT werden diese Funkgeräte nicht unterstützt.
+3784fb7e	{0} Jede Registerkarte liest und schreibt nur ihre eigene Firmware: Original von Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (CHIRP-Treiber), F4HWN (Treiber von armel für CHIRP, mit den F4HWN-Einstellungen), OSFW (CHIRP-Treiber) oder die chinesischen Firmwares LOSEHU / LTS / UVE (CHIRP-Treiber, chinesische Namen). Öffnet man die falsche Registerkarte, liest das Programm die Firmware-Version, hält ohne zu schreiben an und nennt die richtige Registerkarte; «Identifizieren» findet sie selbst. Firmware: .bin-Dateien von Quansheng (z. B. k5_v2.01.26_publish.bin) mit dem Lader des Funkgeräts (mit gedrückter PTT eingeschaltet); das Programm prüft, ob die Firmware zum Ladertyp des Funkgeräts passt (UV-K5, UV-K5(8)/UV-K6 oder UV-5R Plus). Quansheng schützt die Downloads mit einem Passwort, das der Händler mitteilt. Auch IJV wird unterstützt (V3 mit 200 oder 999 Kanälen auf der klassischen UV-K5; V4, V5 und V6 auf der UV-K5 V3: am Funkgerät gewählte Bank, Kanäle, Gruppen und wichtigste Einstellungen).{1}
+b9ae89b8	Radioddity GD-77
+38c31cf1	Radioddity GD-77S
+829ca215	Baofeng RD-5R
+d016c282	Baofeng DM-1801A
+123293fe	TYT MD-UV380
+f4a22d9b	TYT MD-380
+a23ee16e	Baofeng DM-1701
+f24ec890	Baofeng DM-1701 (RGB)
+c1ba3e92	Niedrig 500 mW
+18565b4f	Minimal 50 mW
+07201eab	Freie Firmware {0}: Das normal eingeschaltete Funkgerät erscheint als serielle USB-Schnittstelle (115200 Baud). 1024 Kanäle mit 16-stelligen Namen, analog oder DMR. Geändert werden Frequenzen, Name, Betriebsart, Leistung, Bandbreite, Töne, Nur-Empfang und Ausschluss vom Suchlauf; bei DMR-Kanälen bleiben Color Code, Zeitschlitz, Kontakt und Gruppe wie eingestellt (neue DMR-Kanäle: Color Code 1, Zeitschlitz 1). Eine am Funkgerät bereits eingestellte Leistung (auch «die des Funkgeräts») bleibt, bis du sie änderst. Ein gelöschter Kanal wird auch aus den Zonen entfernt; neue Kanäle stehen in der Zone «Alle Kanäle» des Funkgeräts. Vor dem Schreiben liest das Programm das Funkgerät erneut und schreibt nur die geänderten Blöcke von Kanälen und Zonen: Einstellungen, Kontakte, Gruppen und Kalibrierung werden nie angetastet. Protokoll und Speicher wie im freien Programm qdmr.
+fbde8d37	OpenGD77 (Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R)
+5da23611	OpenGD77 (Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84)
+5a30f7a7	OpenGD77 für die MD-UV380-Familie (OpenUV380, OpenDM1701)
+32306b70	OpenGD77 {0} ({1})
+fe225491	Quansheng UV-K5 / UV-K6 / UV-5R Plus (Firmware OSFW oder geändertes Original, erweiterte Bänder)
+ebc98c0d	Freie Firmware OSFW (Version bd90ca3) und mit erweiterten Bändern veränderte Originalfirmwares (uvmod-kitchen, Sammlung von Tunas1337), die mit der Version des Originals antworten. Funkgerät einschalten, dann das Kabel an den Mikrofon-/Lautsprecheranschluss stecken. Gleicher Speicher wie die Originalfirmware; Bereiche von 18 bis 1300 MHz: Außerhalb der Bänder des Originals funktioniert der Kanal nur, wenn die Firmware des Funkgeräts wirklich verändert ist. CHIRP-Treiber.
+0d254ef7	UV-K5 (egzumer)
+759b7361	Quansheng UV-K5 / UV-K6 / UV-5R Plus (Firmware NUNU von kamilsss655)
+cc5169db	NUNU v26
+1b10f5b3	Freie Firmware NUNU von kamilsss655 (das Funkgerät antwortet «NUNU …»), die von egzumer abstammt und denselben Speicher hat. Funkgerät einschalten, dann das Kabel an den Mikrofon-/Lautsprecheranschluss stecken. Das Programm versucht 115200 Baud und, wenn das Funkgerät nicht antwortet, 38400 (erste Versionen). Wie der von kamilsss655 veröffentlichte CHIRP-Treiber.
+14e3071d	Quansheng UV-K5 / UV-K6 (Firmware UV-KX von joaquim.org)
+d94d723a	JOAQUIM V0.0.1
+05598926	Freie Firmware UV-KX von joaquim.org (das Funkgerät antwortet «JOAQUIM …»): 230 Kanäle mit 10-stelligen Namen, 115200 Baud. Funkgerät einschalten, dann das Kabel an den Mikrofon-/Lautsprecheranschluss stecken. Bandbreite, Squelch und Verstärkung jedes Kanals bleiben wie am Funkgerät eingestellt; die Modulation bleibt die des Kanals, wenn sich die Frequenz nicht ändert (AM im Flugfunkband bei einem neuen Kanal). Die Kalibrierung wird nie geschrieben (der CHIRP-Treiber schreibt sie). Nach dem mit der Firmware veröffentlichten CHIRP-Treiber.
+9cc1704d	Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R
+1e48a635	Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84
+df7880d4	Firmware NUNU von kamilsss655
+ef8de76c	Firmware OSFW oder geändertes Original, erweiterte Bänder
+300b8fba	Firmware UV-KX von joaquim.org

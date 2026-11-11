@@ -5,6 +5,13 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 또는 그 이후 버�
 이 파일은 CHANGELOG.txt의 최신 항목을 한국어로 번역한 것입니다. 이전 버전(1.0 - 4.12)의 전체 기록은 패키지 메인 폴더의 이탈리아어
 원문 CHANGELOG.txt에 있습니다. 각 버전의 주요 새 기능은 GUIDE.txt에도 요약되어 있습니다.
 
+4.16.0 (2026/11/10)
+-------------------
+- OpenGD77 펌웨어(drv_ogd77.go, 신규; 프로토콜과 메모리는 자유 프로그램 qdmr의 설명을 따름): GD-77 / GD-77S / DM-1801 / RD-5R용과 MD-UV380 계열(DM-1701, MD-UV380, MD-380, MD-9600, MD-2017, RT3S, RT84)용의 두 탭. 아날로그 또는 DMR 1024채널. 쓰기 전에 무전기를 다시 읽고 채널과 존에서 바뀐 블록만 씁니다.
+- Quansheng UV-K5: kamilsss655의 NUNU 펌웨어(drv_uvk5x.go; egzumer 메모리, 115200 baud, 설정 71개)와 joaquim.org의 UV-KX 펌웨어(drv_uvkx.go, 신규; 230채널, 설정 14개, 보정값은 절대 쓰지 않음). «OSFW» 탭은 수정 순정 펌웨어를 위해 순정 펌웨어 버전도 받아들입니다.
+- Radtel RT-880(GPS 없음): Radtel 프로그램은 CHIRP의 RT-880G 드라이버와 같은 명령을 사용하므로 RT-880은 그 탭을 사용합니다. amnemonic 펌웨어 모음의 34개 파일이 UV-K5 펌웨어 업데이트에서 받아들여지는 것을 확인했습니다.
+- 카탈로그: 무전기 485, 설정 지원 419, 갤러리 539, 브랜드 47. 번역: 새 텍스트 47개. 테스트: kamilsss655와 joaquim.org의 CHIRP용 드라이버와의 비교, OpenGD77 모의 무전기.
+
 4.15.0 (2026/11/10)
 -------------------
 - Icom ID-31, ID-51, ID-51 Plus, ID-51 Plus2(drv_id31.go, 신규; CHIRP 드라이버 id31.py, id51.py, id51plus.py)와 IC-E90 / IC-T90(drv_icx90.go, 신규; icx90.py): Icom 고속 복사, 500채널, 아날로그 또는 D-STAR.

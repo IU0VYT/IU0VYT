@@ -1864,7 +1864,6 @@ e5124f3c	Radio FRS (EE. UU.), 16 canales. Obtenida del programa del fabricante �
 11fa38bb	Retevis RT84
 5bf2511f	qdmr (programa libre para radios DMR, GPL)
 19de537d	dmrconfig (programa libre de línea de comandos, licencia BSD)
-d65f0982	Radio DMR de la familia TYT MD-UV380, conectada por USB en modo DFU: hace falta el controlador USB del fabricante (carpeta «DM-1701 USB Driver» del paquete «DM-1701 CPS», que se instala desde aquí con «Instalar el controlador USB…»), el mismo de su programa, o el controlador genérico WinUSB (Zadig). Memoria y protocolo de los programas libres dmrconfig y qdmr, verificados con el código original de dmrconfig (lectura, cambios, borrado y escritura idénticos). Con el firmware libre OpenGD77 la radio usa otro protocolo: en ese caso usa qdmr.
 9595e894	DMR-6X2 (BTECH)
 b82b0847	BTECH DMR-6X2
 2725c619	BaofengTech DMR-6X2
@@ -1879,7 +1878,6 @@ c224a773	DMR-6X2II
 03d4eaa7	Segunda serie de la DMR-6X2 (firmware «DMR_6X2II», numeración 1.x; la 1.21 salió junto con la 2.21 de la DMR-6X2). El firmware es un archivo distinto del de la DMR-6X2 (identificador «D6X2UV2»): no uses el de la otra radio. Los iconos (DMR_6X2_PIC) son los mismos. Actualización guiada con el programa oficial, como para la DMR-6X2.
 5f81c272	Programa «DM-1702 MD Setup» v1.00.76 (página de descargas de Baofeng)
 9fc225b8	Radio DMR: el programa del fabricante («DM-1702 MD Setup», familia TYT MD) no está documentado; el codeplug se gestiona con ese programa.
-2fc473f4	Radio DMR (plataforma de la Radioddity GD-77), conectada por USB como dispositivo HID: sin puerto COM y sin controladores que instalar. Memoria y protocolo de los programas libres dmrconfig y qdmr, verificados con el código original de dmrconfig (lectura, cambios y escritura idénticos). Con el firmware libre OpenGD77 la radio usa otro protocolo: en ese caso usa qdmr.
 8f42ee90	DM-1801 Pro
 9eccd68c	Programa «CPS DMR Radio» v1.60 (página de descargas de Radioddity)
 bb8e3c94	Experimental. Para la DM-1801 Pro el fabricante publica el mismo programa que para la DM-32UV (mismo ejecutable «DMR CPS.exe», v1.60): se usa el controlador de la DM-32UV. Si la radio se identifica como otro modelo, el programa se detiene antes de leer o escribir.
@@ -1892,7 +1890,6 @@ a3a1d678	Programa «CPS_5R» (archivo «DM_5R_Programming_Software», contraseñ
 d2346d94	DM-5R Tier II
 72336e09	Radioddity RD5R
 a8f94ecd	Programa «RD-5R Program Software» V1.0.0.4 y firmware V2.1.6 (página de descargas de Baofeng)
-39f27629	Radio DMR conectada por USB como dispositivo HID: sin puerto COM y sin controladores que instalar. Memoria y protocolo de los programas libres dmrconfig y qdmr (la radio se identifica como «BF-5R», también la TD-5R), verificados con el código original de dmrconfig (lectura, cambios y escritura idénticos). Con el firmware libre OpenGD77 (OpenRD5R) la radio usa otro protocolo: en ese caso usa qdmr.
 95b17c64	Programa «DM-32UV CPS» v1.60 y firmware v1.01.048 (página de descargas de Radioddity)
 27733ab8	CHIRP (controlador Baofeng DM-32UV)
 42f2657e	Canales (analógicos y DMR) con el controlador de CHIRP, obtenido del programa del fabricante v1.60 y probado en una radio real: se modifican frecuencias, nombres, potencia y tonos; los ajustes DMR de los canales, las zonas, los contactos y las listas se quedan como están. El firmware se actualiza con el programa del fabricante.
@@ -3103,10 +3100,8 @@ d6c2626f	la imagen no es adecuada para esta radio (versión del firmware distint
 6374ed8d	Enciende la radio y luego conecta el cable al conector de micrófono/altavoz (bien insertado). Como en CHIRP, la lectura y la escritura solo se hacen con las versiones conocidas del firmware original: con un firmware modificado el programa se detiene sin escribir.
 f39051f7	Quansheng UV-K5 / UV-K6 / UV-5R Plus
 e247f543	Quansheng UV-K1
-b37044a6	Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware OSFW)
 54727d95	OSFW-bd90ca3
 4b4e923c	OSFW
-4a42b6ef	Firmware libre OSFW (versión bd90ca3, la única que gestiona CHIRP). Enciende la radio y luego conecta el cable al conector de micrófono/altavoz. Misma memoria que el firmware original; rangos sin límites. Controlador de CHIRP.
 1e59b74c	Retevis RA79
 4ac7138a	MaxTalker TK-6
 a11b84a6	la radio está en modo de actualización del firmware: apágala y vuelve a encenderla normalmente
@@ -4885,7 +4880,6 @@ ec8cdbd9	firmware hasta 0.23: 960 canales
 810324ef	firmware egzumer
 087d5c7b	firmware F4HWN
 fb975e6f	firmware LOSEHU, LTS, UVE
-6c3baeb5	firmware OSFW
 d1f9e8ef	nueva versión
 37ed5e1e	Freenet
 53826d51	firmware M7OCM
@@ -5045,7 +5039,6 @@ ef53c837	IJV-{0}
 447dca6b	firmware IJV V3 X, 999 canales
 1c75d52b	firmware IJV V4
 1b75d398	firmware IJV V5
-7c2fdf6f	{0} Cada pestaña lee y escribe solo su propio firmware: original de Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (controlador de CHIRP), F4HWN (controlador de armel para CHIRP, con los ajustes F4HWN), OSFW (controlador de CHIRP) o los firmwares chinos LOSEHU / LTS / UVE (controlador de CHIRP, nombres chinos). Si abres la pestaña equivocada el programa lee la versión del firmware, se detiene sin escribir e indica la pestaña correcta; «Identificar» la encuentra solo. Firmware: archivos .bin de Quansheng (p. ej. k5_v2.01.26_publish.bin) con el cargador de la radio (encendida manteniendo pulsado el PTT); el programa comprueba que el firmware sea para el tipo de cargador de la radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). Quansheng protege las descargas con una contraseña que proporciona el vendedor. También se gestiona IJV (V3 de 200 o 999 canales en la UV-K5 clásica; V4, V5 y V6 en la UV-K5 V3: banco elegido en la radio, canales, grupos y ajustes principales).
 02b27e38	IJV V6
 4b2a8174	Quansheng UV-K5 V3 / UV-K1 (firmware IJV V6)
 81db67f1	Firmware IJV V6 (modular) para UV-K5 V3 y UV-K1. {0}Enlace de datos de la V6 (DTR y RTS bajos): si la radio dice que falta el enlace de datos, actualízala con FLASH V6 de RadioManager. Se leen y escriben los 500 canales del banco elegido en la radio, con nombres de los grupos y ajustes principales, en sectores de 4 KiB releídos y verificados uno a uno; nunca las calibraciones, la licencia, los módulos, las voces ni los archivos de los módulos. Módulos y firmware quedan en RadioManager de IJV.
@@ -5199,7 +5192,6 @@ badf093c	TD-H3 (firmware nicFW)
 d4a810ff	RT-880 (no G)
 d7ffe954	iRadio UV-98
 539599ba	Documentación de nicFW880 (nicsure)
-bd2f0310	Con el firmware original de Radtel la RT-880 (sin GPS) se programa con el programa de Radtel: su protocolo aún no está gestionado (la RT-880G sí, con su ficha). {0}
 4a49f494	RT-880 / RT-880G (firmware nicFW880)
 9ab35be3	RT-880 nicFW
 33526df2	RT-880G nicFW
@@ -5307,3 +5299,50 @@ e3af4e9c	firmware F4HWN Fusion 5.x
 ab73dbd5	firmware nicFW950
 8382cca1	firmware nicFW
 d36b19e0	segunda serie
+0f1c8c46	Radio DMR de la familia TYT MD-UV380, conectada por USB en modo DFU: hace falta el controlador USB del fabricante (carpeta «DM-1701 USB Driver» del paquete «DM-1701 CPS», que se instala desde aquí con «Instalar el controlador USB…»), el mismo de su programa, o el controlador genérico WinUSB (Zadig). Memoria y protocolo de los programas libres dmrconfig y qdmr, verificados con el código original de dmrconfig (lectura, cambios, borrado y escritura idénticos).{0}
+b6763080	Radio DMR (plataforma de la Radioddity GD-77), conectada por USB como dispositivo HID: sin puerto COM y sin controladores que instalar. Memoria y protocolo de los programas libres dmrconfig y qdmr, verificados con el código original de dmrconfig (lectura, cambios y escritura idénticos).{0}
+5e2468d7	Radio DMR conectada por USB como dispositivo HID: sin puerto COM y sin controladores que instalar. Memoria y protocolo de los programas libres dmrconfig y qdmr (la radio se identifica como «BF-5R», también la TD-5R), verificados con el código original de dmrconfig (lectura, cambios y escritura idénticos).{0}
+056f6cc4	Con el firmware original la RT-880 (sin GPS) se lee y se escribe con la ficha «Radtel RT-880G»: Radtel publica un solo programa para las dos radios, con el mismo enlace que el controlador de CHIRP de la RT-880G. Con el firmware nicFW880 usa la ficha nicFW. {0}
+40bc82d1	Con el firmware libre OpenGD77 la radio aparece como puerto serie USB y usa otro protocolo: abre la ficha «OpenGD77».
+b11d1334	Desde la 4.16 también los firmwares NUNU de kamilsss655 (memoria de egzumer, 115200 baudios), UV-KX de joaquim.org (230 canales) y, con la ficha «OSFW u original modificado», los firmwares originales retocados con las bandas ampliadas (uvmod-kitchen, colección de Tunas1337).
+445a11ea	Con el firmware libre OpenGD77 la radio encendida aparece como puerto serie USB: 1024 canales analógicos o DMR, leídos y escritos como en el programa libre qdmr. Solo se escriben los canales y las zonas; contactos, grupos, ajustes y calibración no se tocan nunca.
+45b42fc6	GD-77 / GD-77S (firmware OpenGD77)
+9bf2d4d9	TYT MD-760
+9aae2a08	Sitio de OpenGD77
+396d6da3	{0} Con el firmware original de Radioddity la GD-77 no está gestionada.
+b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (firmware OpenGD77)
+76df013d	Retevis RT3S
+9785f3bc	Retevis RT3
+17fa422d	Retevis RT82
+8ff72d7e	Retevis RT90
+850cccbc	{0} Con el firmware original de TYT estas radios no están gestionadas.
+3784fb7e	{0} Cada pestaña lee y escribe solo su propio firmware: original de Quansheng (k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer (controlador de CHIRP), F4HWN (controlador de armel para CHIRP, con los ajustes F4HWN), OSFW (controlador de CHIRP) o los firmwares chinos LOSEHU / LTS / UVE (controlador de CHIRP, nombres chinos). Si abres la pestaña equivocada el programa lee la versión del firmware, se detiene sin escribir e indica la pestaña correcta; «Identificar» la encuentra solo. Firmware: archivos .bin de Quansheng (p. ej. k5_v2.01.26_publish.bin) con el cargador de la radio (encendida manteniendo pulsado el PTT); el programa comprueba que el firmware sea para el tipo de cargador de la radio (UV-K5, UV-K5(8)/UV-K6 o UV-5R Plus). Quansheng protege las descargas con una contraseña que proporciona el vendedor. También se gestiona IJV (V3 de 200 o 999 canales en la UV-K5 clásica; V4, V5 y V6 en la UV-K5 V3: banco elegido en la radio, canales, grupos y ajustes principales).{1}
+b9ae89b8	Radioddity GD-77
+38c31cf1	Radioddity GD-77S
+829ca215	Baofeng RD-5R
+d016c282	Baofeng DM-1801A
+123293fe	TYT MD-UV380
+f4a22d9b	TYT MD-380
+a23ee16e	Baofeng DM-1701
+f24ec890	Baofeng DM-1701 (RGB)
+c1ba3e92	Baja 500 mW
+18565b4f	Mínima 50 mW
+07201eab	Firmware libre {0}: la radio encendida normalmente aparece como puerto serie USB (115200 baudios). 1024 canales con nombres de 16 caracteres, analógicos o DMR. Se modifican frecuencias, nombre, modo, potencia, ancho de banda, tonos, solo recepción y exclusión del escaneo; en los canales DMR el color code, el slot, el contacto y el grupo quedan como están (canales DMR nuevos: color code 1, slot 1). Una potencia ya ajustada en la radio (también «la de la radio») queda como está hasta que la cambies. Un canal borrado sale también de las zonas; los canales nuevos se encuentran en la zona «Todos los canales» de la radio. Antes de escribir, el programa vuelve a leer la radio y escribe solo los bloques cambiados de canales y zonas: ajustes, contactos, grupos y calibración no se tocan nunca. Protocolo y memoria como en el programa libre qdmr.
+fbde8d37	OpenGD77 (Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R)
+5da23611	OpenGD77 (Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84)
+5a30f7a7	OpenGD77 para la familia MD-UV380 (OpenUV380, OpenDM1701)
+32306b70	OpenGD77 {0} ({1})
+fe225491	Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware OSFW u original modificado, bandas ampliadas)
+ebc98c0d	Firmware libre OSFW (versión bd90ca3) y firmwares originales modificados con las bandas ampliadas (uvmod-kitchen, colección de Tunas1337), que responden con la versión del original. Enciende la radio y luego conecta el cable al conector de micrófono/altavoz. Misma memoria que el firmware original; gamas de 18 a 1300 MHz: fuera de las bandas del original el canal solo funciona si el firmware de la radio está realmente modificado. Controlador de CHIRP.
+0d254ef7	UV-K5 (egzumer)
+759b7361	Quansheng UV-K5 / UV-K6 / UV-5R Plus (firmware NUNU de kamilsss655)
+cc5169db	NUNU v26
+1b10f5b3	Firmware libre NUNU de kamilsss655 (la radio responde «NUNU …»), que deriva de egzumer y tiene su misma memoria. Enciende la radio y luego conecta el cable al conector de micrófono/altavoz. El programa prueba a 115200 baudios y, si la radio no responde, a 38400 (primeras versiones). Como el controlador de CHIRP publicado por kamilsss655.
+14e3071d	Quansheng UV-K5 / UV-K6 (firmware UV-KX de joaquim.org)
+d94d723a	JOAQUIM V0.0.1
+05598926	Firmware libre UV-KX de joaquim.org (la radio responde «JOAQUIM …»): 230 canales con nombres de 10 caracteres, 115200 baudios. Enciende la radio y luego conecta el cable al conector de micrófono/altavoz. El ancho de banda, el squelch y la ganancia de cada canal quedan como están en la radio; la modulación queda la del canal si la frecuencia no cambia (AM en la banda aérea para un canal nuevo). La calibración no se escribe nunca (el controlador de CHIRP la escribe). Del controlador de CHIRP publicado con el firmware.
+9cc1704d	Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R
+1e48a635	Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84
+df7880d4	firmware NUNU de kamilsss655
+ef8de76c	firmware OSFW u original modificado, bandas ampliadas
+300b8fba	firmware UV-KX de joaquim.org

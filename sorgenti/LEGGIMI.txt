@@ -1,11 +1,22 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.15.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.16.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.16.0:
+- OPENGD77: canali delle radio DMR con il firmware libero OpenGD77: Radioddity GD-77 e
+  GD-77S, Baofeng DM-1801, RD-5R e DM-1701, TYT MD-UV380, MD-380, MD-9600 e MD-2017,
+  Retevis RT3S e RT84. Si scrivono solo i canali e le zone cambiati. Vedi «OPENGD77».
+- QUANSHENG UV-K5, ALTRI FIRMWARE LIBERI: schede nuove per NUNU di kamilsss655 e
+  UV-KX di joaquim.org (canali e impostazioni); la scheda «OSFW» vale ora anche per
+  i firmware originali modificati con le bande ampliate (uvmod-kitchen, raccolta di
+  Tunas1337). Vedi «FIRMWARE NICFW E F4HWN FUSION».
+- RADTEL RT-880 senza GPS con il firmware originale: si usa la scheda «Radtel
+  RT-880G» (Radtel pubblica un solo programma per le due radio).
+- Galleria: 539 modelli di 47 marche (485 con canali, 419 con impostazioni).
 Novità della 4.15.0:
 - D-STAR E C4FM: canali via cavo per i palmari digitali radioamatoriali. Icom ID-31,
   ID-51, ID-51 Plus, ID-51 Plus2 e IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D, FT1D,
@@ -1175,6 +1186,33 @@ che la radio comunica:
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
 
+OPENGD77 (4.16)
+Radio DMR con il firmware libero OpenGD77 (www.opengd77.com). In galleria: «GD-77 /
+GD-77S (firmware OpenGD77)» sotto Radioddity, «MD-UV380 … (firmware OpenGD77)» sotto
+TYT, e la scheda «OpenGD77» nelle voci Baofeng DM-1801, RD-5R e DM-1701.
+- Due schede: una per GD-77, GD-77S, DM-1801 e RD-5R; una per la famiglia MD-UV380
+  (DM-1701, MD-UV380, MD-380, MD-9600, MD-2017, RT3S, RT84). Se apri quella sbagliata
+  il programma legge il tipo di radio, si ferma e indica quella giusta.
+- Collegamento: radio accesa normalmente, cavo USB di programmazione; la radio compare
+  come porta seriale (COM). Durante lo scambio lo schermo della radio mostra «IU0VYT
+  Flash» e «Lettura» o «Scrittura».
+- 1024 canali con nomi di 16 caratteri, analogici o DMR. Si modificano frequenze,
+  nome, modo, potenza (alta 5 W, media 2 W, bassa 500 mW, minima 50 mW), banda, toni,
+  sola ricezione ed esclusione dalla scansione. Una potenza già impostata sulla radio,
+  anche «quella della radio», resta com'è finché non la cambi.
+- Canali DMR: color code, slot, contatto e gruppo restano quelli impostati; i canali
+  DMR nuovi nascono con color code 1 e slot 1, senza contatto: completali sulla
+  radio o con il programma di OpenGD77.
+- Un canale cancellato esce anche dalle zone. I canali nuovi non entrano in nessuna
+  zona: sulla radio si trovano nella zona «Tutti i canali».
+- Prima di scrivere il programma rilegge la radio e scrive solo i blocchi cambiati di
+  canali e zone. Impostazioni, contatti, gruppi, messaggi e taratura non si toccano
+  mai. Non ci sono le impostazioni della radio.
+- Protocollo e memoria sono quelli descritti nel programma libero qdmr; qui sono
+  provati solo con una radio simulata scritta da me. Le radio vere non sono ancora
+  state provate: prima fai la sola lettura, conserva la copia di sicurezza fatta con
+  il programma di OpenGD77 e segnala ogni problema.
+
 D-STAR, C4FM E KENWOOD (4.15)
 Palmari radioamatoriali digitali gestiti con i driver di CHIRP riscritti nel linguaggio
 di questo programma: stessa memoria, stessi byte sul cavo, file .img che si aprono
@@ -1224,8 +1262,8 @@ FIRMWARE NICFW E F4HWN FUSION (4.15)
   la 2.5x.
 - nicFW880 e nicFW950 di Radtel RT-880, RT-880G e RT-950 Pro: 999 canali con nomi
   fino a 30 caratteri, 38400 baud. Dopo la scrittura la radio si riavvia. La RT-880
-  senza GPS con il firmware originale di Radtel non è ancora gestita (la RT-880G sì,
-  dalla 4.9).
+  senza GPS con il firmware originale si usa, dalla 4.16, la scheda «Radtel RT-880G»
+  (Radtel pubblica un solo programma per le due radio).
 - Con nicFW la taratura della radio non viene mai scritta: prima di scrivere il
   programma rilegge la radio e scrive solo ciò che è cambiato; se la radio ha un'altra
   versione del firmware rispetto al file si ferma e chiede di rileggere.
@@ -1233,6 +1271,17 @@ FIRMWARE NICFW E F4HWN FUSION (4.15)
   1024 canali e impostazioni, come il driver dell'autore per CHIRP. La scheda
   «firmware F4HWN» di prima resta per le versioni fino alla 4. Dopo l'aggiornamento
   del firmware a Fusion 5 il programma indica la scheda da usare.
+- NUNU di kamilsss655 per la UV-K5 (4.16, scheda «firmware NUNU di kamilsss655»): la
+  memoria è quella di egzumer; il programma prova a 115200 baud e, se la radio non
+  risponde, a 38400. Canali e impostazioni come il driver per CHIRP di kamilsss655.
+- UV-KX di joaquim.org per la UV-K5 (4.16, scheda «firmware UV-KX di joaquim.org»):
+  230 canali con nomi di 10 caratteri, 115200 baud, impostazioni principali.
+  Larghezza di banda, squelch e guadagno di ogni canale restano quelli della radio.
+  A differenza del driver per CHIRP, la taratura non viene mai scritta.
+- Firmware originali modificati della UV-K5 (bande ampliate: uvmod-kitchen, raccolta
+  di Tunas1337): hanno la versione e la memoria dell'originale. Con la scheda normale
+  valgono i limiti di banda dell'originale; con la scheda «OSFW o originale
+  modificato» si possono scrivere canali da 18 a 1300 MHz.
 - nicFW è scritto da zero dalla documentazione pubblicata da nicsure e provato con
   radio simulate; Fusion è confrontato byte per byte con il driver dell'autore. Le
   radio vere non sono ancora state provate: segnala ogni problema.

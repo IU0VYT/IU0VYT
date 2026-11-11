@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.15.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.16.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,17 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Apa yang baharu dalam 4.16.0:
+- OPENGD77: saluran radio DMR dengan perisian tegar bebas OpenGD77: Radioddity GD-77 dan
+  GD-77S, Baofeng DM-1801, RD-5R dan DM-1701, TYT MD-UV380, MD-380, MD-9600 dan MD-2017,
+  Retevis RT3S dan RT84. Radio muncul sebagai port bersiri USB; hanya saluran dan zon
+  yang berubah ditulis, tidak sekali-kali tetapan, kenalan, kumpulan atau penentukuran.
+- QUANSHENG UV-K5, PERISIAN TEGAR BEBAS LAIN: tab baharu untuk NUNU oleh kamilsss655 dan
+  UV-KX oleh joaquim.org (saluran dan tetapan); tab «OSFW» kini juga untuk perisian
+  tegar asal yang diubah dengan jalur diperluas (uvmod-kitchen, koleksi Tunas1337).
+- RADTEL RT-880 tanpa GPS dengan perisian tegar asal: gunakan tab «Radtel RT-880G»
+  (Radtel menerbitkan satu program sahaja untuk kedua-dua radio).
+- Galeri: 539 model daripada 47 jenama (485 dengan saluran, 419 dengan tetapan).
 Apa yang baharu dalam 4.15.0:
 - D-STAR DAN C4FM: saluran melalui kabel untuk radio mudah alih digital amatur. Icom
   ID-31, ID-51, ID-51 Plus, ID-51 Plus2 dan IC-E90/IC-T90; Yaesu VX-6, VX-3, FT-70D,

@@ -361,14 +361,14 @@ var catalog = []catItem{
 		Links: []catLink{cps(s3 + "Baofeng_GT-68_CPS.zip"), {"info", "Scheda del prodotto (baofengradio.com)", "https://baofengradio.com/products/gt-68"}},
 		Notes: "Radio FRS (USA), 16 canali. Ricavata dal programma del costruttore «BF_V1_FH» (pacchetto GT-68, lo stesso della BF-C2 / BF-V2) e " +
 			"verificata con il suo codice originale: stessa memoria e stesso protocollo della BF-888S."},
-	{ID: "dm-1701", Brand: "Baofeng", Name: "DM-1701", Aliases: []string{"Retevis RT84"}, Type: "dmr", Drivers: []string{"bf-dm1701"}, FW: "dm1701",
+	{ID: "dm-1701", Brand: "Baofeng", Name: "DM-1701", Aliases: []string{"Retevis RT84"}, Type: "dmr", Drivers: []string{"bf-dm1701", "ogd77-uv380"}, FW: "dm1701",
 		Links: []catLink{cps(s3 + "Baofeng_DM-1701_CPS_1.05.zip"),
 			catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}, catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}},
 		Notes: "Radio DMR della famiglia TYT MD-UV380, collegata via USB in modalità DFU: serve il driver USB del costruttore (cartella " +
 			"«DM-1701 USB Driver» del pacchetto «DM-1701 CPS», installabile da qui con «Installa il driver USB…»), lo stesso del suo programma, " +
 			"oppure il driver generico WinUSB (Zadig). Memoria e protocollo dei programmi liberi " +
-			"dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche, cancellazione e scrittura identiche). " +
-			"Con il firmware libero OpenGD77 la radio usa un altro protocollo: in quel caso usa qdmr."},
+			"dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche, cancellazione e scrittura identiche)." +
+			ogd77Note},
 	{ID: "dmr-6x2", Brand: "Baofeng", Name: "DMR-6X2 (BTECH)", Aliases: []string{"BTECH DMR-6X2", "BaofengTech DMR-6X2"}, Type: "dmr", FW: "link", Guide: "6x2",
 		Links: []catLink{{"fw", "Pacchetto ufficiale 2.21b: firmware 2.21, CPS, driver USB e istruzioni (BTECH)", btechUp + "2025/05/DMR-6X2-221b.zip"},
 			{"info", "Annuncio dei firmware 2.21 e 1.21 (BTECH, 1/4/2025)", btechFw221},
@@ -386,11 +386,11 @@ var catalog = []catItem{
 	{ID: "dm-1702", Brand: "Baofeng", Name: "DM-1702", Type: "dmr",
 		Links: []catLink{{"cps", "Programma «DM-1702 MD Setup» v1.00.76 (pagina dei download Baofeng)", bfDown}},
 		Notes: "Radio DMR: il programma del costruttore («DM-1702 MD Setup», famiglia TYT MD) non è documentato; il codeplug si gestisce con quel programma."},
-	{ID: "dm-1801", Brand: "Baofeng", Name: "DM-1801", Type: "dmr", Drivers: []string{"bf-dm1801"}, FW: "sgl",
+	{ID: "dm-1801", Brand: "Baofeng", Name: "DM-1801", Type: "dmr", Drivers: []string{"bf-dm1801", "ogd77"}, FW: "sgl",
 		Links: []catLink{catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}, catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}},
 		Notes: "Radio DMR (piattaforma della Radioddity GD-77), collegata via USB come dispositivo HID: nessuna porta COM e nessun driver da installare. " +
 			"Memoria e protocollo dei programmi liberi dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche e scrittura " +
-			"identiche). Con il firmware libero OpenGD77 la radio usa un altro protocollo: in quel caso usa qdmr."},
+			"identiche)." + ogd77Note},
 	{ID: "dm-1801pro", Brand: "Baofeng", Name: "DM-1801 Pro", Type: "dmr", Drivers: []string{"bf-dm32uv"},
 		Links: []catLink{{"cps", "Programma «CPS DMR Radio» v1.60 (pagina dei download Radioddity)", rdDown}},
 		Notes: "Sperimentale. Il costruttore pubblica per la DM-1801 Pro lo stesso programma della DM-32UV (stesso eseguibile «DMR CPS.exe», v1.60): si usa il driver della DM-32UV. " +
@@ -408,12 +408,12 @@ var catalog = []catItem{
 		Notes: "Radio DMR Tier I: il programma del costruttore («CPS_5R», scritto in C++Builder, porta seriale a 57600 baud) è un programma " +
 			"nativo che non si può eseguire per un confronto e non esistono programmi liberi per questa versione: il codeplug si gestisce con " +
 			"il programma del costruttore. La versione Tier II (DM-5R Plus) è la RD-5R, compatibile."},
-	{ID: "rd-5r", Brand: "Baofeng", Name: "RD-5R", Aliases: []string{"DM-5R Tier II", "Radioddity RD5R", "TD-5R"}, Type: "dmr", Drivers: []string{"bf-rd5r"}, FW: "sgl",
+	{ID: "rd-5r", Brand: "Baofeng", Name: "RD-5R", Aliases: []string{"DM-5R Tier II", "Radioddity RD5R", "TD-5R"}, Type: "dmr", Drivers: []string{"bf-rd5r", "ogd77"}, FW: "sgl",
 		Links: []catLink{{"cps", "Programma «RD-5R Program Software» V1.0.0.4 e firmware V2.1.6 (pagina dei download Baofeng)", bfDown},
 			catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}, catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}},
 		Notes: "Radio DMR collegata via USB come dispositivo HID: nessuna porta COM e nessun driver da installare. Memoria e protocollo dei programmi " +
 			"liberi dmrconfig e qdmr (la radio si identifica come «BF-5R», anche la TD-5R), verificati con il codice originale di dmrconfig (lettura, " +
-			"modifiche e scrittura identiche). Con il firmware libero OpenGD77 (OpenRD5R) la radio usa un altro protocollo: in quel caso usa qdmr."},
+			"modifiche e scrittura identiche)." + ogd77Note},
 	{ID: "dm-v1", Brand: "Baofeng", Name: "DM-V1", Type: "dmr"},
 	{ID: "dm-32uv", Brand: "Baofeng", Name: "DM-32UV", Type: "dmr", Drivers: []string{"bf-dm32uv"},
 		Links: []catLink{{"cps", "Programma «DM-32UV CPS» v1.60 e firmware v1.01.048 (pagina dei download Radioddity)", rdDown},
@@ -548,6 +548,7 @@ func init() {
 	catalog = append(catalog, catalog414...)
 	// 4.15: Icom D-STAR, Yaesu VX e System Fusion, Kenwood, firmware nicFW (catalog_415.go)
 	catalog = append(catalog, catalog415...)
+	catalog = append(catalog, catalog416...) // 4.16
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

@@ -7,6 +7,26 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.16.0 (10/11/2026)
+-------------------
+- Firmware OpenGD77 (drv_ogd77.go, nuevo; protocolo y memoria descritos en el programa
+  libre qdmr): dos fichas, para GD-77 / GD-77S / DM-1801 / RD-5R y para la familia
+  MD-UV380 (DM-1701, MD-UV380, MD-380, MD-9600, MD-2017, RT3S, RT84); 1024 canales
+  analógicos o DMR; antes de escribir se vuelve a leer la radio y solo se escriben los
+  bloques cambiados de canales y zonas.
+- Quansheng UV-K5: firmware NUNU de kamilsss655 (drv_uvk5x.go; memoria de egzumer,
+  115200 baudios, 71 ajustes) y firmware UV-KX de joaquim.org (drv_uvkx.go, nuevo; 230
+  canales, 14 ajustes, la calibración no se escribe nunca); la ficha «OSFW» acepta
+  también las versiones del firmware original, para los firmwares originales
+  modificados.
+- Radtel RT-880 sin GPS: el programa de Radtel usa los mismos comandos que el
+  controlador de CHIRP de la RT-880G, así que la RT-880 usa esa ficha. Comprobado que
+  los 34 archivos de la colección de firmwares de amnemonic son aceptados por la
+  actualización del firmware de la UV-K5.
+- Catálogo: 485 radios, 419 con ajustes, 539 en la galería, 47 marcas. Traducciones: 47
+  textos nuevos. Pruebas: comparación con los controladores de CHIRP de kamilsss655 y de
+  joaquim.org, radio OpenGD77 simulada.
+
 4.15.0 (10/11/2026)
 -------------------
 - Icom ID-31, ID-51, ID-51 Plus, ID-51 Plus2 (drv_id31.go, nuevo; controladores de CHIRP

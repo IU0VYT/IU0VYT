@@ -95,10 +95,12 @@ var catalog415 = []catItem{
 	{ID: "tid-td-h3-nicfw", Brand: "TIDRADIO", Name: "TD-H3 (firmware nicFW)", Aliases: []string{"TD-H3 nicFW", "nicFW"}, Type: "analog", Drivers: []string{"td-tdh3-nicfw"}, FW: "tdh",
 		Links: []catLink{info("Documentazione di nicFW 2.x (nicsure)", nicfwH3Docs), info("Sito di nicsure", nicfwSite), info("Programmi TIDRADIO", tidDown)},
 		Notes: nicfwCatNote + " " + tdhFwNote},
-	{ID: "rtl-rt-880", Brand: "Radtel", Name: "RT-880", Aliases: []string{"RT-880 (non G)", "iRadio UV-98"}, Type: "analog", Drivers: []string{"rtl-rt880-nicfw"},
+	{ID: "rtl-rt-880", Brand: "Radtel", Name: "RT-880", Aliases: []string{"RT-880 (non G)", "iRadio UV-98"}, Type: "analog", Drivers: []string{"rtl-rt880g", "rtl-rt880-nicfw"},
 		Links: []catLink{info("Programmi Radtel", rtlDown), info("Documentazione di nicFW880 (nicsure)", nicfw880Docs)},
-		Notes: "Con il firmware originale di Radtel la RT-880 (senza GPS) si programma con il programma di Radtel: il suo protocollo non è ancora gestito " +
-			"(la RT-880G sì, con la sua scheda). " + nicfwCatNote},
+		// 4.16: il programma di Radtel («RT-880 Program Software» V1.10, lo stesso per RT-880 e RT-880G) usa gli stessi comandi di
+		// ingresso e di uscita dalla programmazione del driver di CHIRP della RT-880G
+		Notes: "Con il firmware originale la RT-880 (senza GPS) si legge e si scrive con la scheda «Radtel RT-880G»: Radtel pubblica un solo " +
+			"programma per le due radio, con lo stesso collegamento del driver di CHIRP della RT-880G. Con il firmware nicFW880 usa la scheda nicFW. " + nicfwCatNote},
 	{ID: "rtl-rt-880-nicfw", Brand: "Radtel", Name: "RT-880 / RT-880G (firmware nicFW880)", Aliases: []string{"nicFW880", "RT-880 nicFW", "RT-880G nicFW"}, Type: "analog",
 		Drivers: []string{"rtl-rt880-nicfw"}, Links: []catLink{info("Documentazione di nicFW880 (nicsure)", nicfw880Docs), info("Sito di nicsure", nicfwSite)},
 		Notes: nicfwCatNote},

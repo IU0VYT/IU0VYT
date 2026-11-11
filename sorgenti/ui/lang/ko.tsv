@@ -1864,7 +1864,6 @@ e5124f3c	FRS 무전기(미국), 채널 16개. 제조사 «BF_V1_FH» 프로그�
 11fa38bb	Retevis RT84
 5bf2511f	qdmr(DMR 무전기용 무료 프로그램, GPL)
 19de537d	dmrconfig(무료 명령줄 프로그램, BSD 라이선스)
-d65f0982	TYT MD-UV380 계열의 DMR 무전기로 DFU 모드에서 USB로 연결: 제조사의 USB 드라이버(«DM-1701 CPS» 패키지의 «DM-1701 USB Driver» 폴더, 여기서 «USB 드라이버 설치…»로 설치 가능, 그 프로그램과 같음) 또는 범용 WinUSB 드라이버(Zadig)가 필요합니다. 메모리와 프로토콜은 무료 프로그램 dmrconfig와 qdmr의 것으로, 원래 dmrconfig 코드로 검증했습니다(읽기, 변경, 지우기, 쓰기가 동일). 무료 OpenGD77 펌웨어에서는 무전기가 다른 프로토콜을 씁니다: 그 경우 qdmr를 사용하세요.
 9595e894	DMR-6X2 (BTECH)
 b82b0847	BTECH DMR-6X2
 2725c619	BaofengTech DMR-6X2
@@ -1879,7 +1878,6 @@ c224a773	DMR-6X2II
 03d4eaa7	DMR-6X2의 두 번째 시리즈(«DMR_6X2II» 펌웨어, 1.x 번호; 1.21은 DMR-6X2의 2.21과 함께 나옴). 펌웨어는 DMR-6X2의 것과 다른 파일입니다(식별자 «D6X2UV2»): 다른 무전기의 것을 쓰지 마세요. 아이콘(DMR_6X2_PIC)은 같습니다. DMR-6X2처럼 공식 프로그램으로 안내형 업데이트.
 5f81c272	«DM-1702 MD Setup» v1.00.76 프로그램(Baofeng 내려받기 페이지)
 9fc225b8	DMR 무전기: 제조사 프로그램(«DM-1702 MD Setup», TYT MD 계열)은 문서화되어 있지 않습니다; 코드플러그는 그 프로그램으로 관리합니다.
-2fc473f4	DMR 무전기(Radioddity GD-77 플랫폼), USB로 HID 장치로 연결: COM 포트도 설치할 드라이버도 없습니다. 메모리와 프로토콜은 무료 프로그램 dmrconfig와 qdmr의 것으로, 원래 dmrconfig 코드로 검증했습니다(읽기, 변경, 쓰기가 동일). 무료 OpenGD77 펌웨어에서는 무전기가 다른 프로토콜을 씁니다: 그 경우 qdmr를 사용하세요.
 8f42ee90	DM-1801 Pro
 9eccd68c	«CPS DMR Radio» v1.60 프로그램(Radioddity 내려받기 페이지)
 bb8e3c94	실험적. DM-1801 Pro에 대해 제조사는 DM-32UV와 같은 프로그램(같은 «DMR CPS.exe» 실행 파일, v1.60)을 공개합니다: DM-32UV 드라이버를 씁니다. 무전기가 다른 모델로 자신을 알리면 프로그램은 읽기나 쓰기 전에 멈춥니다.
@@ -1892,7 +1890,6 @@ a3a1d678	«CPS_5R» 프로그램(«DM_5R_Programming_Software» 압축 파일, �
 d2346d94	DM-5R Tier II
 72336e09	Radioddity RD5R
 a8f94ecd	«RD-5R Program Software» V1.0.0.4 프로그램과 펌웨어 V2.1.6(Baofeng 내려받기 페이지)
-39f27629	USB로 HID 장치로 연결되는 DMR 무전기: COM 포트도 설치할 드라이버도 없습니다. 메모리와 프로토콜은 무료 프로그램 dmrconfig와 qdmr의 것(무전기는 «BF-5R»로 자신을 알리며 TD-5R도 마찬가지)으로, 원래 dmrconfig 코드로 검증했습니다(읽기, 변경, 쓰기가 동일). 무료 OpenGD77(OpenRD5R) 펌웨어에서는 무전기가 다른 프로토콜을 씁니다: 그 경우 qdmr를 사용하세요.
 95b17c64	«DM-32UV CPS» v1.60 프로그램과 펌웨어 v1.01.048(Radioddity 내려받기 페이지)
 27733ab8	CHIRP(Baofeng DM-32UV 드라이버)
 42f2657e	CHIRP 드라이버로 채널(아날로그 및 DMR), 제조사 프로그램 v1.60에서 가져와 실제 무전기로 시험: 주파수, 이름, 출력, 톤을 바꿉니다. 채널의 DMR 설정, 구역, 연락처, 목록은 그대로 유지됩니다. 펌웨어는 제조사 프로그램으로 업데이트합니다.
@@ -3103,10 +3100,8 @@ d6c2626f	이 무전기에 맞지 않는 이미지입니다(펌웨어 버전 다�
 6374ed8d	무전기를 켠 다음 마이크/스피커 커넥터에 케이블을 연결하세요(끝까지 꽂기). CHIRP처럼 읽기와 쓰기는 알려진 원래 펌웨어 버전에서만 합니다: 수정된 펌웨어에서는 프로그램이 쓰지 않고 멈춥니다.
 f39051f7	Quansheng UV-K5 / UV-K6 / UV-5R Plus
 e247f543	Quansheng UV-K1
-b37044a6	Quansheng UV-K5 / UV-K6 / UV-5R Plus(OSFW 펌웨어)
 54727d95	OSFW-bd90ca3
 4b4e923c	OSFW
-4a42b6ef	무료 OSFW 펌웨어(버전 bd90ca3, CHIRP가 지원하는 유일한 버전). 무전기를 켠 다음 마이크/스피커 커넥터에 케이블을 연결하세요. 원래 펌웨어와 같은 메모리; 대역 제한 없음. CHIRP 드라이버.
 1e59b74c	Retevis RA79
 4ac7138a	MaxTalker TK-6
 a11b84a6	무전기가 펌웨어 업데이트 모드입니다: 껐다가 정상적으로 다시 켜세요
@@ -4885,7 +4880,6 @@ ec8cdbd9	펌웨어 0.23 이하: 960채널
 810324ef	egzumer 펌웨어
 087d5c7b	F4HWN 펌웨어
 fb975e6f	LOSEHU, LTS, UVE 펌웨어
-6c3baeb5	OSFW 펌웨어
 d1f9e8ef	새 버전
 37ed5e1e	Freenet
 53826d51	M7OCM 펌웨어
@@ -5045,7 +5039,6 @@ ef53c837	IJV-{0}
 447dca6b	IJV V3 X 펌웨어, 999채널
 1c75d52b	IJV V4 펌웨어
 1b75d398	IJV V5 펌웨어
-7c2fdf6f	{0} 각 탭은 자기 펌웨어만 읽고 씁니다: Quansheng 원래 펌웨어(k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer(CHIRP 드라이버), F4HWN(CHIRP용 armel 드라이버, F4HWN 설정 포함), OSFW(CHIRP 드라이버) 또는 중국어 펌웨어 LOSEHU / LTS / UVE(CHIRP 드라이버, 중국어 이름). 잘못된 탭을 열면 프로그램이 펌웨어 버전을 읽고 쓰지 않고 멈춘 뒤 맞는 탭을 알려 주며, «식별»은 스스로 찾습니다. 펌웨어: Quansheng .bin 파일(예: k5_v2.01.26_publish.bin)을 무전기 로더로(PTT를 누른 채 켬); 프로그램은 펌웨어가 무전기의 로더 종류(UV-K5, UV-K5(8)/UV-K6 또는 UV-5R Plus)에 맞는지 확인합니다. Quansheng은 판매점이 제공하는 비밀번호로 내려받기를 보호합니다. IJV도 지원합니다(클래식 UV-K5의 200 또는 999채널 V3, UV-K5 V3의 V4, V5, V6: 무전기에서 선택한 뱅크, 채널, 그룹, 주요 설정).
 02b27e38	IJV V6
 4b2a8174	Quansheng UV-K5 V3 / UV-K1(IJV V6 펌웨어)
 81db67f1	UV-K5 V3 및 UV-K1용 IJV V6 펌웨어(모듈형). {0}V6 데이터 링크(DTR와 RTS 낮음): 무전기가 데이터 링크가 없다고 하면 RadioManager의 FLASH V6로 업데이트하세요. 무전기에서 선택한 뱅크의 500채널을 그룹 이름 및 주요 설정과 함께 4 KiB 섹터 단위로 읽고 쓰며 섹터마다 다시 읽어 확인합니다. 보정값, 라이선스, 모듈, 음성, 모듈 파일은 절대 쓰지 않습니다. 모듈과 펌웨어는 IJV의 RadioManager에서 관리합니다.
@@ -5199,7 +5192,6 @@ badf093c	TD-H3(nicFW 펌웨어)
 d4a810ff	RT-880(G 아님)
 d7ffe954	iRadio UV-98
 539599ba	nicFW880 문서(nicsure)
-bd2f0310	Radtel 순정 펌웨어의 RT-880(GPS 없음)은 Radtel 프로그램으로 프로그래밍합니다. 그 프로토콜은 아직 지원하지 않습니다(RT-880G는 전용 탭으로 지원). {0}
 4a49f494	RT-880 / RT-880G(nicFW880 펌웨어)
 9ab35be3	RT-880 nicFW
 33526df2	RT-880G nicFW
@@ -5307,3 +5299,50 @@ e3af4e9c	F4HWN Fusion 5.x 펌웨어
 ab73dbd5	nicFW950 펌웨어
 8382cca1	nicFW 펌웨어
 d36b19e0	2차 시리즈
+0f1c8c46	TYT MD-UV380 계열의 DMR 무전기로 DFU 모드에서 USB로 연결: 제조사의 USB 드라이버(«DM-1701 CPS» 패키지의 «DM-1701 USB Driver» 폴더, 여기서 «USB 드라이버 설치…»로 설치 가능, 그 프로그램과 같음) 또는 범용 WinUSB 드라이버(Zadig)가 필요합니다. 메모리와 프로토콜은 무료 프로그램 dmrconfig와 qdmr의 것으로, 원래 dmrconfig 코드로 검증했습니다(읽기, 변경, 지우기, 쓰기가 동일).{0}
+b6763080	DMR 무전기(Radioddity GD-77 플랫폼), USB로 HID 장치로 연결: COM 포트도 설치할 드라이버도 없습니다. 메모리와 프로토콜은 무료 프로그램 dmrconfig와 qdmr의 것으로, 원래 dmrconfig 코드로 검증했습니다(읽기, 변경, 쓰기가 동일).{0}
+5e2468d7	USB로 HID 장치로 연결되는 DMR 무전기: COM 포트도 설치할 드라이버도 없습니다. 메모리와 프로토콜은 무료 프로그램 dmrconfig와 qdmr의 것(무전기는 «BF-5R»로 자신을 알리며 TD-5R도 마찬가지)으로, 원래 dmrconfig 코드로 검증했습니다(읽기, 변경, 쓰기가 동일).{0}
+056f6cc4	순정 펌웨어의 RT-880(GPS 없음)은 «Radtel RT-880G» 탭으로 읽고 씁니다. Radtel은 두 무전기용 프로그램을 하나만 배포하며, 연결 방식은 CHIRP의 RT-880G 드라이버와 같습니다. nicFW880 펌웨어에서는 nicFW 탭을 사용하세요. {0}
+40bc82d1	자유 펌웨어 OpenGD77에서는 무전기가 USB 직렬 포트로 표시되고 다른 프로토콜을 사용합니다. «OpenGD77» 탭을 여세요.
+b11d1334	4.16부터 kamilsss655의 NUNU 펌웨어(egzumer 메모리, 115200 baud), joaquim.org의 UV-KX 펌웨어(230채널), 그리고 «OSFW 또는 수정된 순정» 탭으로 대역을 넓힌 수정 순정 펌웨어(uvmod-kitchen, Tunas1337 모음)도 지원합니다.
+445a11ea	자유 펌웨어 OpenGD77에서는 켜진 무전기가 USB 직렬 포트로 표시됩니다. 1024채널(아날로그 또는 DMR)을 자유 프로그램 qdmr과 같은 방식으로 읽고 씁니다. 채널과 존만 쓰며, 연락처, 그룹, 설정, 보정값은 절대 건드리지 않습니다.
+45b42fc6	GD-77 / GD-77S(OpenGD77 펌웨어)
+9bf2d4d9	TYT MD-760
+9aae2a08	OpenGD77 사이트
+396d6da3	{0} Radioddity 순정 펌웨어의 GD-77은 지원하지 않습니다.
+b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600(OpenGD77 펌웨어)
+76df013d	Retevis RT3S
+9785f3bc	Retevis RT3
+17fa422d	Retevis RT82
+8ff72d7e	Retevis RT90
+850cccbc	{0} TYT 순정 펌웨어의 이 무전기들은 지원하지 않습니다.
+3784fb7e	{0} 각 탭은 자기 펌웨어만 읽고 씁니다: Quansheng 원래 펌웨어(k5_2.01, 3.00, 4.00, 5.00, 7.00/7.01, 1.02, «1o11»), egzumer(CHIRP 드라이버), F4HWN(CHIRP용 armel 드라이버, F4HWN 설정 포함), OSFW(CHIRP 드라이버) 또는 중국어 펌웨어 LOSEHU / LTS / UVE(CHIRP 드라이버, 중국어 이름). 잘못된 탭을 열면 프로그램이 펌웨어 버전을 읽고 쓰지 않고 멈춘 뒤 맞는 탭을 알려 주며, «식별»은 스스로 찾습니다. 펌웨어: Quansheng .bin 파일(예: k5_v2.01.26_publish.bin)을 무전기 로더로(PTT를 누른 채 켬); 프로그램은 펌웨어가 무전기의 로더 종류(UV-K5, UV-K5(8)/UV-K6 또는 UV-5R Plus)에 맞는지 확인합니다. Quansheng은 판매점이 제공하는 비밀번호로 내려받기를 보호합니다. IJV도 지원합니다(클래식 UV-K5의 200 또는 999채널 V3, UV-K5 V3의 V4, V5, V6: 무전기에서 선택한 뱅크, 채널, 그룹, 주요 설정).{1}
+b9ae89b8	Radioddity GD-77
+38c31cf1	Radioddity GD-77S
+829ca215	Baofeng RD-5R
+d016c282	Baofeng DM-1801A
+123293fe	TYT MD-UV380
+f4a22d9b	TYT MD-380
+a23ee16e	Baofeng DM-1701
+f24ec890	Baofeng DM-1701 (RGB)
+c1ba3e92	낮음 500 mW
+18565b4f	최소 50 mW
+07201eab	자유 펌웨어 {0}: 평소처럼 켠 무전기가 USB 직렬 포트로 표시됩니다(115200 baud). 1024채널, 이름 16자, 아날로그 또는 DMR. 주파수, 이름, 모드, 출력, 대역폭, 톤, 수신 전용, 스캔 제외를 바꿀 수 있습니다. DMR 채널의 컬러 코드, 슬롯, 연락처, 그룹은 설정된 그대로 둡니다(새 DMR 채널: 컬러 코드 1, 슬롯 1). 무전기에 이미 설정된 출력(«무전기 설정 따름» 포함)은 바꾸기 전까지 그대로입니다. 삭제한 채널은 존에서도 빠집니다. 새 채널은 무전기의 «모든 채널» 존에 있습니다. 쓰기 전에 프로그램이 무전기를 다시 읽고 채널과 존에서 바뀐 블록만 씁니다. 설정, 연락처, 그룹, 보정값은 절대 건드리지 않습니다. 프로토콜과 메모리는 자유 프로그램 qdmr과 같습니다.
+fbde8d37	OpenGD77 (Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R)
+5da23611	OpenGD77 (Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84)
+5a30f7a7	MD-UV380 계열용 OpenGD77(OpenUV380, OpenDM1701)
+32306b70	OpenGD77 {0} ({1})
+fe225491	Quansheng UV-K5 / UV-K6 / UV-5R Plus(OSFW 또는 수정된 순정 펌웨어, 확장 대역)
+ebc98c0d	자유 펌웨어 OSFW(버전 bd90ca3)와 대역을 넓힌 수정 순정 펌웨어(uvmod-kitchen, Tunas1337 모음). 후자는 순정 버전으로 응답합니다. 무전기를 켠 다음 케이블을 마이크/스피커 단자에 연결하세요. 메모리는 순정 펌웨어와 같습니다. 범위는 18~1300 MHz이며, 순정 대역 밖의 채널은 무전기 펌웨어가 실제로 수정된 경우에만 동작합니다. CHIRP 드라이버.
+0d254ef7	UV-K5 (egzumer)
+759b7361	Quansheng UV-K5 / UV-K6 / UV-5R Plus(kamilsss655의 NUNU 펌웨어)
+cc5169db	NUNU v26
+1b10f5b3	kamilsss655의 자유 펌웨어 NUNU(무전기가 «NUNU …»로 응답). egzumer에서 파생되었고 메모리가 같습니다. 무전기를 켠 다음 케이블을 마이크/스피커 단자에 연결하세요. 프로그램은 115200 baud를 시도하고, 무전기가 응답하지 않으면 38400(초기 버전)을 시도합니다. kamilsss655가 공개한 CHIRP용 드라이버와 같습니다.
+14e3071d	Quansheng UV-K5 / UV-K6(joaquim.org의 UV-KX 펌웨어)
+d94d723a	JOAQUIM V0.0.1
+05598926	joaquim.org의 자유 펌웨어 UV-KX(무전기가 «JOAQUIM …»으로 응답): 230채널, 이름 10자, 115200 baud. 무전기를 켠 다음 케이블을 마이크/스피커 단자에 연결하세요. 각 채널의 대역폭, 스켈치, 게인은 무전기에 설정된 그대로입니다. 주파수가 바뀌지 않으면 변조는 채널의 것을 유지합니다(새 채널은 항공 대역에서 AM). 보정값은 절대 쓰지 않습니다(CHIRP 드라이버는 씁니다). 펌웨어와 함께 공개된 CHIRP용 드라이버를 따릅니다.
+9cc1704d	Radioddity GD-77 / GD-77S, Baofeng DM-1801 / RD-5R
+1e48a635	Baofeng DM-1701, TYT MD-UV380 / MD-380 / MD-9600 / MD-2017, Retevis RT3S / RT84
+df7880d4	kamilsss655의 NUNU 펌웨어
+ef8de76c	OSFW 또는 수정된 순정 펌웨어, 확장 대역
+300b8fba	joaquim.org의 UV-KX 펌웨어

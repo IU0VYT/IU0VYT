@@ -6,6 +6,24 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.16.0 (10/11/2026)
+-------------------
+- Perisian tegar OpenGD77 (drv_ogd77.go, baharu; protokol dan memori seperti yang
+  diterangkan dalam program bebas qdmr): dua tab, untuk GD-77 / GD-77S / DM-1801 / RD-5R
+  dan untuk keluarga MD-UV380 (DM-1701, MD-UV380, MD-380, MD-9600, MD-2017, RT3S, RT84);
+  1024 saluran analog atau DMR; radio dibaca semula sebelum menulis dan hanya blok
+  saluran dan zon yang berubah ditulis.
+- Quansheng UV-K5: perisian tegar NUNU oleh kamilsss655 (drv_uvk5x.go; memori egzumer,
+  115200 baud, 71 tetapan) dan perisian tegar UV-KX oleh joaquim.org (drv_uvkx.go,
+  baharu; 230 saluran, 14 tetapan, penentukuran tidak pernah ditulis); tab «OSFW» juga
+  menerima versi perisian tegar asal, untuk perisian tegar asal yang diubah suai.
+- Radtel RT-880 tanpa GPS: program Radtel menggunakan arahan yang sama seperti pemacu
+  CHIRP bagi RT-880G, maka RT-880 menggunakan tab itu. Disahkan bahawa 34 fail dalam
+  koleksi perisian tegar amnemonic diterima oleh kemas kini perisian tegar UV-K5.
+- Katalog: 485 radio, 419 dengan tetapan, 539 dalam galeri, 47 jenama. Terjemahan: 47
+  teks baharu. Ujian: perbandingan dengan pemacu CHIRP oleh kamilsss655 dan joaquim.org,
+  radio OpenGD77 simulasi.
+
 4.15.0 (10/11/2026)
 -------------------
 - Icom ID-31, ID-51, ID-51 Plus, ID-51 Plus2 (drv_id31.go, baharu; pemacu CHIRP id31.py,

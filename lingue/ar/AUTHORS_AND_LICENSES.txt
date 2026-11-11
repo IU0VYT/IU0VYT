@@ -198,6 +198,7 @@ drv.go وbw.go وdrv_uv5r.go وdrv_uv17pro.go وdrv_uv17.go وdrv_bfcommon.go و
 4.14: drv_ft4.go, drv_ft60.go, drv_icom.go, drv_icv86.go, drv_icv80.go, drv_icx8x.go.
 4.15: drv_id31.go, drv_icx90.go, drv_yaesuclone.go, drv_vx6.go, drv_ysf.go, drv_thd74.go,
 drv_thd72.go, drv_uvk5x.go (F4HWN Fusion).
+4.16: drv_ogd77.go, drv_uvkx.go, drv_uvk5x.go (NUNU).
 
 تحديث البرنامج الثابت لـ QUANSHENG UV-K5 (4.1)
 صيغة ملفات .bin من Quansheng وبروتوكول محمّل UV-K5 موثّقان في البرنامجين الحرّين
@@ -245,6 +246,8 @@ Radtel؛ والبرامج غير مضمّنة في الحزمة. رُوجعت أ
 من تلك المشاريع.
 
 البرنامج الثابت NICFW (4.15): nicFW من إعداد nicsure (https://nicsure.co.uk). ذاكرة القنوات والإعدادات وأوامر الاتصال مأخوذة، لأغراض التوافق، من الوثائق التي نشرها المؤلف (https://github.com/nicsure/nicfw2docs, https://github.com/nicsure/nicFW880_950_Docs). لا يتضمن البرنامج أي شيفرة أو برنامج أو برنامج ثابت من nicsure: الملفان drv_nicfw.go و settings_nicfw.go مكتوبان من الصفر. برنامج مستقل غير تابع لـ nicsure.
+
+OPENGD77 وبرامج ثابتة أخرى لجهاز UV-K5 (4.16): OpenGD77 من إعداد Roger Clark VK3KYY وآخرين؛ الاتصال وبنية الذاكرة مأخوذان من البرنامج الحر qdmr لـ Hannes Matuschek DM3MAT (GNU GPL v3). البرنامج الثابت NUNU من kamilsss655 والبرنامج الثابت UV-KX من joaquim.org (Apache 2.0): الذاكرة والكتابة كما في مشغّلات CHIRP التي نشرها مؤلفوها (المشتقة من uvk5.py لـ Jacek Lipkowski SQ5BPF، GNU GPL v2 أو أحدث). لا يتضمن البرنامج أي برنامج ثابت أو برنامج لهؤلاء المؤلفين؛ الملفان drv_ogd77.go و drv_uvkx.go مكتوبان في IU0VYT Flash. برنامج مستقل غير تابع لهم (https://www.opengd77.com, https://github.com/hmatuschek/qdmr, https://github.com/kamilsss655/uv-k5-firmware-custom, https://github.com/joaquimorg/UV-KX).
 
 أسماء المناطق (4.11)
 صيغة أسماء المناطق مستخرجة، لأغراض التوافق، من شيفرة برامج الشركة المصنّعة: Radtel
