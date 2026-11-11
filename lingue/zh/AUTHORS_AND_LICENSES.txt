@@ -210,6 +210,8 @@ KENWOOD TK-2140/3140、TK-280/380、R3B0RN 固件、RADTEL RT-330 和 RT-400（4
 
 RADTEL RT-817A / RT-871A（4.19）：根据与厂商软件（“Radtel RT-871A CPS”）的比对得出，其中任何内容都未包含；连接方式和信道记录与 CHIRP 的 radtel_rt880g.py 相同，已用于 RT-880G。
 
+RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：根据对厂商软件（“RT-4D CPS”、“DMR RT-6D”、“Radtel RT-1000 Pro CPS”）的研究得出，未包含其中任何内容；代码从零编写。
+
 区域名称（4.11）
 为了互操作性，区域名称的格式取自厂家程序的代码：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 和 Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS“BT-9000_CPS”v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）和 RT910_EnCPS v1.0.3（无蓝牙的 RT-910），来自 radtels.com 和 bajeton.cn；RT-920 的格式还取自 CHIRP 的驱动程序 radtel_rt900.py（Fred Trimble，GNU GPL，见上文）。不包含任何厂家程序。
 给区域命名和批量修改信道的想法来自 Jorge De La Cruz KK4OXN 的“RT-950 / 950 Pro Editor”程序（https://github.com/cruzerdlc/RT-950-950Pro-Editor，MIT 许可证）：该仓库只发布文档和编译好的程序，没有源代码，也没有从中取用任何代码；这些功能在 IU0VYT Flash 中从头重写。

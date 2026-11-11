@@ -6,6 +6,26 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.20.0 (11/11/2026)
+-------------------
+- Radtel RT-4D dan RT-6D (DMR) serta RT-1000 Pro (drv_rt4d.go, baharu), diperoleh
+  daripada program pengeluar («RT-4D CPS» 2.07, «DMR RT-6D» 2.06, «Radtel RT-1000 Pro
+  CPS» bertarikh 6 Ogos 2026), satu generasi selepas program Bajeton DM-5000: sambungan
+  yang sama (115200 baud, blok 1 KiB), saluran dan zon yang berbeza. Saluran 48 bait
+  dengan medan bit dalam lima bait pertama, frekuensi dalam puluhan Hz pada bait 5-12,
+  nada pada bait 13-16, nama pada bait 32-47; 250 zon bersaiz 520 bait dengan sehingga
+  250 saluran. Blok 8 (kata laluan), blok 16-63 (saluran) dan 0x78-0xF7 (zon) dibaca;
+  penulisan mengikut urutan program dan berhenti selepas zon: 0x90 (tetapan) dan 0x92
+  (VFO) dengan data yang baru dibaca daripada radio, 0x91 (48 blok saluran), 0x93 (128
+  blok zon). Butiran saluran sedia ada yang tidak diurus dikekalkan; antara 108 dan 136
+  MHz saluran ditulis dalam AM.
+- Tidak dibuat kerana tidak pasti: saluran yang dipilih untuk A/B/C dalam zon (program
+  menyimpannya dengan satu cara dan membacanya semula dengan cara lain: bait itu
+  dikekalkan); pada RT-1000 Pro pengecualian daripada imbasan (program menulisnya dalam
+  satu bit dan membacanya daripada bit lain: tidak diurus, bait itu kekal seadanya).
+- Katalog (catalog_420.go, baharu): 3 entri. Kiraan: 502 radio, 427 dengan tetapan, 556
+  dalam galeri. Terjemahan: 13 teks baharu.
+
 4.19.0 (11/11/2026)
 -------------------
 - Radtel RT-817A / RT-871A (drv_iradio.go, jenis irRT871A), daripada program pengeluar

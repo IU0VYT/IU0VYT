@@ -5404,3 +5404,16 @@ f733bbbd	la radio s'identifie comme un autre modèle de la même famille ({0}) :
 35c405c5	1024 canaux avec des noms de 16 caractères, 18-660 et 840-1000 MHz, 115200 bauds. Même liaison et même canal que la Radtel RT-880G, sans les zones.{0} « Identifier » ne la distingue pas de la RT-880G : choisissez vous-même l'onglet.
 96369764	Radtel RT-817A / RT-871A
 cc621dfc	1024 canaux avec des noms de 16 caractères, 115200 bauds. Protocole et mémoire tirés du programme du constructeur (« Radtel RT-871A CPS »), qui utilise la liaison et le canal de 48 octets de la Radtel RT-880G sans les zones. On lit et on écrit les mêmes zones de mémoire que le programme du constructeur (réglages, canaux, radio FM ; pas le logo). La modulation (AM, USB) des canaux dont la fréquence ne change pas, le brouilleur, les tonalités de fin, le code du canal et les autres options sont conservés ; dans la bande aviation le canal est écrit en AM.
+872bfdf0	Tiré du programme du constructeur et essayé avec une radio simulée, pas sur une vraie radio. Seuls les canaux et les zones sont écrits ; les réglages et le VFO lus sur la radio sont réécrits tels quels. « Identifier » ne la distingue pas des autres Radtel et Bajeton utilisant la même liaison : choisissez vous-même l'onglet.
+7e3aca00	Radio DMR : 1024 canaux avec des noms de 16 caractères, 250 zones, 18-660 et 840-1000 MHz, 115200 bauds. Les contacts, les groupes et les messages ne sont pas modifiés.{0}
+fbb7a5e0	Radio DMR : 1024 canaux avec des noms de 16 caractères, 250 zones, 18-660 et 840-1000 MHz, 115200 bauds. Même mémoire que la RT-4D. Les contacts, les groupes et les messages ne sont pas modifiés.{0}
+4dc05ed4	RT-1000 Pro
+250f9f5d	RT1000 Pro
+c1cbfbcc	1024 canaux avec des noms de 16 caractères, 250 zones, 18-660 et 840-1000 MHz, 115200 bauds. Même canal que la RT-4D, analogique seulement ; l'exclusion du balayage n'est pas gérée (elle reste telle qu'elle est sur la radio).{0}
+88b83d68	Un canal nouveau est ajouté à la zone 1 s'il n'est dans aucune zone ; un canal supprimé est retiré des zones. Si un mot de passe est défini sur la radio, enlevez-le d'abord avec le programme du constructeur. « Identifier » ne distingue pas cette radio des autres Radtel et Bajeton utilisant la même liaison : choisissez vous-même le bon onglet.
+b6bcffc3	Radtel {0}
+76b4acd2	Radio DMR. Protocole et mémoire tirés des programmes du constructeur « RT-4D CPS » (version 2.07) et « DMR RT-6D » (version 2.06). Ici on modifie les fréquences, le nom, la puissance, la largeur de bande, le balayage et les tonalités ; les autres éléments du canal restent tels qu'ils sont réglés (un canal DMR nouveau prend les valeurs par défaut du programme : premier contact, slot 1, color code 1). Seuls les canaux et les zones sont écrits : les contacts, les groupes, les messages et les réglages de la radio ne sont pas modifiés.{0}
+8d2388c9	Protocole et mémoire tirés du programme du constructeur « Radtel RT-1000 Pro CPS » (version du 6 août 2026). Ici on modifie les fréquences, le nom, la puissance, la largeur de bande et les tonalités ; les autres éléments du canal, balayage compris, restent tels qu'ils sont réglés. Seuls les canaux et les zones sont écrits : la radio FM et les réglages de la radio ne sont pas modifiés.{0}
+d90df803	Zone{0}
+2d0e3a60	Écriture : canaux…
+a7f04ce8	Écriture : zones…

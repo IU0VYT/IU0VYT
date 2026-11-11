@@ -2022,6 +2022,12 @@ b3a8e214	Canali letti e scritti un canale per volta con i comandi del PC, come f
 9b189840	JJCC-7700
 62547ae1	256 canali con nomi di 12 caratteri, 18-1000 MHz. Stesso saluto, stesso protocollo e stesso record dei canali delle Radtel RT-470 (famiglia MML JC-8810 di CHIRP). Il programma del costruttore non controlla l'identificativo della radio: la scheda rifiuta le radio che si identificano come un altro modello della famiglia.{0}
 35c405c5	1024 canali con nomi di 16 caratteri, 18-660 e 840-1000 MHz, 115200 baud. Stesso collegamento e stesso canale della Radtel RT-880G, senza le zone.{0} «Identifica» non la distingue dalla RT-880G: scegli tu la scheda.
+872bfdf0	Ricavato dal programma del costruttore e provato con una radio simulata, non su una radio vera. Si scrivono solo canali e zone; impostazioni e VFO letti dalla radio si riscrivono come sono. «Identifica» non la distingue dalle altre Radtel e Bajeton con lo stesso collegamento: scegli tu la scheda.
+7e3aca00	Radio DMR: 1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840-1000 MHz, 115200 baud. Contatti, gruppi e messaggi non si toccano.{0}
+fbb7a5e0	Radio DMR: 1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840-1000 MHz, 115200 baud. Stessa memoria della RT-4D. Contatti, gruppi e messaggi non si toccano.{0}
+4dc05ed4	RT-1000 Pro
+250f9f5d	RT1000 Pro
+c1cbfbcc	1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840-1000 MHz, 115200 baud. Stesso canale della RT-4D, solo analogico; l'esclusione dalla scansione non si gestisce (resta com'è sulla radio).{0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -3117,6 +3123,13 @@ eeb1014d	HamGeek HG-590
 932ee5ae	PROGROMJJCCU
 3d2d8311	la radio non è entrata in programmazione dopo cinque tentativi (risposta {0})
 61774c49	gamme della radio {0}
+88b83d68	Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale cancellato viene tolto dalle zone. Se sulla radio è impostata una password, toglila prima con il programma del costruttore. «Identifica» non distingue questa radio dalle altre Radtel e Bajeton con lo stesso collegamento: scegli tu la scheda giusta.
+b6bcffc3	Radtel {0}
+76b4acd2	Radio DMR. Protocollo e memoria ricavati dai programmi del costruttore «RT-4D CPS» (versione 2.07) e «DMR RT-6D» (versione 2.06). Qui si modificano frequenze, nome, potenza, banda, scansione e toni; le altre voci del canale restano quelle impostate (un canale DMR nuovo prende i valori predefiniti del programma: primo contatto, slot 1, color code 1). Si scrivono solo canali e zone: contatti, gruppi, messaggi e impostazioni della radio non si toccano.{0}
+8d2388c9	Protocollo e memoria ricavati dal programma del costruttore «Radtel RT-1000 Pro CPS» (versione del 6 agosto 2026). Qui si modificano frequenze, nome, potenza, banda e toni; le altre voci del canale, scansione compresa, restano quelle impostate. Si scrivono solo canali e zone: radio FM e impostazioni della radio non si toccano.{0}
+d90df803	Zone{0}
+2d0e3a60	Scrittura: canali…
+a7f04ce8	Scrittura: zone…
 9b4191c0	Retevis RT76P (GMRS)
 87ab3755	Radio GMRS per gli Stati Uniti: in Italia la banda GMRS non è ammessa. Come in CHIRP: fuori dalle frequenze GMRS solo ricezione, sui canali dei ponti simplex o +5 MHz, sui 467 MHz banda stretta e bassa potenza. Blocco del canale occupato, PTT ID, compander e ANI si conservano. Driver di CHIRP.
 9015bc86	canale {0}: sulle frequenze GMRS la trasmissione non si può disabilitare

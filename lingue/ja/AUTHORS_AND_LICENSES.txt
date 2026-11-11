@@ -210,6 +210,8 @@ KENWOOD TK-2140/3140、TK-280/380、R3B0RN ファームウェア、RADTEL RT-330
 
 RADTEL RT-817A / RT-871A（4.19）：メーカーのソフト（「Radtel RT-871A CPS」）との比較によるもので、その内容は一切含まれていません。接続とチャンネルレコードは CHIRP の radtel_rt880g.py のもので、RT-880G ですでに使っています。
 
+RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：メーカーのソフト（「RT-4D CPS」、「DMR RT-6D」、「Radtel RT-1000 Pro CPS」）を調べて求めました。それらの内容は何も含まれておらず、コードは一から書いています。
+
 ゾーン名（4.11）
 ゾーン名の形式は、相互運用性のために、メーカーのプログラムのコードから得ました：Radtel RT-950PRO_CPS v1.2.0-v1.3.3 と Bajeton BJ-9000_CPS v1.3.3（RT-950 Pro、BJ-9000、HI-UV850 Pro）、RT-950_EnCPS「BT-9000_CPS」v1.3.0（RT-950）、RT-920_EnCPS v1.2.4（RT-920）、RT910_EnCPS v1.0.3（Bluetooth なしの RT-910）、radtels.com と bajeton.cn。RT-920 については CHIRP のドライバー radtel_rt900.py（Fred Trimble、GNU GPL、上記参照）からも得ました。メーカーのプログラムは含まれていません。
 ゾーンに名前を付けるアイデアとチャンネルの一括編集は、Jorge De La Cruz KK4OXN の「RT-950 / 950 Pro Editor」プログラム（https://github.com/cruzerdlc/RT-950-950Pro-Editor、MIT ライセンス）から来ています。このリポジトリは文書とコンパイル済みのプログラムだけを公開しており、ソースコードはなく、そこからコードは取っていません。機能は IU0VYT Flash で一から書き直しました。

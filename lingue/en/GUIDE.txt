@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.19.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.20.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,13 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.20.0:
+- RADTEL RT-4D, RT-6D (DMR) and RT-1000 Pro: channels and zones, derived from the
+  manufacturer's programs. Only channels and zones are written; contacts, groups,
+  messages, FM radio and settings are left untouched. «Identify» cannot tell them from
+  the other Radtel and Bajeton radios with the same link: choose the tab yourself.
+  Tested only with a simulated radio: read first and report any problem.
+- Gallery: 556 models of 47 brands (502 with channels, 427 with settings).
 What's new in 4.19.0:
 - RADTEL RT-817A / RT-871A: channels, derived from the manufacturer's program (same link
   and same channel as the RT-880G, without the zones). Only the areas used by Radtel's

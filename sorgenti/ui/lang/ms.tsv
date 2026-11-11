@@ -5404,3 +5404,16 @@ f733bbbd	radio mengenalkan diri sebagai model lain dalam keluarga yang sama ({0}
 35c405c5	1024 saluran dengan nama 16 aksara, 18-660 dan 840-1000 MHz, 115200 baud. Sambungan dan saluran yang sama seperti Radtel RT-880G, tanpa zon.{0} «Kenal pasti» tidak dapat membezakannya daripada RT-880G: pilih tab sendiri.
 96369764	Radtel RT-817A / RT-871A
 cc621dfc	1024 saluran dengan nama 16 aksara, 115200 baud. Protokol dan memori diperoleh daripada program pengeluar («Radtel RT-871A CPS»), yang menggunakan sambungan dan saluran 48 bait Radtel RT-880G tanpa zon. Kawasan yang dibaca dan ditulis sama seperti program pengeluar (tetapan, saluran, radio FM; bukan logo). Modulasi (AM, USB) saluran yang tidak bertukar frekuensi, pengacak, nada ekor, kod saluran dan pilihan lain dikekalkan; dalam julat penerbangan saluran ditulis dalam AM.
+872bfdf0	Diperoleh daripada program pengeluar dan diuji dengan radio simulasi, bukan pada radio sebenar. Hanya saluran dan zon ditulis; tetapan dan VFO yang dibaca daripada radio ditulis semula seadanya. «Kenal pasti» tidak dapat membezakannya daripada radio Radtel dan Bajeton lain dengan sambungan yang sama: pilih tab sendiri.
+7e3aca00	Radio DMR: 1024 saluran dengan nama 16 aksara, 250 zon, 18-660 dan 840-1000 MHz, 115200 baud. Kenalan, kumpulan dan mesej tidak disentuh.{0}
+fbb7a5e0	Radio DMR: 1024 saluran dengan nama 16 aksara, 250 zon, 18-660 dan 840-1000 MHz, 115200 baud. Memori yang sama seperti RT-4D. Kenalan, kumpulan dan mesej tidak disentuh.{0}
+4dc05ed4	RT-1000 Pro
+250f9f5d	RT1000 Pro
+c1cbfbcc	1024 saluran dengan nama 16 aksara, 250 zon, 18-660 dan 840-1000 MHz, 115200 baud. Saluran yang sama seperti RT-4D, analog sahaja; pengecualian daripada imbasan tidak diurus (kekal seperti pada radio).{0}
+88b83d68	Saluran baharu ditambah ke zon 1 jika ia tiada dalam mana-mana zon; saluran yang dipadam dikeluarkan daripada zon. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak dapat membezakan radio ini daripada radio Radtel dan Bajeton lain dengan sambungan yang sama: pilih sendiri tab yang betul.
+b6bcffc3	Radtel {0}
+76b4acd2	Radio DMR. Protokol dan memori diperoleh daripada program pengeluar «RT-4D CPS» (versi 2.07) dan «DMR RT-6D» (versi 2.06). Di sini frekuensi, nama, kuasa, lebar jalur, imbasan dan nada diubah; butiran lain saluran kekal seperti yang ditetapkan (saluran DMR baharu mengambil nilai lalai program: kenalan pertama, slot 1, color code 1). Hanya saluran dan zon ditulis: kenalan, kumpulan, mesej dan tetapan radio tidak disentuh.{0}
+8d2388c9	Protokol dan memori diperoleh daripada program pengeluar «Radtel RT-1000 Pro CPS» (versi 6 Ogos 2026). Di sini frekuensi, nama, kuasa, lebar jalur dan nada diubah; butiran lain saluran, termasuk imbasan, kekal seperti yang ditetapkan. Hanya saluran dan zon ditulis: radio FM dan tetapan radio tidak disentuh.{0}
+d90df803	Zone{0}
+2d0e3a60	Penulisan: saluran…
+a7f04ce8	Penulisan: zon…

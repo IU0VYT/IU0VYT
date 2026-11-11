@@ -247,6 +247,8 @@ KENWOOD TK-2140/3140, TK-280/380, R3B0RN 펌웨어, RADTEL RT-330과 RT-400 (4.1
 
 RADTEL RT-817A / RT-871A (4.19): 제조사 프로그램(«Radtel RT-871A CPS»)과 비교하여 얻었으며, 그 내용은 전혀 포함되어 있지 않습니다. 연결과 채널 레코드는 CHIRP의 radtel_rt880g.py의 것으로, 이미 RT-880G에 사용하고 있습니다.
 
+RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): 제조사 프로그램(«RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»)을 연구해 알아냈으며, 그 내용은 아무것도 포함되어 있지 않습니다. 코드는 처음부터 새로 작성했습니다.
+
 구역 이름(4.11)
 구역 이름의 형식은 상호 운용성을 위해 제조사 프로그램의 코드에서 얻었습니다: Radtel RT-950PRO_CPS v1.2.0-v1.3.3과
 Bajeton BJ-9000_CPS v1.3.3(RT-950 Pro, BJ-9000, HI-UV850 Pro), RT-950_EnCPS

@@ -7,6 +7,26 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.20.0 (11/11/2026)
+-------------------
+- Radtel RT-4D and RT-6D (DMR) and RT-1000 Pro (drv_rt4d.go, new), from the
+  manufacturer's programs («RT-4D CPS» 2.07, «DMR RT-6D» 2.06, «Radtel RT-1000 Pro CPS»
+  of 6 August 2026), one generation after the Bajeton DM-5000 one: same link (115200
+  baud, 1 KiB blocks), different channel and zone. 48-byte channel with bit fields in
+  the first five bytes, frequencies in tens of Hz at bytes 5-12, tones at bytes 13-16,
+  name at bytes 32-47; 250 zones of 520 bytes with up to 250 channels. Block 8
+  (password), blocks 16-63 (channels) and 0x78-0xF7 (zones) are read; writing follows
+  the order of the program and stops after the zones: 0x90 (settings) and 0x92 (VFO)
+  with the data just read from the radio, 0x91 (48 channel blocks), 0x93 (128 zone
+  blocks). The items of an existing channel that are not handled are preserved; between
+  108 and 136 MHz the channel is written in AM.
+- Not done because not certain: the channels selected for A/B/C in the zone (the program
+  saves them one way and reads them back another: those bytes are preserved); on the
+  RT-1000 Pro the scan exclusion (the program writes it in one bit and reads it from
+  another: it is not handled, the byte stays as it is).
+- Catalogue (catalog_420.go, new): 3 entries. Counts: 502 radios, 427 with settings, 556
+  in the gallery. Translations: 13 new texts.
+
 4.19.0 (11/11/2026)
 -------------------
 - Radtel RT-817A / RT-871A (drv_iradio.go, kind irRT871A), from the manufacturer's

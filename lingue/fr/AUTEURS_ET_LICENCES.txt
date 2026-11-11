@@ -307,6 +307,10 @@ constructeur (« Radtel RT-871A CPS »), dont rien n'est inclus ; la liaison et
 l'enregistrement des canaux sont ceux de radtel_rt880g.py de CHIRP, déjà utilisés pour
 la RT-880G.
 
+RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20) : d'après l'étude des programmes du constructeur
+(« RT-4D CPS », « DMR RT-6D », « Radtel RT-1000 Pro CPS »), dont rien n'est inclus ; le
+code est écrit à partir de zéro.
+
 NOMS DES ZONES (4.11)
 Le format des noms des zones est tiré, pour l'interopérabilité, du code des programmes
 du constructeur : Radtel RT-950PRO_CPS v1.2.0-v1.3.3 et Bajeton BJ-9000_CPS v1.3.3

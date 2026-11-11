@@ -7,6 +7,28 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.20.0 (11.11.2026)
+-------------------
+- Radtel RT-4D und RT-6D (DMR) und RT-1000 Pro (drv_rt4d.go, neu), aus den Programmen
+  des Herstellers («RT-4D CPS» 2.07, «DMR RT-6D» 2.06, «Radtel RT-1000 Pro CPS» vom 6.
+  August 2026), eine Generation nach dem des Bajeton DM-5000: gleiche Verbindung (115200
+  Baud, 1-KiB-Blöcke), anderer Kanal und andere Zone. 48-Byte-Kanal mit Bitfeldern in
+  den ersten fünf Bytes, Frequenzen in Zehner-Hz in den Bytes 5-12, Töne in den Bytes
+  13-16, Name in den Bytes 32-47; 250 Zonen zu 520 Bytes mit bis zu 250 Kanälen. Gelesen
+  werden Block 8 (Passwort), die Blöcke 16-63 (Kanäle) und 0x78-0xF7 (Zonen); das
+  Schreiben folgt der Reihenfolge des Programms und endet nach den Zonen: 0x90
+  (Einstellungen) und 0x92 (VFO) mit den gerade aus dem Funkgerät gelesenen Daten, 0x91
+  (48 Kanalblöcke), 0x93 (128 Zonenblöcke). Die nicht verwalteten Angaben eines
+  vorhandenen Kanals bleiben erhalten; zwischen 108 und 136 MHz wird der Kanal in AM
+  geschrieben.
+- Nicht gemacht, weil nicht sicher: die für A/B/C gewählten Kanäle in der Zone (das
+  Programm speichert sie auf eine Art und liest sie auf eine andere zurück: diese Bytes
+  bleiben erhalten); beim RT-1000 Pro der Ausschluss vom Suchlauf (das Programm schreibt
+  ihn in ein Bit und liest ihn aus einem anderen: er wird nicht verwaltet, das Byte
+  bleibt, wie es ist).
+- Katalog (catalog_420.go, neu): 3 Einträge. Zahlen: 502 Funkgeräte, 427 mit
+  Einstellungen, 556 in der Galerie. Übersetzungen: 13 neue Texte.
+
 4.19.0 (11.11.2026)
 -------------------
 - Radtel RT-817A / RT-871A (drv_iradio.go, Typ irRT871A), aus dem Programm des

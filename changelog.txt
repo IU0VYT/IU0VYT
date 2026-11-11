@@ -3,6 +3,33 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.20.0 (11/11/2026)
+-------------------
+- Radtel RT-4D e RT-6D (DMR) e RT-1000 Pro (drv_rt4d.go, nuovo; modelli rtl-rt4d,
+  rtl-rt6d, rtl-rt1000pro): dai programmi del costruttore («RT-4D CPS» 2.07, «DMR
+  RT-6D» 2.06, «Radtel RT-1000 Pro CPS» del 6 agosto 2026), una generazione dopo
+  quella della Bajeton DM-5000: stesso collegamento (115200 baud, blocchi da 1 KiB),
+  canale e zona diversi. Canale di 48 byte con i campi a bit nei primi cinque byte
+  (tipo, potenza, TOT, scansione, banda, FM/AM/SSB), frequenze in decine di Hz ai
+  byte 5-12, toni ai byte 13-16, nome ai byte 32-47; 250 zone di 520 byte con fino a
+  250 canali. Ogni campo è stato ricavato da due routine distinte del programma
+  (salvataggio e rilettura) e i tre programmi sono stati confrontati fra loro.
+- Si leggono il blocco 8 (password), i blocchi 16-63 (canali) e 0x78-0xF7 (zone). In
+  scrittura si segue l'ordine del programma e ci si ferma dopo le zone: 0x90
+  (impostazioni) e 0x92 (VFO) con i dati appena letti dalla radio, 0x91 (48 blocchi
+  di canali), 0x93 (128 blocchi di zone). Contatti, gruppi, cifratura, messaggi e
+  radio FM non vengono scritti.
+- Le voci non gestite di un canale esistente si conservano; un canale nuovo prende i
+  valori predefiniti del programma. Fra 108 e 136 MHz il canale si scrive in AM.
+- Non fatto perché non certo: i canali scelti per A/B/C nella zona (il programma li
+  salva in un modo e li rilegge in un altro: quei byte si conservano); sulla RT-1000
+  Pro l'esclusione dalla scansione (il programma la scrive in un bit e la rilegge da
+  un altro: non si gestisce, il byte resta com'è).
+- Provate solo con una radio simulata. «Identifica» non le distingue dalle altre
+  Radtel e Bajeton con lo stesso collegamento.
+- Catalogo (catalog_420.go, nuovo): 3 voci. Conteggi: 502 radio, 427 con
+  impostazioni, 556 in galleria. Traduzioni: 13 testi nuovi.
+
 4.19.0 (11/11/2026)
 -------------------
 - Radtel RT-817A / RT-871A (drv_iradio.go, tipo irRT871A; modello rtl-rt871a): dal

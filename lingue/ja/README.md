@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**バージョン 4.19.0** · Windows · 13 言語のインターフェース（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية、Bahasa Melayu、हिन्दी）· 実行ファイル 1 つだけ、インストール不要
+**バージョン 4.20.0** · Windows · 13 言語のインターフェース（italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語、한국어、العربية、Bahasa Melayu、हिन्दी）· 実行ファイル 1 つだけ、インストール不要
 
 アマチュア無線家と **47 ブランド**のトランシーバーの利用者のためのプログラムです（**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood）。プログラミングケーブルでチャンネル、周波数、設定を読み書きし、イタリアのレピーターのアーカイブを管理し、対応する無線機のファームウェアを更新します。
 
@@ -38,7 +38,7 @@
 
 ## 機能
 
-- 499 機種の**チャンネルと周波数**（デジタル PMR や DMR 無線機を含み、USB 接続も可）：ケーブルによる読み書き、CHIRP 互換の `.img` ファイル、Baofeng K67 Pro（`.xlc`）と Bajeton 8300（`.dat`）の元のファイル。
+- 502 機種の**チャンネルと周波数**（デジタル PMR や DMR 無線機を含み、USB 接続も可）：ケーブルによる読み書き、CHIRP 互換の `.img` ファイル、Baofeng K67 Pro（`.xlc`）と Bajeton 8300（`.dat`）の元のファイル。
 - 427 機種の**無線機の設定**（メニュー、表示、VOX、スケルチ、TOT、DTMF、キー…）。各項目の説明があり、注意が必要な項目には確認付きの警告があります。
 - **接続した無線機の識別**：このプログラムが自動で識別し、メーカー、機種、種類、ファームウェア、無線機が伝えるその他の情報を表示します（USB の DMR 無線機では DMR ID と名前も）。**自動識別**（「識別」タブのボタン、選択は記憶）を使えば、どのタブにいてもケーブルをつなぐだけです。すべてのケーブルのポートを同時に監視し、ケーブル接続後に電源を入れた無線機や、別々のケーブルにつないだ複数の無線機も識別します。過去に識別した無線機やよく使われる無線機を先に試し、ファームウェア更新モードの無線機にだまされず、それぞれのタブを読み込んだチャンネルとともに開きます。「無線機を識別中」の枠は応答する無線機のあるケーブルにだけ表示されます。別の無線機には右上の **「🔎 無線機を識別」** ボタンがあります。
 - **別の無線機への転送**：ある無線機でチェックしたチャンネルを、メーカーと機種で選んだ接続中の別の無線機に直接書き込みます。互換性チェック、調整、バックアップ、確認付きです。
@@ -46,7 +46,7 @@
 - **13 言語のインターフェース**：「ℹ Info」の隣の旗の選択で、プログラム全体をすぐに翻訳し（アラビア語は右から左）、言語は再起動後も記憶されます。説明ファイルの訳は `lingue` フォルダーにあります。
 - 「ゾーン 1」「ゾーン 2」…の代わりの**ゾーン名**（Radtel RT-950 Pro、RT-950、RT-920、RT-910、Bajeton BJ-9000 と BJ-7700、Hiroyasu HI-UV850 Pro、DMR 無線機 RD-5R、DM-1801、DM-32UV のゾーン）。チャンネルと一緒にケーブルで読み書きします。
 - チェックしたチャンネルの**一括編集**：出力、帯域幅、スキャン、サブトーン、シフト、送信をまとめて変更し、各チャンネルの残りはそのままです。
-- 47 ブランド 553 機種の**ギャラリー**：対応と非対応、種類（アマチュア無線、DMR、GMRS/FRS、PMR446、子ども向け）、ブランドで分類し、検索、フィルター、公式プログラムやマニュアルへのリンク付き。
+- 47 ブランド 556 機種の**ギャラリー**：対応と非対応、種類（アマチュア無線、DMR、GMRS/FRS、PMR446、子ども向け）、ブランドで分類し、検索、フィルター、公式プログラムやマニュアルへのリンク付き。
 - [IK2ANE](https://www.ik2ane.it) の最新リストに基づく**レピーターのアーカイブ**：フィルターと無線機への入力、書き込み前のレピーターと無線機の互換性チェック付き。
 - 57 機種の**ファームウェア更新**（Quansheng UV-K5、UV-K6、UV-5R Plus、Quansheng と Radtel の .bin ファイルによる Radtel RT-590 と RT-600、Radtel の .kdhx ファイルによる Radtel RT-470、RT-470L、RT-470X、RT-495、RT-630、メーカーの .BIN ファイルによる TIDRADIO TD-H3、TD-H8 と Radtel RT-730、.bin ファイルによる Retevis RA79 V3 と RA89、Retevis の .hex ファイルによる Retevis RT85、.BTF ファイルによる Radtel RT-950 Pro、RT-950 と Bajeton BJ-9000、.anc ファイルによる Radtel RT-920 と RT-910B、.BTU ファイルによる Radtel RT-910、RT-900 と Bluetooth なしの Bajeton BJ-7700、Radtel と M7OCM の .bin ファイルによる Radtel RT-890、USB で Baofeng の .bin ファイルによる Baofeng DM-1701、USB で .sgl ファイルによる Baofeng RD-5R と DM-1801 も）。ファイルのチェックと無線機のバックアップ付き。BTECH DMR-6X2 と DMR-6X2 PRO は公式プログラムによるガイド付き更新。
 - 書き込みのたびに自動で**バックアップ**し、書き込み後に確認。

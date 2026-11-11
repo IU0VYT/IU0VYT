@@ -309,6 +309,10 @@ RADTEL RT-817A / RT-871A (4.19): aus dem Vergleich mit dem Programm des Herstell
 («Radtel RT-871A CPS»), von dem nichts enthalten ist; Verbindung und Kanaldatensatz sind
 die von radtel_rt880g.py von CHIRP, die schon für das RT-880G verwendet werden.
 
+RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): aus dem Studium der Programme des Herstellers
+(«RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), von denen nichts enthalten ist;
+der Code ist von Grund auf neu geschrieben.
+
 ZONENNAMEN (4.11)
 Das Format der Zonennamen ist, zur Interoperabilität, aus dem Code der
 Herstellerprogramme abgeleitet: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 und Bajeton

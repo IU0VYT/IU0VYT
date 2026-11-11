@@ -302,6 +302,10 @@ RADTEL RT-817A / RT-871A (4.19): daripada perbandingan dengan program pengeluar 
 RT-871A CPS»), yang tiada satu pun disertakan; sambungan dan rekod saluran ialah yang
 terdapat dalam radtel_rt880g.py CHIRP, yang sudah digunakan untuk RT-880G.
 
+RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): daripada kajian program pengeluar («RT-4D CPS»,
+«DMR RT-6D», «Radtel RT-1000 Pro CPS»), tiada apa-apa daripadanya disertakan; kod
+ditulis dari awal.
+
 NAMA ZON (4.11)
 Format nama zon diperoleh, untuk saling kendali, daripada kod program pengeluar: Radtel
 RT-950PRO_CPS v1.2.0-v1.3.3 dan Bajeton BJ-9000_CPS v1.3.3 (RT-950 Pro, BJ-9000,

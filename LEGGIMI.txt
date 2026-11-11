@@ -1,11 +1,15 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.19.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.20.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.20.0:
+- RADTEL RT-4D, RT-6D (DMR) e RT-1000 Pro: canali e zone, dai programmi del
+  costruttore. Vedi «RADTEL RT-4D, RT-6D, RT-1000 PRO».
+- Galleria: 556 modelli di 47 marche (502 con canali, 427 con impostazioni).
 Novità della 4.19.0:
 - RADTEL RT-817A / RT-871A: canali, dal programma del costruttore (stesso collegamento
   e stesso canale della RT-880G, senza le zone). Vedi «RADTEL RT-817A / RT-871A».
@@ -1208,6 +1212,24 @@ che la radio comunica:
   ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
+
+RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
+- 1024 canali con nomi di 16 caratteri, 250 zone, 18-660 e 840-1000 MHz, 115200 baud.
+  RT-4D e RT-6D sono radio DMR; la RT-1000 Pro è solo analogica.
+- Si modificano frequenze, nome, potenza, banda, toni e (RT-4D, RT-6D) scansione. Le
+  altre voci di un canale esistente restano come sono; un canale DMR nuovo prende i
+  valori predefiniti del programma di Radtel (primo contatto, slot 1, color code 1).
+- Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale
+  cancellato viene tolto dalle zone.
+- Si scrivono solo canali e zone. Contatti, gruppi, messaggi, radio FM e impostazioni
+  non si toccano (impostazioni e VFO vengono riscritti come sono sulla radio).
+- RT-1000 Pro: l'esclusione dalla scansione non si gestisce (resta com'è sulla radio).
+- Le potenze sono indicate come alta e bassa (i watt non sono nel programma).
+- «Identifica» non distingue queste radio dalle altre Radtel e Bajeton con lo stesso
+  collegamento: scegli tu la scheda. Se sulla radio è impostata una password, toglila
+  prima con il programma di Radtel.
+Ricavate dai programmi del costruttore e provate solo con una radio simulata: fai
+prima la sola lettura e segnala ogni problema.
 
 RADTEL RT-817A / RT-871A (4.19)
 - 1024 canali con nomi di 16 caratteri, 18-660 e 840-1000 MHz, 115200 baud.
