@@ -1,11 +1,15 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.18.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.19.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.19.0:
+- RADTEL RT-817A / RT-871A: canali, dal programma del costruttore (stesso collegamento
+  e stesso canale della RT-880G, senza le zone). Vedi «RADTEL RT-817A / RT-871A».
+- Galleria: 553 modelli di 47 marche (499 con canali, 427 con impostazioni).
 Novità della 4.18.0:
 - KENWOOD TK-2140, TK-3140, TK-280, TK-380: palmari professionali con i canali divisi
   in zone (gruppi): canali e impostazioni, con i driver di CHIRP. Vedi «KENWOOD
@@ -1204,6 +1208,19 @@ che la radio comunica:
   ricavati dai moduli CHIRP pubblicati da IJV (3.60, V4.0, V5.0) e dall'analisi di
   RadioManager 4.3.2 (anche il collegamento dati della V6), e provati con radio simulate. Le radio vere con IJV non sono
   ancora state provate: segnala ogni problema.
+
+RADTEL RT-817A / RT-871A (4.19)
+- 1024 canali con nomi di 16 caratteri, 18-660 e 840-1000 MHz, 115200 baud.
+- Si leggono e si scrivono solo le aree che usa il programma di Radtel: impostazioni,
+  canali e radio FM. Il logo non viene toccato.
+- Solo i canali: le impostazioni lette dalla radio si riscrivono come sono.
+- Modulazione (AM, USB) di un canale che non cambia frequenza, scrambler, toni di
+  coda, codice del canale e le altre opzioni si conservano; fra 108 e 136 MHz il
+  canale si scrive in AM.
+- Le potenze sono indicate come bassa, media e alta (i watt non sono nel programma).
+- «Identifica» non distingue questa radio dalla RT-880G: scegli tu la scheda.
+Ricavata dal programma del costruttore e provata solo con una radio simulata: fai
+prima la sola lettura e segnala ogni problema.
 
 KENWOOD TK-2140/3140, TK-280/380 (4.18)
 Palmari professionali Kenwood con i canali divisi in zone (TK-2140, TK-3140) o in

@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.18.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.19.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,14 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.19.0:
+- RADTEL RT-817A / RT-871A: Kanäle, aus dem Programm des Herstellers abgeleitet
+  (dieselbe Verbindung und derselbe Kanal wie beim RT-880G, ohne die Zonen). Gelesen und
+  geschrieben werden nur die Bereiche, die das Programm von Radtel verwendet
+  (Einstellungen, Kanäle, UKW-Radio; nicht das Logo). «Identifizieren» kann es nicht vom
+  RT-880G unterscheiden: wähle die Karte selbst. Nur mit einem simulierten Funkgerät
+  getestet: zuerst lesen und jedes Problem melden.
+- Galerie: 553 Modelle von 47 Marken (499 mit Kanälen, 427 mit Einstellungen).
 Neu in 4.18.0:
 - KENWOOD TK-2140, TK-3140, TK-280, TK-380: Betriebsfunk-Handgeräte mit in Zonen
   (Gruppen) aufgeteilten Kanälen: Kanäle und Einstellungen, mit den CHIRP-Treibern. Die

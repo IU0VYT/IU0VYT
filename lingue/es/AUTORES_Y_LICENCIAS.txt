@@ -302,6 +302,10 @@ no afiliado a él. Radtel RT-330 y RT-400: de la comparación con los programas 
 fabricante («Radio CPS» y «JJCC-7700 CPS»), de los que no se incluye nada; el registro
 de canales es el de mml_jc8810.py de CHIRP. Gracias a fagci por el firmware R3b0rn.
 
+RADTEL RT-817A / RT-871A (4.19): de la comparación con el programa del fabricante
+(«Radtel RT-871A CPS»), del que no se incluye nada; la conexión y el registro de canales
+son los de radtel_rt880g.py de CHIRP, ya usados para la RT-880G.
+
 NOMBRES DE LAS ZONAS (4.11)
 El formato de los nombres de las zonas se ha obtenido, para la interoperabilidad, del
 código de los programas del fabricante: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 y Bajeton

@@ -5401,3 +5401,6 @@ f89ce4d0	Radtel RT-400
 e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
 f733bbbd	la radio s'identifie comme un autre modèle de la même famille ({0}) : ouvrez l'onglet de ce modèle
 8a4bc126	firmware R3b0rn de fagci
+35c405c5	1024 canaux avec des noms de 16 caractères, 18-660 et 840-1000 MHz, 115200 bauds. Même liaison et même canal que la Radtel RT-880G, sans les zones.{0} « Identifier » ne la distingue pas de la RT-880G : choisissez vous-même l'onglet.
+96369764	Radtel RT-817A / RT-871A
+cc621dfc	1024 canaux avec des noms de 16 caractères, 115200 bauds. Protocole et mémoire tirés du programme du constructeur (« Radtel RT-871A CPS »), qui utilise la liaison et le canal de 48 octets de la Radtel RT-880G sans les zones. On lit et on écrit les mêmes zones de mémoire que le programme du constructeur (réglages, canaux, radio FM ; pas le logo). La modulation (AM, USB) des canaux dont la fréquence ne change pas, le brouilleur, les tonalités de fin, le code du canal et les autres options sont conservés ; dans la bande aviation le canal est écrit en AM.

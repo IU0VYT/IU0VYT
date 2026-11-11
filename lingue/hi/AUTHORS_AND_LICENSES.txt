@@ -267,6 +267,8 @@ KENWOOD TH-F6/F7, TH-G71, TH-D7, TH-K2 और TK हैंडहेल्ड (4.
 
 KENWOOD TK-2140/3140, TK-280/380, R3B0RN फ़र्मवेयर, RADTEL RT-330 और RT-400 (4.18): drv_kwtk140.go CHIRP के tk3140.py (Copyright 2023 Dan Smith) से और drv_kwtk280.go CHIRP के tk280.py (Copyright 2016 Pavel Milanes CO7WT, 2024 Dan Smith) से निकला है, GNU GPL v3। fagci का R3b0rn फ़र्मवेयर (https://github.com/fagci/uvk5-fagci-reborn, Apache 2.0 लाइसेंस, DualTachyon के फ़र्मवेयर पर आधारित): drv_fagci.go को IU0VYT Flash में फ़र्मवेयर के स्रोत कोड में बताई गई मेमोरी की बनावट और कमांड के आधार पर लिखा गया है; लेखक का कोई फ़र्मवेयर या प्रोग्राम शामिल नहीं है; स्वतंत्र प्रोग्राम, लेखक से संबद्ध नहीं। Radtel RT-330 और RT-400: निर्माता के प्रोग्रामों («Radio CPS» और «JJCC-7700 CPS») से तुलना द्वारा, जिनका कुछ भी शामिल नहीं है; चैनल रिकॉर्ड CHIRP के mml_jc8810.py वाला है। R3b0rn फ़र्मवेयर के लिए fagci का धन्यवाद।
 
+RADTEL RT-817A / RT-871A (4.19): निर्माता के प्रोग्राम («Radtel RT-871A CPS») से तुलना द्वारा, जिसका कुछ भी शामिल नहीं है; कनेक्शन और चैनल रिकॉर्ड CHIRP के radtel_rt880g.py वाले हैं, जो RT-880G के लिए पहले से इस्तेमाल होते हैं।
+
 ज़ोन के नाम (4.11)
 ज़ोन के नामों का फ़ॉर्मेट, इंटरऑपरेबिलिटी के लिए, निर्माता के प्रोग्रामों के कोड से निकाला
 गया है: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 और Bajeton BJ-9000_CPS v1.3.3 (RT-950 Pro,

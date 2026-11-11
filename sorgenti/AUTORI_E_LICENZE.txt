@@ -307,6 +307,11 @@ Radtel RT-330 e RT-400: dal confronto con i programmi del costruttore («Radio C
 della RT-330 e «JJCC-7700 CPS» della RT-400), di cui non è incluso nulla; il record
 dei canali è quello di mml_jc8810.py di CHIRP.
 
+RADTEL RT-817A / RT-871A (4.19)
+Dal confronto con il programma del costruttore («Radtel RT-871A CPS»), di cui non è
+incluso nulla; collegamento e record dei canali sono quelli di radtel_rt880g.py di
+CHIRP, già usati per la RT-880G.
+
 NOMI DELLE ZONE (4.11)
 Il formato dei nomi delle zone è ricavato, per l'interoperabilità, dal codice dei
 programmi del costruttore: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 e Bajeton BJ-9000_CPS

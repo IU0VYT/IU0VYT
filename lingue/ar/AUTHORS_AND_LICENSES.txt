@@ -263,6 +263,8 @@ KENWOOD TH-F6/F7 و TH-G71 و TH-D7 و TH-K2 وأجهزة TK المحمولة (4
 
 KENWOOD TK-2140/3140 وTK-280/380 وبرنامج R3B0RN الثابت وRADTEL RT-330 وRT-400 (4.18): drv_kwtk140.go مشتق من tk3140.py في CHIRP (Copyright 2023 Dan Smith) وdrv_kwtk280.go من tk280.py في CHIRP (Copyright 2016 Pavel Milanes CO7WT, 2024 Dan Smith)، GNU GPL v3. برنامج R3b0rn الثابت من fagci (https://github.com/fagci/uvk5-fagci-reborn، رخصة Apache 2.0، مبني على البرنامج الثابت لـ DualTachyon): drv_fagci.go مكتوب في IU0VYT Flash بحسب بنية الذاكرة والأوامر الموصوفة في الشيفرة المصدرية للبرنامج الثابت؛ لا يتضمن أي برنامج ثابت أو برنامج للمؤلف؛ برنامج مستقل لا علاقة له به. Radtel RT-330 وRT-400: من المقارنة مع برامج الشركة المصنّعة («Radio CPS» و«JJCC-7700 CPS») التي لا يتضمن منها شيء؛ سجل القناة هو سجل mml_jc8810.py في CHIRP. شكرًا لـ fagci على برنامج R3b0rn الثابت.
 
+RADTEL RT-817A / RT-871A (4.19): من المقارنة مع برنامج الشركة المصنّعة («Radtel RT-871A CPS») الذي لا يتضمن منه شيء؛ الاتصال وسجل القناة هما ما في radtel_rt880g.py في CHIRP، المستخدمان من قبل لـ RT-880G.
+
 أسماء المناطق (4.11)
 صيغة أسماء المناطق مستخرجة، لأغراض التوافق، من شيفرة برامج الشركة المصنّعة: Radtel
 RT-950PRO_CPS v1.2.0-v1.3.3 وBajeton BJ-9000_CPS v1.3.3 (RT-950 Pro وBJ-9000 وHI-UV850

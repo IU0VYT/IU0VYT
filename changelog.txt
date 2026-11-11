@@ -3,6 +3,26 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.19.0 (11/11/2026)
+-------------------
+- Radtel RT-817A / RT-871A (drv_iradio.go, tipo irRT871A; modello rtl-rt871a): dal
+  programma del costruttore («Radtel RT-871A CPS», stessa base di codice di quello
+  della RT-860, confrontato metodo per metodo). Stesso ingresso in programmazione,
+  stessi blocchi da 1 KiB e stesso canale di 48 byte della RT-880G, senza le zone:
+  si leggono i blocchi 8-11 (impostazioni), 0x10-0x3F (1024 canali) e 0x358 (radio
+  FM) e si scrivono le aree 0x90 (4 blocchi), 0x91 (48) e 0x99 (1); il logo (0x9A)
+  non è gestito. Potenza 0 bassa, 1 media, 2 alta; il codice del canale occupa 12
+  byte (0x14-0x1F) e si conserva; limiti 18-660 e 840-1000 MHz. Immagine di
+  0xD4400 byte con le aree non lette a FF. Provata solo con una radio simulata.
+  «Identifica» non la distingue dalla RT-880G (stesso ingresso in programmazione).
+- Catalogo (catalog_419.go, nuovo): 1 voce. Conteggi: 499 radio, 427 con
+  impostazioni, 553 in galleria. Traduzioni: 3 testi nuovi.
+- Esaminati e non fatti: Radtel RT-4D, RT-6D e RT-1000 Pro (programmi di una
+  generazione più recente, con un'altra disposizione delle aree: serve un driver
+  nuovo); Kenwood TK-2180 / TK-3180 (tk8180.py: formato della memoria costruito in
+  base alle zone e file con intestazione propria, non riducibile a una modifica
+  semplice dei canali esistenti).
+
 4.18.0 (11/11/2026)
 -------------------
 - Kenwood TK-2140 e TK-3140 (drv_kwtk140.go, nuovo; tk3140.py di CHIRP): TK-2140K,

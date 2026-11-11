@@ -82,7 +82,7 @@ func (e *iradioEmu) serve(p Port) error {
 			if pr.byBlock {
 				a *= pr.block
 			}
-			if e.f.kind == irRT880G && addr == 0 {
+			if (e.f.kind == irRT880G || e.f.kind == irRT871A) && addr == 0 {
 				a = 0 // lettura iniziale della scrittura (blocco 0)
 			}
 			e.mu.Lock()
@@ -110,7 +110,7 @@ func (e *iradioEmu) serve(p Port) error {
 				a = addr * pr.block
 			default:
 				base := -1
-				for _, z := range rt880gRegions {
+				for _, z := range e.f.regions() {
 					if byte(z[2]) == c {
 						base = z[0]
 					}

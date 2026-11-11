@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.18.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.19.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,13 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.19.0:
+- RADTEL RT-817A / RT-871A: canales, a partir del programa del fabricante (misma
+  conexión y mismo canal que la RT-880G, sin las zonas). Solo se leen y se escriben las
+  áreas que usa el programa de Radtel (ajustes, canales, radio FM; no el logotipo).
+  «Identificar» no la distingue de la RT-880G: elige tú la ficha. Probado solo con una
+  radio simulada: haz primero una lectura y avisa de cualquier problema.
+- Galería: 553 modelos de 47 marcas (499 con canales, 427 con ajustes).
 Novedades de la 4.18.0:
 - KENWOOD TK-2140, TK-3140, TK-280, TK-380: portátiles profesionales con los canales
   repartidos en zonas (grupos): canales y ajustes, con los drivers de CHIRP. La lista

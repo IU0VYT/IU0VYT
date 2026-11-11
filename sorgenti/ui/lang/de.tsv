@@ -5401,3 +5401,6 @@ f89ce4d0	Radtel RT-400
 e5e465e2	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890_-*()/\+=.
 f733bbbd	das Funkgerät weist sich als ein anderes Modell derselben Familie aus ({0}): öffne die Karte dieses Modells
 8a4bc126	Firmware R3b0rn von fagci
+35c405c5	1024 Kanäle mit Namen aus 16 Zeichen, 18-660 und 840-1000 MHz, 115200 Baud. Dieselbe Verbindung und derselbe Kanal wie beim Radtel RT-880G, ohne die Zonen.{0} «Identifizieren» kann es nicht vom RT-880G unterscheiden: wähle die Karte selbst.
+96369764	Radtel RT-817A / RT-871A
+cc621dfc	1024 Kanäle mit Namen aus 16 Zeichen, 115200 Baud. Protokoll und Speicher aus dem Programm des Herstellers («Radtel RT-871A CPS») abgeleitet, das die Verbindung und den 48-Byte-Kanal des Radtel RT-880G ohne die Zonen verwendet. Gelesen und geschrieben werden dieselben Bereiche wie im Programm des Herstellers (Einstellungen, Kanäle, UKW-Radio; nicht das Logo). Modulation (AM, USB) der Kanäle, deren Frequenz sich nicht ändert, Scrambler, Rauschsperren-Endtöne, Kanalcode und die übrigen Optionen bleiben erhalten; im Flugfunkbereich wird der Kanal in AM geschrieben.

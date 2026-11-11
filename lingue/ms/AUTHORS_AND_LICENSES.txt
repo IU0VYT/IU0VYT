@@ -298,6 +298,10 @@ dan RT-400: daripada perbandingan dengan program pengeluar («Radio CPS» dan «
 CPS»), yang tiada satu pun disertakan; rekod saluran ialah rekod mml_jc8810.py CHIRP.
 Terima kasih kepada fagci atas perisian tegar R3b0rn.
 
+RADTEL RT-817A / RT-871A (4.19): daripada perbandingan dengan program pengeluar («Radtel
+RT-871A CPS»), yang tiada satu pun disertakan; sambungan dan rekod saluran ialah yang
+terdapat dalam radtel_rt880g.py CHIRP, yang sudah digunakan untuk RT-880G.
+
 NAMA ZON (4.11)
 Format nama zon diperoleh, untuk saling kendali, daripada kod program pengeluar: Radtel
 RT-950PRO_CPS v1.2.0-v1.3.3 dan Bajeton BJ-9000_CPS v1.3.3 (RT-950 Pro, BJ-9000,

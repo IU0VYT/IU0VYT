@@ -6,6 +6,23 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.19.0 (11/11/2026)
+-------------------
+- Radtel RT-817A / RT-871A (drv_iradio.go, jenis irRT871A), daripada program pengeluar
+  («Radtel RT-871A CPS», asas kod yang sama seperti program RT-860, dibandingkan kaedah
+  demi kaedah): cara masuk pengaturcaraan yang sama, blok 1 KiB yang sama dan saluran 48
+  bait yang sama seperti RT-880G, tanpa zon. Blok 8-11 (tetapan), 0x10-0x3F (1024
+  saluran) dan 0x358 (radio FM) dibaca; kawasan 0x90 (4 blok), 0x91 (48) dan 0x99 (1)
+  ditulis; logo tidak dikendalikan. Kuasa 0 rendah, 1 sederhana, 2 tinggi; kod saluran
+  12 bait dikekalkan; had 18-660 dan 840-1000 MHz.
+- Katalog (catalog_419.go, baharu): 1 entri. Kiraan: 499 radio, 427 dengan tetapan, 553
+  dalam galeri. Terjemahan: 3 teks baharu.
+- Diperiksa tetapi tidak dibuat: Radtel RT-4D, RT-6D dan RT-1000 Pro (program generasi
+  lebih baharu dengan susunan kawasan yang berbeza: pemacu baharu diperlukan); Kenwood
+  TK-2180 / TK-3180 (tk8180.py membina format memori berdasarkan zon dan menggunakan
+  fail dengan pengepala sendiri: tidak boleh dikurangkan kepada pengubahsuaian mudah
+  saluran sedia ada).
+
 4.18.0 (11/11/2026)
 -------------------
 - Kenwood TK-2140 dan TK-3140 (drv_kwtk140.go, baharu; tk3140.py CHIRP: TK-2140K,

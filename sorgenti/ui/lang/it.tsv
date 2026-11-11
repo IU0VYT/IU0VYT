@@ -2021,6 +2021,7 @@ b3a8e214	Canali letti e scritti un canale per volta con i comandi del PC, come f
 6c261fe0	512 canali con nomi di 12 caratteri, 100-520 MHz, 115200 baud. Stesso protocollo e stesso record dei canali delle Radtel RT-470 (famiglia MML JC-8810 di CHIRP), con un saluto proprio.{0}
 9b189840	JJCC-7700
 62547ae1	256 canali con nomi di 12 caratteri, 18-1000 MHz. Stesso saluto, stesso protocollo e stesso record dei canali delle Radtel RT-470 (famiglia MML JC-8810 di CHIRP). Il programma del costruttore non controlla l'identificativo della radio: la scheda rifiuta le radio che si identificano come un altro modello della famiglia.{0}
+35c405c5	1024 canali con nomi di 16 caratteri, 18-660 e 840-1000 MHz, 115200 baud. Stesso collegamento e stesso canale della Radtel RT-880G, senza le zone.{0} «Identifica» non la distingue dalla RT-880G: scegli tu la scheda.
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2850,6 +2851,8 @@ ea204b58	Radtel RT-890 (firmware M7OCM)
 76b55833	Radtel RT-890 (PCB 2.0) con il firmware M7OCM: 999 canali con nomi di 10 caratteri, 10-1300 MHz. Modulazione (AM, LSB, USB) dei canali che non cambiano frequenza, liste di scansione, blocco del canale occupato, codice di silenziamento e numero SC si conservano. Driver di M7OCM per CHIRP (github.com/M7OCM/890, GPL v2 o successiva).
 60f12f01	Radtel RT-880G
 4097320d	1024 canali con nomi di 16 caratteri (lettura di circa 860 KiB a 115200 baud: un paio di minuti). Modulazione (AM, USB) dei canali che non cambiano frequenza, scrambler, toni di coda, cifratura DCS e limiti RX/TX si conservano; nella gamma aeronautica il canale si scrive in AM. Le zone restano come sono. Driver di CHIRP.
+96369764	Radtel RT-817A / RT-871A
+cc621dfc	1024 canali con nomi di 16 caratteri, 115200 baud. Protocollo e memoria ricavati dal programma del costruttore («Radtel RT-871A CPS»), che usa il collegamento e il canale di 48 byte della Radtel RT-880G senza le zone. Si leggono e si scrivono le stesse aree del programma del costruttore (impostazioni, canali, radio FM; non il logo). Modulazione (AM, USB) dei canali che non cambiano frequenza, scrambler, toni di coda, codice del canale e le altre opzioni si conservano; nella gamma aeronautica il canale si scrive in AM.
 75a86cfc	la radio non è entrata in programmazione dopo cinque tentativi: controlla il cavo e riaccendi la radio
 f5902c29	Ingresso in programmazione
 a08d3599	Alta {0}

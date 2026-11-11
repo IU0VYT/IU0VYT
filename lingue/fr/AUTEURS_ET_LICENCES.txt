@@ -302,6 +302,11 @@ du constructeur (« Radio CPS » et « JJCC-7700 CPS »), dont rien n'est inclus
 l'enregistrement des canaux est celui de mml_jc8810.py de CHIRP. Merci à fagci pour le
 firmware R3b0rn.
 
+RADTEL RT-817A / RT-871A (4.19) : d'après la comparaison avec le programme du
+constructeur (« Radtel RT-871A CPS »), dont rien n'est inclus ; la liaison et
+l'enregistrement des canaux sont ceux de radtel_rt880g.py de CHIRP, déjà utilisés pour
+la RT-880G.
+
 NOMS DES ZONES (4.11)
 Le format des noms des zones est tiré, pour l'interopérabilité, du code des programmes
 du constructeur : Radtel RT-950PRO_CPS v1.2.0-v1.3.3 et Bajeton BJ-9000_CPS v1.3.3

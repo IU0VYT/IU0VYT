@@ -32,6 +32,10 @@ const (
 	irUV58P                    // iRadio UV-5118plus (Ruyage UV58Plus)
 	irRT880G                   // Radtel RT-880G
 	irRT890M                   // Radtel RT-890 con il firmware M7OCM (driver di M7OCM per CHIRP)
+	// 4.19: Radtel RT-817A / RT-871A, dal programma del costruttore («Radtel RT-871A
+	// CPS», stessa base di codice di quello della RT-860): memoria della RT-880G senza
+	// le zone, con un solo blocco per la radio FM
+	irRT871A
 )
 
 type iradioFam struct{ kind iradioKind }
@@ -184,6 +188,17 @@ func init() {
 			Notes: "1024 canali con nomi di 16 caratteri (lettura di circa 860 KiB a 115200 baud: un paio di minuti). " +
 				"Modulazione (AM, USB) dei canali che non cambiano frequenza, scrambler, toni di coda, cifratura DCS e limiti RX/TX " +
 				"si conservano; nella gamma aeronautica il canale si scrive in AM. Le zone restano come sono. Driver di CHIRP."},
+		&genModel{ID: "rtl-rt871a", Vendor: "Radtel", Model: "RT-817A", Variant: "RT-871A", RClass: "IU0VYT_Radtel_RT871A",
+			Name:  "Radtel RT-817A / RT-871A",
+			Slots: 1024, First: 1, NameMax: 16, Charset: charsetASCII,
+			Powers: []genPower{{"Bassa", 0, 2}, {"Media", 0, 1}, {"Alta", 0, 0}},
+			Bands:  []band{{18000000, 660000000}, {840000000, 1000000000}}, Narrow: true, HasScan: true, NoTxOff: true, NoChirp: true,
+			DCS: iradioDCS, Baud: 115200, Fam: iradioFam{irRT871A},
+			Notes: "1024 canali con nomi di 16 caratteri, 115200 baud. Protocollo e memoria ricavati dal programma del costruttore " +
+				"(«Radtel RT-871A CPS»), che usa il collegamento e il canale di 48 byte della Radtel RT-880G senza le zone. Si leggono e si " +
+				"scrivono le stesse aree del programma del costruttore (impostazioni, canali, radio FM; non il logo). Modulazione " +
+				"(AM, USB) dei canali che non cambiano frequenza, scrambler, toni di coda, codice del canale e le altre opzioni " +
+				"si conservano; nella gamma aeronautica il canale si scrive in AM."},
 	)
 }
 
@@ -193,7 +208,7 @@ func (f iradioFam) fmtStr() string {
 		return iradio5118pFormat
 	case irRT890M:
 		return iradio890mFormat
-	case irRT880G:
+	case irRT880G, irRT871A:
 		return rt880gFormat
 	}
 	return iradio5118Format
@@ -279,7 +294,7 @@ func (f iradioFam) Get(m *genModel, img []byte, i int) *Chan {
 	}
 	c := &Chan{Rx: rx * 10, Tx: r.F("txfreq").Int(img) * 10, Scan: true}
 	switch f.kind {
-	case irRT880G:
+	case irRT880G, irRT871A:
 		c.TxTone = rt880gToneDec(r.F("tx_tone"), img)
 		c.RxTone = rt880gToneDec(r.F("rx_tone"), img)
 		c.Narrow = r.F("rx_mode").Int(img) == 0 && r.F("isnarrow").Int(img) == 1
@@ -377,9 +392,14 @@ func (f iradioFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 			nm = nm[:10]
 		}
 		r.F("name").SetRaw(img, append(nm, bytes.Repeat([]byte{0x20}, 10-len(nm))...))
-	case irRT880G:
+	case irRT880G, irRT871A:
 		// impostazioni del canale conservate (extra di get_memory)
 		var enc, mc, tail, scr, bcl, lim, tot, mode int64
+		// RT-871A: il codice del canale occupa anche gli 8 byte che la RT-880G non usa
+		var code2 []byte
+		if old != nil && f.kind == irRT871A {
+			code2 = append([]byte{}, r.F("unknown").Raw(img)...)
+		}
 		if old != nil {
 			enc, mc, tail, scr = r.F("dcs_encrypt").Int(img), r.F("mutecode").Int(img), r.F("tail_tone").Int(img), r.F("scrambler").Int(img)
 			if bcl = r.F("bcl").Int(img); bcl > 2 {
@@ -395,6 +415,9 @@ func (f iradioFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		}
 		r.SetRaw(img, append(make([]byte, 32), bytes.Repeat([]byte{0x20}, 16)...))
 		r.F("enabled").SetInt(img, 1)
+		if code2 != nil {
+			r.F("unknown").SetRaw(img, code2)
+		}
 		nm := []byte(strings.TrimRight(c.Name, " "))
 		if len(nm) > 16 {
 			nm = nm[:16]
@@ -425,7 +448,7 @@ func (f iradioFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	}
 	r.F("rxfreq").SetInt(img, c.Rx/10)
 	r.F("txfreq").SetInt(img, c.Tx/10)
-	if f.kind != irRT880G {
+	if f.kind != irRT880G && f.kind != irRT871A {
 		r.F("scan").SetBool(img, c.Scan)
 		r.F("isnarrow").SetBool(img, c.Narrow)
 		r.F("tx_tone").SetInt(img, iradioToneEnc(tt))
@@ -454,6 +477,10 @@ func (f iradioFam) proto() iradioProto {
 	case irRT880G:
 		return iradioProto{enter: []byte("4R\x05\x10\x9b"), exit: []byte("4R\x05\xEE\x79"), enterTO: 250 * time.Millisecond,
 			block: 0x400, readOff: 8, byBlock: true, size: 0x35b * 0x400}
+	case irRT871A:
+		// la memoria arriva fino al blocco della radio FM (blocco 0x358 della radio)
+		return iradioProto{enter: []byte("4R\x05\x10\x9b"), exit: []byte("4R\x05\xEE\x79"), enterTO: 250 * time.Millisecond,
+			block: 0x400, readOff: 8, byBlock: true, size: 0x351 * 0x400}
 	}
 	return iradioProto{enter: []byte("93\x05\x10\x81"), exit: []byte("93\x05\xEE\x5F"), enterTO: 750 * time.Millisecond,
 		block: 0x10, readOff: 0x0340, size: 0x0850}
@@ -520,6 +547,31 @@ func (f iradioFam) Download(ctx context.Context, m *genModel, port string, prog 
 		return nil, "", genFail("Ingresso in programmazione", err)
 	}
 	defer s.send(p.exit)
+	if f.kind == irRT871A {
+		// come il programma del costruttore: solo impostazioni, canali e radio FM
+		data := bytes.Repeat([]byte{0xFF}, p.size)
+		done, total := 0, 0
+		for _, z := range rt871aRegions {
+			total += z[1]
+		}
+		for _, z := range rt871aRegions {
+			for b := 0; b < z[1]; b++ {
+				if ctx.Err() != nil {
+					return nil, "", errCancelled
+				}
+				prog(done*p.block, total*p.block, "Lettura…")
+				a := z[0] + b*p.block
+				d, err := s.iradioRead(a/p.block+p.readOff, p.block)
+				if err != nil {
+					return nil, "", err
+				}
+				copy(data[a:], d)
+				done++
+			}
+		}
+		prog(total*p.block, total*p.block, "Lettura completata")
+		return data, "", nil
+	}
 	var data []byte
 	for a := 0; a < p.size; a += p.block {
 		if ctx.Err() != nil {
@@ -542,6 +594,17 @@ func (f iradioFam) Download(ctx context.Context, m *genModel, port string, prog 
 
 // zone scritte dalla RT-880G: indirizzo, blocchi da 1 KiB, identificativo della zona
 var rt880gRegions = [][3]int{{0x0000, 4, 0x90}, {0x2000, 48, 0x91}, {0x1a000, 128, 0x92}, {0xd4000, 4, 0x99}}
+
+// zone lette e scritte dalla RT-871A (programma del costruttore): impostazioni
+// (blocchi 8-11 della radio), canali (0x10-0x3F), radio FM (0x358)
+var rt871aRegions = [][3]int{{0x0000, 4, 0x90}, {0x2000, 48, 0x91}, {0xd4000, 1, 0x99}}
+
+func (f iradioFam) regions() [][3]int {
+	if f.kind == irRT871A {
+		return rt871aRegions
+	}
+	return rt880gRegions
+}
 
 func (f iradioFam) Upload(ctx context.Context, m *genModel, port string, img []byte, prog Progress) (string, error) {
 	p := f.proto()
@@ -577,17 +640,17 @@ func (f iradioFam) Upload(ctx context.Context, m *genModel, port string, img []b
 				return "", err
 			}
 		}
-	case irRT880G:
+	case irRT880G, irRT871A:
 		// come il programma del costruttore: prima si legge il blocco 0
 		// (do_upload di CHIRP: senza lo scostamento della lettura)
 		if _, err := s.iradioRead(0, p.block); err != nil {
 			return "", err
 		}
 		done, total := 0, 0
-		for _, z := range rt880gRegions {
+		for _, z := range f.regions() {
 			total += z[1]
 		}
-		for _, z := range rt880gRegions {
+		for _, z := range f.regions() {
 			for b := 0; b < z[1]; b++ {
 				prog(done*p.block, total*p.block, "Scrittura…")
 				a := z[0] + b*p.block

@@ -81,6 +81,9 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	if _, ok := m.Fam.(fagciFam); ok { // 4.18: firmware R3b0rn di fagci (EEPROM originale di 8 KiB)
 		mem = fagciBlank(2)
 	}
+	if f, ok := m.Fam.(iradioFam); ok { // 4.19: Radtel RT-817A / RT-871A
+		mem = bytes.Repeat([]byte{0xFF}, f.proto().size)
+	}
 	switch m.Fam.(type) { // 4.15: firmware nicFW
 	case nicfwFam:
 		mem = nicfwTestImg(true)

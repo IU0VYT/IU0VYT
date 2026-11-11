@@ -7,6 +7,24 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.19.0 (11.11.2026)
+-------------------
+- Radtel RT-817A / RT-871A (drv_iradio.go, Typ irRT871A), aus dem Programm des
+  Herstellers («Radtel RT-871A CPS», gleiche Codebasis wie das des RT-860, Methode für
+  Methode verglichen): gleicher Einstieg in die Programmierung, gleiche 1-KiB-Blöcke und
+  gleicher 48-Byte-Kanal wie beim RT-880G, ohne die Zonen. Gelesen werden die Blöcke
+  8-11 (Einstellungen), 0x10-0x3F (1024 Kanäle) und 0x358 (UKW-Radio); geschrieben
+  werden die Bereiche 0x90 (4 Blöcke), 0x91 (48) und 0x99 (1); das Logo wird nicht
+  behandelt. Leistung 0 niedrig, 1 mittel, 2 hoch; der 12 Byte lange Kanalcode bleibt
+  erhalten; Grenzen 18-660 und 840-1000 MHz.
+- Katalog (catalog_419.go, neu): 1 Eintrag. Zahlen: 499 Funkgeräte, 427 mit
+  Einstellungen, 553 in der Galerie. Übersetzungen: 3 neue Texte.
+- Untersucht und nicht gemacht: Radtel RT-4D, RT-6D und RT-1000 Pro (Programme einer
+  neueren Generation mit anderem Aufbau der Bereiche: ein neuer Treiber ist nötig);
+  Kenwood TK-2180 / TK-3180 (tk8180.py baut das Speicherformat aus den Zonen auf und
+  verwendet eine Datei mit eigenem Kopf: das lässt sich nicht auf ein einfaches Ändern
+  der vorhandenen Kanäle reduzieren).
+
 4.18.0 (11.11.2026)
 -------------------
 - Kenwood TK-2140 und TK-3140 (drv_kwtk140.go, neu; tk3140.py von CHIRP: TK-2140K,

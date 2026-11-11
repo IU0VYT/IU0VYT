@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.18.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.19.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,13 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Yang baharu dalam 4.19.0:
+- RADTEL RT-817A / RT-871A: saluran, diperoleh daripada program pengeluar (sambungan dan
+  saluran yang sama seperti RT-880G, tanpa zon). Hanya kawasan yang digunakan oleh
+  program Radtel dibaca dan ditulis (tetapan, saluran, radio FM; bukan logo). «Kenal
+  pasti» tidak dapat membezakannya daripada RT-880G: pilih tab sendiri. Diuji dengan
+  radio simulasi sahaja: baca dahulu dan laporkan sebarang masalah.
+- Galeri: 553 model daripada 47 jenama (499 dengan saluran, 427 dengan tetapan).
 Yang baharu dalam 4.18.0:
 - KENWOOD TK-2140, TK-3140, TK-280, TK-380: radio genggam profesional dengan saluran
   yang dibahagikan kepada zon (kumpulan): saluran dan tetapan, dengan pemacu CHIRP.

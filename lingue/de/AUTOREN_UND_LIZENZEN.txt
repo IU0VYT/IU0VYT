@@ -305,6 +305,10 @@ Herstellers («Radio CPS» und «JJCC-7700 CPS»), von denen nichts enthalten is
 Kanaldatensatz ist der von mml_jc8810.py von CHIRP. Dank an fagci für die Firmware
 R3b0rn.
 
+RADTEL RT-817A / RT-871A (4.19): aus dem Vergleich mit dem Programm des Herstellers
+(«Radtel RT-871A CPS»), von dem nichts enthalten ist; Verbindung und Kanaldatensatz sind
+die von radtel_rt880g.py von CHIRP, die schon für das RT-880G verwendet werden.
+
 ZONENNAMEN (4.11)
 Das Format der Zonennamen ist, zur Interoperabilität, aus dem Code der
 Herstellerprogramme abgeleitet: Radtel RT-950PRO_CPS v1.2.0-v1.3.3 und Bajeton
