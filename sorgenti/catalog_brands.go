@@ -39,6 +39,12 @@ func chirpNote(cls string) string {
 		"lettura, scrittura e byte scambiati con la radio identici a CHIRP. I file .img si aprono anche con CHIRP."
 }
 
+// chirpNoteCh (4.33): come chirpNote, per i modelli di cui si gestiscono solo i canali
+func chirpNoteCh(cls string) string {
+	return "Canali con il driver di CHIRP (classe " + cls + "), verificato con i test automatici: " +
+		"lettura, scrittura e byte scambiati con la radio identici a CHIRP. I file .img si aprono anche con CHIRP."
+}
+
 func fixedNote(what string) string {
 	return " I canali con una frequenza " + what + " fissa non si cancellano e non cambiano frequenza (come in CHIRP)."
 }

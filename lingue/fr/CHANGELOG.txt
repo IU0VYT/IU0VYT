@@ -7,6 +7,19 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.33.0 (13/11/2026)
+-------------------
+- Nouvelles radios tirées des pilotes de CHIRP (portatifs Icom qui manquaient) : IC-T7H
+  (60 canaux), IC-T8A (tribande 50 / 144 / 430 MHz, 100 canaux avec nom), IC-Q7A (200
+  canaux, récepteur large bande) et IC-P7 (1000 canaux avec nom, récepteur large bande,
+  copie rapide). Canaux uniquement. La lecture de l'image, les modifications, la
+  structure de la mémoire et les octets échangés avec la radio sont comparés à CHIRP et
+  sont identiques.
+- IC-Q7A et IC-P7 : le mode (FM, FM large, AM) reste tel quel si la fréquence ne change
+  pas, sinon il suit la fréquence ; le saut « P » et le pas d'accord du canal sont
+  conservés. IC-T7H et IC-T8A n'ont pas le DCS ; une fréquence ou un décalage que la
+  radio ne peut pas mémoriser est refusé.
+
 4.32.0 (13/11/2026)
 -------------------
 - Nouvelles radios tirées des programmes des constructeurs : Baofeng T22 en version FRS

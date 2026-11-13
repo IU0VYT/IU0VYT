@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.32.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.33.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,9 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.33.0:
+- New radios: Icom IC-T7H, IC-T8A, IC-Q7A and IC-P7 (channels), with the CHIRP drivers.
+- Gallery: 633 models of 52 brands (579 with channels, 496 with settings).
 What's new in 4.32.0:
 - New radios: Baofeng T22 in the FRS version, TIDRADIO TD-M8S, TD-V2, TD-H4 and TD-H11
   (channels and settings).

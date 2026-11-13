@@ -5810,3 +5810,23 @@ cddf33a5	Penggera («Rx Emergency»)
 fb443a2f	Menghidupkan atau mematikan fungsi penggera: dalam program pengeluar item ini dinamakan «Rx Emergency» dalam bahasa Inggeris dan «suis penggera» dalam bahasa Cina.
 be542c64	«T20 FRS» v1.0.1
 760bbadb	«CPS_F8_FRS» v1.0
+7a956ebd	{0} 60 saluran VHF/UHF tanpa nama.
+0bc7d640	{0} Tiga jalur 50/144/430 MHz: 100 saluran dengan nama 4 aksara.
+cc4cc2a4	{0} Dwijalur 144/430 MHz dengan penerima jalur lebar: 200 saluran tanpa nama.
+5e07fa42	{0} Dwijalur 144/430 MHz dengan penerima jalur lebar: 1000 saluran dengan nama 6 aksara.
+d0b9ada6	Saluran dengan pemacu CHIRP (kelas {0}), disahkan dengan ujian automatik: bacaan, penulisan dan bait yang ditukar dengan radio sama dengan CHIRP. Fail .img juga boleh dibuka dengan CHIRP.
+84903fdf	Icom IC-P7
+15481803	1000 saluran (0 hingga 999) dengan nama 6 aksara; penerima jalur lebar. {0}{1}{2}{3}Pemacu CHIRP.
+ead9e515	Icom IC-Q7A
+8ff3e6c7	200 saluran (0 hingga 199) tanpa nama; penerima jalur lebar. {0}{1}{2}{3}Pemacu CHIRP.
+113e5d7d	radio tidak mempunyai kod DCS
+1dba35ec	radio tidak dapat menyimpan ofset {0} Hz (gandaan 1 kHz)
+6ab5aa11	Icom IC-T7H
+ea02ff43	60 saluran VHF/UHF (1 hingga 60) tanpa nama. {0}{1}{2}Pemacu CHIRP.
+d1d50ce1	Icom IC-T8A
+3b3557f2	100 saluran (0 hingga 99) pada 50, 144 dan 430 MHz, dengan nama 4 aksara. {0}{1}{2}Pemacu CHIRP.
+66736872	Radio tidak mempunyai DCS.
+2eeabfb5	Kuasa tidak disimpan dalam saluran.
+78ff8dbe	Mod (FM, FM lebar, AM) mengikut frekuensi.
+4a2dedfd	Klon ini yang pantas (38400 baud selepas pengenalpastian).
+29603ad2	radio tidak dapat menyimpan ofset {0} Hz

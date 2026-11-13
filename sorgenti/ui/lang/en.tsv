@@ -5810,3 +5810,23 @@ cddf33a5	Alarm («Rx Emergency»)
 fb443a2f	Turns the alarm function on or off: in the manufacturer's program the item is called «Rx Emergency» in English and «alarm switch» in Chinese.
 be542c64	«T20 FRS» v1.0.1
 760bbadb	«CPS_F8_FRS» v1.0
+7a956ebd	{0} 60 VHF/UHF channels without names.
+0bc7d640	{0} Tri-band 50/144/430 MHz: 100 channels with 4-character names.
+cc4cc2a4	{0} Dual-band 144/430 MHz with wide-band receiver: 200 channels without names.
+5e07fa42	{0} Dual-band 144/430 MHz with wide-band receiver: 1000 channels with 6-character names.
+d0b9ada6	Channels with the CHIRP driver (class {0}), verified with the automatic tests: reading, writing and bytes exchanged with the radio identical to CHIRP. The .img files also open with CHIRP.
+84903fdf	Icom IC-P7
+15481803	1000 channels (0 to 999) with 6-character names; wide-band receiver. {0}{1}{2}{3}CHIRP driver.
+ead9e515	Icom IC-Q7A
+8ff3e6c7	200 channels (0 to 199) without names; wide-band receiver. {0}{1}{2}{3}CHIRP driver.
+113e5d7d	the radio has no DCS codes
+1dba35ec	the radio cannot store an offset of {0} Hz (multiples of 1 kHz)
+6ab5aa11	Icom IC-T7H
+ea02ff43	60 VHF/UHF channels (1 to 60) without names. {0}{1}{2}CHIRP driver.
+d1d50ce1	Icom IC-T8A
+3b3557f2	100 channels (0 to 99) on 50, 144 and 430 MHz, with 4-character names. {0}{1}{2}CHIRP driver.
+66736872	The radio has no DCS.
+2eeabfb5	Power is not stored in the channel.
+78ff8dbe	The mode (FM, wide FM, AM) follows the frequency.
+4a2dedfd	The clone is the fast one (38400 baud after identification).
+29603ad2	the radio cannot store an offset of {0} Hz

@@ -3,6 +3,30 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.33.0 (13/11/2026)
+-------------------
+- Radio nuove dai driver di CHIRP (palmari Icom che mancavano): IC-T7H (60
+  canali, drv_ict7.go), IC-T8A (tribanda 50 / 144 / 430 MHz, 100 canali con
+  nome, drv_ict7.go), IC-Q7A (200 canali, ricevitore a larga banda,
+  drv_icq7.go) e IC-P7 (1000 canali con nome, ricevitore a larga banda, copia
+  veloce, drv_icp7.go). Solo canali. Lettura dell'immagine, modifiche, struttura
+  della memoria e byte scambiati con la radio sono confrontati con CHIRP e
+  risultano identici.
+- IC-Q7A e IC-P7: il modo (FM, FM larga, AM) non è una colonna del programma;
+  resta quello del canale se la frequenza non cambia, altrimenti segue la
+  frequenza, come per l'IC-E90. Differenze volute rispetto a CHIRP: il salto
+  «P» resta quando il canale modificato resta fuori dalla scansione; nell'IC-P7
+  un canale con il passo di sintonia automatico resta così, e una frequenza o
+  uno scostamento che non cambiano restano scritti come sono (non si perdono i
+  terzi di Hz dei passi da 8,33 kHz); nell'IC-Q7A sopra 1 GHz la frequenza si
+  scrive come la legge CHIRP (che la scrive in modo errato).
+- IC-T7H e IC-T8A: non hanno il DCS; una frequenza o uno scostamento che la
+  radio non può memorizzare vengono rifiutati (CHIRP li tronca).
+- Catalogo: quattro schede Icom nuove; la nota dice «canali» e non «canali e
+  impostazioni» (chirpNoteCh).
+- Prove: icom433_test.go; i quattro modelli sono nelle prove di confronto con
+  CHIRP (TestChirpDecode, TestChirpEncode, TestChirpLayout, TestChirpClone).
+
 4.32.0 (13/11/2026)
 -------------------
 - Radio nuove, dai programmi dei costruttori (famiglia «AnaCps» di drv_bfd.go,

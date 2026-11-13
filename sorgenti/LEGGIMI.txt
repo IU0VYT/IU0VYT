@@ -1,11 +1,15 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.32.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.33.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.33.0:
+- Radio nuove: Icom IC-T7H, IC-T8A, IC-Q7A e IC-P7 (canali), con i driver di
+  CHIRP.
+- Galleria: 633 modelli di 52 marche (579 con canali, 496 con impostazioni).
 Novità della 4.32.0:
 - Radio nuove: Baofeng T22 in versione FRS, TIDRADIO TD-M8S, TD-V2, TD-H4 e
   TD-H11 (canali e impostazioni).

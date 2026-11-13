@@ -6,6 +6,18 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.33.0 (13/11/2026)
+-------------------
+- Radio baharu daripada pemacu CHIRP (radio genggam Icom yang belum ada): IC-T7H (60
+  saluran), IC-T8A (tiga jalur 50 / 144 / 430 MHz, 100 saluran bernama), IC-Q7A (200
+  saluran, penerima jalur lebar) dan IC-P7 (1000 saluran bernama, penerima jalur lebar,
+  klon pantas). Saluran sahaja. Pembacaan imej, pengubahsuaian, struktur memori dan bait
+  yang ditukar dengan radio dibandingkan dengan CHIRP dan adalah sama.
+- IC-Q7A dan IC-P7: mod (FM, FM lebar, AM) kekal jika frekuensi tidak berubah, jika
+  tidak ia mengikut frekuensi; langkau «P» dan langkah talaan saluran dikekalkan. IC-T7H
+  dan IC-T8A tiada DCS; frekuensi atau ofset yang tidak dapat disimpan oleh radio akan
+  ditolak.
+
 4.32.0 (13/11/2026)
 -------------------
 - Radio baharu daripada program pengeluar: Baofeng T22 versi FRS dan TIDRADIO TD-M8S

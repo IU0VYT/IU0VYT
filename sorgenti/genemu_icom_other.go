@@ -158,3 +158,12 @@ func (e *icomEmu) serve(p Port) error {
 		}
 	}
 }
+
+// 4.33: IC-T7H, IC-T8A
+func (ict7Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(ict7o(m).clone, img) }
+
+// 4.33: IC-Q7A
+func (icq7Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(icq7Opt, img) }
+
+// 4.33: IC-P7
+func (icp7Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(icp7Opt, img) }

@@ -5810,3 +5810,23 @@ cddf33a5	Alarm («Rx Emergency»)
 fb443a2f	Schaltet die Alarmfunktion ein oder aus: Im Herstellerprogramm heißt der Punkt auf Englisch «Rx Emergency» und auf Chinesisch «Alarmschalter».
 be542c64	«T20 FRS» v1.0.1
 760bbadb	«CPS_F8_FRS» v1.0
+7a956ebd	{0} 60 VHF/UHF-Kanäle ohne Namen.
+0bc7d640	{0} Tribander 50/144/430 MHz: 100 Kanäle mit 4-stelligen Namen.
+cc4cc2a4	{0} Dualbander 144/430 MHz mit Breitbandempfänger: 200 Kanäle ohne Namen.
+5e07fa42	{0} Dualbander 144/430 MHz mit Breitbandempfänger: 1000 Kanäle mit 6-stelligen Namen.
+d0b9ada6	Kanäle mit dem CHIRP-Treiber (Klasse {0}), mit den automatischen Tests geprüft: Lesen, Schreiben und mit dem Funkgerät ausgetauschte Bytes identisch mit CHIRP. Die .img-Dateien lassen sich auch mit CHIRP öffnen.
+84903fdf	Icom IC-P7
+15481803	1000 Kanäle (0 bis 999) mit 6-stelligen Namen; Breitbandempfänger. {0}{1}{2}{3}CHIRP-Treiber.
+ead9e515	Icom IC-Q7A
+8ff3e6c7	200 Kanäle (0 bis 199) ohne Namen; Breitbandempfänger. {0}{1}{2}{3}CHIRP-Treiber.
+113e5d7d	das Funkgerät hat keine DCS-Codes
+1dba35ec	das Funkgerät kann keine Ablage von {0} Hz speichern (Vielfache von 1 kHz)
+6ab5aa11	Icom IC-T7H
+ea02ff43	60 VHF/UHF-Kanäle (1 bis 60) ohne Namen. {0}{1}{2}CHIRP-Treiber.
+d1d50ce1	Icom IC-T8A
+3b3557f2	100 Kanäle (0 bis 99) auf 50, 144 und 430 MHz, mit 4-stelligen Namen. {0}{1}{2}CHIRP-Treiber.
+66736872	Das Funkgerät hat kein DCS.
+2eeabfb5	Die Leistung wird nicht im Kanal gespeichert.
+78ff8dbe	Die Betriebsart (FM, Breit-FM, AM) folgt der Frequenz.
+4a2dedfd	Es wird schnell geklont (38400 Baud nach der Identifikation).
+29603ad2	das Funkgerät kann keine Ablage von {0} Hz speichern

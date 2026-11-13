@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.32.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.33.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,10 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.33.0 :
+- Nouvelles radios : Icom IC-T7H, IC-T8A, IC-Q7A et IC-P7 (canaux), avec les pilotes de
+  CHIRP.
+- Galerie : 633 modèles de 52 marques (579 avec canaux, 496 avec réglages).
 Nouveautés de la 4.32.0 :
 - Nouvelles radios : Baofeng T22 en version FRS, TIDRADIO TD-M8S, TD-V2, TD-H4 et TD-H11
   (canaux et réglages).

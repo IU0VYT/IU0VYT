@@ -2135,6 +2135,10 @@ fc3531d7	199 canali, solo UHF (400-520 MHz nel programma del costruttore). Canal
 a3fb2872	Canali senza nome e impostazioni generali. Non è in CHIRP.{0}
 6aa904a9	22 canali FRS (Stati Uniti). Il programma del costruttore è lo stesso della Baofeng T22 in versione FRS. Non è la TD-M8 senza «S», che ha un'altra scheda. {0}
 c506923a	16 canali FRS (Stati Uniti). Le istruzioni del programma del costruttore lo indicano anche per Pofung F8, F8i, F8U, F8X e BF-V8. {0}
+7a956ebd	{0} 60 canali VHF/UHF senza nome.
+0bc7d640	{0} Tribanda 50/144/430 MHz: 100 canali con nomi di 4 caratteri.
+cc4cc2a4	{0} Bibanda 144/430 MHz con ricevitore a larga banda: 200 canali senza nome.
+5e07fa42	{0} Bibanda 144/430 MHz con ricevitore a larga banda: 1000 canali con nomi di 6 caratteri.
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2264,6 +2268,7 @@ ac677ebe	{0} Portatile da 15 W; i file .img devono venire da una lettura della r
 f91ae192	{0} Versione americana con nomi di 8 caratteri.
 f4fe3894	30 canali GMRS senza nome. I canali con una frequenza GMRS fissa non si cancellano e non cambiano frequenza (come in CHIRP).
 bc7c87a1	Canali e impostazioni con il driver di CHIRP (classe {0}), verificato con i test automatici: lettura, scrittura e byte scambiati con la radio identici a CHIRP. I file .img si aprono anche con CHIRP.
+d0b9ada6	Canali con il driver di CHIRP (classe {0}), verificato con i test automatici: lettura, scrittura e byte scambiati con la radio identici a CHIRP. I file .img si aprono anche con CHIRP.
 9d616461	I canali con una frequenza {0} fissa non si cancellano e non cambiano frequenza (come in CHIRP).
 7fe47b79	UV-K5 / UV-K6 / UV-5R Plus
 321bd12e	UV-5R Plus
@@ -2938,20 +2943,39 @@ c1a108a1	lettura incompleta: {0} byte su {1}
 7d04058b	la radio non ha confermato la scrittura
 2ea938b0	la radio ha rifiutato i dati scritti
 cccf8e56	Cavo Icom OPC-478 (o compatibile) nella presa dell'altoparlante, 9600 baud; la radio va accesa normalmente e durante la copia mostra «CLONE».
+7839b844	Icom Inc.A8
+84903fdf	Icom IC-P7
+a7b4db17	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890
+15481803	1000 canali (da 0 a 999) con nomi di 6 caratteri; ricevitore a larga banda. {0}{1}{2}{3}Driver di CHIRP.
+e6282e24	l'immagine non è di una {0}
+a936d75d	Icom Inc.
+ead9e515	Icom IC-Q7A
+8ff3e6c7	200 canali (da 0 a 199) senza nome; ricevitore a larga banda. {0}{1}{2}{3}Driver di CHIRP.
+113e5d7d	la radio non ha i codici DCS
+bed9a66d	la radio non può memorizzare la frequenza {0} MHz (multipli di 5 o di 6,25 kHz)
+1dba35ec	la radio non può memorizzare uno scostamento di {0} Hz (multipli di 1 kHz)
+d0a1c599	scostamento fuori dai limiti della radio
+6ab5aa11	Icom IC-T7H
+ea02ff43	60 canali VHF/UHF (da 1 a 60) senza nome. {0}{1}{2}Driver di CHIRP.
+d1d50ce1	Icom IC-T8A
+3b3557f2	100 canali (da 0 a 99) sui 50, 144 e 430 MHz, con nomi di 4 caratteri. {0}{1}{2}Driver di CHIRP.
+66736872	La radio non ha il DCS.
+2eeabfb5	La potenza non è memorizzata nel canale.
+78ff8dbe	Il modo (FM, FM larga, AM) segue la frequenza.
+4a2dedfd	La copia è quella veloce (38400 baud dopo l'identificazione).
+d9bcac02	la radio non può memorizzare la frequenza {0} MHz
+29603ad2	la radio non può memorizzare uno scostamento di {0} Hz
 b3fa7827	Icom Inc.7C
 910c5b7a	Alta 5,5 W
 03a68a88	Icom IC-V80
-a7b4db17	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890
 215302ea	200 canali VHF (da 0 a 199) con nomi di 5 caratteri. {0}La copia è quella veloce (38400 baud dopo l'identificazione). Passo di sintonia, canali di scansione e di chiamata e inversione del canale si conservano. Driver di CHIRP.
 52b58449	Icom IC-T70
 c4d1c0f5	300 canali VHF/UHF (da 0 a 299) con nomi di 6 caratteri. {0}I banchi si conservano. Driver di CHIRP.
 da70894a	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione, lo stesso subtono nei due versi, lo stesso codice DCS nei due versi)
-bed9a66d	la radio non può memorizzare la frequenza {0} MHz (multipli di 5 o di 6,25 kHz)
 efa0c310	con la frequenza {0} MHz la radio non può memorizzare uno scostamento di {1} Hz
 ae0e8e43	frequenza o scostamento fuori dai limiti della radio
 ee3eef34	Icom Inc.CF
 f63ad748	la radio non può memorizzare uno scostamento di {0} Hz (multipli di 5 kHz)
-d0a1c599	scostamento fuori dai limiti della radio
 a339fbf5	Icom Inc.AC
 09a693fa	Icom IC-V86
 4deb5042	Massima 7 W
@@ -2963,13 +2987,10 @@ f03ef25a	Icom Inc.CD
 fe5c79a7	Icom {0}
 2972bf65	200 canali {0} (da 0 a 199) con nomi di 5 caratteri. {1}La potenza non è memorizzata nel canale. Banchi, nominativi D-STAR, passo di sintonia e canali in modo digitale DV si conservano. Driver di CHIRP.
 f5084846	la radio è l'altro modello della serie: apri la scheda «Icom {0}»
-e6282e24	l'immagine non è di una {0}
-a936d75d	Icom Inc.
 ecbb6013	Icom IC-E90 / IC-T90
 c21daaea	ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()*+-,/|=
 0db26069	500 canali (da 0 a 499) con nomi di 6 caratteri; ricevitore a larga banda. {0}Il modo (FM, FM larga, AM) segue la frequenza. Driver di CHIRP.
 729fa53d	la radio non può memorizzare uno scostamento di {0} Hz (multipli di 5 o di 6,25 kHz)
-7839b844	Icom Inc.A8
 ad31bcee	Icom Inc.DA
 aedc7408	Cavo dati Icom OPC-2350LU (USB) oppure OPC-2218LU, nella presa «DATA»; la radio va accesa normalmente e durante la copia mostra «CLONE». Copia veloce a 38400 baud.
 2257eeef	500 canali {0} (da 0 a 499) con nomi di 16 caratteri, analogici o D-STAR. {1}Un canale D-STAR nuovo nasce con «CQCQCQ». Driver di CHIRP.
@@ -3103,7 +3124,6 @@ b74bc2f5	Kenwood TH-D7A / TH-D7E
 eaf549cd	{0}100 canali (0-99); i nomi ci sono solo se la radio è impostata a 50 canali con nome (in quel caso i canali da 50 in su non esistono e la radio li rifiuta). Subtono in trasmissione, subtono o codice DCS uguale nei due versi; ponti fino a 69,95 MHz di scostamento. Comandi del driver di CHIRP, provati con una radio simulata.
 cce84c13	tono «{0}» non disponibile su questa radio, impostato OFF
 a0e87eb4	la radio non ha questa combinazione di toni (mai il solo tono in ricezione o codici invertiti)
-d9bcac02	la radio non può memorizzare la frequenza {0} MHz
 c4fad8d7	MNA {0}
 3abf08e3	MNA 0,{0}
 c2efd81a	la radio è un altro modello ({0})

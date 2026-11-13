@@ -5810,3 +5810,23 @@ cddf33a5	Alarma («Rx Emergency»)
 fb443a2f	Activa o desactiva la función de alarma: en el programa del fabricante la opción se llama «Rx Emergency» en inglés e «interruptor de alarma» en chino.
 be542c64	«T20 FRS» v1.0.1
 760bbadb	«CPS_F8_FRS» v1.0
+7a956ebd	{0} 60 canales VHF/UHF sin nombre.
+0bc7d640	{0} Tribanda 50/144/430 MHz: 100 canales con nombres de 4 caracteres.
+cc4cc2a4	{0} Bibanda 144/430 MHz con receptor de banda ancha: 200 canales sin nombre.
+5e07fa42	{0} Bibanda 144/430 MHz con receptor de banda ancha: 1000 canales con nombres de 6 caracteres.
+d0b9ada6	Canales con el controlador de CHIRP (clase {0}), verificado con las pruebas automáticas: lectura, escritura y bytes intercambiados con la radio idénticos a CHIRP. Los archivos .img también se abren con CHIRP.
+84903fdf	Icom IC-P7
+15481803	1000 canales (de 0 a 999) con nombres de 6 caracteres; receptor de banda ancha. {0}{1}{2}{3}Controlador de CHIRP.
+ead9e515	Icom IC-Q7A
+8ff3e6c7	200 canales (de 0 a 199) sin nombre; receptor de banda ancha. {0}{1}{2}{3}Controlador de CHIRP.
+113e5d7d	la radio no tiene códigos DCS
+1dba35ec	la radio no puede memorizar un desplazamiento de {0} Hz (múltiplos de 1 kHz)
+6ab5aa11	Icom IC-T7H
+ea02ff43	60 canales VHF/UHF (de 1 a 60) sin nombre. {0}{1}{2}Controlador de CHIRP.
+d1d50ce1	Icom IC-T8A
+3b3557f2	100 canales (de 0 a 99) en 50, 144 y 430 MHz, con nombres de 4 caracteres. {0}{1}{2}Controlador de CHIRP.
+66736872	La radio no tiene DCS.
+2eeabfb5	La potencia no se memoriza en el canal.
+78ff8dbe	El modo (FM, FM ancha, AM) sigue la frecuencia.
+4a2dedfd	La copia es la rápida (38400 baudios tras la identificación).
+29603ad2	la radio no puede memorizar un desplazamiento de {0} Hz

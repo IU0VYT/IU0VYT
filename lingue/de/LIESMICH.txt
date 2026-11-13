@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.32.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.33.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,10 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.33.0:
+- Neue Funkgeräte: Icom IC-T7H, IC-T8A, IC-Q7A und IC-P7 (Kanäle), mit den
+  CHIRP-Treibern.
+- Galerie: 633 Modelle von 52 Marken (579 mit Kanälen, 496 mit Einstellungen).
 Neu in 4.32.0:
 - Neue Funkgeräte: Baofeng T22 in der FRS-Version, TIDRADIO TD-M8S, TD-V2, TD-H4 und
   TD-H11 (Kanäle und Einstellungen).

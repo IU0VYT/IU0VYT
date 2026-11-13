@@ -7,6 +7,19 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.33.0 (13.11.2026)
+-------------------
+- Neue Funkgeräte aus den CHIRP-Treibern (Icom-Handfunkgeräte, die fehlten): IC-T7H (60
+  Kanäle), IC-T8A (Tribander 50 / 144 / 430 MHz, 100 Kanäle mit Namen), IC-Q7A (200
+  Kanäle, Breitbandempfänger) und IC-P7 (1000 Kanäle mit Namen, Breitbandempfänger,
+  schnelles Klonen). Nur Kanäle. Das Lesen des Abbilds, Änderungen, Speicheraufbau und
+  die mit dem Funkgerät ausgetauschten Bytes werden mit CHIRP verglichen und sind
+  identisch.
+- IC-Q7A und IC-P7: Die Betriebsart (FM, Breit-FM, AM) bleibt, wenn sich die Frequenz
+  nicht ändert, sonst folgt sie der Frequenz; der «P»-Sprung und die Abstimmschrittweite
+  des Kanals bleiben erhalten. IC-T7H und IC-T8A haben kein DCS; eine Frequenz oder
+  Ablage, die das Funkgerät nicht speichern kann, wird abgelehnt.
+
 4.32.0 (13.11.2026)
 -------------------
 - Neue Funkgeräte aus den Herstellerprogrammen: Baofeng T22 in der FRS-Version und

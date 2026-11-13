@@ -1,6 +1,6 @@
 IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 =====================================================================
-버전 4.32.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
+버전 4.33.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
 작성자: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 웹사이트: https://iu0vyt.github.io/IU0VYT/
 소스 코드와 릴리스: https://github.com/IU0VYT/IU0VYT
@@ -8,6 +8,9 @@ IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 AUTHORS_AND_LICENSES.txt를 보세요.
 이 파일은 LEGGIMI.txt의 한국어 번역입니다(이탈리아어 원문이 기준이 되는 글입니다). 이전 버전의 새 기능은 메인 폴더의 이탈리아어
 CHANGELOG.txt에 있습니다(여기의 CHANGELOG.txt에는 4.13 항목의 번역이 있습니다).
+4.33.0의 새로운 점:
+- 새 무전기: Icom IC-T7H, IC-T8A, IC-Q7A, IC-P7(채널), CHIRP 드라이버 사용.
+- 갤러리: 52개 브랜드 633개 모델(채널 지원 579개, 설정 지원 496개).
 4.32.0의 새로운 점:
 - 새 무전기: Baofeng T22 FRS 버전, TIDRADIO TD-M8S, TD-V2, TD-H4, TD-H11(채널과 설정).
 - 2026년 TIDRADIO 모델의 출력 단계를 바로잡았습니다: 중간 출력은 실제로 있는 모델에만 표시합니다(TD-H7 Plus, TD-H8 4세대, TD-H9, TD-H11, TD-638UV. GMRS 버전 제외).
