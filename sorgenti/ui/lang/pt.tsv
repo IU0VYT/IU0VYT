@@ -5595,3 +5595,48 @@ b5b3f1aa	VOX ligado / desligado
 9897783e	Meteorologia NOAA
 ea75db5c	Frequências invertidas
 a6263d4e	WLT
+0b95937d	Rádio móvel GMRS de 15 W, 80 canais mais as 8 posições dos repetidores. Duas fichas, conforme o firmware do rádio: antes da V1.10 (sem nomes) e V1.10 (com nomes). Canais e definições gerais como no programa do fabricante. Não está no CHIRP.{0}
+a7d04ceb	Rádio móvel GMRS de 35 W, 80 canais, recebe também em VHF (o programa do fabricante chama-se «DB-35G»). Canais e definições gerais como no programa do fabricante. Não está no CHIRP.{0}
+05f46370	Rádio móvel VHF / UHF de 35 W, 80 canais. Canais e definições gerais como no programa do fabricante. Não está no CHIRP.{0}
+6bc059e3	Rádio móvel GMRS de 40 W, 199 canais com nome. Canais e definições gerais; está também no CHIRP (desde novembro de 2026) e o ficheiro é o mesmo.{0}
+eb7279a2	{0} baud. Protocolo e memória obtidos do programa do fabricante {1} e do seu ficheiro de configuração, e testados com um rádio simulado, não com um rádio real. Aqui alteram-se frequências, tons, potência, largura de banda, pesquisa e nomes dos canais e as definições gerais; bloqueio com canal ocupado e prioridade ficam como estão no canal. {2}«Identificar» não reconhece este rádio: escolha a ficha certa.
+65b6a98c	{0} baud. Protocolo e memória obtidos do programa do fabricante {1} e do seu ficheiro de configuração, e testados com um rádio simulado, não com um rádio real. Aqui alteram-se frequências, tons, potência, largura de banda e pesquisa dos canais (não têm nome) e as definições gerais; bloqueio com canal ocupado e prioridade ficam como estão no canal. {2}«Identificar» não reconhece este rádio: escolha a ficha certa.
+f55aa366	«UB-15G» (versão de 21/8/2026)
+01effed1	«UB15-G» para o firmware V1.10
+3ea382d0	As 88 posições são, pela ordem do rádio: os canais 1-15, depois «15RP», 16, «16RP» e assim por diante até 22 e «22RP» (RP = o mesmo canal com a transmissão para o repetidor), depois os canais 23-80.
+7730b028	{0} baud. Mesma memória e mesmos pacotes do controlador do CHIRP (que tem este modelo desde novembro de 2026), comparados também com o programa do fabricante {1} e com o seu ficheiro de configuração. Aqui alteram-se frequências, tons, potência, largura de banda e nomes dos canais e as definições gerais. «Identificar» não reconhece este rádio: escolha a ficha certa.
+fbb04a4c	Radioddity UB15-G (firmware anterior à V1.10)
+e0ae264f	{0}Com o firmware V1.10 a memória é diferente (há nomes): use a outra ficha.
+e108c3cb	Radioddity UB15-G (firmware V1.10, com nomes)
+cfc5c977	{0}Com um firmware anterior a memória é diferente (sem nomes): use a outra ficha.
+3993d543	Radioddity DB35-G (DB-35G)
+e23545aa	Radioddity DB35-UV
+c6c2fa12	Radioddity DB40-G
+027d1319	nome «{0}» demasiado longo (8 caracteres no máximo)
+517bae24	nome «{0}»: só são admitidos letras, algarismos e sinais simples
+63cc565d	{0}: resposta inesperada do rádio ({1} em vez de {2})
+719b13bc	o rádio declara outro tipo ({0}): não é o desta ficha
+e727cb79	o rádio declara um tipo desconhecido ({0}): não é o desta ficha
+aae46543	resposta inesperada à leitura em {0} ({1})
+7aa46675	escrita em {0}
+f47e9acb	Escuta do canal prioritário
+948f479e	O rádio verifica de vez em quando os canais marcados como prioritários enquanto está noutro canal.
+6f139dce	Nível da redução de ruído
+03252bf4	Quanto é reduzido o ruído de fundo do áudio recebido: quanto mais alto o nível, mais forte a redução.
+e09e3b2c	Redução de ruído do microfone
+b3e96fa9	Reduz o ruído ambiente captado pelo microfone enquanto transmite.
+8b68364d	2,5 kHz
+e23ae463	5 kHz
+3d72e229	6,25 kHz
+dd925812	12,5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+0b946609	Quanto muda a frequência a cada passo quando o rádio está em modo VFO.
+10297dff	Brilho da retroiluminação do ecrã.
+9fcb981b	Ao fim de quanto tempo sem tocar no rádio a retroiluminação se apaga.
+76eb05bf	Ciano
+f217e6d3	Cor da retroiluminação
+13b70667	Cor da luz do ecrã.
+5fc6890d	firmware anterior à V1.10
+6f039420	firmware V1.10, com nomes

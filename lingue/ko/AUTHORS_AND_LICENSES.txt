@@ -252,6 +252,8 @@ RADTEL RT-817A / RT-871A (4.19): 제조사 프로그램(«Radtel RT-871A CPS»)�
 
 RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): 제조사 프로그램(«RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»)을 연구해 알아냈으며, 그 내용은 아무것도 포함되어 있지 않습니다. 코드는 처음부터 새로 작성했습니다.
 
+RADIODDITY UB15-G, DB35-G, DB35-UV, DB40-G (4.28): 프로토콜, 메모리, 설정은 제조사 프로그램과 그 설정 파일을 읽어 얻었으며 처음부터 새로 작성했습니다. 그 프로그램의 어떤 것도 포함되어 있지 않습니다. DB40-G는 CHIRP에도 있습니다(drivers/radioddity_db40g.py, Copyright 2026 Tony Gies, GNU GPL v2 이상, 2026/11/09의 리비전 337b385). 이곳의 드라이버는 그것과 대조했으며 바이트 단위로 똑같이 동작합니다.
+
 RETEVIS C6 / C66 및 RADIODDITY ECHO-DE / ECHO-IT(4.27): 제3자 코드는 없습니다. 프로토콜, 메모리, 설정은 제조사 프로그램(Retevis의 「C6」과 「C66」, 「Radioddity ECHO」)의 코드를 읽어 얻었으며 처음부터 다시 작성했습니다. 그 프로그램들의 어떤 것도 포함되어 있지 않습니다.
 
 RETEVIS RB39 / RB639 및 BF-T17 / GT-18 / FS-T3의 설정(4.26): 제3자 코드는 없습니다. 프로토콜, 메모리, 설정은 제조사 프로그램(Retevis 「RB39 CPS」, 「RB639」, 「Retevis Analog CPS」; Baofeng 「T17-T18 PMR446 PRO」, 「T17-T18 FRS」, 「BAOFENG GT18 PMR」; Radioddity 「Radioddity T3」)의 코드를 읽어 얻었으며 처음부터 다시 작성했습니다. 그 프로그램들의 어떤 것도 포함되어 있지 않습니다.

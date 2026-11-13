@@ -70,8 +70,20 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = auctusSize
 	case *wltOpt: // 4.27: Retevis C6, C66 e Radioddity Echo
 		size = o.size()
+	case *wfOpt: // 4.28: Radioddity UB15-G, DB-35G e DB35-UV
+		size = o.size(m)
 	}
 	mem := bytes.Repeat([]byte{0xFF}, size)
+	if o, ok := m.Opt.(*wfOpt); ok { // memoria vuota come la scrive il programma; impostazioni: squelch 3, TOT 180 s, suono dei tasti
+		mem = make([]byte, size)
+		for i := 0; i < m.Slots; i++ {
+			copy(mem[i*o.page+8:], []byte{0xFF, 0xFF, 0xFF, 0xFF})
+			if o.name >= 0 {
+				copy(mem[i*o.page+o.name:], "        ")
+			}
+		}
+		mem[o.param(m)], mem[o.param(m)+1] = 3, 0x0B
+	}
 	if o, ok := m.Opt.(*wltOpt); ok { // gamma dichiarata dalla radio: tutta quella del modello; modello e area 0
 		putBCDLE(mem[o.rng():o.rng()+2], m.Bands[0].Lo/100000)
 		putBCDLE(mem[o.rng()+2:o.rng()+4], m.Bands[len(m.Bands)-1].Hi/100000)

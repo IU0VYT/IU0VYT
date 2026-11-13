@@ -316,6 +316,13 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): aus dem Studium der Programme des Herst
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), von denen nichts enthalten ist;
 der Code ist von Grund auf neu geschrieben.
 
+RADIODDITY UB15-G, DB35-G, DB35-UV UND DB40-G (4.28): Protokoll, Speicher und
+Einstellungen stammen aus dem Lesen des Herstellerprogramms und dessen
+Konfigurationsdatei und wurden von Grund auf neu geschrieben; nichts von diesem Programm
+ist enthalten. Das DB40-G ist auch in CHIRP (drivers/radioddity_db40g.py, Copyright 2026
+Tony Gies, GNU GPL v2 oder neuer, Revision 337b385 vom 09.11.2026): der Treiber hier
+wurde damit verglichen und macht Byte für Byte dasselbe.
+
 RETEVIS C6 / C66 UND RADIODDITY ECHO-DE / ECHO-IT (4.27): kein Code Dritter. Protokoll,
 Speicher und Einstellungen stammen aus dem Lesen des Codes der Herstellerprogramme («C6»
 und «C66» von Retevis, «Radioddity ECHO»), von Grund auf neu geschrieben; nichts aus

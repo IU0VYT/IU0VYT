@@ -6,6 +6,44 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.28.0 (12/11/2026)
+-------------------
+- Radioddity UB15-G, DB35-G (programnya bernama «DB-35G»), DB35-UV dan DB40-G, radio
+  kenderaan: pemacu baharu (drv_wf.go). Program pengeluar adalah sama untuk semuanya dan
+  mengambil kelajuan, jabat tangan, alamat dan kedudukan setiap medan daripada fail
+  konfigurasi di sebelahnya; selebihnya dibaca dalam kodnya. Pertanyaan jenis radio (55
+  01 00 00), jabat tangan tiga langkah (02 «PROGRAM», 02 → «SMP558», 06), bacaan 'R' dan
+  tulisan 'W' mengikut nombor baris, 'b' pada akhir; tetapan ialah satu baris pada
+  alamat E0 00. Baris saluran: terima dan pancar dalam 4 bait (Hz), nada dalam 2 bait
+  (CTCSS dalam persepuluh Hz, DCS 0x2800 + kod, 0xA800 jika songsang), kemudian kuasa,
+  lebar jalur, imbasan dan, jika ada, nama 8 aksara huruf besar. Kunci saluran sibuk dan
+  keutamaan kekal seperti dalam saluran. UB15-G: 88 baris (saluran 1-15, kemudian
+  «15RP», 16, «16RP» … 22, «22RP», kemudian 23-80) dan dua kad, kerana dengan perisian
+  tegar V1.10 barisnya lebih panjang dan mempunyai nama. Radio jenis lain ditolak
+  sebelum jabat tangan dengan mesej yang jelas. Imej yang tidak pernah dibaca daripada
+  radio tidak menyentuh tetapan.
+- DB40-G: sejak November 2026 ia juga ada dalam CHIRP (radioddity_db40g.py). Di sini ia
+  melakukan bait demi bait apa yang CHIRP lakukan (tiada pertanyaan jenis, gema arahan
+  bacaan disemak, nama diisi dengan 00, baris yang dipadam semuanya sifar) dan ujian
+  membandingkan kedua-duanya: 31 saluran imej contoh CHIRP dibaca tanpa perbezaan, 18
+  suntingan menghasilkan imej yang sama, 811 bait dihantar semasa membaca dan 7211
+  semasa menulis, sama seperti CHIRP. Ini juga pengesahan bebas bagi jabat tangan,
+  paket, alamat, nada dan frekuensi seluruh keluarga.
+- Tetapan (settings_wf.go): squelch, masa pancaran maksimum, pengurangan hingar (hidup /
+  mati atau mengikut tahap), pemantauan saluran keutamaan, bunyi kekunci, bip roger;
+  UB15-G dengan perisian tegar V1.10 juga pengurangan hingar mikrofon dan VOX; DB35-UV
+  juga VOX, langkah frekuensi dan lampu latar (tahap, padam, warna); DB40-G: squelch,
+  masa pancaran maksimum, kunci saluran sibuk, bunyi kekunci. Kiraan: 556 radio, 476
+  dengan tetapan, 610 dalam galeri, 52 jenama. Terjemahan: 45 teks baharu. Semakan: bait
+  dikira dengan tangan untuk frekuensi, nada dan setiap tetapan; radio simulasi baharu
+  dalam ujian umum bacaan, tulisan, penukaran dan keteguhan; semakan perlumbaan data.
+  Dua kesilapan ditemui dan dibetulkan semasa semakan: satu nilai kiraan tangan yang
+  salah dalam ujian, dan radio simulasi yang mengekalkan keadaannya dari satu sambungan
+  ke sambungan seterusnya. Program pengeluar tidak pernah dijalankan. UB15-G, DB35-G dan
+  DB35-UV belum diuji secara sebenar. Dibetulkan: sejak 4.26 ujian tidak dapat dikompil
+  pada Windows, kerana tiga fail ujian menggunakan radio simulasi yang tidak dibina pada
+  Windows; program itu sendiri tidak terjejas.
+
 4.27.0 (12/11/2026)
 -------------------
 - Retevis C6 (FRS / GMRS, 30 saluran), Retevis C66 (UHF, 16 saluran) dan Radioddity

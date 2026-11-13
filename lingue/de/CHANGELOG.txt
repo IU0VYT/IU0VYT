@@ -7,6 +7,46 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.28.0 (12.11.2026)
+-------------------
+- Radioddity UB15-G, DB35-G (das Programm heißt «DB-35G»), DB35-UV und DB40-G,
+  Mobilfunkgeräte: neuer Treiber (drv_wf.go). Das Herstellerprogramm ist für alle
+  dasselbe und nimmt Geschwindigkeit, Verbindungsaufbau, Adressen und die Position jedes
+  Feldes aus einer Konfigurationsdatei, die daneben liegt; der Rest wurde in seinem Code
+  gelesen. Abfrage des Gerätetyps (55 01 00 00), Verbindungsaufbau in drei Schritten (02
+  «PROGRAM», 02 → «SMP558», 06), Lesen 'R' und Schreiben 'W' nach Zeilennummer, 'b' am
+  Ende; die Einstellungen sind eine einzige Zeile an der Adresse E0 00. Kanalzeile:
+  Empfang und Senden in 4 Bytes (Hz), Töne in 2 Bytes (CTCSS in Zehntel Hz, DCS 0x2800 +
+  Code, 0xA800 wenn invertiert), dann Leistung, Bandbreite, Suchlauf und, wo vorhanden,
+  der Name mit 8 Großbuchstaben. Sperre bei belegtem Kanal und Priorität bleiben wie im
+  Kanal. UB15-G: 88 Zeilen (Kanäle 1-15, dann «15RP», 16, «16RP» … 22, «22RP», dann
+  23-80) und zwei Karten, weil die Zeilen mit der Firmware V1.10 länger sind und den
+  Namen haben. Ein Funkgerät eines anderen Typs wird vor dem Verbindungsaufbau mit einer
+  klaren Meldung abgelehnt. Ein Abbild, das nie aus einem Funkgerät gelesen wurde, rührt
+  die Einstellungen nicht an.
+- DB40-G: seit November 2026 ist es auch in CHIRP (radioddity_db40g.py). Hier macht es
+  Byte für Byte, was CHIRP macht (keine Typabfrage, das Echo des Lesebefehls wird
+  geprüft, Namen mit 00 aufgefüllt, gelöschte Zeile ganz auf null) und die Tests
+  vergleichen beide: 31 Kanäle des CHIRP-Beispielabbilds ohne Unterschiede gelesen, 18
+  Änderungen mit identischem Abbild, 811 gesendete Bytes beim Lesen und 7211 beim
+  Schreiben, identisch mit CHIRP. Das ist auch eine unabhängige Bestätigung von
+  Verbindungsaufbau, Paketen, Adressen, Tönen und Frequenzen der ganzen Familie.
+- Einstellungen (settings_wf.go): Squelch, maximale Sendezeit, Rauschunterdrückung (ein
+  / aus oder in Stufen), Überwachung des Prioritätskanals, Tastenton, Roger-Piep; UB15-G
+  mit Firmware V1.10 auch Rauschunterdrückung des Mikrofons und VOX; DB35-UV auch VOX,
+  Frequenzschritt und Hintergrundbeleuchtung (Stufe, Abschaltung, Farbe); DB40-G:
+  Squelch, maximale Sendezeit, Sperre bei belegtem Kanal, Tastenton. Zahlen: 556
+  Funkgeräte, 476 mit Einstellungen, 610 in der Galerie, 52 Marken. Übersetzungen: 45
+  neue Texte. Prüfungen: von Hand berechnete Bytes für Frequenzen, Töne und jede
+  Einstellung; neue simulierte Funkgeräte in den gemeinsamen Tests für Lesen, Schreiben,
+  Umwandlung und Robustheit; Prüfung auf gleichzeitige Datenzugriffe. Zwei Fehler bei
+  den Prüfungen gefunden und behoben: ein falsch von Hand berechneter Wert in einem Test
+  und das simulierte Funkgerät, das seinen Zustand von einer Verbindung zur nächsten
+  behielt. Die Herstellerprogramme wurden nie ausgeführt. UB15-G, DB35-G und DB35-UV
+  sind nicht real erprobt. Behoben: seit 4.26 ließen sich die Tests unter Windows nicht
+  kompilieren, weil drei Testdateien die simulierten Funkgeräte benutzten, die unter
+  Windows nicht gebaut werden; das Programm selbst war nicht betroffen.
+
 4.27.0 (12.11.2026)
 -------------------
 - Retevis C6 (FRS / GMRS, 30 Kanäle), Retevis C66 (UHF, 16 Kanäle) und Radioddity

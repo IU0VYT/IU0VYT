@@ -5595,3 +5595,48 @@ b5b3f1aa	VOX allumé / éteint
 9897783e	Météo NOAA
 ea75db5c	Fréquences inversées
 a6263d4e	WLT
+0b95937d	Radio mobile GMRS de 15 W, 80 canaux plus les 8 positions des relais. Deux fiches, selon le firmware de la radio : avant la V1.10 (sans noms) et V1.10 (avec les noms). Canaux et réglages généraux comme dans le programme du constructeur. Absent de CHIRP.{0}
+a7d04ceb	Radio mobile GMRS de 35 W, 80 canaux, reçoit aussi en VHF (le programme du constructeur s'appelle « DB-35G »). Canaux et réglages généraux comme dans le programme du constructeur. Absent de CHIRP.{0}
+05f46370	Radio mobile VHF / UHF de 35 W, 80 canaux. Canaux et réglages généraux comme dans le programme du constructeur. Absent de CHIRP.{0}
+6bc059e3	Radio mobile GMRS de 40 W, 199 canaux avec nom. Canaux et réglages généraux ; elle est aussi dans CHIRP (depuis novembre 2026) et le fichier est le même.{0}
+eb7279a2	{0} bauds. Protocole et mémoire tirés du programme du constructeur {1} et de son fichier de configuration, et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande, balayage et noms des canaux ainsi que les réglages généraux ; blocage sur canal occupé et priorité restent ceux du canal. {2}« Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
+65b6a98c	{0} bauds. Protocole et mémoire tirés du programme du constructeur {1} et de son fichier de configuration, et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande et balayage des canaux (ils n'ont pas de nom) ainsi que les réglages généraux ; blocage sur canal occupé et priorité restent ceux du canal. {2}« Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
+f55aa366	« UB-15G » (version du 21/8/2026)
+01effed1	« UB15-G » pour le firmware V1.10
+3ea382d0	Les 88 positions sont, dans l'ordre de la radio : les canaux 1-15, puis « 15RP », 16, « 16RP » et ainsi de suite jusqu'à 22 et « 22RP » (RP = le même canal avec l'émission vers le relais), puis les canaux 23-80.
+7730b028	{0} bauds. Même mémoire et mêmes paquets que le pilote de CHIRP (qui a ce modèle depuis novembre 2026), comparés aussi avec le programme du constructeur {1} et avec son fichier de configuration. Ici on modifie fréquences, tonalités, puissance, largeur de bande et noms des canaux ainsi que les réglages généraux. « Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
+fbb04a4c	Radioddity UB15-G (firmware avant la V1.10)
+e0ae264f	{0}Avec le firmware V1.10 la mémoire est différente (il y a les noms) : utilisez l'autre fiche.
+e108c3cb	Radioddity UB15-G (firmware V1.10, avec les noms)
+cfc5c977	{0}Avec un firmware antérieur la mémoire est différente (sans noms) : utilisez l'autre fiche.
+3993d543	Radioddity DB35-G (DB-35G)
+e23545aa	Radioddity DB35-UV
+c6c2fa12	Radioddity DB40-G
+027d1319	nom « {0} » trop long (8 caractères au maximum)
+517bae24	nom « {0} » : seuls les lettres, les chiffres et les signes simples sont admis
+63cc565d	{0} : réponse inattendue de la radio ({1} au lieu de {2})
+719b13bc	la radio déclare un autre type ({0}) : ce n'est pas celle de cette fiche
+e727cb79	la radio déclare un type inconnu ({0}) : ce n'est pas celle de cette fiche
+aae46543	réponse inattendue à la lecture à {0} ({1})
+7aa46675	écriture à {0}
+f47e9acb	Veille du canal prioritaire
+948f479e	La radio contrôle de temps en temps les canaux marqués comme prioritaires pendant qu'elle est sur un autre canal.
+6f139dce	Niveau de la réduction du bruit
+03252bf4	De combien le bruit de fond de l'audio reçu est réduit : plus le niveau est élevé, plus la réduction est forte.
+e09e3b2c	Réduction du bruit du microphone
+b3e96fa9	Réduit le bruit ambiant capté par le microphone pendant que vous émettez.
+8b68364d	2,5 kHz
+e23ae463	5 kHz
+3d72e229	6,25 kHz
+dd925812	12,5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+0b946609	De combien la fréquence change à chaque pas quand la radio est en mode VFO.
+10297dff	Luminosité du rétroéclairage de l'écran.
+9fcb981b	Au bout de combien de temps sans toucher la radio le rétroéclairage s'éteint.
+76eb05bf	Cyan
+f217e6d3	Couleur du rétroéclairage
+13b70667	Couleur de la lumière de l'écran.
+5fc6890d	firmware avant la V1.10
+6f039420	firmware V1.10, avec les noms

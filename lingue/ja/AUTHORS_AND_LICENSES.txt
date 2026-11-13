@@ -215,6 +215,8 @@ RADTEL RT-817A / RT-871A（4.19）：メーカーのソフト（「Radtel RT-871
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：メーカーのソフト（「RT-4D CPS」、「DMR RT-6D」、「Radtel RT-1000 Pro CPS」）を調べて求めました。それらの内容は何も含まれておらず、コードは一から書いています。
 
+RADIODDITY UB15-G、DB35-G、DB35-UV、DB40-G（4.28）：プロトコル、メモリー、設定はメーカーのプログラムとその設定ファイルを読んで得たもので、ゼロから書き直しました。そのプログラムのものは何も含まれていません。DB40-G は CHIRP にもあります（drivers/radioddity_db40g.py、Copyright 2026 Tony Gies、GNU GPL v2 以降、2026/11/09 のリビジョン 337b385）。ここのドライバーはそれと照合済みで、バイト単位で同じ動作をします。
+
 RETEVIS C6 / C66 と RADIODDITY ECHO-DE / ECHO-IT（4.27）：第三者のコードはありません。プロトコル、メモリー、設定はメーカーのプログラム（Retevis の「C6」「C66」、「Radioddity ECHO」）のコードを読んで得たもので、ゼロから書き直しました。これらのプログラムのものは何も含まれていません。
 
 RETEVIS RB39 / RB639 と BF-T17 / GT-18 / FS-T3 の設定（4.26）：第三者のコードはありません。プロトコル、メモリー、設定はメーカーのプログラム（Retevis「RB39 CPS」「RB639」「Retevis Analog CPS」、Baofeng「T17-T18 PMR446 PRO」「T17-T18 FRS」「BAOFENG GT18 PMR」、Radioddity「Radioddity T3」）のコードを読んで得たもので、ゼロから書き直しました。これらのプログラムのものは何も含まれていません。

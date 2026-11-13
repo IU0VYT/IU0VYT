@@ -5595,3 +5595,48 @@ b5b3f1aa	VOX encendido / apagado
 9897783e	Meteorología NOAA
 ea75db5c	Frecuencias invertidas
 a6263d4e	WLT
+0b95937d	Radio móvil GMRS de 15 W, 80 canales más las 8 posiciones de los repetidores. Dos fichas, según el firmware de la radio: antes de la V1.10 (sin nombres) y V1.10 (con nombres). Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
+a7d04ceb	Radio móvil GMRS de 35 W, 80 canales, recibe también en VHF (el programa del fabricante se llama «DB-35G»). Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
+05f46370	Radio móvil VHF / UHF de 35 W, 80 canales. Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
+6bc059e3	Radio móvil GMRS de 40 W, 199 canales con nombre. Canales y ajustes generales; está también en CHIRP (desde noviembre de 2026) y el archivo es el mismo.{0}
+eb7279a2	{0} baudios. Protocolo y memoria sacados del programa del fabricante {1} y de su archivo de configuración, y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda, exploración y nombres de los canales y los ajustes generales; bloqueo con canal ocupado y prioridad quedan como están en el canal. {2}«Identificar» no reconoce esta radio: elige tú la ficha correcta.
+65b6a98c	{0} baudios. Protocolo y memoria sacados del programa del fabricante {1} y de su archivo de configuración, y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y exploración de los canales (no tienen nombre) y los ajustes generales; bloqueo con canal ocupado y prioridad quedan como están en el canal. {2}«Identificar» no reconoce esta radio: elige tú la ficha correcta.
+f55aa366	«UB-15G» (versión del 21/8/2026)
+01effed1	«UB15-G» para el firmware V1.10
+3ea382d0	Las 88 posiciones son, en el orden de la radio: los canales 1-15, luego «15RP», 16, «16RP» y así hasta 22 y «22RP» (RP = el mismo canal con la transmisión hacia el repetidor), luego los canales 23-80.
+7730b028	{0} baudios. Misma memoria y mismos paquetes que el controlador de CHIRP (que tiene este modelo desde noviembre de 2026), comparados también con el programa del fabricante {1} y con su archivo de configuración. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y nombres de los canales y los ajustes generales. «Identificar» no reconoce esta radio: elige tú la ficha correcta.
+fbb04a4c	Radioddity UB15-G (firmware anterior a la V1.10)
+e0ae264f	{0}Con el firmware V1.10 la memoria es distinta (hay nombres): usa la otra ficha.
+e108c3cb	Radioddity UB15-G (firmware V1.10, con nombres)
+cfc5c977	{0}Con un firmware anterior la memoria es distinta (sin nombres): usa la otra ficha.
+3993d543	Radioddity DB35-G (DB-35G)
+e23545aa	Radioddity DB35-UV
+c6c2fa12	Radioddity DB40-G
+027d1319	nombre «{0}» demasiado largo (8 caracteres como máximo)
+517bae24	nombre «{0}»: solo se admiten letras, cifras y signos sencillos
+63cc565d	{0}: respuesta inesperada de la radio ({1} en lugar de {2})
+719b13bc	la radio declara otro tipo ({0}): no es la de esta ficha
+e727cb79	la radio declara un tipo desconocido ({0}): no es la de esta ficha
+aae46543	respuesta inesperada a la lectura en {0} ({1})
+7aa46675	escritura en {0}
+f47e9acb	Escucha del canal prioritario
+948f479e	La radio comprueba de vez en cuando los canales marcados como prioritarios mientras está en otro canal.
+6f139dce	Nivel de la reducción de ruido
+03252bf4	Cuánto se reduce el ruido de fondo del audio recibido: cuanto más alto el nivel, más fuerte la reducción.
+e09e3b2c	Reducción de ruido del micrófono
+b3e96fa9	Reduce el ruido ambiente captado por el micrófono mientras transmites.
+8b68364d	2,5 kHz
+e23ae463	5 kHz
+3d72e229	6,25 kHz
+dd925812	12,5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+0b946609	Cuánto cambia la frecuencia en cada paso cuando la radio está en modo VFO.
+10297dff	Brillo de la retroiluminación de la pantalla.
+9fcb981b	Al cabo de cuánto tiempo sin tocar la radio se apaga la retroiluminación.
+76eb05bf	Cian
+f217e6d3	Color de la retroiluminación
+13b70667	Color de la luz de la pantalla.
+5fc6890d	firmware anterior a la V1.10
+6f039420	firmware V1.10, con nombres

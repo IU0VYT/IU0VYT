@@ -5595,3 +5595,48 @@ b5b3f1aa	VOX hidup / mati
 9897783e	Cuaca NOAA
 ea75db5c	Frekuensi terbalik
 a6263d4e	WLT
+0b95937d	Radio kenderaan GMRS 15 W, 80 saluran dan 8 kedudukan pengulang. Dua kad, mengikut perisian tegar radio: sebelum V1.10 (tanpa nama) dan V1.10 (dengan nama). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
+a7d04ceb	Radio kenderaan GMRS 35 W, 80 saluran, juga menerima VHF (program pengeluar bernama «DB-35G»). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
+05f46370	Radio kenderaan VHF / UHF 35 W, 80 saluran. Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
+6bc059e3	Radio kenderaan GMRS 40 W, 199 saluran bernama. Saluran dan tetapan umum; ia juga ada dalam CHIRP (sejak November 2026) dan failnya sama.{0}
+eb7279a2	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur, imbasan dan nama saluran serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}«Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
+65b6a98c	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran (tiada nama) serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}«Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
+f55aa366	«UB-15G» (versi 21/8/2026)
+01effed1	«UB15-G» untuk perisian tegar V1.10
+3ea382d0	88 kedudukan itu, mengikut susunan radio: saluran 1-15, kemudian «15RP», 16, «16RP» dan seterusnya hingga 22 dan «22RP» (RP = saluran yang sama dengan pancaran ke arah pengulang), kemudian saluran 23-80.
+7730b028	{0} baud. Memori dan paket yang sama seperti pemacu CHIRP (yang mempunyai model ini sejak November 2026), juga dibandingkan dengan program pengeluar {1} dan fail konfigurasinya. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan nama saluran serta tetapan umum. «Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
+fbb04a4c	Radioddity UB15-G (perisian tegar sebelum V1.10)
+e0ae264f	{0}Dengan perisian tegar V1.10 memorinya berbeza (ada nama): gunakan kad yang satu lagi.
+e108c3cb	Radioddity UB15-G (perisian tegar V1.10, dengan nama)
+cfc5c977	{0}Dengan perisian tegar yang lebih awal memorinya berbeza (tanpa nama): gunakan kad yang satu lagi.
+3993d543	Radioddity DB35-G (DB-35G)
+e23545aa	Radioddity DB35-UV
+c6c2fa12	Radioddity DB40-G
+027d1319	nama «{0}» terlalu panjang (selebih-lebihnya 8 aksara)
+517bae24	nama «{0}»: hanya huruf, angka dan tanda ringkas dibenarkan
+63cc565d	{0}: jawapan tidak dijangka daripada radio ({1} dan bukannya {2})
+719b13bc	radio melaporkan jenis lain ({0}): ia bukan radio untuk kad ini
+e727cb79	radio melaporkan jenis yang tidak diketahui ({0}): ia bukan radio untuk kad ini
+aae46543	jawapan tidak dijangka semasa membaca di {0} ({1})
+7aa46675	menulis di {0}
+f47e9acb	Pemantauan saluran keutamaan
+948f479e	Radio memeriksa saluran yang ditanda sebagai keutamaan dari semasa ke semasa ketika berada di saluran lain.
+6f139dce	Tahap pengurangan hingar
+03252bf4	Sebanyak mana hingar latar audio yang diterima dikurangkan: lebih tinggi tahapnya, lebih kuat pengurangannya.
+e09e3b2c	Pengurangan hingar mikrofon
+b3e96fa9	Mengurangkan hingar persekitaran yang ditangkap mikrofon semasa anda memancar.
+8b68364d	2.5 kHz
+e23ae463	5 kHz
+3d72e229	6.25 kHz
+dd925812	12.5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+0b946609	Sebanyak mana frekuensi berubah pada setiap langkah apabila radio dalam mod VFO.
+10297dff	Kecerahan lampu latar paparan.
+9fcb981b	Selepas berapa lama radio tidak disentuh lampu latar akan padam.
+76eb05bf	Sian
+f217e6d3	Warna lampu latar
+13b70667	Warna cahaya paparan.
+5fc6890d	perisian tegar sebelum V1.10
+6f039420	perisian tegar V1.10, dengan nama

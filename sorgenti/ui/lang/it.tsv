@@ -2089,6 +2089,10 @@ d1d35451	Echo IT
 3eae2ce8	Echo-DE
 e18d46d6	Echo-IT
 24d13cb7	PMR446, 16 canali, guida vocale in tedesco o in italiano. Canali e impostazioni generali come nel programma del costruttore «Radioddity ECHO». Non è nel CHIRP.{0}
+0b95937d	Veicolare GMRS da 15 W, 80 canali più le 8 posizioni dei ponti. Due schede, secondo il firmware della radio: prima della V1.10 (senza nomi) e V1.10 (con i nomi). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
+a7d04ceb	Veicolare GMRS da 35 W, 80 canali, riceve anche in VHF (il programma del costruttore si chiama «DB-35G»). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
+05f46370	Veicolare VHF / UHF da 35 W, 80 canali. Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
+6bc059e3	Veicolare GMRS da 40 W, 199 canali con nome. Canali e impostazioni generali; è anche nel CHIRP (dal novembre 2026) e il file è lo stesso.{0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -3675,6 +3679,28 @@ ce744b54	Minima 0,3 W
 d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
 4fc7572e	Alta 1,5 W
 fa4647fb	Bassa 0,1 W
+eb7279a2	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda, scansione e nomi dei canali e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}«Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+65b6a98c	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}«Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+f55aa366	«UB-15G» (versione del 21/8/2026)
+01effed1	«UB15-G» per il firmware V1.10
+3ea382d0	Le 88 posizioni sono, nell'ordine della radio: i canali 1-15, poi «15RP», 16, «16RP» e così via fino a 22 e «22RP» (RP = lo stesso canale con la trasmissione verso il ponte), poi i canali 23-80.
+7730b028	{0} baud. Stessa memoria e stessi pacchetti del driver del CHIRP (che ha questo modello dal novembre 2026), confrontati anche con il programma del costruttore {1} e con il suo file di configurazione. Qui si modificano frequenze, toni, potenza, banda e nomi dei canali e le impostazioni generali. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+fbb04a4c	Radioddity UB15-G (firmware prima della V1.10)
+e0ae264f	{0}Con il firmware V1.10 la memoria è diversa (ci sono i nomi): usa l'altra scheda.
+e108c3cb	Radioddity UB15-G (firmware V1.10, con i nomi)
+cfc5c977	{0}Con un firmware precedente la memoria è diversa (senza nomi): usa l'altra scheda.
+3993d543	Radioddity DB35-G (DB-35G)
+e23545aa	Radioddity DB35-UV
+c6c2fa12	Radioddity DB40-G
+ef18ae1b	tono {0} non previsto dalla radio
+6e1da434	codice DCS {0} non previsto dalla radio
+027d1319	nome «{0}» troppo lungo (al massimo 8 caratteri)
+517bae24	nome «{0}»: sono ammessi solo lettere, cifre e segni semplici
+63cc565d	{0}: risposta inattesa della radio ({1} invece di {2})
+719b13bc	la radio dichiara un altro tipo ({0}): non è quella di questa scheda
+e727cb79	la radio dichiara un tipo sconosciuto ({0}): non è quella di questa scheda
+aae46543	risposta inattesa alla lettura a {0} ({1})
+7aa46675	scrittura a {0}
 587883c4	Canali senza nome, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali e le impostazioni generali; scrambler, compander, blocco su canale occupato e salto di frequenza restano quelli del canale. {1}Se nella radio è impostata una password di lettura, toglila prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
 1e3c1a23	«Radioddity ECHO»
 153e1fd0	Retevis C6
@@ -3682,8 +3708,6 @@ ca0139c9	Frequenze fra 462 e 468 MHz: i canali di fabbrica sono i 22 FRS / GMRS 
 56cc3712	Retevis C66
 eb9232ff	Radioddity Echo-DE / Echo-IT
 a7046703	Frequenze fra 400 e 520 MHz, entro la gamma che la radio dichiara: ricorda che in PMR446 sono ammessi solo i 16 canali fra 446,00625 e 446,19375 MHz.
-ef18ae1b	tono {0} non previsto dalla radio
-6e1da434	codice DCS {0} non previsto dalla radio
 a83256ee	frequenza {0} MHz fuori dalla gamma dichiarata dalla radio ({1}-{2} MHz)
 a0693d6a	{0}: risposta inattesa della radio ({1})
 e91f6279	somma di controllo errata nel blocco {0}
@@ -5418,6 +5442,25 @@ fc24dac8	Impedisce di trasmettere quando la tensione della batteria è troppo al
 a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 5ca37d7b	«Radioddity T3» v1.3
 d0e2b5a6	programma del costruttore {0}
+f47e9acb	Ascolto del canale prioritario
+948f479e	La radio controlla ogni tanto i canali segnati come prioritari mentre è su un altro canale.
+6f139dce	Livello della riduzione del rumore
+03252bf4	Quanto viene ridotto il rumore di fondo dell'audio ricevuto: più alto il livello, più forte la riduzione.
+e09e3b2c	Riduzione del rumore del microfono
+b3e96fa9	Riduce il rumore dell'ambiente raccolto dal microfono mentre trasmetti.
+8b68364d	2,5 kHz
+e23ae463	5 kHz
+3d72e229	6,25 kHz
+dd925812	12,5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+0b946609	Di quanto cambia la frequenza a ogni scatto quando la radio è in modo VFO.
+10297dff	Luminosità della retroilluminazione del display.
+9fcb981b	Dopo quanto tempo senza toccare la radio la retroilluminazione si spegne.
+76eb05bf	Ciano
+f217e6d3	Colore della retroilluminazione
+13b70667	Colore della luce del display.
 903de02f	A inizio trasmissione
 acf9776b	A fine trasmissione
 de5f87a4	A inizio e a fine
@@ -5569,6 +5612,8 @@ ef8de76c	firmware OSFW o originale modificato, bande estese
 1c75d52b	firmware IJV V4
 1b75d398	firmware IJV V5
 1e75d851	firmware IJV V6
+5fc6890d	firmware prima della V1.10
+6f039420	firmware V1.10, con i nomi
 d1f9e8ef	nuova versione
 37ed5e1e	Freenet
 1bead84b	firmware nicFW880

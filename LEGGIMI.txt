@@ -1,11 +1,19 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.27.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.28.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.28.0:
+- Radio nuove: Radioddity UB15-G, DB35-G, DB35-UV e DB40-G (veicolari), con canali
+  e impostazioni generali. Vengono dal programma del costruttore e dal suo file di
+  configurazione; la DB40-G è anche nel CHIRP ed è confrontata con quello byte per
+  byte. Le altre tre non sono ancora provate con una radio vera: fai prima la sola
+  lettura. La scheda va scelta a mano («Identifica» non le riconosce); la UB15-G ha
+  due schede, secondo il firmware (prima della V1.10, senza nomi; V1.10, con i nomi).
+- Galleria: 610 modelli di 52 marche (556 con canali, 476 con impostazioni).
 Novità della 4.27.0:
 - Radio nuove: Retevis C6 (FRS / GMRS, 30 canali), Retevis C66 (UHF, 16 canali) e
   Radioddity Echo-DE / Echo-IT (PMR446, 16 canali), con canali e impostazioni

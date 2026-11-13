@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.27.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.28.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,14 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.28.0:
+- New radios: Radioddity UB15-G, DB35-G, DB35-UV and DB40-G (mobile radios), with
+  channels and general settings. They come from the manufacturer's program and its
+  configuration file; the DB40-G is also in CHIRP and is compared with it byte by byte.
+  The other three have not yet been tested with a real radio: do a read-only first. The
+  card must be chosen by hand («Identify» does not recognise them); the UB15-G has two
+  cards, depending on its firmware (before V1.10, without names; V1.10, with names).
+- Gallery: 610 models of 52 brands (556 with channels, 476 with settings).
 What's new in 4.27.0:
 - New radios: Retevis C6 (FRS / GMRS, 30 channels), Retevis C66 (UHF, 16 channels) and
   Radioddity Echo-DE / Echo-IT (PMR446, 16 channels), with channels and general

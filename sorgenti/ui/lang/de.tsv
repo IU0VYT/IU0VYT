@@ -5595,3 +5595,48 @@ b5b3f1aa	VOX ein / aus
 9897783e	NOAA-Wetter
 ea75db5c	Vertauschte Frequenzen
 a6263d4e	WLT
+0b95937d	GMRS-Mobilfunkgerät mit 15 W, 80 Kanäle plus die 8 Relaispositionen. Zwei Karten, je nach Firmware des Funkgeräts: vor V1.10 (ohne Namen) und V1.10 (mit Namen). Kanäle und allgemeine Einstellungen wie im Herstellerprogramm. Nicht in CHIRP.{0}
+a7d04ceb	GMRS-Mobilfunkgerät mit 35 W, 80 Kanäle, empfängt auch VHF (das Herstellerprogramm heißt «DB-35G»). Kanäle und allgemeine Einstellungen wie im Herstellerprogramm. Nicht in CHIRP.{0}
+05f46370	VHF-/UHF-Mobilfunkgerät mit 35 W, 80 Kanäle. Kanäle und allgemeine Einstellungen wie im Herstellerprogramm. Nicht in CHIRP.{0}
+6bc059e3	GMRS-Mobilfunkgerät mit 40 W, 199 Kanäle mit Namen. Kanäle und allgemeine Einstellungen; es ist auch in CHIRP (seit November 2026) und die Datei ist dieselbe.{0}
+eb7279a2	{0} Baud. Protokoll und Speicher stammen aus dem Herstellerprogramm {1} und aus dessen Konfigurationsdatei und wurden mit einem simulierten Funkgerät erprobt, nicht mit einem echten. Hier änderst du Frequenzen, Töne, Leistung, Bandbreite, Suchlauf und Namen der Kanäle sowie die allgemeinen Einstellungen; Sperre bei belegtem Kanal und Priorität bleiben wie im Kanal. {2}«Identifizieren» erkennt dieses Funkgerät nicht: wähle die richtige Karte selbst.
+65b6a98c	{0} Baud. Protokoll und Speicher stammen aus dem Herstellerprogramm {1} und aus dessen Konfigurationsdatei und wurden mit einem simulierten Funkgerät erprobt, nicht mit einem echten. Hier änderst du Frequenzen, Töne, Leistung, Bandbreite und Suchlauf der Kanäle (sie haben keine Namen) sowie die allgemeinen Einstellungen; Sperre bei belegtem Kanal und Priorität bleiben wie im Kanal. {2}«Identifizieren» erkennt dieses Funkgerät nicht: wähle die richtige Karte selbst.
+f55aa366	«UB-15G» (Version vom 21.8.2026)
+01effed1	«UB15-G» für die Firmware V1.10
+3ea382d0	Die 88 Positionen sind, in der Reihenfolge des Funkgeräts: die Kanäle 1-15, dann «15RP», 16, «16RP» und so weiter bis 22 und «22RP» (RP = derselbe Kanal mit Senden zum Relais), dann die Kanäle 23-80.
+7730b028	{0} Baud. Gleicher Speicher und gleiche Pakete wie beim CHIRP-Treiber (der dieses Modell seit November 2026 hat), auch mit dem Herstellerprogramm {1} und dessen Konfigurationsdatei verglichen. Hier änderst du Frequenzen, Töne, Leistung, Bandbreite und Namen der Kanäle sowie die allgemeinen Einstellungen. «Identifizieren» erkennt dieses Funkgerät nicht: wähle die richtige Karte selbst.
+fbb04a4c	Radioddity UB15-G (Firmware vor V1.10)
+e0ae264f	{0}Mit der Firmware V1.10 ist der Speicher anders (es gibt Namen): nimm die andere Karte.
+e108c3cb	Radioddity UB15-G (Firmware V1.10, mit Namen)
+cfc5c977	{0}Mit einer älteren Firmware ist der Speicher anders (ohne Namen): nimm die andere Karte.
+3993d543	Radioddity DB35-G (DB-35G)
+e23545aa	Radioddity DB35-UV
+c6c2fa12	Radioddity DB40-G
+027d1319	Name «{0}» zu lang (höchstens 8 Zeichen)
+517bae24	Name «{0}»: erlaubt sind nur Buchstaben, Ziffern und einfache Zeichen
+63cc565d	{0}: unerwartete Antwort des Funkgeräts ({1} statt {2})
+719b13bc	das Funkgerät meldet einen anderen Typ ({0}): es ist nicht das dieser Karte
+e727cb79	das Funkgerät meldet einen unbekannten Typ ({0}): es ist nicht das dieser Karte
+aae46543	unerwartete Antwort beim Lesen bei {0} ({1})
+7aa46675	Schreiben bei {0}
+f47e9acb	Überwachung des Prioritätskanals
+948f479e	Das Funkgerät prüft ab und zu die als Priorität markierten Kanäle, während es auf einem anderen Kanal ist.
+6f139dce	Stufe der Rauschunterdrückung
+03252bf4	Wie stark das Hintergrundrauschen des empfangenen Tons verringert wird: je höher die Stufe, desto stärker die Unterdrückung.
+e09e3b2c	Rauschunterdrückung des Mikrofons
+b3e96fa9	Verringert die vom Mikrofon aufgenommenen Umgebungsgeräusche, während du sendest.
+8b68364d	2,5 kHz
+e23ae463	5 kHz
+3d72e229	6,25 kHz
+dd925812	12,5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+0b946609	Um wie viel sich die Frequenz bei jedem Schritt ändert, wenn das Funkgerät im VFO-Modus ist.
+10297dff	Helligkeit der Display-Hintergrundbeleuchtung.
+9fcb981b	Nach welcher Zeit ohne Bedienung die Hintergrundbeleuchtung ausgeht.
+76eb05bf	Cyan
+f217e6d3	Farbe der Hintergrundbeleuchtung
+13b70667	Farbe des Displaylichts.
+5fc6890d	Firmware vor V1.10
+6f039420	Firmware V1.10, mit Namen

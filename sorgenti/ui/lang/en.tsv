@@ -5595,3 +5595,48 @@ b5b3f1aa	VOX on / off
 9897783e	NOAA weather
 ea75db5c	Reversed frequencies
 a6263d4e	WLT
+0b95937d	15 W GMRS mobile radio, 80 channels plus the 8 repeater positions. Two cards, depending on the radio's firmware: before V1.10 (without names) and V1.10 (with names). Channels and general settings as in the manufacturer's program. Not in CHIRP.{0}
+a7d04ceb	35 W GMRS mobile radio, 80 channels, also receives VHF (the manufacturer's program is called «DB-35G»). Channels and general settings as in the manufacturer's program. Not in CHIRP.{0}
+05f46370	35 W VHF / UHF mobile radio, 80 channels. Channels and general settings as in the manufacturer's program. Not in CHIRP.{0}
+6bc059e3	40 W GMRS mobile radio, 199 channels with names. Channels and general settings; it is also in CHIRP (since November 2026) and the file is the same.{0}
+eb7279a2	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth, scan and names of the channels and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}«Identify» does not recognise this radio: choose the right card yourself.
+65b6a98c	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels (they have no names) and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}«Identify» does not recognise this radio: choose the right card yourself.
+f55aa366	«UB-15G» (version of 21/8/2026)
+01effed1	«UB15-G» for firmware V1.10
+3ea382d0	The 88 positions are, in the radio's order: channels 1-15, then «15RP», 16, «16RP» and so on up to 22 and «22RP» (RP = the same channel with transmit towards the repeater), then channels 23-80.
+7730b028	{0} baud. Same memory and same packets as the CHIRP driver (which has had this model since November 2026), also compared with the manufacturer's program {1} and with its configuration file. Here you change frequencies, tones, power, bandwidth and names of the channels and the general settings. «Identify» does not recognise this radio: choose the right card yourself.
+fbb04a4c	Radioddity UB15-G (firmware before V1.10)
+e0ae264f	{0}With firmware V1.10 the memory is different (there are names): use the other card.
+e108c3cb	Radioddity UB15-G (firmware V1.10, with names)
+cfc5c977	{0}With an earlier firmware the memory is different (no names): use the other card.
+3993d543	Radioddity DB35-G (DB-35G)
+e23545aa	Radioddity DB35-UV
+c6c2fa12	Radioddity DB40-G
+027d1319	name «{0}» too long (8 characters at most)
+517bae24	name «{0}»: only letters, digits and simple signs are allowed
+63cc565d	{0}: unexpected reply from the radio ({1} instead of {2})
+719b13bc	the radio reports another type ({0}): it is not the one of this card
+e727cb79	the radio reports an unknown type ({0}): it is not the one of this card
+aae46543	unexpected reply to the read at {0} ({1})
+7aa46675	write at {0}
+f47e9acb	Priority channel watch
+948f479e	The radio checks the channels marked as priority every now and then while it is on another channel.
+6f139dce	Noise reduction level
+03252bf4	How much the background noise of the received audio is reduced: the higher the level, the stronger the reduction.
+e09e3b2c	Microphone noise reduction
+b3e96fa9	Reduces the ambient noise picked up by the microphone while you transmit.
+8b68364d	2.5 kHz
+e23ae463	5 kHz
+3d72e229	6.25 kHz
+dd925812	12.5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+0b946609	How much the frequency changes at each step when the radio is in VFO mode.
+10297dff	Brightness of the display backlight.
+9fcb981b	How long after the last touch the backlight turns off.
+76eb05bf	Cyan
+f217e6d3	Backlight colour
+13b70667	Colour of the display light.
+5fc6890d	firmware before V1.10
+6f039420	firmware V1.10, with names

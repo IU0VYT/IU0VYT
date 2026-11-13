@@ -7,6 +7,45 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.28.0 (12/11/2026)
+-------------------
+- Radioddity UB15-G, DB35-G (el programa se llama «DB-35G»), DB35-UV y DB40-G, radios
+  móviles: controlador nuevo (drv_wf.go). El programa del fabricante es el mismo para
+  todas y toma velocidad, enlace, direcciones y posición de cada campo de un archivo de
+  configuración que está a su lado; el resto se ha leído en su código. Pregunta del tipo
+  de radio (55 01 00 00), enlace en tres pasos (02 «PROGRAM», 02 → «SMP558», 06),
+  lecturas 'R' y escrituras 'W' por número de fila, 'b' al final; los ajustes son una
+  sola fila en la dirección E0 00. Fila de un canal: recepción y transmisión en 4 bytes
+  (Hz), tonos en 2 bytes (CTCSS en décimas de Hz, DCS 0x2800 + código, 0xA800 si está
+  invertido), luego potencia, ancho de banda, exploración y, donde existe, el nombre de
+  8 caracteres en mayúsculas. Bloqueo con canal ocupado y prioridad quedan como están en
+  el canal. UB15-G: 88 filas (canales 1-15, luego «15RP», 16, «16RP» … 22, «22RP», luego
+  23-80) y dos fichas, porque con el firmware V1.10 las filas son más largas y tienen el
+  nombre. Una radio de otro tipo se rechaza antes del enlace con un mensaje claro. Una
+  imagen nunca leída de una radio no toca los ajustes.
+- DB40-G: desde noviembre de 2026 está también en CHIRP (radioddity_db40g.py). Aquí hace
+  byte por byte lo que hace CHIRP (sin pregunta del tipo, se comprueba el eco de la
+  orden de lectura, nombres rellenados con 00, fila borrada toda a cero) y las pruebas
+  comparan los dos: 31 canales de la imagen de prueba de CHIRP leídos sin diferencias,
+  18 modificaciones con imagen idéntica, 811 bytes enviados en lectura y 7211 en
+  escritura, idénticos a los de CHIRP. Es también una confirmación independiente del
+  enlace, los paquetes, las direcciones, los tonos y las frecuencias de toda la familia.
+- Ajustes (settings_wf.go): squelch, tiempo máximo de transmisión, reducción de ruido
+  (encendida / apagada o por niveles), escucha del canal prioritario, sonido de las
+  teclas, roger; UB15-G con el firmware V1.10 también reducción de ruido del micrófono y
+  VOX; DB35-UV también VOX, paso de frecuencia y retroiluminación (nivel, apagado,
+  color); DB40-G: squelch, tiempo máximo de transmisión, bloqueo con canal ocupado,
+  sonido de las teclas. Recuentos: 556 radios, 476 con ajustes, 610 en la galería, 52
+  marcas. Traducciones: 45 textos nuevos. Comprobaciones: bytes calculados a mano para
+  frecuencias, tonos y cada ajuste; radios simuladas nuevas en las pruebas comunes de
+  lectura, escritura, conversión y robustez; control de accesos simultáneos a los datos.
+  Dos errores encontrados y corregidos durante las comprobaciones: un valor calculado a
+  mano equivocado en una prueba, y la radio simulada que conservaba su estado de una
+  conexión a otra. Los programas de los fabricantes no se han ejecutado nunca. UB15-G,
+  DB35-G y DB35-UV no se han probado de verdad. Corregido: desde la 4.26 las pruebas no
+  se compilaban en Windows, porque tres archivos de prueba usaban las radios simuladas,
+  que no se compilan en Windows; el programa en sí no estaba afectado.
+
 4.27.0 (12/11/2026)
 -------------------
 - Retevis C6 (FRS / GMRS, 30 canales), Retevis C66 (UHF, 16 canales) y Radioddity

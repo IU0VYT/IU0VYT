@@ -7,6 +7,42 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.28.0 (12/11/2026)
+-------------------
+- Radioddity UB15-G, DB35-G (the program is called «DB-35G»), DB35-UV and DB40-G, mobile
+  radios: new driver (drv_wf.go). The manufacturer's program is the same for all of them
+  and takes speed, handshake, addresses and the position of every field from a
+  configuration file next to it; the rest was read in its code. Radio type query (55 01
+  00 00), three-step handshake (02 «PROGRAM», 02 → «SMP558», 06), 'R' reads and 'W'
+  writes by row number, 'b' at the end; the settings are a single row at address E0 00.
+  Channel row: receive and transmit in 4 bytes (Hz), tones in 2 bytes (CTCSS in tenths
+  of Hz, DCS 0x2800 + code, 0xA800 if inverted), then power, bandwidth, scan and, where
+  present, an 8-character upper-case name. Busy-channel lockout and priority stay as
+  they are in the channel. UB15-G: 88 rows (channels 1-15, then «15RP», 16, «16RP» … 22,
+  «22RP», then 23-80) and two cards, because with firmware V1.10 the rows are longer and
+  have the name. A radio of another type is refused before the handshake with a clear
+  message. An image never read from a radio does not touch the settings.
+- DB40-G: since November 2026 it is also in CHIRP (radioddity_db40g.py). Here it does
+  byte by byte what CHIRP does (no type query, the echo of the read command is checked,
+  names padded with 00, deleted row all zeros) and the tests compare the two: 31
+  channels of CHIRP's sample image read with no differences, 18 edits giving an
+  identical image, 811 bytes sent when reading and 7211 when writing, identical to
+  CHIRP's. It is also an independent confirmation of handshake, packets, addresses,
+  tones and frequencies of the whole family.
+- Settings (settings_wf.go): squelch, maximum transmit time, noise reduction (on / off
+  or by level), priority channel watch, key beep, roger beep; UB15-G with firmware V1.10
+  also microphone noise reduction and VOX; DB35-UV also VOX, frequency step and
+  backlight (level, timeout, colour); DB40-G: squelch, maximum transmit time,
+  busy-channel lockout, key beep. Counts: 556 radios, 476 with settings, 610 in the
+  gallery, 52 brands. Translations: 45 new texts. Checks: bytes computed by hand for
+  frequencies, tones and every setting; new simulated radios in the common read, write,
+  conversion and robustness tests; data-race check. Two mistakes found and fixed during
+  the checks: a wrong hand-computed value in a test, and the simulated radio keeping its
+  state from one connection to the next. The manufacturers' programs were never run.
+  UB15-G, DB35-G and DB35-UV have not been tested for real. Fixed: since 4.26 the tests
+  did not compile on Windows, because three test files used the simulated radios, which
+  are not built on Windows; the program itself was not affected.
+
 4.27.0 (12/11/2026)
 -------------------
 - Retevis C6 (FRS / GMRS, 30 channels), Retevis C66 (UHF, 16 channels) and Radioddity

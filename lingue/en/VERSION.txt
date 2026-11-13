@@ -1,6 +1,6 @@
 IU0VYT Flash
-Version: 4.27.0
-Build: 2026-11-12T09:40
+Version: 4.28.0
+Build: 2026-11-12T11:45
 
 The program reads its version from versione.txt in the main folder; this file is only
 for information.
