@@ -5548,3 +5548,50 @@ efbcdf5c	Side key (long press)
 c9363874	Function of the side key held down.
 73b10bc8	Turns the radio's Bluetooth on or off (RB39P and RB639P only).
 7fe587e0	Auctus
+039d3bdf	MateTalk C6
+3d4708b2	FRS / GMRS, 30 channels (22 plus 8 for repeaters). Channels and general settings as in the manufacturer's program. Not in CHIRP.{0}
+99854fcb	MateTalk C66
+3cada21b	16 UHF channels (400-480 MHz). Channels and general settings as in the manufacturer's program. Not in CHIRP.{0}
+06dda3c4	Echo-DE / Echo-IT
+3b7d6ba4	Echo
+1e3a20c8	ECHO-DE
+411a0436	ECHO-IT
+dcdbb467	Echo DE
+d1d35451	Echo IT
+3eae2ce8	Echo-DE
+e18d46d6	Echo-IT
+24d13cb7	PMR446, 16 channels, voice guide in German or Italian. Channels and general settings as in the manufacturer's program «Radioddity ECHO». Not in CHIRP.{0}
+587883c4	Channels without names, 9600 baud. Protocol and memory taken from the manufacturer's program {0} and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels and the general settings; scrambler, compander, busy-channel lockout and frequency hopping stay as they are in the channel. {1}If a read password is set in the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right card yourself.
+1e3c1a23	«Radioddity ECHO»
+153e1fd0	Retevis C6
+ca0139c9	Frequencies between 462 and 468 MHz: the factory channels are the 22 FRS / GMRS ones plus 8 channels for GMRS repeaters (transmit between 467.55 and 467.725 MHz). 
+56cc3712	Retevis C66
+eb9232ff	Radioddity Echo-DE / Echo-IT
+a7046703	Frequencies between 400 and 520 MHz, within the range the radio declares: remember that PMR446 allows only the 16 channels between 446.00625 and 446.19375 MHz. 
+ef18ae1b	tone {0} not supported by the radio
+6e1da434	DCS code {0} not supported by the radio
+a83256ee	frequency {0} MHz outside the range declared by the radio ({1}-{2} MHz)
+e91f6279	wrong checksum in block {0}
+d2423b8e	the radio answered the handshake differently from what was expected: it is not the model of this card
+73a44ef7	the radio did not accept the password: if one is set, remove it with the manufacturer's program
+b32af56e	the radio declares another model (index {0}): it is not the one of this card
+9bfb24f6	firmware version not given
+888cdc7f	firmware v{0}.{1}.{2}
+8ef3c60f	the frequency range, model or area of the radio ({0}) are not those of the image ({1}): the image comes from another radio
+49ac0001	block {0}
+903de02f	At the start of transmission
+acf9776b	At the end of transmission
+de5f87a4	At the start and at the end
+0e66e58d	Transmit sound (roger)
+ed06da3f	Short sound sent on air when you press or release the PTT, so that the others know when you start or stop talking.
+96f6c973	One-key pairing
+4781992d	Lets you copy, with a key combination, the frequency and tones of the channel in use from a companion's radio.
+3fa24792	Wireless copy
+0e9ddd88	Lets you copy all the channels over the air from one radio to an identical one.
+98678065	Alarm on the radio
+fe4605ae	Transmitted alarm
+b5b3f1aa	VOX on / off
+5aa4df2e	Direct (no repeater)
+9897783e	NOAA weather
+ea75db5c	Reversed frequencies
+a6263d4e	WLT

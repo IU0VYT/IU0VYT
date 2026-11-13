@@ -68,8 +68,15 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = rt69Size
 	case *auctusOpt: // 4.26: Retevis RB39 e RB639
 		size = auctusSize
+	case *wltOpt: // 4.27: Retevis C6, C66 e Radioddity Echo
+		size = o.size()
 	}
 	mem := bytes.Repeat([]byte{0xFF}, size)
+	if o, ok := m.Opt.(*wltOpt); ok { // gamma dichiarata dalla radio: tutta quella del modello; modello e area 0
+		putBCDLE(mem[o.rng():o.rng()+2], m.Bands[0].Lo/100000)
+		putBCDLE(mem[o.rng()+2:o.rng()+4], m.Bands[len(m.Bands)-1].Hi/100000)
+		mem[o.rng()+4], mem[o.rng()+5] = 0, 0
+	}
 	if _, ok := m.Opt.(*auctusOpt); ok { // dati di sistema come li manda la radio (9 byte)
 		mem = make([]byte, auctusSize)
 		copy(mem[auctusSys:], []byte{9, 6, 0, 1, 2, 1, 1, 0, 2, 1})

@@ -307,6 +307,11 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): from the study of the manufacturer's pr
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), of which nothing is included; the
 code is written from scratch.
 
+RETEVIS C6 / C66 AND RADIODDITY ECHO-DE / ECHO-IT (4.27): no third-party code. Protocol,
+memory and settings come from reading the code of the manufacturers' programs (Retevis
+«C6» and «C66», «Radioddity ECHO»), rewritten from scratch; nothing of those programs is
+included.
+
 RETEVIS RB39 / RB639 AND SETTINGS OF THE BF-T17 / GT-18 / FS-T3 (4.26): no third-party
 code. Protocol, memory and settings come from reading the code of the manufacturers'
 programs (Retevis «RB39 CPS», «RB639» and «Retevis Analog CPS»; Baofeng «T17-T18 PMR446

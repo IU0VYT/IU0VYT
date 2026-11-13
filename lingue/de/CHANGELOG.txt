@@ -7,6 +7,40 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.27.0 (12.11.2026)
+-------------------
+- Retevis C6 (FRS / GMRS, 30 Kanäle), Retevis C66 (UHF, 16 Kanäle) und Radioddity
+  Echo-DE / Echo-IT (PMR446, 16 Kanäle): neuer Treiber (drv_wlt.go), aus dem Code der
+  Herstellerprogramme «C6», «C66» und «Radioddity ECHO» (dasselbe Programm mit anderen
+  Schlüsseln und Adressen). 9600 Baud. Verbindungsaufbau: das Programm wählt zwei
+  Zufallszahlen und sendet den Schlüssel des Modells (8 Bytes), mit der ersten
+  vermischt; das Funkgerät antwortet mit dem Schlüssel, vermischt mit einem aus beiden
+  Zahlen berechneten Wert. Dann das Passwort (FF, wenn keines gesetzt ist), Lesen mit
+  'R' und Schreiben mit 'W' in 16-Byte-Blöcken mit Prüfsumme, am Ende 'E'. Kanal mit 16
+  Bytes: Frequenzen in BCD (Zehner-Hz), Töne in BCD mit den DCS-Bits, Leistung,
+  Bandbreite, Suchlauf; Scrambler, Kompander, Sperre bei belegtem Kanal und
+  Frequenzsprung bleiben wie im Kanal. Gelesen wird bis zum Passwortblock, geschrieben
+  bis zum Bereichsblock: Passwort und Abgleichdaten werden nie geschrieben. Vor dem
+  Schreiben müssen Bereich, Modell und Gebiet des Funkgeräts denen des Abbilds
+  entsprechen. Ein Funkgerät mit gesetztem Passwort oder eines anderen Modells wird mit
+  einer klaren Meldung abgelehnt.
+- Einstellungen (settings_wlt.go): Rauschsperre, maximale Sendezeit, VOX und
+  Empfindlichkeit, Sprachansage, Batteriesparen, Seitentasten (kurz und lang drücken);
+  zusätzlich bei C6 und C66: Rufton, Sendeton (Roger), Koppeln per Tastendruck,
+  drahtloses Kopieren; beim Echo: VOX-Verzögerung.
+- Zusätzliche Prüfung: die 30 Standardkanäle im Programm des C6 (die 22 FRS-/GMRS-Kanäle
+  und die 8 Relaiskanäle) werden mit den richtigen Frequenzen, Tönen, Leistung und
+  Bandbreite gelesen. Deshalb nimmt das C6 Frequenzen bis 468 MHz an, auch wenn das
+  Programm bei der Eingabe bei 467 MHz aufhört.
+- Retevis RB39 / RB39P: im Reiter Modelle steht es jetzt bei den Funkgeräten «GMRS / FRS
+  (USA)» (es war bei den PMR446-Geräten gelandet). Zahlen: 552 Funkgeräte, 472 mit
+  Einstellungen, 606 in der Galerie, 52 Marken. Übersetzungen: 47 neue Texte. Prüfungen:
+  Verbindungsaufbau für drei Zahlenpaare von Hand berechnet und mit allen Kombinationen
+  erprobt; jede Adresse zweimal im Code der Programme gelesen; neue simulierte
+  Funkgeräte in den gemeinsamen Tests für Lesen, Schreiben, Umwandlung und Robustheit.
+  Die Herstellerprogramme wurden nie ausgeführt. Keines dieser Funkgeräte ist in echt
+  erprobt.
+
 4.26.0 (12.11.2026)
 -------------------
 - Retevis RB39 / RB39P (FRS, 22 Kanäle) und RB639 / RB639P (PMR446, 16 Kanäle): neuer

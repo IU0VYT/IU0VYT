@@ -7,6 +7,38 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.27.0 (12/11/2026)
+-------------------
+- Retevis C6 (FRS / GMRS, 30 canales), Retevis C66 (UHF, 16 canales) y Radioddity
+  Echo-DE / Echo-IT (PMR446, 16 canales): controlador nuevo (drv_wlt.go), del código de
+  los programas de los fabricantes «C6», «C66» y «Radioddity ECHO» (el mismo programa
+  con claves y direcciones distintas). 9600 baudios. Enlace: el programa elige dos
+  números al azar y envía la clave del modelo (8 bytes) mezclada con el primero; la
+  radio responde con la clave mezclada con un valor calculado a partir de los dos
+  números. Después la contraseña (FF si no hay), lecturas 'R' y escrituras 'W' en
+  bloques de 16 bytes con suma de comprobación, 'E' al final. Canal de 16 bytes:
+  frecuencias en BCD (decenas de Hz), tonos en BCD con los bits del DCS, potencia, ancho
+  de banda, exploración; scrambler, compander, bloqueo con canal ocupado y salto de
+  frecuencia quedan como están en el canal. Se lee hasta el bloque de la contraseña y se
+  escribe hasta el de la gama: la contraseña y las calibraciones no se escriben nunca.
+  Antes de escribir, la gama, el modelo y el área de la radio deben ser los de la
+  imagen. Una radio con contraseña, o de otro modelo, se rechaza con un mensaje claro.
+- Ajustes (settings_wlt.go): squelch, tiempo máximo de transmisión, VOX y sensibilidad,
+  guía de voz, ahorro de batería, teclas laterales (pulsación corta y larga); además en
+  C6 y C66: tono de llamada, sonido de transmisión (roger), emparejamiento con una
+  tecla, copia inalámbrica; en la Echo: retardo del VOX.
+- Comprobación adicional: los 30 canales predeterminados contenidos en el programa del
+  C6 (los 22 FRS / GMRS y los 8 de repetidores) se leen con las frecuencias, tonos,
+  potencia y ancho de banda correctos. Por eso el C6 acepta frecuencias hasta 468 MHz,
+  aunque el programa se detiene en 467 MHz al teclear.
+- Retevis RB39 / RB39P: en la pestaña Modelos ahora está entre las radios «GMRS / FRS
+  (USA)» (había quedado entre las PMR446). Recuentos: 552 radios, 472 con ajustes, 606
+  en la galería, 52 marcas. Traducciones: 47 textos nuevos. Comprobaciones: enlace
+  calculado a mano para tres pares de números y probado con todas las combinaciones;
+  cada dirección leída dos veces en el código de los programas; nuevas radios simuladas
+  en las pruebas comunes de lectura, escritura, conversión y robustez. Los programas de
+  los fabricantes nunca se ejecutaron. Ninguna de estas radios se ha probado de verdad.
+
 4.26.0 (12/11/2026)
 -------------------
 - Retevis RB39 / RB39P (FRS, 22 canales) y RB639 / RB639P (PMR446, 16 canales):

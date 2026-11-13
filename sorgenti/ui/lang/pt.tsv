@@ -5548,3 +5548,50 @@ efbcdf5c	Tecla lateral (pressão longa)
 c9363874	Função da tecla lateral mantida premida.
 73b10bc8	Liga ou desliga o Bluetooth do rádio (só RB39P e RB639P).
 7fe587e0	Auctus
+039d3bdf	MateTalk C6
+3d4708b2	FRS / GMRS, 30 canais (22 mais 8 para repetidores). Canais e definições gerais como no programa do fabricante. Não está no CHIRP.{0}
+99854fcb	MateTalk C66
+3cada21b	16 canais UHF (400-480 MHz). Canais e definições gerais como no programa do fabricante. Não está no CHIRP.{0}
+06dda3c4	Echo-DE / Echo-IT
+3b7d6ba4	Echo
+1e3a20c8	ECHO-DE
+411a0436	ECHO-IT
+dcdbb467	Echo DE
+d1d35451	Echo IT
+3eae2ce8	Echo-DE
+e18d46d6	Echo-IT
+24d13cb7	PMR446, 16 canais, guia de voz em alemão ou em italiano. Canais e definições gerais como no programa do fabricante «Radioddity ECHO». Não está no CHIRP.{0}
+587883c4	Canais sem nome, 9600 baud. Protocolo e memória obtidos do programa do fabricante {0} e testados com um rádio simulado, não com um rádio real. Aqui alteram-se frequências, tons, potência, largura de banda e pesquisa dos canais e as definições gerais; scrambler, compander, bloqueio com canal ocupado e salto de frequência ficam como estão no canal. {1}Se o rádio tiver uma palavra-passe de leitura, retire-a primeiro com o programa do fabricante. «Identificar» não reconhece este rádio: escolha a ficha certa.
+1e3c1a23	«Radioddity ECHO»
+153e1fd0	Retevis C6
+ca0139c9	Frequências entre 462 e 468 MHz: os canais de fábrica são os 22 FRS / GMRS mais 8 canais para repetidores GMRS (transmissão entre 467,55 e 467,725 MHz). 
+56cc3712	Retevis C66
+eb9232ff	Radioddity Echo-DE / Echo-IT
+a7046703	Frequências entre 400 e 520 MHz, dentro da gama que o rádio declara: lembre-se de que em PMR446 só são permitidos os 16 canais entre 446,00625 e 446,19375 MHz. 
+ef18ae1b	tom {0} não previsto pelo rádio
+6e1da434	código DCS {0} não previsto pelo rádio
+a83256ee	frequência {0} MHz fora da gama declarada pelo rádio ({1}-{2} MHz)
+e91f6279	soma de verificação errada no bloco {0}
+d2423b8e	o rádio respondeu à ligação de forma diferente da esperada: não é o modelo desta ficha
+73a44ef7	o rádio não aceitou a palavra-passe: se houver uma, retire-a com o programa do fabricante
+b32af56e	o rádio declara outro modelo (índice {0}): não é o desta ficha
+9bfb24f6	versão do firmware não indicada
+888cdc7f	firmware v{0}.{1}.{2}
+8ef3c60f	a gama de frequência, o modelo ou a área do rádio ({0}) não são os da imagem ({1}): a imagem vem de outro rádio
+49ac0001	bloco {0}
+903de02f	No início da transmissão
+acf9776b	No fim da transmissão
+de5f87a4	No início e no fim
+0e66e58d	Som de transmissão (roger)
+ed06da3f	Som breve enviado para o ar quando prime ou solta o PTT, para os outros saberem quando começa ou acaba de falar.
+96f6c973	Emparelhamento com uma tecla
+4781992d	Permite copiar do rádio de um companheiro, com uma combinação de teclas, a frequência e os tons do canal em uso.
+3fa24792	Cópia sem fios
+0e9ddd88	Permite copiar por rádio todos os canais de um rádio para outro igual.
+98678065	Alarme no rádio
+fe4605ae	Alarme transmitido
+b5b3f1aa	VOX ligado / desligado
+5aa4df2e	Direto (sem repetidor)
+9897783e	Meteorologia NOAA
+ea75db5c	Frequências invertidas
+a6263d4e	WLT

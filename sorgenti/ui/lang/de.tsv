@@ -5548,3 +5548,50 @@ efbcdf5c	Seitentaste (lang drücken)
 c9363874	Funktion der gedrückt gehaltenen Seitentaste.
 73b10bc8	Schaltet das Bluetooth des Funkgeräts ein oder aus (nur RB39P und RB639P).
 7fe587e0	Auctus
+039d3bdf	MateTalk C6
+3d4708b2	FRS / GMRS, 30 Kanäle (22 plus 8 für Relais). Kanäle und allgemeine Einstellungen wie im Herstellerprogramm. Nicht in CHIRP.{0}
+99854fcb	MateTalk C66
+3cada21b	16 UHF-Kanäle (400-480 MHz). Kanäle und allgemeine Einstellungen wie im Herstellerprogramm. Nicht in CHIRP.{0}
+06dda3c4	Echo-DE / Echo-IT
+3b7d6ba4	Echo
+1e3a20c8	ECHO-DE
+411a0436	ECHO-IT
+dcdbb467	Echo DE
+d1d35451	Echo IT
+3eae2ce8	Echo-DE
+e18d46d6	Echo-IT
+24d13cb7	PMR446, 16 Kanäle, Sprachansage auf Deutsch oder Italienisch. Kanäle und allgemeine Einstellungen wie im Herstellerprogramm «Radioddity ECHO». Nicht in CHIRP.{0}
+587883c4	Kanäle ohne Namen, 9600 Baud. Protokoll und Speicher stammen aus dem Herstellerprogramm {0} und wurden mit einem simulierten Funkgerät erprobt, nicht mit einem echten. Hier änderst du Frequenzen, Töne, Leistung, Bandbreite und Suchlauf der Kanäle sowie die allgemeinen Einstellungen; Scrambler, Kompander, Sperre bei belegtem Kanal und Frequenzsprung bleiben wie im Kanal. {1}Ist im Funkgerät ein Lesepasswort gesetzt, entferne es zuerst mit dem Herstellerprogramm. «Identifizieren» erkennt dieses Funkgerät nicht: wähle die richtige Karte selbst.
+1e3c1a23	«Radioddity ECHO»
+153e1fd0	Retevis C6
+ca0139c9	Frequenzen zwischen 462 und 468 MHz: die Werkskanäle sind die 22 FRS-/GMRS-Kanäle plus 8 Kanäle für GMRS-Relais (Senden zwischen 467,55 und 467,725 MHz). 
+56cc3712	Retevis C66
+eb9232ff	Radioddity Echo-DE / Echo-IT
+a7046703	Frequenzen zwischen 400 und 520 MHz, innerhalb des Bereichs, den das Funkgerät meldet: denke daran, dass bei PMR446 nur die 16 Kanäle zwischen 446,00625 und 446,19375 MHz erlaubt sind. 
+ef18ae1b	Ton {0} vom Funkgerät nicht vorgesehen
+6e1da434	DCS-Code {0} vom Funkgerät nicht vorgesehen
+a83256ee	Frequenz {0} MHz außerhalb des vom Funkgerät gemeldeten Bereichs ({1}-{2} MHz)
+e91f6279	falsche Prüfsumme im Block {0}
+d2423b8e	das Funkgerät hat auf den Verbindungsaufbau anders als erwartet geantwortet: es ist nicht das Modell dieser Karte
+73a44ef7	das Funkgerät hat das Passwort nicht angenommen: ist eines gesetzt, entferne es mit dem Herstellerprogramm
+b32af56e	das Funkgerät meldet ein anderes Modell (Index {0}): es ist nicht das dieser Karte
+9bfb24f6	Firmware-Version nicht angegeben
+888cdc7f	firmware v{0}.{1}.{2}
+8ef3c60f	Frequenzbereich, Modell oder Gebiet des Funkgeräts ({0}) sind nicht die des Abbilds ({1}): das Abbild stammt von einem anderen Funkgerät
+49ac0001	Block {0}
+903de02f	Am Sendebeginn
+acf9776b	Am Sendeende
+de5f87a4	Am Beginn und am Ende
+0e66e58d	Sendeton (Roger)
+ed06da3f	Kurzer Ton, der gesendet wird, wenn du die PTT-Taste drückst oder loslässt, damit die anderen wissen, wann du zu sprechen beginnst oder aufhörst.
+96f6c973	Koppeln per Tastendruck
+4781992d	Erlaubt, mit einer Tastenkombination Frequenz und Töne des benutzten Kanals vom Funkgerät eines Partners zu kopieren.
+3fa24792	Drahtloses Kopieren
+0e9ddd88	Erlaubt, alle Kanäle per Funk von einem Funkgerät auf ein gleiches zu kopieren.
+98678065	Alarm am Funkgerät
+fe4605ae	Gesendeter Alarm
+b5b3f1aa	VOX ein / aus
+5aa4df2e	Direkt (ohne Relais)
+9897783e	NOAA-Wetter
+ea75db5c	Vertauschte Frequenzen
+a6263d4e	WLT

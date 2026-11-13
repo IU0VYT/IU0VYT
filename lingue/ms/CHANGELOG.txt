@@ -6,6 +6,38 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.27.0 (12/11/2026)
+-------------------
+- Retevis C6 (FRS / GMRS, 30 saluran), Retevis C66 (UHF, 16 saluran) dan Radioddity
+  Echo-DE / Echo-IT (PMR446, 16 saluran): pemacu baharu (drv_wlt.go), daripada kod
+  program pengeluar «C6», «C66» dan «Radioddity ECHO» (program yang sama dengan kunci
+  dan alamat berbeza). 9600 baud. Jabat tangan: program memilih dua nombor rawak dan
+  menghantar kunci model (8 bait) yang dicampur dengan nombor pertama; radio menjawab
+  dengan kunci yang dicampur dengan nilai yang dikira daripada kedua-dua nombor.
+  Kemudian kata laluan (FF jika tiada), bacaan 'R' dan tulisan 'W' dalam blok 16 bait
+  dengan jumlah semak, 'E' pada akhir. Saluran 16 bait: frekuensi dalam BCD (puluhan
+  Hz), nada dalam BCD dengan bit DCS, kuasa, lebar jalur, imbasan; scrambler, compander,
+  kunci saluran sibuk dan lompatan frekuensi kekal seperti dalam saluran. Bacaan
+  sehingga blok kata laluan, tulisan sehingga blok julat: kata laluan dan data
+  penentukuran tidak pernah ditulis. Sebelum menulis, julat, model dan kawasan radio
+  mesti sama dengan imej. Radio dengan kata laluan, atau model lain, ditolak dengan
+  mesej yang jelas.
+- Tetapan (settings_wlt.go): squelch, masa pancaran maksimum, VOX dan kepekaan, panduan
+  suara, penjimatan bateri, kekunci sisi (tekan pendek dan lama); tambahan pada C6 dan
+  C66: nada panggilan, bunyi pancaran (roger), pemadanan satu kekunci, salinan tanpa
+  wayar; pada Echo: lengah VOX.
+- Semakan tambahan: 30 saluran lalai yang terkandung dalam program C6 (22 saluran FRS /
+  GMRS dan 8 saluran pengulang) dibaca dengan frekuensi, nada, kuasa dan lebar jalur
+  yang betul. Oleh itu C6 menerima frekuensi sehingga 468 MHz, walaupun program berhenti
+  pada 467 MHz semasa menaip.
+- Retevis RB39 / RB39P: dalam tab Model ia kini dalam kalangan radio «GMRS / FRS (AS)»
+  (sebelum ini berada dalam PMR446). Kiraan: 552 radio, 472 dengan tetapan, 606 dalam
+  galeri, 52 jenama. Terjemahan: 47 teks baharu. Semakan: jabat tangan dikira dengan
+  tangan untuk tiga pasangan nombor dan diuji pada semua gabungan; setiap alamat dibaca
+  dua kali dalam kod program; radio simulasi baharu dalam ujian umum bacaan, tulisan,
+  penukaran dan ketahanan. Program pengeluar tidak pernah dijalankan. Tiada satu pun
+  radio ini diuji secara sebenar.
+
 4.26.0 (12/11/2026)
 -------------------
 - Retevis RB39 / RB39P (FRS, 22 saluran) dan RB639 / RB639P (PMR446, 16 saluran): pemacu

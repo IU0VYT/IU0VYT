@@ -11,7 +11,7 @@ package main
 // ricavato dal codice dei programmi del costruttore (drv_auctus.go).
 
 var catalog426 = []catItem{
-	{ID: "rtv-rb39", Brand: "Retevis", Name: "RB39 / RB39P", Aliases: []string{"RB-39", "RB-39P"}, Models: []string{"RB39", "RB39P"}, Type: "pmr",
+	{ID: "rtv-rb39", Brand: "Retevis", Name: "RB39 / RB39P", Aliases: []string{"RB-39", "RB-39P"}, Models: []string{"RB39", "RB39P"}, Type: "gmrs",
 		Drivers: []string{"rt-rb39"}, Links: []catLink{info("Programmi Retevis", rtvDown)},
 		Notes: "Versione FRS (22 canali). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP." + cps425},
 	{ID: "rtv-rb639", Brand: "Retevis", Name: "RB639 / RB639P", Aliases: []string{"RB-639", "RB-639P"}, Models: []string{"RB639", "RB639P"}, Type: "pmr",

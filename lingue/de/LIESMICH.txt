@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.26.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.27.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,15 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.27.0:
+- Neue Funkgeräte: Retevis C6 (FRS / GMRS, 30 Kanäle), Retevis C66 (UHF, 16 Kanäle) und
+  Radioddity Echo-DE / Echo-IT (PMR446, 16 Kanäle), mit Kanälen und allgemeinen
+  Einstellungen. Sie stammen aus dem Code der Herstellerprogramme und sind noch nicht
+  mit einem echten Funkgerät erprobt: zuerst nur auslesen. Die Karte wird von Hand
+  gewählt («Identifizieren» erkennt sie nicht). Ist im Funkgerät ein Lesepasswort
+  gesetzt, entferne es zuerst mit dem Herstellerprogramm.
+- Retevis RB39 / RB39P: jetzt bei den Funkgeräten «GMRS / FRS (USA)».
+- Galerie: 606 Modelle von 52 Marken (552 mit Kanälen, 472 mit Einstellungen).
 Neu in 4.26.0:
 - Neue Funkgeräte: Retevis RB39 / RB39P (FRS, 22 Kanäle) und RB639 / RB639P (PMR446, 16
   Kanäle), mit Kanälen und allgemeinen Einstellungen. Sie stammen aus dem Code der

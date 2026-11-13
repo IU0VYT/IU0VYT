@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.26.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.27.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,15 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.27.0:
+- New radios: Retevis C6 (FRS / GMRS, 30 channels), Retevis C66 (UHF, 16 channels) and
+  Radioddity Echo-DE / Echo-IT (PMR446, 16 channels), with channels and general
+  settings. They come from the code of the manufacturers' programs and have not yet been
+  tested with a real radio: do a read-only first. The card must be chosen by hand
+  («Identify» does not recognise them). If a read password is set in the radio, remove
+  it first with the manufacturer's program.
+- Retevis RB39 / RB39P: now listed among the «GMRS / FRS (USA)» radios.
+- Gallery: 606 models of 52 brands (552 with channels, 472 with settings).
 What's new in 4.26.0:
 - New radios: Retevis RB39 / RB39P (FRS, 22 channels) and RB639 / RB639P (PMR446, 16
   channels), with channels and general settings. They come from the code of the

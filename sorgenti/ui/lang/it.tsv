@@ -2076,6 +2076,19 @@ bb3c8e60	999 canali in un unico elenco e impostazioni generali, come nel program
 924329db	Canali come nel programma del costruttore «Radioddity T3» v1.3 (stesso protocollo della Baofeng BF-T17, senza password): la FS-T3 è la versione FRS (22 canali), la PR-T3 quella PMR446 (16 canali). Non è nel CHIRP.{0}
 3193cf7f	Versione FRS (22 canali). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
 1a5178a8	Versione PMR446 (16 canali). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
+039d3bdf	MateTalk C6
+3d4708b2	FRS / GMRS, 30 canali (22 più 8 per i ponti). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
+99854fcb	MateTalk C66
+3cada21b	16 canali UHF (400-480 MHz). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
+06dda3c4	Echo-DE / Echo-IT
+3b7d6ba4	Echo
+1e3a20c8	ECHO-DE
+411a0436	ECHO-IT
+dcdbb467	Echo DE
+d1d35451	Echo IT
+3eae2ce8	Echo-DE
+e18d46d6	Echo-IT
+24d13cb7	PMR446, 16 canali, guida vocale in tedesco o in italiano. Canali e impostazioni generali come nel programma del costruttore «Radioddity ECHO». Non è nel CHIRP.{0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -3662,6 +3675,25 @@ ce744b54	Minima 0,3 W
 d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
 4fc7572e	Alta 1,5 W
 fa4647fb	Bassa 0,1 W
+587883c4	Canali senza nome, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali e le impostazioni generali; scrambler, compander, blocco su canale occupato e salto di frequenza restano quelli del canale. {1}Se nella radio è impostata una password di lettura, toglila prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+1e3c1a23	«Radioddity ECHO»
+153e1fd0	Retevis C6
+ca0139c9	Frequenze fra 462 e 468 MHz: i canali di fabbrica sono i 22 FRS / GMRS più 8 canali per i ponti GMRS (trasmissione fra 467,55 e 467,725 MHz).
+56cc3712	Retevis C66
+eb9232ff	Radioddity Echo-DE / Echo-IT
+a7046703	Frequenze fra 400 e 520 MHz, entro la gamma che la radio dichiara: ricorda che in PMR446 sono ammessi solo i 16 canali fra 446,00625 e 446,19375 MHz.
+ef18ae1b	tono {0} non previsto dalla radio
+6e1da434	codice DCS {0} non previsto dalla radio
+a83256ee	frequenza {0} MHz fuori dalla gamma dichiarata dalla radio ({1}-{2} MHz)
+a0693d6a	{0}: risposta inattesa della radio ({1})
+e91f6279	somma di controllo errata nel blocco {0}
+d2423b8e	la radio ha risposto all'aggancio in modo diverso da quello atteso: non è il modello di questa scheda
+73a44ef7	la radio non ha accettato la password: se ne è impostata una, toglila con il programma del costruttore
+b32af56e	la radio dichiara un altro modello (indice {0}): non è quella di questa scheda
+9bfb24f6	versione del firmware non indicata
+888cdc7f	firmware v{0}.{1}.{2}
+8ef3c60f	la gamma di frequenza, il modello o l'area della radio ({0}) non sono quelli dell'immagine ({1}): l'immagine viene da un'altra radio
+49ac0001	blocco {0}
 a0cfa32f	lettura del blocco 0x{0} non riuscita ({1} byte invece di {2})
 7b9ea03b	0123456789 -*+ABCDEFGHIJKLMNOPQRSTUVWXYZ_/
 cea319b9	Accendi la radio con il cavo collegato. 128 canali con nomi di 6 caratteri (cifre, lettere maiuscole e - * + _ /). In DCS lo stesso codice vale in trasmissione e in ricezione. Driver di CHIRP.
@@ -4152,7 +4184,6 @@ f659ee91	indirizzo {0} invece di {1}: il file non è continuo (non è un firmwar
 75b8178d	manca la riga di fine del file .hex (file incompleto)
 106792fb	blocco del firmware non valido
 4cb457da	{0}: nessuna risposta della radio entro {1} secondi
-a0693d6a	{0}: risposta inattesa della radio ({1})
 23cea0c4	Presentazione alla radio (la radio deve essere già in modalità di aggiornamento: indicatore verde)…
 34b0e5b3	la radio non è in modalità di aggiornamento, non è una RT85 o è una RT85 di potenza diversa da quella scelta ({0})
 3edcdc02	la radio non è in modalità di aggiornamento o non è una {0} ({1})
@@ -5387,6 +5418,22 @@ fc24dac8	Impedisce di trasmettere quando la tensione della batteria è troppo al
 a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 5ca37d7b	«Radioddity T3» v1.3
 d0e2b5a6	programma del costruttore {0}
+903de02f	A inizio trasmissione
+acf9776b	A fine trasmissione
+de5f87a4	A inizio e a fine
+0e66e58d	Suono di trasmissione (roger)
+ed06da3f	Breve suono mandato in aria quando premi o rilasci il PTT, per far capire agli altri quando inizi o finisci di parlare.
+96f6c973	Abbinamento con un tasto
+4781992d	Permette di copiare dalla radio di un compagno, con una combinazione di tasti, la frequenza e i toni del canale in uso.
+3fa24792	Copia senza fili
+0e9ddd88	Permette di copiare via radio tutti i canali da una radio uguale all'altra.
+98678065	Allarme sulla radio
+fe4605ae	Allarme trasmesso
+b5b3f1aa	VOX acceso / spento
+5aa4df2e	Diretta (senza ponte)
+9897783e	Meteo NOAA
+ea75db5c	Frequenze invertite
+a6263d4e	WLT
 b0659828	archivio non valido
 dc8f0e14	file vuoto
 f8881cf2	formato non riconosciuto: usa un file .xls, .xlsx o .csv

@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.26.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.27.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,14 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.27.0:
+- Radio baharu: Retevis C6 (FRS / GMRS, 30 saluran), Retevis C66 (UHF, 16 saluran) dan
+  Radioddity Echo-DE / Echo-IT (PMR446, 16 saluran), dengan saluran dan tetapan umum. Ia
+  diperoleh daripada kod program pengeluar dan belum diuji dengan radio sebenar: lakukan
+  bacaan sahaja dahulu. Kad mesti dipilih sendiri («Kenal pasti» tidak mengenalinya).
+  Jika kata laluan bacaan ditetapkan dalam radio, buang dahulu dengan program pengeluar.
+- Retevis RB39 / RB39P: kini dalam kalangan radio «GMRS / FRS (AS)».
+- Galeri: 606 model daripada 52 jenama (552 dengan saluran, 472 dengan tetapan).
 Baharu dalam 4.26.0:
 - Radio baharu: Retevis RB39 / RB39P (FRS, 22 saluran) dan RB639 / RB639P (PMR446, 16
   saluran), dengan saluran dan tetapan umum. Ia diperoleh daripada kod program pengeluar

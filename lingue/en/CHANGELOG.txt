@@ -7,6 +7,37 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.27.0 (12/11/2026)
+-------------------
+- Retevis C6 (FRS / GMRS, 30 channels), Retevis C66 (UHF, 16 channels) and Radioddity
+  Echo-DE / Echo-IT (PMR446, 16 channels): new driver (drv_wlt.go), from the code of the
+  manufacturers' programs «C6», «C66» and «Radioddity ECHO» (the same program with
+  different keys and addresses). 9600 baud. Handshake: the program picks two random
+  numbers and sends the model's key (8 bytes) mixed with the first; the radio answers
+  with the key mixed with a value computed from the two numbers. Then the password (FF
+  if there is none), 'R' reads and 'W' writes in 16-byte blocks with a checksum, 'E' at
+  the end. 16-byte channel: frequencies in BCD (tens of Hz), tones in BCD with the DCS
+  bits, power, bandwidth, scan; scrambler, compander, busy-channel lockout and frequency
+  hopping stay as they are in the channel. Reading goes up to the password block,
+  writing up to the range block: password and calibration data are never written. Before
+  writing, the range, model and area of the radio must match those of the image. A radio
+  with a password set, or of another model, is refused with a clear message.
+- Settings (settings_wlt.go): squelch, maximum transmit time, VOX and sensitivity, voice
+  guide, battery saver, side keys (short and long press); in addition on the C6 and C66:
+  call tone, transmit sound (roger), one-key pairing, wireless copy; on the Echo: VOX
+  delay.
+- Extra check: the 30 default channels contained in the C6 program (the 22 FRS / GMRS
+  ones and the 8 repeater ones) are read with the right frequencies, tones, power and
+  bandwidth. For this reason the C6 accepts frequencies up to 468 MHz, even though the
+  program stops at 467 MHz when typing.
+- Retevis RB39 / RB39P: in the Models tab it is now among the «GMRS / FRS (USA)» radios
+  (it had ended up among the PMR446 ones). Counts: 552 radios, 472 with settings, 606 in
+  the gallery, 52 brands. Translations: 47 new texts. Checks: handshake computed by hand
+  for three pairs of numbers and tested on all combinations; every address read twice in
+  the code of the programs; new simulated radios in the common read, write, conversion
+  and robustness tests. The manufacturers' programs were never run. None of these radios
+  has been tested for real.
+
 4.26.0 (12/11/2026)
 -------------------
 - Retevis RB39 / RB39P (FRS, 22 channels) and RB639 / RB639P (PMR446, 16 channels): new

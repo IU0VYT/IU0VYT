@@ -5548,3 +5548,50 @@ efbcdf5c	Kekunci sisi (tekan lama)
 c9363874	Fungsi kekunci sisi apabila ditekan lama.
 73b10bc8	Menghidupkan atau mematikan Bluetooth radio (RB39P dan RB639P sahaja).
 7fe587e0	Auctus
+039d3bdf	MateTalk C6
+3d4708b2	FRS / GMRS, 30 saluran (22 dan 8 untuk pengulang). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
+99854fcb	MateTalk C66
+3cada21b	16 saluran UHF (400-480 MHz). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
+06dda3c4	Echo-DE / Echo-IT
+3b7d6ba4	Echo
+1e3a20c8	ECHO-DE
+411a0436	ECHO-IT
+dcdbb467	Echo DE
+d1d35451	Echo IT
+3eae2ce8	Echo-DE
+e18d46d6	Echo-IT
+24d13cb7	PMR446, 16 saluran, panduan suara dalam bahasa Jerman atau Itali. Saluran dan tetapan umum seperti dalam program pengeluar «Radioddity ECHO». Tiada dalam CHIRP.{0}
+587883c4	Saluran tanpa nama, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran serta tetapan umum; scrambler, compander, kunci saluran sibuk dan lompatan frekuensi kekal seperti dalam saluran. {1}Jika kata laluan bacaan ditetapkan dalam radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
+1e3c1a23	«Radioddity ECHO»
+153e1fd0	Retevis C6
+ca0139c9	Frekuensi antara 462 dan 468 MHz: saluran kilang ialah 22 saluran FRS / GMRS dan 8 saluran untuk pengulang GMRS (pancaran antara 467.55 dan 467.725 MHz). 
+56cc3712	Retevis C66
+eb9232ff	Radioddity Echo-DE / Echo-IT
+a7046703	Frekuensi antara 400 dan 520 MHz, dalam julat yang diisytiharkan oleh radio: ingat bahawa PMR446 hanya membenarkan 16 saluran antara 446.00625 dan 446.19375 MHz. 
+ef18ae1b	nada {0} tidak disokong oleh radio
+6e1da434	kod DCS {0} tidak disokong oleh radio
+a83256ee	frekuensi {0} MHz di luar julat yang diisytiharkan oleh radio ({1}-{2} MHz)
+e91f6279	jumlah semak salah dalam blok {0}
+d2423b8e	radio menjawab jabat tangan secara berbeza daripada yang dijangka: ia bukan model kad ini
+73a44ef7	radio tidak menerima kata laluan: jika ada, buang dengan program pengeluar
+b32af56e	radio mengisytiharkan model lain (indeks {0}): ia bukan radio kad ini
+9bfb24f6	versi perisian tegar tidak dinyatakan
+888cdc7f	firmware v{0}.{1}.{2}
+8ef3c60f	julat frekuensi, model atau kawasan radio ({0}) tidak sama dengan imej ({1}): imej itu daripada radio lain
+49ac0001	blok {0}
+903de02f	Pada permulaan pancaran
+acf9776b	Pada akhir pancaran
+de5f87a4	Pada permulaan dan akhir
+0e66e58d	Bunyi pancaran (roger)
+ed06da3f	Bunyi pendek yang dihantar ke udara apabila anda menekan atau melepaskan PTT, supaya orang lain tahu bila anda mula atau berhenti bercakap.
+96f6c973	Pemadanan satu kekunci
+4781992d	Membolehkan anda menyalin, dengan gabungan kekunci, frekuensi dan nada saluran yang digunakan daripada radio rakan.
+3fa24792	Salinan tanpa wayar
+0e9ddd88	Membolehkan anda menyalin semua saluran melalui radio dari satu radio ke radio yang sama.
+98678065	Penggera pada radio
+fe4605ae	Penggera dipancarkan
+b5b3f1aa	VOX hidup / mati
+5aa4df2e	Terus (tanpa pengulang)
+9897783e	Cuaca NOAA
+ea75db5c	Frekuensi terbalik
+a6263d4e	WLT

@@ -3,6 +3,42 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.27.0 (12/11/2026)
+-------------------
+- Retevis C6 (FRS / GMRS, 30 canali), Retevis C66 (UHF, 16 canali) e Radioddity
+  Echo-DE / Echo-IT (PMR446, 16 canali): driver nuovo (drv_wlt.go), dal codice dei
+  programmi dei costruttori «C6», «C66» e «Radioddity ECHO» (lo stesso programma con
+  chiavi e indirizzi diversi). 9600 baud. Aggancio: il programma sceglie due numeri a
+  caso e manda la chiave del modello (8 byte) mescolata con il primo; la radio
+  risponde con la chiave mescolata con un valore calcolato dai due numeri. Poi la
+  password (FF se non c'è), letture 'R' e scritture 'W' a blocchi di 16 byte con la
+  somma di controllo, fine 'E'. Canale di 16 byte: frequenze in BCD (decine di Hz),
+  toni in BCD con i bit del DCS, potenza, banda, scansione; scrambler, compander,
+  blocco su canale occupato e salto di frequenza restano quelli del canale. Si legge
+  fino al blocco della password, si scrive fino a quello della gamma: password e
+  tarature non si scrivono mai. Prima di scrivere si controlla che gamma, modello e
+  area della radio siano quelli dell'immagine. Una radio con la password impostata,
+  o di un altro modello, viene rifiutata con un messaggio chiaro.
+  Impostazioni (settings_wlt.go): squelch, tempo massimo di trasmissione, VOX e
+  sensibilità, guida vocale, risparmio della batteria, tasti laterali (pressione
+  breve e lunga); in più C6 e C66: tono di chiamata, suono di trasmissione (roger),
+  abbinamento con un tasto, copia senza fili; Echo: ritardo del VOX.
+  Verifica in più: i 30 canali predefiniti contenuti nel programma del C6 (i 22 FRS /
+  GMRS e gli 8 dei ponti) si leggono con frequenze, toni, potenza e banda giusti.
+  Per questo il C6 accetta le frequenze fino a 468 MHz, anche se il programma alla
+  tastiera si ferma a 467 MHz.
+- Retevis RB39 / RB39P: nella scheda Modelli ora sta fra le radio «GMRS / FRS (USA)»
+  (era finita fra le PMR446).
+- Conteggi: 552 radio, 472 con impostazioni, 606 in galleria, 52 marche. Traduzioni:
+  47 testi nuovi.
+- Verifiche: aggancio calcolato a mano su tre coppie di numeri e provato su tutte le
+  combinazioni; ogni indirizzo letto due volte nel codice dei programmi (lettura dalla
+  radio e scrittura); radio simulate nuove nelle prove comuni di lettura, scrittura,
+  conversione e robustezza. I programmi dei costruttori non sono mai stati eseguiti.
+  Nessuna di queste radio è provata dal vero.
+- Non fatti: Radtel RT-659 (memoria ancora da ricostruire), le altre famiglie nuove
+  dei programmi Retevis e Radioddity, le veicolari BTECH.
+
 4.26.0 (12/11/2026)
 -------------------
 - Retevis RB39 / RB39P (FRS, 22 canali) e RB639 / RB639P (PMR446, 16 canali): driver

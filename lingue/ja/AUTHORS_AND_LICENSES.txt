@@ -215,6 +215,8 @@ RADTEL RT-817A / RT-871A（4.19）：メーカーのソフト（「Radtel RT-871
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：メーカーのソフト（「RT-4D CPS」、「DMR RT-6D」、「Radtel RT-1000 Pro CPS」）を調べて求めました。それらの内容は何も含まれておらず、コードは一から書いています。
 
+RETEVIS C6 / C66 と RADIODDITY ECHO-DE / ECHO-IT（4.27）：第三者のコードはありません。プロトコル、メモリー、設定はメーカーのプログラム（Retevis の「C6」「C66」、「Radioddity ECHO」）のコードを読んで得たもので、ゼロから書き直しました。これらのプログラムのものは何も含まれていません。
+
 RETEVIS RB39 / RB639 と BF-T17 / GT-18 / FS-T3 の設定（4.26）：第三者のコードはありません。プロトコル、メモリー、設定はメーカーのプログラム（Retevis「RB39 CPS」「RB639」「Retevis Analog CPS」、Baofeng「T17-T18 PMR446 PRO」「T17-T18 FRS」「BAOFENG GT18 PMR」、Radioddity「Radioddity T3」）のコードを読んで得たもので、ゼロから書き直しました。これらのプログラムのものは何も含まれていません。
 
 新しいファームウェアの BAJETON BJ-8300、RADIODDITY GS-10B PRO、FS-T3 / PR-T3（4.25）：第三者のコードはありません。プロトコル、メモリ、設定は、メーカーのプログラム（Bajeton「BT-11_CPS」v1.2.6、Radioddity「GS-10B Pro_EnCPS」v1.0.3、「Radioddity T3」v1.3）のコードを読んで得たもので、一から書き直しました。これらのプログラムは何も含まれていません。

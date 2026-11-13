@@ -1,11 +1,15 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.26.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.27.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.27.0 的新内容：
+- 新对讲机：Retevis C6（FRS / GMRS，30 个信道）、Retevis C66（UHF，16 个信道）和 Radioddity Echo-DE / Echo-IT（PMR446，16 个信道），含信道和常规设置。它们来自制造商程序的代码，尚未用真实对讲机测试：请先只做读取。卡片需手动选择（「识别」无法识别它们）。如果对讲机设置了读取密码，请先用制造商程序取消。
+- Retevis RB39 / RB39P：现在归入「GMRS / FRS（美国）」对讲机。
+- 图库：52 个品牌的 606 个型号（552 个支持信道，472 个支持设置）。
 4.26.0 的新内容：
 - 新对讲机：Retevis RB39 / RB39P（FRS，22 个信道）和 RB639 / RB639P（PMR446，16 个信道），含信道和常规设置。它们来自制造商程序的代码，尚未用真实对讲机测试：请先只做读取。卡片需手动选择（「识别」无法识别它们）；如果选了另一个国家的卡片，读取会停止并指出正确的卡片。
 - Baofeng BF-T17 / BF-T18（PMR446 和 FRS）、GT-18 PMR446、Radioddity PR-T5、FS-T3 和 PR-T3 的新设置：静噪、最长发射时间、VOX、语音提示、按键音、省电以及制造商程序中的其他项。

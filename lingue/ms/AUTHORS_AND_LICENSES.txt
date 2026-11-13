@@ -309,6 +309,11 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): daripada kajian program pengeluar («RT
 «DMR RT-6D», «Radtel RT-1000 Pro CPS»), tiada apa-apa daripadanya disertakan; kod
 ditulis dari awal.
 
+RETEVIS C6 / C66 DAN RADIODDITY ECHO-DE / ECHO-IT (4.27): tiada kod pihak ketiga.
+Protokol, memori dan tetapan diperoleh dengan membaca kod program pengeluar («C6» dan
+«C66» Retevis, «Radioddity ECHO»), ditulis semula dari awal; tiada apa-apa daripada
+program itu disertakan.
+
 RETEVIS RB39 / RB639 DAN TETAPAN BF-T17 / GT-18 / FS-T3 (4.26): tiada kod pihak ketiga.
 Protokol, memori dan tetapan diperoleh dengan membaca kod program pengeluar (Retevis
 «RB39 CPS», «RB639» dan «Retevis Analog CPS»; Baofeng «T17-T18 PMR446 PRO», «T17-T18

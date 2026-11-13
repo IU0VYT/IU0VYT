@@ -322,6 +322,11 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
 Dallo studio dei programmi del costruttore («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000
 Pro CPS»), di cui non è incluso nulla; il codice è scritto da zero.
 
+RETEVIS C6 / C66 E RADIODDITY ECHO-DE / ECHO-IT (4.27)
+Nessun codice di terzi. Protocollo, memoria e impostazioni vengono dalla lettura del
+codice dei programmi dei costruttori («C6» e «C66» di Retevis, «Radioddity ECHO»),
+riscritti da zero; di quei programmi non è incluso nulla.
+
 RETEVIS RB39 / RB639 E IMPOSTAZIONI DI BF-T17 / GT-18 / FS-T3 (4.26)
 Nessun codice di terzi. Protocollo, memoria e impostazioni vengono dalla lettura del
 codice dei programmi dei costruttori (Retevis «RB39 CPS», «RB639» e «Retevis Analog
