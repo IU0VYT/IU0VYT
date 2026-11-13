@@ -5,6 +5,12 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 또는 그 이후 버�
 이 파일은 CHANGELOG.txt의 최신 항목을 한국어로 번역한 것입니다. 이전 버전(1.0 - 4.12)의 전체 기록은 패키지 메인 폴더의 이탈리아어
 원문 CHANGELOG.txt에 있습니다. 각 버전의 주요 새 기능은 GUIDE.txt에도 요약되어 있습니다.
 
+4.24.0 (2026/11/11)
+-------------------
+- '모델' 탭(ui/style.css): 무전기 종류의 라벨(아마추어 무선, DMR, GMRS / FRS, PMR446, 어린이용)이 페이지 가운데에 놓이고 모델 수는 바로 오른쪽에 표시됩니다. 호환 무전기와 비호환 무전기를 나누는 선은 조금 굵어지고(9 px) 빨간색이 되었습니다. 탭의 나머지는 그대로입니다.
+- 카탈로그(catalog_424.go, 신규): 21개 항목, 26개 카드. 모두 이미 있는, 자동 테스트로 검증된 드라이버를 사용합니다. 제조사 프로그램을 이미 지원하는 무전기의 프로그램과 명령어 단위로 비교한 결과: Bajeton BT-8000(접속 절차와 메모리 영역이 Radioddity GS-10B와 같음), Radioddity GC-5(Baofeng UV-17R 시리즈와 같은 프로그램), Radioddity Trivox(Radtel RT-950 Pro, Bajeton BJ-9000과 같은 프로그램과 식별), Radioddity PR-T5(Baofeng GT-18 PMR446과 같은 프로토콜과 메모리), Radioddity GT-82(Baofeng UV-82와 같은 키), Retevis RT28(Baofeng BF-R5와 같은 프로그램, BF-888S 프로토콜). 실제 무전기로는 검증하지 않았으며 각 카드의 메모에 적혀 있습니다. CHIRP의 동등 모델 표에 있으나 카탈로그에 없던 모델: Radioddity GA-5S, Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+, Rugged RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S, Tenway TW-325, UV-82 Pro, UV-5R Pro. 집계: 무전기 541종, 설정 지원 457종, 갤러리 595종, 52개 브랜드. 번역: 새 문구 22개.
+- 제조사 프로그램 조사(그 내용은 아무것도 포함되지 않음): Baofeng, Radioddity, BTECH, Quansheng, Retevis, Bajeton, BinTe의 페이지에서 454개 파일을 내려받고 444개 압축 파일을 분류했습니다. Radtel RT-659의 네이티브 코드 프로그램 조사를 시작했습니다. Retevis RT22 계열의 프로토콜을 키 «PROGRAM»으로 사용합니다. 메모리 구조는 아직 복원해야 합니다. 하지 않은 것: Radioddity GS-10B Pro, FS-T3 / PR-T3, Retevis와 Radioddity 프로그램의 새 계열, BTECH 차량용, Baofeng DM-5R Tier 2(보호된 프로그램: 분석하지 않음).
+
 4.23.0 (2026/11/11)
 -------------------
 - Kenwood TK-481과 TK-981(drv_kwtk481.go, 새 파일), CHIRP의 tk481.py 드라이버: 연결과 32 KiB 메모리는 TK-280과 같습니다. 채널은 차례로 놓인 32개 시스템에 들어 있습니다(채널을 더하거나 빼면 뒤따르는 내용이 32바이트 이동합니다. CHIRP와 같습니다). 목록 위치는 시스템마다 250개. 시스템은 만들지 않으며 트렁킹 시스템은 수정하지 않습니다. 읽기, 쓰기, 주고받는 바이트가 CHIRP와 같습니다. Kenwood TK-780과 TK-880(차량용): TK-280 / TK-380과 같은 드라이버. TK-2180, TK-3180, TK-7180, TK-8180에 설정을 추가했습니다(8개 모델, 196~201개 항목). CHIRP에서 표를 뽑는 도구가 시험 중 메모리 구조가 바뀌면 모든 항목을 잃던 문제를 고쳤습니다.

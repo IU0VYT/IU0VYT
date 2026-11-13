@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.23.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.24.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,16 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.24.0:
+- Pestaña Modelos más legible: las etiquetas de los tipos de radio están en el centro de
+  la página y la línea entre radios compatibles y no compatibles es roja y más gruesa.
+- 26 radios más, gestionadas con los controladores de radios iguales ya presentes:
+  Bajeton BT-8000, Radioddity GC-5, Trivox, PR-T5, GT-82, Retevis RT28, Radioddity
+  GA-5S, Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+,
+  Rugged RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S,
+  Tenway TW-325, UV-82 Pro, UV-5R Pro. Las reconocidas al comparar los programas de los
+  fabricantes todavía no se han probado con una radio real: haz primero solo la lectura.
+- Galería: 595 modelos de 52 marcas (541 con canales, 457 con ajustes).
 Novedades de la 4.23.0:
 - KENWOOD TK-481 y TK-981 (900 MHz, canales divididos en sistemas) y las móviles TK-780
   y TK-880: canales y ajustes, con los controladores de CHIRP. KENWOOD TK-2180/3180 y

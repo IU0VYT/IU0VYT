@@ -3,6 +3,40 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.24.0 (11/11/2026)
+-------------------
+- Scheda Modelli (ui/style.css): le etichette delle tipologie di radio
+  (Radioamatoriali, DMR, GMRS / FRS, PMR446, Per bambini) stanno al centro della
+  pagina, con il numero dei modelli subito a destra; la riga che separa le radio
+  compatibili da quelle non compatibili è un po' più spessa (9 px) e rossa. Il resto
+  della scheda non cambia.
+- Catalogo (catalog_424.go, nuovo): 21 voci, 26 schede, tutte con driver già presenti
+  e verificati con i test automatici.
+  Dal confronto, istruzione per istruzione, dei programmi dei costruttori con quelli
+  delle radio già gestite: Bajeton BT-8000 (stesso saluto e stesse aree di memoria
+  della Radioddity GS-10B), Radioddity GC-5 (stesso programma della serie Baofeng
+  UV-17R), Radioddity Trivox (stesso programma e stessa identificazione di Radtel
+  RT-950 Pro e Bajeton BJ-9000), Radioddity PR-T5 (stesso protocollo e stessa memoria
+  della Baofeng GT-18 PMR446), Radioddity GT-82 (stessa chiave della Baofeng UV-82),
+  Retevis RT28 (stesso programma della Baofeng BF-R5, protocollo della BF-888S). Non
+  sono provate con radio vere: lo dice la nota di ogni scheda.
+  Dalla tabella dei modelli equivalenti di CHIRP, che mancavano dal catalogo:
+  Radioddity GA-5S, Retevis RT5 (tre potenze), RT5R, RT5RV e RT5, TIDRADIO TD-UV5R
+  TriPower, TechSide TI-F8+ e TS-T9+, Rugged RH5R e RH5X, Ansoko A-5R e A-8S, Arcshell
+  AR-5, AR-6 e AR-8, Greaval GV-8S e GV-9S, Tenway TW-325, UV-82 Pro e UV-5R Pro.
+- Conteggi: 541 radio, 457 con impostazioni, 595 in galleria, 52 marche. Traduzioni:
+  22 testi nuovi.
+- Studio dei programmi dei costruttori (nel programma non è incluso nulla): 454 file
+  scaricati dalle pagine di Baofeng, Radioddity, BTECH, Quansheng, Retevis, Bajeton e
+  BinTe, 444 archivi smistati. Avviato lo studio del programma in codice nativo della
+  Radtel RT-659: usa il protocollo della famiglia Retevis RT22 con la chiave
+  «PROGRAM»; la sua memoria è ancora da ricostruire.
+- Non fatti: Radioddity GS-10B Pro (999 canali, programma derivato da quello della
+  Bajeton BJ-8300), FS-T3 / PR-T3, le famiglie nuove dei programmi Retevis e
+  Radioddity, le veicolari BTECH; Baofeng DM-5R Tier 2 (programma protetto: non si
+  analizza). I programmi TIDRADIO e una parte di quelli Retevis e Quansheng non si
+  sono potuti scaricare (chiedono un indirizzo e-mail o sono stati bloccati sul PC).
+
 4.23.0 (11/11/2026)
 -------------------
 - Kenwood TK-481 (palmare) e TK-981 (veicolare), 900 MHz (drv_kwtk481.go, nuovo;

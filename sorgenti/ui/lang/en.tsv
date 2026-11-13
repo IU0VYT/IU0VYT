@@ -5458,3 +5458,25 @@ adf62e1b	the radio's memory is full
 cd92c034	Radtel RT-13
 68a5c963	999 channels with 12-character names, 19200 baud. Protocol and memory derived from the manufacturer's program «RT-69 GPS» and tested with a simulated radio, not on a real one. Here you edit frequencies, name, tones, power, bandwidth and scan; the rest of the channel and the radio's settings stay as they are. Before writing, as the manufacturer's program does, every channel is checked to be within the radio's bands. If a password is set on the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right tab yourself.
 2dedccf9	Radtel RT-69 GPS
+6a54dc65	The comparison was made on the code of the manufacturers' programs: it has not yet been tested with a real radio. Read the radio first: if the model is not the right one the radio does not answer and is not modified.
+336dd64b	In CHIRP's table of equivalent models this radio corresponds to a model the program already handles: the same driver is used, verified with the automatic tests.
+5ceaf573	The manufacturer's program («BT-8000 CPS» v1.10.4) uses the same handshake command and reads and writes the same memory areas as the program of the Radioddity GS-10B: the GS-10B driver is used (256 channels).{0}
+f06375c3	The manufacturer's program («Radioddity GC-5 CPS») is the same as that of the Baofeng UV-17R series (only the labels change): the UV-17R driver is used.{0}
+71904257	Trivox
+21c25df8	The manufacturer's program («Radioddity Trivox CPS» v1.3.3) is the same as that of the Radtel RT-950 Pro and the Bajeton BJ-9000, with the same radio identification: the same drivers are used (990 channels; 960 with older firmware).{0}
+fdd03d98	The manufacturer's program («PR-T5») uses the same protocol and the same memory as that of the Baofeng GT-18 PMR446 (99 channels): its driver is used. If the read and write password is set, remove it first with the manufacturer's program.{0}
+0705b04d	The manufacturer's program («CPS_UV82») introduces itself to the radio with the same key as the Baofeng UV-82: the UV-82 driver is used.{0}
+9e3c67f2	The manufacturer's program («RT28») is the same as that of the Baofeng BF-R5 («BF_480»: only the names change) and uses the BF-888S protocol: the BF-888S driver is used (16 channels, 400 to 490 MHz; the VHF version is not handled).{0}
+b1fa6065	RT5 (three power levels)
+54109f37	RT5 tri-power
+48555cfa	TD-UV5R TriPower
+c1666779	UV5R TriPower
+64b68ced	TI-F8 Plus
+fd70ccf0	TS-T9 Plus
+d57f47fa	Ansoko
+f01449cf	Arcshell
+b93f39c5	Greaval
+98b8f063	Tenway
+02dbe0d8	UV-82 Pro
+2c239b5e	UV-82Pro
+60aa99f5	UV-5RPro

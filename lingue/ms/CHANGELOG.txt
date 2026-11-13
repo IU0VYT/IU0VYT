@@ -6,6 +6,34 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.24.0 (11/11/2026)
+-------------------
+- Tab Model (ui/style.css): label jenis radio (Radio amatur, DMR, GMRS / FRS, PMR446,
+  Untuk kanak-kanak) berada di tengah halaman, dengan bilangan model betul-betul di
+  sebelah kanan; garisan yang memisahkan radio serasi daripada yang tidak serasi lebih
+  tebal sedikit (9 px) dan berwarna merah. Bahagian lain tab tidak berubah.
+- Katalog (catalog_424.go, baharu): 21 entri, 26 kad, semuanya dengan pemacu yang sudah
+  ada dan disahkan dengan ujian automatik. Daripada perbandingan, arahan demi arahan,
+  program pengeluar dengan program radio yang sudah diurus: Bajeton BT-8000 (salam dan
+  kawasan memori yang sama seperti Radioddity GS-10B), Radioddity GC-5 (program yang
+  sama seperti siri Baofeng UV-17R), Radioddity Trivox (program dan pengenalan yang sama
+  seperti Radtel RT-950 Pro dan Bajeton BJ-9000), Radioddity PR-T5 (protokol dan memori
+  yang sama seperti Baofeng GT-18 PMR446), Radioddity GT-82 (kunci yang sama seperti
+  Baofeng UV-82), Retevis RT28 (program yang sama seperti Baofeng BF-R5, protokol
+  BF-888S); tidak diuji dengan radio sebenar, seperti yang dinyatakan dalam nota setiap
+  kad. Daripada jadual model setara CHIRP, yang tiada dalam katalog: Radioddity GA-5S,
+  Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+, Rugged
+  RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S, Tenway
+  TW-325, UV-82 Pro, UV-5R Pro. Kiraan: 541 radio, 457 dengan tetapan, 595 dalam galeri,
+  52 jenama. Terjemahan: 22 teks baharu.
+- Kajian program pengeluar (tiada apa-apa daripadanya disertakan): 454 fail dimuat turun
+  dari halaman Baofeng, Radioddity, BTECH, Quansheng, Retevis, Bajeton dan BinTe, 444
+  arkib diisih. Kajian program kod natif Radtel RT-659 dimulakan: ia menggunakan
+  protokol keluarga Retevis RT22 dengan kunci «PROGRAM»; memorinya masih perlu dibina
+  semula. Belum dibuat: Radioddity GS-10B Pro, FS-T3 / PR-T3, keluarga baharu program
+  Retevis dan Radioddity, radio kenderaan BTECH; Baofeng DM-5R Tier 2 (program
+  dilindungi: tidak dianalisis).
+
 4.23.0 (11/11/2026)
 -------------------
 - Kenwood TK-481 dan TK-981 (drv_kwtk481.go, baharu), pemacu tk481.py daripada CHIRP:

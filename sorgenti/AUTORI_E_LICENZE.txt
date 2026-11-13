@@ -322,6 +322,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
 Dallo studio dei programmi del costruttore («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000
 Pro CPS»), di cui non è incluso nulla; il codice è scritto da zero.
 
+CATALOGO (4.24)
+Nessun codice nuovo di terzi. Le schede aggiunte usano driver già presenti: sei
+vengono dal confronto dei programmi dei costruttori (Bajeton, Radioddity, Retevis,
+Baofeng), di cui non è incluso nulla; le altre dalla tabella dei modelli equivalenti
+di CHIRP (GNU GPL v3).
+
 KENWOOD TK-481 / TK-981, TK-780 / TK-880, RADTEL RT-13, RT-69 GPS (4.23)
 Kenwood TK-481 / TK-981: drv_kwtk481.go deriva da tk481.py e tk280.py di CHIRP (GNU GPL
 v3); TK-780 / TK-880: stessa famiglia delle TK-280 / TK-380 (tk280.py). Radtel RT-13 e

@@ -5458,3 +5458,25 @@ adf62e1b	memori radio penuh
 cd92c034	Radtel RT-13
 68a5c963	999 saluran dengan nama 12 aksara, 19200 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-69 GPS» dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, nama, ton, kuasa, lebar jalur dan imbasan; bahagian lain saluran dan tetapan radio kekal seperti sedia ada. Sebelum menulis, seperti program pengeluar, setiap saluran disemak supaya berada dalam jalur radio. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
 2dedccf9	Radtel RT-69 GPS
+6a54dc65	Perbandingan dibuat pada kod program pengeluar: belum diuji dengan radio sebenar. Baca radio dahulu: jika modelnya tidak betul, radio tidak menjawab dan tidak diubah.
+336dd64b	Dalam jadual model setara CHIRP, radio ini sepadan dengan model yang sudah diurus oleh program: pemacu yang sama digunakan, disahkan dengan ujian automatik.
+5ceaf573	Program pengeluar («BT-8000 CPS» v1.10.4) menggunakan arahan sambungan yang sama serta membaca dan menulis kawasan memori yang sama seperti program Radioddity GS-10B: pemacu GS-10B digunakan (256 saluran).{0}
+f06375c3	Program pengeluar («Radioddity GC-5 CPS») sama dengan program siri Baofeng UV-17R (hanya label yang berubah): pemacu UV-17R digunakan.{0}
+71904257	Trivox
+21c25df8	Program pengeluar («Radioddity Trivox CPS» v1.3.3) sama dengan program Radtel RT-950 Pro dan Bajeton BJ-9000, dengan pengenalan radio yang sama: pemacu yang sama digunakan (990 saluran; 960 dengan firmware lama).{0}
+fdd03d98	Program pengeluar («PR-T5») menggunakan protokol dan memori yang sama seperti program Baofeng GT-18 PMR446 (99 saluran): pemacunya digunakan. Jika kata laluan baca dan tulis ditetapkan, buangnya dahulu dengan program pengeluar.{0}
+0705b04d	Program pengeluar («CPS_UV82») memperkenalkan diri kepada radio dengan kunci yang sama seperti Baofeng UV-82: pemacu UV-82 digunakan.{0}
+9e3c67f2	Program pengeluar («RT28») sama dengan program Baofeng BF-R5 («BF_480»: hanya nama yang berubah) dan menggunakan protokol BF-888S: pemacu BF-888S digunakan (16 saluran, 400 hingga 490 MHz; versi VHF tidak diurus).{0}
+b1fa6065	RT5 (tiga tahap kuasa)
+54109f37	RT5 tri-power
+48555cfa	TD-UV5R TriPower
+c1666779	UV5R TriPower
+64b68ced	TI-F8 Plus
+fd70ccf0	TS-T9 Plus
+d57f47fa	Ansoko
+f01449cf	Arcshell
+b93f39c5	Greaval
+98b8f063	Tenway
+02dbe0d8	UV-82 Pro
+2c239b5e	UV-82Pro
+60aa99f5	UV-5RPro

@@ -4,6 +4,12 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
 
 本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.12）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
 
+4.24.0（2026/11/11）
+-------------------
+- “型号”页（ui/style.css）：电台类型的标签（业余电台、DMR、GMRS / FRS、PMR446、儿童）位于页面中央，型号数量紧随其右；兼容与不兼容电台之间的分隔线略粗（9 px）并为红色。该页其余部分不变。
+- 目录（catalog_424.go，新增）：21 个条目，26 张卡片，全部使用已有并经自动测试验证的驱动。逐条指令比较厂家程序与已支持电台的程序后得出：Bajeton BT-8000（握手和存储区域与 Radioddity GS-10B 相同）、Radioddity GC-5（与 Baofeng UV-17R 系列程序相同）、Radioddity Trivox（程序和识别信息与 Radtel RT-950 Pro、Bajeton BJ-9000 相同）、Radioddity PR-T5（协议和存储结构与 Baofeng GT-18 PMR446 相同）、Radioddity GT-82（密钥与 Baofeng UV-82 相同）、Retevis RT28（与 Baofeng BF-R5 程序相同，BF-888S 协议）；未用真实电台验证，每张卡片的说明中已注明。来自 CHIRP 等效型号表、此前目录中缺少的型号：Radioddity GA-5S, Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+, Rugged RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S, Tenway TW-325, UV-82 Pro, UV-5R Pro。统计：541 款电台，457 款带设置，图库 595 款，52 个品牌。翻译：22 条新文本。
+- 厂家程序的研究（程序中不包含其任何内容）：从 Baofeng、Radioddity、BTECH、Quansheng、Retevis、Bajeton 和 BinTe 的页面下载了 454 个文件，整理了 444 个压缩包。开始研究 Radtel RT-659 的本机代码程序：它使用 Retevis RT22 系列的协议，密钥为«PROGRAM»；其存储结构尚待还原。未完成：Radioddity GS-10B Pro、FS-T3 / PR-T3、Retevis 和 Radioddity 程序的新系列、BTECH 车载台；Baofeng DM-5R Tier 2（受保护的程序：不作分析）。
+
 4.23.0（2026/11/11）
 -------------------
 - Kenwood TK-481 和 TK-981（drv_kwtk481.go，新增），CHIRP 的 tk481.py 驱动：连接方式和 32 KiB 存储与 TK-280 相同；信道分在 32 个依次排列的系统里（增加或删除一个信道会把后面的内容移动 32 字节，与 CHIRP 相同）；每个系统在列表中有 250 个位置；不能新建系统，集群系统不能修改。读取、写入和交换的字节与 CHIRP 完全一致。Kenwood TK-780 和 TK-880（车载台）：与 TK-280 / TK-380 使用同一驱动。为 TK-2180、TK-3180、TK-7180 和 TK-8180 增加了设置（8 个型号，196 到 201 项）；从 CHIRP 得出表格的工具在某次试验改变存储结构后会丢失所有项目：已修正。

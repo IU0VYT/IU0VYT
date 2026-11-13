@@ -307,6 +307,11 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): from the study of the manufacturer's pr
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), of which nothing is included; the
 code is written from scratch.
 
+CATALOGUE (4.24): no new third-party code. The cards added use drivers already present:
+six come from comparing the manufacturers' programs (Bajeton, Radioddity, Retevis,
+Baofeng), of which nothing is included; the others from CHIRP's table of equivalent
+models (GNU GPL v3).
+
 KENWOOD TK-481 / TK-981, TK-780 / TK-880, RADTEL RT-13, RT-69 GPS (4.23): drv_kwtk481.go
 derives from tk481.py and tk280.py of CHIRP (GNU GPL v3), Copyright 2024 Dan Smith;
 TK-780 / TK-880 belong to the TK-280 / TK-380 family (tk280.py). Radtel RT-13 and RT-69

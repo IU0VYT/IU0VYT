@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.23.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.24.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,17 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.24.0:
+- Registerkarte Modelle besser lesbar: die Beschriftungen der Funkgerätetypen stehen in
+  der Seitenmitte, und die Linie zwischen kompatiblen und nicht kompatiblen Funkgeräten
+  ist rot und dicker.
+- 26 Funkgeräte mehr, verwaltet mit den Treibern gleicher, schon vorhandener Funkgeräte:
+  Bajeton BT-8000, Radioddity GC-5, Trivox, PR-T5, GT-82, Retevis RT28, Radioddity
+  GA-5S, Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+,
+  Rugged RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S,
+  Tenway TW-325, UV-82 Pro, UV-5R Pro. Die durch den Vergleich der Herstellerprogramme
+  erkannten sind noch nicht mit einem echten Funkgerät erprobt: zuerst nur auslesen.
+- Galerie: 595 Modelle von 52 Marken (541 mit Kanälen, 457 mit Einstellungen).
 Neu in 4.23.0:
 - KENWOOD TK-481 und TK-981 (900 MHz, Kanäle in Systeme aufgeteilt) und die Mobilgeräte
   TK-780 und TK-880: Kanäle und Einstellungen, mit den CHIRP-Treibern. KENWOOD

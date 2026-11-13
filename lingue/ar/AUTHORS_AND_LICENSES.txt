@@ -270,6 +270,8 @@ RADTEL RT-817A / RT-871A (4.19): من المقارنة مع برنامج الش�
 
 RADTEL RT-4D وRT-6D وRT-1000 PRO (4.20): استنادًا إلى دراسة برامج الشركة المصنّعة («RT-4D CPS» و«DMR RT-6D» و«Radtel RT-1000 Pro CPS»)، ولم يُضمَّن منها شيء؛ والشيفرة مكتوبة من الصفر.
 
+الفهرس (4.24): لا توجد شيفرة جديدة من أطراف أخرى. البطاقات المضافة تستخدم مشغّلات موجودة من قبل: ست منها من مقارنة برامج المصنّعين (Bajeton و Radioddity و Retevis و Baofeng) التي لا يتضمن البرنامج شيئاً منها؛ والباقي من جدول الطرازات المكافئة في CHIRP (GNU GPL v3).
+
 KENWOOD TK-481 / TK-981 وTK-780 / TK-880 وRADTEL RT-13 وRT-69 GPS (4.23): drv_kwtk481.go مشتق من tk481.py وtk280.py في CHIRP (GNU GPL v3)، Copyright 2024 Dan Smith؛ TK-780 / TK-880 من عائلة TK-280 / TK-380 (tk280.py). Radtel RT-13 وRT-69 GPS: من دراسة برامج الشركة المصنّعة («RT-13» 1.7 و«RT-69 GPS»)، ولم يُضمَّن منها شيء؛ الشيفرة مكتوبة من الصفر.
 
 RADTEL RT-480 وRT-68 وRT-830 وRT-850 (4.22): من دراسة برامج الشركة المصنّعة («Radio Programing Software» و«Radtel RT830» و«Radtel RT-850 programming software»)، ولم يُضمَّن منها شيء؛ الشيفرة مكتوبة من الصفر.

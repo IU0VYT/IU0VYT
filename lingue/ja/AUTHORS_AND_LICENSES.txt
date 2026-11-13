@@ -215,6 +215,8 @@ RADTEL RT-817A / RT-871A（4.19）：メーカーのソフト（「Radtel RT-871
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：メーカーのソフト（「RT-4D CPS」、「DMR RT-6D」、「Radtel RT-1000 Pro CPS」）を調べて求めました。それらの内容は何も含まれておらず、コードは一から書いています。
 
+カタログ (4.24)：新しい第三者のコードはありません。追加したカードは既存のドライバーを使います。6 つはメーカーのプログラム（Bajeton、Radioddity、Retevis、Baofeng）の比較によるもので、その内容は何も含まれていません。ほかは CHIRP の同等機種の表（GNU GPL v3）によります。
+
 KENWOOD TK-481 / TK-981、TK-780 / TK-880、RADTEL RT-13、RT-69 GPS (4.23)：drv_kwtk481.go は CHIRP の tk481.py と tk280.py から派生しています（GNU GPL v3）、Copyright 2024 Dan Smith。TK-780 / TK-880 は TK-280 / TK-380 の系列です（tk280.py）。Radtel RT-13 と RT-69 GPS：メーカーのソフト（「RT-13」1.7 と「RT-69 GPS」）を調べた結果によるもので、それらは一切含まれていません。コードはゼロから書いています。
 
 RADTEL RT-480、RT-68、RT-830、RT-850 (4.22)：メーカーのソフト（「Radio Programing Software」、「Radtel RT830」、「Radtel RT-850 programming software」）を調べた結果によるもので、それらは一切含まれていません。コードはゼロから書いています。

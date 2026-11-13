@@ -7,6 +7,34 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.24.0 (11/11/2026)
+-------------------
+- Separador Modelos (ui/style.css): as etiquetas dos tipos de rádio (Radioamador, DMR,
+  GMRS / FRS, PMR446, Para crianças) estão no centro da página, com o número de modelos
+  logo à direita; a linha que separa os rádios compatíveis dos não compatíveis é um
+  pouco mais grossa (9 px) e vermelha. O resto do separador não muda.
+- Catálogo (catalog_424.go, novo): 21 entradas, 26 fichas, todas com drivers já
+  presentes e verificados com os testes automáticos. Da comparação, instrução a
+  instrução, dos programas dos fabricantes com os dos rádios já geridos: Bajeton BT-8000
+  (mesma saudação e mesmas áreas de memória do Radioddity GS-10B), Radioddity GC-5
+  (mesmo programa da série Baofeng UV-17R), Radioddity Trivox (mesmo programa e
+  identificação do Radtel RT-950 Pro e do Bajeton BJ-9000), Radioddity PR-T5 (mesmo
+  protocolo e memória do Baofeng GT-18 PMR446), Radioddity GT-82 (mesma chave do Baofeng
+  UV-82), Retevis RT28 (mesmo programa do Baofeng BF-R5, protocolo do BF-888S); não
+  testados com rádios verdadeiros, como diz a nota de cada ficha. Da tabela de modelos
+  equivalentes do CHIRP, que faltavam no catálogo: Radioddity GA-5S, Retevis RT5, RT5R,
+  RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+, Rugged RH5R, RH5X, Ansoko
+  A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S, Tenway TW-325, UV-82 Pro,
+  UV-5R Pro. Contagens: 541 rádios, 457 com definições, 595 na galeria, 52 marcas.
+  Traduções: 22 textos novos.
+- Estudo dos programas dos fabricantes (nada deles está incluído): 454 ficheiros
+  descarregados das páginas da Baofeng, Radioddity, BTECH, Quansheng, Retevis, Bajeton e
+  BinTe, 444 arquivos triados. Iniciado o estudo do programa em código nativo do Radtel
+  RT-659: usa o protocolo da família Retevis RT22 com a chave «PROGRAM»; a sua memória
+  ainda está por reconstruir. Não feitos: Radioddity GS-10B Pro, FS-T3 / PR-T3, as
+  famílias novas dos programas Retevis e Radioddity, os móveis BTECH; Baofeng DM-5R Tier
+  2 (programa protegido: não se analisa).
+
 4.23.0 (11/11/2026)
 -------------------
 - Kenwood TK-481 e TK-981 (drv_kwtk481.go, novo), controlador tk481.py do CHIRP: mesma

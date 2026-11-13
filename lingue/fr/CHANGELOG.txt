@@ -7,6 +7,34 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.24.0 (11/11/2026)
+-------------------
+- Onglet Modèles (ui/style.css) : les étiquettes des types de radio (Radioamateur, DMR,
+  GMRS / FRS, PMR446, Pour enfants) sont au centre de la page, avec le nombre de modèles
+  juste à droite ; la ligne qui sépare les radios compatibles des non compatibles est un
+  peu plus épaisse (9 px) et rouge. Le reste de l'onglet ne change pas.
+- Catalogue (catalog_424.go, nouveau) : 21 entrées, 26 fiches, toutes avec des pilotes
+  déjà présents et vérifiés avec les tests automatiques. De la comparaison, instruction
+  par instruction, des programmes des constructeurs avec ceux des radios déjà gérées :
+  Bajeton BT-8000 (même salut et mêmes zones de mémoire que la Radioddity GS-10B),
+  Radioddity GC-5 (même programme que la série Baofeng UV-17R), Radioddity Trivox (même
+  programme et même identification que les Radtel RT-950 Pro et Bajeton BJ-9000),
+  Radioddity PR-T5 (même protocole et même mémoire que la Baofeng GT-18 PMR446),
+  Radioddity GT-82 (même clé que la Baofeng UV-82), Retevis RT28 (même programme que la
+  Baofeng BF-R5, protocole de la BF-888S) ; non essayées avec de vraies radios, comme le
+  dit la note de chaque fiche. De la table des modèles équivalents de CHIRP, absents du
+  catalogue : Radioddity GA-5S, Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower,
+  TechSide TI-F8+, TS-T9+, Rugged RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6,
+  AR-8, Greaval GV-8S, GV-9S, Tenway TW-325, UV-82 Pro, UV-5R Pro. Comptes : 541 radios,
+  457 avec réglages, 595 dans la galerie, 52 marques. Traductions : 22 textes nouveaux.
+- Étude des programmes des constructeurs (rien n'en est inclus) : 454 fichiers
+  téléchargés des pages de Baofeng, Radioddity, BTECH, Quansheng, Retevis, Bajeton et
+  BinTe, 444 archives triées. Début de l'étude du programme en code natif de la Radtel
+  RT-659 : il utilise le protocole de la famille Retevis RT22 avec la clé « PROGRAM » ;
+  sa mémoire reste à reconstruire. Non faits : Radioddity GS-10B Pro, FS-T3 / PR-T3, les
+  nouvelles familles des programmes Retevis et Radioddity, les mobiles BTECH ; Baofeng
+  DM-5R Tier 2 (programme protégé : non analysé).
+
 4.23.0 (11/11/2026)
 -------------------
 - Kenwood TK-481 et TK-981 (drv_kwtk481.go, nouveau), pilote tk481.py de CHIRP : même

@@ -418,6 +418,11 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 .galtype-gmrs { border-left: 5px solid #0d8a6a; } .galtype-gmrs .galarea-name { background: #0d8a6a; }
 .galtype-pmr { border-left: 5px solid #e8590c; } .galtype-pmr .galarea-name { background: #e8590c; }
 .galtype-kids { border-left: 5px solid #d4a017; } .galtype-kids .galarea-name { background: #d4a017; }
+/* 4.24: solo l'etichetta della tipologia sta al centro della pagina; il numero dei
+   modelli resta subito alla sua destra, tutto il resto è com'era */
+.galarea[class*="galtype-"] > .galarea-head { display: grid; grid-template-columns: 1fr auto 1fr; }
+.galarea[class*="galtype-"] > .galarea-head > .galarea-name { grid-column: 2; }
+.galarea[class*="galtype-"] > .galarea-head > .note { grid-column: 3; justify-self: start; }
 .galbrand { border: 1px solid var(--line-soft); border-radius: 10px; padding: 8px 10px 10px; margin: 6px 0 10px; background: rgba(255,255,255,.6); }
 .galbrand-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 6px; }
 .galbrand-name { font-size: 13px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 1px 9px; border-radius: 5px; color: #fff; }
@@ -513,7 +518,8 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
 #idbanner[hidden] { display: none; }
 
 /* 4.3: linea spessa tra i modelli compatibili e quelli non compatibili */
-.galdivider { border: 0; height: 6px; margin: 26px 0 22px; border-radius: 3px; background: var(--ink, #1b2433); opacity: .85; }
+/* 4.24: riga fra compatibili e non compatibili un po' più spessa e rossa */
+.galdivider { border: 0; height: 9px; margin: 26px 0 22px; border-radius: 4px; background: #d62828; opacity: 1; }
 
 /* 4.3: Home più compatta: titolo un po' più piccolo e riquadri brevi, così in basso
    restano visibili copyright, sito web e sorgenti */

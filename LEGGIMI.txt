@@ -1,11 +1,21 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.23.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.24.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.24.0:
+- Scheda Modelli più leggibile: le etichette delle tipologie di radio sono al centro
+  della pagina e la riga fra radio compatibili e non compatibili è rossa e più
+  spessa.
+- 26 radio in più, gestite con i driver di radio uguali già presenti: Bajeton
+  BT-8000, Radioddity GC-5, Trivox, PR-T5, GT-82 e GA-5S, Retevis RT28, RT5, RT5R e
+  RT5RV, TIDRADIO TD-UV5R TriPower e modelli di TechSide, Rugged, Ansoko, Arcshell,
+  Greaval e Tenway. Quelle riconosciute dal confronto dei programmi dei costruttori
+  non sono ancora provate con una radio vera: fai prima la sola lettura.
+- Galleria: 595 modelli di 52 marche (541 con canali, 457 con impostazioni).
 Novità della 4.23.0:
 - KENWOOD TK-481 e TK-981 (900 MHz, divise in sistemi) e le veicolari TK-780 e
   TK-880: canali e impostazioni. Vedi «KENWOOD TK-481, TK-981».

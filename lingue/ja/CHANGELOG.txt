@@ -4,6 +4,12 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 以降
 
 このファイルは CHANGELOG.txt の最新の項目の日本語訳です。以前のバージョン（1.0 - 4.12）の完全な履歴は、パッケージのメインフォルダーにあるイタリア語の原文 CHANGELOG.txt にあります。各バージョンの主な新機能は GUIDE.txt にもまとめています。
 
+4.24.0（2026/11/11）
+-------------------
+- 「機種」タブ（ui/style.css）：無線機の種類のラベル（アマチュア無線、DMR、GMRS / FRS、PMR446、子ども向け）がページの中央に並び、機種数はそのすぐ右に表示されます。対応機種と非対応機種を分ける線は少し太く（9 px）、赤くなりました。タブのほかの部分は変わりません。
+- カタログ（catalog_424.go、新規）：21 項目、26 枚のカード。すべて既存の、自動テストで確認済みのドライバーを使います。メーカーのプログラムを、対応済みの無線機のプログラムと命令単位で比較した結果：Bajeton BT-8000（接続手順とメモリー領域が Radioddity GS-10B と同じ）、Radioddity GC-5（Baofeng UV-17R シリーズと同じプログラム）、Radioddity Trivox（Radtel RT-950 Pro、Bajeton BJ-9000 と同じプログラムと識別）、Radioddity PR-T5（Baofeng GT-18 PMR446 と同じプロトコルとメモリー）、Radioddity GT-82（Baofeng UV-82 と同じキー）、Retevis RT28（Baofeng BF-R5 と同じプログラム、BF-888S のプロトコル）。実機では未確認で、各カードの注記に書いてあります。CHIRP の同等機種の表にあり、カタログになかった機種：Radioddity GA-5S, Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+, Rugged RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S, Tenway TW-325, UV-82 Pro, UV-5R Pro。集計：541 機種、設定対応 457、ギャラリー 595、52 ブランド。翻訳：新しい文 22。
+- メーカーのプログラムの調査（その内容は何も含まれていません）：Baofeng、Radioddity、BTECH、Quansheng、Retevis、Bajeton、BinTe のページから 454 ファイルをダウンロードし、444 のアーカイブを分類しました。Radtel RT-659 のネイティブコードのプログラムの調査を始めました。Retevis RT22 ファミリーのプロトコルをキー «PROGRAM» で使います。メモリーの構造はこれから復元します。未対応：Radioddity GS-10B Pro、FS-T3 / PR-T3、Retevis と Radioddity のプログラムの新しいファミリー、BTECH の車載機、Baofeng DM-5R Tier 2（保護されたプログラムのため解析しません）。
+
 4.23.0（2026/11/11）
 -------------------
 - Kenwood TK-481 と TK-981（drv_kwtk481.go、新規）、CHIRP のドライバー tk481.py：接続と 32 KiB のメモリは TK-280 と同じです。チャンネルは順に並んだ 32 のシステムに入っています（チャンネルを追加または削除すると、後ろの内容が 32 バイトずれます。CHIRP と同じです）。リストの位置はシステムごとに 250。システムは作成せず、トランキングのシステムは変更しません。読み込み、書き込み、やり取りするバイトは CHIRP と同一です。Kenwood TK-780 と TK-880（車載機）：TK-280 / TK-380 と同じドライバーです。TK-2180、TK-3180、TK-7180、TK-8180 に設定を追加しました（8 機種、196～201 項目）。CHIRP から表を作るツールは、試行でメモリの構造が変わるとすべての項目を失っていました。修正済みです。

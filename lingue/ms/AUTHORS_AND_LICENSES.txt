@@ -309,6 +309,11 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): daripada kajian program pengeluar («RT
 «DMR RT-6D», «Radtel RT-1000 Pro CPS»), tiada apa-apa daripadanya disertakan; kod
 ditulis dari awal.
 
+KATALOG (4.24): tiada kod pihak ketiga yang baharu. Kad yang ditambah menggunakan pemacu
+yang sudah ada: enam datang daripada perbandingan program pengeluar (Bajeton,
+Radioddity, Retevis, Baofeng), yang tiada apa-apa daripadanya disertakan; yang lain
+daripada jadual model setara CHIRP (GNU GPL v3).
+
 KENWOOD TK-481 / TK-981, TK-780 / TK-880, RADTEL RT-13, RT-69 GPS (4.23): drv_kwtk481.go
 diterbitkan daripada tk481.py dan tk280.py CHIRP (GNU GPL v3), Copyright 2024 Dan Smith;
 TK-780 / TK-880 tergolong dalam keluarga TK-280 / TK-380 (tk280.py). Radtel RT-13 dan

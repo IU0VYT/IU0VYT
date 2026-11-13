@@ -1,6 +1,6 @@
 IU0VYT Flash
-Versión: 4.23.0
-Compilación: 2026-11-11T14:56
+Versión: 4.24.0
+Compilación: 2026-11-11T22:05
 
 El programa lee su versión de versione.txt en la carpeta principal; este archivo es
 solo informativo.
