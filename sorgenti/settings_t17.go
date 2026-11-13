@@ -27,6 +27,22 @@ package main
 // PR-T3 non ha il tono di fine trasmissione. Le scelte non vengono riempite
 // all'avvio dei programmi (a differenza della potenza dei canali, vedi
 // drv_bfd.go): l'ordine è quello delle risorse delle finestre.
+//
+// 4.32: programmi «T20 FRS» v1.0.1 (Baofeng T22 in versione FRS, TIDRADIO
+// TD-M8S) e «CPS_F8_FRS» v1.0 (TIDRADIO TD-V2): stessa finestra e stesse voci
+// nei due, tre blocchi invece di due (a = 0x2C0 nel primo, 0x3C0 nel secondo):
+//
+//   0x2B0  guida vocale (0/1)              0x2B8  «Rx Emergency» (0/1)
+//   0x2B1  lingua della guida vocale       a+0    bit 0 suono dei tasti
+//   0x2B2  scansione (0/1)                        bit 1 risparmio della batteria
+//   0x2B3  VOX (0/1)                       a+1    squelch (0-9)
+//   0x2B4  livello del VOX (1-5)           a+2    tasto laterale
+//   0x2B5  VOX spento in ricezione         a+3    tempo massimo di trasmissione
+//   0x2B6  blocco TX a tensione alta
+//   0x2B7  blocco TX a tensione bassa
+//
+// (le due voci del blocco della trasmissione sono in ordine inverso rispetto
+// alle T17). Il livello del VOX è il numero stesso (casella numerica 1-5).
 
 import (
 	"encoding/hex"
@@ -39,6 +55,7 @@ type t17SetDef struct {
 	off               int
 	mask              byte
 	opts              []string // vuoto: OFF/ON
+	first             int      // valore della prima scelta (0 di solito)
 	group, label, dsc string
 	warn              string
 }
@@ -87,15 +104,48 @@ func t17SetDefsFor(txEnd byte) []t17SetDef {
 	return d
 }
 
+// anaSetDefs (4.32): voci dei programmi «T20 FRS» e «CPS_F8_FRS»; a = indirizzo
+// del blocco con suoni, squelch, tasto laterale e TOT
+func anaSetDefs(a int) []t17SetDef {
+	g1, g2, g3 := "Ricezione e trasmissione", "Display, suoni e tasti", "DTMF, allarme e funzioni remote"
+	t := t17SetDefsFor(0)
+	pick := func(key string, off int, mask byte) t17SetDef {
+		for _, d := range t {
+			if d.key == key {
+				d.off, d.mask = off, mask
+				return d
+			}
+		}
+		panic(key)
+	}
+	vl := pick("vox_level", 0x2B4, 0xFF)
+	vl.first = 1
+	return []t17SetDef{
+		pick("sql", a+1, 0xFF), pick("tot", a+3, 0xFF), pick("vox_on", 0x2B3, 0xFF), vl,
+		{key: "vox_rx", off: 0x2B5, mask: 0xFF, group: g1, label: "VOX disattivato durante la ricezione",
+			dsc: "Il VOX non fa trasmettere mentre la radio sta ricevendo un segnale."},
+		pick("scan_on", 0x2B2, 0xFF), pick("low_tx", 0x2B7, 0xFF), pick("high_tx", 0x2B6, 0xFF),
+		pick("voice", 0x2B0, 0xFF), pick("lang", 0x2B1, 0xFF), pick("beep", a, 0x01), pick("save", a, 0x02),
+		{key: "side_key", off: a + 2, mask: 0xFF, opts: []string{"Nessuna", "Monitor", "Cambio di potenza", "Allarme"}, group: g2,
+			label: "Tasto laterale", dsc: "Funzione del tasto laterale."},
+		{key: "rx_emerg", off: 0x2B8, mask: 0xFF, group: g3, label: "Allarme («Rx Emergency»)",
+			dsc: "Accende o spegne la funzione di allarme: nel programma del costruttore la voce si chiama «Rx Emergency» in inglese e «interruttore dell'allarme» in cinese."},
+	}
+}
+
 func t17SetTable(defs []t17SetDef, src string) *setTable {
-	t := &setTable{Class: "AnaCps", Size: t17Memsize, Source: src}
+	return t17SetTableSize(defs, src, t17Memsize)
+}
+
+func t17SetTableSize(defs []t17SetDef, src string, size int) *setTable {
+	t := &setTable{Class: "AnaCps", Size: size, Source: src}
 	for _, b := range defs {
 		sh := 0
 		for b.mask>>sh&1 == 0 {
 			sh++
 		}
 		val := func(i int) *string {
-			s := hex.EncodeToString([]byte{byte(i<<sh) & b.mask})
+			s := hex.EncodeToString([]byte{byte((i+b.first)<<sh) & b.mask})
 			return &s
 		}
 		enc := &setEnc{Kind: "table", Fields: [][2]interface{}{{float64(b.off), hex.EncodeToString([]byte{b.mask})}}}
@@ -122,6 +172,9 @@ var t17Settings = map[string]*setTable{
 	"bf-t17frs":  t17SetTable(t17SetDefsFor(0x80), t17Src("«T17-T18 FRS» v1.2.2")),
 	"bf-gt18pmr": t17SetTable(t17SetDefsFor(0x04), t17Src("«BAOFENG GT18 PMR» v1.2.1")),
 	"rd-t3":      t17SetTable(t17SetDefsFor(0), t17Src("«Radioddity T3» v1.3")),
+	"bf-t22frs":  t17SetTableSize(anaSetDefs(0x2C0), t17Src("«T20 FRS» v1.0.1"), 0x340),
+	"td-m8s":     t17SetTableSize(anaSetDefs(0x2C0), t17Src("«T20 FRS» v1.0.1"), 0x340),
+	"td-v2":      t17SetTableSize(anaSetDefs(0x3C0), t17Src("«CPS_F8_FRS» v1.0"), bfdMemsize),
 }
 
 func t17Src(prog string) string { return fmt.Sprintf("programma del costruttore %s", prog) }
@@ -130,10 +183,11 @@ func init() {
 	settingsProviders = append(settingsProviders, settingsProvider{
 		has: func(kind string) bool { return t17Settings[kind] != nil },
 		get: func(kind string, img []byte) *setTable {
-			if len(img) < t17Memsize {
+			t := t17Settings[kind]
+			if t == nil || len(img) < t.Size {
 				return nil
 			}
-			return t17Settings[kind]
+			return t
 		},
 	})
 }

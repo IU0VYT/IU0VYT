@@ -81,8 +81,7 @@ var rt69Wire = &wx8Opt{start: 0x7D}
 const rt69Note = "999 canali con nomi di 12 caratteri, 19200 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-69 GPS» e " +
 	"provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, nome, toni, potenza, banda e scansione; " +
 	"il resto del canale e le impostazioni della radio restano come sono. Prima di scrivere si controlla, come fa il programma, che " +
-	"ogni canale stia nelle bande della radio. Se sulla radio è impostata una password va tolta prima con il programma del costruttore. " +
-	"«Identifica» non riconosce questa radio: scegli tu la scheda giusta."
+	"ogni canale stia nelle bande della radio. Se sulla radio è impostata una password va tolta prima con il programma del costruttore."
 
 type rt69Opt struct{}
 

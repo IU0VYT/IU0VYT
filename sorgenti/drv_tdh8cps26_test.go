@@ -26,7 +26,24 @@ func TestTdh8Cps26(t *testing.T) {
 		"td-h8g4": "544448383447454E", "td-h8g4ham": "5444483834474548", "td-h8g4gmrs": "5444483834474547",
 		"td-h9": "54444839FFFFFF4E", "td-h9ham": "54444839FFFFFF48", "td-h9gmrs": "54444839FFFFFF47",
 		"td-638uv": "544436333855564E", "td-638uvham": "5444363338555648", "td-638uvgmrs": "5444363338555647",
+		// 4.32: banda larga
+		"td-h4": "54444834FFFFFF4E", "td-h4ham": "54444834FFFFFF48", "td-h4gmrs": "54444834FFFFFF47",
+		"td-h11": "5444483131FFFF4E", "td-h11ham": "5444483131FFFF48", "td-h11gmrs": "5444483131FFFF47",
 	}
+	// 4.32, dal programma: potenza media solo su H7 Plus, H8, H9, H11 e 638UV e mai
+	// nelle versioni GMRS (Settings.HasMidPower, IsGMRSMode); H4 e H11 a banda larga
+	mid := func(id string) bool {
+		if strings.HasSuffix(id, "gmrs") {
+			return false
+		}
+		for _, p := range []string{"td-h7plus", "td-h8g4", "td-h9", "td-h11", "td-638uv"} {
+			if strings.HasPrefix(id, p) {
+				return true
+			}
+		}
+		return false
+	}
+	wide := func(id string) bool { return strings.HasPrefix(id, "td-h4") || strings.HasPrefix(id, "td-h11") }
 	np := func(int, int, string) {}
 	for id, hx := range idents {
 		m := genByID[id]
@@ -34,7 +51,7 @@ func TestTdh8Cps26(t *testing.T) {
 			t.Fatalf("%s: modello assente", id)
 		}
 		o := tdh8o(m)
-		if strings.ToUpper(hexStr(o.ident)) != hx || !o.cps26 || o.memsize != 0x1F30 || !m.NoChirp || m.Slots != 199 || len(m.Powers) != 3 ||
+		if strings.ToUpper(hexStr(o.ident)) != hx || !o.cps26 || o.memsize != 0x1F30 || !m.NoChirp || m.Slots != 199 || (len(m.Powers) == 3) != mid(id) || len(m.Powers) != len(o.pow) || o.pow[len(o.pow)-1] != 2 || o.pow[0] != 0 ||
 			!bytes.Equal(o.magic, []byte{0x50, 0x56, 0x4F, 0x4A, 0x48, 0x5C, 0x14}) || !settingsAvailable(id) {
 			t.Fatalf("%s: dati del modello errati (% X)", id, o.ident)
 		}
@@ -51,12 +68,18 @@ func TestTdh8Cps26(t *testing.T) {
 		copy(img[8+0xD40:], "GMRS1\xFF\xFF\xFF  PONTE\x00")
 		img[8+0x1900], img[8+0x1920] = 0x07, 0x01 // usati 1-3; in scansione solo l'1
 		// 462,5625 MHz è fuori dalla gamma di trasmissione dei radioamatori: nella versione HAM è di sola ricezione
-		ham := strings.HasSuffix(id, "ham")
+		ham := strings.HasSuffix(id, "ham") && !wide(id)
+		// valore 1 del campo della potenza: «media» dove c'è, altrimenti il
+		// programma mostra «alta» (ogni valore diverso da zero)
+		p1 := 0
+		if mid(id) {
+			p1 = 1
+		}
 		c1, c2 := m.Fam.Get(m, img, 0), m.Fam.Get(m, img, 1)
 		if c1 == nil || c1.Rx != 462562500 || c1.Tx != 462562500 || c1.Power != 0 || c1.Narrow || !c1.Scan || c1.Name != "GMRS1" || c1.RxTone != "" || c1.TxOff != ham {
 			t.Fatalf("%s: canale 1 %+v", id, c1)
 		}
-		if c2 == nil || c2.Rx != 441562500 || c2.RxTone != "74.4" || c2.TxTone != "74.4" || c2.Power != 1 || !c2.Narrow || c2.Scan || c2.Name != "  PONTE" || c2.TxOff {
+		if c2 == nil || c2.Rx != 441562500 || c2.RxTone != "74.4" || c2.TxTone != "74.4" || c2.Power != p1 || !c2.Narrow || c2.Scan || c2.Name != "  PONTE" || c2.TxOff {
 			t.Fatalf("%s: canale 2 %+v", id, c2)
 		}
 		if m.Fam.Get(m, img, 2) != nil || m.Fam.Get(m, img, 3) != nil {
@@ -85,9 +108,58 @@ func TestTdh8Cps26(t *testing.T) {
 		if g := m.Fam.Get(m, img, 5); g.TxOff != ham {
 			t.Fatalf("%s: 462,5625 MHz sola ricezione = %v", id, g.TxOff)
 		}
-		if m.inBands(700000000) || m.inBands(190000000) || !m.inBands(108000000) || !m.inBands(600000000) {
+		if !wide(id) && (m.inBands(700000000) || m.inBands(190000000) || !m.inBands(108000000) || !m.inBands(600000000)) {
 			t.Fatalf("%s: limiti di frequenza errati", id)
 		}
+		if wide(id) {
+			// trasmissione 18-76 e 136-520 MHz, ricezione 18-800 MHz, uguali nelle tre versioni
+			if m.inBands(17999000) || !m.inBands(18000000) || !m.inBands(800000000) || m.inBands(800001000) {
+				t.Fatalf("%s: limiti di ricezione errati", id)
+			}
+			for hz, rxOnly := range map[int64]bool{18000000: false, 76000000: false, 76001000: true, 135999000: true, 136000000: false, 520000000: false, 520001000: true, 800000000: true} {
+				if got := tdh8o(m).rxOnly(hz); got != rxOnly {
+					t.Fatalf("%s: %d Hz sola ricezione = %v", id, hz, got)
+				}
+			}
+			// 27,205 MHz: 00 05 72 02
+			if err := m.Fam.Set(m, img, 6, &Chan{Rx: 27205000, Tx: 27205000, Power: 0}); err != nil || !bytes.Equal(img[8+0x70:8+0x78], []byte{0x00, 0x05, 0x72, 0x02, 0x00, 0x05, 0x72, 0x02}) {
+				t.Fatalf("%s: 27,205 MHz % X (%v)", id, img[8+0x70:8+0x78], err)
+			}
+			if g := m.Fam.Get(m, img, 6); g == nil || g.Rx != 27205000 || g.TxOff {
+				t.Fatalf("%s: 27,205 MHz riletto %+v", id, g)
+			}
+		}
+		// potenza: due livelli = bassa 0 e alta 2; tre livelli = 0, 1, 2 (bit 4-5 del byte 14)
+		for k, pw := range m.Powers {
+			wantRaw := []byte{0x00, 0x20}[k%2]
+			if len(m.Powers) == 3 {
+				wantRaw = []byte{0x00, 0x10, 0x20}[k]
+			}
+			if err := m.Fam.Set(m, img, 7, &Chan{Rx: 145000000, Tx: 145000000, Power: pw.Sem}); err != nil || img[8+0x80+14]&0x30 != wantRaw {
+				t.Fatalf("%s: potenza %s scritta %02X (%v)", id, pw.Label, img[8+0x80+14]&0x30, err)
+			}
+			if g := m.Fam.Get(m, img, 7); g == nil || g.Power != pw.Sem {
+				t.Fatalf("%s: potenza %s riletta %+v", id, pw.Label, g)
+			}
+		}
+		if len(m.Powers) == 2 {
+			// canale di fabbrica con il valore 1: letto come «alta»; riscritto in
+			// potenza alta resta 1, in bassa va a 0, di nuovo in alta va a 2
+			img[8+0x80+14] = img[8+0x80+14]&^0x30 | 0x10
+			g := m.Fam.Get(m, img, 7)
+			if g == nil || g.Power != m.Powers[1].Sem {
+				t.Fatalf("%s: valore 1 letto %+v", id, g)
+			}
+			g.Name = "X"
+			for k, want := range []byte{0x10, 0x00, 0x20} {
+				g.Power = m.Powers[[]int{1, 0, 1}[k]].Sem
+				if err := m.Fam.Set(m, img, 7, g); err != nil || img[8+0x80+14]&0x30 != want {
+					t.Fatalf("%s: passo %d, potenza scritta %02X (%v)", id, k, img[8+0x80+14]&0x30, err)
+				}
+			}
+		}
+		_ = m.Fam.Set(m, img, 6, nil)
+		_ = m.Fam.Set(m, img, 7, nil)
 		// cancellazione come il programma
 		if err := m.Fam.Set(m, img, 0, nil); err != nil || m.Fam.Get(m, img, 0) != nil || img[8+0x1900]&1 != 0 || img[8+0x1920]&1 != 0 ||
 			!bytes.Equal(img[8+0x10:8+0x20], []byte{0, 0, 0, 0, 0, 0, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0}) {

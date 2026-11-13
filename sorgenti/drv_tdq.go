@@ -32,6 +32,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -52,6 +53,22 @@ type tdqFam struct{}
 
 func tdqO(m *genModel) *tdqOpt { return m.Opt.(*tdqOpt) }
 
+// tdqNote: nota della scheda. I modelli con la chiave «QROGRAM» hanno lo stesso
+// collegamento e «Identifica» non li distingue; la TD-M2 Pro («QROGRAO») è la
+// sola con la sua (4.32: la frase non compare più nella sua nota). Due testi
+// interi, perché ognuno ha la sua traduzione.
+func tdqNote(magic, prog, extra string) string {
+	if magic != "QROGRAM" {
+		return strings.TrimSpace(fmt.Sprintf("38400 baud. Protocollo e memoria ricavati dal programma del costruttore %s e provati con una radio simulata, non su una radio vera. "+
+			"Qui si modificano frequenze (a passi di 1,25 kHz), toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; "+
+			"il resto del canale (scrambler, PTT-ID, blocco su canale occupato) non si tocca. %s", prog, extra))
+	}
+	return fmt.Sprintf("38400 baud. Protocollo e memoria ricavati dal programma del costruttore %s e provati con una radio simulata, non su una radio vera. "+
+		"Qui si modificano frequenze (a passi di 1,25 kHz), toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; "+
+		"il resto del canale (scrambler, PTT-ID, blocco su canale occupato) non si tocca. %s"+
+		"«Identifica» non distingue i modelli di questa famiglia: scegli tu la scheda.", prog, extra)
+}
+
 func init() {
 	lmh := []genPower{{"Bassa", 0, 2}, {"Media", 0, 1}, {"Alta", 0, 0}}
 	lh := []genPower{{"Bassa", 0, 2}, {"Alta", 0, 0}}
@@ -61,11 +78,8 @@ func init() {
 	mk := func(id, model, name string, slots int, bands []band, pw []genPower, pow []int, magic string, off byte, prog, extra string) *genModel {
 		return &genModel{ID: id, Vendor: "TIDRADIO", Model: model, RClass: "IU0VYT_TIDRADIO_" + id[3:], Name: name, Slots: slots, First: 1,
 			Powers: pw, Bands: bands, Narrow: true, HasScan: true, NoChirp: true, DCS: dtcsAll(), Baud: 38400, Fam: tdqFam{},
-			Opt: &tdqOpt{magic: magic, pow: pow, toneOff: off, prog: prog},
-			Notes: fmt.Sprintf("38400 baud. Protocollo e memoria ricavati dal programma del costruttore %s e provati con una radio simulata, non su una radio vera. "+
-				"Qui si modificano frequenze (a passi di 1,25 kHz), toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; "+
-				"il resto del canale (scrambler, PTT-ID, blocco su canale occupato) non si tocca. %s"+
-				"«Identifica» non distingue i modelli di questa famiglia: scegli tu la scheda.", prog, extra)}
+			Opt:   &tdqOpt{magic: magic, pow: pow, toneOff: off, prog: prog},
+			Notes: tdqNote(magic, prog, extra)}
 	}
 	free := "È una radio di libero uso: fuori dai suoi canali e dalla sua potenza di fabbrica non è più a norma. "
 	genRegister(

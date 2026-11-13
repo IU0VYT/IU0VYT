@@ -66,7 +66,7 @@ var (
 const rt13Note = "22 canali senza nome, 400-480 MHz, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-13» 1.7 e " +
 	"provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione; salto di " +
 	"frequenza, scrambler e blocco su canale occupato restano quelli impostati. Se sulla radio è impostata una password va tolta prima " +
-	"con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta."
+	"con il programma del costruttore."
 
 type rt13Opt struct{}
 

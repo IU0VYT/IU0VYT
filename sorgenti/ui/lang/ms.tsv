@@ -5441,9 +5441,7 @@ cc054a8c	radio mempunyai zon bukan konvensional (trunking): tidak disokong
 031746de	256 saluran (0 hingga 255) dengan nama 12 aksara, 9600 baud. Diperoleh daripada program pengeluar dan diuji dengan radio simulasi, bukan pada radio sebenar. Hanya saluran dan nama yang ditulis: tetapan, VFO dan DTMF radio tidak disentuh.
 8d412538	128 saluran tanpa nama, 9600 baud. Diperoleh daripada program pengeluar dan diuji dengan radio simulasi, bukan pada radio sebenar. Kawasan yang ditulis ialah kawasan yang ditulis oleh program pengeluar; kata laluan radio tidak pernah ditulis.
 5cebd6e9	Program pengeluar («RT-20M Radio Program Software») menggunakan sambungan yang sama, blok yang sama dan saluran 32 bait yang sama seperti iRadio UV-5118plus: radio dibuka dengan tab Ruyage UV58Plus (999 saluran dengan nama 10 aksara, 115200 baud). Perbandingan dibuat pada program, bukan pada radio sebenar.
-1bf618a9	Protokol dan memori diperoleh daripada program pengeluar «Radio Programing Software» (versi 1.5.2 dan 1.5.3). Hidupkan radio dengan kabel disambungkan. Saluran 0 hingga 255, seperti dalam program pengeluar; frekuensi dalam langkah 1.25 kHz. Di sini anda mengubah frekuensi, nama, kuasa, lebar jalur, imbasan dan ton; kod isyarat, PTT ID, pengacak dan kunci saluran sibuk kekal seperti yang ditetapkan. Hanya saluran dan nama yang ditulis: tetapan, VFO dan DTMF radio tidak disentuh. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
 bc8e418f	radio tidak dapat menyimpan frekuensi {0} MHz (gandaan 1.25 kHz)
-09c74e1e	Radio tanpa nama saluran (128 saluran). Protokol dan memori diperoleh daripada program pengeluar. Di sini anda mengubah frekuensi, kuasa, lebar jalur, imbasan dan ton; had pemancaran, penyulitan, jenis DCS dan kod senyap saluran kekal seperti yang ditetapkan. Tetapan dan VFO radio ditulis semula seperti sedia ada. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
 939f420e	kata laluan ditetapkan pada radio: buang dahulu dengan program pengeluar
 d6d1a0a5	Radio 900 MHz (jalur yang tidak digunakan di Itali), sentiasa jalur sempit. Saluran dibahagikan kepada sistem: senarai mempunyai 250 kedudukan bagi setiap satu daripada 32 sistem dan kedudukan itu ialah nombor saluran dalam sistem. Hanya sistem yang sudah ada pada radio digunakan; sistem sumber kongsi (trunking) tidak diubah. Ia diprogramkan dengan kabel pengaturcaraan Kenwood.
 7d662f43	RT-69 GPS
@@ -5453,9 +5451,7 @@ ad1777b1	jadual sistem radio tidak dapat dibaca: memori tidak boleh diubah
 a31f50a7	sistem {0} ialah sistem sumber kongsi (trunking): ia tidak diubah dari sini
 cf3a4d90	sistem {0} penuh
 adf62e1b	memori radio penuh
-7d0150af	22 saluran tanpa nama, 400-480 MHz, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-13» 1.7 dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, ton, kuasa, lebar jalur dan imbasan; lompatan frekuensi, scrambler dan kunci saluran sibuk kekal seperti yang ditetapkan. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
 cd92c034	Radtel RT-13
-68a5c963	999 saluran dengan nama 12 aksara, 19200 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-69 GPS» dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, nama, ton, kuasa, lebar jalur dan imbasan; bahagian lain saluran dan tetapan radio kekal seperti sedia ada. Sebelum menulis, seperti program pengeluar, setiap saluran disemak supaya berada dalam jalur radio. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri tab yang betul.
 2dedccf9	Radtel RT-69 GPS
 6a54dc65	Perbandingan dibuat pada kod program pengeluar: belum diuji dengan radio sebenar. Baca radio dahulu: jika modelnya tidak betul, radio tidak menjawab dan tidak diubah.
 336dd64b	Dalam jadual model setara CHIRP, radio ini sepadan dengan model yang sudah diurus oleh program: pemacu yang sama digunakan, disahkan dengan ujian automatik.
@@ -5653,7 +5649,6 @@ d67023e9	TIDRADIO TD-H9
 934f88cf	{0} HAM
 93054cc8	{0} GMRS
 3f23af0c	Generasi ke-4
-1d2bea2b	199 saluran dan tetapan umum. Tiga kad: asas, HAM dan GMRS; semasa membaca radio, program mengenal pasti versinya. Ia memperkenalkan diri seperti TD-H3, tetapi mempunyai tiga tahap kuasa: gunakan kad ini dan bukan kad TD-H3. Tiada dalam CHIRP.{0}
 cd207e61	199 saluran dan tetapan umum. Tiga kad: asas, HAM dan GMRS; semasa membaca radio, program mengenal pasti versinya. Tiada dalam CHIRP.{0}
 0a0f28c6	199 saluran dan tetapan umum. Tiga kad: asas, HAM dan GMRS; semasa membaca radio, program mengenal pasti versinya. Untuk TD-H8 tiga generasi pertama gunakan kad «TD-H8». Tiada dalam CHIRP.{0}
 128fa15f	Saluran tanpa nama dan tetapan umum. Tiada dalam CHIRP. «Kenal pasti» tidak membezakan model keluarga ini: pilih kad sendiri.{0}
@@ -5680,7 +5675,6 @@ c413bfa6	TD PMR
 adfbb178	TD-M2 Pro
 457ed57e	TD-M2Pro
 e16cee51	M2 Pro
-de564f6a	199 saluran, UHF sahaja (400-520 MHz dalam program pengeluar). {0}
 18b12059	Matikan radio, sambungkan kabel, hidupkannya dengan kelantangan tinggi pada saluran kosong. Tiada dalam CHIRP: sambungan dan memori diperoleh daripada program pengeluar «TIDRadioCPS» (2026), yang menggunakan peta memori yang sama seperti TD-H3 dalam CHIRP, dan diuji dengan radio simulasi serta fail kilang program itu, bukan radio sebenar. Saluran (frekuensi, nada, kuasa, lebar jalur, imbasan, nama) dan tetapan umum; kunci saluran sibuk, PTT-ID, lompatan frekuensi, pengacak dan mod terima kekal seperti dalam saluran. Versi (asas, HAM, GMRS) dibezakan melalui pengecam yang dilaporkan radio: jika bukan yang betul, radio tidak dibaca.
 4f7716b6	«TD-FRS» / «TD-PMR» (versi 25/6/2026)
 cd4fda8b	38400 baud. Protokol dan memori diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi (dalam langkah 1.25 kHz), nada, kuasa, lebar jalur dan imbasan saluran (tiada nama) serta tetapan umum; selebihnya pada saluran (scrambler, PTT-ID, kunci saluran sibuk) tidak disentuh. {1}«Kenal pasti» tidak membezakan model keluarga ini: pilih kad sendiri.
@@ -5792,3 +5786,27 @@ a973430b	Saluran tanpa nama, 400-470 MHz, 2400 baud. Protokol dan data diperoleh
 71152f6e	Saluran tanpa nama, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran serta tetapan umum; scrambler, compander, kunci saluran sibuk dan lompatan frekuensi kekal seperti dalam saluran. {1}Jika kata laluan bacaan ditetapkan dalam radio, buang dahulu dengan program pengeluar.
 4ccec7f4	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur, imbasan dan nama saluran serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}
 2346b1b2	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran (tiada nama) serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}
+0c54d822	Dua kad: versi Eropah (PMR446, 16 saluran) dan versi Amerika (FRS, 22 saluran), yang mempunyai program pengeluar yang berbeza.
+1899f7cd	199 saluran dan tetapan umum. Tiga kad: asas, HAM dan GMRS; semasa membaca radio, program mengenal pasti versinya. Ia memperkenalkan diri seperti TD-H3, tetapi program pengeluar membaca dan menulisnya dengan cara yang berbeza: gunakan kad ini dan bukan kad TD-H3. Tiada dalam CHIRP.{0}
+fc3531d7	199 saluran, UHF sahaja (400-520 MHz dalam program pengeluar). Saluran tanpa nama dan tetapan umum. Tiada dalam CHIRP.{0}
+a3fb2872	Saluran tanpa nama dan tetapan umum. Tiada dalam CHIRP.{0}
+6aa904a9	22 saluran FRS (Amerika Syarikat). Program pengeluar adalah sama dengan program Baofeng T22 versi FRS. Ini bukan TD-M8 tanpa «S», yang mempunyai kad lain. {0}
+c506923a	16 saluran FRS (Amerika Syarikat). Arahan program pengeluar menyatakan ia juga untuk Pofung F8, F8i, F8U, F8X dan BF-V8. {0}
+368f65ab	22 saluran tanpa nama, 400-480 MHz, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-13» 1.7 dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, ton, kuasa, lebar jalur dan imbasan; lompatan frekuensi, scrambler dan kunci saluran sibuk kekal seperti yang ditetapkan. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar.
+a454c0ed	Protokol dan memori diperoleh daripada program pengeluar «Radio Programing Software» (versi 1.5.2 dan 1.5.3). Hidupkan radio dengan kabel disambungkan. Saluran 0 hingga 255, seperti dalam program pengeluar; frekuensi dalam langkah 1.25 kHz. Di sini anda mengubah frekuensi, nama, kuasa, lebar jalur, imbasan dan ton; kod isyarat, PTT ID, pengacak dan kunci saluran sibuk kekal seperti yang ditetapkan. Hanya saluran dan nama yang ditulis: tetapan, VFO dan DTMF radio tidak disentuh.
+09a39cef	999 saluran dengan nama 12 aksara, 19200 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-69 GPS» dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, nama, ton, kuasa, lebar jalur dan imbasan; bahagian lain saluran dan tetapan radio kekal seperti sedia ada. Sebelum menulis, seperti program pengeluar, setiap saluran disemak supaya berada dalam jalur radio. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar.
+56c39478	Radio tanpa nama saluran (128 saluran). Protokol dan memori diperoleh daripada program pengeluar. Di sini anda mengubah frekuensi, kuasa, lebar jalur, imbasan dan ton; had pemancaran, penyulitan, jenis DCS dan kod senyap saluran kekal seperti yang ditetapkan. Tetapan dan VFO radio ditulis semula seperti sedia ada. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar.
+affbd219	Radio tanpa paparan: saluran tidak mempunyai nama. Diperoleh daripada program pengeluar «T20 FRS» (v1.0.1, program yang sama diberikan oleh Baofeng untuk T22 versi FRS dan oleh TIDRADIO untuk TD-M8S); jika kata laluan baca dan tulis ditetapkan pada radio, buangnya dahulu dengan program itu.
+baebb9fa	T22 FRS
+050e47ea	Baofeng T22 (FRS, USA)
+05a9fca8	TIDRADIO TD-M8S
+4b755946	TIDRADIO TD-V2
+8950ef8a	Radio tanpa paparan: saluran tidak mempunyai nama. Diperoleh daripada program pengeluar «CPS_F8_FRS» (v1.0); jika kata laluan baca dan tulis ditetapkan pada radio, buangnya dahulu dengan program itu.
+e170353a	TIDRADIO TD-H4
+da9ca510	TIDRADIO TD-H11
+2f389c6a	Matikan radio, sambungkan kabel, hidupkannya dengan kelantangan tinggi pada saluran kosong. Tiada dalam CHIRP: sambungan dan memori diperoleh daripada program pengeluar «TIDRadioCPS» (2026), yang mengendalikan model ini seperti model lain dalam siri itu, dan hanya diuji dengan radio simulasi: untuk model ini program itu tiada fail kilang. Jalur lebar, seperti dalam program: pemancaran 18-76 dan 136-520 MHz, penerimaan 18-800 MHz. Saluran (frekuensi, nada, kuasa, lebar jalur, imbasan, nama) dan tetapan umum; kunci saluran sibuk, PTT-ID, lompatan frekuensi, pengacak dan mod terima kekal seperti dalam saluran. Versi (asas, HAM, GMRS) dibezakan melalui pengecam yang dilaporkan radio: jika bukan yang betul, radio tidak dibaca.
+0be19b10	38400 baud. Protokol dan memori diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi (dalam langkah 1.25 kHz), nada, kuasa, lebar jalur dan imbasan saluran (tiada nama) serta tetapan umum; selebihnya pada saluran (scrambler, PTT-ID, kunci saluran sibuk) tidak disentuh. {1}
+cddf33a5	Penggera («Rx Emergency»)
+fb443a2f	Menghidupkan atau mematikan fungsi penggera: dalam program pengeluar item ini dinamakan «Rx Emergency» dalam bahasa Inggeris dan «suis penggera» dalam bahasa Cina.
+be542c64	«T20 FRS» v1.0.1
+760bbadb	«CPS_F8_FRS» v1.0

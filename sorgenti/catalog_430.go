@@ -37,5 +37,5 @@ var catalog430 = []catItem{
 		Notes: "16 canali PMR446, due potenze. " + tdq430},
 	{ID: "tid-td-m2pro", Brand: "TIDRADIO", Name: "TD-M2 Pro", Aliases: []string{"TD-M2Pro", "M2 Pro", "M2Pro"}, Models: []string{"TD-M2 Pro"},
 		Type: "pmr", Drivers: []string{"td-m2pro"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
-		Notes: "199 canali, solo UHF (400-520 MHz nel programma del costruttore). " + tdq430},
+		Notes: "199 canali, solo UHF (400-520 MHz nel programma del costruttore). Canali senza nome e impostazioni generali. Non è in CHIRP." + cps425},
 }

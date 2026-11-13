@@ -222,7 +222,9 @@ func init() {
 		id            string
 		top, gnss, se bool
 	}{{"td-h3plus", false, false, true}, {"td-h7plus", false, false, false}, {"td-h8g4", true, false, false},
-		{"td-h9", true, true, false}, {"td-638uv", true, true, false}} {
+		{"td-h9", true, true, false}, {"td-638uv", true, true, false},
+		// 4.32: TD-H4 e TD-H11 (Settings.HasTopKey e KeyCode2IsGNSS valgono anche per loro)
+		{"td-h4", true, true, false}, {"td-h11", true, true, false}} {
 		for _, suf := range []string{"", "ham", "gmrs"} {
 			if m := genByID[x.id+suf]; m != nil {
 				tdcSettings[m.ID] = tdcTable(m, x.top, x.gnss, x.se)

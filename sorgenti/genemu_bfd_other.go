@@ -11,7 +11,7 @@ package main
 
 // Radio simulate della serie D («BF Series CPS»), delle BF-T17 / BF-T18 e della
 // BF-T9, con i
-// protocolli descritti in drv_bfd.go.
+// protocolli descritti in drv_bfd.go (4.32: anche «T20 FRS» e TD-V2).
 
 import (
 	"bytes"
@@ -33,7 +33,7 @@ func (bfdFam) emu(m *genModel, img []byte) genEmu {
 }
 
 func (t17Fam) emu(m *genModel, img []byte) genEmu {
-	e := &bfdEmu{m: m, img: append([]byte{}, img...), size: t17Memsize}
+	e := &bfdEmu{m: m, img: append([]byte{}, img...), size: t17o(m).memsize()}
 	e.fit()
 	return e
 }

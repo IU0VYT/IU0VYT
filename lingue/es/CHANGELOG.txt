@@ -7,6 +7,33 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.32.0 (13/11/2026)
+-------------------
+- Radios nuevas a partir de los programas de los fabricantes: Baofeng T22 en versión FRS
+  y TIDRADIO TD-M8S (programa «T20 FRS» v1.0.1, el mismo archivo en los paquetes de los
+  dos fabricantes, 22 canales) y TIDRADIO TD-V2 (programa «CPS_F8_FRS» v1.0, 16 canales;
+  sus instrucciones citan también Pofung F8, F8i, F8U, F8X y BF-V8): canales y 14
+  ajustes generales; si la radio tiene una contraseña el programa se detiene (quítala
+  con el programa del fabricante); calibraciones, código de salto y contraseña no se
+  escriben nunca. TIDRADIO TD-H4 y TD-H11 (base, HAM, GMRS) del «TIDRadioCPS» (2026):
+  misma conexión y misma memoria que los demás modelos de la serie, banda ancha como en
+  el programa (transmisión 18-76 y 136-520 MHz, recepción 18-800 MHz); el programa no
+  tiene archivo de fábrica para estos dos, probados solo con la radio simulada.
+  Corregido (modelos de las 4.29 y 4.30): la potencia media solo existe en TD-H7 Plus,
+  TD-H8 4ª generación, TD-H9, TD-H11 y TD-638UV y nunca en las versiones GMRS; las demás
+  fichas tienen ahora dos niveles (baja = 0, alta = 2); un canal de fábrica con el valor
+  1 se muestra como «alta», como hace el programa, y sigue en 1 hasta que se le cambie
+  la potencia. Corregido (Baofeng T22 PMR446): el programa del fabricante envía 0x02
+  antes de «PROGRGS»; la ficha prueba ahora primero con él y luego sin él.
+  «Identificar»: los tres modelos nuevos que responden como la BF-888S se proponen sin
+  una lectura adicional de la radio; la radio se lee con su controlador solo al abrir
+  esa ficha. En los demás grupos las relecturas no cambian: descartan los modelos cuyo
+  controlador rechaza la radio. Notas corregidas de Radtel RT-13, RT-480 / RT-68, RT-830
+  / RT-850, RT-69 GPS y TIDRADIO TD-M2 Pro. Examinados y no añadidos: «H8_4829» es una
+  versión más reciente (19/9/2024) del programa de las primeras generaciones de TD-H8,
+  ya gestionadas; «DP712» contiene el programa «DP710 CPS» (DMR, código nativo), no
+  empezado.
+
 4.31.0 (13/11/2026)
 -------------------
 - «Identificar» más rápido (identify.go): antes de los intentos con las esperas

@@ -2228,6 +2228,20 @@ type rt22Opt struct {
 	ranges  [][3]int // inizio, fine, blocco
 	anyID   bool     // identificativo non controllato (come il programma del costruttore)
 	cpsFill bool     // byte non usati del canale a FF, come il programma del costruttore
+	// stx (4.32): il programma del costruttore della Baofeng T22 manda 0x02 prima
+	// di «PROGRGS» (CHIRP, per le radio di questa famiglia, no): si prova prima
+	// con 0x02 e poi senza, a tentativi alterni
+	stx bool
+}
+
+// identJoin (4.32): la T22 ha un saluto suo (con 0x02), ma se risponde anche a
+// quello senza 0x02 «Identifica» la trova con il gruppo della W31E: resta fra
+// le candidate di quel gruppo
+func (o *rt22Opt) identJoin() string {
+	if o.stx {
+		return "bf-w31e"
+	}
+	return ""
 }
 
 type rt22Fam struct{}
@@ -2250,8 +2264,9 @@ func init() {
 	// Baofeng T22 (PMR446): programma del costruttore «Baofeng_T22_Programming_Software_PMR»,
 	// stesso protocollo («PROGRGS») e stessa memoria della W31E (retevis_rt22 di CHIRP);
 	// il programma non controlla l'identificativo e scrive FF nei byte non usati.
+	// 4.32: il programma manda «\x02PROGRGS» (TabelHandShake1, 8 byte), vedi stx.
 	t22 := mk("bf-t22", "T22", "W31E", "Baofeng T22 (PMR446)", &rt22Opt{memsize: 0x0200,
-		ranges: [][3]int{{0x0000, 0x0200, 0x10}}, anyID: true, cpsFill: true})
+		ranges: [][3]int{{0x0000, 0x0200, 0x10}}, anyID: true, cpsFill: true, stx: true})
 	t22.NoChirp = true
 	t22.Powers = []genPower{{"Bassa", 0.5, 2}, {"Alta", 0.5, 0}}
 	t22.Bands = []band{{446000000, 446200000}}
@@ -2404,6 +2419,11 @@ func (s *rawSess) rt22Enter(o *rt22Opt) ([]byte, error) {
 	var ack []byte
 	ok := false
 	for k := 0; k < 5 && !ok; k++ {
+		if o.stx && k%2 == 0 {
+			if err := s.slowSend([]byte{0x02}); err != nil {
+				return nil, err
+			}
+		}
 		if err := s.slowSend([]byte("PROGRGS")); err != nil {
 			return nil, err
 		}

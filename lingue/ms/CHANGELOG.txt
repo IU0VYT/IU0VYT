@@ -6,6 +6,31 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.32.0 (13/11/2026)
+-------------------
+- Radio baharu daripada program pengeluar: Baofeng T22 versi FRS dan TIDRADIO TD-M8S
+  (program «T20 FRS» v1.0.1, fail yang sama dalam pakej kedua-dua pengeluar, 22 saluran)
+  serta TIDRADIO TD-V2 (program «CPS_F8_FRS» v1.0, 16 saluran; arahannya turut
+  menyenaraikan Pofung F8, F8i, F8U, F8X dan BF-V8): saluran dan 14 tetapan umum; jika
+  kata laluan ditetapkan pada radio, program berhenti (buang dengan program pengeluar);
+  data penentukuran, kod lompatan dan kata laluan tidak pernah ditulis. TIDRADIO TD-H4
+  dan TD-H11 (asas, HAM, GMRS) daripada «TIDRadioCPS» (2026): sambungan dan memori sama
+  seperti model lain dalam siri itu, jalur lebar seperti dalam program (pemancaran 18-76
+  dan 136-520 MHz, penerimaan 18-800 MHz); program tiada fail kilang untuk dua model
+  ini, jadi hanya diuji dengan radio simulasi. Dibetulkan (model 4.29 dan 4.30): kuasa
+  sederhana hanya ada pada TD-H7 Plus, TD-H8 generasi ke-4, TD-H9, TD-H11 dan TD-638UV
+  dan tidak pernah pada versi GMRS; kad lain kini mempunyai dua tahap (rendah = 0,
+  tinggi = 2); saluran kilang dengan nilai 1 dipaparkan sebagai «tinggi», seperti
+  program, dan kekal 1 sehingga kuasanya diubah. Dibetulkan (Baofeng T22 PMR446):
+  program pengeluar menghantar 0x02 sebelum «PROGRGS»; kad kini mencuba dengannya dahulu
+  dan kemudian tanpanya. «Kenal pasti»: tiga model baharu yang menjawab seperti BF-888S
+  dicadangkan tanpa bacaan tambahan; radio hanya dibaca dengan pemacunya apabila kad itu
+  dibuka. Bagi kumpulan lain bacaan semula tidak berubah: ia menyingkirkan model yang
+  pemacunya menolak radio. Nota dibetulkan untuk Radtel RT-13, RT-480 / RT-68, RT-830 /
+  RT-850, RT-69 GPS dan TIDRADIO TD-M2 Pro. Diperiksa dan tidak ditambah: «H8_4829»
+  ialah binaan lebih baharu (19/9/2024) bagi program generasi awal TD-H8, yang sudah
+  disokong; «DP712» mengandungi program «DP710 CPS» (DMR, kod natif), belum dimulakan.
+
 4.31.0 (13/11/2026)
 -------------------
 - «Kenal pasti» lebih pantas (identify.go): sebelum percubaan dengan masa menunggu penuh

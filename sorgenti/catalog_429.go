@@ -15,7 +15,7 @@ var catalog429 = []catItem{
 	{ID: "tid-td-h3plus", Brand: "TIDRADIO", Name: "TD-H3 Plus", Aliases: []string{"H3 Plus", "TDH3 Plus", "TD-H3 SE Mini", "H3 SE"}, Models: []string{"TD-H3 Plus", "TD-H3 SE"},
 		Type: "analog", Drivers: []string{"td-h3plus", "td-h3plusham", "td-h3plusgmrs"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: "199 canali e impostazioni generali. Tre schede: base, HAM e GMRS; leggendo la radio il programma riconosce la versione. " +
-			"Si presenta come la TD-H3, ma ha tre potenze: usa queste schede e non quelle della TD-H3. Non è in CHIRP." + cps425},
+			"Si presenta come la TD-H3, ma il programma del costruttore la legge e la scrive in modo diverso: usa queste schede e non quelle della TD-H3. Non è in CHIRP." + cps425},
 	{ID: "tid-td-h7plus", Brand: "TIDRADIO", Name: "TD-H7 Plus", Aliases: []string{"H7 Plus", "TDH7 Plus"}, Models: []string{"TD-H7 Plus"},
 		Type: "analog", Drivers: []string{"td-h7plus", "td-h7plusham", "td-h7plusgmrs"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: "199 canali e impostazioni generali. Tre schede: base, HAM e GMRS; leggendo la radio il programma riconosce la versione. Non è in CHIRP." + cps425},

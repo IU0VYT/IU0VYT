@@ -5441,9 +5441,7 @@ cc054a8c	o rádio tem zonas não convencionais (trunking): não são geridas
 031746de	256 canais (de 0 a 255) com nomes de 12 caracteres, 9600 baud. Obtido do programa do fabricante e testado com um rádio simulado, não num rádio verdadeiro. Só se escrevem canais e nomes: as definições, o VFO e o DTMF do rádio não são tocados.
 8d412538	128 canais sem nome, 9600 baud. Obtido do programa do fabricante e testado com um rádio simulado, não num rádio verdadeiro. Escrevem-se as áreas que o programa do fabricante escreve; a palavra-passe do rádio nunca é escrita.
 5cebd6e9	O programa do fabricante («RT-20M Radio Program Software») usa a mesma ligação, os mesmos blocos e o mesmo canal de 32 bytes do iRadio UV-5118plus: abre-se com o separador Ruyage UV58Plus (999 canais com nomes de 10 caracteres, 115200 baud). Comparação feita no programa, não num rádio verdadeiro.
-1bf618a9	Protocolo e memória obtidos do programa do fabricante «Radio Programing Software» (versões 1.5.2 e 1.5.3). Liga o rádio com o cabo ligado. Canais de 0 a 255, como no programa do fabricante; frequências em passos de 1,25 kHz. Aqui alteram-se frequências, nome, potência, largura de banda, varrimento e tons; o código de sinalização, o PTT ID, o scrambler e o bloqueio em canal ocupado ficam como estão definidos. Só se escrevem canais e nomes: as definições, o VFO e o DTMF do rádio não são tocados. «Identificar» não reconhece este rádio: escolhe tu o separador certo.
 bc8e418f	o rádio não consegue guardar a frequência {0} MHz (múltiplos de 1,25 kHz)
-09c74e1e	Rádio sem nomes de canais (128 canais). Protocolo e memória obtidos do programa do fabricante. Aqui alteram-se frequências, potência, largura de banda, varrimento e tons; o limite de transmissão, a cifra, o tipo de DCS e o código de silenciamento do canal ficam como estão definidos. As definições e o VFO do rádio voltam como estão. Se o rádio tiver uma palavra-passe, retira-a primeiro com o programa do fabricante. «Identificar» não reconhece este rádio: escolhe tu o separador certo.
 939f420e	o rádio tem uma palavra-passe: retira-a primeiro com o programa do fabricante
 d6d1a0a5	Rádio de 900 MHz (banda não usada em Itália), sempre em banda estreita. Os canais estão divididos em sistemas: a lista tem 250 posições para cada um dos 32 sistemas e a posição é o número do canal no sistema. Só se usam os sistemas que o rádio já tem; os de recursos partilhados (trunking) não são alterados. Programa-se com o cabo de programação Kenwood.
 7d662f43	RT-69 GPS
@@ -5453,9 +5451,7 @@ ad1777b1	a tabela de sistemas do rádio não se consegue ler: a memória não po
 a31f50a7	o sistema {0} é de recursos partilhados (trunking): não se altera a partir daqui
 cf3a4d90	o sistema {0} está cheio
 adf62e1b	a memória do rádio está cheia
-7d0150af	22 canais sem nome, 400-480 MHz, 9600 baud. Protocolo e memória obtidos do programa do fabricante «RT-13» 1.7 e testados com um rádio simulado, não num rádio verdadeiro. Aqui alteram-se frequências, tons, potência, largura de banda e varrimento; o salto de frequência, o scrambler e o bloqueio em canal ocupado ficam como estão definidos. Se o rádio tiver uma palavra-passe, retira-a primeiro com o programa do fabricante. «Identificar» não reconhece este rádio: escolhe tu o separador certo.
 cd92c034	Radtel RT-13
-68a5c963	999 canais com nomes de 12 caracteres, 19200 baud. Protocolo e memória obtidos do programa do fabricante «RT-69 GPS» e testados com um rádio simulado, não num rádio verdadeiro. Aqui alteram-se frequências, nome, tons, potência, largura de banda e varrimento; o resto do canal e as definições do rádio ficam como estão. Antes de escrever verifica-se, como faz o programa do fabricante, que cada canal está dentro das bandas do rádio. Se o rádio tiver uma palavra-passe, retira-a primeiro com o programa do fabricante. «Identificar» não reconhece este rádio: escolhe tu o separador certo.
 2dedccf9	Radtel RT-69 GPS
 6a54dc65	A comparação foi feita sobre o código dos programas dos fabricantes: ainda não foi testado com um rádio verdadeiro. Leia primeiro o rádio: se o modelo não for o certo, o rádio não responde e não é modificado.
 336dd64b	Na tabela de modelos equivalentes do CHIRP este rádio corresponde a um modelo que o programa já gere: usa-se o mesmo driver, verificado com os testes automáticos.
@@ -5653,7 +5649,6 @@ d67023e9	TIDRADIO TD-H9
 934f88cf	{0} HAM
 93054cc8	{0} GMRS
 3f23af0c	4.ª geração
-1d2bea2b	199 canais e definições gerais. Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Apresenta-se como o TD-H3, mas tem três potências: use estas fichas e não as do TD-H3. Não está no CHIRP.{0}
 cd207e61	199 canais e definições gerais. Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Não está no CHIRP.{0}
 0a0f28c6	199 canais e definições gerais. Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Para os TD-H8 das três primeiras gerações use a ficha «TD-H8». Não está no CHIRP.{0}
 128fa15f	Canais sem nome e definições gerais. Não está no CHIRP. «Identificar» não distingue os modelos desta família: escolhe tu a ficha.{0}
@@ -5680,7 +5675,6 @@ c413bfa6	TD PMR
 adfbb178	TD-M2 Pro
 457ed57e	TD-M2Pro
 e16cee51	M2 Pro
-de564f6a	199 canais, só UHF (400-520 MHz no programa do fabricante). {0}
 18b12059	Desligue o rádio, ligue o cabo, ligue-o com o volume alto, num canal livre. Não está no CHIRP: ligação e memória vêm do programa do fabricante «TIDRadioCPS» (2026), que usa o mesmo mapa do TD-H3 do CHIRP, e foram testadas com um rádio simulado e com os ficheiros de fábrica do programa, não com um rádio real. Canais (frequências, tons, potência, largura de banda, pesquisa, nome) e definições gerais; bloqueio com canal ocupado, PTT-ID, salto de frequência, scrambler e modo de receção ficam como estão no canal. As versões (base, HAM, GMRS) distinguem-se pelo identificador comunicado pelo rádio: se não for a certa, o rádio não é lido.
 4f7716b6	«TD-FRS» / «TD-PMR» (versão de 25/6/2026)
 cd4fda8b	38400 baud. Protocolo e memória obtidos do programa do fabricante {0} e testados com um rádio simulado, não num rádio verdadeiro. Aqui alteram-se frequências (em passos de 1,25 kHz), tons, potência, largura de banda e pesquisa dos canais (não têm nome) e as definições gerais; o resto do canal (scrambler, PTT-ID, bloqueio em canal ocupado) não é tocado. {1}«Identificar» não distingue os modelos desta família: escolhe tu a ficha.
@@ -5792,3 +5786,27 @@ a973430b	Canais sem nome, 400-470 MHz, 2400 baud. Protocolo e dados obtidos do p
 71152f6e	Canais sem nome, 9600 baud. Protocolo e memória obtidos do programa do fabricante {0} e testados com um rádio simulado, não com um rádio real. Aqui alteram-se frequências, tons, potência, largura de banda e pesquisa dos canais e as definições gerais; scrambler, compander, bloqueio com canal ocupado e salto de frequência ficam como estão no canal. {1}Se o rádio tiver uma palavra-passe de leitura, retire-a primeiro com o programa do fabricante.
 4ccec7f4	{0} baud. Protocolo e memória obtidos do programa do fabricante {1} e do seu ficheiro de configuração, e testados com um rádio simulado, não com um rádio real. Aqui alteram-se frequências, tons, potência, largura de banda, pesquisa e nomes dos canais e as definições gerais; bloqueio com canal ocupado e prioridade ficam como estão no canal. {2}
 2346b1b2	{0} baud. Protocolo e memória obtidos do programa do fabricante {1} e do seu ficheiro de configuração, e testados com um rádio simulado, não com um rádio real. Aqui alteram-se frequências, tons, potência, largura de banda e pesquisa dos canais (não têm nome) e as definições gerais; bloqueio com canal ocupado e prioridade ficam como estão no canal. {2}
+0c54d822	Duas fichas: a versão europeia (PMR446, 16 canais) e a americana (FRS, 22 canais), que têm programas do fabricante diferentes.
+1899f7cd	199 canais e definições gerais. Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Apresenta-se como o TD-H3, mas o programa do fabricante lê-o e escreve-o de forma diferente: use estas fichas e não as do TD-H3. Não está no CHIRP.{0}
+fc3531d7	199 canais, só UHF (400-520 MHz no programa do fabricante). Canais sem nome e definições gerais. Não está no CHIRP.{0}
+a3fb2872	Canais sem nome e definições gerais. Não está no CHIRP.{0}
+6aa904a9	22 canais FRS (Estados Unidos). O programa do fabricante é o mesmo do Baofeng T22 na versão FRS. Não é o TD-M8 sem «S», que tem outra ficha. {0}
+c506923a	16 canais FRS (Estados Unidos). As instruções do programa do fabricante indicam-no também para Pofung F8, F8i, F8U, F8X e BF-V8. {0}
+368f65ab	22 canais sem nome, 400-480 MHz, 9600 baud. Protocolo e memória obtidos do programa do fabricante «RT-13» 1.7 e testados com um rádio simulado, não num rádio verdadeiro. Aqui alteram-se frequências, tons, potência, largura de banda e varrimento; o salto de frequência, o scrambler e o bloqueio em canal ocupado ficam como estão definidos. Se o rádio tiver uma palavra-passe, retira-a primeiro com o programa do fabricante.
+a454c0ed	Protocolo e memória obtidos do programa do fabricante «Radio Programing Software» (versões 1.5.2 e 1.5.3). Liga o rádio com o cabo ligado. Canais de 0 a 255, como no programa do fabricante; frequências em passos de 1,25 kHz. Aqui alteram-se frequências, nome, potência, largura de banda, varrimento e tons; o código de sinalização, o PTT ID, o scrambler e o bloqueio em canal ocupado ficam como estão definidos. Só se escrevem canais e nomes: as definições, o VFO e o DTMF do rádio não são tocados.
+09a39cef	999 canais com nomes de 12 caracteres, 19200 baud. Protocolo e memória obtidos do programa do fabricante «RT-69 GPS» e testados com um rádio simulado, não num rádio verdadeiro. Aqui alteram-se frequências, nome, tons, potência, largura de banda e varrimento; o resto do canal e as definições do rádio ficam como estão. Antes de escrever verifica-se, como faz o programa do fabricante, que cada canal está dentro das bandas do rádio. Se o rádio tiver uma palavra-passe, retira-a primeiro com o programa do fabricante.
+56c39478	Rádio sem nomes de canais (128 canais). Protocolo e memória obtidos do programa do fabricante. Aqui alteram-se frequências, potência, largura de banda, varrimento e tons; o limite de transmissão, a cifra, o tipo de DCS e o código de silenciamento do canal ficam como estão definidos. As definições e o VFO do rádio voltam como estão. Se o rádio tiver uma palavra-passe, retira-a primeiro com o programa do fabricante.
+affbd219	Rádio sem ecrã: os canais não têm nome. Obtido do programa do fabricante «T20 FRS» (v1.0.1, o mesmo que a Baofeng dá para o T22 na versão FRS e a TIDRADIO para o TD-M8S); se no rádio estiver definida a palavra-passe de leitura e escrita, retire-a primeiro com esse programa.
+baebb9fa	T22 FRS
+050e47ea	Baofeng T22 (FRS, USA)
+05a9fca8	TIDRADIO TD-M8S
+4b755946	TIDRADIO TD-V2
+8950ef8a	Rádio sem ecrã: os canais não têm nome. Obtido do programa do fabricante «CPS_F8_FRS» (v1.0); se no rádio estiver definida a palavra-passe de leitura e escrita, retire-a primeiro com esse programa.
+e170353a	TIDRADIO TD-H4
+da9ca510	TIDRADIO TD-H11
+2f389c6a	Desligue o rádio, ligue o cabo, ligue-o com o volume alto, num canal livre. Não está no CHIRP: ligação e memória vêm do programa do fabricante «TIDRadioCPS» (2026), que trata este modelo como os outros da série, e foram testadas apenas com um rádio simulado: para este modelo o programa não tem ficheiro de fábrica. Banda larga, como no programa: transmissão 18-76 e 136-520 MHz, receção 18-800 MHz. Canais (frequências, tons, potência, largura de banda, pesquisa, nome) e definições gerais; bloqueio com canal ocupado, PTT-ID, salto de frequência, scrambler e modo de receção ficam como estão no canal. As versões (base, HAM, GMRS) distinguem-se pelo identificador comunicado pelo rádio: se não for a certa, o rádio não é lido.
+0be19b10	38400 baud. Protocolo e memória obtidos do programa do fabricante {0} e testados com um rádio simulado, não num rádio verdadeiro. Aqui alteram-se frequências (em passos de 1,25 kHz), tons, potência, largura de banda e pesquisa dos canais (não têm nome) e as definições gerais; o resto do canal (scrambler, PTT-ID, bloqueio em canal ocupado) não é tocado. {1}
+cddf33a5	Alarme («Rx Emergency»)
+fb443a2f	Liga ou desliga a função de alarme: no programa do fabricante a opção chama-se «Rx Emergency» em inglês e «interruptor do alarme» em chinês.
+be542c64	«T20 FRS» v1.0.1
+760bbadb	«CPS_F8_FRS» v1.0

@@ -148,7 +148,7 @@ func identModelBase(t *testing.T, m *genModel) []byte {
 func TestIdentifyEachModel(t *testing.T) {
 	identFast(t)
 	a := newApp(mustStore(t))
-	n, other := 0, 0
+	n, other, lazyN := 0, 0, 0
 	only := os.Getenv("IDENT_MODEL") // 4.8: un solo modello (prove mirate)
 	for _, m := range genModels {
 		if only != "" && m.ID != only {
@@ -189,7 +189,11 @@ func TestIdentifyEachModel(t *testing.T) {
 				}
 			}
 		}
-		if len(grp) != 1 {
+		groups := 1
+		if j, ok := m.Opt.(interface{ identJoin() string }); ok && j.identJoin() != "" {
+			groups = 2 // 4.32: il suo gruppo e quello a cui può rispondere (Baofeng T22)
+		}
+		if len(grp) != groups {
 			t.Fatalf("%s: in %d gruppi", m.Name, len(grp))
 		}
 		func() {
@@ -227,6 +231,15 @@ func TestIdentifyEachModel(t *testing.T) {
 			if res.Count != len(packed(genChans(genByID[res.Kind], read))) {
 				t.Errorf("%s: %d canali", m.Name, res.Count)
 			}
+			if j.sess.lazy[m.ID] {
+				// 4.32: proposto senza rileggere la radio: la memoria si legge
+				// quando si apre la scheda
+				lazyN++
+				j.sess.at = time.Time{}
+				if _, err := a.identLazyRead(context.Background(), j.sess, m); err != nil {
+					t.Errorf("%s: lettura all'apertura della scheda: %v", m.Name, err)
+				}
+			}
 			if b, ok := j.sess.mems[m.ID]; ok && res.Kind != m.ID {
 				read = b // proposto tra gli altri modelli: si apre con la sua lettura
 			}
@@ -245,7 +258,13 @@ func TestIdentifyEachModel(t *testing.T) {
 			}
 		}()
 	}
-	t.Logf("%d modelli identificati (%d come modello con la stessa memoria)", n, other)
+	t.Logf("%d modelli identificati (%d come modello con la stessa memoria, %d letti all'apertura della scheda)", n, other, lazyN)
+	// con le radio simulate la T22 FRS e la TD-M8S vengono lette dal loro driver
+	// (quello della BF-888S rifiuta il loro identificativo) e la TD-V2 è proposta
+	// senza rilettura: almeno un modello deve passare dalla lettura all'apertura
+	if only == "" && lazyN < 1 {
+		t.Errorf("nessun modello letto all'apertura della scheda (atteso almeno TD-V2)")
+	}
 	if n < 20 && only == "" {
 		t.Fatalf("troppo pochi modelli provati: %d", n)
 	}

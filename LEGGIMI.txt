@@ -1,11 +1,21 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.31.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.32.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.32.0:
+- Radio nuove: Baofeng T22 in versione FRS, TIDRADIO TD-M8S, TD-V2, TD-H4 e
+  TD-H11 (canali e impostazioni).
+- Corrette le potenze dei TIDRADIO del 2026: la potenza media c'è solo sui
+  modelli che l'hanno davvero (TD-H7 Plus, TD-H8 4ª generazione, TD-H9, TD-H11,
+  TD-638UV, non nelle versioni GMRS).
+- Baofeng T22 PMR446: collegamento come il programma del costruttore.
+- «Identifica» propone anche le radio nuove che si presentano come la BF-888S,
+  senza allungare la ricerca.
+- Galleria: 629 modelli di 52 marche (575 con canali, 496 con impostazioni).
 Novità della 4.31.0:
 - «Identifica» è molto più veloce: prima fa un giro rapido di tutte le radio e
   solo dopo, se non ha trovato nulla, quello completo di prima. Una radio in

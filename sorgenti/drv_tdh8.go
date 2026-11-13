@@ -207,6 +207,11 @@ func (f tdh8Fam) Get(m *genModel, img []byte, i int) *Chan {
 			c.Power = m.Powers[k].Sem
 		}
 	}
+	if o.cps26 && len(o.pow) == 2 && pv != 0 {
+		// 4.32: modelli senza potenza media: il programma mostra «alta» per ogni
+		// valore diverso da zero (GetPowerUIIndex)
+		c.Power = m.Powers[1].Sem
+	}
 	// nome: 0x00 e 0xFF tolti, spazi finali tolti (come CHIRP)
 	var nb []byte
 	for _, b := range f.name(m, i).Raw(img) {
@@ -269,6 +274,7 @@ func (f tdh8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	// impostazioni del canale che CHIRP conserva (mem.extra)
 	var pttid, bcl, freqhop int64
 	old := append([]byte{}, r.Raw(img)...)
+	oldPow := r.F("lowpower").Int(img)
 	if !wasEmpty {
 		bcl = r.F("bcl").Int(img)
 		if !o.rt730 {
@@ -287,7 +293,14 @@ func (f tdh8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	t18ToneEnc(r.F("rxtone").Raw(img), rt)
 	// modo: FM → wide 0, NFM (e AM in banda aerea) → wide 1
 	r.F("wide").SetBool(img, c.Narrow || (c.Rx >= tdh8Air.Lo && c.Rx <= tdh8Air.Hi))
-	r.F("lowpower").SetInt(img, o.pow[m.powerIndex(c.Power)])
+	pv := o.pow[m.powerIndex(c.Power)]
+	if cur := oldPow; o.cps26 && len(o.pow) == 2 && pv != 0 && !wasEmpty && cur != 0 && cur <= 2 {
+		// 4.32: modelli senza potenza media. Il programma mostra «alta» sia per 1
+		// sia per 2 (i suoi file di fabbrica hanno molti canali a 1): se il
+		// canale era già in potenza alta il valore resta quello che c'era
+		pv = cur
+	}
+	r.F("lowpower").SetInt(img, pv)
 	if o.cps26 && !wasEmpty { // gruppo dello scrambler e modo di ricezione restano quelli del canale
 		cur := append([]byte{}, r.Raw(img)...)
 		cur[12], cur[15] = old[12], old[15]
@@ -589,37 +602,65 @@ func init() {
 		}
 		return out
 	}
-	rx := mhz(108, 174, 200, 600)
-	type v struct{ id, model, name, n, h, g string }
+	// 4.32, dal programma (Settings.HasMidPower, IsGMRSMode, IsWideBandSeries,
+	// ValidateFrequencyByDeviceModel): la potenza media c'è solo su H7 Plus, H8,
+	// H9, H11 e 638UV e mai nelle versioni GMRS (le altre hanno bassa = 0 e alta
+	// = 2: nella 4.29 e nella 4.30 la media era offerta a tutte); TD-H4 e TD-H11
+	// sono a banda larga, con gli stessi limiti nelle tre versioni: trasmissione
+	// 18-76 e 136-520 MHz, ricezione 18-800 MHz. Per queste due il programma non
+	// ha file di fabbrica: collegamento e memoria sono gli stessi degli altri
+	// modelli (nessun caso particolare nel codice della lettura e della scrittura).
+	type v struct {
+		id, model, name, n, h, g string
+		mid, wide                bool
+	}
 	list := []v{
-		{"td-h3plus", "TD-H3 Plus", "TIDRADIO TD-H3 Plus / TD-H3 SE", "P31183\xff\xff", "P31185\xff\xff", "P31184\xff\xff"},
-		{"td-h7plus", "TD-H7 Plus", "TIDRADIO TD-H7 Plus", "TDH7PLUN", "TDH7PLUH", "TDH7PLUG"},
-		{"td-h8g4", "TD-H8", "TIDRADIO TD-H8 (4ª generazione)", "TDH84GEN", "TDH84GEH", "TDH84GEG"},
-		{"td-h9", "TD-H9", "TIDRADIO TD-H9", "TDH9\xff\xff\xffN", "TDH9\xff\xff\xffH", "TDH9\xff\xff\xffG"},
-		{"td-638uv", "TD-638UV", "TIDRADIO TD-638UV", "TD638UVN", "TD638UVH", "TD638UVG"},
+		{"td-h3plus", "TD-H3 Plus", "TIDRADIO TD-H3 Plus / TD-H3 SE", "P31183\xff\xff", "P31185\xff\xff", "P31184\xff\xff", false, false},
+		{"td-h7plus", "TD-H7 Plus", "TIDRADIO TD-H7 Plus", "TDH7PLUN", "TDH7PLUH", "TDH7PLUG", true, false},
+		{"td-h8g4", "TD-H8", "TIDRADIO TD-H8 (4ª generazione)", "TDH84GEN", "TDH84GEH", "TDH84GEG", true, false},
+		{"td-h9", "TD-H9", "TIDRADIO TD-H9", "TDH9\xff\xff\xffN", "TDH9\xff\xff\xffH", "TDH9\xff\xff\xffG", true, false},
+		{"td-638uv", "TD-638UV", "TIDRADIO TD-638UV", "TD638UVN", "TD638UVH", "TD638UVG", true, false},
+		{"td-h4", "TD-H4", "TIDRADIO TD-H4", "TDH4\xff\xff\xffN", "TDH4\xff\xff\xffH", "TDH4\xff\xff\xffG", false, true},
+		{"td-h11", "TD-H11", "TIDRADIO TD-H11", "TDH11\xff\xffN", "TDH11\xff\xffH", "TDH11\xff\xffG", true, true},
 	}
 	for _, x := range list {
 		for k, ident := range []string{x.n, x.h, x.g} {
-			id, name, tx := x.id, x.name, mhz(136, 174, 200, 600)
+			id, name, tx, rx := x.id, x.name, mhz(136, 174, 200, 600), mhz(108, 174, 200, 600)
 			switch k {
 			case 1:
 				id, name, tx = id+"ham", name+" HAM", mhz(144, 148, 420, 450)
 			case 2:
 				id, name = id+"gmrs", name+" GMRS"
 			}
+			if x.wide {
+				tx, rx = mhz(18, 76, 136, 520), mhz(18, 800)
+			}
+			pow, powers := []int64{0, 2}, []genPower{{"Bassa", 0, 2}, {"Alta", 0, 0}}
+			if x.mid && k != 2 {
+				pow, powers = []int64{0, 1, 2}, []genPower{{"Bassa", 0, 2}, {"Media", 0, 1}, {"Alta", 0, 0}}
+			}
 			o := &tdh8Opt{magic: []byte(magic), ident: []byte(ident), memsize: 0x1F30, flags: 0x1908,
-				pow: []int64{0, 1, 2}, tx: tx, rx: rx, cps26: true}
+				pow: pow, tx: tx, rx: rx, cps26: true}
+			note := "Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria " +
+				"vengono dal programma del costruttore «TIDRadioCPS» (2026), che usa la stessa mappa della TD-H3 di CHIRP, e sono provati con una radio " +
+				"simulata e con i file di fabbrica del programma, non su una radio vera. Canali (frequenze, toni, potenza, banda, scansione, nome) e impostazioni generali; " +
+				"blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, " +
+				"GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta."
+			if x.wide {
+				note = "Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria " +
+					"vengono dal programma del costruttore «TIDRadioCPS» (2026), che tratta questo modello come gli altri della serie, e sono provati solo con una radio " +
+					"simulata: per questo modello il programma non ha un file di fabbrica. Banda larga, come nel programma: trasmissione 18-76 e 136-520 MHz, " +
+					"ricezione 18-800 MHz. Canali (frequenze, toni, potenza, banda, scansione, nome) e impostazioni generali; " +
+					"blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, " +
+					"GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta."
+			}
 			genRegister(&genModel{ID: id, Vendor: "TIDRADIO", Model: x.model, RClass: "TDH3", NoChirp: true,
 				Name: name, Slots: 199, First: 1, NameMax: 8,
 				Charset: charsetAlnum + "!@#$%^&*()+-=[]:\";'<>?,./",
-				Powers:  []genPower{{"Bassa", 0, 2}, {"Media", 0, 1}, {"Alta", 0, 0}},
+				Powers:  powers,
 				Bands:   append(append([]band{}, tx...), rx...), Narrow: true, HasScan: true,
 				DCS: dtcsCodes, Baud: 38400, Fam: tdh8Fam{}, Opt: o,
-				Notes: "Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria " +
-					"vengono dal programma del costruttore «TIDRadioCPS» (2026), che usa la stessa mappa della TD-H3 di CHIRP, e sono provati con una radio " +
-					"simulata e con i file di fabbrica del programma, non su una radio vera. Canali (frequenze, toni, potenza, banda, scansione, nome) e impostazioni generali; " +
-					"blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, " +
-					"GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta."})
+				Notes: note})
 		}
 	}
 }

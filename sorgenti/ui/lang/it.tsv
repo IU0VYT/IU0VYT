@@ -1858,6 +1858,7 @@ a5fe24ca	MRA-1904
 8d4ee0e1	BF-88ST / BF-88ST Pro
 4cfdc7d4	BF-88ST Pro
 53e1197e	Il pacchetto del costruttore indica di programmarla con CHIRP come «Baofeng BF-888»: si usa lo stesso driver della BF-888S.
+0c54d822	Due schede: la versione europea (PMR446, 16 canali) e quella americana (FRS, 22 canali), che hanno programmi del costruttore diversi.
 ae84eb8c	Protocollo e memoria ricavati dal programma del costruttore («BF Series CPS»): canali analogici e digitali (criptati).
 de561ee4	Programmi «T17-T18 PMR446 PRO» e «T17-T18 FRS» v1.2.2 (pagina dei download Radioddity)
 6237822e	Protocollo e memoria ricavati dai programmi del costruttore e provati con il loro codice originale: 99 canali (versione PMR446) o 35 (versione FRS per gli USA). Se è impostata la password di lettura e scrittura, toglila prima con il programma del costruttore.
@@ -2097,7 +2098,7 @@ a7d04ceb	Veicolare GMRS da 35 W, 80 canali, riceve anche in VHF (il programma de
 3cdbc404	H3 Plus
 4ce6fa44	TDH3 Plus
 2cc4525a	TD-H3 SE Mini
-1d2bea2b	199 canali e impostazioni generali. Tre schede: base, HAM e GMRS; leggendo la radio il programma riconosce la versione. Si presenta come la TD-H3, ma ha tre potenze: usa queste schede e non quelle della TD-H3. Non è in CHIRP.{0}
+1899f7cd	199 canali e impostazioni generali. Tre schede: base, HAM e GMRS; leggendo la radio il programma riconosce la versione. Si presenta come la TD-H3, ma il programma del costruttore la legge e la scrive in modo diverso: usa queste schede e non quelle della TD-H3. Non è in CHIRP.{0}
 d4ecc743	TD-H7 Plus
 cfa006a0	H7 Plus
 b5e694e0	TDH7 Plus
@@ -2130,7 +2131,10 @@ c413bfa6	TD PMR
 adfbb178	TD-M2 Pro
 457ed57e	TD-M2Pro
 e16cee51	M2 Pro
-de564f6a	199 canali, solo UHF (400-520 MHz nel programma del costruttore). {0}
+fc3531d7	199 canali, solo UHF (400-520 MHz nel programma del costruttore). Canali senza nome e impostazioni generali. Non è in CHIRP.{0}
+a3fb2872	Canali senza nome e impostazioni generali. Non è in CHIRP.{0}
+6aa904a9	22 canali FRS (Stati Uniti). Il programma del costruttore è lo stesso della Baofeng T22 in versione FRS. Non è la TD-M8 senza «S», che ha un'altra scheda. {0}
+c506923a	16 canali FRS (Stati Uniti). Le istruzioni del programma del costruttore lo indicano anche per Pofung F8, F8i, F8U, F8X e BF-V8. {0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -3259,7 +3263,7 @@ f3601f97	Rugged RH5R-V2
 b29caf71	Alta 9 W
 0755d7ca	Accendi la radio con il cavo collegato. 16 canali senza nomi; la radio è VHF oppure UHF (si riconosce dalla memoria) e la scrittura si ferma se la memoria è dell'altra versione. Blocco del canale occupato, eliminazione della coda, compander e scrambler si conservano. Driver di CHIRP.
 882d6f84	la memoria è di una versione della radio diversa (VHF/UHF) da quella collegata: nessun dato è stato scritto
-7d0150af	22 canali senza nome, 400-480 MHz, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-13» 1.7 e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione; salto di frequenza, scrambler e blocco su canale occupato restano quelli impostati. Se sulla radio è impostata una password va tolta prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+368f65ab	22 canali senza nome, 400-480 MHz, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-13» 1.7 e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione; salto di frequenza, scrambler e blocco su canale occupato restano quelli impostati. Se sulla radio è impostata una password va tolta prima con il programma del costruttore.
 cd92c034	Radtel RT-13
 939f420e	sulla radio è impostata una password: toglila prima con il programma del costruttore
 126a7d24	struct {{0}{1}
@@ -3304,7 +3308,7 @@ fe1ad29c	PROIUAM
 93e16d7b	Retevis RT26
 66369328	16 canali UHF senza nome. Copia a 4800 baud. Blocco del canale occupato, eliminazione della coda (STE) e PTT ID si conservano. Driver di CHIRP.
 b6bcffc3	Radtel {0}
-1bf618a9	Protocollo e memoria ricavati dal programma del costruttore «Radio Programing Software» (versioni 1.5.2 e 1.5.3). Accendi la radio con il cavo collegato. Canali da 0 a 255, come nel programma del costruttore; frequenze a passi di 1,25 kHz. Qui si modificano frequenze, nome, potenza, banda, scansione e toni; codice di segnalazione, PTT ID, scrambler e blocco su canale occupato restano quelli impostati. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+a454c0ed	Protocollo e memoria ricavati dal programma del costruttore «Radio Programing Software» (versioni 1.5.2 e 1.5.3). Accendi la radio con il cavo collegato. Canali da 0 a 255, come nel programma del costruttore; frequenze a passi di 1,25 kHz. Qui si modificano frequenze, nome, potenza, banda, scansione e toni; codice di segnalazione, PTT ID, scrambler e blocco su canale occupato restano quelli impostati. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano.
 bc8e418f	la radio non può memorizzare la frequenza {0} MHz (multipli di 1,25 kHz)
 e1f47135	Bassa 3 W
 86691197	Accendi la radio con il cavo collegato. Canali 1-256. Driver di CHIRP della famiglia Radtel RT-490 («sperimentale» in CHIRP). I canali in AM restano in AM se la frequenza resta nella banda aerea (108-136 MHz).{0}
@@ -3335,13 +3339,13 @@ a7f04ce8	Scrittura: zone…
 9cd943ab	codice DCS {0} non ammesso da questa radio
 13b1a26f	la radio ha rifiutato il comando {0}
 735691ef	risposta della radio troppo corta ({0} byte invece di {1})
-68a5c963	999 canali con nomi di 12 caratteri, 19200 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-69 GPS» e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, nome, toni, potenza, banda e scansione; il resto del canale e le impostazioni della radio restano come sono. Prima di scrivere si controlla, come fa il programma, che ogni canale stia nelle bande della radio. Se sulla radio è impostata una password va tolta prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+09a39cef	999 canali con nomi di 12 caratteri, 19200 baud. Protocollo e memoria ricavati dal programma del costruttore «RT-69 GPS» e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, nome, toni, potenza, banda e scansione; il resto del canale e le impostazioni della radio restano come sono. Prima di scrivere si controlla, come fa il programma, che ogni canale stia nelle bande della radio. Se sulla radio è impostata una password va tolta prima con il programma del costruttore.
 2dedccf9	Radtel RT-69 GPS
 9b4191c0	Retevis RT76P (GMRS)
 87ab3755	Radio GMRS per gli Stati Uniti: in Italia la banda GMRS non è ammessa. Come in CHIRP: fuori dalle frequenze GMRS solo ricezione, sui canali dei ponti simplex o +5 MHz, sui 467 MHz banda stretta e bassa potenza. Blocco del canale occupato, PTT ID, compander e ANI si conservano. Driver di CHIRP.
 9015bc86	canale {0}: sulle frequenze GMRS la trasmissione non si può disabilitare
 e94e12f6	canale {0}: su questa frequenza GMRS solo simplex o +5 MHz (ponti)
-09c74e1e	Radio senza nomi dei canali (128 canali). Protocollo e memoria ricavati dal programma del costruttore. Qui si modificano frequenze, potenza, banda, scansione e toni; limite di trasmissione, cifratura, tipo di DCS e codice di silenziamento del canale restano quelli impostati. Impostazioni e VFO della radio tornano come sono. Se sulla radio è impostata una password, toglila prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+56c39478	Radio senza nomi dei canali (128 canali). Protocollo e memoria ricavati dal programma del costruttore. Qui si modificano frequenze, potenza, banda, scansione e toni; limite di trasmissione, cifratura, tipo di DCS e codice di silenziamento del canale restano quelli impostati. Impostazioni e VFO della radio tornano come sono. Se sulla radio è impostata una password, toglila prima con il programma del costruttore.
 12fa3a4e	Retevis RT87
 eb030d31	128 canali con nomi di 10 caratteri. Blocco del canale occupato, PTT ID, VOX, compander/scrambler si conservano. Driver di CHIRP.
 9ced82e0	eco della radio non corretta
@@ -3471,6 +3475,12 @@ cca425aa	Zastone ZT-X6
 150a1a01	Luiton LT-316
 710f8330	TID TD-M8
 7d9595b7	PROGRGS
+affbd219	Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «T20 FRS» (v1.0.1, lo stesso che Baofeng dà per la T22 in versione FRS e TIDRADIO per la TD-M8S); se sulla radio è impostata la password di lettura e scrittura, toglila prima con quel programma.
+baebb9fa	T22 FRS
+050e47ea	Baofeng T22 (FRS, USA)
+05a9fca8	TIDRADIO TD-M8S
+4b755946	TIDRADIO TD-V2
+8950ef8a	Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «CPS_F8_FRS» (v1.0); se sulla radio è impostata la password di lettura e scrittura, toglila prima con quel programma.
 50e3cddc	nei canali 31-54 della {0} sono ammesse solo le frequenze GMRS (462,550-467,7125 MHz)
 57d8e670	canale {0} della {1}: solo simplex o ponte GMRS con +5 MHz
 665cffd1	i canali 1-30 della {0} sono canali GMRS fissi: frequenza non modificabile
@@ -3499,9 +3509,12 @@ c024f7c3	TD-H3-GMRS
 479cc1fc	TIDRADIO TD-H8 (4ª generazione)
 d67023e9	TIDRADIO TD-H9
 1a1a246c	TIDRADIO TD-638UV
+e170353a	TIDRADIO TD-H4
+da9ca510	TIDRADIO TD-H11
 934f88cf	{0} HAM
 93054cc8	{0} GMRS
 18b12059	Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria vengono dal programma del costruttore «TIDRadioCPS» (2026), che usa la stessa mappa della TD-H3 di CHIRP, e sono provati con una radio simulata e con i file di fabbrica del programma, non su una radio vera. Canali (frequenze, toni, potenza, banda, scansione, nome) e impostazioni generali; blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta.
+2f389c6a	Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria vengono dal programma del costruttore «TIDRadioCPS» (2026), che tratta questo modello come gli altri della serie, e sono provati solo con una radio simulata: per questo modello il programma non ha un file di fabbrica. Banda larga, come nel programma: trasmissione 18-76 e 136-520 MHz, ricezione 18-800 MHz. Canali (frequenze, toni, potenza, banda, scansione, nome) e impostazioni generali; blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta.
 e24205e1	STD-M11-
 c4cc45fb	TD-M11 22 FRS (firmware 0.9.4)
 89350fd3	TD-M11 16 PMR (firmware 1.0.3)
@@ -3514,11 +3527,12 @@ d581835d	16 PMR v0.9.5
 2569d0d5	la radio è una {0}: scegli quella scheda
 c4c8a593	la programmazione della radio è protetta da password: toglierla con il programma del costruttore
 ce3c6aea	modello della radio non corrispondente
-4f7716b6	«TD-FRS» / «TD-PMR» (versione del 25/6/2026)
+b955ce70	QROGRAM
+0be19b10	38400 baud. Protocollo e memoria ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze (a passi di 1,25 kHz), toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; il resto del canale (scrambler, PTT-ID, blocco su canale occupato) non si tocca. {1}
 cd4fda8b	38400 baud. Protocollo e memoria ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze (a passi di 1,25 kHz), toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; il resto del canale (scrambler, PTT-ID, blocco su canale occupato) non si tocca. {1}«Identifica» non distingue i modelli di questa famiglia: scegli tu la scheda.
+4f7716b6	«TD-FRS» / «TD-PMR» (versione del 25/6/2026)
 c684886c	È una radio di libero uso: fuori dai suoi canali e dalla sua potenza di fabbrica non è più a norma.
 71f044ed	TIDRADIO TID-712Plus (TD-V712 Plus)
-b955ce70	QROGRAM
 50689532	TIDRADIO TD-M7
 32c37f0f	TIDRADIO TD-M11 Plus (199 canali)
 d5813cab	TIDRADIO TD-M11 Plus (16 canali)
@@ -5503,10 +5517,15 @@ daf6364d	Prima riga del messaggio mostrato all'accensione (10 caratteri).
 802acd28	Impedisce di trasmettere quando la tensione della batteria è troppo bassa (protegge la radio).
 bcd2bbe9	Blocco della trasmissione con tensione alta
 fc24dac8	Impedisce di trasmettere quando la tensione della batteria è troppo alta (protegge la radio).
+76ef509c	Cambio di potenza
+cddf33a5	Allarme («Rx Emergency»)
+fb443a2f	Accende o spegne la funzione di allarme: nel programma del costruttore la voce si chiama «Rx Emergency» in inglese e «interruttore dell'allarme» in cinese.
 7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
 92aad8ad	«T17-T18 FRS» v1.2.2
 a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 5ca37d7b	«Radioddity T3» v1.3
+be542c64	«T20 FRS» v1.0.1
+760bbadb	«CPS_F8_FRS» v1.0
 d0e2b5a6	programma del costruttore {0}
 0b7d9ed8	Tasti programmabili
 fd9e406e	Scansione e modo di lavoro
@@ -5587,7 +5606,6 @@ a97c957b	Testo mostrato all'accensione (fino a 16 caratteri, senza lettere accen
 bc3ed66a	Se l'allarme suona soltanto dall'altoparlante della radio oppure viene anche trasmesso.
 5b0f15f8	TDCPS-{0}
 8ff788d4	programma del costruttore TIDRadioCPS
-76ef509c	Cambio di potenza
 c3d3983c	Blocco del canale
 f6862d4a	Chiamata 1
 f5862bb7	Chiamata 2

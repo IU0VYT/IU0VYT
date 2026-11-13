@@ -340,8 +340,9 @@ var catalog = []catItem{
 	{ID: "bf-88a", Brand: "Baofeng", Name: "BF-88A / BF-88E", Aliases: []string{"BF-88E"}, Models: []string{"BF-88A", "BF-88E"}, Type: "pmr", Drivers: []string{"bf-888s"},
 		Links: []catLink{cps("https://bf-88a88e.s3.amazonaws.com/Programming%20Software%20%26%20Chirp%20BF-88A%20%26%2088E.zip")},
 		Notes: "Il pacchetto del costruttore indica di programmarla con CHIRP come «Baofeng BF-888»: si usa lo stesso driver della BF-888S."},
-	{ID: "t22", Brand: "Baofeng", Name: "T22", Type: "pmr", Drivers: []string{"bf-t22"},
-		Links: []catLink{cps(s3 + "Baofeng_T22_Programming_Software_PMR.zip"), manual(s3 + "Baofeng_T22_User_Manual_PMR_20250122.pdf")}},
+	{ID: "t22", Brand: "Baofeng", Name: "T22", Type: "pmr", Drivers: []string{"bf-t22", "bf-t22frs"},
+		Links: []catLink{cps(s3 + "Baofeng_T22_Programming_Software_PMR.zip"), manual(s3 + "Baofeng_T22_User_Manual_PMR_20250122.pdf")},
+		Notes: "Due schede: la versione europea (PMR446, 16 canali) e quella americana (FRS, 22 canali), che hanno programmi del costruttore diversi."}, // 4.32
 	{ID: "bf-33c", Brand: "Baofeng", Name: "BF-33C", Type: "pmr", Links: []catLink{manual(s3 + "Baofeng_BF-33C_User_Manual_EU_Version.pdf")}},
 	{ID: "v1d", Brand: "Baofeng", Name: "V1D", Aliases: []string{"BF-V1D"}, Type: "pmr", Drivers: []string{"bf-v1d"},
 		Links: []catLink{cps(s3 + "Baofeng_V1D_CPS.zip"), manual(s3 + "Baofeng_V1D_User_Manual.pdf")},
@@ -568,6 +569,7 @@ func init() {
 	catalog = append(catalog, catalog428...) // 4.28
 	catalog = append(catalog, catalog429...) // 4.29
 	catalog = append(catalog, catalog430...) // 4.30
+	catalog = append(catalog, catalog432...) // 4.32
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

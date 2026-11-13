@@ -148,8 +148,7 @@ func init() {
 			Notes: "Radio senza nomi dei canali (128 canali). Protocollo e memoria ricavati dal programma del costruttore. " +
 				"Qui si modificano frequenze, potenza, banda, scansione e toni; limite di trasmissione, cifratura, tipo di DCS e codice di " +
 				"silenziamento del canale restano quelli impostati. Impostazioni e VFO della radio tornano come sono. " +
-				"Se sulla radio è impostata una password, toglila prima con il programma del costruttore. " +
-				"«Identifica» non riconosce questa radio: scegli tu la scheda giusta."})
+				"Se sulla radio è impostata una password, toglila prima con il programma del costruttore."})
 	}
 }
 

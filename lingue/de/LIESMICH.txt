@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.31.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.32.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,16 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.32.0:
+- Neue Funkgeräte: Baofeng T22 in der FRS-Version, TIDRADIO TD-M8S, TD-V2, TD-H4 und
+  TD-H11 (Kanäle und Einstellungen).
+- Leistungsstufen der TIDRADIO-Modelle von 2026 korrigiert: Die mittlere Leistung wird
+  nur bei den Modellen angeboten, die sie wirklich haben (TD-H7 Plus, TD-H8 4.
+  Generation, TD-H9, TD-H11, TD-638UV, nicht in den GMRS-Versionen).
+- Baofeng T22 PMR446: Verbindung wie im Herstellerprogramm. «Identifizieren» schlägt
+  auch die neuen Funkgeräte vor, die wie das BF-888S antworten, ohne die Suche zu
+  verlängern.
+- Galerie: 629 Modelle von 52 Marken (575 mit Kanälen, 496 mit Einstellungen).
 Neu in 4.31.0:
 - «Identifizieren» ist viel schneller: Zuerst kommt eine schnelle Runde über alle
   Funkgeräte und erst dann, wenn nichts gefunden wurde, die vollständige Runde wie

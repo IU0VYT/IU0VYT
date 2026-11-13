@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.31.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.32.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,15 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.32.0:
+- Radio baharu: Baofeng T22 versi FRS, TIDRADIO TD-M8S, TD-V2, TD-H4 dan TD-H11 (saluran
+  dan tetapan).
+- Tahap kuasa model TIDRADIO 2026 dibetulkan: kuasa sederhana hanya ditawarkan pada
+  model yang benar-benar memilikinya (TD-H7 Plus, TD-H8 generasi ke-4, TD-H9, TD-H11,
+  TD-638UV, bukan pada versi GMRS).
+- Baofeng T22 PMR446: sambungan seperti dalam program pengeluar. «Kenal pasti» turut
+  mencadangkan radio baharu yang menjawab seperti BF-888S, tanpa memanjangkan carian.
+- Galeri: 629 model daripada 52 jenama (575 dengan saluran, 496 dengan tetapan).
 Baharu dalam 4.31.0:
 - «Kenal pasti» jauh lebih pantas: mula-mula ia membuat satu pusingan pantas untuk semua
   radio dan hanya selepas itu, jika tiada yang ditemui, pusingan penuh seperti dahulu.

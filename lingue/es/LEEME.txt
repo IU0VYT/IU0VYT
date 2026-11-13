@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.31.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.32.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,15 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.32.0:
+- Radios nuevas: Baofeng T22 en versión FRS, TIDRADIO TD-M8S, TD-V2, TD-H4 y TD-H11
+  (canales y ajustes).
+- Corregidas las potencias de los TIDRADIO de 2026: la potencia media solo se ofrece en
+  los modelos que la tienen de verdad (TD-H7 Plus, TD-H8 4ª generación, TD-H9, TD-H11,
+  TD-638UV, no en las versiones GMRS).
+- Baofeng T22 PMR446: conexión como en el programa del fabricante. «Identificar» propone
+  también las radios nuevas que responden como la BF-888S, sin alargar la búsqueda.
+- Galería: 629 modelos de 52 marcas (575 con canales, 496 con ajustes).
 Novedades de la 4.31.0:
 - «Identificar» es mucho más rápido: primero da una vuelta rápida a todas las radios y
   solo después, si no ha encontrado nada, la vuelta completa de antes. Una radio al

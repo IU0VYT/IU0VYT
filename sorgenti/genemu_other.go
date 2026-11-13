@@ -962,7 +962,14 @@ func (e *rt22Emu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return appe
 
 func (e *rt22Emu) serve(p Port) error {
 	o := rt22o(e.m)
-	if got, err := emuRead(p, 7); err != nil || string(got) != "PROGRGS" {
+	got, err := emuRead(p, 7)
+	if err == nil && got[0] == 0x02 {
+		// 4.32: con 0x02 davanti, come il programma del costruttore della T22
+		var b byte
+		b, err = emuByte(p)
+		got = append(got[1:], b)
+	}
+	if err != nil || string(got) != "PROGRGS" {
 		return fmt.Errorf("comando di programmazione atteso")
 	}
 	p.Write([]byte{0x06})

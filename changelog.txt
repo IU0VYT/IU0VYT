@@ -3,6 +3,51 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.32.0 (13/11/2026)
+-------------------
+- Radio nuove, dai programmi dei costruttori (famiglia «AnaCps» di drv_bfd.go,
+  modelli in drv_t17ana.go): Baofeng T22 in versione FRS e TIDRADIO TD-M8S
+  (programma «T20 FRS» v1.0.1: lo stesso file nei pacchetti dei due costruttori,
+  22 canali) e TIDRADIO TD-V2 (programma «CPS_F8_FRS» v1.0, 16 canali; le sue
+  istruzioni lo indicano anche per Pofung F8, F8i, F8U, F8X e BF-V8). Canali e
+  14 impostazioni generali. Saluto «\x02PROGRAM», lettura della password (se è
+  impostata ci si ferma: va tolta con il programma del costruttore), blocchi di
+  8 byte. Si scrivono solo le aree che scrive il programma; tarature, codice di
+  salto e password non si scrivono mai.
+- TIDRADIO TD-H4 e TD-H11 (base, HAM, GMRS), dal programma «TIDRadioCPS» del
+  2026: stesso collegamento e stessa memoria degli altri modelli della serie;
+  banda larga come nel programma (trasmissione 18-76 e 136-520 MHz, ricezione
+  18-800 MHz). Canali e impostazioni generali. Per questi due il programma non
+  ha file di fabbrica: sono provati solo con la radio simulata.
+- Corretto (modelli «TIDRadioCPS» delle 4.29 e 4.30): la potenza media esiste
+  solo su TD-H7 Plus, TD-H8 di quarta generazione, TD-H9, TD-H11 e TD-638UV, e
+  mai nelle versioni GMRS (Settings.HasMidPower / IsGMRSMode del programma). Le
+  altre schede (TD-H3 Plus / SE, TD-H4 e tutte le GMRS) ora hanno due potenze:
+  bassa = 0, alta = 2. Un canale di fabbrica con il valore 1 è mostrato come
+  «alta», come fa il programma, e resta a 1 finché non gli si cambia potenza.
+  Corretta anche la nota della scheda TD-H3 Plus, che parlava di tre potenze.
+- Corretto (Baofeng T22 PMR446): il programma del costruttore manda 0x02 prima
+  di «PROGRGS», la scheda no (seguiva CHIRP, che lo fa per le altre radio della
+  famiglia). Ora prova prima con 0x02 e poi senza, a tentativi alterni.
+  «Identifica» la cerca con tutti e due i saluti.
+- «Identifica»: i tre modelli nuovi con il saluto della BF-888S vengono proposti
+  fra le radio possibili senza una rilettura in più (prima ogni tipo di memoria
+  del gruppo costava una pausa e una lettura intera, e oltre il quinto tipo i
+  modelli restavano fuori): la radio si legge con il loro driver solo quando si
+  apre quella scheda. La prima lettura del gruppo resta quella della BF-888S.
+  Per gli altri gruppi le riletture sono rimaste com'erano: servono a scartare
+  i modelli il cui driver rifiuta la radio, e toglierle senza una prova su
+  radio vere farebbe proporre schede sbagliate.
+- Note corrette: Radtel RT-13, RT-480 / RT-68, RT-830 / RT-850, RT-69 GPS e
+  TIDRADIO TD-M2 Pro dicevano ancora che «Identifica» non le riconosce.
+- Esaminati e non aggiunti: «H8_4829» è il programma delle TD-H8 delle prime
+  generazioni in una versione più recente (19/9/2024): la radio è già gestita.
+  «DP712» contiene il programma «DP710 CPS» (DMR, codice nativo): non iniziato.
+- Prove: anacps432_test.go (radio finta scritta a parte: sequenza dei comandi
+  uguale a quella dei programmi, password, aree scritte), t22stx432_test.go,
+  drv_tdh8cps26_test.go (potenze, banda larga), identificazione di ogni modello
+  anche con la lettura all'apertura della scheda.
+
 4.31.0 (13/11/2026)
 -------------------
 - «Identifica» più veloce (identify.go). Prima dei tentativi con le attese piene

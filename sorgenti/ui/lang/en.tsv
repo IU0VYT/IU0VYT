@@ -5441,9 +5441,7 @@ cc054a8c	the radio has non-conventional (trunking) zones: they are not handled
 031746de	256 channels (0 to 255) with 12-character names, 9600 baud. Derived from the manufacturer's program and tested with a simulated radio, not on a real one. Only channels and names are written: the radio's settings, VFO and DTMF are not touched.
 8d412538	128 channels without names, 9600 baud. Derived from the manufacturer's program and tested with a simulated radio, not on a real one. The areas written are those the manufacturer's program writes; the radio's password is never written.
 5cebd6e9	The manufacturer's program («RT-20M Radio Program Software») uses the same link, the same blocks and the same 32-byte channel as the iRadio UV-5118plus: it opens with the Ruyage UV58Plus tab (999 channels with 10-character names, 115200 baud). Comparison made on the program, not on a real radio.
-1bf618a9	Protocol and memory derived from the manufacturer's program «Radio Programing Software» (versions 1.5.2 and 1.5.3). Switch the radio on with the cable connected. Channels 0 to 255, as in the manufacturer's program; frequencies in 1.25 kHz steps. Here you edit frequencies, name, power, bandwidth, scan and tones; signalling code, PTT ID, scrambler and busy channel lockout stay as they are set. Only channels and names are written: the radio's settings, VFO and DTMF are not touched. «Identify» does not recognise this radio: choose the right tab yourself.
 bc8e418f	the radio cannot store the frequency {0} MHz (multiples of 1.25 kHz)
-09c74e1e	Radio without channel names (128 channels). Protocol and memory derived from the manufacturer's program. Here you edit frequencies, power, bandwidth, scan and tones; transmit limit, encryption, DCS type and mute code of the channel stay as they are set. The radio's settings and VFO go back as they are. If a password is set on the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right tab yourself.
 939f420e	a password is set on the radio: remove it first with the manufacturer's program
 d6d1a0a5	900 MHz radio (a band not used in Italy), always narrowband. The channels are divided into systems: the list has 250 positions for each of the 32 systems and the position is the channel number in the system. Only the systems the radio already has are used; shared-resource (trunking) systems are not edited. It is programmed with the Kenwood programming cable.
 7d662f43	RT-69 GPS
@@ -5453,9 +5451,7 @@ ad1777b1	the radio's system table cannot be read: the memory cannot be edited
 a31f50a7	system {0} is a shared-resource (trunking) system: it is not edited from here
 cf3a4d90	system {0} is full
 adf62e1b	the radio's memory is full
-7d0150af	22 channels without names, 400-480 MHz, 9600 baud. Protocol and memory derived from the manufacturer's program «RT-13» 1.7 and tested with a simulated radio, not on a real one. Here you edit frequencies, tones, power, bandwidth and scan; frequency hopping, scrambler and busy channel lockout stay as they are set. If a password is set on the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right tab yourself.
 cd92c034	Radtel RT-13
-68a5c963	999 channels with 12-character names, 19200 baud. Protocol and memory derived from the manufacturer's program «RT-69 GPS» and tested with a simulated radio, not on a real one. Here you edit frequencies, name, tones, power, bandwidth and scan; the rest of the channel and the radio's settings stay as they are. Before writing, as the manufacturer's program does, every channel is checked to be within the radio's bands. If a password is set on the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right tab yourself.
 2dedccf9	Radtel RT-69 GPS
 6a54dc65	The comparison was made on the code of the manufacturers' programs: it has not yet been tested with a real radio. Read the radio first: if the model is not the right one the radio does not answer and is not modified.
 336dd64b	In CHIRP's table of equivalent models this radio corresponds to a model the program already handles: the same driver is used, verified with the automatic tests.
@@ -5653,7 +5649,6 @@ d67023e9	TIDRADIO TD-H9
 934f88cf	{0} HAM
 93054cc8	{0} GMRS
 3f23af0c	4th generation
-1d2bea2b	199 channels and general settings. Three cards: base, HAM and GMRS; when reading the radio the program recognises the version. It identifies itself like the TD-H3, but it has three power levels: use these cards and not those of the TD-H3. Not in CHIRP.{0}
 cd207e61	199 channels and general settings. Three cards: base, HAM and GMRS; when reading the radio the program recognises the version. Not in CHIRP.{0}
 0a0f28c6	199 channels and general settings. Three cards: base, HAM and GMRS; when reading the radio the program recognises the version. For the TD-H8 of the first three generations use the «TD-H8» card. Not in CHIRP.{0}
 128fa15f	Channels without names and general settings. Not in CHIRP. «Identify» cannot tell the models of this family apart: choose the card yourself.{0}
@@ -5680,7 +5675,6 @@ c413bfa6	TD PMR
 adfbb178	TD-M2 Pro
 457ed57e	TD-M2Pro
 e16cee51	M2 Pro
-de564f6a	199 channels, UHF only (400-520 MHz in the manufacturer's program). {0}
 18b12059	Switch the radio off, connect the cable, switch it on with the volume high, on a free channel. Not in CHIRP: connection and memory come from the manufacturer's program «TIDRadioCPS» (2026), which uses the same map as CHIRP's TD-H3, and are tested with a simulated radio and with the program's factory files, not on a real radio. Channels (frequencies, tones, power, bandwidth, scan, name) and general settings; busy-channel lockout, PTT-ID, frequency hopping, scrambler and receive mode stay as they are in the channel. The versions (base, HAM, GMRS) are told apart by the identifier the radio reports: if it is not the right one the radio is not read.
 4f7716b6	«TD-FRS» / «TD-PMR» (version of 25/6/2026)
 cd4fda8b	38400 baud. Protocol and memory derived from the manufacturer's program {0} and tested with a simulated radio, not on a real radio. Here you edit frequencies (in 1.25 kHz steps), tones, power, bandwidth and scan of the channels (they have no name) and the general settings; the rest of the channel (scrambler, PTT-ID, busy-channel lockout) is left untouched. {1}«Identify» cannot tell the models of this family apart: choose the card yourself.
@@ -5792,3 +5786,27 @@ a973430b	Channels without names, 400-470 MHz, 2400 baud. Protocol and data deriv
 71152f6e	Channels without names, 9600 baud. Protocol and memory taken from the manufacturer's program {0} and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels and the general settings; scrambler, compander, busy-channel lockout and frequency hopping stay as they are in the channel. {1}If a read password is set in the radio, remove it first with the manufacturer's program.
 4ccec7f4	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth, scan and names of the channels and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}
 2346b1b2	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels (they have no names) and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}
+0c54d822	Two cards: the European version (PMR446, 16 channels) and the American one (FRS, 22 channels), which have different manufacturer's programs.
+1899f7cd	199 channels and general settings. Three cards: base, HAM and GMRS; when reading the radio the program recognises the version. It identifies itself like the TD-H3, but the manufacturer's program reads and writes it differently: use these cards and not those of the TD-H3. Not in CHIRP.{0}
+fc3531d7	199 channels, UHF only (400-520 MHz in the manufacturer's program). Channels without names and general settings. Not in CHIRP.{0}
+a3fb2872	Channels without names and general settings. Not in CHIRP.{0}
+6aa904a9	22 FRS channels (United States). The manufacturer's program is the same as that of the Baofeng T22 in the FRS version. It is not the TD-M8 without the «S», which has another card. {0}
+c506923a	16 FRS channels (United States). The instructions of the manufacturer's program also list it for Pofung F8, F8i, F8U, F8X and BF-V8. {0}
+368f65ab	22 channels without names, 400-480 MHz, 9600 baud. Protocol and memory derived from the manufacturer's program «RT-13» 1.7 and tested with a simulated radio, not on a real one. Here you edit frequencies, tones, power, bandwidth and scan; frequency hopping, scrambler and busy channel lockout stay as they are set. If a password is set on the radio, remove it first with the manufacturer's program.
+a454c0ed	Protocol and memory derived from the manufacturer's program «Radio Programing Software» (versions 1.5.2 and 1.5.3). Switch the radio on with the cable connected. Channels 0 to 255, as in the manufacturer's program; frequencies in 1.25 kHz steps. Here you edit frequencies, name, power, bandwidth, scan and tones; signalling code, PTT ID, scrambler and busy channel lockout stay as they are set. Only channels and names are written: the radio's settings, VFO and DTMF are not touched.
+09a39cef	999 channels with 12-character names, 19200 baud. Protocol and memory derived from the manufacturer's program «RT-69 GPS» and tested with a simulated radio, not on a real one. Here you edit frequencies, name, tones, power, bandwidth and scan; the rest of the channel and the radio's settings stay as they are. Before writing, as the manufacturer's program does, every channel is checked to be within the radio's bands. If a password is set on the radio, remove it first with the manufacturer's program.
+56c39478	Radio without channel names (128 channels). Protocol and memory derived from the manufacturer's program. Here you edit frequencies, power, bandwidth, scan and tones; transmit limit, encryption, DCS type and mute code of the channel stay as they are set. The radio's settings and VFO go back as they are. If a password is set on the radio, remove it first with the manufacturer's program.
+affbd219	Radio without display: the channels have no names. Derived from the manufacturer's program «T20 FRS» (v1.0.1, the same one Baofeng provides for the FRS version of the T22 and TIDRADIO for the TD-M8S); if the read and write password is set on the radio, remove it first with that program.
+baebb9fa	T22 FRS
+050e47ea	Baofeng T22 (FRS, USA)
+05a9fca8	TIDRADIO TD-M8S
+4b755946	TIDRADIO TD-V2
+8950ef8a	Radio without display: the channels have no names. Derived from the manufacturer's program «CPS_F8_FRS» (v1.0); if the read and write password is set on the radio, remove it first with that program.
+e170353a	TIDRADIO TD-H4
+da9ca510	TIDRADIO TD-H11
+2f389c6a	Switch the radio off, connect the cable, switch it on with the volume high, on a free channel. Not in CHIRP: connection and memory come from the manufacturer's program «TIDRadioCPS» (2026), which handles this model like the others of the series, and are tested only with a simulated radio: for this model the program has no factory file. Wide band, as in the program: transmit 18-76 and 136-520 MHz, receive 18-800 MHz. Channels (frequencies, tones, power, bandwidth, scan, name) and general settings; busy-channel lockout, PTT-ID, frequency hopping, scrambler and receive mode stay as they are in the channel. The versions (base, HAM, GMRS) are told apart by the identifier the radio reports: if it is not the right one the radio is not read.
+0be19b10	38400 baud. Protocol and memory derived from the manufacturer's program {0} and tested with a simulated radio, not on a real radio. Here you edit frequencies (in 1.25 kHz steps), tones, power, bandwidth and scan of the channels (they have no name) and the general settings; the rest of the channel (scrambler, PTT-ID, busy-channel lockout) is left untouched. {1}
+cddf33a5	Alarm («Rx Emergency»)
+fb443a2f	Turns the alarm function on or off: in the manufacturer's program the item is called «Rx Emergency» in English and «alarm switch» in Chinese.
+be542c64	«T20 FRS» v1.0.1
+760bbadb	«CPS_F8_FRS» v1.0

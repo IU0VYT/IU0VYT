@@ -915,6 +915,12 @@ type identSession struct {
 	kinds []string // modelli proposti (il primo è quello identificato)
 	sess  *radioSession
 	mems  map[string][]byte // memoria letta con il driver di ogni modello proposto
+	// 4.32: modelli proposti senza averli riletti (vedi identRun): la memoria si
+	// legge con il loro driver quando l'utente apre quella scheda
+	lazy map[string]bool
+	port string
+	at   time.Time // fine dell'identificazione
+	mu   sync.Mutex
 }
 
 // ---------------------------------------------------------------- testo dei byte
@@ -1205,6 +1211,7 @@ func (a *App) identPlan(req *identReq) []identProbe {
 	a.mu.Unlock()
 	groups := map[string]*identProbe{}
 	var order []string
+	var joins []*genModel
 	var keys map[string]string
 	if !usb {
 		keys = identTranscripts()
@@ -1237,6 +1244,25 @@ func (a *App) identPlan(req *identReq) []identProbe {
 			g.kinds = append([]*genModel{m}, g.kinds...)
 		} else {
 			g.kinds = append(g.kinds, m)
+		}
+		if j, ok := m.Opt.(interface{ identJoin() string }); ok && !usb && j.identJoin() != "" {
+			joins = append(joins, m)
+		}
+	}
+	// 4.32: modelli con un saluto proprio che possono rispondere anche a quello
+	// di un altro gruppo (vedi rt22Opt.identJoin): restano fra le candidate di
+	// quel gruppo, in coda
+	for _, m := range joins {
+		target := m.Opt.(interface{ identJoin() string }).identJoin()
+		for _, k := range order {
+			g, has, in := groups[k], false, false
+			for _, o := range g.kinds {
+				has = has || o.ID == target
+				in = in || o == m
+			}
+			if has && !in {
+				g.kinds = append(g.kinds, m)
+			}
 		}
 	}
 	for _, k := range order {
@@ -1542,8 +1568,24 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 				}
 				reads := []shapeRead{{m, mem, note, st}}
 				seen := map[string]bool{identShape(m): true}
+				// 4.32: i tipi di memoria dei modelli che lo dichiarano (identLazy)
+				// non si rileggono qui: una rilettura costa una pausa e una lettura
+				// intera e per loro non direbbe niente di più (non si riconoscono
+				// dalla memoria e il loro driver non controlla il modello). Si
+				// propongono lo stesso, anche oltre identMaxRereads, e la memoria
+				// si legge con il loro driver solo se l'utente apre quella scheda
+				// (apiIdentifyOpen)
+				lazyShape := map[string]bool{}
+				for _, o := range p.kinds {
+					if _, ok := lazyShape[identShape(o)]; !ok {
+						lazyShape[identShape(o)] = true
+					}
+					if !identIsLazy(o) {
+						lazyShape[identShape(o)] = false
+					}
+				}
 				for _, o := range p.kinds[k+1:] {
-					if seen[identShape(o)] || len(reads) > identMaxRereads {
+					if seen[identShape(o)] || len(reads) > identMaxRereads || lazyShape[identShape(o)] {
 						continue
 					}
 					seen[identShape(o)] = true
@@ -1639,6 +1681,15 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 						}
 					}
 				}
+				// 4.32: modelli dei tipi di memoria non riletti (identLazy):
+				// proposti in coda, da leggere all'apertura della scheda
+				lazy := map[string]bool{}
+				for _, o := range p.kinds {
+					if _, ok := mems[o.ID]; !ok && !seen[identShape(o)] && lazyShape[identShape(o)] {
+						lazy[o.ID] = true
+						cands = append(cands, o)
+					}
+				}
 				genIdentFill(best, cands, mem, note, st, req.Port, res)
 				res.Ambiguous = len(confirmed) == 0 && len(res.Others) > 0
 				res.Seconds = int(time.Since(start).Seconds())
@@ -1649,7 +1700,8 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 				for _, o := range res.Others {
 					kinds = append(kinds, o.Kind)
 				}
-				j.sess = &identSession{kind: best.ID, kinds: kinds, sess: &radioSession{Base: mem}, mems: mems}
+				j.sess = &identSession{kind: best.ID, kinds: kinds, sess: &radioSession{Base: mem}, mems: mems,
+					lazy: lazy, port: req.Port, at: time.Now()}
 				a.rememberRadio(best.ID)
 				return res, nil
 			}
@@ -1659,6 +1711,43 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 	// 4.7: la radio trasmetteva da sola (es. in modalità aggiornamento firmware)
 	res.Spont = identSpontSeen(probeKey(req.Port))
 	return res, nil
+}
+
+// identLazyRead (4.32): memoria della radio identificata per il modello scelto.
+// Per i modelli proposti senza averli riletti (identSession.lazy) la radio si
+// legge adesso con il loro driver; la lettura resta nella sessione.
+func (a *App) identLazyRead(ctx context.Context, id *identSession, m *genModel) ([]byte, error) {
+	id.mu.Lock()
+	defer id.mu.Unlock()
+	if b, ok := id.mems[m.ID]; ok {
+		return b, nil
+	}
+	if !id.lazy[m.ID] {
+		return id.sess.Base, nil
+	}
+	a.yieldAuto()
+	l := identPortLock(id.port)
+	l.Lock()
+	defer l.Unlock()
+	// la radio deve essere uscita dalla programmazione dell'ultima lettura
+	if d := identPause - time.Since(id.at); d > 0 {
+		if err := sleepCtx(ctx, d); err != nil {
+			return nil, err
+		}
+	}
+	mem, _, err := m.Fam.Download(ctx, m, id.port, func(int, int, string) {})
+	id.at = time.Now()
+	if err == nil && len(mem) < genMinSize(m) {
+		err = fmt.Errorf("dati letti incompleti (%d byte)", len(mem))
+	}
+	if err != nil {
+		return nil, err
+	}
+	if id.mems == nil {
+		id.mems = map[string][]byte{}
+	}
+	id.mems[m.ID] = mem
+	return mem, nil
 }
 
 func famName(m *genModel) string { return fmt.Sprintf("%T", m.Fam) }
@@ -1683,6 +1772,13 @@ func identShape(m *genModel) string {
 		}
 	}
 	return fmt.Sprintf("%s/%d", famName(m), n)
+}
+
+// identIsLazy (4.32): modello che «Identifica» propone senza rileggere la radio
+// con il suo driver (vedi identRun)
+func identIsLazy(m *genModel) bool {
+	l, ok := m.Opt.(interface{ identLazy() bool })
+	return ok && l.identLazy() && !identCanMatch(m)
 }
 
 // identCanMatch: il modello si riconosce dal contenuto della memoria (come
@@ -1876,20 +1972,23 @@ func (a *App) apiIdentifyOpen(r *http.Request) (interface{}, error) {
 			card = c.ID
 		}
 	}
-	a.rememberCard(kind, card)
 	if m, ok := genByID[kind]; ok {
-		mem := id.sess.Base
-		if b, ok := id.mems[kind]; ok {
-			mem = b
+		// 4.32: modello proposto senza averlo riletto: la radio si legge adesso,
+		// con il suo driver (una volta sola)
+		mem, err := a.identLazyRead(r.Context(), id, m)
+		if err != nil {
+			return nil, err
 		}
 		if len(mem) < genMinSize(m) {
 			return nil, errors.New("la memoria letta non è quella di questo modello")
 		}
+		a.rememberCard(kind, card)
 		a.mu.Lock()
 		a.radios[kind] = &radioSession{Base: mem}
 		a.mu.Unlock()
 		return map[string]interface{}{"radio": genResp{Kind: m.ID, Channels: genChans(m, mem), Def: m.def(), Warnings: []string{}, Single: genSingle(m.ID, mem)}, "card": card}, nil
 	}
+	a.rememberCard(kind, card)
 	rep := &Report{}
 	kind, chs, err := readRadio(id.sess.Base, rep)
 	if err != nil || kind != id.kind {

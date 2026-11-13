@@ -60,6 +60,32 @@ package main
 //    a blocchi di 16 byte da 0x000 a 0x65F, scrittura a blocchi di 8 byte, 'E'.
 //    99 posizioni di 16 byte da 0x000, stessi bit dei canali della T17.
 //    Frequenze ammesse dal programma: 446-446,2 e 462-467,999 MHz.
+//
+// 5) Baofeng T22 in versione FRS e TIDRADIO TD-M8S (programma «T20 FRS» v1.0.1:
+//    lo stesso file nei pacchetti dei due costruttori) e TIDRADIO TD-V2
+//    (programma «CPS_F8_FRS» v1.0, che nelle istruzioni dichiara anche Pofung F8,
+//    F8i, F8U, F8X e BF-V8), 4.32. Stessa classe AnaCps.Data.DataProtocol; i due
+//    programmi differiscono solo negli indirizzi di readInfo / writeInfo:
+//      «\x02PROGRAM» → 06; 02 → 8 byte; 06 → 06; «R hi lo 08» all'indirizzo della
+//      password (0x2D8 nel T20 FRS, 0x130 nel TD-V2) → 12 byte (password nei
+//      byte 4-9: FF = nessuna); 06 → 06. In scrittura: 'E' → 'F' e di nuovo
+//      l'aggancio, senza la password. Blocchi di 8 byte in lettura ('R' indirizzo
+//      08 → 'W' indirizzo 08 + 8 byte; 06 → 06) e in scrittura ('W' indirizzo 08
+//      + 8 byte → 06). Fine: 'E'. Niente codice di salto prima dell'aggancio.
+//    T20 FRS / TD-M8S: 22 canali di 16 byte da 0x000; letti 0x000-0x15F,
+//      0x2B0-0x2C7 e 0x330-0x337 (codice di salto, mai scritto); scritti
+//      0x000-0x15F, 0x2B0-0x2C7 e 0x2C8-0x2CF, che il programma riempie sempre
+//      di FF senza averli letti (qui lo stesso).
+//    TD-V2: 16 canali di 16 byte da 0x010; letti 0x000-0x10F, 0x2B0-0x2BF,
+//      0x330-0x33F (mai scritti), 0x380-0x3DF: sono le aree della serie D qui
+//      sopra. Il programma in scrittura riempie di FF le parti che non conosce
+//      e mette un testo fisso a 0x3D0; qui si riscrivono i byte letti.
+//    Canale: come la T17 (bit 4 = 1 escluso dalla scansione, bit 3 = 1 potenza
+//    ALTA, bit 2 = 1 banda stretta, bit 0 = 1 senza blocco del canale occupato,
+//    bit 7 salto di frequenza: i programmi lo leggono ma scrivono sempre 0, qui
+//    resta com'è). Le tabelle di taratura (writeTune) e il codice di salto
+//    (writeHopping) non si scrivono mai; la password non si legge oltre il
+//    controllo «nessuna password» e non si scrive mai.
 
 import (
 	"bytes"
@@ -499,6 +525,47 @@ type t17Opt struct {
 	wblk  int      // byte per blocco in scrittura (8; 16 per la BF-T9)
 	codec pmrCodec // codifica dei canali
 	rng   int      // indirizzo del codice della gamma di frequenze (0 = nessuno)
+	// 4.32 (T20 FRS / TD-M8S e TD-V2): zero = come le T17
+	noJump bool     // niente lettura del codice di salto prima dell'aggancio
+	pwAddr int      // indirizzo della password (0 = 0x7B0)
+	rblk   int      // byte per blocco in lettura (0 = 16)
+	size   int      // dimensione dell'immagine (0 = t17Memsize)
+	wgaps  [][2]int // aree scritte, se diverse da quelle lette
+	ffill  [][2]int // aree scritte sempre con FF, come fa il programma
+}
+
+func (o *t17Opt) memsize() int {
+	if o.size != 0 {
+		return o.size
+	}
+	return t17Memsize
+}
+
+func (o *t17Opt) rb() int {
+	if o.rblk != 0 {
+		return o.rblk
+	}
+	return 16
+}
+
+func (o *t17Opt) pw() int {
+	if o.pwAddr != 0 {
+		return o.pwAddr
+	}
+	return 0x7B0
+}
+
+// identLazy (4.32): i modelli dei programmi «T20 FRS» e «CPS_F8_FRS» hanno lo
+// stesso saluto della BF-888S: «Identifica» li propone fra le radio possibili
+// senza rileggere la radio con questo driver (che non controlla il modello)
+func (o *t17Opt) identLazy() bool { return o.noJump }
+
+// aree scritte dal driver
+func (o *t17Opt) wr() [][2]int {
+	if o.wgaps != nil {
+		return o.wgaps
+	}
+	return o.gaps
 }
 
 type t17Fam struct{}
@@ -568,6 +635,8 @@ func init() {
 		Notes: "Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «Radioddity T3» (v1.3), che mostra 99 posizioni: " +
 			"la FS-T3 ha 22 canali (FRS) e la PR-T3 16 (PMR446), usa le prime posizioni e lascia vuote le altre. " +
 			"Frequenze ammesse: 446-446,2 MHz e 462-467,999 MHz."})
+	// 4.32: i modelli dei programmi «T20 FRS» e «CPS_F8_FRS» sono registrati in
+	// drv_t17ana.go
 	// BF-T9: nuovo canale come nel programma «BF-Ts» (potenza alta, banda larga,
 	// in scansione, senza blocco del canale occupato)
 	t9 := t17Opt{cmd: "PROGRAL", gaps: [][2]int{{0x000, 0x660}}, wblk: 16, rng: 0x652,
@@ -636,10 +705,11 @@ func (f t17Fam) enter(s *pmrSess, m *genModel, write bool) (string, error) {
 	if !t17o(m).pmr {
 		return info, nil
 	}
-	if err := s.p.Write([]byte{'R', 0x07, 0xB0, 0x10}); err != nil {
+	o := t17o(m)
+	if err := s.p.Write([]byte{'R', byte(o.pw() >> 8), byte(o.pw()), byte(o.rb())}); err != nil {
 		return info, err
 	}
-	pw, err := s.read(20, time.Second)
+	pw, err := s.read(4+o.rb(), time.Second)
 	if err != nil {
 		if err == errTimeout {
 			return info, rErr("nessuna risposta alla richiesta della password")
@@ -669,9 +739,11 @@ func (f t17Fam) Download(ctx context.Context, m *genModel, port string, prog Pro
 		return nil, "", err
 	}
 	defer s.p.Close()
-	prog(0, t17Memsize, "Collegamento con la radio…")
+	o := t17o(m)
+	size, rb := o.memsize(), o.rb()
+	prog(0, size, "Collegamento con la radio…")
 	jump := ""
-	if t17o(m).pmr {
+	if o.pmr && !o.noJump {
 		// come il programma del costruttore: prima il codice di salto di frequenza
 		if err := s.p.Write([]byte{0xFE, 0x03, 0x30, 0x08}); err != nil {
 			return nil, "", err
@@ -693,17 +765,17 @@ func (f t17Fam) Download(ctx context.Context, m *genModel, port string, prog Pro
 	if err != nil {
 		return nil, info, genFail("Identificazione", err)
 	}
-	img := bytes.Repeat([]byte{0xFF}, t17Memsize)
-	for _, g := range t17o(m).gaps {
-		for a := g[0]; a < g[1]; a += 16 {
+	img := bytes.Repeat([]byte{0xFF}, size)
+	for _, g := range o.gaps {
+		for a := g[0]; a < g[1]; a += rb {
 			if ctx.Err() != nil {
 				return nil, info, errCancelled
 			}
-			prog(a, t17Memsize, "Lettura…")
-			if err := s.p.Write([]byte{'R', byte(a >> 8), byte(a), 0x10}); err != nil {
+			prog(a, size, "Lettura…")
+			if err := s.p.Write([]byte{'R', byte(a >> 8), byte(a), byte(rb)}); err != nil {
 				return nil, info, err
 			}
-			resp, err := s.read(20, time.Second)
+			resp, err := s.read(4+rb, time.Second)
 			if err != nil {
 				if err == errCancelled {
 					return nil, info, err
@@ -717,31 +789,41 @@ func (f t17Fam) Download(ctx context.Context, m *genModel, port string, prog Pro
 		}
 	}
 	_ = s.p.Write([]byte{'E'})
-	prog(t17Memsize, t17Memsize, "Lettura completata")
+	prog(size, size, "Lettura completata")
 	return img, info, nil
 }
 
 func (f t17Fam) Upload(ctx context.Context, m *genModel, port string, img []byte, prog Progress) (string, error) {
-	if len(img) < t17Memsize {
+	o := t17o(m)
+	size := o.memsize()
+	if len(img) < size {
 		return "", fmt.Errorf("immagine della memoria incompleta")
+	}
+	if len(o.ffill) > 0 {
+		img = append([]byte{}, img...)
+		for _, g := range o.ffill {
+			for a := g[0]; a < g[1]; a++ {
+				img[a] = 0xFF
+			}
+		}
 	}
 	s, err := pmrOpen(ctx, port)
 	if err != nil {
 		return "", err
 	}
 	defer s.p.Close()
-	prog(0, t17Memsize, "Collegamento con la radio…")
+	prog(0, size, "Collegamento con la radio…")
 	info, err := f.enter(s, m, true)
 	if err != nil {
 		return info, genFail("Identificazione", err)
 	}
-	for _, g := range t17o(m).gaps {
-		n := t17o(m).wblk
+	for _, g := range o.wr() {
+		n := o.wblk
 		for a := g[0]; a < g[1]; a += n {
 			if ctx.Err() != nil {
 				return info, errCancelled
 			}
-			prog(a, t17Memsize, "Scrittura…")
+			prog(a, size, "Scrittura…")
 			cmd := append([]byte{'W', byte(a >> 8), byte(a), byte(n)}, img[a:a+n]...)
 			if err := s.xfer(cmd, []byte{0x06}, fmt.Sprintf("scrittura del blocco 0x%03X", a)); err != nil {
 				return info, genFail("Scrittura", err)
@@ -749,6 +831,6 @@ func (f t17Fam) Upload(ctx context.Context, m *genModel, port string, img []byte
 		}
 	}
 	_ = s.p.Write([]byte{'E'})
-	prog(t17Memsize, t17Memsize, "Scrittura completata")
+	prog(size, size, "Scrittura completata")
 	return info, nil
 }

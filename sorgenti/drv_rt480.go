@@ -84,8 +84,7 @@ func init() {
 			Notes: "Protocollo e memoria ricavati dal programma del costruttore «Radio Programing Software» (versioni 1.5.2 e 1.5.3). " +
 				"Accendi la radio con il cavo collegato. Canali da 0 a 255, come nel programma del costruttore; frequenze a passi di 1,25 kHz. " +
 				"Qui si modificano frequenze, nome, potenza, banda, scansione e toni; codice di segnalazione, PTT ID, scrambler e blocco " +
-				"su canale occupato restano quelli impostati. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano. " +
-				"«Identifica» non riconosce questa radio: scegli tu la scheda giusta."})
+				"su canale occupato restano quelli impostati. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano."})
 	}
 }
 
