@@ -7,6 +7,28 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.30.0 (12/11/2026)
+-------------------
+- General settings of TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 4th generation,
+  TD-H9 and TD-638UV (settings_tdcps.go): 45 items, 47 where there is a top key.
+  Addresses and bits come from the «Optional Settings» window of the manufacturer's
+  program «TIDRadioCPS» and match, item by item, the TD-H3 structure of CHIRP's tdh8.py
+  driver. Each item changes only its own bits. Not offered, because the two sources
+  disagree or the program does not show them: FM radio mode, HAM/GMRS bits, band and VFO
+  scan limits, current channel, DTMF items, remote kill/stun. Checked on the program's
+  factory files.
+- New «tdq» family (drv_tdq.go, settings_tdq.go): TIDRADIO TID-712Plus, TD-M7, TD-M11
+  Plus, TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR and TD-M2 Pro, 12 cards with channels
+  and general settings, from the manufacturer's programs «TD-FRS» / «TD-PMR» (25/6/2026)
+  and «TD-M2Pro». 38400 baud; key «QROGRAM» («QROGRAO» for the TD-M2 Pro) → 07; «123456»
+  + 7 bytes FF → 55; 08 → one byte; 52 + addr + 40 → 4 + 64; 57 + addr + 10 + 16 → 08.
+  Memory 0x000-0xE7F: 200 channels of 16 bytes, settings at 0xC80. Program limits:
+  136-174 and 400-520 MHz (TD-M2 Pro UHF only), 1.25 kHz steps. Checks: hand-computed
+  values, the program's PMR and FRS factory files, simulated radio, «go vet» for
+  Windows. Still to do with the TIDRADIO packages: TD-V2, TD-M8S, «H8_4829», DP712.
+  Counts: 571 radios, 491 with settings, 625 in the gallery, 52 brands. Translations:
+  134 new texts.
+
 4.29.0 (12/11/2026)
 -------------------
 - TIDRADIO TD-H3 Plus and TD-H3 SE, TD-H7 Plus, TD-H8 4th generation, TD-H9 and TD-638UV

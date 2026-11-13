@@ -6,6 +6,28 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.30.0 (12/11/2026)
+-------------------
+- Tetapan umum TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 generasi ke-4, TD-H9 dan
+  TD-638UV (settings_tdcps.go): 45 butiran, 47 jika ada kekunci atas. Alamat dan bit
+  diperoleh daripada tetingkap «Optional Settings» program pengeluar «TIDRadioCPS» dan
+  sepadan, butiran demi butiran, dengan struktur TD-H3 pemacu tdh8.py CHIRP. Setiap
+  butiran mengubah bitnya sendiri sahaja. Tidak ditawarkan, kerana dua sumber tidak
+  sepadan atau program tidak memaparkannya: mod radio FM, bit HAM/GMRS, had jalur dan
+  imbasan VFO, saluran semasa, butiran DTMF, sekatan jarak jauh. Disemak pada fail
+  kilang program.
+- Keluarga baharu «tdq» (drv_tdq.go, settings_tdq.go): TIDRADIO TID-712Plus, TD-M7,
+  TD-M11 Plus, TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR dan TD-M2 Pro, 12 kad dengan
+  saluran dan tetapan umum, daripada program pengeluar «TD-FRS» / «TD-PMR» (25/6/2026)
+  dan «TD-M2Pro». 38400 baud; kunci «QROGRAM» («QROGRAO» untuk TD-M2 Pro) → 07; «123456»
+  + 7 bait FF → 55; 08 → satu bait; 52 + addr + 40 → 4 + 64; 57 + addr + 10 + 16 → 08.
+  Memori 0x000-0xE7F: 200 saluran 16 bait, tetapan di 0xC80. Had program: 136-174 dan
+  400-520 MHz (TD-M2 Pro UHF sahaja), langkah 1.25 kHz. Semakan: nilai yang dikira
+  dengan tangan, fail kilang PMR dan FRS program, radio simulasi, «go vet» untuk
+  Windows. Masih belum dibuat dengan pakej TIDRADIO: TD-V2, TD-M8S, «H8_4829», DP712.
+  Kiraan: 571 radio, 491 dengan tetapan, 625 dalam galeri, 52 jenama. Terjemahan: 134
+  teks baharu.
+
 4.29.0 (12/11/2026)
 -------------------
 - TIDRADIO TD-H3 Plus dan TD-H3 SE, TD-H7 Plus, TD-H8 generasi ke-4, TD-H9 dan TD-638UV

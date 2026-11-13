@@ -74,6 +74,9 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = o.size(m)
 	case *tdh8Opt: // 4.29: modelli del programma TIDRadioCPS del 2026 (identificativo + 0x0000-0x1F3F)
 		size = 8 + (o.memsize+0x1F)/0x20*0x20
+	case *tdqOpt: // 4.30: TIDRADIO dei programmi TD-FRS / TD-PMR e TD-M2Pro
+		_ = o
+		size = tdqSize
 	}
 	mem := bytes.Repeat([]byte{0xFF}, size)
 	if o, ok := m.Opt.(*wfOpt); ok { // memoria vuota come la scrive il programma; impostazioni: squelch 3, TOT 180 s, suono dei tasti

@@ -617,7 +617,7 @@ func init() {
 				DCS: dtcsCodes, Baud: 38400, Fam: tdh8Fam{}, Opt: o,
 				Notes: "Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria " +
 					"vengono dal programma del costruttore «TIDRadioCPS» (2026), che usa la stessa mappa della TD-H3 di CHIRP, e sono provati con una radio " +
-					"simulata e con i file di fabbrica del programma, non su una radio vera. Solo canali (frequenze, toni, potenza, banda, scansione, nome); " +
+					"simulata e con i file di fabbrica del programma, non su una radio vera. Canali (frequenze, toni, potenza, banda, scansione, nome) e impostazioni generali; " +
 					"blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, " +
 					"GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta."})
 		}

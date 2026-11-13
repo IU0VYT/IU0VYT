@@ -7,6 +7,28 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.30.0 (12/11/2026)
+-------------------
+- Definições gerais de TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª geração,
+  TD-H9 e TD-638UV (settings_tdcps.go): 45 entradas, 47 onde há tecla superior.
+  Endereços e bits vêm da janela «Optional Settings» do programa do fabricante
+  «TIDRadioCPS» e coincidem, entrada a entrada, com a estrutura do TD-H3 do driver
+  tdh8.py do CHIRP. Cada entrada altera só os seus próprios bits. Não oferecidas, porque
+  as duas fontes não coincidem ou o programa não as mostra: modo do rádio FM, bits
+  HAM/GMRS, limites de banda e da pesquisa VFO, canal atual, entradas DTMF, bloqueio à
+  distância. Verificado nos ficheiros de fábrica do programa.
+- Família nova «tdq» (drv_tdq.go, settings_tdq.go): TIDRADIO TID-712Plus, TD-M7, TD-M11
+  Plus, TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR e TD-M2 Pro, 12 fichas com canais e
+  definições gerais, dos programas do fabricante «TD-FRS» / «TD-PMR» (25/6/2026) e
+  «TD-M2Pro». 38400 baud; chave «QROGRAM» («QROGRAO» no TD-M2 Pro) → 07; «123456» + 7
+  bytes FF → 55; 08 → um byte; 52 + addr + 40 → 4 + 64; 57 + addr + 10 + 16 → 08.
+  Memória 0x000-0xE7F: 200 canais de 16 bytes, definições em 0xC80. Limites do programa:
+  136-174 e 400-520 MHz (TD-M2 Pro só UHF), passos de 1,25 kHz. Verificações: valores
+  calculados à mão, ficheiros de fábrica PMR e FRS do programa, rádio simulado, «go vet»
+  para Windows. Ainda por fazer com os pacotes TIDRADIO: TD-V2, TD-M8S, «H8_4829»,
+  DP712. Contagens: 571 rádios, 491 com definições, 625 na galeria, 52 marcas.
+  Traduções: 134 textos novos.
+
 4.29.0 (12/11/2026)
 -------------------
 - TIDRADIO TD-H3 Plus e TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª geração, TD-H9 e TD-638UV (só

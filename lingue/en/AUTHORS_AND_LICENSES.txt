@@ -307,6 +307,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): from the study of the manufacturer's pr
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), of which nothing is included; the
 code is written from scratch.
 
+TIDRADIO TID-712PLUS, TD-M7, TD-M11 PLUS, TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR,
+TD-M2 PRO (4.30): protocol, memory map and settings come from reading the manufacturer's
+programs «TD-FRS» / «TD-PMR» and «TD-M2Pro», rewritten from scratch; nothing of those
+programs or their files is included. The settings of the «TIDRadioCPS» models (4.29)
+come from that program, compared with CHIRP's tdh8.py driver.
+
 TIDRADIO TD-H3 PLUS / SE, TD-H7 PLUS, TD-H8 4TH GENERATION, TD-H9, TD-638UV (4.29):
 identifiers, memory ranges read and written, end of session, power levels and channel
 fields come from reading the manufacturer's program «TIDRadioCPS» and were rewritten

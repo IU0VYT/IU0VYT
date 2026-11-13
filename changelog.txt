@@ -3,6 +3,43 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.30.0 (12/11/2026)
+-------------------
+- Impostazioni generali dei TIDRADIO TD-H3 Plus / SE, TD-H7 Plus, TD-H8 di quarta
+  generazione, TD-H9 e TD-638UV (settings_tdcps.go): 45 voci, 47 dove c'è il tasto
+  superiore. Indirizzi e bit vengono dalla finestra «Optional Settings» del
+  programma del costruttore «TIDRadioCPS» e coincidono, voce per voce, con la
+  struttura della TD-H3 del driver tdh8.py di CHIRP: tasti programmabili (0xC90),
+  luminosità (0xC9D), blocco delle opzioni (0xCA0-0xCAF), messaggi di accensione
+  (0x1C00), guadagno del microfono (0x1F20), lingua, stile, colore dei menu e
+  ripresa della scansione (0x1F28-0x1F2F). Ogni voce cambia solo i propri bit: gli
+  altri restano come li ha lasciati la radio (il programma del costruttore invece
+  li azzera). Non offerte, perché le due fonti non concordano o il programma non le
+  mostra: modo della radio FM, bit HAM/GMRS, limiti di banda e della scansione VFO,
+  canale corrente, voci DTMF, blocco e disattivazione a distanza. Verificate sui
+  file di fabbrica del programma (tutti letti senza errori, valori sensati).
+- Famiglia nuova «tdq» (drv_tdq.go, settings_tdq.go): TIDRADIO TID-712Plus, TD-M7,
+  TD-M11 Plus (199, 16 e 22 canali), TD-BR09, TD-777S (16 e 22 canali), TD-V900,
+  TD-FRS, TD-PMR e TD-M2 Pro: 12 schede con canali e impostazioni generali. Dai
+  programmi del costruttore «TD-FRS» / «TD-PMR» (25/6/2026) e «TD-M2Pro» (V1.0 e
+  V1.2): 38400 baud; chiave «QROGRAM» («QROGRAO» per il TD-M2 Pro) → 07; «123456» +
+  7 byte FF → 55; 08 → un byte; lettura 52 + indirizzo + 40 → 4 + 64 byte, con 08 →
+  08 fra un blocco e l'altro e 45 alla fine; scrittura 57 + indirizzo + 10 + 16
+  byte → 08. Memoria 0x000-0xE7F: 200 canali di 16 byte (frequenze BCD in decine
+  di Hz, toni CTCSS in decimi di Hz o DCS 0x2800 + codice, potenza, banda,
+  scansione), impostazioni a 0xC80. Limiti del programma: 136-174 e 400-520 MHz
+  (TD-M2 Pro solo UHF), passi di 1,25 kHz. Un'immagine mai letta da una radio
+  scrive solo i canali. «Identifica» non distingue i modelli (stessa chiave).
+- Verifiche: valori calcolati a mano per canali, toni e impostazioni; frequenze,
+  banda e potenza confrontate con i file di fabbrica PMR e FRS del programma;
+  radio simulata (sequenza dei pacchetti, immagine vuota, risposte sbagliate);
+  controllo «go vet» per Windows pulito.
+- Ancora da fare con i pacchetti TIDRADIO: TD-V2 e TD-M8S (due varianti dei
+  programmi «AnaCps» già gestiti per altre radio, la prima con password di
+  programmazione), «H8_4829» e DP712 (programmi DP710, DMR).
+- Conteggi: 571 radio, 491 con impostazioni, 625 in galleria, 52 marche.
+  Traduzioni: 134 testi nuovi.
+
 4.29.0 (12/11/2026)
 -------------------
 - TIDRADIO TD-H3 Plus e TD-H3 SE, TD-H7 Plus, TD-H8 di quarta generazione, TD-H9 e

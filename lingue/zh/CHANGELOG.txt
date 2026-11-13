@@ -4,6 +4,11 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
 
 本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.12）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
 
+4.30.0（2026/11/12）
+-------------------
+- TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 第四代、TD-H9 和 TD-638UV 的常规设置（settings_tdcps.go）：45 项，有顶键的机型为 47 项。地址和位取自厂商程序“TIDRadioCPS”的“Optional Settings”窗口，并逐项与 CHIRP 的 tdh8.py 驱动中 TD-H3 的结构一致。每一项只改动自己的位。未提供的项（两个来源不一致或程序不显示）：FM 收音机模式、HAM/GMRS 位、频段和 VFO 扫描限制、当前信道、DTMF 项、遥毙。已用程序的出厂文件核对。
+- 新的“tdq”系列（drv_tdq.go、settings_tdq.go）：TIDRADIO TID-712Plus, TD-M7, TD-M11 Plus, TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR 和 TD-M2 Pro，共 12 张卡片，含信道和常规设置，取自厂商程序“TD-FRS”/“TD-PMR”（2026/6/25）和“TD-M2Pro”。38400 波特；密钥“QROGRAM”（TD-M2 Pro 为“QROGRAO”）→ 07；“123456”+ 7 个 FF 字节 → 55；08 → 一个字节；52 + addr + 40 → 4 + 64; 57 + addr + 10 + 16 → 08。内存 0x000-0xE7F：200 个 16 字节的信道，设置在 0xC80。程序的限制：136-174 和 400-520 MHz（TD-M2 Pro 仅 UHF），步进 1.25 kHz。核对：手算数值、程序的 PMR 和 FRS 出厂文件、模拟对讲机、Windows 的“go vet”。TIDRADIO 软件包中尚未完成：TD-V2、TD-M8S、“H8_4829”、DP712。统计：571 款对讲机，491 款带设置，图库 625 款，52 个品牌。翻译：134 条新文本。
+
 4.29.0（2026/11/12）
 -------------------
 - TIDRADIO TD-H3 Plus 和 TD-H3 SE、TD-H7 Plus、第四代 TD-H8、TD-H9 和 TD-638UV（仅信道）：drv_tdh8.go 中新增 15 张卡片（每款有基本版、HAM 和 GMRS）。取自制造商程序「TIDRadioCPS」（2026/1/23 至 2026/7/27 的各版本）：连接方式与 TD-H3 相同，存储器布局与 CHIRP 的 TD-H3 相同（信道自 0x0010，名称自 0x0D40，已用信道在 0x1900，扫描在 0x1920）。取自程序的差异：识别码（H3 Plus 和 SE 为 P31183 / P31185 / P31184；其余为「TDH7PLU」「TDH84GE」「TDH9」「TD638UV」后接 N、H 或 G），读写地址 0x0000-0x1F3F，写入前不读取固件版本，会话以 32 字节的「CE」块结束，三档功率（0 低、1 中、2 高），空信道的频率为零且未标记为已用，信道中另外两个字段（扰频组、接收模式）予以保留。范围：基本版 108-174 和 200-600 MHz（108-136 仅接收），HAM 发射 144-148 和 420-450 MHz。

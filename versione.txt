@@ -1,7 +1,7 @@
-versione=4.29.0
-compilazione=2026-11-12T19:39
-radio=562
-impostazioni=476
-galleria=616
+versione=4.30.0
+compilazione=2026-11-12T22:10
+radio=571
+impostazioni=491
+galleria=625
 firmware=58
 marche=52

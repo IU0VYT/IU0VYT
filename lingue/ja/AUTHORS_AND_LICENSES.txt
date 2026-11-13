@@ -215,6 +215,8 @@ RADTEL RT-817A / RT-871A（4.19）：メーカーのソフト（「Radtel RT-871
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：メーカーのソフト（「RT-4D CPS」、「DMR RT-6D」、「Radtel RT-1000 Pro CPS」）を調べて求めました。それらの内容は何も含まれておらず、コードは一から書いています。
 
+TIDRADIO TID-712PLUS、TD-M7、TD-M11 PLUS、TD-BR09、TD-777S、TD-V900、TD-FRS、TD-PMR、TD-M2 PRO（4.30）：プロトコル、メモリー配置、設定はメーカーのプログラム「TD-FRS」/「TD-PMR」と「TD-M2Pro」を読んで得たもので、ゼロから書き直しました。これらのプログラムやそのファイルは一切含まれていません。「TIDRadioCPS」の機種（4.29 版で追加）の設定は同プログラムから得て、CHIRP の tdh8.py ドライバーと照合しました。
+
 TIDRADIO TD-H3 PLUS / SE、TD-H7 PLUS、第 4 世代 TD-H8、TD-H9、TD-638UV（4.29）：識別子、読み書きするメモリー領域、セッションの終了、出力段階、チャンネルのフィールドはメーカーのプログラム「TIDRadioCPS」を読んで得たもので、ゼロから書き直しました。そのプログラムとそのファイルのものは何も含まれていません。チャンネルの配置は、すでに使用している CHIRP の tdh8.py ドライバーの TD-H3 と同じです（上記参照）。
 
 RADIODDITY UB15-G、DB35-G、DB35-UV、DB40-G（4.28）：プロトコル、メモリー、設定はメーカーのプログラムとその設定ファイルを読んで得たもので、ゼロから書き直しました。そのプログラムのものは何も含まれていません。DB40-G は CHIRP にもあります（drivers/radioddity_db40g.py、Copyright 2026 Tony Gies、GNU GPL v2 以降、2026/11/09 のリビジョン 337b385）。ここのドライバーはそれと照合済みで、バイト単位で同じ動作をします。

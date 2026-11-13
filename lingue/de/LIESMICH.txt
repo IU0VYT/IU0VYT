@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.29.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.30.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,15 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.30.0:
+- Allgemeine Einstellungen für TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 der 4.
+  Generation, TD-H9 und TD-638UV: programmierbare Tasten, Rauschsperre, VOX,
+  Sendezeitbegrenzung, Display, Sprache, Einschaltmeldungen und mehr.
+- Neue Funkgeräte (Kanäle und Einstellungen): TIDRADIO TID-712Plus, TD-M7, TD-M11 Plus,
+  TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR und TD-M2 Pro. Sie stammen aus den
+  Herstellerprogrammen und sind noch nicht mit einem echten Funkgerät getestet: Lies
+  zuerst nur aus. «Identifizieren» unterscheidet sie nicht: Wähle die Karte selbst.
+- Galerie: 625 Modelle von 52 Marken (571 mit Kanälen, 491 mit Einstellungen).
 Neu in 4.29.0:
 - Neue Funkgeräte (nur Kanäle): TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 der 4.
   Generation, TD-H9 und TD-638UV, jeweils in den Versionen Basis, HAM und GMRS. Sie

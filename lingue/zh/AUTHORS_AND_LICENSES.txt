@@ -215,6 +215,8 @@ RADTEL RT-817A / RT-871A（4.19）：根据与厂商软件（“Radtel RT-871A C
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：根据对厂商软件（“RT-4D CPS”、“DMR RT-6D”、“Radtel RT-1000 Pro CPS”）的研究得出，未包含其中任何内容；代码从零编写。
 
+TIDRADIO TID-712PLUS、TD-M7、TD-M11 PLUS、TD-BR09、TD-777S、TD-V900、TD-FRS、TD-PMR、TD-M2 PRO（4.30）：协议、内存布局和设置来自对厂商程序“TD-FRS”/“TD-PMR”和“TD-M2Pro”的阅读，并从零重写；未包含这些程序及其文件的任何内容。“TIDRadioCPS”各机型（4.29 版加入）的设置来自该程序，并与 CHIRP 的 tdh8.py 驱动作了比对。
+
 TIDRADIO TD-H3 PLUS / SE、TD-H7 PLUS、第四代 TD-H8、TD-H9、TD-638UV（4.29）：识别码、读写的存储区、会话结束方式、功率档位和信道字段来自阅读制造商程序「TIDRadioCPS」，并从零重写；不包含该程序及其文件的任何内容。信道布局与 CHIRP 的 tdh8.py 驱动中 TD-H3 的相同，该驱动此前已在使用（见上文）。
 
 RADIODDITY UB15-G、DB35-G、DB35-UV 和 DB40-G（4.28）：协议、存储器和设置来自阅读制造商程序及其配置文件，并从零重写；不包含该程序的任何内容。DB40-G 在 CHIRP 中也有（drivers/radioddity_db40g.py，Copyright 2026 Tony Gies，GNU GPL v2 或更高版本，2026/11/09 的修订 337b385）：这里的驱动已与之对照，逐字节做同样的事。

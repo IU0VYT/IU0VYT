@@ -35,7 +35,7 @@ func TestTdh8Cps26(t *testing.T) {
 		}
 		o := tdh8o(m)
 		if strings.ToUpper(hexStr(o.ident)) != hx || !o.cps26 || o.memsize != 0x1F30 || !m.NoChirp || m.Slots != 199 || len(m.Powers) != 3 ||
-			!bytes.Equal(o.magic, []byte{0x50, 0x56, 0x4F, 0x4A, 0x48, 0x5C, 0x14}) || settingsAvailable(id) {
+			!bytes.Equal(o.magic, []byte{0x50, 0x56, 0x4F, 0x4A, 0x48, 0x5C, 0x14}) || !settingsAvailable(id) {
 			t.Fatalf("%s: dati del modello errati (% X)", id, o.ident)
 		}
 		size := 8 + 0x1F40

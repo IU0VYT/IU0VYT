@@ -5644,15 +5644,12 @@ f217e6d3	Cor da retroiluminação
 3cdbc404	H3 Plus
 4ce6fa44	TDH3 Plus
 2cc4525a	TD-H3 SE Mini
-ba5b852d	199 canais, só canais (não as definições). Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Apresenta-se como o TD-H3, mas tem três potências: use estas fichas e não as do TD-H3. Não está no CHIRP.{0}
 d4ecc743	TD-H7 Plus
 cfa006a0	H7 Plus
 b5e694e0	TDH7 Plus
-455a0d5f	199 canais, só canais (não as definições). Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Não está no CHIRP.{0}
 a7fd409e	TD-H8 (4.ª geração)
 43f19b72	TD-H8 4th Gen
 70b88cf4	TD-H8 4.ª ger.
-3fcc8030	199 canais, só canais (não as definições). Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Para os TD-H8 das três primeiras gerações use a ficha «TD-H8». Não está no CHIRP.{0}
 93f0a7aa	TIDRADIO TD-H3 Plus / TD-H3 SE
 9ecdfa55	TIDRADIO TD-H7 Plus
 479cc1fc	TIDRADIO TD-H8 (4.ª geração)
@@ -5660,5 +5657,138 @@ d67023e9	TIDRADIO TD-H9
 1a1a246c	TIDRADIO TD-638UV
 934f88cf	{0} HAM
 93054cc8	{0} GMRS
-167d24be	Desligue o rádio, ligue o cabo, ligue-o com o volume alto, num canal livre. Não está no CHIRP: ligação e memória vêm do programa do fabricante «TIDRadioCPS» (2026), que usa o mesmo mapa do TD-H3 do CHIRP, e foram testadas com um rádio simulado e com os ficheiros de fábrica do programa, não com um rádio real. Só canais (frequências, tons, potência, largura de banda, pesquisa, nome); bloqueio com canal ocupado, PTT-ID, salto de frequência, scrambler e modo de receção ficam como estão no canal. As versões (base, HAM, GMRS) distinguem-se pelo identificador comunicado pelo rádio: se não for a certa, o rádio não é lido.
 3f23af0c	4.ª geração
+1d2bea2b	199 canais e definições gerais. Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Apresenta-se como o TD-H3, mas tem três potências: use estas fichas e não as do TD-H3. Não está no CHIRP.{0}
+cd207e61	199 canais e definições gerais. Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Não está no CHIRP.{0}
+0a0f28c6	199 canais e definições gerais. Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Para os TD-H8 das três primeiras gerações use a ficha «TD-H8». Não está no CHIRP.{0}
+128fa15f	Canais sem nome e definições gerais. Não está no CHIRP. «Identificar» não distingue os modelos desta família: escolhe tu a ficha.{0}
+84d82337	TD-M11 Plus
+c2e9d521	TD-M11Plus
+ce61cece	M11 Plus
+042aa52c	TD-M11Plus-CH16
+9a27bfb7	TD-M11Plus-CH22
+49a542b4	Três fichas, como no programa do fabricante: 199 canais, 16 canais e 22 canais (esta última só com duas potências). Não é o TD-M11 sem «Plus», que tem outra ficha. {0}
+53cecb69	TID-712Plus
+71de7a10	TD-V712 Plus
+1dfc6690	TD-V712Plus
+ae54bd33	712 Plus
+7113122f	TID-712 Plus
+852eea26	199 canais. O mesmo programa do fabricante lista também, com a mesma memória, RT128, Airmob A10 Ver 2.0, Ranger V9 e DV-4478+. {0}
+d2dc0ed8	199 canais. {0}
+c6fb99a5	Duas fichas, como no programa do fabricante: 16 canais e 22 canais. {0}
+ec05dd51	TD-FRS
+14ce1c08	TD FRS
+adcb6bfe	22 canais FRS (Estados Unidos), duas potências. {0}
+d81a9707	TD-PMR
+c413bfa6	TD PMR
+6459f22a	16 canais PMR446, duas potências. {0}
+adfbb178	TD-M2 Pro
+457ed57e	TD-M2Pro
+e16cee51	M2 Pro
+de564f6a	199 canais, só UHF (400-520 MHz no programa do fabricante). {0}
+18b12059	Desligue o rádio, ligue o cabo, ligue-o com o volume alto, num canal livre. Não está no CHIRP: ligação e memória vêm do programa do fabricante «TIDRadioCPS» (2026), que usa o mesmo mapa do TD-H3 do CHIRP, e foram testadas com um rádio simulado e com os ficheiros de fábrica do programa, não com um rádio real. Canais (frequências, tons, potência, largura de banda, pesquisa, nome) e definições gerais; bloqueio com canal ocupado, PTT-ID, salto de frequência, scrambler e modo de receção ficam como estão no canal. As versões (base, HAM, GMRS) distinguem-se pelo identificador comunicado pelo rádio: se não for a certa, o rádio não é lido.
+4f7716b6	«TD-FRS» / «TD-PMR» (versão de 25/6/2026)
+cd4fda8b	38400 baud. Protocolo e memória obtidos do programa do fabricante {0} e testados com um rádio simulado, não num rádio verdadeiro. Aqui alteram-se frequências (em passos de 1,25 kHz), tons, potência, largura de banda e pesquisa dos canais (não têm nome) e as definições gerais; o resto do canal (scrambler, PTT-ID, bloqueio em canal ocupado) não é tocado. {1}«Identificar» não distingue os modelos desta família: escolhe tu a ficha.
+c684886c	É um rádio de uso livre: fora dos seus canais e da sua potência de fábrica deixa de cumprir as normas.
+71f044ed	TIDRADIO TID-712Plus (TD-V712 Plus)
+b955ce70	QROGRAM
+50689532	TIDRADIO TD-M7
+32c37f0f	TIDRADIO TD-M11 Plus (199 canais)
+d5813cab	TIDRADIO TD-M11 Plus (16 canais)
+46c6b7f8	TIDRADIO TD-M11 Plus (22 canais)
+e3a0e6e5	TIDRADIO TD-BR09
+24f4d970	TIDRADIO TD-777S (16 canais)
+f4f83403	TIDRADIO TD-777S (22 canais)
+befebb43	TIDRADIO TD-V900
+2dae4be9	TIDRADIO TD-FRS (22 canais FRS)
+936381da	TIDRADIO TD-PMR (16 canais PMR446)
+53d01982	TIDRADIO TD-M2 Pro
+bb55d196	QROGRAO
+e4aba7c2	«TD-M2Pro» (V1.0 e V1.2)
+f01951fc	O programa só aceita frequências UHF.
+376462d7	frequência {0} MHz: o rádio só aceita passos de 1,25 kHz
+0b7d9ed8	Teclas programáveis
+fd9e406e	Pesquisa e modo de trabalho
+221815ab	Função da tecla, com os nomes do programa do fabricante.
+8c5b9131	Meteorologia
+38ea4037	10 kHz
+a92a7d97	0,5 kHz
+7fd014ec	8,33 kHz
+66752345	VFO e canais
+e6afcb70	Só canais
+1b9ae0bb	English
+bdef6388	Türkçe
+4d9184f0	Русский
+f41f19e3	Deutsch
+38008831	Español
+6ea5fa0c	Italiano
+d03483b3	Français
+63875fb8	Azul-claro
+0433fa44	Cinzento
+0c68ddec	Azul-escuro
+40b6f8ad	Verde-claro
+9be48269	Castanho
+16c60f88	Magenta
+7704ba1f	Bordô
+0ffe6745	Azul-ardósia
+879e976a	Cinzento-claro
+9669443d	Azul-ardósia claro
+9f639519	Azul-aço claro
+34a147ce	OD PTT
+09b811c1	GNSS (posição)
+4ab60a17	No TD-H3 SE a função «OD PTT» não existe.
+ea70871f	No TD-H3 SE esta opção não existe: deixa-a como está.
+c6574f94	Tecla superior, pressão curta
+c8e83f55	Tecla superior, pressão longa
+60c98f42	Sensibilidade do microfone: quanto mais alto o número, mais forte o áudio transmitido.
+fa38c884	Banda selecionada
+e182c192	Banda da última chamada recebida
+26f3c057	Transmissão com a dupla escuta
+9477264f	No fim da transmissão o rádio envia um sinal que fecha logo o squelch de quem escuta com o tom, sem o ruído final.
+33f7d5d8	Tom 1
+36f7da91	Tom 2
+92c6ff92	Transmissão na banda dos 200 MHz
+1250a55f	Entradas «TX 200», «TX 350» e «TX 500» do programa do fabricante: ativam a transmissão nessa banda.
+3aae5620	Transmissão na banda dos 350 MHz
+b72279fb	Transmissão na banda dos 500 MHz
+9698a985	Se na banda se escolhe uma frequência livre (VFO), um canal memorizado ou as duas coisas.
+e07b3cf8	Só canais (modo de canal único)
+524596b6	O rádio trabalha só nos canais memorizados.
+32bbd528	Passo de frequência da banda A
+35bbd9e1	Passo de frequência da banda B
+9edd5f1c	Quanto tempo a pesquisa fica parada, depois do fim do sinal, antes de recomeçar.
+e0868642	Enquanto ouves o rádio FM, uma chamada no canal interrompe-o e é reproduzida.
+114d998e	Ecrã ligado em transmissão
+1f56c07d	Liga o ecrã enquanto transmites.
+56e3200f	Ecrã ligado em receção
+6d3c8480	Liga o ecrã quando chega um sinal.
+167e29cc	Piscar do indicador em espera
+de896c22	Entrada «Breath Led» do programa do fabricante: de quanto em quanto tempo o indicador acende enquanto o rádio está em espera.
+978a76cd	Banda A: mostrar o nome do canal
+f947159e	Banda B: mostrar o nome do canal
+addc9894	Clássico
+078792a3	Estilo do ecrã
+e6db9cf9	Aspeto do ecrã principal (entradas «Single», «Dual» e «Classic» do programa do fabricante).
+ec0a11d4	Cor dos menus
+26fc59dd	Cor usada nos menus do rádio.
+dc7b02e9	O que o rádio mostra quando o ligas.
+a97c957b	Texto mostrado ao ligar (até 16 caracteres, sem letras acentuadas).
+92c4b828	Mensagem ao ligar, linha 3
+2e0acea8	Transmitido no ar
+bc3ed66a	Se o alarme toca só no altifalante do rádio ou se também é transmitido.
+5b0f15f8	TDCPS-{0}
+8ff788d4	programa do fabricante TIDRadioCPS
+76ef509c	Mudança de potência
+c3d3983c	Bloqueio do canal
+f6862d4a	Chamada 1
+f5862bb7	Chamada 2
+9a160905	Pesquisa de frequências
+84bc0aa8	Cópia por rádio
+49ec873a	Monitor enquanto premida
+3dbc701b	Pré-aviso do tempo máximo
+afcc8f6f	TDQ-{0}
+ab98ff6c	16 canais
+158800a5	22 canais
+7a2500e8	22 canais FRS
+fe1a1ff8	199 canais
+b8f20f9f	16 canais PMR446

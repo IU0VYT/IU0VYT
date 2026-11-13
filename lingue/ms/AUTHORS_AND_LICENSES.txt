@@ -309,6 +309,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): daripada kajian program pengeluar («RT
 «DMR RT-6D», «Radtel RT-1000 Pro CPS»), tiada apa-apa daripadanya disertakan; kod
 ditulis dari awal.
 
+TIDRADIO TID-712PLUS, TD-M7, TD-M11 PLUS, TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR,
+TD-M2 PRO (4.30): protokol, peta memori dan tetapan diperoleh dengan membaca program
+pengeluar «TD-FRS» / «TD-PMR» dan «TD-M2Pro», ditulis semula dari awal; tiada apa-apa
+daripada program itu atau failnya disertakan. Tetapan model «TIDRadioCPS» (4.29)
+diperoleh daripada program itu, dibandingkan dengan pemacu tdh8.py CHIRP.
+
 TIDRADIO TD-H3 PLUS / SE, TD-H7 PLUS, TD-H8 GENERASI KE-4, TD-H9, TD-638UV (4.29):
 pengecam, kawasan memori yang dibaca dan ditulis, penutupan sesi, tahap kuasa dan medan
 saluran diperoleh daripada pembacaan program pengeluar «TIDRadioCPS» dan ditulis semula

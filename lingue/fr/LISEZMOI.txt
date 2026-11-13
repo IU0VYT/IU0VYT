@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.29.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.30.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,16 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.30.0 :
+- Réglages généraux pour TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4e
+  génération, TD-H9 et TD-638UV : touches programmables, squelch, VOX, temps maximal
+  d'émission, écran, langue, messages d'allumage, etc.
+- Nouvelles radios (canaux et réglages) : TIDRADIO TID-712Plus, TD-M7, TD-M11 Plus,
+  TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR et TD-M2 Pro. Elles viennent des programmes
+  du constructeur et ne sont pas encore testées avec une vraie radio : faites d'abord
+  une simple lecture. « Identifier » ne les distingue pas : choisissez vous-même la
+  fiche.
+- Galerie : 625 modèles de 52 marques (571 avec canaux, 491 avec réglages).
 Nouveautés de la 4.29.0 :
 - Nouvelles radios (canaux seulement) : TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8
   de 4e génération, TD-H9 et TD-638UV, chacune dans les versions de base, HAM et GMRS.

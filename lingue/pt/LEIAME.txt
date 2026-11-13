@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.29.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.30.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,15 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.30.0:
+- Definições gerais para TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª
+  geração, TD-H9 e TD-638UV: teclas programáveis, squelch, VOX, tempo máximo de
+  transmissão, ecrã, idioma, mensagens ao ligar e mais.
+- Rádios novos (canais e definições): TIDRADIO TID-712Plus, TD-M7, TD-M11 Plus, TD-BR09,
+  TD-777S, TD-V900, TD-FRS, TD-PMR e TD-M2 Pro. Vêm dos programas do fabricante e ainda
+  não foram testados com um rádio verdadeiro: faz primeiro só a leitura. «Identificar»
+  não os distingue: escolhe tu a ficha.
+- Galeria: 625 modelos de 52 marcas (571 com canais, 491 com definições).
 Novidades da 4.29.0:
 - Rádios novos (só canais): TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª
   geração, TD-H9 e TD-638UV, cada um nas versões base, HAM e GMRS. Vêm do programa de

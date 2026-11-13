@@ -7,6 +7,29 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.30.0 (12/11/2026)
+-------------------
+- Réglages généraux des TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4e
+  génération, TD-H9 et TD-638UV (settings_tdcps.go) : 45 entrées, 47 là où il y a une
+  touche supérieure. Adresses et bits viennent de la fenêtre « Optional Settings » du
+  programme du constructeur « TIDRadioCPS » et coïncident, entrée par entrée, avec la
+  structure du TD-H3 du pilote tdh8.py de CHIRP. Chaque entrée ne change que ses propres
+  bits. Non proposés, parce que les deux sources divergent ou que le programme ne les
+  montre pas : mode de la radio FM, bits HAM/GMRS, limites de bande et du balayage VFO,
+  canal courant, entrées DTMF, blocage à distance. Vérifié sur les fichiers d'usine du
+  programme.
+- Nouvelle famille « tdq » (drv_tdq.go, settings_tdq.go) : TIDRADIO TID-712Plus, TD-M7,
+  TD-M11 Plus, TD-BR09, TD-777S, TD-V900, TD-FRS, TD-PMR et TD-M2 Pro, 12 fiches avec
+  canaux et réglages généraux, d'après les programmes du constructeur « TD-FRS » / «
+  TD-PMR » (25/6/2026) et « TD-M2Pro ». 38400 bauds ; clé « QROGRAM » (« QROGRAO » pour
+  le TD-M2 Pro) → 07 ; « 123456 » + 7 octets FF → 55 ; 08 → un octet ; 52 + addr + 40 →
+  4 + 64; 57 + addr + 10 + 16 → 08. Mémoire 0x000-0xE7F : 200 canaux de 16 octets,
+  réglages en 0xC80. Limites du programme : 136-174 et 400-520 MHz (TD-M2 Pro UHF
+  seulement), pas de 1,25 kHz. Vérifications : valeurs calculées à la main, fichiers
+  d'usine PMR et FRS du programme, radio simulée, « go vet » pour Windows. Reste à faire
+  avec les paquets TIDRADIO : TD-V2, TD-M8S, « H8_4829 », DP712. Comptes : 571 radios,
+  491 avec réglages, 625 dans la galerie, 52 marques. Traductions : 134 nouveaux textes.
+
 4.29.0 (12/11/2026)
 -------------------
 - TIDRADIO TD-H3 Plus et TD-H3 SE, TD-H7 Plus, TD-H8 de 4e génération, TD-H9 et TD-638UV
