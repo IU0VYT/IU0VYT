@@ -5640,3 +5640,25 @@ f217e6d3	背光颜色
 13b70667	显示屏灯光的颜色。
 5fc6890d	V1.10 之前的固件
 6f039420	固件 V1.10，有名称
+2947fcff	TD-H3 Plus
+3cdbc404	H3 Plus
+4ce6fa44	TDH3 Plus
+2cc4525a	TD-H3 SE Mini
+ba5b852d	199 个信道，仅信道（不含设置）。三张卡片：基本版、HAM 和 GMRS；读取对讲机时程序会识别版本。它的识别码与 TD-H3 相同，但有三档功率：请使用这些卡片，而不是 TD-H3 的卡片。CHIRP 中没有。{0}
+d4ecc743	TD-H7 Plus
+cfa006a0	H7 Plus
+b5e694e0	TDH7 Plus
+455a0d5f	199 个信道，仅信道（不含设置）。三张卡片：基本版、HAM 和 GMRS；读取对讲机时程序会识别版本。CHIRP 中没有。{0}
+a7fd409e	TD-H8（第四代）
+43f19b72	TD-H8 4th Gen
+70b88cf4	TD-H8 第 4 代
+3fcc8030	199 个信道，仅信道（不含设置）。三张卡片：基本版、HAM 和 GMRS；读取对讲机时程序会识别版本。前三代 TD-H8 请使用「TD-H8」卡片。CHIRP 中没有。{0}
+93f0a7aa	TIDRADIO TD-H3 Plus / TD-H3 SE
+9ecdfa55	TIDRADIO TD-H7 Plus
+479cc1fc	TIDRADIO TD-H8（第四代）
+d67023e9	TIDRADIO TD-H9
+1a1a246c	TIDRADIO TD-638UV
+934f88cf	{0} HAM
+93054cc8	{0} GMRS
+167d24be	关闭对讲机，接上数据线，在空闲信道上以大音量开机。CHIRP 中没有：连接和存储器取自制造商程序「TIDRadioCPS」（2026），它使用与 CHIRP 中 TD-H3 相同的存储器布局，并已用模拟对讲机和该程序的出厂文件测试，未在真实对讲机上测试。仅信道（频率、亚音、功率、带宽、扫描、名称）；信道占用锁定、PTT-ID、跳频、扰频和接收模式保持信道中的原样。各版本（基本版、HAM、GMRS）靠对讲机报告的识别码区分：如果不是正确的版本，对讲机不会被读取。
+3f23af0c	第四代

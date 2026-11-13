@@ -23,6 +23,10 @@ type tdh8Emu struct {
 	mu  sync.Mutex
 	m   *genModel
 	img []byte // immagine come quella di CHIRP: identificativo (8 byte) + dati
+	// per le prove: come è stato chiuso l'ultimo collegamento ('E' o 'C') e quante
+	// volte è stata letta la versione del firmware (0x1B40)
+	end     byte
+	fwReads int
 }
 
 func (tdh8Fam) emu(m *genModel, img []byte) genEmu {
@@ -63,6 +67,21 @@ func (e *tdh8Emu) serve(p Port) error {
 	for {
 		c, err := emuByte(p)
 		if err != nil || c == 'E' {
+			if err == nil {
+				e.mu.Lock()
+				e.end = 'E'
+				e.mu.Unlock()
+			}
+			return nil
+		}
+		if c == 'C' { // chiusura del programma del 2026: blocco di 32 byte «CE» + zeri
+			rest, err := emuRead(p, 31)
+			if err != nil || rest[0] != 'E' {
+				return fmt.Errorf("blocco di chiusura errato")
+			}
+			e.mu.Lock()
+			e.end = 'C'
+			e.mu.Unlock()
 			return nil
 		}
 		h, err := emuRead(p, 3)
@@ -74,6 +93,9 @@ func (e *tdh8Emu) serve(p Port) error {
 		case 'R':
 			d := bytes.Repeat([]byte{0xFF}, n)
 			e.mu.Lock()
+			if addr == 0x1B40 {
+				e.fwReads++
+			}
 			if 8+addr < len(e.img) {
 				copy(d, e.img[8+addr:])
 			}

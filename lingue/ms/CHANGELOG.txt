@@ -6,6 +6,33 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.29.0 (12/11/2026)
+-------------------
+- TIDRADIO TD-H3 Plus dan TD-H3 SE, TD-H7 Plus, TD-H8 generasi ke-4, TD-H9 dan TD-638UV
+  (saluran sahaja): 15 kad baharu (asas, HAM dan GMRS bagi setiap satu) dalam
+  drv_tdh8.go. Daripada program pengeluar «TIDRadioCPS» (versi dari 23/1 hingga
+  27/7/2026): sambungan yang sama seperti TD-H3 dan peta memori yang sama seperti TD-H3
+  dalam CHIRP (saluran dari 0x0010, nama dari 0x0D40, saluran terpakai pada 0x1900,
+  imbasan pada 0x1920). Perbezaan yang diambil daripada program: pengecam (P31183 /
+  P31185 / P31184 untuk H3 Plus dan SE; «TDH7PLU», «TDH84GE», «TDH9», «TD638UV» diikuti
+  N, H atau G), alamat 0x0000-0x1F3F dibaca dan ditulis, versi perisian tegar tidak
+  dibaca sebelum menulis, sesi ditutup dengan blok 32 bait «CE», tiga tahap kuasa (0
+  rendah, 1 sederhana, 2 tinggi), saluran kosong mempunyai frekuensi sifar dan tidak
+  ditanda sebagai terpakai, dan dua medan tambahan dalam saluran (kumpulan pengacak, mod
+  terima) dikekalkan. Had: asas 108-174 dan 200-600 MHz (108-136 terima sahaja), HAM
+  pancar 144-148 dan 420-450 MHz.
+- Semakan: 15 fail kilang yang disertakan dalam program dibaca sepenuhnya (32 atau 41
+  saluran setiap satu, sama banyak dengan saluran yang ditanda sebagai terpakai, tiada
+  frekuensi di luar julat) dan ditulis semula saluran demi saluran tanpa perbezaan,
+  kecuali saluran cuaca versi HAM yang menjadi terima sahaja; pengekodan CTCSS dan DCS
+  disemak semula dalam kod program; radio simulasi; model CHIRP keluarga yang sama tidak
+  berubah. Tidak ditambah: model H4 dan H11 daripada program yang sama (tiada fail
+  kilang dalam pakej) dan tetapan umum model-model ini. Sudah disokong dan disemak
+  semula dengan pakej TIDRADIO: TD-H8 tiga generasi pertama, TD-H3, TD-M11 22 saluran,
+  TD-M8. Masih perlu dikaji: TD-M2Pro, TD-FRS / TD-PMR, TD-V2, TD-M8s, DP712. Kiraan:
+  562 radio, 476 dengan tetapan, 616 dalam galeri, 52 jenama. Terjemahan: 24 teks
+  baharu.
+
 4.28.0 (12/11/2026)
 -------------------
 - Radioddity UB15-G, DB35-G (programnya bernama «DB-35G»), DB35-UV dan DB40-G, radio

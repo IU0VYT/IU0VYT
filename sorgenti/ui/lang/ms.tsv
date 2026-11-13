@@ -5640,3 +5640,25 @@ f217e6d3	Warna lampu latar
 13b70667	Warna cahaya paparan.
 5fc6890d	perisian tegar sebelum V1.10
 6f039420	perisian tegar V1.10, dengan nama
+2947fcff	TD-H3 Plus
+3cdbc404	H3 Plus
+4ce6fa44	TDH3 Plus
+2cc4525a	TD-H3 SE Mini
+ba5b852d	199 saluran, saluran sahaja (bukan tetapan). Tiga kad: asas, HAM dan GMRS; semasa membaca radio, program mengenal pasti versinya. Ia memperkenalkan diri seperti TD-H3, tetapi mempunyai tiga tahap kuasa: gunakan kad ini dan bukan kad TD-H3. Tiada dalam CHIRP.{0}
+d4ecc743	TD-H7 Plus
+cfa006a0	H7 Plus
+b5e694e0	TDH7 Plus
+455a0d5f	199 saluran, saluran sahaja (bukan tetapan). Tiga kad: asas, HAM dan GMRS; semasa membaca radio, program mengenal pasti versinya. Tiada dalam CHIRP.{0}
+a7fd409e	TD-H8 (generasi ke-4)
+43f19b72	TD-H8 4th Gen
+70b88cf4	TD-H8 gen. ke-4
+3fcc8030	199 saluran, saluran sahaja (bukan tetapan). Tiga kad: asas, HAM dan GMRS; semasa membaca radio, program mengenal pasti versinya. Untuk TD-H8 tiga generasi pertama gunakan kad «TD-H8». Tiada dalam CHIRP.{0}
+93f0a7aa	TIDRADIO TD-H3 Plus / TD-H3 SE
+9ecdfa55	TIDRADIO TD-H7 Plus
+479cc1fc	TIDRADIO TD-H8 (generasi ke-4)
+d67023e9	TIDRADIO TD-H9
+1a1a246c	TIDRADIO TD-638UV
+934f88cf	{0} HAM
+93054cc8	{0} GMRS
+167d24be	Matikan radio, sambungkan kabel, hidupkannya dengan kelantangan tinggi pada saluran kosong. Tiada dalam CHIRP: sambungan dan memori diperoleh daripada program pengeluar «TIDRadioCPS» (2026), yang menggunakan peta memori yang sama seperti TD-H3 dalam CHIRP, dan diuji dengan radio simulasi serta fail kilang program itu, bukan radio sebenar. Saluran sahaja (frekuensi, nada, kuasa, lebar jalur, imbasan, nama); kunci saluran sibuk, PTT-ID, lompatan frekuensi, pengacak dan mod terima kekal seperti dalam saluran. Versi (asas, HAM, GMRS) dibezakan melalui pengecam yang dilaporkan radio: jika bukan yang betul, radio tidak dibaca.
+3f23af0c	Generasi ke-4

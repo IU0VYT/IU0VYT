@@ -307,6 +307,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): from the study of the manufacturer's pr
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), of which nothing is included; the
 code is written from scratch.
 
+TIDRADIO TD-H3 PLUS / SE, TD-H7 PLUS, TD-H8 4TH GENERATION, TD-H9, TD-638UV (4.29):
+identifiers, memory ranges read and written, end of session, power levels and channel
+fields come from reading the manufacturer's program «TIDRadioCPS» and were rewritten
+from scratch; nothing of that program or of its files is included. The channel map is
+that of the TD-H3 in CHIRP's tdh8.py driver, already used (see above).
+
 RADIODDITY UB15-G, DB35-G, DB35-UV AND DB40-G (4.28): protocol, memory and settings come
 from reading the manufacturer's program and its configuration file, rewritten from
 scratch; nothing of that program is included. The DB40-G is also in CHIRP

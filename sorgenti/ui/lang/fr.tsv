@@ -5640,3 +5640,25 @@ f217e6d3	Couleur du rétroéclairage
 13b70667	Couleur de la lumière de l'écran.
 5fc6890d	firmware avant la V1.10
 6f039420	firmware V1.10, avec les noms
+2947fcff	TD-H3 Plus
+3cdbc404	H3 Plus
+4ce6fa44	TDH3 Plus
+2cc4525a	TD-H3 SE Mini
+ba5b852d	199 canaux, canaux seulement (pas les réglages). Trois fiches : base, HAM et GMRS ; en lisant la radio le programme reconnaît la version. Elle se présente comme la TD-H3, mais elle a trois puissances : utilisez ces fiches et non celles de la TD-H3. Absent de CHIRP.{0}
+d4ecc743	TD-H7 Plus
+cfa006a0	H7 Plus
+b5e694e0	TDH7 Plus
+455a0d5f	199 canaux, canaux seulement (pas les réglages). Trois fiches : base, HAM et GMRS ; en lisant la radio le programme reconnaît la version. Absent de CHIRP.{0}
+a7fd409e	TD-H8 (4e génération)
+43f19b72	TD-H8 4th Gen
+70b88cf4	TD-H8 4e gén.
+3fcc8030	199 canaux, canaux seulement (pas les réglages). Trois fiches : base, HAM et GMRS ; en lisant la radio le programme reconnaît la version. Pour les TD-H8 des trois premières générations, utilisez la fiche « TD-H8 ». Absent de CHIRP.{0}
+93f0a7aa	TIDRADIO TD-H3 Plus / TD-H3 SE
+9ecdfa55	TIDRADIO TD-H7 Plus
+479cc1fc	TIDRADIO TD-H8 (4e génération)
+d67023e9	TIDRADIO TD-H9
+1a1a246c	TIDRADIO TD-638UV
+934f88cf	{0} HAM
+93054cc8	{0} GMRS
+167d24be	Éteignez la radio, branchez le câble, allumez-la avec le volume fort, sur un canal libre. Absent de CHIRP : connexion et mémoire viennent du programme du constructeur « TIDRadioCPS » (2026), qui utilise la même carte mémoire que la TD-H3 de CHIRP, et sont essayées avec une radio simulée et avec les fichiers d'usine du programme, pas sur une vraie radio. Canaux seulement (fréquences, tonalités, puissance, largeur de bande, balayage, nom) ; blocage sur canal occupé, PTT-ID, saut de fréquence, brouilleur et mode de réception restent ceux du canal. Les versions (base, HAM, GMRS) se distinguent par l'identifiant communiqué par la radio : si ce n'est pas la bonne, la radio n'est pas lue.
+3f23af0c	4e génération

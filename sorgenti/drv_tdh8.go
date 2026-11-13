@@ -117,6 +117,24 @@ type tdh8Opt struct {
 	// 31-54 simplex o +5 MHz (TD-H8 GMRS), "all" tutti i canali (TD-H8 GMRS di
 	// terza generazione), "" nessuna (TD-H3 GMRS)
 	gmrsDup string
+	// cps26: modelli del programma «TIDRadioCPS» del 2026 (TD-H3 Plus / SE, H7 Plus,
+	// H8 di quarta generazione, H9, 638UV), non in CHIRP. Stessa mappa della TD-H3;
+	// il programma legge e scrive 0x0000-0x1F3F, non legge la versione del firmware
+	// prima di scrivere, chiude con un blocco di 32 byte «CE» e nel canale ha due
+	// campi in più (gruppo dello scrambler nel byte 12, modo di ricezione nei bit 0-1
+	// del byte 15) che qui si conservano.
+	cps26 bool
+}
+
+// tdh8End: chiusura del collegamento. CHIRP manda 'E'; il programma del 2026 manda
+// un blocco di 32 byte che comincia con «CE» (anche dopo la lettura).
+func tdh8End(p Port, o *tdh8Opt, afterRead bool) {
+	switch {
+	case o.cps26:
+		_ = p.Write(append([]byte{'C', 'E'}, make([]byte, 30)...))
+	case !afterRead:
+		_ = p.Write([]byte{'E'})
+	}
 }
 
 // frequenze GMRS (bandplan_na.ALL_GMRS_FREQS di CHIRP)
@@ -172,7 +190,7 @@ func (o *tdh8Opt) rxOnly(hz int64) bool { return tdh8In(hz, o.rx) && !tdh8In(hz,
 func (f tdh8Fam) Get(m *genModel, img []byte, i int) *Chan {
 	o := tdh8o(m)
 	r := f.rec(m, i)
-	if r.Raw(img)[0] == 0xFF {
+	if r.Raw(img)[0] == 0xFF || f.cps26Empty(m, img, i) {
 		return nil
 	}
 	c := &Chan{Rx: r.F("rxfreq").Int(img) * 10}
@@ -213,12 +231,30 @@ func (f tdh8Fam) Get(m *genModel, img []byte, i int) *Chan {
 	return c
 }
 
+// cps26Empty: nei modelli del programma del 2026 un canale è vuoto anche quando non è
+// segnato fra quelli usati o ha la ricezione a zero (è così che il programma scrive i
+// canali vuoti: 8 byte a 00, toni FF FF FF FF, il resto a 00).
+func (f tdh8Fam) cps26Empty(m *genModel, img []byte, i int) bool {
+	if !tdh8o(m).cps26 {
+		return false
+	}
+	r := f.rec(m, i)
+	return !f.mem(m).F("usedflags").I(i).Bool(img) || bytes.Equal(r.F("rxfreq").Raw(img), []byte{0, 0, 0, 0})
+}
+
 func (f tdh8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	o := tdh8o(m)
 	mm := f.mem(m)
 	r := f.rec(m, i)
+	wasEmpty := r.Raw(img)[0] == 0xFF || f.cps26Empty(m, img, i)
 	mm.F("usedflags").I(i).SetBool(img, c != nil)
 	if c == nil {
+		if o.cps26 { // come il programma: frequenze a zero, nessun tono, nome vuoto, fuori dalla scansione
+			r.SetRaw(img, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0})
+			f.name(m, i).Fill(img, 0x00)
+			mm.F("scanadd").I(i).SetBool(img, false)
+			return nil
+		}
 		r.Fill(img, 0xFF)
 		return nil
 	}
@@ -232,7 +268,7 @@ func (f tdh8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	}
 	// impostazioni del canale che CHIRP conserva (mem.extra)
 	var pttid, bcl, freqhop int64
-	wasEmpty := r.Raw(img)[0] == 0xFF
+	old := append([]byte{}, r.Raw(img)...)
 	if !wasEmpty {
 		bcl = r.F("bcl").Int(img)
 		if !o.rt730 {
@@ -252,9 +288,14 @@ func (f tdh8Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	// modo: FM → wide 0, NFM (e AM in banda aerea) → wide 1
 	r.F("wide").SetBool(img, c.Narrow || (c.Rx >= tdh8Air.Lo && c.Rx <= tdh8Air.Hi))
 	r.F("lowpower").SetInt(img, o.pow[m.powerIndex(c.Power)])
+	if o.cps26 && !wasEmpty { // gruppo dello scrambler e modo di ricezione restano quelli del canale
+		cur := append([]byte{}, r.Raw(img)...)
+		cur[12], cur[15] = old[12], old[15]
+		r.SetRaw(img, cur)
+	}
 	mm.F("scanadd").I(i).SetBool(img, c.Scan)
 	if !wasEmpty {
-		if string(o.ident) == "P31184\xff\xff" && i+1 >= 189 && i+1 <= 199 {
+		if !o.cps26 && string(o.ident) == "P31184\xff\xff" && i+1 >= 189 && i+1 <= 199 {
 			pttid, bcl, freqhop = 0, 0, 0
 		}
 		r.F("bcl").SetInt(img, bcl)
@@ -401,6 +442,7 @@ func (f tdh8Fam) Download(ctx context.Context, m *genModel, port string, prog Pr
 		}
 		data = append(data, b...)
 	}
+	tdh8End(p, o, true)
 	prog(o.memsize, o.memsize, "Lettura completata")
 	return data, "", nil
 }
@@ -448,7 +490,7 @@ func (f tdh8Fam) Upload(ctx context.Context, m *genModel, port string, img []byt
 			return "", genFail(fmt.Sprintf("Scrittura (0x%04X)", a), err)
 		}
 	}
-	_ = p.Write([]byte{'E'})
+	tdh8End(p, o, false)
 	prog(o.memsize, o.memsize, "Scrittura completata")
 	return "", nil
 }
@@ -524,6 +566,61 @@ func init() {
 			Charset: charsetAlnum + "!@#$%^&*()+-=[]:\";'<>?,./",
 			Powers:  x.powers, Bands: bands, Narrow: true, HasScan: true,
 			DCS: dtcsCodes, Baud: 38400, Fam: tdh8Fam{}, Opt: o, Notes: note})
+	}
+}
+
+// Modelli del programma «TIDRadioCPS» (versioni dal 23/1 al 27/7/2026), che non sono
+// in CHIRP. Il programma è uno solo per tutti: stesso saluto della TD-H3, canali da
+// 0x0010, nomi da 0x0D40, canali usati a 0x1900 e scansione a 0x1920 (cioè la mappa
+// della TD-H3 di CHIRP), tre potenze (0 bassa, 1 media, 2 alta), bit 3 del byte 14 a
+// 1 = banda stretta. Identificativi presi dalla tabella del programma
+// (GetSupportedVersions); i limiti di frequenza da ValidateFrequencyByDeviceModel
+// (base: 108-174 e 200-600 MHz; HAM: trasmissione 144-148 e 420-450 MHz), con la
+// banda aerea 108-136 MHz in sola ricezione come nella TD-H3. TD-H3 Plus e TD-H3 SE
+// si presentano come la TD-H3 (P31183 / P31185 / P31184): la differenza è nelle tre
+// potenze. I modelli H4 e H11 dello stesso programma (banda larga 18-800 MHz) non
+// hanno un file di fabbrica nel pacchetto e non sono stati aggiunti.
+func init() {
+	const magic = "PVOJH\x5c\x14"
+	mhz := func(l ...float64) []band {
+		var out []band
+		for k := 0; k+1 < len(l); k += 2 {
+			out = append(out, band{int64(math.Round(l[k] * 1e6)), int64(math.Round(l[k+1] * 1e6))})
+		}
+		return out
+	}
+	rx := mhz(108, 174, 200, 600)
+	type v struct{ id, model, name, n, h, g string }
+	list := []v{
+		{"td-h3plus", "TD-H3 Plus", "TIDRADIO TD-H3 Plus / TD-H3 SE", "P31183\xff\xff", "P31185\xff\xff", "P31184\xff\xff"},
+		{"td-h7plus", "TD-H7 Plus", "TIDRADIO TD-H7 Plus", "TDH7PLUN", "TDH7PLUH", "TDH7PLUG"},
+		{"td-h8g4", "TD-H8", "TIDRADIO TD-H8 (4ª generazione)", "TDH84GEN", "TDH84GEH", "TDH84GEG"},
+		{"td-h9", "TD-H9", "TIDRADIO TD-H9", "TDH9\xff\xff\xffN", "TDH9\xff\xff\xffH", "TDH9\xff\xff\xffG"},
+		{"td-638uv", "TD-638UV", "TIDRADIO TD-638UV", "TD638UVN", "TD638UVH", "TD638UVG"},
+	}
+	for _, x := range list {
+		for k, ident := range []string{x.n, x.h, x.g} {
+			id, name, tx := x.id, x.name, mhz(136, 174, 200, 600)
+			switch k {
+			case 1:
+				id, name, tx = id+"ham", name+" HAM", mhz(144, 148, 420, 450)
+			case 2:
+				id, name = id+"gmrs", name+" GMRS"
+			}
+			o := &tdh8Opt{magic: []byte(magic), ident: []byte(ident), memsize: 0x1F30, flags: 0x1908,
+				pow: []int64{0, 1, 2}, tx: tx, rx: rx, cps26: true}
+			genRegister(&genModel{ID: id, Vendor: "TIDRADIO", Model: x.model, RClass: "TDH3", NoChirp: true,
+				Name: name, Slots: 199, First: 1, NameMax: 8,
+				Charset: charsetAlnum + "!@#$%^&*()+-=[]:\";'<>?,./",
+				Powers:  []genPower{{"Bassa", 0, 2}, {"Media", 0, 1}, {"Alta", 0, 0}},
+				Bands:   append(append([]band{}, tx...), rx...), Narrow: true, HasScan: true,
+				DCS: dtcsCodes, Baud: 38400, Fam: tdh8Fam{}, Opt: o,
+				Notes: "Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria " +
+					"vengono dal programma del costruttore «TIDRadioCPS» (2026), che usa la stessa mappa della TD-H3 di CHIRP, e sono provati con una radio " +
+					"simulata e con i file di fabbrica del programma, non su una radio vera. Solo canali (frequenze, toni, potenza, banda, scansione, nome); " +
+					"blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, " +
+					"GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta."})
+		}
 	}
 }
 

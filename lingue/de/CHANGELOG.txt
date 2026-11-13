@@ -7,6 +7,33 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.29.0 (12.11.2026)
+-------------------
+- TIDRADIO TD-H3 Plus und TD-H3 SE, TD-H7 Plus, TD-H8 der 4. Generation, TD-H9 und
+  TD-638UV (nur Kanäle): 15 neue Karten (Basis, HAM und GMRS für jedes) in drv_tdh8.go.
+  Aus dem Herstellerprogramm «TIDRadioCPS» (Versionen vom 23.1. bis 27.7.2026): gleiche
+  Verbindung wie beim TD-H3 und gleiche Speicherbelegung wie beim TD-H3 von CHIRP
+  (Kanäle ab 0x0010, Namen ab 0x0D40, benutzte Kanäle bei 0x1900, Suchlauf bei 0x1920).
+  Unterschiede aus dem Programm: Kennungen (P31183 / P31185 / P31184 für H3 Plus und SE;
+  «TDH7PLU», «TDH84GE», «TDH9», «TD638UV» gefolgt von N, H oder G), gelesen und
+  geschrieben werden die Adressen 0x0000-0x1F3F, die Firmware-Version wird vor dem
+  Schreiben nicht gelesen, die Sitzung endet mit einem 32-Byte-Block «CE», drei
+  Leistungsstufen (0 niedrig, 1 mittel, 2 hoch), ein leerer Kanal hat Frequenzen auf
+  null und ist nicht als benutzt markiert, und zwei weitere Felder des Kanals
+  (Scrambler-Gruppe, Empfangsart) bleiben erhalten. Grenzen: Basis 108-174 und 200-600
+  MHz (108-136 nur Empfang), HAM Senden 144-148 und 420-450 MHz.
+- Prüfungen: die 15 im Programm enthaltenen Werksdateien wurden vollständig gelesen (je
+  32 oder 41 Kanäle, so viele wie als benutzt markiert, keine Frequenz außerhalb des
+  Bereichs) und Kanal für Kanal ohne Unterschiede neu geschrieben, außer den
+  Wetterkanälen der HAM-Versionen, die zu reinen Empfangskanälen werden; CTCSS- und
+  DCS-Kodierung im Programmcode nachgeprüft; simuliertes Funkgerät; die CHIRP-Modelle
+  derselben Familie sind unverändert. Nicht hinzugefügt: die Modelle H4 und H11
+  desselben Programms (keine Werksdatei im Paket) und die allgemeinen Einstellungen
+  dieser Modelle. Bereits unterstützt und mit den TIDRADIO-Paketen nachgeprüft: TD-H8
+  der ersten drei Generationen, TD-H3, TD-M11 mit 22 Kanälen, TD-M8. Noch zu
+  untersuchen: TD-M2Pro, TD-FRS / TD-PMR, TD-V2, TD-M8s, DP712. Zahlen: 562 Funkgeräte,
+  476 mit Einstellungen, 616 in der Galerie, 52 Marken. Übersetzungen: 24 neue Texte.
+
 4.28.0 (12.11.2026)
 -------------------
 - Radioddity UB15-G, DB35-G (das Programm heißt «DB-35G»), DB35-UV und DB40-G,

@@ -7,6 +7,31 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.29.0 (12/11/2026)
+-------------------
+- TIDRADIO TD-H3 Plus e TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª geração, TD-H9 e TD-638UV (só
+  canais): 15 fichas novas (base, HAM e GMRS para cada um) em drv_tdh8.go. Do programa
+  do fabricante «TIDRadioCPS» (versões de 23/1 a 27/7/2026): mesma ligação do TD-H3 e
+  mesmo mapa de memória do TD-H3 do CHIRP (canais a partir de 0x0010, nomes a partir de
+  0x0D40, canais usados em 0x1900, pesquisa em 0x1920). Diferenças tiradas do programa:
+  identificadores (P31183 / P31185 / P31184 para H3 Plus e SE; «TDH7PLU», «TDH84GE»,
+  «TDH9», «TD638UV» seguidos de N, H ou G), leem-se e escrevem-se os endereços
+  0x0000-0x1F3F, a versão do firmware não é lida antes de escrever, a sessão fecha-se
+  com um bloco de 32 bytes «CE», três potências (0 baixa, 1 média, 2 alta), um canal
+  vazio tem as frequências a zero e não está marcado como usado, e conservam-se mais
+  dois campos do canal (grupo do scrambler, modo de receção). Limites: base 108-174 e
+  200-600 MHz (108-136 só receção), HAM transmissão 144-148 e 420-450 MHz.
+- Verificações: os 15 ficheiros de fábrica incluídos no programa foram lidos por inteiro
+  (32 ou 41 canais cada um, tantos quantos os canais marcados como usados, nenhuma
+  frequência fora da gama) e reescritos canal a canal sem diferenças, exceto os canais
+  meteorológicos das versões HAM, que passam a só receção; codificação CTCSS e DCS
+  revista no código do programa; rádio simulado; os modelos do CHIRP da mesma família
+  não mudam. Não adicionados: os modelos H4 e H11 do mesmo programa (sem ficheiro de
+  fábrica no pacote) e as definições gerais destes modelos. Já suportados e revistos com
+  os pacotes da TIDRADIO: TD-H8 das três primeiras gerações, TD-H3, TD-M11 de 22 canais,
+  TD-M8. Por estudar: TD-M2Pro, TD-FRS / TD-PMR, TD-V2, TD-M8s, DP712. Contagens: 562
+  rádios, 476 com definições, 616 na galeria, 52 marcas. Traduções: 24 textos novos.
+
 4.28.0 (12/11/2026)
 -------------------
 - Radioddity UB15-G, DB35-G (o programa chama-se «DB-35G»), DB35-UV e DB40-G, rádios

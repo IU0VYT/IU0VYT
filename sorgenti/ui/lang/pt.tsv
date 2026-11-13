@@ -5640,3 +5640,25 @@ f217e6d3	Cor da retroiluminação
 13b70667	Cor da luz do ecrã.
 5fc6890d	firmware anterior à V1.10
 6f039420	firmware V1.10, com nomes
+2947fcff	TD-H3 Plus
+3cdbc404	H3 Plus
+4ce6fa44	TDH3 Plus
+2cc4525a	TD-H3 SE Mini
+ba5b852d	199 canais, só canais (não as definições). Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Apresenta-se como o TD-H3, mas tem três potências: use estas fichas e não as do TD-H3. Não está no CHIRP.{0}
+d4ecc743	TD-H7 Plus
+cfa006a0	H7 Plus
+b5e694e0	TDH7 Plus
+455a0d5f	199 canais, só canais (não as definições). Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Não está no CHIRP.{0}
+a7fd409e	TD-H8 (4.ª geração)
+43f19b72	TD-H8 4th Gen
+70b88cf4	TD-H8 4.ª ger.
+3fcc8030	199 canais, só canais (não as definições). Três fichas: base, HAM e GMRS; ao ler o rádio o programa reconhece a versão. Para os TD-H8 das três primeiras gerações use a ficha «TD-H8». Não está no CHIRP.{0}
+93f0a7aa	TIDRADIO TD-H3 Plus / TD-H3 SE
+9ecdfa55	TIDRADIO TD-H7 Plus
+479cc1fc	TIDRADIO TD-H8 (4.ª geração)
+d67023e9	TIDRADIO TD-H9
+1a1a246c	TIDRADIO TD-638UV
+934f88cf	{0} HAM
+93054cc8	{0} GMRS
+167d24be	Desligue o rádio, ligue o cabo, ligue-o com o volume alto, num canal livre. Não está no CHIRP: ligação e memória vêm do programa do fabricante «TIDRadioCPS» (2026), que usa o mesmo mapa do TD-H3 do CHIRP, e foram testadas com um rádio simulado e com os ficheiros de fábrica do programa, não com um rádio real. Só canais (frequências, tons, potência, largura de banda, pesquisa, nome); bloqueio com canal ocupado, PTT-ID, salto de frequência, scrambler e modo de receção ficam como estão no canal. As versões (base, HAM, GMRS) distinguem-se pelo identificador comunicado pelo rádio: se não for a certa, o rádio não é lido.
+3f23af0c	4.ª geração

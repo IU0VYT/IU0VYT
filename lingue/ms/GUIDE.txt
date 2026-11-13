@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.28.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.29.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,13 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.29.0:
+- Radio baharu (saluran sahaja): TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8
+  generasi ke-4, TD-H9 dan TD-638UV, setiap satu dalam versi asas, HAM dan GMRS. Ia
+  diperoleh daripada program pengeluar tahun 2026 dan belum diuji dengan radio sebenar:
+  buat bacaan sahaja dahulu. TD-H3 Plus memperkenalkan diri seperti TD-H3: gunakan kad
+  «TD-H3 Plus», kerana ia mempunyai tiga tahap kuasa.
+- Galeri: 616 model daripada 52 jenama (562 dengan saluran, 476 dengan tetapan).
 Baharu dalam 4.28.0:
 - Radio baharu: Radioddity UB15-G, DB35-G, DB35-UV dan DB40-G (radio kenderaan), dengan
   saluran dan tetapan umum. Ia diperoleh daripada program pengeluar dan fail

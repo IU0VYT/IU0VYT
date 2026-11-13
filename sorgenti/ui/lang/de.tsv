@@ -5640,3 +5640,25 @@ f217e6d3	Farbe der Hintergrundbeleuchtung
 13b70667	Farbe des Displaylichts.
 5fc6890d	Firmware vor V1.10
 6f039420	Firmware V1.10, mit Namen
+2947fcff	TD-H3 Plus
+3cdbc404	H3 Plus
+4ce6fa44	TDH3 Plus
+2cc4525a	TD-H3 SE Mini
+ba5b852d	199 Kanäle, nur Kanäle (nicht die Einstellungen). Drei Karten: Basis, HAM und GMRS; beim Lesen des Funkgeräts erkennt das Programm die Version. Es meldet sich wie das TD-H3, hat aber drei Leistungsstufen: nimm diese Karten und nicht die des TD-H3. Nicht in CHIRP.{0}
+d4ecc743	TD-H7 Plus
+cfa006a0	H7 Plus
+b5e694e0	TDH7 Plus
+455a0d5f	199 Kanäle, nur Kanäle (nicht die Einstellungen). Drei Karten: Basis, HAM und GMRS; beim Lesen des Funkgeräts erkennt das Programm die Version. Nicht in CHIRP.{0}
+a7fd409e	TD-H8 (4. Generation)
+43f19b72	TD-H8 4th Gen
+70b88cf4	TD-H8 4. Gen.
+3fcc8030	199 Kanäle, nur Kanäle (nicht die Einstellungen). Drei Karten: Basis, HAM und GMRS; beim Lesen des Funkgeräts erkennt das Programm die Version. Für die TD-H8 der ersten drei Generationen nimm die Karte «TD-H8». Nicht in CHIRP.{0}
+93f0a7aa	TIDRADIO TD-H3 Plus / TD-H3 SE
+9ecdfa55	TIDRADIO TD-H7 Plus
+479cc1fc	TIDRADIO TD-H8 (4. Generation)
+d67023e9	TIDRADIO TD-H9
+1a1a246c	TIDRADIO TD-638UV
+934f88cf	{0} HAM
+93054cc8	{0} GMRS
+167d24be	Funkgerät ausschalten, Kabel anschließen, mit hoher Lautstärke auf einem freien Kanal einschalten. Nicht in CHIRP: Verbindung und Speicher stammen aus dem Herstellerprogramm «TIDRadioCPS» (2026), das dieselbe Speicherbelegung wie das TD-H3 von CHIRP benutzt, und wurden mit einem simulierten Funkgerät und mit den Werksdateien des Programms erprobt, nicht mit einem echten Funkgerät. Nur Kanäle (Frequenzen, Töne, Leistung, Bandbreite, Suchlauf, Name); Sperre bei belegtem Kanal, PTT-ID, Frequenzsprung, Scrambler und Empfangsart bleiben wie im Kanal. Die Versionen (Basis, HAM, GMRS) unterscheiden sich durch die Kennung, die das Funkgerät meldet: ist es nicht die richtige, wird das Funkgerät nicht gelesen.
+3f23af0c	4. Generation

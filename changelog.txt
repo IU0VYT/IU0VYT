@@ -3,6 +3,39 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.29.0 (12/11/2026)
+-------------------
+- TIDRADIO TD-H3 Plus e TD-H3 SE, TD-H7 Plus, TD-H8 di quarta generazione, TD-H9 e
+  TD-638UV (solo canali): 15 schede nuove (base, HAM e GMRS per ognuna) in
+  drv_tdh8.go (opzione cps26). Dal programma del costruttore «TIDRadioCPS»
+  (versioni dal 23/1 al 27/7/2026): collegamento come la TD-H3 (saluto «PVOJH» 5C
+  14, poi 02 → identificativo di 8 byte, 06; letture 'R' e scritture 'W' di 32 byte
+  con la somma) e stessa mappa della TD-H3 di CHIRP (canali da 0x0010, nomi da
+  0x0D40, canali usati a 0x1900, scansione a 0x1920). Differenze prese dal
+  programma: identificativi (P31183 / P31185 / P31184 per H3 Plus e SE; «TDH7PLU»,
+  «TDH84GE», «TDH9», «TD638UV» seguiti da N, H o G), si leggono e si scrivono gli
+  indirizzi 0x0000-0x1F3F, non si legge la versione del firmware prima di
+  scrivere, il collegamento si chiude con un blocco di 32 byte «CE», tre potenze
+  (0 bassa, 1 media, 2 alta), il canale vuoto ha le frequenze a zero e non è
+  segnato fra gli usati, e nel canale ci sono due campi in più (gruppo dello
+  scrambler, modo di ricezione) che vengono conservati. Limiti: base 108-174 e
+  200-600 MHz (108-136 solo ricezione), HAM trasmissione 144-148 e 420-450 MHz.
+- Verifiche: i 15 file di fabbrica inclusi nel programma sono stati letti per
+  intero (32 o 41 canali ognuno, tanti quanti i canali segnati come usati, nessuna
+  frequenza fuori gamma) e riscritti canale per canale senza differenze, tranne i
+  canali meteo delle versioni HAM, che diventano di sola ricezione; codifica dei
+  toni CTCSS e DCS ricontrollata nel codice del programma; radio simulata; i
+  modelli di CHIRP della stessa famiglia non cambiano (confronti con CHIRP
+  ripetuti); controllo «go vet» per Windows pulito.
+- Non aggiunti: i modelli H4 e H11 dello stesso programma (banda larga 18-800 MHz:
+  nel pacchetto non hanno un file di fabbrica) e le impostazioni generali di
+  questi modelli (vanno confrontate voce per voce con quelle della TD-H3).
+- Pacchetti TIDRADIO messi da Daniele in APPOGGIO: già gestiti TD-H8 delle prime
+  tre generazioni, TD-H3, TD-M11 a 22 canali, TD-M8. Ancora da studiare: TD-M2Pro,
+  TD-FRS / TD-PMR, TD-V2, TD-M8s, DP712 (programmi DP710), «H8_4829».
+- Conteggi: 562 radio, 476 con impostazioni, 616 in galleria, 52 marche.
+  Traduzioni: 24 testi nuovi.
+
 4.28.0 (12/11/2026)
 -------------------
 - Radioddity UB15-G, DB35-G (il programma si chiama «DB-35G»), DB35-UV e DB40-G,

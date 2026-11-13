@@ -1,11 +1,18 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.28.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.29.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.29.0:
+- Radio nuove (solo canali): TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 di
+  quarta generazione, TD-H9 e TD-638UV, ognuna nelle versioni base, HAM e GMRS.
+  Vengono dal programma del costruttore del 2026 e non sono ancora provate con
+  una radio vera: fai prima la sola lettura. La TD-H3 Plus si presenta come la
+  TD-H3: usa le schede «TD-H3 Plus», perché ha tre potenze.
+- Galleria: 616 modelli di 52 marche (562 con canali, 476 con impostazioni).
 Novità della 4.28.0:
 - Radio nuove: Radioddity UB15-G, DB35-G, DB35-UV e DB40-G (veicolari), con canali
   e impostazioni generali. Vengono dal programma del costruttore e dal suo file di

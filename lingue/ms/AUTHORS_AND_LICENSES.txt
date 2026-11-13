@@ -309,6 +309,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): daripada kajian program pengeluar («RT
 «DMR RT-6D», «Radtel RT-1000 Pro CPS»), tiada apa-apa daripadanya disertakan; kod
 ditulis dari awal.
 
+TIDRADIO TD-H3 PLUS / SE, TD-H7 PLUS, TD-H8 GENERASI KE-4, TD-H9, TD-638UV (4.29):
+pengecam, kawasan memori yang dibaca dan ditulis, penutupan sesi, tahap kuasa dan medan
+saluran diperoleh daripada pembacaan program pengeluar «TIDRadioCPS» dan ditulis semula
+dari awal; tiada apa-apa daripada program itu atau fail-failnya disertakan. Peta saluran
+ialah peta TD-H3 dalam pemacu tdh8.py CHIRP, yang sudah digunakan (lihat di atas).
+
 RADIODDITY UB15-G, DB35-G, DB35-UV DAN DB40-G (4.28): protokol, memori dan tetapan
 diperoleh daripada pembacaan program pengeluar dan fail konfigurasinya, ditulis semula
 dari awal; tiada apa-apa daripada program itu disertakan. DB40-G juga ada dalam CHIRP

@@ -7,6 +7,32 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.29.0 (12/11/2026)
+-------------------
+- TIDRADIO TD-H3 Plus and TD-H3 SE, TD-H7 Plus, TD-H8 4th generation, TD-H9 and TD-638UV
+  (channels only): 15 new cards (base, HAM and GMRS for each) in drv_tdh8.go. From the
+  manufacturer's program «TIDRadioCPS» (versions from 23/1 to 27/7/2026): same
+  connection as the TD-H3 and same memory map as CHIRP's TD-H3 (channels from 0x0010,
+  names from 0x0D40, used channels at 0x1900, scan at 0x1920). Differences taken from
+  the program: identifiers (P31183 / P31185 / P31184 for H3 Plus and SE; «TDH7PLU»,
+  «TDH84GE», «TDH9», «TD638UV» followed by N, H or G), addresses 0x0000-0x1F3F are read
+  and written, the firmware version is not read before writing, the session is closed
+  with a 32-byte «CE» block, three power levels (0 low, 1 middle, 2 high), an empty
+  channel has zero frequencies and is not marked as used, and two more fields in the
+  channel (scrambler group, receive mode) are preserved. Limits: base 108-174 and
+  200-600 MHz (108-136 receive only), HAM transmit 144-148 and 420-450 MHz.
+- Checks: the 15 factory files included in the program were read in full (32 or 41
+  channels each, as many as the channels marked as used, no frequency out of range) and
+  rewritten channel by channel with no differences, except the weather channels of the
+  HAM versions, which become receive-only; CTCSS and DCS encoding rechecked in the
+  program's code; simulated radio; the CHIRP models of the same family are unchanged.
+  Not added: models H4 and H11 of the same program (no factory file in the package) and
+  the general settings of these models. Already supported and rechecked with the
+  TIDRADIO packages: TD-H8 of the first three generations, TD-H3, TD-M11 with 22
+  channels, TD-M8. Still to study: TD-M2Pro, TD-FRS / TD-PMR, TD-V2, TD-M8s, DP712.
+  Counts: 562 radios, 476 with settings, 616 in the gallery, 52 brands. Translations: 24
+  new texts.
+
 4.28.0 (12/11/2026)
 -------------------
 - Radioddity UB15-G, DB35-G (the program is called «DB-35G»), DB35-UV and DB40-G, mobile

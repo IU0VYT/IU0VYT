@@ -7,6 +7,33 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.29.0 (12/11/2026)
+-------------------
+- TIDRADIO TD-H3 Plus y TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª generación, TD-H9 y TD-638UV
+  (solo canales): 15 fichas nuevas (base, HAM y GMRS para cada una) en drv_tdh8.go. Del
+  programa del fabricante «TIDRadioCPS» (versiones del 23/1 al 27/7/2026): misma
+  conexión que la TD-H3 y mismo mapa de memoria que la TD-H3 de CHIRP (canales desde
+  0x0010, nombres desde 0x0D40, canales usados en 0x1900, exploración en 0x1920).
+  Diferencias tomadas del programa: identificadores (P31183 / P31185 / P31184 para H3
+  Plus y SE; «TDH7PLU», «TDH84GE», «TDH9», «TD638UV» seguidos de N, H o G), se leen y se
+  escriben las direcciones 0x0000-0x1F3F, no se lee la versión del firmware antes de
+  escribir, la sesión se cierra con un bloque de 32 bytes «CE», tres potencias (0 baja,
+  1 media, 2 alta), un canal vacío tiene las frecuencias a cero y no está marcado como
+  usado, y se conservan dos campos más del canal (grupo del scrambler, modo de
+  recepción). Límites: base 108-174 y 200-600 MHz (108-136 solo recepción), HAM
+  transmisión 144-148 y 420-450 MHz.
+- Comprobaciones: los 15 archivos de fábrica incluidos en el programa se han leído
+  enteros (32 o 41 canales cada uno, tantos como los canales marcados como usados,
+  ninguna frecuencia fuera de gama) y se han reescrito canal por canal sin diferencias,
+  salvo los canales meteorológicos de las versiones HAM, que pasan a ser de solo
+  recepción; codificación CTCSS y DCS revisada en el código del programa; radio
+  simulada; los modelos de CHIRP de la misma familia no cambian. No añadidos: los
+  modelos H4 y H11 del mismo programa (sin archivo de fábrica en el paquete) y los
+  ajustes generales de estos modelos. Ya gestionados y revisados con los paquetes de
+  TIDRADIO: TD-H8 de las tres primeras generaciones, TD-H3, TD-M11 de 22 canales, TD-M8.
+  Por estudiar: TD-M2Pro, TD-FRS / TD-PMR, TD-V2, TD-M8s, DP712. Recuentos: 562 radios,
+  476 con ajustes, 616 en la galería, 52 marcas. Traducciones: 24 textos nuevos.
+
 4.28.0 (12/11/2026)
 -------------------
 - Radioddity UB15-G, DB35-G (el programa se llama «DB-35G»), DB35-UV y DB40-G, radios

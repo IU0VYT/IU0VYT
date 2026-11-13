@@ -314,6 +314,13 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20) : d'après l'étude des programmes du co
 (« RT-4D CPS », « DMR RT-6D », « Radtel RT-1000 Pro CPS »), dont rien n'est inclus ; le
 code est écrit à partir de zéro.
 
+TIDRADIO TD-H3 PLUS / SE, TD-H7 PLUS, TD-H8 4e GÉNÉRATION, TD-H9, TD-638UV (4.29) :
+identifiants, zones de mémoire lues et écrites, fin de session, puissances et champs du
+canal viennent de la lecture du programme du constructeur « TIDRadioCPS » et ont été
+réécrits à partir de zéro ; rien de ce programme ni de ses fichiers n'est inclus. La
+carte des canaux est celle de la TD-H3 du pilote tdh8.py de CHIRP, déjà utilisé (voir
+plus haut).
+
 RADIODDITY UB15-G, DB35-G, DB35-UV ET DB40-G (4.28) : protocole, mémoire et réglages
 viennent de la lecture du programme du constructeur et de son fichier de configuration,
 réécrits à partir de zéro ; rien de ce programme n'est inclus. La DB40-G est aussi dans

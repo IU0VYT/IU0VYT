@@ -2093,6 +2093,19 @@ e18d46d6	Echo-IT
 a7d04ceb	Veicolare GMRS da 35 W, 80 canali, riceve anche in VHF (il programma del costruttore si chiama «DB-35G»). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
 05f46370	Veicolare VHF / UHF da 35 W, 80 canali. Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
 6bc059e3	Veicolare GMRS da 40 W, 199 canali con nome. Canali e impostazioni generali; è anche nel CHIRP (dal novembre 2026) e il file è lo stesso.{0}
+2947fcff	TD-H3 Plus
+3cdbc404	H3 Plus
+4ce6fa44	TDH3 Plus
+2cc4525a	TD-H3 SE Mini
+ba5b852d	199 canali, solo canali (non le impostazioni). Tre schede: base, HAM e GMRS; leggendo la radio il programma riconosce la versione. Si presenta come la TD-H3, ma ha tre potenze: usa queste schede e non quelle della TD-H3. Non è in CHIRP.{0}
+d4ecc743	TD-H7 Plus
+cfa006a0	H7 Plus
+b5e694e0	TDH7 Plus
+455a0d5f	199 canali, solo canali (non le impostazioni). Tre schede: base, HAM e GMRS; leggendo la radio il programma riconosce la versione. Non è in CHIRP.{0}
+a7fd409e	TD-H8 (4ª generazione)
+43f19b72	TD-H8 4th Gen
+70b88cf4	TD-H8 4ª gen.
+3fcc8030	199 canali, solo canali (non le impostazioni). Tre schede: base, HAM e GMRS; leggendo la radio il programma riconosce la versione. Per le TD-H8 delle prime tre generazioni usa la scheda «TD-H8». Non è in CHIRP.{0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -3456,6 +3469,14 @@ c024f7c3	TD-H3-GMRS
 5ba2617a	Radtel RT-730
 3bb33441	Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Driver di CHIRP della famiglia TIDRADIO TD-H8. Le versioni (base, HAM, GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta.
 03002d60	Radio GMRS (USA): canali 1-30 a frequenza fissa, 8-14 a banda stretta e bassa potenza.
+93f0a7aa	TIDRADIO TD-H3 Plus / TD-H3 SE
+9ecdfa55	TIDRADIO TD-H7 Plus
+479cc1fc	TIDRADIO TD-H8 (4ª generazione)
+d67023e9	TIDRADIO TD-H9
+1a1a246c	TIDRADIO TD-638UV
+934f88cf	{0} HAM
+93054cc8	{0} GMRS
+167d24be	Spegni la radio, collega il cavo, accendila con il volume alto, su un canale libero. Non è in CHIRP: collegamento e memoria vengono dal programma del costruttore «TIDRadioCPS» (2026), che usa la stessa mappa della TD-H3 di CHIRP, e sono provati con una radio simulata e con i file di fabbrica del programma, non su una radio vera. Solo canali (frequenze, toni, potenza, banda, scansione, nome); blocco su canale occupato, PTT-ID, salto di frequenza, scrambler e modo di ricezione restano quelli del canale. Le versioni (base, HAM, GMRS) si distinguono dall'identificativo comunicato dalla radio: se non è quella giusta la radio non viene letta.
 e24205e1	STD-M11-
 c4cc45fb	TD-M11 22 FRS (firmware 0.9.4)
 89350fd3	TD-M11 16 PMR (firmware 1.0.3)
@@ -5619,6 +5640,7 @@ d1f9e8ef	nuova versione
 1bead84b	firmware nicFW880
 53826d51	firmware M7OCM
 ab73dbd5	firmware nicFW950
+3f23af0c	4ª generazione
 8382cca1	firmware nicFW
 8781a829	3ª generazione
 f0a3a6ce	versione USA, nomi di 8 caratteri

@@ -316,6 +316,13 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): aus dem Studium der Programme des Herst
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), von denen nichts enthalten ist;
 der Code ist von Grund auf neu geschrieben.
 
+TIDRADIO TD-H3 PLUS / SE, TD-H7 PLUS, TD-H8 4. GENERATION, TD-H9, TD-638UV (4.29):
+Kennungen, gelesene und geschriebene Speicherbereiche, Sitzungsende, Leistungsstufen und
+Kanalfelder stammen aus dem Lesen des Herstellerprogramms «TIDRadioCPS» und wurden von
+Grund auf neu geschrieben; nichts von diesem Programm oder seinen Dateien ist enthalten.
+Die Kanalbelegung ist die des TD-H3 im CHIRP-Treiber tdh8.py, der bereits verwendet wird
+(siehe oben).
+
 RADIODDITY UB15-G, DB35-G, DB35-UV UND DB40-G (4.28): Protokoll, Speicher und
 Einstellungen stammen aus dem Lesen des Herstellerprogramms und dessen
 Konfigurationsdatei und wurden von Grund auf neu geschrieben; nichts von diesem Programm

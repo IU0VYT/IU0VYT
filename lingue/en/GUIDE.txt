@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.28.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.29.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,13 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.29.0:
+- New radios (channels only): TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 4th
+  generation, TD-H9 and TD-638UV, each in the base, HAM and GMRS versions. They come
+  from the manufacturer's 2026 program and have not yet been tested with a real radio:
+  do a read-only first. The TD-H3 Plus identifies itself like the TD-H3: use the «TD-H3
+  Plus» cards, because it has three power levels.
+- Gallery: 616 models of 52 brands (562 with channels, 476 with settings).
 What's new in 4.28.0:
 - New radios: Radioddity UB15-G, DB35-G, DB35-UV and DB40-G (mobile radios), with
   channels and general settings. They come from the manufacturer's program and its
