@@ -94,7 +94,7 @@ func newNoisyCable(seed int64) Port {
 
 func TestAutoIdentBanner(t *testing.T) {
 	identFast(t)
-	identFirstWait, identSilentMax = 80*time.Millisecond, 250*time.Millisecond
+	identFirstWait, identSilentMax = 60*time.Millisecond, 180*time.Millisecond
 	oldS, oldF, oldU, oldL, oldQ := autoSettle, autoRetryFast, autoRetryUnknown, listPortsFunc, autoQuiet
 	autoSettle, autoRetryFast, autoQuiet = 10*time.Millisecond, 20*time.Millisecond, 10*time.Millisecond
 	t.Cleanup(func() {

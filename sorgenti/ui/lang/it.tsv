@@ -2492,7 +2492,7 @@ a8f14b11	lettura del blocco 0x{0} incompleta
 e86000e9	somma di controllo errata nel blocco 0x{0}
 c284c59d	immagine della memoria incompleta ({0} byte invece di {1})
 026c934c	la radio non ha accettato il blocco 0x{0}
-ee33b84f	Canali senza nome, 400-470 MHz, 2400 baud. Protocollo e dati ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza e banda dei canali e le impostazioni generali (tempo massimo di trasmissione, VOX, guida vocale, tasto laterale e le altre della scheda Impostazioni). La radio dice per quale paese è fatta: se non è quello di questa scheda la lettura si ferma e ti indica la scheda {1}. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+a973430b	Canali senza nome, 400-470 MHz, 2400 baud. Protocollo e dati ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza e banda dei canali e le impostazioni generali (tempo massimo di trasmissione, VOX, guida vocale, tasto laterale e le altre della scheda Impostazioni). La radio dice per quale paese è fatta: se non è quello di questa scheda la lettura si ferma e ti indica la scheda {1}.
 fb93b1dc	Retevis RB39 / RB39P (FRS)
 f8d83637	FCC
 3fe59b12	«RB39 CPS» v1.0.7 / «Retevis Analog CPS» v1.1.2
@@ -3750,12 +3750,12 @@ ce744b54	Minima 0,3 W
 d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
 4fc7572e	Alta 1,5 W
 fa4647fb	Bassa 0,1 W
-eb7279a2	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda, scansione e nomi dei canali e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}«Identifica» non riconosce questa radio: scegli tu la scheda giusta.
-65b6a98c	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}«Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+4ccec7f4	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda, scansione e nomi dei canali e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}
+2346b1b2	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}
 f55aa366	«UB-15G» (versione del 21/8/2026)
 01effed1	«UB15-G» per il firmware V1.10
 3ea382d0	Le 88 posizioni sono, nell'ordine della radio: i canali 1-15, poi «15RP», 16, «16RP» e così via fino a 22 e «22RP» (RP = lo stesso canale con la trasmissione verso il ponte), poi i canali 23-80.
-7730b028	{0} baud. Stessa memoria e stessi pacchetti del driver del CHIRP (che ha questo modello dal novembre 2026), confrontati anche con il programma del costruttore {1} e con il suo file di configurazione. Qui si modificano frequenze, toni, potenza, banda e nomi dei canali e le impostazioni generali. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+8f4dcbe2	{0} baud. Stessa memoria e stessi pacchetti del driver del CHIRP (che ha questo modello dal novembre 2026), confrontati anche con il programma del costruttore {1} e con il suo file di configurazione. Qui si modificano frequenze, toni, potenza, banda e nomi dei canali e le impostazioni generali.
 fbb04a4c	Radioddity UB15-G (firmware prima della V1.10)
 e0ae264f	{0}Con il firmware V1.10 la memoria è diversa (ci sono i nomi): usa l'altra scheda.
 e108c3cb	Radioddity UB15-G (firmware V1.10, con i nomi)
@@ -3767,7 +3767,7 @@ c6c2fa12	Radioddity DB40-G
 517bae24	nome «{0}»: sono ammessi solo lettere, cifre e segni semplici
 719b13bc	la radio dichiara un altro tipo ({0}): non è quella di questa scheda
 e727cb79	la radio dichiara un tipo sconosciuto ({0}): non è quella di questa scheda
-587883c4	Canali senza nome, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali e le impostazioni generali; scrambler, compander, blocco su canale occupato e salto di frequenza restano quelli del canale. {1}Se nella radio è impostata una password di lettura, toglila prima con il programma del costruttore. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+71152f6e	Canali senza nome, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali e le impostazioni generali; scrambler, compander, blocco su canale occupato e salto di frequenza restano quelli del canale. {1}Se nella radio è impostata una password di lettura, toglila prima con il programma del costruttore.
 1e3c1a23	«Radioddity ECHO»
 153e1fd0	Retevis C6
 ca0139c9	Frequenze fra 462 e 468 MHz: i canali di fabbrica sono i 22 FRS / GMRS più 8 canali per i ponti GMRS (trasmissione fra 467,55 e 467,725 MHz).

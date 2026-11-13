@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**Versi 4.30.0** · Windows · antara muka dalam 13 bahasa (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · satu fail boleh laku sahaja, tanpa pemasangan
+**Versi 4.31.0** · Windows · antara muka dalam 13 bahasa (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · satu fail boleh laku sahaja, tanpa pemasangan
 
 Program untuk amatur radio dan pengguna radio pemancar-penerima daripada **52 jenama** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood): ia membaca dan menulis saluran, frekuensi dan tetapan melalui kabel pengaturcaraan, mengurus arkib pengulang Itali dan mengemas kini perisian tegar radio yang disokong.
 

@@ -5537,7 +5537,6 @@ a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 d0e2b5a6	manufacturer's program {0}
 3193cf7f	FRS version (22 channels). Channels and general settings as in the manufacturer's program. It is not in CHIRP.{0}
 1a5178a8	PMR446 version (16 channels). Channels and general settings as in the manufacturer's program. It is not in CHIRP.{0}
-ee33b84f	Channels without names, 400-470 MHz, 2400 baud. Protocol and data derived from the manufacturer's program {0} and tested with a simulated radio, not with a real one. Here you change frequencies, tones, power and bandwidth of the channels and the general settings (maximum transmit time, VOX, voice guide, side key and the others in the Settings tab). The radio says which country it is made for: if it is not the one of this card the read stops and names the card {1}. «Identify» does not recognise this radio: choose the right card yourself.
 fc8883bd	manufacturer's programs «RB39 CPS» and «Retevis Analog CPS» («System Information» window)
 78730f88	Compander
 4ea54f89	Compresses the voice when transmitting and expands it when receiving to reduce background noise: it works well only if the other radios use it too.
@@ -5561,7 +5560,6 @@ d1d35451	Echo IT
 3eae2ce8	Echo-DE
 e18d46d6	Echo-IT
 24d13cb7	PMR446, 16 channels, voice guide in German or Italian. Channels and general settings as in the manufacturer's program «Radioddity ECHO». Not in CHIRP.{0}
-587883c4	Channels without names, 9600 baud. Protocol and memory taken from the manufacturer's program {0} and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels and the general settings; scrambler, compander, busy-channel lockout and frequency hopping stay as they are in the channel. {1}If a read password is set in the radio, remove it first with the manufacturer's program. «Identify» does not recognise this radio: choose the right card yourself.
 1e3c1a23	«Radioddity ECHO»
 153e1fd0	Retevis C6
 ca0139c9	Frequencies between 462 and 468 MHz: the factory channels are the 22 FRS / GMRS ones plus 8 channels for GMRS repeaters (transmit between 467.55 and 467.725 MHz). 
@@ -5599,12 +5597,9 @@ a6263d4e	WLT
 a7d04ceb	35 W GMRS mobile radio, 80 channels, also receives VHF (the manufacturer's program is called «DB-35G»). Channels and general settings as in the manufacturer's program. Not in CHIRP.{0}
 05f46370	35 W VHF / UHF mobile radio, 80 channels. Channels and general settings as in the manufacturer's program. Not in CHIRP.{0}
 6bc059e3	40 W GMRS mobile radio, 199 channels with names. Channels and general settings; it is also in CHIRP (since November 2026) and the file is the same.{0}
-eb7279a2	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth, scan and names of the channels and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}«Identify» does not recognise this radio: choose the right card yourself.
-65b6a98c	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels (they have no names) and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}«Identify» does not recognise this radio: choose the right card yourself.
 f55aa366	«UB-15G» (version of 21/8/2026)
 01effed1	«UB15-G» for firmware V1.10
 3ea382d0	The 88 positions are, in the radio's order: channels 1-15, then «15RP», 16, «16RP» and so on up to 22 and «22RP» (RP = the same channel with transmit towards the repeater), then channels 23-80.
-7730b028	{0} baud. Same memory and same packets as the CHIRP driver (which has had this model since November 2026), also compared with the manufacturer's program {1} and with its configuration file. Here you change frequencies, tones, power, bandwidth and names of the channels and the general settings. «Identify» does not recognise this radio: choose the right card yourself.
 fbb04a4c	Radioddity UB15-G (firmware before V1.10)
 e0ae264f	{0}With firmware V1.10 the memory is different (there are names): use the other card.
 e108c3cb	Radioddity UB15-G (firmware V1.10, with names)
@@ -5792,3 +5787,8 @@ ab98ff6c	16 channels
 7a2500e8	22 channels FRS
 fe1a1ff8	199 channels
 b8f20f9f	16 channels PMR446
+a973430b	Channels without names, 400-470 MHz, 2400 baud. Protocol and data derived from the manufacturer's program {0} and tested with a simulated radio, not with a real one. Here you change frequencies, tones, power and bandwidth of the channels and the general settings (maximum transmit time, VOX, voice guide, side key and the others in the Settings tab). The radio says which country it is made for: if it is not the one of this card the read stops and names the card {1}.
+8f4dcbe2	{0} baud. Same memory and same packets as the CHIRP driver (which has had this model since November 2026), also compared with the manufacturer's program {1} and with its configuration file. Here you change frequencies, tones, power, bandwidth and names of the channels and the general settings.
+71152f6e	Channels without names, 9600 baud. Protocol and memory taken from the manufacturer's program {0} and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels and the general settings; scrambler, compander, busy-channel lockout and frequency hopping stay as they are in the channel. {1}If a read password is set in the radio, remove it first with the manufacturer's program.
+4ccec7f4	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth, scan and names of the channels and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}
+2346b1b2	{0} baud. Protocol and memory taken from the manufacturer's program {1} and from its configuration file, and tested with a simulated radio, not on a real one. Here you change frequencies, tones, power, bandwidth and scan of the channels (they have no names) and the general settings; busy-channel lockout and priority stay as they are in the channel. {2}

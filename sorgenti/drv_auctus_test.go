@@ -14,6 +14,7 @@ import (
 	"context"
 	"strings"
 	"testing"
+	"time"
 )
 
 // 4.26: Retevis RB39 / RB39P e RB639 / RB639P. Pacchetti e dati trascritti dal
@@ -163,13 +164,23 @@ func TestAuctusRadio(t *testing.T) {
 		e, done = link(radio)
 		e.region = "AU147_" + map[string]string{"FCC": "CE", "CE": "FCC"}[auctusO(m).country]
 		_, _, err = m.Fam.Download(context.Background(), m, "EMU", func(int, int, string) {})
+		// 4.31: dopo il rifiuto la radio va fatta uscire dalla programmazione (terzo comando: fine)
+		for i := 0; i < 50 && len(e.logCopy()) < 3; i++ {
+			time.Sleep(10 * time.Millisecond)
+		}
 		done()
-		if err == nil || !strings.Contains(err.Error(), "altro paese") || len(e.log) != 2 {
-			t.Fatalf("%s: radio di un altro paese: %v (%d comandi)", id, err, len(e.log))
+		if lg := e.logCopy(); err == nil || !strings.Contains(err.Error(), "altro paese") || len(lg) != 3 || lg[2] != 0x0701 {
+			t.Fatalf("%s: radio di un altro paese: %v (comandi %04X)", id, err, lg)
 		}
 		// file senza i dati di sistema (non letto dalla radio): scrittura rifiutata
 		if _, err := m.Fam.Upload(context.Background(), m, "EMU", make([]byte, auctusSize), func(int, int, string) {}); err == nil {
 			t.Fatalf("%s: scrittura di un file non letto dalla radio accettata", id)
 		}
 	}
+}
+
+func (e *auctusEmu) logCopy() []int {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]int{}, e.log...)
 }

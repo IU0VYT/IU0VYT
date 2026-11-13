@@ -7,6 +7,25 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.31.0 (13/11/2026)
+-------------------
+- « Identifier » plus rapide (identify.go) : avant les essais avec les attentes
+  complètes (350 ms par question, inchangé) il y a maintenant un tour rapide : 100 ms
+  pour chaque nouvelle question ; une question déjà restée sans réponse dans le même
+  tour (mêmes octets à la même vitesse) n'attend plus ; l'essai se termine dès que le
+  pilote ne pose plus de nouvelles questions ; les radios déjà reconnues sur ce PC ou
+  avec un onglet ouvert ont tout de suite les attentes complètes. Si le tour rapide ne
+  trouve rien, le tour complet suit, inchangé. Mesuré avec des radios simulées : la
+  dernière radio du plan est trouvée en 26 s (avant : plus de 100), sans radio la
+  recherche complète dure environ 128 s (avant 103). En écoute continue, un tour sur
+  deux est seulement rapide. « Identifier » essaie maintenant aussi les radios ajoutées
+  de la 4.26 à la 4.30 (Retevis RB39 / RB639, C6, C66, Radioddity Echo, UB15-G, DB35-G,
+  DB35-UV, DB40-G, TIDRADIO TD-M2 Pro ; pour la famille TIDRADIO TID-712Plus et pour
+  UB15-G / DB35-G / DB35-UV il reconnaît la famille et propose les fiches). Corrigé
+  (drv_auctus.go) : avec une Retevis RB39 sur la fiche RB639, ou l'inverse, la radio
+  n'était pas sortie du mode programmation. Non fait : TD-V2, TD-M8S, « H8_4829 »,
+  DP712.
+
 4.30.0 (12/11/2026)
 -------------------
 - Réglages généraux des TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4e

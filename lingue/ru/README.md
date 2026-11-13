@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**Версия 4.30.0** · Windows · интерфейс на 13 языках (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · один исполняемый файл, без установки
+**Версия 4.31.0** · Windows · интерфейс на 13 языках (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · один исполняемый файл, без установки
 
 Программа для радиолюбителей и пользователей радиостанций **52 марок** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood): читает и записывает каналы, частоты и настройки через кабель программирования, ведёт архив итальянских ретрансляторов и обновляет прошивку поддерживаемых радиостанций.
 

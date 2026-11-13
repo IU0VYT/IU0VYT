@@ -3,6 +3,38 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.31.0 (13/11/2026)
+-------------------
+- «Identifica» più veloce (identify.go). Prima dei tentativi con le attese piene
+  (350 ms per ogni domanda, com'era) ora c'è un GIRO VELOCE: 100 ms per ogni
+  domanda nuova; una domanda già rimasta senza risposta nello stesso giro (stessi
+  byte alla stessa velocità, dallo stesso driver o da un altro) non aspetta di
+  nuovo; il tentativo si chiude appena il driver smette di fare domande nuove;
+  l'ascolto di un secondo per le radio che trasmettono da sole si fa solo dove
+  qualcosa ha risposto. Le radio già riconosciute su questo PC e quelle con una
+  scheda aperta hanno subito le attese piene, come prima. Se il giro veloce non
+  trova nulla segue il giro pieno, invariato: nessuna radio riconosciuta prima
+  viene persa. Tempi misurati con radio simulate e attese vere: l'ultima radio
+  del piano si trova in 26 s (prima oltre 100), una TD-PMR in 20 s, una Retevis
+  RB639 in 5 s. Senza radio la ricerca completa dura circa 128 s (prima 103):
+  è il prezzo del giro in più.
+- Ascolto continuo: un giro sì e uno no è solo veloce (circa 24 s invece di 103);
+  le radio note ripetute in mezzo al piano sono veloci anche loro nel giro veloce.
+- Ora «Identifica» prova anche le radio aggiunte dalla 4.26 alla 4.30, che ne
+  erano escluse: Retevis RB39 / RB639 (dice quale delle due), C6, C66, Radioddity
+  Echo, DB40-G e TIDRADIO TD-M2 Pro (riconosciute); Radioddity UB15-G / DB35-G /
+  DB35-UV e TIDRADIO TID-712Plus, TD-M7, TD-M11 Plus, TD-BR09, TD-777S, TD-V900,
+  TD-FRS, TD-PMR (riconosciuta la famiglia: i modelli hanno lo stesso
+  collegamento, la scheda si sceglie fra quelle proposte). Tolta dalle note di
+  quelle radio la frase «Identifica non riconosce questa radio».
+- Corretto (drv_auctus.go): con una Retevis RB39 sulla scheda RB639, o
+  viceversa, il programma si fermava senza far uscire la radio dalla
+  programmazione; ora manda il comando di fine, in lettura e in scrittura.
+- Prove: tutte quelle dell'identificazione (ogni modello con la sua radio
+  simulata, nessuna radio, due cavi, radio che trasmette da sola) con il giro
+  veloce; adeguate le attese abbreviate delle prove.
+- Non fatto: TD-V2, TD-M8S, «H8_4829», DP712 (pacchetti TIDRADIO).
+
 4.30.0 (12/11/2026)
 -------------------
 - Impostazioni generali dei TIDRADIO TD-H3 Plus / SE, TD-H7 Plus, TD-H8 di quarta

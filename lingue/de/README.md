@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**Version 4.30.0** · Windows · Oberfläche in 13 Sprachen (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · eine einzige ausführbare Datei, keine Installation
+**Version 4.31.0** · Windows · Oberfläche in 13 Sprachen (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · eine einzige ausführbare Datei, keine Installation
 
 Programm für Funkamateure und Nutzer von Funkgeräten von **52 Marken** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood): es liest und schreibt Kanäle, Frequenzen und Einstellungen über das Programmierkabel, verwaltet ein Archiv der italienischen Relais und aktualisiert die Firmware der unterstützten Funkgeräte.
 

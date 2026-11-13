@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**Version 4.30.0** · Windows · interface in 13 languages (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · a single executable file, no installation
+**Version 4.31.0** · Windows · interface in 13 languages (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · a single executable file, no installation
 
 A program for radio amateurs and users of transceivers of **52 brands** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood): it reads and writes channels, frequencies and settings via the programming cable, manages an archive of Italian repeaters and updates the firmware of the supported radios.
 

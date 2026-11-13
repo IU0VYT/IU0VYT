@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.30.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.31.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,14 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.31.0:
+- «Identificar» es mucho más rápido: primero da una vuelta rápida a todas las radios y
+  solo después, si no ha encontrado nada, la vuelta completa de antes. Una radio al
+  final de la lista se encuentra en menos de medio minuto en lugar de casi dos.
+- «Identificar» ahora prueba también las radios añadidas en las últimas versiones
+  (Retevis RB39 / RB639, C6, C66, Radioddity Echo, UB15-G, DB35-G, DB35-UV, DB40-G y los
+  TIDRADIO sin pantalla).
+- Galería: 625 modelos de 52 marcas (571 con canales, 491 con ajustes).
 Novedades de la 4.30.0:
 - Ajustes generales para TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª
   generación, TD-H9 y TD-638UV: teclas programables, squelch, VOX, tiempo máximo de

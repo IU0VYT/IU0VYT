@@ -50,8 +50,6 @@ type tdqOpt struct {
 
 type tdqFam struct{}
 
-func (tdqFam) noIdent() {}
-
 func tdqO(m *genModel) *tdqOpt { return m.Opt.(*tdqOpt) }
 
 func init() {

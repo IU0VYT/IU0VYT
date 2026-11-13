@@ -36,9 +36,13 @@ func identFast(t *testing.T) {
 	// ascolto più lungo dell'attesa massima del tentativo, come con i tempi veri
 	// (1 s e 0,7 s): il tentativo deve proseguire lo stesso
 	identSpontListen, identSpontListen9600 = 1000*time.Millisecond, 1000*time.Millisecond
+	// 4.31: giro veloce e domande ripetute (le radio simulate rispondono subito)
+	fw, fs, fi, rf := identFastWait, identFastSilent, identFastIdle, identReplayWaitFast
+	identFastWait, identFastSilent, identFastIdle, identReplayWaitFast = 40*time.Millisecond, 130*time.Millisecond, 15*time.Millisecond, 5*time.Millisecond
 	identSpontReset()
 	t.Cleanup(func() {
 		identFirstWait, identSilentMax, identPause = f, s, p
+		identFastWait, identFastSilent, identFastIdle, identReplayWaitFast = fw, fs, fi, rf
 		identSpontListen, identSpontListen9600 = l, l9
 		identSpontReset()
 	})
@@ -48,6 +52,12 @@ func identSpontReset() {
 	identSpont.Lock()
 	identSpont.m = nil
 	identSpont.Unlock()
+	identSpontWant.Lock()
+	identSpontWant.m = nil
+	identSpontWant.Unlock()
+	identRounds.Lock()
+	identRounds.m = nil
+	identRounds.Unlock()
 }
 
 // 4.7: radio che trasmette da sola (come il caricatore delle Bajeton in modalità
@@ -190,7 +200,7 @@ func TestIdentifyEachModel(t *testing.T) {
 			j := &cableJob{Notes: []string{}, Log: []string{}}
 			identPortMu.Lock()
 			res, err := a.identRun(context.Background(), j, &identReq{Port: port}, grp, time.Now(),
-				&identResult{Fields: []identField{}, Others: []identOther{}, Answers: []string{}})
+				&identResult{Fields: []identField{}, Others: []identOther{}, Answers: []string{}}, identPass{of: 1})
 			identPortMu.Unlock()
 			if err != nil || !res.Found {
 				t.Fatalf("%s: non identificata: %v %v\n%s", m.Name, err, res.Answers, strings.Join(j.Log, "\n"))

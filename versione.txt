@@ -1,5 +1,5 @@
-versione=4.30.0
-compilazione=2026-11-12T22:10
+versione=4.31.0
+compilazione=2026-11-13T02:40
 radio=571
 impostazioni=491
 galleria=625

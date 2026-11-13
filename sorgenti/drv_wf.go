@@ -95,8 +95,6 @@ var wfKinds = map[string]string{
 
 type wfFam struct{}
 
-func (wfFam) noIdent() {}
-
 func wfO(m *genModel) *wfOpt { return m.Opt.(*wfOpt) }
 
 func init() {
@@ -104,13 +102,11 @@ func init() {
 		if o.name >= 0 {
 			return fmt.Sprintf("%d baud. Protocollo e memoria ricavati dal programma del costruttore %s e dal suo file di configurazione, "+
 				"e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda, scansione e nomi dei canali "+
-				"e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. %s"+
-				"«Identifica» non riconosce questa radio: scegli tu la scheda giusta.", baud, o.prog, extra)
+				"e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. %s", baud, o.prog, extra)
 		}
 		return fmt.Sprintf("%d baud. Protocollo e memoria ricavati dal programma del costruttore %s e dal suo file di configurazione, "+
 			"e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali (non hanno nome) "+
-			"e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. %s"+
-			"«Identifica» non riconosce questa radio: scegli tu la scheda giusta.", baud, o.prog, extra)
+			"e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. %s", baud, o.prog, extra)
 	}
 	lowHigh := []genPower{{"Bassa", 0, 2}, {"Alta", 0, 0}}
 	r1 := []byte{0x00, 0x06, 0x02, 0x00}
@@ -136,12 +132,12 @@ func init() {
 		if o.name >= 0 {
 			m.NameMax, m.Charset = 8, wfCharset
 		}
-		m.Notes = note(baud, o, extra)
+		m.Notes = strings.TrimSpace(note(baud, o, extra))
 		if o.chirp { // dal novembre 2026 è anche nel CHIRP: stesso file, e le prove confrontano i due
 			m.RClass, m.NoChirp = "RadioddityDB40G", false
 			m.Notes = fmt.Sprintf("%d baud. Stessa memoria e stessi pacchetti del driver del CHIRP (che ha questo modello dal novembre 2026), "+
 				"confrontati anche con il programma del costruttore %s e con il suo file di configurazione. Qui si modificano frequenze, toni, potenza, "+
-				"banda e nomi dei canali e le impostazioni generali. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.", baud, o.prog)
+				"banda e nomi dei canali e le impostazioni generali.", baud, o.prog)
 		}
 		return m
 	}

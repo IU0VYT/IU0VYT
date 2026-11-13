@@ -71,8 +71,6 @@ type auctusOpt struct {
 
 type auctusFam struct{}
 
-func (auctusFam) noIdent() {}
-
 func auctusO(m *genModel) *auctusOpt { return m.Opt.(*auctusOpt) }
 
 func init() {
@@ -80,7 +78,7 @@ func init() {
 		return "Canali senza nome, 400-470 MHz, 2400 baud. Protocollo e dati ricavati dal programma del costruttore " + prog +
 			" e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza e banda dei canali e le impostazioni generali " +
 			"(tempo massimo di trasmissione, VOX, guida vocale, tasto laterale e le altre della scheda Impostazioni). La radio dice per quale paese è fatta: se non è quello di questa scheda la lettura si ferma e ti indica la scheda " +
-			other + ". «Identifica» non riconosce questa radio: scegli tu la scheda giusta."
+			other + "."
 	}
 	pw := []genPower{{"Bassa", 0.5, 2}, {"Alta", 2, 0}}
 	genRegister(
@@ -302,6 +300,11 @@ func (f auctusFam) Download(ctx context.Context, m *genModel, port string, prog 
 	prog(0, total, "Collegamento con la radio…")
 	ver, region, err := s.enter(m, false)
 	if err != nil {
+		if region != "" {
+			// 4.31: la radio era già entrata in programmazione (ha detto il paese):
+			// va fatta uscire, altrimenti resta bloccata fino allo spegnimento
+			_ = s.p.Write(auctusPkt(0x07, 0x01, nil))
+		}
 		return nil, "", genFail("Identificazione", err)
 	}
 	img := make([]byte, auctusSize)
@@ -357,6 +360,9 @@ func (f auctusFam) Upload(ctx context.Context, m *genModel, port string, img []b
 	ver, region, err := s.enter(m, true)
 	info := fmt.Sprintf("identificativo %q", ver+" / "+region)
 	if err != nil {
+		if region != "" {
+			_ = s.p.Write(auctusPkt(0x07, 0x00, nil)) // 4.31: vedi Download
+		}
 		return info, genFail("Identificazione", err)
 	}
 	for i := 0; i < m.Slots; i++ {

@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**버전 4.30.0** · Windows · 13개 언어의 인터페이스(italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · 실행 파일 하나, 설치 필요 없음
+**버전 4.31.0** · Windows · 13개 언어의 인터페이스(italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · 실행 파일 하나, 설치 필요 없음
 
 **52개 브랜드**(**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood)의 무전기를 쓰는 아마추어 무선사와 사용자를 위한 프로그램입니다. 프로그래밍 케이블로 채널, 주파수, 설정을 읽고 쓰며, 이탈리아 중계기 보관함을 관리하고, 지원하는 무전기의 펌웨어를 업데이트합니다.
 

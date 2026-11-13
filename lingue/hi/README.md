@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**संस्करण 4.30.0** · Windows · 13 भाषाओं में इंटरफ़ेस (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · केवल एक निष्पादन योग्य फ़ाइल, बिना इंस्टॉलेशन
+**संस्करण 4.31.0** · Windows · 13 भाषाओं में इंटरफ़ेस (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · केवल एक निष्पादन योग्य फ़ाइल, बिना इंस्टॉलेशन
 
 शौक़िया रेडियो ऑपरेटरों और **52 ब्रांडों** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood) के ट्रांसीवर रेडियो के उपयोगकर्ताओं के लिए प्रोग्राम: यह प्रोग्रामिंग केबल से चैनल, फ़्रीक्वेंसी और सेटिंग्स पढ़ता और लिखता है, इतालवी रिपीटरों का संग्रह संभालता है और समर्थित रेडियो का फ़र्मवेयर अपडेट करता है।
 

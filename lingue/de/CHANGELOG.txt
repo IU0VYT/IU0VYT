@@ -7,6 +7,25 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.31.0 (13.11.2026)
+-------------------
+- Schnelleres «Identifizieren» (identify.go): Vor den Versuchen mit vollen Wartezeiten
+  (350 ms pro Frage, unverändert) gibt es jetzt eine schnelle Runde: 100 ms für jede
+  neue Frage; eine in derselben Runde bereits unbeantwortete Frage (gleiche Bytes bei
+  gleicher Geschwindigkeit) wartet nicht erneut; der Versuch endet, sobald der Treiber
+  keine neuen Fragen mehr stellt; auf diesem PC bereits erkannte Funkgeräte oder solche
+  mit offenem Tab bekommen sofort die vollen Wartezeiten. Findet die schnelle Runde
+  nichts, folgt die vollständige Runde, unverändert. Mit simulierten Funkgeräten
+  gemessen: Das letzte Funkgerät des Plans wird in 26 s gefunden (vorher über 100), ohne
+  Funkgerät dauert die vollständige Suche etwa 128 s (vorher 103). Beim Dauerlauschen
+  ist jede zweite Runde nur schnell. «Identifizieren» probiert jetzt auch die von 4.26
+  bis 4.30 hinzugefügten Funkgeräte (Retevis RB39 / RB639, C6, C66, Radioddity Echo,
+  UB15-G, DB35-G, DB35-UV, DB40-G, TIDRADIO TD-M2 Pro; bei der Familie TIDRADIO
+  TID-712Plus und bei UB15-G / DB35-G / DB35-UV erkennt es die Familie und schlägt die
+  Karten vor). Behoben (drv_auctus.go): Mit einem Retevis RB39 auf der Karte RB639 oder
+  umgekehrt wurde das Funkgerät nicht aus dem Programmiermodus geholt. Nicht erledigt:
+  TD-V2, TD-M8S, «H8_4829», DP712.
+
 4.30.0 (12.11.2026)
 -------------------
 - Allgemeine Einstellungen von TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 der 4.

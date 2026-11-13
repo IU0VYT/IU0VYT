@@ -1,11 +1,19 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.30.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.31.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.31.0:
+- «Identifica» è molto più veloce: prima fa un giro rapido di tutte le radio e
+  solo dopo, se non ha trovato nulla, quello completo di prima. Una radio in
+  fondo all'elenco si trova in meno di mezzo minuto invece di quasi due.
+- «Identifica» ora prova anche le radio aggiunte nelle ultime versioni (Retevis
+  RB39 / RB639, C6, C66, Radioddity Echo, UB15-G, DB35-G, DB35-UV, DB40-G e i
+  TIDRADIO senza display).
+- Galleria: 625 modelli di 52 marche (571 con canali, 491 con impostazioni).
 Novità della 4.30.0:
 - Impostazioni generali per TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 di
   quarta generazione, TD-H9 e TD-638UV: tasti programmabili, squelch, VOX, tempo

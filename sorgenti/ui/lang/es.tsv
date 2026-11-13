@@ -5537,7 +5537,6 @@ a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 d0e2b5a6	programa del fabricante {0}
 3193cf7f	Versión FRS (22 canales). Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
 1a5178a8	Versión PMR446 (16 canales). Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
-ee33b84f	Canales sin nombre, 400-470 MHz, 2400 baudios. Protocolo y datos obtenidos del programa del fabricante {0} y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia y ancho de banda de los canales y los ajustes generales (tiempo máximo de transmisión, VOX, guía de voz, tecla lateral y los demás de la pestaña Ajustes). La radio dice para qué país está hecha: si no es el de esta ficha la lectura se detiene e indica la ficha {1}. «Identificar» no reconoce esta radio: elige tú la ficha correcta.
 fc8883bd	programas del fabricante «RB39 CPS» y «Retevis Analog CPS» (ventana «System Information»)
 78730f88	Compander
 4ea54f89	Comprime la voz al transmitir y la expande al recibir para reducir el ruido de fondo: funciona bien solo si las otras radios también lo usan.
@@ -5561,7 +5560,6 @@ d1d35451	Echo IT
 3eae2ce8	Echo-DE
 e18d46d6	Echo-IT
 24d13cb7	PMR446, 16 canales, guía de voz en alemán o en italiano. Canales y ajustes generales como en el programa del fabricante «Radioddity ECHO». No está en CHIRP.{0}
-587883c4	Canales sin nombre, 9600 baudios. Protocolo y memoria sacados del programa del fabricante {0} y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y exploración de los canales y los ajustes generales; scrambler, compander, bloqueo con canal ocupado y salto de frecuencia quedan como están en el canal. {1}Si la radio tiene una contraseña de lectura, quítala antes con el programa del fabricante. «Identificar» no reconoce esta radio: elige tú la ficha correcta.
 1e3c1a23	«Radioddity ECHO»
 153e1fd0	Retevis C6
 ca0139c9	Frecuencias entre 462 y 468 MHz: los canales de fábrica son los 22 FRS / GMRS más 8 canales para repetidores GMRS (transmisión entre 467,55 y 467,725 MHz). 
@@ -5599,12 +5597,9 @@ a6263d4e	WLT
 a7d04ceb	Radio móvil GMRS de 35 W, 80 canales, recibe también en VHF (el programa del fabricante se llama «DB-35G»). Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
 05f46370	Radio móvil VHF / UHF de 35 W, 80 canales. Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
 6bc059e3	Radio móvil GMRS de 40 W, 199 canales con nombre. Canales y ajustes generales; está también en CHIRP (desde noviembre de 2026) y el archivo es el mismo.{0}
-eb7279a2	{0} baudios. Protocolo y memoria sacados del programa del fabricante {1} y de su archivo de configuración, y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda, exploración y nombres de los canales y los ajustes generales; bloqueo con canal ocupado y prioridad quedan como están en el canal. {2}«Identificar» no reconoce esta radio: elige tú la ficha correcta.
-65b6a98c	{0} baudios. Protocolo y memoria sacados del programa del fabricante {1} y de su archivo de configuración, y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y exploración de los canales (no tienen nombre) y los ajustes generales; bloqueo con canal ocupado y prioridad quedan como están en el canal. {2}«Identificar» no reconoce esta radio: elige tú la ficha correcta.
 f55aa366	«UB-15G» (versión del 21/8/2026)
 01effed1	«UB15-G» para el firmware V1.10
 3ea382d0	Las 88 posiciones son, en el orden de la radio: los canales 1-15, luego «15RP», 16, «16RP» y así hasta 22 y «22RP» (RP = el mismo canal con la transmisión hacia el repetidor), luego los canales 23-80.
-7730b028	{0} baudios. Misma memoria y mismos paquetes que el controlador de CHIRP (que tiene este modelo desde noviembre de 2026), comparados también con el programa del fabricante {1} y con su archivo de configuración. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y nombres de los canales y los ajustes generales. «Identificar» no reconoce esta radio: elige tú la ficha correcta.
 fbb04a4c	Radioddity UB15-G (firmware anterior a la V1.10)
 e0ae264f	{0}Con el firmware V1.10 la memoria es distinta (hay nombres): usa la otra ficha.
 e108c3cb	Radioddity UB15-G (firmware V1.10, con nombres)
@@ -5792,3 +5787,8 @@ ab98ff6c	16 canales
 7a2500e8	22 canales FRS
 fe1a1ff8	199 canales
 b8f20f9f	16 canales PMR446
+a973430b	Canales sin nombre, 400-470 MHz, 2400 baudios. Protocolo y datos obtenidos del programa del fabricante {0} y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia y ancho de banda de los canales y los ajustes generales (tiempo máximo de transmisión, VOX, guía de voz, tecla lateral y los demás de la pestaña Ajustes). La radio dice para qué país está hecha: si no es el de esta ficha la lectura se detiene e indica la ficha {1}.
+8f4dcbe2	{0} baudios. Misma memoria y mismos paquetes que el controlador de CHIRP (que tiene este modelo desde noviembre de 2026), comparados también con el programa del fabricante {1} y con su archivo de configuración. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y nombres de los canales y los ajustes generales.
+71152f6e	Canales sin nombre, 9600 baudios. Protocolo y memoria sacados del programa del fabricante {0} y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y exploración de los canales y los ajustes generales; scrambler, compander, bloqueo con canal ocupado y salto de frecuencia quedan como están en el canal. {1}Si la radio tiene una contraseña de lectura, quítala antes con el programa del fabricante.
+4ccec7f4	{0} baudios. Protocolo y memoria sacados del programa del fabricante {1} y de su archivo de configuración, y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda, exploración y nombres de los canales y los ajustes generales; bloqueo con canal ocupado y prioridad quedan como están en el canal. {2}
+2346b1b2	{0} baudios. Protocolo y memoria sacados del programa del fabricante {1} y de su archivo de configuración, y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia, ancho de banda y exploración de los canales (no tienen nombre) y los ajustes generales; bloqueo con canal ocupado y prioridad quedan como están en el canal. {2}

@@ -7,6 +7,24 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.31.0 (13/11/2026)
+-------------------
+- «Identificar» mais rápido (identify.go): antes das tentativas com as esperas completas
+  (350 ms por pergunta, sem alterações) há agora uma volta rápida: 100 ms para cada
+  pergunta nova; uma pergunta que já ficou sem resposta na mesma volta (mesmos bytes à
+  mesma velocidade) não volta a esperar; a tentativa termina logo que o driver deixa de
+  fazer perguntas novas; os rádios já reconhecidos neste PC ou com um separador aberto
+  têm logo as esperas completas. Se a volta rápida não encontrar nada segue-se a volta
+  completa, sem alterações. Medido com rádios simulados: o último rádio do plano é
+  encontrado em 26 s (antes mais de 100), sem rádio a pesquisa completa demora cerca de
+  128 s (antes 103). Na escuta contínua uma volta em cada duas é só rápida.
+  «Identificar» agora experimenta também os rádios acrescentados da 4.26 à 4.30 (Retevis
+  RB39 / RB639, C6, C66, Radioddity Echo, UB15-G, DB35-G, DB35-UV, DB40-G, TIDRADIO
+  TD-M2 Pro; na família TIDRADIO TID-712Plus e em UB15-G / DB35-G / DB35-UV reconhece a
+  família e propõe as fichas). Corrigido (drv_auctus.go): com um Retevis RB39 na ficha
+  RB639, ou o contrário, o rádio não era tirado do modo de programação. Não feito:
+  TD-V2, TD-M8S, «H8_4829», DP712.
+
 4.30.0 (12/11/2026)
 -------------------
 - Definições gerais de TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 de 4.ª geração,

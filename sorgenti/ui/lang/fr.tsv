@@ -5537,7 +5537,6 @@ a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 d0e2b5a6	programme du constructeur {0}
 3193cf7f	Version FRS (22 canaux). Canaux et réglages généraux comme dans le programme du constructeur. Elle n'est pas dans CHIRP.{0}
 1a5178a8	Version PMR446 (16 canaux). Canaux et réglages généraux comme dans le programme du constructeur. Elle n'est pas dans CHIRP.{0}
-ee33b84f	Canaux sans nom, 400-470 MHz, 2400 bauds. Protocole et données tirés du programme du constructeur {0} et essayés avec une radio simulée, pas avec une vraie radio. Ici on modifie fréquences, tonalités, puissance et largeur de bande des canaux ainsi que les réglages généraux (temps maximal d'émission, VOX, guide vocal, touche latérale et les autres de l'onglet Réglages). La radio indique pour quel pays elle est faite : si ce n'est pas celui de cette fiche, la lecture s'arrête et indique la fiche {1}. « Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
 fc8883bd	programmes du constructeur « RB39 CPS » et « Retevis Analog CPS » (fenêtre « System Information »)
 78730f88	Compander
 4ea54f89	Compresse la voix à l'émission et l'étend à la réception pour réduire le bruit de fond : cela ne fonctionne bien que si les autres radios l'utilisent aussi.
@@ -5561,7 +5560,6 @@ d1d35451	Echo IT
 3eae2ce8	Echo-DE
 e18d46d6	Echo-IT
 24d13cb7	PMR446, 16 canaux, guide vocal en allemand ou en italien. Canaux et réglages généraux comme dans le programme du constructeur « Radioddity ECHO ». Absent de CHIRP.{0}
-587883c4	Canaux sans nom, 9600 bauds. Protocole et mémoire tirés du programme du constructeur {0} et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande et balayage des canaux ainsi que les réglages généraux ; brouilleur, compander, blocage sur canal occupé et saut de fréquence restent ceux du canal. {1}Si un mot de passe de lecture est défini dans la radio, enlevez-le d'abord avec le programme du constructeur. « Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
 1e3c1a23	«Radioddity ECHO»
 153e1fd0	Retevis C6
 ca0139c9	Fréquences entre 462 et 468 MHz : les canaux d'usine sont les 22 FRS / GMRS plus 8 canaux pour les relais GMRS (émission entre 467,55 et 467,725 MHz). 
@@ -5599,12 +5597,9 @@ a6263d4e	WLT
 a7d04ceb	Radio mobile GMRS de 35 W, 80 canaux, reçoit aussi en VHF (le programme du constructeur s'appelle « DB-35G »). Canaux et réglages généraux comme dans le programme du constructeur. Absent de CHIRP.{0}
 05f46370	Radio mobile VHF / UHF de 35 W, 80 canaux. Canaux et réglages généraux comme dans le programme du constructeur. Absent de CHIRP.{0}
 6bc059e3	Radio mobile GMRS de 40 W, 199 canaux avec nom. Canaux et réglages généraux ; elle est aussi dans CHIRP (depuis novembre 2026) et le fichier est le même.{0}
-eb7279a2	{0} bauds. Protocole et mémoire tirés du programme du constructeur {1} et de son fichier de configuration, et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande, balayage et noms des canaux ainsi que les réglages généraux ; blocage sur canal occupé et priorité restent ceux du canal. {2}« Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
-65b6a98c	{0} bauds. Protocole et mémoire tirés du programme du constructeur {1} et de son fichier de configuration, et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande et balayage des canaux (ils n'ont pas de nom) ainsi que les réglages généraux ; blocage sur canal occupé et priorité restent ceux du canal. {2}« Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
 f55aa366	« UB-15G » (version du 21/8/2026)
 01effed1	« UB15-G » pour le firmware V1.10
 3ea382d0	Les 88 positions sont, dans l'ordre de la radio : les canaux 1-15, puis « 15RP », 16, « 16RP » et ainsi de suite jusqu'à 22 et « 22RP » (RP = le même canal avec l'émission vers le relais), puis les canaux 23-80.
-7730b028	{0} bauds. Même mémoire et mêmes paquets que le pilote de CHIRP (qui a ce modèle depuis novembre 2026), comparés aussi avec le programme du constructeur {1} et avec son fichier de configuration. Ici on modifie fréquences, tonalités, puissance, largeur de bande et noms des canaux ainsi que les réglages généraux. « Identifier » ne reconnaît pas cette radio : choisissez vous-même la bonne fiche.
 fbb04a4c	Radioddity UB15-G (firmware avant la V1.10)
 e0ae264f	{0}Avec le firmware V1.10 la mémoire est différente (il y a les noms) : utilisez l'autre fiche.
 e108c3cb	Radioddity UB15-G (firmware V1.10, avec les noms)
@@ -5792,3 +5787,8 @@ ab98ff6c	16 canaux
 7a2500e8	22 canaux FRS
 fe1a1ff8	199 canaux
 b8f20f9f	16 canaux PMR446
+a973430b	Canaux sans nom, 400-470 MHz, 2400 bauds. Protocole et données tirés du programme du constructeur {0} et essayés avec une radio simulée, pas avec une vraie radio. Ici on modifie fréquences, tonalités, puissance et largeur de bande des canaux ainsi que les réglages généraux (temps maximal d'émission, VOX, guide vocal, touche latérale et les autres de l'onglet Réglages). La radio indique pour quel pays elle est faite : si ce n'est pas celui de cette fiche, la lecture s'arrête et indique la fiche {1}.
+8f4dcbe2	{0} bauds. Même mémoire et mêmes paquets que le pilote de CHIRP (qui a ce modèle depuis novembre 2026), comparés aussi avec le programme du constructeur {1} et avec son fichier de configuration. Ici on modifie fréquences, tonalités, puissance, largeur de bande et noms des canaux ainsi que les réglages généraux.
+71152f6e	Canaux sans nom, 9600 bauds. Protocole et mémoire tirés du programme du constructeur {0} et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande et balayage des canaux ainsi que les réglages généraux ; brouilleur, compander, blocage sur canal occupé et saut de fréquence restent ceux du canal. {1}Si un mot de passe de lecture est défini dans la radio, enlevez-le d'abord avec le programme du constructeur.
+4ccec7f4	{0} bauds. Protocole et mémoire tirés du programme du constructeur {1} et de son fichier de configuration, et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande, balayage et noms des canaux ainsi que les réglages généraux ; blocage sur canal occupé et priorité restent ceux du canal. {2}
+2346b1b2	{0} bauds. Protocole et mémoire tirés du programme du constructeur {1} et de son fichier de configuration, et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie fréquences, tonalités, puissance, largeur de bande et balayage des canaux (ils n'ont pas de nom) ainsi que les réglages généraux ; blocage sur canal occupé et priorité restent ceux du canal. {2}

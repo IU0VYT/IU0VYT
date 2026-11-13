@@ -6,6 +6,25 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.31.0 (13/11/2026)
+-------------------
+- «Kenal pasti» lebih pantas (identify.go): sebelum percubaan dengan masa menunggu penuh
+  (350 ms bagi setiap soalan, tidak berubah) kini ada pusingan pantas: 100 ms bagi
+  setiap soalan baharu; soalan yang sudah tidak berjawab dalam pusingan yang sama (bait
+  yang sama pada kelajuan yang sama) tidak menunggu lagi; percubaan tamat sebaik sahaja
+  pemacu berhenti bertanya soalan baharu; radio yang sudah dikenali pada PC ini atau
+  yang mempunyai tab terbuka terus mendapat masa menunggu penuh. Jika pusingan pantas
+  tidak menemui apa-apa, pusingan penuh menyusul, tidak berubah. Diukur dengan radio
+  simulasi: radio terakhir dalam pelan ditemui dalam 26 s (dahulu lebih 100), tanpa
+  radio carian lengkap mengambil kira-kira 128 s (dahulu 103). Dalam pendengaran
+  berterusan, setiap pusingan kedua hanya pantas. «Kenal pasti» kini turut mencuba radio
+  yang ditambah dari 4.26 hingga 4.30 (Retevis RB39 / RB639, C6, C66, Radioddity Echo,
+  UB15-G, DB35-G, DB35-UV, DB40-G, TIDRADIO TD-M2 Pro; bagi keluarga TIDRADIO
+  TID-712Plus dan bagi UB15-G / DB35-G / DB35-UV ia mengenal pasti keluarga dan
+  mencadangkan kad). Dibaiki (drv_auctus.go): dengan Retevis RB39 pada kad RB639, atau
+  sebaliknya, radio tidak dikeluarkan daripada mod pengaturcaraan. Belum dibuat: TD-V2,
+  TD-M8S, «H8_4829», DP712.
+
 4.30.0 (12/11/2026)
 -------------------
 - Tetapan umum TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 generasi ke-4, TD-H9 dan

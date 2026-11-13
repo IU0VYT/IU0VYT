@@ -5537,7 +5537,6 @@ a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 d0e2b5a6	program pengeluar {0}
 3193cf7f	Versi FRS (22 saluran). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
 1a5178a8	Versi PMR446 (16 saluran). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
-ee33b84f	Saluran tanpa nama, 400-470 MHz, 2400 baud. Protokol dan data diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan dengan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa dan lebar jalur saluran serta tetapan umum (masa pancaran maksimum, VOX, panduan suara, kekunci sisi dan yang lain dalam tab Tetapan). Radio menyatakan untuk negara mana ia dibuat: jika bukan negara kad ini, bacaan berhenti dan menyebut kad {1}. «Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
 fc8883bd	program pengeluar «RB39 CPS» dan «Retevis Analog CPS» (tetingkap «System Information»)
 78730f88	Compander
 4ea54f89	Memampatkan suara semasa memancar dan mengembangkannya semasa menerima untuk mengurangkan hingar latar: berfungsi dengan baik hanya jika radio lain juga menggunakannya.
@@ -5561,7 +5560,6 @@ d1d35451	Echo IT
 3eae2ce8	Echo-DE
 e18d46d6	Echo-IT
 24d13cb7	PMR446, 16 saluran, panduan suara dalam bahasa Jerman atau Itali. Saluran dan tetapan umum seperti dalam program pengeluar «Radioddity ECHO». Tiada dalam CHIRP.{0}
-587883c4	Saluran tanpa nama, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran serta tetapan umum; scrambler, compander, kunci saluran sibuk dan lompatan frekuensi kekal seperti dalam saluran. {1}Jika kata laluan bacaan ditetapkan dalam radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
 1e3c1a23	«Radioddity ECHO»
 153e1fd0	Retevis C6
 ca0139c9	Frekuensi antara 462 dan 468 MHz: saluran kilang ialah 22 saluran FRS / GMRS dan 8 saluran untuk pengulang GMRS (pancaran antara 467.55 dan 467.725 MHz). 
@@ -5599,12 +5597,9 @@ a6263d4e	WLT
 a7d04ceb	Radio kenderaan GMRS 35 W, 80 saluran, juga menerima VHF (program pengeluar bernama «DB-35G»). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
 05f46370	Radio kenderaan VHF / UHF 35 W, 80 saluran. Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
 6bc059e3	Radio kenderaan GMRS 40 W, 199 saluran bernama. Saluran dan tetapan umum; ia juga ada dalam CHIRP (sejak November 2026) dan failnya sama.{0}
-eb7279a2	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur, imbasan dan nama saluran serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}«Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
-65b6a98c	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran (tiada nama) serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}«Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
 f55aa366	«UB-15G» (versi 21/8/2026)
 01effed1	«UB15-G» untuk perisian tegar V1.10
 3ea382d0	88 kedudukan itu, mengikut susunan radio: saluran 1-15, kemudian «15RP», 16, «16RP» dan seterusnya hingga 22 dan «22RP» (RP = saluran yang sama dengan pancaran ke arah pengulang), kemudian saluran 23-80.
-7730b028	{0} baud. Memori dan paket yang sama seperti pemacu CHIRP (yang mempunyai model ini sejak November 2026), juga dibandingkan dengan program pengeluar {1} dan fail konfigurasinya. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan nama saluran serta tetapan umum. «Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
 fbb04a4c	Radioddity UB15-G (perisian tegar sebelum V1.10)
 e0ae264f	{0}Dengan perisian tegar V1.10 memorinya berbeza (ada nama): gunakan kad yang satu lagi.
 e108c3cb	Radioddity UB15-G (perisian tegar V1.10, dengan nama)
@@ -5792,3 +5787,8 @@ ab98ff6c	16 saluran
 7a2500e8	22 saluran FRS
 fe1a1ff8	199 saluran
 b8f20f9f	16 saluran PMR446
+a973430b	Saluran tanpa nama, 400-470 MHz, 2400 baud. Protokol dan data diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan dengan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa dan lebar jalur saluran serta tetapan umum (masa pancaran maksimum, VOX, panduan suara, kekunci sisi dan yang lain dalam tab Tetapan). Radio menyatakan untuk negara mana ia dibuat: jika bukan negara kad ini, bacaan berhenti dan menyebut kad {1}.
+8f4dcbe2	{0} baud. Memori dan paket yang sama seperti pemacu CHIRP (yang mempunyai model ini sejak November 2026), juga dibandingkan dengan program pengeluar {1} dan fail konfigurasinya. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan nama saluran serta tetapan umum.
+71152f6e	Saluran tanpa nama, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran serta tetapan umum; scrambler, compander, kunci saluran sibuk dan lompatan frekuensi kekal seperti dalam saluran. {1}Jika kata laluan bacaan ditetapkan dalam radio, buang dahulu dengan program pengeluar.
+4ccec7f4	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur, imbasan dan nama saluran serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}
+2346b1b2	{0} baud. Protokol dan memori diperoleh daripada program pengeluar {1} dan fail konfigurasinya, dan diuji dengan radio simulasi, bukan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa, lebar jalur dan imbasan saluran (tiada nama) serta tetapan umum; kunci saluran sibuk dan keutamaan kekal seperti dalam saluran. {2}

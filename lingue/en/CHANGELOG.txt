@@ -7,6 +7,23 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.31.0 (13/11/2026)
+-------------------
+- Faster «Identify» (identify.go): before the attempts with full waits (350 ms per
+  question, unchanged) there is now a quick round: 100 ms for each new question; a
+  question already left unanswered in the same round (same bytes at the same speed) does
+  not wait again; the attempt ends as soon as the driver stops asking new questions;
+  radios already recognised on this PC or with an open tab get the full waits at once.
+  If the quick round finds nothing the full round follows, unchanged. Measured with
+  simulated radios: the last radio of the plan is found in 26 s (before: over 100),
+  without a radio the complete search takes about 128 s (before 103). In continuous
+  listening every other round is quick only. «Identify» now also tries the radios added
+  from 4.26 to 4.30 (Retevis RB39 / RB639, C6, C66, Radioddity Echo, UB15-G, DB35-G,
+  DB35-UV, DB40-G, TIDRADIO TD-M2 Pro; for the TIDRADIO TID-712Plus family and for
+  UB15-G / DB35-G / DB35-UV it recognises the family and proposes the cards). Fixed
+  (drv_auctus.go): with a Retevis RB39 on the RB639 card, or vice versa, the radio was
+  not taken out of programming mode. Not done: TD-V2, TD-M8S, «H8_4829», DP712.
+
 4.30.0 (12/11/2026)
 -------------------
 - General settings of TIDRADIO TD-H3 Plus, TD-H3 SE, TD-H7 Plus, TD-H8 4th generation,

@@ -78,8 +78,6 @@ func (o *wltOpt) size() int { return o.set + 0x30 }
 
 type wltFam struct{}
 
-func (wltFam) noIdent() {}
-
 func wltO(m *genModel) *wltOpt { return m.Opt.(*wltOpt) }
 
 func init() {
@@ -87,8 +85,7 @@ func init() {
 		return "Canali senza nome, 9600 baud. Protocollo e memoria ricavati dal programma del costruttore " + o.prog +
 			" e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali " +
 			"e le impostazioni generali; scrambler, compander, blocco su canale occupato e salto di frequenza restano quelli del canale. " + extra +
-			"Se nella radio è impostata una password di lettura, toglila prima con il programma del costruttore. " +
-			"«Identifica» non riconosce questa radio: scegli tu la scheda giusta."
+			"Se nella radio è impostata una password di lettura, toglila prima con il programma del costruttore."
 	}
 	pw := []genPower{{"Bassa", 0, 2}, {"Alta", 0, 0}}
 	c6 := &wltOpt{key: []byte("XMU=E8\xFF\xFF"), set: 0x600, newFlag: 0x18, prog: "«C6»"}
