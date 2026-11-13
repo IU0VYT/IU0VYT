@@ -7,6 +7,40 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.25.0 (11/11/2026)
+-------------------
+- Radioddity GS-10B Pro et Bajeton BJ-8300 avec le nouveau firmware (drv_bt11v126.go,
+  nouveau) : protocole, mémoire et réglages lus dans le code des programmes des
+  constructeurs « GS-10B Pro_EnCPS » v1.0.3 et « BT-11_CPS » v1.2.6 (protocole de la
+  famille Radtel RT-900, 57600 bauds). GS-10B Pro : 999 canaux dans une seule liste.
+  BJ-8300 avec le nouveau firmware : 990 canaux en 10 zones de 99 (avant, 960 en 15
+  zones de 64), noms des zones, touches latérales et réduction du bruit un octet plus
+  loin. Les canaux 961-990 et les noms des zones ne sont écrits que s'ils changent et
+  seulement si la radio les possède ; si la radio contient d'autres données après le
+  canal 960 (ancien firmware), rien n'est écrit et la lecture le signale.
+- Fiche « Bajeton 8300 » (fichiers .dat) : à la fin d'une lecture, elle lit aussi, comme
+  le programme v1.2.6, les canaux 961-990 et les noms des zones ; si elle les trouve,
+  elle avertit que la radio a le nouveau firmware et indique la fiche à utiliser. Les
+  données lues et le fichier ne changent pas.
+- Radioddity FS-T3 / PR-T3 (drv_bfd.go) : d'après le programme « Radioddity T3 » v1.3,
+  même protocole que la BF-T17 sans mot de passe ; 99 positions, 446-446,2 et
+  462-467,999 MHz.
+- Corrections. BF-T17 / BF-T18 (PMR446 et FRS) et GT-18 (aussi Radioddity PR-T5) : le
+  bit 3 du canal est la puissance HAUTE, comme sur la BF-T9 et dans le pilote CHIRP de
+  la Retevis RB18 ; depuis la 3.3 il était lu à l'envers. Ceux qui ont écrit ces radios
+  avec les versions précédentes trouvent haute et basse inversées : relisez la radio et
+  choisissez de nouveau la puissance. « Sortie automatique du menu » (BJ-8300, BJ-9000,
+  Radtel RT-950) : le onzième choix est 60 secondes, il était affiché comme 55. Bajeton
+  BJ-9000 à 990 canaux : cinq réglages de plus, ceux ajoutés par le programme v1.3.3
+  (délai à l'allumage, radio FM interrompue par la réception, voyant à pulsation lente,
+  alarme météo NOAA, rétroéclairage avec la radio FM).
+- Comptes : 544 radios, 458 avec réglages, 598 dans la galerie, 52 marques. Traductions
+  : 38 textes nouveaux. Vérifications : chaque position de la mémoire a été lue deux
+  fois dans le code des programmes des constructeurs (dans la méthode qui lit la radio
+  et dans celle qui écrit) ; nouveaux tests automatiques avec des radios simulées. Les
+  programmes des constructeurs n'ont jamais été exécutés. Aucune de ces radios n'est
+  essayée en vrai.
+
 4.24.0 (11/11/2026)
 -------------------
 - Onglet Modèles (ui/style.css) : les étiquettes des types de radio (Radioamateur, DMR,

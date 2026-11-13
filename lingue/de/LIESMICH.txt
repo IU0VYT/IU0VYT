@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.24.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.25.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,20 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.25.0:
+- Neue Funkgeräte: Radioddity GS-10B Pro (999 Kanäle und Einstellungen), Radioddity
+  FS-T3 und PR-T3 (Kanäle) und das Bajeton BJ-8300 mit der neuen Firmware (990 Kanäle in
+  10 benannten Zonen zu 99, Einstellungen). Sie stammen aus dem Code der
+  Herstellerprogramme und sind noch nicht mit einem echten Funkgerät erprobt: zuerst nur
+  auslesen.
+- Bajeton BJ-8300: zwei Karten je nach Firmware. Die Karte «Bajeton 8300» warnt jetzt,
+  wenn das Funkgerät die neue Firmware hat; die neue Karte schreibt nicht, wenn sie die
+  frühere findet.
+- Korrekturen: Bei Baofeng BF-T17 / BF-T18 und GT-18 (und Radioddity PR-T5) waren hohe
+  und niedrige Leistung vertauscht; die letzte Auswahl von «Automatisches Verlassen des
+  Menüs» ist 60 Sekunden, nicht 55 (BJ-8300, BJ-9000, Radtel RT-950). Bajeton BJ-9000
+  mit 990 Kanälen: fünf Einstellungen mehr.
+- Galerie: 598 Modelle von 52 Marken (544 mit Kanälen, 458 mit Einstellungen).
 Neu in 4.24.0:
 - Registerkarte Modelle besser lesbar: die Beschriftungen der Funkgerätetypen stehen in
   der Seitenmitte, und die Linie zwischen kompatiblen und nicht kompatiblen Funkgeräten

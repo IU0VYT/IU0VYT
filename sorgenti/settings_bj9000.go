@@ -17,7 +17,6 @@ package main
 // quelli letti dalla radio (il programma originale li riscrive a 0xFF).
 
 import (
-	"encoding/hex"
 	"fmt"
 	"strconv"
 )
@@ -97,9 +96,10 @@ func bj9kSetDefsFor(nz int) []bj9kSetDef {
 		{field: "PowerMsg", off: 28, opts: []string{"Logo predefinito", "Tensione della batteria"}, group: g3},
 		{field: "BTWriteSwitch", off: 29, key: "bt_prog", group: g4},
 		{field: "RTone", off: 30, opts: []string{"1000 Hz", "1450 Hz", "1750 Hz", "2100 Hz"}, group: g1},
-		{field: "TimerMenuQuit", off: 0x21, opts: strNums(11, 5, 5, " s"), group: g3},
+		{field: "TimerMenuQuit", off: 0x21, opts: append(strNums(10, 5, 5, " s"), "60 s"), group: g3},
 		{field: "WeatherCH", off: 0x25, opts: strNums(10, 1, 1, ""), group: g2},
-		{field: "DivideCH", off: 0x26, opts: []string{fmt.Sprintf("Zone (%d × %d)", nz, per), fmt.Sprintf("Tutti i canali (%d)", nz*per)}, group: g2},
+		{field: "DivideCH", off: 0x26, opts: []string{fmt.Sprintf("Zone (%d × %d)", nz, per), fmt.Sprintf("Tutti i canali (%d)", nz*per)}, group: g2,
+			desc: kdhDivideDesc}, // 4.25: prima diceva «15 zone da 64» anche nella versione da 990 canali
 		{field: "SubaudioScanSave", off: 0x27, opts: []string{"Ricezione e trasmissione", "Solo ricezione", "Solo trasmissione"}, key: "qt_scan_save", group: g2,
 			label: "Salvataggio del tono trovato con la scansione", desc: "Dove salvare il tono CTCSS/DCS trovato con la scansione dei toni: in ricezione e trasmissione, solo in ricezione o solo in trasmissione."},
 		{field: "KeySide1", off: 0x29, opts: bj9kSideOpts(8), key: "pf1_short", group: g3, label: "Tasto laterale 1 (pressione breve)", desc: "Funzione del tasto laterale 1 premuto brevemente."},
@@ -114,6 +114,30 @@ func bj9kSetDefsFor(nz int) []bj9kSetDef {
 			warn: "Come ripetitore la radio trasmette da sola, anche a lungo: usala solo dove è consentito (in Italia un ponte va autorizzato) e controlla il riscaldamento."},
 		{field: "SoundTransfer", off: 0x3A, key: "transfer_sound", group: g4, label: "Altoparlante durante la ripetizione",
 			desc: "Fa sentire nell'altoparlante il segnale ritrasmesso quando la radio funziona da ripetitore."},
+	}
+	if nz == 10 {
+		// 4.25: voci aggiunte dal programma v1.3.3 (Get/SetFunConfigInfo_Part2 e
+		// _Part3), solo nella versione con 990 canali; con un firmware che non le
+		// ha quei byte non sono usati
+		newer := " Presente solo con il firmware più recente (programma del costruttore v1.3.3)."
+		d = append(d,
+			bj9kSetDef{field: "PowerOnDelayTime", off: 0x24, opts: func() []string {
+				o := make([]string, 15)
+				for i := range o {
+					o[i] = strconv.FormatFloat(0.2+float64(i)*0.2, 'f', 1, 64) + " s"
+				}
+				return o
+			}(), key: "pwr_delay", group: g3, label: "Ritardo all'accensione",
+				desc: "Ritardo all'accensione della radio, da 0,2 a 3 secondi (voce «PowerOn DelayTime» del programma del costruttore)." + newer},
+			bj9kSetDef{field: "RadioRxInterruption", off: 0x45, key: "fm_rx_break", group: g2, label: "Radio FM interrotta dalla ricezione",
+				desc: "Mentre ascolti la radio FM, un segnale in arrivo sul canale interrompe la radio FM." + newer},
+			bj9kSetDef{field: "BreathingLight", off: 0x46, key: "breath_led", group: g3, label: "Spia a intermittenza lenta",
+				desc: "Spia che si accende e si spegne lentamente a radio accesa («Breathing Light»)." + newer},
+			bj9kSetDef{field: "NoaaAlarm", off: 0x47, key: "noaa_alarm", group: g2, label: "Allarme meteo NOAA",
+				desc: "Avviso quando il servizio meteo NOAA trasmette un'allerta (solo USA/Canada; in Italia non è usato)." + newer},
+			bj9kSetDef{field: "RadioBacklight", off: 0x48, key: "fm_backlight", group: g3, label: "Retroilluminazione con la radio FM",
+				desc: "Retroilluminazione del display mentre ascolti la radio FM." + newer},
+		)
 	}
 	for k := 0; k < 10; k++ {
 		d = append(d, bj9kSetDef{field: "Key" + strconv.Itoa(k) + "L", off: 0x3B + k, mask: 0x1F, opts: bj9kKeyOpts(),
@@ -156,36 +180,7 @@ var bj9kSettings, bj9kSettings960 = bj9kTable(bj9kSetDefs,
 	bj9kTable(bj9kSetDefs960, "programmi del costruttore BJ-9000_CPS / RT-950PRO_CPS fino a v1.2.0 (finestra «Optional Features»)")
 
 func bj9kTable(defs []bj9kSetDef, src string) *setTable {
-	t := &setTable{Class: "BJ-9000", Size: 0x9080, Source: src}
-	for _, b := range defs {
-		sh := 0
-		for b.mask>>sh&1 == 0 {
-			sh++
-		}
-		val := func(i int) *string {
-			s := hex.EncodeToString([]byte{byte(i<<sh) & b.mask})
-			return &s
-		}
-		enc := &setEnc{Kind: "table", Fields: [][2]interface{}{{float64(bj9kSetBase + b.off), hex.EncodeToString([]byte{b.mask})}}}
-		sd := setDef{Key: b.key, Group: b.group, Label: b.label, ItLabel: b.label, ItDesc: b.desc, ItWarn: b.warn, Enc: enc}
-		if len(b.opts) == 0 {
-			sd.Type = "bool"
-			if b.inv {
-				enc.Table = []*string{val(1), val(0)}
-			} else {
-				enc.Table = []*string{val(0), val(1)}
-			}
-		} else {
-			sd.Type = "list"
-			sd.ItOpts = b.opts
-			for i := range b.opts {
-				sd.Options = append(sd.Options, strconv.Itoa(i))
-				enc.Table = append(enc.Table, val(i))
-			}
-		}
-		t.Settings = append(t.Settings, sd)
-	}
-	return t
+	return kdhSetTable("BJ-9000", 0x9080, defs, src) // 4.25: costruzione comune (drv_gs10bpro.go)
 }
 
 func init() {

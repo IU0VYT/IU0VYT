@@ -126,6 +126,10 @@ type rt900Opt struct {
 	// messaggio quando nella radio l'area contiene altri dati
 	hiFirst, hiRecs int
 	hiJunk          string
+	// hiStrict (4.25, BJ-8300 con il firmware nuovo): se nell'area hi la radio ha
+	// dati che non sono canali non si scrive nulla, anche quando l'area non è
+	// stata modificata (il firmware precedente ha le impostazioni in altre posizioni)
+	hiStrict bool
 	// layout (4.6): canali della generazione di firmware (960 o 990); le due
 	// versioni della stessa radio sono modelli distinti (vedi rt950PickLayout)
 	layout int
@@ -923,6 +927,12 @@ func (f rt900Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 			cur = append(cur, blk...)
 		}
 		want := img[o.hi[0]:o.hi[1]]
+		if o.hiStrict {
+			if _, junk := rt950HiCount(cur[:o.hiLen()]); junk > 0 {
+				s.exit()
+				return "", rErr("%s", o.hiJunk)
+			}
+		}
 		if !bytes.Equal(cur, want) {
 			_, junk := rt950HiCount(cur[:o.hiLen()])
 			if o.hiFirst != 0 {

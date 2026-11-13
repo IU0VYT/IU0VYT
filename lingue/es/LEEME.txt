@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.24.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.25.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,19 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.25.0:
+- Radios nuevas: Radioddity GS-10B Pro (999 canales y ajustes), Radioddity FS-T3 y PR-T3
+  (canales) y la Bajeton BJ-8300 con el firmware nuevo (990 canales en 10 zonas de 99
+  con nombre, ajustes). Vienen del código de los programas de los fabricantes y todavía
+  no se han probado con una radio real: haz primero solo la lectura.
+- Bajeton BJ-8300: dos fichas según el firmware. La ficha «Bajeton 8300» ahora avisa
+  cuando la radio tiene el firmware nuevo; la ficha nueva no escribe si encuentra el
+  anterior.
+- Correcciones: en las Baofeng BF-T17 / BF-T18 y GT-18 (y Radioddity PR-T5) la potencia
+  alta y la baja estaban intercambiadas; la última opción de «Salida automática del
+  menú» es 60 segundos, no 55 (BJ-8300, BJ-9000, Radtel RT-950). Bajeton BJ-9000 con 990
+  canales: cinco ajustes más.
+- Galería: 598 modelos de 52 marcas (544 con canales, 458 con ajustes).
 Novedades de la 4.24.0:
 - Pestaña Modelos más legible: las etiquetas de los tipos de radio están en el centro de
   la página y la línea entre radios compatibles y no compatibles es roja y más gruesa.

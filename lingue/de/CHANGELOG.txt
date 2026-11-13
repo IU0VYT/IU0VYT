@@ -7,6 +7,39 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.25.0 (11.11.2026)
+-------------------
+- Radioddity GS-10B Pro und Bajeton BJ-8300 mit der neuen Firmware (drv_bt11v126.go,
+  neu): Protokoll, Speicher und Einstellungen im Code der Herstellerprogramme «GS-10B
+  Pro_EnCPS» v1.0.3 und «BT-11_CPS» v1.2.6 gelesen (Protokoll der Radtel-RT-900-Familie,
+  57600 Baud). GS-10B Pro: 999 Kanäle in einer einzigen Liste. BJ-8300 mit der neuen
+  Firmware: 990 Kanäle in 10 Zonen zu 99 (vorher 960 in 15 Zonen zu 64), Zonennamen,
+  Seitentasten und Rauschunterdrückung ein Byte weiter. Die Kanäle 961-990 und die
+  Zonennamen werden nur geschrieben, wenn sie sich ändern und nur wenn das Funkgerät sie
+  hat; stehen nach Kanal 960 andere Daten (frühere Firmware), wird nichts geschrieben,
+  und das Auslesen meldet es.
+- Karte «Bajeton 8300» (.dat-Dateien): Am Ende des Auslesens liest sie, wie das Programm
+  v1.2.6, auch die Kanäle 961-990 und die Zonennamen; findet sie sie, warnt sie, dass
+  das Funkgerät die neue Firmware hat, und nennt die zu benutzende Karte. Die gelesenen
+  Daten und die Datei ändern sich nicht.
+- Radioddity FS-T3 / PR-T3 (drv_bfd.go): aus dem Programm «Radioddity T3» v1.3, gleiches
+  Protokoll wie das BF-T17 ohne Passwort; 99 Plätze, 446-446,2 und 462-467,999 MHz.
+- Korrekturen. BF-T17 / BF-T18 (PMR446 und FRS) und GT-18 (auch Radioddity PR-T5): Bit 3
+  des Kanals ist die HOHE Leistung, wie beim BF-T9 und im CHIRP-Treiber des Retevis
+  RB18; seit 3.3 wurde es umgekehrt gelesen. Wer diese Funkgeräte mit früheren Versionen
+  beschrieben hat, findet hoch und niedrig vertauscht: Funkgerät neu auslesen und die
+  Leistung neu wählen. «Automatisches Verlassen des Menüs» (BJ-8300, BJ-9000, Radtel
+  RT-950): die elfte Auswahl ist 60 Sekunden, angezeigt wurde 55. Bajeton BJ-9000 mit
+  990 Kanälen: fünf Einstellungen mehr, die das Programm v1.3.3 hinzugefügt hat
+  (Einschaltverzögerung, UKW-Radio vom Empfang unterbrochen, langsam pulsierende
+  Leuchte, NOAA-Wetteralarm, Hintergrundbeleuchtung beim UKW-Radio).
+- Zahlen: 544 Funkgeräte, 458 mit Einstellungen, 598 in der Galerie, 52 Marken.
+  Übersetzungen: 38 neue Texte. Prüfungen: Jede Speicherstelle wurde im Code der
+  Herstellerprogramme zweimal gelesen (in der Methode, die aus dem Funkgerät liest, und
+  in der, die schreibt); neue automatische Tests mit simulierten Funkgeräten. Die
+  Herstellerprogramme wurden nie ausgeführt. Keines dieser Funkgeräte ist in echt
+  erprobt.
+
 4.24.0 (11.11.2026)
 -------------------
 - Registerkarte Modelle (ui/style.css): die Beschriftungen der Funkgerätetypen

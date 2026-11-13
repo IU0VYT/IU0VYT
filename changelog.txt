@@ -3,6 +3,50 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.25.0 (12/11/2026)
+-------------------
+- Radioddity GS-10B Pro e Bajeton BJ-8300 con il firmware nuovo (drv_bt11v126.go,
+  nuovo): protocollo, memoria e impostazioni letti nel codice dei programmi dei
+  costruttori «GS-10B Pro_EnCPS» v1.0.3 e «BT-11_CPS» v1.2.6 (stesso codice; protocollo
+  della famiglia Radtel RT-900, 57600 baud).
+  GS-10B Pro: 999 canali in un unico elenco, impostazioni nel blocco 0x9000-0x903F.
+  BJ-8300 con il firmware nuovo: 990 canali in 10 zone da 99 (prima 960 in 15 zone da
+  64), nomi delle zone in 0xC800, tasti laterali in 0x902B-0x902D e riduzione del
+  rumore in 0x9032 (un byte più avanti rispetto al firmware precedente). I canali
+  961-990 e i nomi delle zone si scrivono solo se cambiano e solo se la radio li ha;
+  se dopo il canale 960 la radio ha altri dati (firmware precedente) non si scrive
+  nulla e la lettura lo segnala.
+- Scheda «Bajeton 8300» (file .dat): alla fine della lettura legge anche, come fa il
+  programma v1.2.6, i canali 961-990 e i nomi delle zone; se li trova avvisa che la
+  radio ha il firmware nuovo e indica la scheda da usare. I dati letti e il file non
+  cambiano; una radio che non risponde a quelle letture non dà errore.
+- Radioddity FS-T3 / PR-T3 (drv_bfd.go): dal programma «Radioddity T3» v1.3, stesso
+  protocollo della BF-T17 senza password; 99 posizioni, 446-446,2 e 462-467,999 MHz.
+- Correzioni.
+  BF-T17 / BF-T18 (PMR446 e FRS) e GT-18 (anche Radioddity PR-T5): il bit 3 del canale
+  è la potenza ALTA, come nella BF-T9 e nel driver di CHIRP della Retevis RB18. Dalla
+  3.3 era letto al contrario, perché i programmi del costruttore riempiono le scelte
+  della potenza all'avvio nell'ordine «LOW», «HIGH» e non in quello del disegno della
+  finestra. Chi ha scritto queste radio con le versioni precedenti trova alta e bassa
+  scambiate: basta rileggere la radio e scegliere di nuovo la potenza.
+  «Uscita automatica dal menu» (BJ-8300, BJ-9000, Radtel RT-950): l'undicesima scelta
+  è 60 secondi, era mostrata come 55.
+  «Divisione dei canali» della BJ-9000 con 990 canali: la descrizione non cita più le
+  15 zone.
+- Bajeton BJ-9000 con 990 canali: cinque impostazioni in più, quelle aggiunte dal
+  programma v1.3.3 (ritardo all'accensione, radio FM interrotta dalla ricezione, spia
+  a intermittenza lenta, allarme meteo NOAA, retroilluminazione con la radio FM).
+- Conteggi: 544 radio, 458 con impostazioni, 598 in galleria, 52 marche. Traduzioni:
+  38 testi nuovi.
+- Verifiche: ogni posizione della memoria è stata letta due volte nel codice dei
+  programmi dei costruttori (nel metodo che legge dalla radio e in quello che scrive);
+  test automatici nuovi con le radio simulate (drv_bt11v126_test.go, rdt3_test.go).
+  I programmi dei costruttori non sono mai stati eseguiti. Nessuna di queste radio è
+  provata dal vero.
+- Non fatti: impostazioni della famiglia BF-T17 / GT-18 / FS-T3, Radtel RT-659
+  (memoria ancora da ricostruire), le famiglie nuove dei programmi Retevis e
+  Radioddity, le veicolari BTECH.
+
 4.24.0 (11/11/2026)
 -------------------
 - Scheda Modelli (ui/style.css): le etichette delle tipologie di radio

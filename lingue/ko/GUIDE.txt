@@ -1,6 +1,6 @@
 IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 =====================================================================
-버전 4.24.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
+버전 4.25.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
 작성자: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 웹사이트: https://iu0vyt.github.io/IU0VYT/
 소스 코드와 릴리스: https://github.com/IU0VYT/IU0VYT
@@ -8,6 +8,11 @@ IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 AUTHORS_AND_LICENSES.txt를 보세요.
 이 파일은 LEGGIMI.txt의 한국어 번역입니다(이탈리아어 원문이 기준이 되는 글입니다). 이전 버전의 새 기능은 메인 폴더의 이탈리아어
 CHANGELOG.txt에 있습니다(여기의 CHANGELOG.txt에는 4.13 항목의 번역이 있습니다).
+4.25.0의 새로운 점:
+- 새 무전기: Radioddity GS-10B Pro(999개 채널과 설정), Radioddity FS-T3 및 PR-T3(채널), 새 펌웨어의 Bajeton BJ-8300(이름이 있는 99개씩 10개 구역의 990개 채널, 설정). 제조사 프로그램의 코드에서 얻은 것으로 실제 무전기로는 아직 시험하지 않았습니다: 먼저 읽기만 하세요.
+- Bajeton BJ-8300: 펌웨어에 따라 카드가 두 개입니다. 「Bajeton 8300」 카드는 이제 무전기가 새 펌웨어일 때 알려 줍니다. 새 카드는 이전 펌웨어를 발견하면 기록하지 않습니다.
+- 수정: Baofeng BF-T17 / BF-T18 및 GT-18(그리고 Radioddity PR-T5)에서 높은 출력과 낮은 출력이 서로 바뀌어 있었습니다. 「메뉴 자동 종료」의 마지막 선택은 55초가 아니라 60초입니다(BJ-8300, BJ-9000, Radtel RT-950). 990개 채널의 Bajeton BJ-9000: 설정 다섯 개 추가.
+- 갤러리: 52개 브랜드 598개 모델(채널 지원 544개, 설정 지원 458개).
 4.24.0의 새로운 점:
 - '모델' 탭이 읽기 쉬워졌습니다. 무전기 종류의 라벨이 페이지 가운데에 놓이고, 호환 무전기와 비호환 무전기 사이의 선이 빨갛고 굵어졌습니다.
 - 무전기 26종 추가. 이미 있는 같은 무전기의 드라이버로 지원합니다: Bajeton BT-8000, Radioddity GC-5, Trivox, PR-T5, GT-82, Retevis RT28, Radioddity GA-5S, Retevis RT5, RT5R, RT5RV, TIDRADIO TD-UV5R TriPower, TechSide TI-F8+, TS-T9+, Rugged RH5R, RH5X, Ansoko A-5R, A-8S, Arcshell AR-5, AR-6, AR-8, Greaval GV-8S, GV-9S, Tenway TW-325, UV-82 Pro, UV-5R Pro. 제조사 프로그램 비교로 확인한 모델은 실제 무전기로는 아직 검증하지 않았습니다. 먼저 읽기만 하세요.

@@ -38,6 +38,9 @@ package main
 //    lettura a blocchi di 16 byte ('R' indirizzo 10 → 'W' indirizzo 10 + 16; 06 → 06)
 //    fino a 0x660 (FRS: 0x000-0x22F e 0x630-0x65F); scrittura (PMR: prima 'E' → 'F'
 //    e di nuovo l'aggancio) a blocchi di 8 byte → 06. Fine: 'E'.
+//    Canale n (16 byte) a 16·n, 99 canali (FRS: 35), byte 12: bit 4 = 1 escluso
+//    dalla scansione, bit 3 = 1 potenza ALTA, bit 2 = 1 banda stretta, bit 0 = 1
+//    senza blocco del canale occupato.
 //
 //    La GT-18 PMR («BAOFENG GT18 PMR» v1.2.1) usa lo stesso programma della
 //    T17 PMR446 (classe AnaCps.Data.DataProtocol identica) con «\x02PROGRAL».
@@ -50,8 +53,13 @@ package main
 //    potenza ALTA, bit 2 = 1 banda stretta, bit 1 = 0 «beat shift», bit 0 = 0
 //    blocco del canale occupato. In 0x650: «\x00\x00» + codice della gamma di
 //    frequenze + «7013P» (13 gamme da 136-150 a 470-650 MHz).
-//    Canale n (16 byte) a 16·n, 99 canali (FRS: 35): come sopra, ma bit 3 = 1
-//    potenza BASSA.
+//
+// 4) Radioddity FS-T3 / PR-T3 (programma «Radioddity T3» v1.3, .NET, stessa
+//    classe AnaCps.Data.DataProtocol dei programmi T17/GT-18 senza password e
+//    senza codice di salto): «\x02PROGRAL» → 06; 02 → 8 byte; 06 → 06; lettura
+//    a blocchi di 16 byte da 0x000 a 0x65F, scrittura a blocchi di 8 byte, 'E'.
+//    99 posizioni di 16 byte da 0x000, stessi bit dei canali della T17.
+//    Frequenze ammesse dal programma: 446-446,2 e 462-467,999 MHz.
 
 import (
 	"bytes"
@@ -86,7 +94,6 @@ struct {
 // due programmi del costruttore.
 type pmrCodec struct {
 	base     int
-	lowBit   bool // bit 3 = 1 potenza bassa (T17/T18); altrimenti potenza alta
 	digital  bool // canali digitali (serie D)
 	newTail  []byte
 	newFlags byte
@@ -117,10 +124,7 @@ func (c pmrCodec) get(m *genModel, img []byte, i int) *Chan {
 		ch.Tx = r.F("txfreq").Int(img) * 10
 	}
 	ch.Narrow = r.F("narrow").Bool(img)
-	hi := r.F("power").Bool(img)
-	if c.lowBit {
-		hi = !hi
-	}
+	hi := r.F("power").Bool(img) // bit 3 = 1: potenza alta, in tutti i programmi
 	if hi {
 		ch.Power = m.powerSem(1)
 	} else {
@@ -167,9 +171,6 @@ func (c pmrCodec) set(m *genModel, img []byte, i int, ch *Chan) error {
 	r.F("txfreq").SetInt(img, ch.Tx/10)
 	r.F("narrow").SetBool(img, ch.Narrow)
 	hi := m.powerIndex(ch.Power) == 1
-	if c.lowBit {
-		hi = !hi
-	}
 	r.F("power").SetBool(img, hi)
 	r.F("skip").SetBool(img, !ch.Scan)
 	if c.digital {
@@ -528,7 +529,13 @@ const t17Memsize = 0x660
 
 func init() {
 	pw := []genPower{{"Bassa", 0.5, 2}, {"Alta", 0.5, 0}}
-	cod := pmrCodec{base: 0, lowBit: true, newFlags: 0x01, newTail: []byte{0xFF, 0xFF, 0xFF}}
+	// 4.25: bit 3 = 1 potenza ALTA anche qui (prima era letto al contrario). I
+	// programmi «T17-T18 PMR446 PRO», «T17-T18 FRS» e «BAOFENG GT18» riempiono la
+	// colonna della potenza all'avvio con «LOW», «HIGH» (changeChnLanguage), non
+	// nell'ordine del disegno della finestra («alta», «bassa»): la scelta 1, che
+	// accende il bit 3, è «HIGH». Come nella BF-T9 e nel driver di CHIRP della
+	// Retevis RB18 (stessa famiglia).
+	cod := pmrCodec{base: 0, newFlags: 0x01, newTail: []byte{0xFF, 0xFF, 0xFF}}
 	pmr := t17Opt{cmd: "PROGPMR", pmr: true, gaps: [][2]int{{0x000, 0x660}}, wblk: 8, codec: cod}
 	frs := t17Opt{cmd: "PROGFRS", gaps: [][2]int{{0x000, 0x230}, {0x630, 0x660}}, wblk: 8, codec: cod}
 	mk := func(id, name string, slots int, o t17Opt, b []band) *genModel {
@@ -552,6 +559,15 @@ func init() {
 		DCS: dtcsAll(), Baud: 9600, Fam: t17Fam{}, Opt: &gt,
 		Notes: "Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «BAOFENG GT18 PMR» (v1.2.1, stesso protocollo " +
 			"della BF-T17 PMR446); se sulla radio è impostata la password di lettura e scrittura, toglila prima con quel programma."})
+	// 4.25: Radioddity FS-T3 (FRS) e PR-T3 (PMR446): un solo programma per le due
+	t3 := t17Opt{cmd: "PROGRAL", gaps: [][2]int{{0x000, 0x660}}, wblk: 8, codec: cod}
+	genRegister(&genModel{ID: "rd-t3", Vendor: "Radioddity", Model: "FS-T3", RClass: "IU0VYT_RDT3", Name: "Radioddity FS-T3 / PR-T3",
+		Slots: 99, First: 1, Powers: []genPower{{"Bassa", 0.1, 2}, {"Alta", 0.5, 0}},
+		Bands:  []band{{446000000, 446200000}, {462000000, 467999000}},
+		Narrow: true, HasScan: true, NoTxOff: true, NoChirp: true, DCS: dtcsAll(), Baud: 9600, Fam: t17Fam{}, Opt: &t3,
+		Notes: "Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «Radioddity T3» (v1.3), che mostra 99 posizioni: " +
+			"la FS-T3 ha 22 canali (FRS) e la PR-T3 16 (PMR446), usa le prime posizioni e lascia vuote le altre. " +
+			"Frequenze ammesse: 446-446,2 MHz e 462-467,999 MHz."})
 	// BF-T9: nuovo canale come nel programma «BF-Ts» (potenza alta, banda larga,
 	// in scansione, senza blocco del canale occupato)
 	t9 := t17Opt{cmd: "PROGRAL", gaps: [][2]int{{0x000, 0x660}}, wblk: 16, rng: 0x652,

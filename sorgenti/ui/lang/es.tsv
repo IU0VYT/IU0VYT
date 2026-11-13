@@ -1713,7 +1713,6 @@ f6da2992	Manual
 023d338e	Programa BT-11_CPS v1.0.9 (Google Drive de Bajeton)
 d452157f	Firmware BJ8300_V0.12_20251112.anc y BinTe ANC Bootloader (Google Drive de Bajeton)
 dbea909e	Página de descargas de Bajeton
-0942e041	Gestión propia de este programa (archivos .dat del programa BT-11_CPS, versiones 1.0.8 y 1.0.9: las dos versiones guardan los archivos en formatos distintos y no abren los de la otra; aquí se abren ambos y se elige el formato en el que guardar), ajustes de la radio (ventana «Optional Features» del programa) y actualización del firmware (.anc).
 d6edc671	SHU H28Y Pro
 2a5d831d	Firmware BJ7800_CN_EN_V0.17_20251126.anc y BinTe ANC Bootloader (Google Drive de Bajeton)
 3d70e163	960 canales en 15 zonas de 64 (controlador de CHIRP, escrito para el firmware V0.15P; los canales auxiliares FM/AM/HF no se gestionan). El firmware se actualiza como el de la BJ-8300 (mismo programa «BinTe ANC Bootloader», archivo .anc).
@@ -5480,3 +5479,41 @@ b93f39c5	Greaval
 02dbe0d8	UV-82 Pro
 2c239b5e	UV-82Pro
 60aa99f5	UV-5RPro
+5288d1db	tiene un canal más allá del 960
+e8fc807e	tiene {0} canales más allá del 960
+efcc54ae	tiene los nombres de las zonas
+42489ed2	Atención: la radio {0}, así que parece tener el firmware nuevo (el del programa BT-11_CPS v1.2.6): 990 canales en 10 zonas de 99, con las teclas laterales y la reducción de ruido en otras posiciones de la memoria. Esta ficha solo gestiona los primeros 960 canales, en 15 zonas de 64, y escribiría los ajustes de las teclas laterales en el lugar equivocado: abre desde la galería la ficha «Bajeton BJ-8300 (firmware nuevo: 10 zonas de 99 canales)» y vuelve a leer la radio desde allí.
+988848a2	Programa BT-11_CPS v1.2.6 para el firmware con 10 zonas de 99 canales (Google Drive de Bajeton, del sitio bajeton.cn)
+ecd0802f	Gestión propia de este programa (archivos .dat del programa BT-11_CPS, versiones 1.0.8 y 1.0.9: las dos versiones guardan los archivos en formatos distintos y no abren los de la otra; aquí se abren ambos y se elige el formato en el que guardar), ajustes de la radio (ventana «Optional Features» del programa) y actualización del firmware (.anc). Dos versiones según el firmware: la original tiene 960 canales en 15 zonas de 64 (ficha «Bajeton 8300»); el firmware nuevo, el del programa BT-11_CPS v1.2.6, tiene 990 canales en 10 zonas de 99 con nombre y algunos ajustes en otras posiciones (ficha «firmware nuevo»). Mira en la radio cuántas zonas hay y cuántos canales tiene cada una. La ficha del firmware nuevo se ha obtenido del código del programa del fabricante y todavía no se ha probado con una radio real: si encuentra el firmware anterior lo indica y no escribe.
+0783ce29	Controlador obtenido del código del programa del fabricante: todavía no se ha probado con una radio real. Lee primero la radio y conserva la copia de la lectura.
+af3f49b8	GS-10B Pro
+dfdf2097	GS10B Pro
+75bc403e	GS-10BPro
+bb3c8e60	999 canales en una sola lista y ajustes generales, como en el programa del fabricante «GS-10B Pro_EnCPS» v1.0.3 (misma familia que la Radtel RT-900 y la Bajeton BJ-8300). No está en CHIRP.{0}
+924329db	Canales como en el programa del fabricante «Radioddity T3» v1.3 (mismo protocolo que la Baofeng BF-T17, sin contraseña): la FS-T3 es la versión FRS (22 canales), la PR-T3 la PMR446 (16 canales). No está en CHIRP.{0}
+8a9e2321	Después del canal 960 la memoria de la radio contiene datos que no son canales: la radio parece tener el firmware anterior (960 canales en 15 zonas de 64). Para esta radio usa la ficha «Bajeton 8300» (archivos .dat): desde esta ficha la escritura se rechaza.
+32161cbe	Radioddity FS-T3 / PR-T3
+72a2e442	Radio sin pantalla: los canales no tienen nombre. Obtenido del programa del fabricante «Radioddity T3» (v1.3), que muestra 99 posiciones: la FS-T3 tiene 22 canales (FRS) y la PR-T3 16 (PMR446), usa las primeras posiciones y deja vacías las demás. Frecuencias admitidas: 446-446,2 MHz y 462-467,999 MHz.
+a7fc710d	Radioddity GS-10B Pro
+95f7def5	Enciende la radio con el cable conectado, en un canal libre. 999 canales en una sola lista. Canales y ajustes generales como en el programa del fabricante «GS-10B Pro_EnCPS» v1.0.3; VFO, DTMF y los canales de las bandas de solo recepción quedan como están en la radio. No compatible con CHIRP.
+8baaf807	en la radio, después del canal 960, hay datos que no son canales: la radio parece tener el firmware anterior (960 canales en 15 zonas de 64). No se ha escrito ningún dato. Usa la ficha «Bajeton 8300» (archivos .dat), o actualiza el firmware de la radio
+27fe934d	Bajeton BJ-8300 (firmware nuevo: 10 zonas de 99 canales)
+0a08cf5a	Enciende la radio con el cable conectado, en un canal libre. Para la BJ-8300 con el firmware que divide los canales en 10 zonas de 99 (programa del fabricante «BT-11_CPS» v1.2.6); si tu radio tiene 15 zonas de 64 canales usa la ficha «Bajeton 8300». Canales, nombres de las zonas y ajustes generales como en el programa del fabricante; VFO, DTMF y los canales de las bandas de solo recepción quedan como están en la radio. Los canales 961-990 y los nombres de las zonas solo se escriben si los modificas, después de comprobar que la radio los tiene. No compatible con CHIRP.
+5b4ea261	Tecla lateral 3 (pulsación larga)
+bb905ffd	Función de la tecla lateral 3 mantenida pulsada.
+10853990	programa del fabricante {0} (ventana «Optional Features»)
+82bf3a9a	GS-10B Pro_EnCPS v1.0.3
+792cfa5f	Canales divididos en zonas o todos en una sola lista.
+64a0c084	BT-11_CPS v1.2.6
+fea31dc6	Presente solo con el firmware más reciente (programa del fabricante v1.3.3).
+ef2e884c	Retardo de encendido
+a9d234e3	Retardo al encender la radio, de 0,2 a 3 segundos (opción «PowerOn DelayTime» del programa del fabricante).{0}
+f58b5229	Radio FM interrumpida por la recepción
+5bd6f7ec	Mientras escuchas la radio FM, una señal que llega al canal interrumpe la radio FM.{0}
+817c2575	Luz de pulso lento
+f1ddc024	Luz que se enciende y se apaga lentamente con la radio encendida («Breathing Light»).{0}
+52790008	Alarma meteorológica NOAA
+f3d7fa00	Aviso cuando el servicio meteorológico NOAA emite una alerta (solo EE. UU./Canadá; en Italia no se usa).{0}
+ad2b2124	Retroiluminación con la radio FM
+622d8193	Retroiluminación de la pantalla mientras escuchas la radio FM.{0}
+d30f2d83	firmware nuevo: 10 zonas de 99 canales

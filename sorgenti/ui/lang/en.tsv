@@ -1713,7 +1713,6 @@ f6da2992	Manual
 023d338e	BT-11_CPS v1.0.9 program (Bajeton Google Drive)
 d452157f	BJ8300_V0.12_20251112.anc firmware and BinTe ANC Bootloader (Bajeton Google Drive)
 dbea909e	Bajeton download page
-0942e041	Native handling in this program (.dat files of the BT-11_CPS program, versions 1.0.8 and 1.0.9: the two versions save files in different formats and do not open each other's, here both open and you choose the format to save in), radio settings («Optional Features» window of the program) and firmware update (.anc).
 d6edc671	SHU H28Y Pro
 2a5d831d	BJ7800_CN_EN_V0.17_20251126.anc firmware and BinTe ANC Bootloader (Bajeton Google Drive)
 3d70e163	960 channels in 15 zones of 64 (CHIRP driver, written for firmware V0.15P; the auxiliary FM/AM/HF channels are not handled). The firmware is updated like that of the BJ-8300 (same «BinTe ANC Bootloader» program, .anc file).
@@ -5480,3 +5479,41 @@ b93f39c5	Greaval
 02dbe0d8	UV-82 Pro
 2c239b5e	UV-82Pro
 60aa99f5	UV-5RPro
+5288d1db	has one channel beyond 960
+e8fc807e	has {0} channels beyond 960
+efcc54ae	has zone names
+42489ed2	Warning: the radio {0}, so it seems to have the new firmware (the one of the BT-11_CPS v1.2.6 program): 990 channels in 10 zones of 99, with the side keys and the noise reduction in other memory positions. This card handles only the first 960 channels, in 15 zones of 64, and would write the side-key settings in the wrong place: open the card «Bajeton BJ-8300 (new firmware: 10 zones of 99 channels)» from the gallery and read the radio again from there.
+988848a2	BT-11_CPS v1.2.6 program for the firmware with 10 zones of 99 channels (Bajeton Google Drive, from the bajeton.cn site)
+ecd0802f	Native handling in this program (.dat files of the BT-11_CPS program, versions 1.0.8 and 1.0.9: the two versions save files in different formats and do not open each other's, here both open and you choose the format to save in), radio settings («Optional Features» window of the program) and firmware update (.anc). Two versions depending on the firmware: the original one has 960 channels in 15 zones of 64 (card «Bajeton 8300»); the new firmware, the one of the BT-11_CPS v1.2.6 program, has 990 channels in 10 named zones of 99 and some settings in other positions (card «new firmware»). Look on the radio how many zones there are and how many channels each one has. The new-firmware card comes from the code of the manufacturer's program and has not yet been tested with a real radio: if it finds the previous firmware it says so and does not write.
+0783ce29	Driver derived from the code of the manufacturer's program: it has not yet been tested with a real radio. Read the radio first and keep the copy of the reading.
+af3f49b8	GS-10B Pro
+dfdf2097	GS10B Pro
+75bc403e	GS-10BPro
+bb3c8e60	999 channels in a single list and general settings, as in the manufacturer's program «GS-10B Pro_EnCPS» v1.0.3 (same family as the Radtel RT-900 and the Bajeton BJ-8300). It is not in CHIRP.{0}
+924329db	Channels as in the manufacturer's program «Radioddity T3» v1.3 (same protocol as the Baofeng BF-T17, without password): the FS-T3 is the FRS version (22 channels), the PR-T3 the PMR446 one (16 channels). It is not in CHIRP.{0}
+8a9e2321	After channel 960 the radio's memory holds data that are not channels: the radio seems to have the previous firmware (960 channels in 15 zones of 64). For this radio use the card «Bajeton 8300» (.dat files): writing from this card is refused.
+32161cbe	Radioddity FS-T3 / PR-T3
+72a2e442	Radio without display: channels have no name. Derived from the manufacturer's program «Radioddity T3» (v1.3), which shows 99 positions: the FS-T3 has 22 channels (FRS) and the PR-T3 16 (PMR446), use the first positions and leave the others empty. Allowed frequencies: 446-446.2 MHz and 462-467.999 MHz.
+a7fc710d	Radioddity GS-10B Pro
+95f7def5	Switch the radio on with the cable connected, on a free channel. 999 channels in a single list. Channels and general settings as in the manufacturer's program «GS-10B Pro_EnCPS» v1.0.3; VFO, DTMF and the channels of the receive-only bands stay as they are in the radio. Not compatible with CHIRP.
+8baaf807	in the radio, after channel 960, there are data that are not channels: the radio seems to have the previous firmware (960 channels in 15 zones of 64). No data was written. Use the card «Bajeton 8300» (.dat files), or update the radio's firmware
+27fe934d	Bajeton BJ-8300 (new firmware: 10 zones of 99 channels)
+0a08cf5a	Switch the radio on with the cable connected, on a free channel. For the BJ-8300 with the firmware that divides the channels into 10 zones of 99 (manufacturer's program «BT-11_CPS» v1.2.6); if your radio has 15 zones of 64 channels use the card «Bajeton 8300». Channels, zone names and general settings as in the manufacturer's program; VFO, DTMF and the channels of the receive-only bands stay as they are in the radio. Channels 961-990 and the zone names are written only if you change them, after checking that the radio has them. Not compatible with CHIRP.
+5b4ea261	Side key 3 (long press)
+bb905ffd	Function of side key 3 held down.
+10853990	manufacturer's program {0} («Optional Features» window)
+82bf3a9a	GS-10B Pro_EnCPS v1.0.3
+792cfa5f	Channels divided into zones or all in a single list.
+64a0c084	BT-11_CPS v1.2.6
+fea31dc6	Present only with the most recent firmware (manufacturer's program v1.3.3).
+ef2e884c	Power-on delay
+a9d234e3	Delay when the radio is switched on, from 0.2 to 3 seconds («PowerOn DelayTime» item of the manufacturer's program).{0}
+f58b5229	FM radio interrupted by reception
+5bd6f7ec	While you listen to the FM radio, a signal arriving on the channel interrupts the FM radio.{0}
+817c2575	Slowly pulsing light
+f1ddc024	Light that slowly fades on and off while the radio is on («Breathing Light»).{0}
+52790008	NOAA weather alarm
+f3d7fa00	Alert when the NOAA weather service broadcasts a warning (USA/Canada only; not used in Italy).{0}
+ad2b2124	Backlight with the FM radio
+622d8193	Display backlight while you listen to the FM radio.{0}
+d30f2d83	new firmware: 10 zones of 99 channels

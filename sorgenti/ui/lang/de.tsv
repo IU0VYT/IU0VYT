@@ -1713,7 +1713,6 @@ f6da2992	Handbuch
 023d338e	Programm BT-11_CPS v1.0.9 (Google Drive von Bajeton)
 d452157f	Firmware BJ8300_V0.12_20251112.anc und BinTe ANC Bootloader (Google Drive von Bajeton)
 dbea909e	Download-Seite von Bajeton
-0942e041	Eigene Verwaltung dieses Programms (.dat-Dateien des Programms BT-11_CPS, Versionen 1.0.8 und 1.0.9: Die beiden Versionen speichern in unterschiedlichen Formaten und öffnen die Dateien der anderen nicht; hier öffnen sich beide, und man wählt das Speicherformat), Einstellungen des Funkgeräts (Fenster «Optional Features» des Programms) und Firmware-Aktualisierung (.anc).
 d6edc671	SHU H28Y Pro
 2a5d831d	Firmware BJ7800_CN_EN_V0.17_20251126.anc und BinTe ANC Bootloader (Google Drive von Bajeton)
 3d70e163	960 Kanäle in 15 Zonen zu 64 (CHIRP-Treiber, für Firmware V0.15P geschrieben; die zusätzlichen FM-/AM-/HF-Kanäle werden nicht verwaltet). Die Firmware wird wie die der BJ-8300 aktualisiert (gleiches Programm «BinTe ANC Bootloader», .anc-Datei).
@@ -5480,3 +5479,41 @@ b93f39c5	Greaval
 02dbe0d8	UV-82 Pro
 2c239b5e	UV-82Pro
 60aa99f5	UV-5RPro
+5288d1db	hat einen Kanal jenseits von 960
+e8fc807e	hat {0} Kanäle jenseits von 960
+efcc54ae	hat Zonennamen
+42489ed2	Achtung: Das Funkgerät {0}, es scheint also die neue Firmware zu haben (die des Programms BT-11_CPS v1.2.6): 990 Kanäle in 10 Zonen zu 99, mit den Seitentasten und der Rauschunterdrückung an anderen Speicherstellen. Diese Karte verwaltet nur die ersten 960 Kanäle, in 15 Zonen zu 64, und würde die Einstellungen der Seitentasten an die falsche Stelle schreiben: Öffne in der Galerie die Karte «Bajeton BJ-8300 (neue Firmware: 10 Zonen zu 99 Kanälen)» und lies das Funkgerät von dort erneut aus.
+988848a2	Programm BT-11_CPS v1.2.6 für die Firmware mit 10 Zonen zu 99 Kanälen (Google Drive von Bajeton, von der Seite bajeton.cn)
+ecd0802f	Eigene Verwaltung dieses Programms (.dat-Dateien des Programms BT-11_CPS, Versionen 1.0.8 und 1.0.9: Die beiden Versionen speichern in unterschiedlichen Formaten und öffnen die Dateien der anderen nicht; hier öffnen sich beide, und man wählt das Speicherformat), Einstellungen des Funkgeräts (Fenster «Optional Features» des Programms) und Firmware-Aktualisierung (.anc). Zwei Versionen je nach Firmware: die ursprüngliche hat 960 Kanäle in 15 Zonen zu 64 (Karte «Bajeton 8300»); die neue Firmware, die des Programms BT-11_CPS v1.2.6, hat 990 Kanäle in 10 benannten Zonen zu 99 und einige Einstellungen an anderen Stellen (Karte «neue Firmware»). Sieh am Funkgerät nach, wie viele Zonen es gibt und wie viele Kanäle jede hat. Die Karte der neuen Firmware stammt aus dem Code des Herstellerprogramms und ist noch nicht mit einem echten Funkgerät erprobt: findet sie die frühere Firmware, meldet sie das und schreibt nicht.
+0783ce29	Treiber aus dem Code des Herstellerprogramms abgeleitet: mit einem echten Funkgerät ist er noch nicht erprobt. Lies zuerst das Funkgerät aus und bewahre die Kopie des Auslesens auf.
+af3f49b8	GS-10B Pro
+dfdf2097	GS10B Pro
+75bc403e	GS-10BPro
+bb3c8e60	999 Kanäle in einer einzigen Liste und allgemeine Einstellungen, wie im Herstellerprogramm «GS-10B Pro_EnCPS» v1.0.3 (gleiche Familie wie Radtel RT-900 und Bajeton BJ-8300). Es ist nicht in CHIRP.{0}
+924329db	Kanäle wie im Herstellerprogramm «Radioddity T3» v1.3 (gleiches Protokoll wie das Baofeng BF-T17, ohne Passwort): das FS-T3 ist die FRS-Version (22 Kanäle), das PR-T3 die PMR446-Version (16 Kanäle). Es ist nicht in CHIRP.{0}
+8a9e2321	Nach Kanal 960 enthält der Speicher des Funkgeräts Daten, die keine Kanäle sind: Das Funkgerät scheint die frühere Firmware zu haben (960 Kanäle in 15 Zonen zu 64). Benutze für dieses Funkgerät die Karte «Bajeton 8300» (.dat-Dateien): von dieser Karte aus wird das Schreiben verweigert.
+32161cbe	Radioddity FS-T3 / PR-T3
+72a2e442	Funkgerät ohne Display: Die Kanäle haben keinen Namen. Aus dem Herstellerprogramm «Radioddity T3» (v1.3) abgeleitet, das 99 Plätze zeigt: Das FS-T3 hat 22 Kanäle (FRS) und das PR-T3 16 (PMR446), benutze die ersten Plätze und lass die anderen leer. Zulässige Frequenzen: 446-446,2 MHz und 462-467,999 MHz.
+a7fc710d	Radioddity GS-10B Pro
+95f7def5	Schalte das Funkgerät mit angeschlossenem Kabel auf einem freien Kanal ein. 999 Kanäle in einer einzigen Liste. Kanäle und allgemeine Einstellungen wie im Herstellerprogramm «GS-10B Pro_EnCPS» v1.0.3; VFO, DTMF und die Kanäle der Nur-Empfangs-Bänder bleiben die des Funkgeräts. Nicht mit CHIRP kompatibel.
+8baaf807	im Funkgerät stehen nach Kanal 960 Daten, die keine Kanäle sind: Das Funkgerät scheint die frühere Firmware zu haben (960 Kanäle in 15 Zonen zu 64). Es wurden keine Daten geschrieben. Benutze die Karte «Bajeton 8300» (.dat-Dateien) oder aktualisiere die Firmware des Funkgeräts
+27fe934d	Bajeton BJ-8300 (neue Firmware: 10 Zonen zu 99 Kanälen)
+0a08cf5a	Schalte das Funkgerät mit angeschlossenem Kabel auf einem freien Kanal ein. Für das BJ-8300 mit der Firmware, die die Kanäle in 10 Zonen zu 99 teilt (Herstellerprogramm «BT-11_CPS» v1.2.6); hat dein Funkgerät 15 Zonen zu 64 Kanälen, benutze die Karte «Bajeton 8300». Kanäle, Zonennamen und allgemeine Einstellungen wie im Herstellerprogramm; VFO, DTMF und die Kanäle der Nur-Empfangs-Bänder bleiben die des Funkgeräts. Die Kanäle 961-990 und die Zonennamen werden nur geschrieben, wenn du sie änderst, nach der Prüfung, dass das Funkgerät sie hat. Nicht mit CHIRP kompatibel.
+5b4ea261	Seitentaste 3 (lang drücken)
+bb905ffd	Funktion der gedrückt gehaltenen Seitentaste 3.
+10853990	Herstellerprogramm {0} (Fenster «Optional Features»)
+82bf3a9a	GS-10B Pro_EnCPS v1.0.3
+792cfa5f	Kanäle in Zonen geteilt oder alle in einer einzigen Liste.
+64a0c084	BT-11_CPS v1.2.6
+fea31dc6	Nur mit der neuesten Firmware vorhanden (Herstellerprogramm v1.3.3).
+ef2e884c	Einschaltverzögerung
+a9d234e3	Verzögerung beim Einschalten des Funkgeräts, von 0,2 bis 3 Sekunden (Eintrag «PowerOn DelayTime» des Herstellerprogramms).{0}
+f58b5229	UKW-Radio vom Empfang unterbrochen
+5bd6f7ec	Während du UKW-Radio hörst, unterbricht ein auf dem Kanal ankommendes Signal das UKW-Radio.{0}
+817c2575	Langsam pulsierende Leuchte
+f1ddc024	Leuchte, die bei eingeschaltetem Funkgerät langsam an- und ausgeht («Breathing Light»).{0}
+52790008	NOAA-Wetteralarm
+f3d7fa00	Hinweis, wenn der NOAA-Wetterdienst eine Warnung sendet (nur USA/Kanada; in Italien nicht benutzt).{0}
+ad2b2124	Hintergrundbeleuchtung beim UKW-Radio
+622d8193	Hintergrundbeleuchtung des Displays, während du UKW-Radio hörst.{0}
+d30f2d83	neue Firmware: 10 Zonen zu 99 Kanälen

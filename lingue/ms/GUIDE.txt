@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.24.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.25.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,19 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.25.0:
+- Radio baharu: Radioddity GS-10B Pro (999 saluran dan tetapan), Radioddity FS-T3 dan
+  PR-T3 (saluran) dan Bajeton BJ-8300 dengan firmware baharu (990 saluran dalam 10 zon
+  99 yang bernama, tetapan). Ia diperoleh daripada kod program pengeluar dan belum diuji
+  dengan radio sebenar: buat bacaan sahaja dahulu.
+- Bajeton BJ-8300: dua kad mengikut firmware. Kad «Bajeton 8300» kini memberi amaran
+  apabila radio mempunyai firmware baharu; kad baharu tidak menulis jika ia menemui
+  firmware terdahulu.
+- Pembetulan: pada Baofeng BF-T17 / BF-T18 dan GT-18 (serta Radioddity PR-T5) kuasa
+  tinggi dan rendah tertukar; pilihan terakhir «Keluar menu automatik» ialah 60 saat,
+  bukan 55 (BJ-8300, BJ-9000, Radtel RT-950). Bajeton BJ-9000 dengan 990 saluran: lima
+  tetapan tambahan.
+- Galeri: 598 model daripada 52 jenama (544 dengan saluran, 458 dengan tetapan).
 Baharu dalam 4.24.0:
 - Tab Model lebih mudah dibaca: label jenis radio berada di tengah halaman dan garisan
   antara radio serasi dan tidak serasi berwarna merah serta lebih tebal.

@@ -489,6 +489,13 @@ func genPickLayout(m *genModel, mem []byte) (*genModel, string) {
 	if o, ok := m.Opt.(*rt900Opt); ok && o.layout != 0 {
 		return rt950PickLayout(m, mem)
 	}
+	if o, ok := m.Opt.(*rt900Opt); ok && o.hiStrict && len(mem) >= o.hi[0]+o.hiLen() {
+		// 4.25 (BJ-8300 con il firmware nuovo): dati che non sono canali dopo il 960
+		if _, junk := rt950HiCount(mem[o.hi[0] : o.hi[0]+o.hiLen()]); junk > 0 {
+			return m, "Dopo il canale 960 la memoria della radio contiene dati che non sono canali: la radio sembra avere il firmware precedente " +
+				"(960 canali in 15 zone da 64). Per questa radio usa la scheda «Bajeton 8300» (file .dat): da questa scheda la scrittura viene rifiutata."
+		}
+	}
 	return m, ""
 }
 

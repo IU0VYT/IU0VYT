@@ -111,7 +111,7 @@ var bajSetDefs = []bajSetDef{
 	{field: "cbB_BeepPrompt", key: "beep", group: "Display, suoni e tasti", label: "Suono dei tasti",
 		desc: "Beep alla pressione dei tasti.", bool: true},
 	{field: "cbB_TimerMenuQuit", key: "menu_time", group: "Display, suoni e tasti", label: "Uscita automatica dal menu",
-		desc: "Dopo quanto tempo senza premere tasti la radio esce dal menu.", opts: strNums(11, 5, 5, " s")},
+		desc: "Dopo quanto tempo senza premere tasti la radio esce dal menu.", opts: append(strNums(10, 5, 5, " s"), "60 s")},
 	{field: "cbB_SaveMode", key: "save", group: "Display, suoni e tasti", label: "Risparmio della batteria",
 		desc: "La radio spegne il ricevitore per brevi intervalli quando il canale è libero: più risparmio, ma i primi istanti di una chiamata possono andare persi.",
 		opts: []string{"OFF", "Normale", "Super", "Profondo"}},

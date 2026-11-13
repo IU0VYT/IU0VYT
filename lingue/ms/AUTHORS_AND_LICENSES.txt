@@ -309,6 +309,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): daripada kajian program pengeluar («RT
 «DMR RT-6D», «Radtel RT-1000 Pro CPS»), tiada apa-apa daripadanya disertakan; kod
 ditulis dari awal.
 
+BAJETON BJ-8300 DENGAN FIRMWARE BAHARU, RADIODDITY GS-10B PRO, FS-T3 / PR-T3 (4.25):
+tiada kod pihak ketiga. Protokol, memori dan tetapan diperoleh dengan membaca kod
+program pengeluar (Bajeton «BT-11_CPS» v1.2.6, Radioddity «GS-10B Pro_EnCPS» v1.0.3 dan
+«Radioddity T3» v1.3), ditulis semula dari awal; tiada apa-apa daripada program tersebut
+disertakan.
+
 KATALOG (4.24): tiada kod pihak ketiga yang baharu. Kad yang ditambah menggunakan pemacu
 yang sudah ada: enam datang daripada perbandingan program pengeluar (Bajeton,
 Radioddity, Retevis, Baofeng), yang tiada apa-apa daripadanya disertakan; yang lain

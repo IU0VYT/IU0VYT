@@ -1616,6 +1616,10 @@ dfccf970	Lettura…
 1273f564	Lettura
 c006a899	Chiusura
 d17d0880	Lettura completata
+5288d1db	ha un canale oltre il 960
+e8fc807e	ha {0} canali oltre il 960
+efcc54ae	ha i nomi delle zone
+42489ed2	Attenzione: la radio {0}, quindi sembra avere il firmware nuovo (quello del programma BT-11_CPS v1.2.6): 990 canali in 10 zone da 99, con i tasti laterali e la riduzione del rumore in altre posizioni della memoria. Questa scheda gestisce solo i primi 960 canali, in 15 zone da 64, e scriverebbe le impostazioni dei tasti laterali nel posto sbagliato: apri dalla galleria la scheda «Bajeton BJ-8300 (firmware nuovo: 10 zone da 99 canali)» e rileggi la radio da lì.
 03906361	dati da scrivere incompleti
 e660b0a4	Scrittura…
 72abf538	Scrittura
@@ -1713,9 +1717,10 @@ d033b61f	Programma del costruttore (CPS)
 f6da2992	Manuale
 5c15fb83	Programma BT-11_CPS v1.0.8 (Google Drive Bajeton)
 023d338e	Programma BT-11_CPS v1.0.9 (Google Drive Bajeton)
+988848a2	Programma BT-11_CPS v1.2.6 per il firmware con 10 zone da 99 canali (Google Drive Bajeton, dal sito bajeton.cn)
 d452157f	Firmware BJ8300_V0.12_20251112.anc e BinTe ANC Bootloader (Google Drive Bajeton)
 dbea909e	Pagina dei download Bajeton
-0942e041	Gestione originale di questo programma (file .dat del programma BT-11_CPS, versioni 1.0.8 e 1.0.9: le due versioni salvano i file in formati diversi e non aprono quelli dell'altra, qui si aprono entrambi e si sceglie il formato in cui salvare), impostazioni della radio (finestra «Optional Features» del programma) e aggiornamento del firmware (.anc).
+ecd0802f	Gestione originale di questo programma (file .dat del programma BT-11_CPS, versioni 1.0.8 e 1.0.9: le due versioni salvano i file in formati diversi e non aprono quelli dell'altra, qui si aprono entrambi e si sceglie il formato in cui salvare), impostazioni della radio (finestra «Optional Features» del programma) e aggiornamento del firmware (.anc). Due versioni secondo il firmware: quella originale ha 960 canali in 15 zone da 64 (scheda «Bajeton 8300»); il firmware nuovo, quello del programma BT-11_CPS v1.2.6, ha 990 canali in 10 zone da 99 con il nome e alcune impostazioni in altre posizioni (scheda «firmware nuovo»). Guarda sulla radio quante zone ci sono e quanti canali ha ciascuna. La scheda del firmware nuovo è ricavata dal codice del programma del costruttore e non è ancora provata con una radio vera: se trova il firmware precedente lo segnala e non scrive.
 d6edc671	SHU H28Y Pro
 2a5d831d	Firmware BJ7800_CN_EN_V0.17_20251126.anc e BinTe ANC Bootloader (Google Drive Bajeton)
 3d70e163	960 canali in 15 zone da 64 (driver di CHIRP, scritto per il firmware V0.15P; i canali FM/AM/HF ausiliari non sono gestiti). Il firmware si aggiorna come quello della BJ-8300 (stesso programma «BinTe ANC Bootloader», file .anc).
@@ -2063,6 +2068,12 @@ b93f39c5	Greaval
 02dbe0d8	UV-82 Pro
 2c239b5e	UV-82Pro
 60aa99f5	UV-5RPro
+0783ce29	Driver ricavato dal codice del programma del costruttore: non è ancora provato con una radio vera. Leggi prima la radio e conserva la copia della lettura.
+af3f49b8	GS-10B Pro
+dfdf2097	GS10B Pro
+75bc403e	GS-10BPro
+bb3c8e60	999 canali in un unico elenco e impostazioni generali, come nel programma del costruttore «GS-10B Pro_EnCPS» v1.0.3 (stessa famiglia della Radtel RT-900 e della Bajeton BJ-8300). Non è nel CHIRP.{0}
+924329db	Canali come nel programma del costruttore «Radioddity T3» v1.3 (stesso protocollo della Baofeng BF-T17, senza password): la FS-T3 è la versione FRS (22 canali), la PR-T3 quella PMR446 (16 canali). Non è nel CHIRP.{0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2402,6 +2413,7 @@ dc9f2da1	Tone
 245a7051	tono {0} non valido
 1b150073	DTCS
 1930cfe8	IU0VYT-Flash-{0}
+8a9e2321	Dopo il canale 960 la memoria della radio contiene dati che non sono canali: la radio sembra avere il firmware precedente (960 canali in 15 zone da 64). Per questa radio usa la scheda «Bajeton 8300» (file .dat): da questa scheda la scrittura viene rifiutata.
 0adf3cd9	il file è di una radio non gestita da questo programma ({0} {1}, classe {2} di CHIRP)
 9ff4ee2f	formato non riconosciuto: il file non è un'immagine .img di una radio gestita
 38b033e7	AnyTone {0}
@@ -2496,6 +2508,8 @@ edf51906	Baofeng BF-T17 / BF-T18 (FRS, USA)
 dfed6ddc	PMR
 b1bac2ae	Baofeng GT-18 (PMR446)
 e777e361	Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «BAOFENG GT18 PMR» (v1.2.1, stesso protocollo della BF-T17 PMR446); se sulla radio è impostata la password di lettura e scrittura, toglila prima con quel programma.
+32161cbe	Radioddity FS-T3 / PR-T3
+72a2e442	Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «Radioddity T3» (v1.3), che mostra 99 posizioni: la FS-T3 ha 22 canali (FRS) e la PR-T3 16 (PMR446), usa le prime posizioni e lascia vuote le altre. Frequenze ammesse: 446-446,2 MHz e 462-467,999 MHz.
 48a839cb	Baofeng BF-T9
 afd15c76	Radio senza display: i canali non hanno nome. Ricavato dal programma del costruttore «BF-Ts» (v1.04, pacchetto «BF-T9 Software»). La gamma di frequenze ammessa è quella memorizzata nella radio (es. 400-470 MHz) e viene controllata prima della scrittura.
 75ca5da9	{0} MHz fuori dalla gamma di questa radio ({1}-{2} MHz)
@@ -2516,9 +2530,72 @@ fca93fde	codice di salto
 aa9e1224	identificativo della radio sconosciuto ({0})
 3dda3a85	la radio non ha confermato l'identificazione
 6a80bc89	nessuna conferma leggendo il blocco 0x{0}
+a7fc710d	Radioddity GS-10B Pro
+102162b6	Alta 8 W
+038a5ac1	Media 5 W
+9edbeada	Bassa 2 W
+95f7def5	Accendi la radio con il cavo collegato, su un canale libero. 999 canali in un unico elenco. Canali e impostazioni generali come nel programma del costruttore «GS-10B Pro_EnCPS» v1.0.3; VFO, DTMF e canali delle bande in sola ricezione restano quelli della radio. Non compatibile con CHIRP.
+8baaf807	nella radio, dopo il canale 960, ci sono dati che non sono canali: la radio sembra avere il firmware precedente (960 canali in 15 zone da 64). Nessun dato è stato scritto. Usa la scheda «Bajeton 8300» (file .dat), oppure aggiorna il firmware della radio
+27fe934d	Bajeton BJ-8300 (firmware nuovo: 10 zone da 99 canali)
+0a08cf5a	Accendi la radio con il cavo collegato, su un canale libero. Per la BJ-8300 con il firmware che divide i canali in 10 zone da 99 (programma del costruttore «BT-11_CPS» v1.2.6); se la tua radio ha 15 zone da 64 canali usa la scheda «Bajeton 8300». Canali, nomi delle zone e impostazioni generali come nel programma del costruttore; VFO, DTMF e canali delle bande in sola ricezione restano quelli della radio. I canali 961-990 e i nomi delle zone si scrivono solo se li modifichi, dopo aver controllato che la radio li abbia. Non compatibile con CHIRP.
+71ce29d9	Radio FM
+e25349b0	Potenza di trasmissione
+dfe1458c	Scansione
+6fb5c9dd	Ricerca frequenza
+575048bf	Meteo (NOAA)
+37f71493	Allarme (SOS)
+c08429e1	Analizzatore di spettro
+53576446	Monitor (apre lo squelch)
+564db89d	PTT della banda B
+011f269f	SQL
+254bee10	TOT
+c6fb783e	VOX
+0b3c99bd	Beep
+1a4ddfd4	Tono 1200 Hz
+ed405cf5	TDR
+0eb099f0	OFF (ultima attiva)
+68ab535a	Banda A
+67ab51c7	Banda B
+c9700264	Frequenza (VFO)
+ca1612f3	TO (a tempo)
+4eab497c	CO (a portante)
+a7b634b5	SE (si ferma)
+a97f5694	Frequenza
+4731c996	Numero del canale
+92ef63b3	Sempre accesa
+bfe7be08	1 min
+fa8cf289	2 min
+23a9bf92	3 min
+72189559	Logo predefinito
+0e2517fe	Tensione della batteria
+9a73db9b	Language
+4af06ef4	Inglese
+aeeb548c	Cinese
+fcb78935	Normale
+9d397374	Super
+d467f92e	Profondo
+ef657f13	Display, suoni e tasti
+5b4ea261	Tasto laterale 3 (pressione lunga)
+bb905ffd	Funzione del tasto laterale 3 tenuto premuto.
+fe1ae2fa	DTMF
+17d6bb78	Tasti
+d4175af6	Codice ANI
+5c4445ab	Tasti + ANI
+3eb7fb42	PTTID
+51d9f53d	All'inizio
+118286f5	Alla fine
+a9374a26	Inizio e fine
+e2ef769a	Solo sulla radio
+a7334767	Trasmette il suono
+012b0836	Trasmette il codice
+10853990	programma del costruttore {0} (finestra «Optional Features»)
+82bf3a9a	GS-10B Pro_EnCPS v1.0.3
+0439e14b	Zone ({0} × {1})
+00a96265	Tutti i canali ({0})
+792cfa5f	Canali divisi in zone oppure tutti in un unico elenco.
+64a0c084	BT-11_CPS v1.2.6
 9c7d536f	BTECH {0}
 4b8e8254	Radio GMRS per gli Stati Uniti: in Italia la banda GMRS non è ammessa.
-9edbeada	Bassa 2 W
 49d522ac	{0}Canali GMRS fissi come in CHIRP: 0-22 (firmware originale) oppure 1-30 (firmware con le regole del 2017, US32418), con frequenza e passo dei ponti non modificabili; fuori da quei canali le frequenze non GMRS sono solo in ricezione. Accendi la radio con il volume a metà e su un canale libero.
 9c357927	{0}Come in CHIRP: fuori dalle frequenze GMRS la trasmissione è spenta, sui canali dei ponti solo simplex o +5 MHz, sui canali 467 MHz «solo portatile» banda stretta e bassa potenza. Accendi la radio con il volume a metà e su un canale libero.
 6d711671	Radio MURS per gli Stati Uniti (151-154 MHz): in Italia la banda MURS non è ammessa. 15 canali sulle frequenze MURS, sempre in simplex; 151,820-151,940 MHz a banda stretta. Accendi la radio con il volume a metà e su un canale libero.
@@ -2677,7 +2754,6 @@ c7a6b559	Retevis RA685
 543729b7	Abbree AR-F5
 df703214	TIDRADIO TD-H6
 fc6324a1	Alta 10 W
-038a5ac1	Media 5 W
 b461bed9	PROGROMSHXU
 68fc69b6	Accendi la radio con il cavo collegato. Canali 0-127; in banda aerea (108-136 MHz) la radio riceve in AM. Driver di CHIRP della SenhaiX 8800 (famiglia Radioddity GA-510).
 58929230	risposta inattesa alla richiesta di programmazione ({0}): è il modello giusto?
@@ -2916,7 +2992,6 @@ f8a797f5	Accendi la radio con il cavo collegato. Driver di CHIRP della famiglia 
 8cdd78a1	Accendi la radio con il cavo collegato (19200 baud). 999 canali con nomi di 8 caratteri; mute, scrambler, compander e preferito di ogni canale si conservano. Driver di CHIRP (sperimentale).
 c334ba3b	Wouxun {0}
 d3eca899	Media 4,5 W
-102162b6	Alta 8 W
 affaf9f3	Bassa 5 W
 ea487aee	Alta 20 W
 81ed0214	Accendi la radio con il cavo collegato (19200 baud). 999 canali con nomi di 8 caratteri. Driver di CHIRP (sperimentale).
@@ -3182,7 +3257,6 @@ eeb1014d	HamGeek HG-590
 d90df803	Zone{0}
 2d0e3a60	Scrittura: canali…
 a7f04ce8	Scrittura: zone…
-fe1ae2fa	DTMF
 1a11c136	VFO
 690a38c4	dati della radio
 5fd145a1	sezione sconosciuta {0}
@@ -4371,8 +4445,6 @@ f6de31d3	Eliminazione della coda del ponte (RP-STE)
 7241764a	Frequenza del tono di apertura inviato ai ponti ripetitori che lo richiedono (in Europa di solito 1750 Hz).
 abb667d0	Segnale di fine trasmissione
 a90fa715	Suono inviato in aria quando rilasci il PTT (roger beep): nessuno, un beep o un tono a 1200 Hz.
-0b3c99bd	Beep
-1a4ddfd4	Tono 1200 Hz
 a5157f61	Riduzione del rumore
 4bdd5850	Riduce il rumore di fondo dell'audio ricevuto.
 4e851327	Doppio ascolto e modalità
@@ -4380,14 +4452,10 @@ a5157f61	Riduzione del rumore
 495b7e9b	La radio ascolta alternativamente le due bande A e B.
 c92fc0b8	Banda di trasmissione in doppio ascolto
 5a941de0	In doppio ascolto, su quale banda trasmettere: quella in cui è arrivato l'ultimo segnale (OFF) o sempre la A o la B.
-0eb099f0	OFF (ultima attiva)
-68ab535a	Banda A
-67ab51c7	Banda B
 42d1da24	Banda attiva
 c22ad634	Banda selezionata all'accensione.
 6f3bcc03	Modalità della banda A
 5ada738d	Frequenza libera (VFO) o canali memorizzati.
-c9700264	Frequenza (VFO)
 703bcd96	Modalità della banda B
 8bd1eaaf	Divisione dei canali
 b3367edf	Canali divisi in 15 zone da 64 oppure tutti i 960 canali in un unico elenco (impostazione presente dalla versione 1.0.9 del programma BT-11_CPS).
@@ -4396,33 +4464,20 @@ ea072e90	Zone (15 × 64)
 2d860ce0	Tutti i canali (960)
 d6cdf014	Modalità di scansione
 a417c0dd	Come riprende la scansione dopo un segnale: TO dopo qualche secondo, CO quando il segnale finisce, SE si ferma sul segnale trovato.
-ca1612f3	TO (a tempo)
-4eab497c	CO (a portante)
-a7b634b5	SE (si ferma)
 94c390ea	Radio FM broadcast
 3c9851e2	Permette di ascoltare la radio FM commerciale.
 ab25bfa7	Canale meteo (NOAA)
 56d9f012	Canale del servizio meteo NOAA (solo USA/Canada; in Italia non è usato).
-ef657f13	Display, suoni e tasti
 c82483b2	Display della banda A
 6a24a03f	Cosa mostra il display per i canali della banda A.
-a97f5694	Frequenza
-4731c996	Numero del canale
 c724821f	Display della banda B
 88270e10	Cosa mostra il display per i canali della banda B.
 9de1c90a	Spegnimento della retroilluminazione
 50c01ced	Dopo quanto tempo senza usare la radio si spegne la luce del display (Sempre accesa = non si spegne).
-92ef63b3	Sempre accesa
-bfe7be08	1 min
-fa8cf289	2 min
-23a9bf92	3 min
 792443f8	Schermata di accensione
 92e2c383	Cosa mostra la radio all'accensione: il logo predefinito o la tensione della batteria.
-72189559	Logo predefinito
-0e2517fe	Tensione della batteria
 d519010b	Lingua
 b055dff9	Lingua dei menu e delle voci della radio.
-4af06ef4	Inglese
 390c12f3	Russo
 69aee291	Guida vocale
 6114e898	La radio annuncia a voce i menu e i canali.
@@ -4432,9 +4487,6 @@ d04ec91c	Beep alla pressione dei tasti.
 d87e1da4	Dopo quanto tempo senza premere tasti la radio esce dal menu.
 4edaa503	Risparmio della batteria
 a603c107	La radio spegne il ricevitore per brevi intervalli quando il canale è libero: più risparmio, ma i primi istanti di una chiamata possono andare persi.
-fcb78935	Normale
-9d397374	Super
-d467f92e	Profondo
 c02319d0	Blocco della tastiera
 b91a39a5	Tastiera bloccata all'accensione.
 13d47bc9	Con la tastiera bloccata i tasti non rispondono finché non la sblocchi con la combinazione indicata nel manuale.
@@ -4442,14 +4494,6 @@ e9b55ed6	Blocco automatico della tastiera
 1e9febef	Blocca la tastiera dopo il tempo indicato senza usarla.
 cb94e8d5	Tasto laterale 2 (pressione breve)
 00526c20	Funzione del tasto laterale 2 premuto brevemente.
-71ce29d9	Radio FM
-e25349b0	Potenza di trasmissione
-dfe1458c	Scansione
-6fb5c9dd	Ricerca frequenza
-575048bf	Meteo (NOAA)
-37f71493	Allarme (SOS)
-c08429e1	Analizzatore di spettro
-564db89d	PTT della banda B
 f31df526	Tasto laterale 2 (pressione lunga)
 ac231f2a	Funzione del tasto laterale 2 tenuto premuto.
 ae1a9b6e	Tasto laterale 3 (pressione breve)
@@ -4457,23 +4501,14 @@ ae1a9b6e	Tasto laterale 3 (pressione breve)
 71f94959	DTMF, allarme e funzioni remote
 4d0b906c	Ascolto dei toni DTMF trasmessi
 e16736d9	Fa sentire nell'altoparlante i toni DTMF che la radio trasmette: quelli dei tasti, quelli del codice identificativo (ANI) o entrambi.
-17d6bb78	Tasti
-d4175af6	Codice ANI
-5c4445ab	Tasti + ANI
 48682f03	Invio del codice identificativo (PTT-ID)
 61ad9ad2	Quando trasmettere il codice DTMF identificativo: alla pressione del PTT, al rilascio o in entrambi i momenti.
 1144d925	Il codice viene trasmesso in aria a ogni trasmissione: sui ponti radioamatoriali e nei canali condivisi di solito non è gradito.
-51d9f53d	All'inizio
-118286f5	Alla fine
-a9374a26	Inizio e fine
 d4af9b5d	Ritardo dell'invio del codice
 126e754b	Attesa tra la pressione del PTT e l'invio del codice identificativo.
 c00adb00	Modalità dell'allarme (SOS)
 6d1b6d36	Cosa fa il tasto di allarme: suona solo sulla radio, trasmette il suono di allarme o trasmette il codice di allarme.
 c8bf40e2	Nelle modalità che trasmettono, premere l'allarme manda un segnale in aria sul canale in uso.
-e2ef769a	Solo sulla radio
-a7334767	Trasmette il suono
-012b0836	Trasmette il codice
 130b18a5	Suono dell'allarme
 1271ef58	Suono di allarme acceso o spento.
 ccbb2c72	Disattivazione a distanza
@@ -4483,7 +4518,6 @@ f582fdf6	Programmazione via Bluetooth
 a0ee96a9	Permette di leggere e scrivere la radio via Bluetooth (con l'app del costruttore).
 29632a8c	Con la programmazione Bluetooth attiva chiunque sia vicino può tentare di leggere o modificare la radio.
 6ea04692	programma BT-11_CPS del costruttore (finestra «Optional Features»)
-c6fb783e	VOX
 d60d9df2	Scansione dei toni
 a19415f6	Squelch
 446b0253	Passo di frequenza
@@ -4498,27 +4532,18 @@ cb7a9877	Doppio ascolto
 8fe19459	GPS acceso/spento
 eb26cac9	APRS acceso/spento
 f638994e	Programmazione Bluetooth
-53576446	Monitor (apre lo squelch)
 73e88be6	Invio beacon APRS
 554db70a	PTT della banda C
 de29a05f	Bande, zone e modalità
 a05afacf	DTMF, allarme, APRS e funzioni remote
-011f269f	SQL
 629b3c59	Con il VOX la radio trasmette da sola quando sente la voce, senza premere il PTT.
 9289035a	Sensibilità del VOX
 84bd9b3c	Livello di voce che fa partire la trasmissione con il VOX acceso (1 = più sensibile).
-ed405cf5	TDR
 25a304ab	La radio ascolta alternativamente più bande.
-254bee10	TOT
-9a73db9b	Language
-aeeb548c	Cinese
-3eb7fb42	PTTID
 c624808c	Display della banda C
 8a294fcd	Cosa mostra il display per i canali della banda C.
 66ab5034	Banda C
 713bcf29	Modalità della banda C
-0439e14b	Zone ({0} × {1})
-00a96265	Tutti i canali ({0})
 d5ebb706	Solo ricezione
 69c4df05	Solo trasmissione
 db585229	Salvataggio del tono trovato con la scansione
@@ -4538,6 +4563,17 @@ a12dd4fe	La radio ritrasmette su una banda quello che riceve sull'altra (funzion
 b9fe0996	Come ripetitore la radio trasmette da sola, anche a lungo: usala solo dove è consentito (in Italia un ponte va autorizzato) e controlla il riscaldamento.
 b7a10eae	Altoparlante durante la ripetizione
 418e8971	Fa sentire nell'altoparlante il segnale ritrasmesso quando la radio funziona da ripetitore.
+fea31dc6	Presente solo con il firmware più recente (programma del costruttore v1.3.3).
+ef2e884c	Ritardo all'accensione
+a9d234e3	Ritardo all'accensione della radio, da 0,2 a 3 secondi (voce «PowerOn DelayTime» del programma del costruttore).{0}
+f58b5229	Radio FM interrotta dalla ricezione
+5bd6f7ec	Mentre ascolti la radio FM, un segnale in arrivo sul canale interrompe la radio FM.{0}
+817c2575	Spia a intermittenza lenta
+f1ddc024	Spia che si accende e si spegne lentamente a radio accesa («Breathing Light»).{0}
+52790008	Allarme meteo NOAA
+f3d7fa00	Avviso quando il servizio meteo NOAA trasmette un'allerta (solo USA/Canada; in Italia non è usato).{0}
+ad2b2124	Retroilluminazione con la radio FM
+622d8193	Retroilluminazione del display mentre ascolti la radio FM.{0}
 d7c16464	Tasto {0} (pressione lunga)
 6d6e38f9	Funzione rapida del tasto numerico {0} tenuto premuto.
 dd6aedb9	programmi del costruttore BJ-9000_CPS / RT-950PRO_CPS v1.2.1 e successivi (finestra «Optional Features»)
@@ -5436,6 +5472,7 @@ a916c443	nella memoria non ci sono zone
 63f94611	FRS, USA
 5bf8b9a1	firmware UV-5R
 0ce70622	senza Bluetooth
+d30f2d83	firmware nuovo: 10 zone da 99 canali
 fea692a8	firmware 0.24 e successivi: 990 canali
 ec8cdbd9	firmware fino a 0.23: 960 canali
 18734e24	radio da casco

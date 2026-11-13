@@ -6,6 +6,39 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.25.0 (11/11/2026)
+-------------------
+- Radioddity GS-10B Pro dan Bajeton BJ-8300 dengan firmware baharu (drv_bt11v126.go,
+  baharu): protokol, memori dan tetapan dibaca dalam kod program pengeluar «GS-10B
+  Pro_EnCPS» v1.0.3 dan «BT-11_CPS» v1.2.6 (protokol keluarga Radtel RT-900, 57600
+  baud). GS-10B Pro: 999 saluran dalam satu senarai. BJ-8300 dengan firmware baharu: 990
+  saluran dalam 10 zon 99 (dahulu 960 dalam 15 zon 64), nama zon, kekunci sisi dan
+  pengurangan hingar satu bait ke hadapan. Saluran 961-990 dan nama zon hanya ditulis
+  jika berubah dan hanya jika radio mempunyainya; jika selepas saluran 960 radio
+  mengandungi data lain (firmware terdahulu) tiada apa-apa ditulis dan bacaan
+  memaklumkannya.
+- Kad «Bajeton 8300» (fail .dat): pada akhir bacaan ia turut membaca, seperti program
+  v1.2.6, saluran 961-990 dan nama zon; jika ia menemuinya ia memberi amaran bahawa
+  radio mempunyai firmware baharu dan menyebut kad yang perlu digunakan. Data yang
+  dibaca dan fail tidak berubah.
+- Radioddity FS-T3 / PR-T3 (drv_bfd.go): daripada program «Radioddity T3» v1.3, protokol
+  yang sama dengan BF-T17 tanpa kata laluan; 99 kedudukan, 446-446.2 dan 462-467.999
+  MHz.
+- Pembetulan. BF-T17 / BF-T18 (PMR446 dan FRS) dan GT-18 (juga Radioddity PR-T5): bit 3
+  saluran ialah kuasa TINGGI, seperti pada BF-T9 dan dalam pemacu CHIRP bagi Retevis
+  RB18; sejak 3.3 ia dibaca terbalik. Sesiapa yang menulis radio ini dengan versi
+  terdahulu akan mendapati tinggi dan rendah tertukar: baca semula radio dan pilih kuasa
+  sekali lagi. «Keluar menu automatik» (BJ-8300, BJ-9000, Radtel RT-950): pilihan
+  kesebelas ialah 60 saat, dahulu dipaparkan sebagai 55. Bajeton BJ-9000 dengan 990
+  saluran: lima tetapan tambahan, iaitu yang ditambah oleh program v1.3.3 (lengah semasa
+  dihidupkan, radio FM diganggu oleh penerimaan, lampu berdenyut perlahan, penggera
+  cuaca NOAA, lampu latar dengan radio FM).
+- Kiraan: 544 radio, 458 dengan tetapan, 598 dalam galeri, 52 jenama. Terjemahan: 38
+  teks baharu. Semakan: setiap kedudukan memori dibaca dua kali dalam kod program
+  pengeluar (dalam kaedah yang membaca dari radio dan dalam kaedah yang menulis); ujian
+  automatik baharu dengan radio simulasi. Program pengeluar tidak pernah dijalankan.
+  Tiada satu pun radio ini diuji secara sebenar.
+
 4.24.0 (11/11/2026)
 -------------------
 - Tab Model (ui/style.css): label jenis radio (Radio amatur, DMR, GMRS / FRS, PMR446,

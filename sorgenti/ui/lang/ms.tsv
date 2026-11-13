@@ -1713,7 +1713,6 @@ f6da2992	Manual
 023d338e	Program BT-11_CPS v1.0.9 (Google Drive Bajeton)
 d452157f	Perisian tegar BJ8300_V0.12_20251112.anc dan BinTe ANC Bootloader (Google Drive Bajeton)
 dbea909e	Halaman muat turun Bajeton
-0942e041	Pengendalian asli dalam program ini (fail .dat program BT-11_CPS, versi 1.0.8 dan 1.0.9: kedua-dua versi menyimpan fail dalam format berbeza dan tidak dapat membuka fail satu sama lain, di sini kedua-duanya boleh dibuka dan anda memilih format untuk disimpan), tetapan radio (tetingkap «Optional Features» program) dan kemas kini perisian tegar (.anc).
 d6edc671	SHU H28Y Pro
 2a5d831d	Perisian tegar BJ7800_CN_EN_V0.17_20251126.anc dan BinTe ANC Bootloader (Google Drive Bajeton)
 3d70e163	960 saluran dalam 15 zon dengan 64 (pemacu CHIRP, ditulis untuk perisian tegar V0.15P; saluran tambahan FM/AM/HF tidak dikendalikan). Perisian tegar dikemas kini seperti BJ-8300 (program «BinTe ANC Bootloader» yang sama, fail .anc).
@@ -5480,3 +5479,41 @@ b93f39c5	Greaval
 02dbe0d8	UV-82 Pro
 2c239b5e	UV-82Pro
 60aa99f5	UV-5RPro
+5288d1db	mempunyai satu saluran selepas 960
+e8fc807e	mempunyai {0} saluran selepas 960
+efcc54ae	mempunyai nama zon
+42489ed2	Perhatian: radio {0}, jadi nampaknya ia mempunyai firmware baharu (firmware bagi program BT-11_CPS v1.2.6): 990 saluran dalam 10 zon 99, dengan kekunci sisi dan pengurangan hingar di kedudukan memori yang lain. Kad ini hanya mengurus 960 saluran pertama, dalam 15 zon 64, dan akan menulis tetapan kekunci sisi di tempat yang salah: buka kad «Bajeton BJ-8300 (firmware baharu: 10 zon 99 saluran)» dari galeri dan baca semula radio dari situ.
+988848a2	Program BT-11_CPS v1.2.6 untuk firmware dengan 10 zon 99 saluran (Google Drive Bajeton, dari laman bajeton.cn)
+ecd0802f	Pengendalian asli dalam program ini (fail .dat program BT-11_CPS, versi 1.0.8 dan 1.0.9: kedua-dua versi menyimpan fail dalam format berbeza dan tidak dapat membuka fail satu sama lain, di sini kedua-duanya boleh dibuka dan anda memilih format untuk disimpan), tetapan radio (tetingkap «Optional Features» program) dan kemas kini perisian tegar (.anc). Dua versi mengikut firmware: yang asal mempunyai 960 saluran dalam 15 zon 64 (kad «Bajeton 8300»); firmware baharu, iaitu firmware bagi program BT-11_CPS v1.2.6, mempunyai 990 saluran dalam 10 zon 99 yang bernama dan beberapa tetapan di kedudukan lain (kad «firmware baharu»). Lihat pada radio berapa zon yang ada dan berapa saluran bagi setiap zon. Kad firmware baharu diperoleh daripada kod program pengeluar dan belum diuji dengan radio sebenar: jika ia menemui firmware terdahulu, ia memaklumkannya dan tidak menulis.
+0783ce29	Pemacu diperoleh daripada kod program pengeluar: belum diuji dengan radio sebenar. Baca radio dahulu dan simpan salinan bacaan.
+af3f49b8	GS-10B Pro
+dfdf2097	GS10B Pro
+75bc403e	GS-10BPro
+bb3c8e60	999 saluran dalam satu senarai dan tetapan umum, seperti dalam program pengeluar «GS-10B Pro_EnCPS» v1.0.3 (keluarga yang sama dengan Radtel RT-900 dan Bajeton BJ-8300). Tiada dalam CHIRP.{0}
+924329db	Saluran seperti dalam program pengeluar «Radioddity T3» v1.3 (protokol yang sama dengan Baofeng BF-T17, tanpa kata laluan): FS-T3 ialah versi FRS (22 saluran), PR-T3 versi PMR446 (16 saluran). Tiada dalam CHIRP.{0}
+8a9e2321	Selepas saluran 960, memori radio mengandungi data yang bukan saluran: radio nampaknya mempunyai firmware terdahulu (960 saluran dalam 15 zon 64). Untuk radio ini gunakan kad «Bajeton 8300» (fail .dat): penulisan dari kad ini ditolak.
+32161cbe	Radioddity FS-T3 / PR-T3
+72a2e442	Radio tanpa paparan: saluran tidak bernama. Diperoleh daripada program pengeluar «Radioddity T3» (v1.3), yang memaparkan 99 kedudukan: FS-T3 mempunyai 22 saluran (FRS) dan PR-T3 16 (PMR446), gunakan kedudukan pertama dan biarkan yang lain kosong. Frekuensi yang dibenarkan: 446-446.2 MHz dan 462-467.999 MHz.
+a7fc710d	Radioddity GS-10B Pro
+95f7def5	Hidupkan radio dengan kabel disambungkan, pada saluran yang kosong. 999 saluran dalam satu senarai. Saluran dan tetapan umum seperti dalam program pengeluar «GS-10B Pro_EnCPS» v1.0.3; VFO, DTMF dan saluran jalur terima sahaja kekal seperti dalam radio. Tidak serasi dengan CHIRP.
+8baaf807	dalam radio, selepas saluran 960, terdapat data yang bukan saluran: radio nampaknya mempunyai firmware terdahulu (960 saluran dalam 15 zon 64). Tiada data ditulis. Gunakan kad «Bajeton 8300» (fail .dat), atau kemas kini firmware radio
+27fe934d	Bajeton BJ-8300 (firmware baharu: 10 zon 99 saluran)
+0a08cf5a	Hidupkan radio dengan kabel disambungkan, pada saluran yang kosong. Untuk BJ-8300 dengan firmware yang membahagikan saluran kepada 10 zon 99 (program pengeluar «BT-11_CPS» v1.2.6); jika radio anda mempunyai 15 zon 64 saluran gunakan kad «Bajeton 8300». Saluran, nama zon dan tetapan umum seperti dalam program pengeluar; VFO, DTMF dan saluran jalur terima sahaja kekal seperti dalam radio. Saluran 961-990 dan nama zon hanya ditulis jika anda mengubahnya, selepas memeriksa bahawa radio mempunyainya. Tidak serasi dengan CHIRP.
+5b4ea261	Kekunci sisi 3 (tekan lama)
+bb905ffd	Fungsi kekunci sisi 3 apabila ditekan lama.
+10853990	program pengeluar {0} (tetingkap «Optional Features»)
+82bf3a9a	GS-10B Pro_EnCPS v1.0.3
+792cfa5f	Saluran dibahagikan kepada zon atau semuanya dalam satu senarai.
+64a0c084	BT-11_CPS v1.2.6
+fea31dc6	Hanya ada dengan firmware terkini (program pengeluar v1.3.3).
+ef2e884c	Lengah semasa dihidupkan
+a9d234e3	Lengah semasa radio dihidupkan, dari 0.2 hingga 3 saat (butiran «PowerOn DelayTime» program pengeluar).{0}
+f58b5229	Radio FM diganggu oleh penerimaan
+5bd6f7ec	Semasa anda mendengar radio FM, isyarat yang tiba pada saluran mengganggu radio FM.{0}
+817c2575	Lampu berdenyut perlahan
+f1ddc024	Lampu yang menyala dan padam perlahan-lahan semasa radio hidup («Breathing Light»).{0}
+52790008	Penggera cuaca NOAA
+f3d7fa00	Makluman apabila perkhidmatan cuaca NOAA menyiarkan amaran (AS/Kanada sahaja; tidak digunakan di Itali).{0}
+ad2b2124	Lampu latar dengan radio FM
+622d8193	Lampu latar paparan semasa anda mendengar radio FM.{0}
+d30f2d83	firmware baharu: 10 zon 99 saluran

@@ -7,6 +7,39 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.25.0 (11/11/2026)
+-------------------
+- Radioddity GS-10B Pro y Bajeton BJ-8300 con el firmware nuevo (drv_bt11v126.go,
+  nuevo): protocolo, memoria y ajustes leídos en el código de los programas de los
+  fabricantes «GS-10B Pro_EnCPS» v1.0.3 y «BT-11_CPS» v1.2.6 (protocolo de la familia
+  Radtel RT-900, 57600 baudios). GS-10B Pro: 999 canales en una sola lista. BJ-8300 con
+  el firmware nuevo: 990 canales en 10 zonas de 99 (antes, 960 en 15 zonas de 64),
+  nombres de las zonas, teclas laterales y reducción de ruido un byte más adelante. Los
+  canales 961-990 y los nombres de las zonas solo se escriben si cambian y solo si la
+  radio los tiene; si después del canal 960 la radio tiene otros datos (firmware
+  anterior) no se escribe nada y la lectura lo indica.
+- Ficha «Bajeton 8300» (archivos .dat): al final de la lectura lee también, como el
+  programa v1.2.6, los canales 961-990 y los nombres de las zonas; si los encuentra
+  avisa de que la radio tiene el firmware nuevo e indica la ficha que hay que usar. Los
+  datos leídos y el archivo no cambian.
+- Radioddity FS-T3 / PR-T3 (drv_bfd.go): del programa «Radioddity T3» v1.3, mismo
+  protocolo que la BF-T17 sin contraseña; 99 posiciones, 446-446,2 y 462-467,999 MHz.
+- Correcciones. BF-T17 / BF-T18 (PMR446 y FRS) y GT-18 (también Radioddity PR-T5): el
+  bit 3 del canal es la potencia ALTA, como en la BF-T9 y en el controlador de CHIRP de
+  la Retevis RB18; desde la 3.3 se leía al revés. Quien haya escrito estas radios con
+  las versiones anteriores encuentra alta y baja intercambiadas: vuelve a leer la radio
+  y elige otra vez la potencia. «Salida automática del menú» (BJ-8300, BJ-9000, Radtel
+  RT-950): la undécima opción es 60 segundos, se mostraba como 55. Bajeton BJ-9000 con
+  990 canales: cinco ajustes más, los añadidos por el programa v1.3.3 (retardo de
+  encendido, radio FM interrumpida por la recepción, luz de pulso lento, alarma
+  meteorológica NOAA, retroiluminación con la radio FM).
+- Recuentos: 544 radios, 458 con ajustes, 598 en la galería, 52 marcas. Traducciones: 38
+  textos nuevos. Comprobaciones: cada posición de la memoria se ha leído dos veces en el
+  código de los programas de los fabricantes (en el método que lee de la radio y en el
+  que escribe); nuevas pruebas automáticas con radios simuladas. Los programas de los
+  fabricantes no se han ejecutado nunca. Ninguna de estas radios se ha probado de
+  verdad.
+
 4.24.0 (11/11/2026)
 -------------------
 - Pestaña Modelos (ui/style.css): las etiquetas de los tipos de radio (Radioaficionados,

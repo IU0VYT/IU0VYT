@@ -291,7 +291,8 @@ func (e *k67Emu) session(p Port) error {
 // ---------------------------------------------------------------- Bajeton simulata
 
 type btEmu struct {
-	mem     []byte // 0xC340 (compreso il blocco finale)
+	mem     []byte // 0xC900: fino ai nomi delle zone del firmware nuovo (4.25)
+	oldFw   bool   // firmware precedente: non risponde alle letture da 0xC800
 	id      []byte
 	written map[int]bool
 	ended   bool
@@ -302,7 +303,7 @@ type btEmu struct {
 func (e *btEmu) note(s string) { e.mu.Lock(); e.log = append(e.log, s); e.mu.Unlock() }
 
 func newBtEmu(img []byte) *btEmu {
-	m := bytes.Repeat([]byte{0xFF}, btImgSize+64)
+	m := bytes.Repeat([]byte{0xFF}, 0xC900)
 	copy(m, img)
 	return &btEmu{mem: m, id: []byte("BT-11U  V1.00   "), written: map[int]bool{}}
 }
@@ -362,9 +363,12 @@ func (e *btEmu) session(p Port) error {
 				return err
 			}
 			addr := int(hdr[0])<<8 | int(hdr[1])
+			e.note(fmt.Sprintf("R:%04X:%x", addr, hdr[2]))
+			if addr+64 > len(e.mem) || (e.oldFw && addr >= 0xC800) {
+				continue // nessuna risposta
+			}
 			data := append([]byte{}, e.mem[addr:addr+64]...)
 			btCrypt(data, key)
-			e.note(fmt.Sprintf("R:%04X:%x", addr, hdr[2]))
 			p.Write(append([]byte{'W', hdr[0], hdr[1], hdr[2]}, data...))
 		case 'W':
 			hdr, err := emuRead(p, 67)

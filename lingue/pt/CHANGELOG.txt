@@ -7,6 +7,36 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.25.0 (11/11/2026)
+-------------------
+- Radioddity GS-10B Pro e Bajeton BJ-8300 com o firmware novo (drv_bt11v126.go, novo):
+  protocolo, memória e definições lidos no código dos programas dos fabricantes «GS-10B
+  Pro_EnCPS» v1.0.3 e «BT-11_CPS» v1.2.6 (protocolo da família Radtel RT-900, 57600
+  baud). GS-10B Pro: 999 canais numa única lista. BJ-8300 com o firmware novo: 990
+  canais em 10 zonas de 99 (antes, 960 em 15 zonas de 64), nomes das zonas, teclas
+  laterais e redução de ruído um byte mais à frente. Os canais 961-990 e os nomes das
+  zonas só são escritos se mudarem e só se o rádio os tiver; se depois do canal 960 o
+  rádio tiver outros dados (firmware anterior) nada é escrito e a leitura avisa.
+- Ficha «Bajeton 8300» (ficheiros .dat): no fim da leitura lê também, como o programa
+  v1.2.6, os canais 961-990 e os nomes das zonas; se os encontrar avisa que o rádio tem
+  o firmware novo e indica a ficha a usar. Os dados lidos e o ficheiro não mudam.
+- Radioddity FS-T3 / PR-T3 (drv_bfd.go): do programa «Radioddity T3» v1.3, mesmo
+  protocolo do BF-T17 sem palavra-passe; 99 posições, 446-446,2 e 462-467,999 MHz.
+- Correções. BF-T17 / BF-T18 (PMR446 e FRS) e GT-18 (também Radioddity PR-T5): o bit 3
+  do canal é a potência ALTA, como no BF-T9 e no controlador do CHIRP do Retevis RB18;
+  desde a 3.3 era lido ao contrário. Quem escreveu estes rádios com as versões
+  anteriores encontra alta e baixa trocadas: volte a ler o rádio e escolha de novo a
+  potência. «Saída automática do menu» (BJ-8300, BJ-9000, Radtel RT-950): a décima
+  primeira opção é 60 segundos, era mostrada como 55. Bajeton BJ-9000 com 990 canais:
+  mais cinco definições, as acrescentadas pelo programa v1.3.3 (atraso ao ligar, rádio
+  FM interrompido pela receção, luz de pulsação lenta, alarme meteorológico NOAA,
+  retroiluminação com o rádio FM).
+- Contagens: 544 rádios, 458 com definições, 598 na galeria, 52 marcas. Traduções: 38
+  textos novos. Verificações: cada posição da memória foi lida duas vezes no código dos
+  programas dos fabricantes (no método que lê do rádio e no que escreve); novos testes
+  automáticos com rádios simulados. Os programas dos fabricantes nunca foram executados.
+  Nenhum destes rádios foi testado a sério.
+
 4.24.0 (11/11/2026)
 -------------------
 - Separador Modelos (ui/style.css): as etiquetas dos tipos de rádio (Radioamador, DMR,

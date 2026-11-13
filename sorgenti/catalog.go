@@ -61,13 +61,18 @@ func manual(url string) catLink { return catLink{"manual", "Manuale", url} }
 var catalog = []catItem{
 	// ------------------------------------------------ Bajeton
 	// collegamenti: pagina dei download di bajeton.com (cartelle Google Drive del costruttore)
-	{ID: "bj-8300", Brand: "Bajeton", Name: "BJ-8300", Type: "analog", Drivers: []string{"baj"}, FW: "anc",
+	{ID: "bj-8300", Brand: "Bajeton", Name: "BJ-8300", Type: "analog", Drivers: []string{"baj", "bj-8300-990"}, FW: "anc",
 		Links: []catLink{{"cps", "Programma BT-11_CPS v1.0.8 (Google Drive Bajeton)", gd + "drive/folders/1l8XTP9j3STu5SsiWcWrcdblccSGgGGrn"},
 			{"cps", "Programma BT-11_CPS v1.0.9 (Google Drive Bajeton)", gd + "drive/folders/1jj9HCZTsBrlM9O29fhuKQZVm8GYmRkmP"},
+			{"cps", "Programma BT-11_CPS v1.2.6 per il firmware con 10 zone da 99 canali (Google Drive Bajeton, dal sito bajeton.cn)", gd + "file/d/1etvKiV80-OEduU4ZLjOr7Bng6O36_o4w/view"},
 			{"fw", "Firmware BJ8300_V0.12_20251112.anc e BinTe ANC Bootloader (Google Drive Bajeton)", gd + "drive/folders/1J4fUng8bC1uRyRvbDzZNlxdm9puzuANW"},
 			{"info", "Pagina dei download Bajeton", bjDown}},
 		Notes: "Gestione originale di questo programma (file .dat del programma BT-11_CPS, versioni 1.0.8 e 1.0.9: le due versioni salvano i file in formati diversi e non aprono quelli dell'altra, qui si aprono entrambi e si sceglie il formato in cui salvare), " +
-			"impostazioni della radio (finestra «Optional Features» del programma) e aggiornamento del firmware (.anc)."},
+			"impostazioni della radio (finestra «Optional Features» del programma) e aggiornamento del firmware (.anc). " +
+			"Due versioni secondo il firmware: quella originale ha 960 canali in 15 zone da 64 (scheda «Bajeton 8300»); il firmware nuovo, quello del programma " +
+			"BT-11_CPS v1.2.6, ha 990 canali in 10 zone da 99 con il nome e alcune impostazioni in altre posizioni (scheda «firmware nuovo»). " +
+			"Guarda sulla radio quante zone ci sono e quanti canali ha ciascuna. La scheda del firmware nuovo è ricavata dal codice del programma del costruttore " +
+			"e non è ancora provata con una radio vera: se trova il firmware precedente lo segnala e non scrive."},
 	{ID: "bj-7800", Brand: "Bajeton", Name: "BJ-7800", Aliases: []string{"BJ7800", "SHU H28Y Pro"}, Type: "analog", Drivers: []string{"bj-7800"}, FW: "anc",
 		Links: []catLink{{"cps", "Programma BT-11_CPS v1.0.9 (Google Drive Bajeton)", gd + "drive/folders/1jj9HCZTsBrlM9O29fhuKQZVm8GYmRkmP"},
 			{"fw", "Firmware BJ7800_CN_EN_V0.17_20251126.anc e BinTe ANC Bootloader (Google Drive Bajeton)", gd + "drive/folders/1VpGx-Actyg_fi-GzeMg1rXhaf5VlEHQm"},
@@ -557,6 +562,7 @@ func init() {
 	catalog = append(catalog, catalog422...) // 4.22
 	catalog = append(catalog, catalog423...) // 4.23
 	catalog = append(catalog, catalog424...) // 4.24
+	catalog = append(catalog, catalog425...) // 4.25
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

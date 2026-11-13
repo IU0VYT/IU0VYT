@@ -308,6 +308,11 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): a partir do estudo dos programas do fab
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), dos quais nada está incluído; o
 código foi escrito de raiz.
 
+BAJETON BJ-8300 COM O FIRMWARE NOVO, RADIODDITY GS-10B PRO, FS-T3 / PR-T3 (4.25): nenhum
+código de terceiros. Protocolo, memória e definições vêm da leitura do código dos
+programas dos fabricantes (Bajeton «BT-11_CPS» v1.2.6, Radioddity «GS-10B Pro_EnCPS»
+v1.0.3 e «Radioddity T3» v1.3), reescritos de raiz; nada desses programas está incluído.
+
 CATÁLOGO (4.24): nenhum código novo de terceiros. As fichas adicionadas usam drivers já
 presentes: seis vêm da comparação dos programas dos fabricantes (Bajeton, Radioddity,
 Retevis, Baofeng), dos quais nada está incluído; as outras da tabela de modelos

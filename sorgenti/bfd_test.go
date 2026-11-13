@@ -74,9 +74,10 @@ func t17Str(c *Chan) string {
 		return s
 	}
 	f := func(hz int64) string { s := fmtMHz6(hz); return s[:len(s)-1] } // 446.00625
-	pw, bw, sc := 0, 1, 0
+	// 4.25: scelte della potenza come le mostra il programma in uso (0 = LOW, 1 = HIGH)
+	pw, bw, sc := 1, 1, 0
 	if c.Power == 2 {
-		pw = 1
+		pw = 0
 	}
 	if c.Narrow {
 		bw = 0

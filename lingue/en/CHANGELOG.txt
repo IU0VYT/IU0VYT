@@ -7,6 +7,36 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.25.0 (11/11/2026)
+-------------------
+- Radioddity GS-10B Pro and Bajeton BJ-8300 with the new firmware (drv_bt11v126.go,
+  new): protocol, memory and settings read in the code of the manufacturers' programs
+  «GS-10B Pro_EnCPS» v1.0.3 and «BT-11_CPS» v1.2.6 (Radtel RT-900 family protocol, 57600
+  baud). GS-10B Pro: 999 channels in a single list. BJ-8300 with the new firmware: 990
+  channels in 10 zones of 99 (before, 960 in 15 zones of 64), zone names, side keys and
+  noise reduction one byte further on. Channels 961-990 and the zone names are written
+  only if they change and only if the radio has them; if the radio holds other data
+  after channel 960 (previous firmware) nothing is written and the read says so.
+- «Bajeton 8300» card (.dat files): at the end of a read it also reads, as the v1.2.6
+  program does, channels 961-990 and the zone names; if it finds them it warns that the
+  radio has the new firmware and names the card to use. The data read and the file do
+  not change.
+- Radioddity FS-T3 / PR-T3 (drv_bfd.go): from the program «Radioddity T3» v1.3, same
+  protocol as the BF-T17 without password; 99 positions, 446-446.2 and 462-467.999 MHz.
+- Fixes. BF-T17 / BF-T18 (PMR446 and FRS) and GT-18 (also Radioddity PR-T5): bit 3 of
+  the channel is HIGH power, as in the BF-T9 and in CHIRP's driver of the Retevis RB18;
+  since 3.3 it was read the other way round. Whoever wrote these radios with earlier
+  versions finds high and low swapped: read the radio again and choose the power again.
+  «Automatic menu exit» (BJ-8300, BJ-9000, Radtel RT-950): the eleventh choice is 60
+  seconds, it was shown as 55. Bajeton BJ-9000 with 990 channels: five more settings,
+  those added by the v1.3.3 program (power-on delay, FM radio interrupted by reception,
+  slowly pulsing light, NOAA weather alarm, backlight with the FM radio).
+- Counts: 544 radios, 458 with settings, 598 in the gallery, 52 brands. Translations: 38
+  new texts. Checks: every memory position was read twice in the code of the
+  manufacturers' programs (in the method that reads from the radio and in the one that
+  writes); new automatic tests with simulated radios. The manufacturers' programs were
+  never run. None of these radios has been tested for real.
+
 4.24.0 (11/11/2026)
 -------------------
 - Models tab (ui/style.css): the labels of the radio types (Amateur radio, DMR, GMRS /

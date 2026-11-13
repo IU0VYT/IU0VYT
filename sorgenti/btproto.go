@@ -36,6 +36,10 @@ var btSymbols = []string{"BHT ", "CO 7", "A ES", " EIY", "M PQ", "XN Y", "RVB ",
 
 type btInfo struct {
 	ID string `json:"id"` // 16 byte inviati dalla radio dopo 'F' (non usati dal programma originale)
+	// NewFw (4.25): la radio sembra avere il firmware nuovo, quello del programma
+	// BT-11_CPS v1.2.6 (990 canali in 10 zone da 99 con il nome): motivo, "" se
+	// non risulta (vedi probeNewFw)
+	NewFw string `json:"newFw,omitempty"`
 }
 
 type btSession struct {
@@ -222,12 +226,74 @@ func btReadImage(ctx context.Context, port string, prog Progress, s *btSession) 
 			copy(img[addr:], data)
 		}
 	}
+	s.info.NewFw = s.probeNewFw()
 	if err := s.p.Write([]byte{'E'}); err != nil {
 		return nil, s.info, btFailMsg("Chiusura", err)
 	}
 	prog(len(blocks), len(blocks), "Lettura completata")
 	return img, s.info, nil
 }
+
+// probeNewFw (4.25): alla fine della lettura guarda le due aree che solo il
+// firmware nuovo usa (programma BT-11_CPS v1.2.6, vedi drv_bt11v126.go): i
+// canali 961-990 (0x7800-0x7BBF) e i nomi delle zone (0xC800-0xC8FF). Sono le
+// stesse letture che fa il programma v1.2.6 con qualsiasi radio. I dati non
+// entrano nell'immagine: servono solo ad avvisare. Un tentativo per blocco; se
+// la radio non risponde si smette senza errore.
+func (s *btSession) probeNewFw() string {
+	read := func(a0, a1 int) []byte {
+		var out []byte
+		for addr := a0; addr < a1; addr += 0x40 {
+			req := []byte{'R', byte(addr >> 8), byte(addr), 0x40}
+			if s.p.Write(req) != nil {
+				return nil
+			}
+			buf := make([]byte, 68)
+			if err := s.p.ReadFull(s.ctx, buf, time.Second); err != nil || buf[1] != req[1] || buf[2] != req[2] {
+				_ = s.p.Purge()
+				return nil
+			}
+			d := append([]byte{}, buf[4:]...)
+			btCrypt(d, s.key)
+			out = append(out, d...)
+		}
+		return out
+	}
+	hi := read(0x7800, 0x7BC0)
+	if hi == nil {
+		return ""
+	}
+	ch, junk := rt950HiCount(hi)
+	switch {
+	case junk > 0:
+		return "" // altri dati: firmware precedente
+	case ch == 1:
+		return "ha un canale oltre il 960"
+	case ch > 1:
+		return fmt.Sprintf("ha %d canali oltre il 960", ch)
+	}
+	m := genByID["bj-8300-990"]
+	if m == nil || m.ZoneNames == nil {
+		return ""
+	}
+	zs := m.ZoneNames
+	zn := read(zs.Addr, zs.Addr+zs.Area)
+	if zn == nil || !zoneAreaPlausible(zs, zn) {
+		return ""
+	}
+	for k := 0; k < zs.Count; k++ {
+		if name, ok := zs.decode(zn[k*zs.Stride : (k+1)*zs.Stride]); ok && name != "" {
+			return "ha i nomi delle zone"
+		}
+	}
+	return ""
+}
+
+// btNewFwNote (4.25): avviso quando la scheda «Bajeton 8300» trova il firmware nuovo
+const btNewFwNote = "Attenzione: la radio %s, quindi sembra avere il firmware nuovo (quello del programma BT-11_CPS v1.2.6): 990 canali in 10 zone da 99, " +
+	"con i tasti laterali e la riduzione del rumore in altre posizioni della memoria. Questa scheda gestisce solo i primi 960 canali, in 15 zone da 64, " +
+	"e scriverebbe le impostazioni dei tasti laterali nel posto sbagliato: apri dalla galleria la scheda «Bajeton BJ-8300 (firmware nuovo: 10 zone da 99 canali)» " +
+	"e rileggi la radio da lì."
 
 // btWriteImage scrive l'immagine nella radio, blocco per blocco, nello stesso
 // ordine del programma originale (compreso il blocco finale a 0xFF).

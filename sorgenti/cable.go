@@ -296,11 +296,29 @@ func (a *App) cableRead(ctx context.Context, j *cableJob, req *cableReq) (file [
 	if err != nil {
 		return nil, bi, false, err
 	}
+	if bi.NewFw != "" && (req.Op != "write" || req.Backup) {
+		// 4.25: firmware nuovo (in scrittura l'avviso arriva con la copia di sicurezza,
+		// non con la rilettura di verifica)
+		a.btNewFwOnce(j, bi.NewFw)
+	}
 	dat, err := eepromToDAT(img, a.bajTemplate())
 	if err != nil {
 		return nil, bi, false, fmt.Errorf("dati letti non convertibili: %v", err)
 	}
 	return dat, bi, false, nil
+}
+
+// btNewFwOnce (4.25): avviso del firmware nuovo, una volta sola per operazione
+func (a *App) btNewFwOnce(j *cableJob, why string) {
+	msg := fmt.Sprintf(btNewFwNote, why)
+	j.mu.Lock()
+	defer j.mu.Unlock()
+	for _, n := range j.Notes {
+		if n == msg {
+			return
+		}
+	}
+	j.Notes = append(j.Notes, msg)
 }
 
 func (a *App) runCable(ctx context.Context, j *cableJob, req *cableReq, payload []byte) (interface{}, error) {
