@@ -2139,6 +2139,10 @@ c506923a	16 canali FRS (Stati Uniti). Le istruzioni del programma del costruttor
 0bc7d640	{0} Tribanda 50/144/430 MHz: 100 canali con nomi di 4 caratteri.
 cc4cc2a4	{0} Bibanda 144/430 MHz con ricevitore a larga banda: 200 canali senza nome.
 5e07fa42	{0} Bibanda 144/430 MHz con ricevitore a larga banda: 1000 canali con nomi di 6 caratteri.
+21c84090	{0} Palmare VHF: 200 canali con nomi di 6 caratteri.
+cfdf703b	{0} Palmare UHF: 200 canali con nomi di 6 caratteri.
+14a958a6	{0} Veicolare bibanda: 999 canali con nomi di 6 caratteri.
+beead202	{0} Veicolare a quattro bande: 799 canali con nomi di 6 caratteri.
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2822,6 +2826,30 @@ f9d04bad	blocco {0} incompleto ({1} byte)
 d02a30f9	immagine della memoria non valida per la FT-60
 5185086a	la radio non conferma i dati: mettila in «F8 CLONE» e premi [MONI] («--RX--») prima di avviare la scrittura
 9ab44350	risposta inattesa della radio ({0}) durante la scrittura
+8c5d8d25	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,- /| [ ] _
+825042b1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,-/|[]_
+abc0b1c8	200 canali con nomi di 6 caratteri. La copia parte dalla radio: spegnila, collega il cavo alla presa MIC/SP, accendila tenendo premuto [MONI], scegli «CLONE» nel menu e premi [F]: la radio riparte in modalità «CLONE». Per leggere: avvia la lettura qui e poi tieni premuto [PTT] per un momento (compare «-TX-»). Per scrivere: premi [MONI] sulla radio (compare «-RX-») e poi avvia la scrittura qui. Le frequenze si memorizzano a passi di 5 o 12,5 kHz. {0}
+ac16acb9	Yaesu VX-170
+ad16ae4c	Yaesu VX-177
+c312d135	Alta 50 W
+28cee59a	Media 20 W
+ba4af50d	Media 10 W
+affaf9f3	Bassa 5 W
+1c7596bc	Yaesu FT-7800 / FT-7900
+feb017f4	Radio veicolare. 999 canali con nomi di 6 caratteri. La copia parte dalla radio: spegnila, collega il cavo alla presa DATA, accendila tenendo premuto [MHz(PRI)], scegli «F-7 CLONE» con la manopola e tieni premuto [BAND(SET)] finché compare «CLONE». Per leggere: avvia la lettura qui e poi premi [V/M(MW)]. Per scrivere: premi [LOW(ACC)] (compare «--RX--») e poi avvia la scrittura qui. La potenza alta indicata è quella in VHF; in UHF è più bassa. Le frequenze si memorizzano a passi di 5 o 12,5 kHz. {0}
+ef1bb624	Yaesu FT-8900
+7c9df33d	[V/M] di sinistra
+866c2e51	[LOW] di sinistra
+5adcb358	Radio veicolare a quattro bande. 799 canali con nomi di 6 caratteri. La copia parte dalla radio: spegnila, collega il cavo alla presa DATA, accendila tenendo premuto il tasto [V/M] di sinistra, scegli «CLONE START» con la manopola di destra e premi [SET]: compare «CLONE». Per leggere: avvia la lettura qui e poi premi il tasto [V/M] di sinistra. Per scrivere: premi il tasto [LOW] di sinistra (compare «CLONE -RX-») e poi avvia la scrittura qui. La potenza alta indicata è quella in VHF; in UHF è più bassa. Le frequenze si memorizzano a passi di 5 o 12,5 kHz. {0}
+5bc2bba9	su questa radio la trasmissione non si può disabilitare sul canale
+7e34f407	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione o in entrambi i versi, lo stesso DCS in entrambi i versi; mai toni diversi nei due versi o codici invertiti)
+dc9c52ec	In attesa della radio: avvia l'invio sulla radio…
+8808a930	la radio non ha inviato nulla: mettila in modalità «CLONE» e premi {0} dopo aver avviato la lettura
+e8ae8fa2	la radio è un altro modello: apri la scheda «{0}»
+646dc839	la radio non è una {0} (identificativo {1})
+bbd47d6b	blocco incompleto all'indirizzo {0} ({1} byte su {2})
+6246f0cc	immagine della memoria non valida per la {0}
+afdae93d	la radio non conferma i dati: mettila in modalità «CLONE» e premi {0} prima di avviare la scrittura
 bbf3eb0e	PROGROMBFHU
 16e6f10c	Baofeng serie H (H-31, H-32, BF-H…)
 9f328973	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!"#$%&'()~+-,./:;
@@ -2933,7 +2961,6 @@ f32b31e9	Scrittura ({0})
 62ec1ba4	Accendi la radio con il cavo collegato (9600 baud, parità pari). 128 canali con nomi di 8 caratteri; il blocco del canale occupato si conserva. Driver di CHIRP (versione «alpha»): controlla le impostazioni anche con il programma del costruttore.
 d891419a	modello non corrispondente (identificativo {0})
 2c926f56	dati della radio non riconosciuti: controlla il cavo
-e8ae8fa2	la radio è un altro modello: apri la scheda «{0}»
 eb1316d4	la radio è un altro modello (identificativo {0})
 0cb25873	la radio ha smesso di inviare dati prima della fine (0x{0})
 2bb37bb5	blocco della radio non valido (0x{0})
@@ -3087,7 +3114,6 @@ f8a797f5	Accendi la radio con il cavo collegato. Driver di CHIRP della famiglia 
 8cdd78a1	Accendi la radio con il cavo collegato (19200 baud). 999 canali con nomi di 8 caratteri; mute, scrambler, compander e preferito di ogni canale si conservano. Driver di CHIRP (sperimentale).
 c334ba3b	Wouxun {0}
 d3eca899	Media 4,5 W
-affaf9f3	Bassa 5 W
 ea487aee	Alta 20 W
 81ed0214	Accendi la radio con il cavo collegato (19200 baud). 999 canali con nomi di 8 caratteri. Driver di CHIRP (sperimentale).
 cc976fbb	intestazione della risposta incompleta
@@ -3835,9 +3861,6 @@ bff69448	Bassa 0,8 W
 efbc521d	199 canali con nomi di 6 caratteri; gamma di frequenza letta dalla radio. Driver di CHIRP (sperimentale).
 c4ec57b1	128 canali con nomi di 6 caratteri (radio GMRS). Driver di CHIRP (sperimentale).
 05583988	la radio non si è identificata
-dc9c52ec	In attesa della radio: avvia l'invio sulla radio…
-8808a930	la radio non ha inviato nulla: mettila in modalità «CLONE» e premi {0} dopo aver avviato la lettura
-afdae93d	la radio non conferma i dati: mettila in modalità «CLONE» e premi {0} prima di avviare la scrittura
 c522b72a	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz.,:;*#_-/&()@!?^
 c407fae5	DATA
 55b67acf	Toni ammessi: subtono in trasmissione o nei due versi, lo stesso codice DCS nei due versi. Driver di CHIRP.

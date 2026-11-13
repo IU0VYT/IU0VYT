@@ -5830,3 +5830,26 @@ d1d50ce1	Icom IC-T8A
 78ff8dbe	Le mode (FM, FM large, AM) suit la fréquence.
 4a2dedfd	La copie est la copie rapide (38400 bauds après l'identification).
 29603ad2	la radio ne peut pas mémoriser un décalage de {0} Hz
+21c84090	{0} Portatif VHF : 200 canaux avec des noms de 6 caractères.
+cfdf703b	{0} Portatif UHF : 200 canaux avec des noms de 6 caractères.
+14a958a6	{0} Mobile bibande : 999 canaux avec des noms de 6 caractères.
+beead202	{0} Mobile quadribande : 799 canaux avec des noms de 6 caractères.
+8c5d8d25	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,- /| [ ] _
+825042b1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,-/|[]_
+abc0b1c8	200 canaux avec des noms de 6 caractères. La copie part de la radio : éteignez-la, branchez le câble sur la prise MIC/SP, allumez-la en maintenant [MONI], choisissez « CLONE » dans le menu et appuyez sur [F] : la radio redémarre en mode « CLONE ». Pour lire : lancez la lecture ici puis maintenez [PTT] un instant (« -TX- » s'affiche). Pour écrire : appuyez sur [MONI] sur la radio (« -RX- » s'affiche) puis lancez l'écriture ici. Les fréquences se mémorisent par pas de 5 ou 12,5 kHz. {0}
+ac16acb9	Yaesu VX-170
+ad16ae4c	Yaesu VX-177
+c312d135	Haute 50 W
+28cee59a	Moyenne 20 W
+ba4af50d	Moyenne 10 W
+1c7596bc	Yaesu FT-7800 / FT-7900
+feb017f4	Radio mobile. 999 canaux avec des noms de 6 caractères. La copie part de la radio : éteignez-la, branchez le câble sur la prise DATA, allumez-la en maintenant [MHz(PRI)], choisissez « F-7 CLONE » avec le bouton rotatif et maintenez [BAND(SET)] jusqu'à ce que « CLONE » s'affiche. Pour lire : lancez la lecture ici puis appuyez sur [V/M(MW)]. Pour écrire : appuyez sur [LOW(ACC)] (« --RX-- » s'affiche) puis lancez l'écriture ici. La puissance haute indiquée est celle en VHF ; en UHF elle est plus faible. Les fréquences se mémorisent par pas de 5 ou 12,5 kHz. {0}
+ef1bb624	Yaesu FT-8900
+7c9df33d	[V/M] de gauche
+866c2e51	[LOW] de gauche
+5adcb358	Radio mobile quadribande. 799 canaux avec des noms de 6 caractères. La copie part de la radio : éteignez-la, branchez le câble sur la prise DATA, allumez-la en maintenant la touche [V/M] de gauche, choisissez « CLONE START » avec le bouton rotatif de droite et appuyez sur [SET] : « CLONE » s'affiche. Pour lire : lancez la lecture ici puis appuyez sur la touche [V/M] de gauche. Pour écrire : appuyez sur la touche [LOW] de gauche (« CLONE -RX- » s'affiche) puis lancez l'écriture ici. La puissance haute indiquée est celle en VHF ; en UHF elle est plus faible. Les fréquences se mémorisent par pas de 5 ou 12,5 kHz. {0}
+5bc2bba9	sur cette radio l'émission ne peut pas être désactivée sur un canal
+7e34f407	la radio n'a pas cette combinaison de tonalités (admis : sous-ton en émission ou dans les deux sens, le même DCS dans les deux sens ; jamais de tonalités différentes dans les deux sens ni de codes inversés)
+646dc839	la radio n'est pas un {0} (identifiant {1})
+bbd47d6b	bloc incomplet à l'adresse {0} ({1} octets sur {2})
+6246f0cc	image de la mémoire non valide pour le {0}

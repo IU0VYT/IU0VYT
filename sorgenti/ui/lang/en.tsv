@@ -5830,3 +5830,26 @@ d1d50ce1	Icom IC-T8A
 78ff8dbe	The mode (FM, wide FM, AM) follows the frequency.
 4a2dedfd	The clone is the fast one (38400 baud after identification).
 29603ad2	the radio cannot store an offset of {0} Hz
+21c84090	{0} VHF handheld: 200 channels with 6-character names.
+cfdf703b	{0} UHF handheld: 200 channels with 6-character names.
+14a958a6	{0} Dual-band mobile: 999 channels with 6-character names.
+beead202	{0} Four-band mobile: 799 channels with 6-character names.
+8c5d8d25	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,- /| [ ] _
+825042b1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,-/|[]_
+abc0b1c8	200 channels with 6-character names. The clone is started from the radio: switch it off, connect the cable to the MIC/SP jack, switch it on while holding [MONI], select «CLONE» in the menu and press [F]: the radio restarts in «CLONE» mode. To read: start the read here and then hold [PTT] for a moment («-TX-» appears). To write: press [MONI] on the radio («-RX-» appears) and then start the write here. Frequencies are stored in 5 or 12.5 kHz steps. {0}
+ac16acb9	Yaesu VX-170
+ad16ae4c	Yaesu VX-177
+c312d135	High 50 W
+28cee59a	Medium 20 W
+ba4af50d	Medium 10 W
+1c7596bc	Yaesu FT-7800 / FT-7900
+feb017f4	Mobile radio. 999 channels with 6-character names. The clone is started from the radio: switch it off, connect the cable to the DATA jack, switch it on while holding [MHz(PRI)], select «F-7 CLONE» with the dial and hold [BAND(SET)] until «CLONE» appears. To read: start the read here and then press [V/M(MW)]. To write: press [LOW(ACC)] («--RX--» appears) and then start the write here. The high power shown is the VHF one; on UHF it is lower. Frequencies are stored in 5 or 12.5 kHz steps. {0}
+ef1bb624	Yaesu FT-8900
+7c9df33d	left [V/M]
+866c2e51	left [LOW]
+5adcb358	Four-band mobile radio. 799 channels with 6-character names. The clone is started from the radio: switch it off, connect the cable to the DATA jack, switch it on while holding the left [V/M] key, select «CLONE START» with the right dial and press [SET]: «CLONE» appears. To read: start the read here and then press the left [V/M] key. To write: press the left [LOW] key («CLONE -RX-» appears) and then start the write here. The high power shown is the VHF one; on UHF it is lower. Frequencies are stored in 5 or 12.5 kHz steps. {0}
+5bc2bba9	on this radio transmission cannot be disabled on a channel
+7e34f407	the radio does not have this tone combination (allowed: subtone on transmit or in both directions, the same DCS in both directions; never different tones in the two directions or inverted codes)
+646dc839	the radio is not a {0} (identifier {1})
+bbd47d6b	incomplete block at address {0} ({1} of {2} bytes)
+6246f0cc	memory image not valid for the {0}

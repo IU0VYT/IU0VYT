@@ -7,6 +7,18 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.34.0 (13/11/2026)
+-------------------
+- New radios from the CHIRP drivers: the Yaesu VX-170 (VHF) and VX-177 (UHF) handhelds,
+  200 named channels, and the Yaesu FT-7800 / FT-7900 (999 channels) and FT-8900 (four
+  bands, 799 channels) mobiles. Channels only. Image decoding, edits, memory layout and
+  the bytes exchanged with the radio are compared with CHIRP and are identical.
+- The clone is started from the radio, so «Identify» does not try these radios: choose
+  the card by hand. A frequency the radio cannot store is refused; an offset that is not
+  a multiple of 50 kHz or exceeds 12.75 MHz is written as a separate transmit frequency;
+  on the mobiles a channel in the air band stays in AM. Receive-only channels cannot be
+  set on these radios. Not done yet: the FT-8800 and the FT-7800 settings.
+
 4.33.0 (13/11/2026)
 -------------------
 - New radios from the CHIRP drivers (Icom handhelds that were missing): IC-T7H (60

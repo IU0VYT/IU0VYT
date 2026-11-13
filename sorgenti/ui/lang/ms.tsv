@@ -5830,3 +5830,26 @@ d1d50ce1	Icom IC-T8A
 78ff8dbe	Mod (FM, FM lebar, AM) mengikut frekuensi.
 4a2dedfd	Klon ini yang pantas (38400 baud selepas pengenalpastian).
 29603ad2	radio tidak dapat menyimpan ofset {0} Hz
+21c84090	{0} Radio genggam VHF: 200 saluran dengan nama 6 aksara.
+cfdf703b	{0} Radio genggam UHF: 200 saluran dengan nama 6 aksara.
+14a958a6	{0} Radio kenderaan dwijalur: 999 saluran dengan nama 6 aksara.
+beead202	{0} Radio kenderaan empat jalur: 799 saluran dengan nama 6 aksara.
+8c5d8d25	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,- /| [ ] _
+825042b1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,-/|[]_
+abc0b1c8	200 saluran dengan nama 6 aksara. Klon dimulakan dari radio: matikannya, sambungkan kabel ke bicu MIC/SP, hidupkannya sambil menekan [MONI], pilih «CLONE» dalam menu dan tekan [F]: radio dimulakan semula dalam mod «CLONE». Untuk membaca: mulakan bacaan di sini dan kemudian tekan [PTT] seketika («-TX-» muncul). Untuk menulis: tekan [MONI] pada radio («-RX-» muncul) dan kemudian mulakan penulisan di sini. Frekuensi disimpan dalam langkah 5 atau 12.5 kHz. {0}
+ac16acb9	Yaesu VX-170
+ad16ae4c	Yaesu VX-177
+c312d135	Tinggi 50 W
+28cee59a	Sederhana 20 W
+ba4af50d	Sederhana 10 W
+1c7596bc	Yaesu FT-7800 / FT-7900
+feb017f4	Radio kenderaan. 999 saluran dengan nama 6 aksara. Klon dimulakan dari radio: matikannya, sambungkan kabel ke bicu DATA, hidupkannya sambil menekan [MHz(PRI)], pilih «F-7 CLONE» dengan tombol dan tekan lama [BAND(SET)] sehingga «CLONE» muncul. Untuk membaca: mulakan bacaan di sini dan kemudian tekan [V/M(MW)]. Untuk menulis: tekan [LOW(ACC)] («--RX--» muncul) dan kemudian mulakan penulisan di sini. Kuasa tinggi yang ditunjukkan ialah untuk VHF; pada UHF ia lebih rendah. Frekuensi disimpan dalam langkah 5 atau 12.5 kHz. {0}
+ef1bb624	Yaesu FT-8900
+7c9df33d	[V/M] kiri
+866c2e51	[LOW] kiri
+5adcb358	Radio kenderaan empat jalur. 799 saluran dengan nama 6 aksara. Klon dimulakan dari radio: matikannya, sambungkan kabel ke bicu DATA, hidupkannya sambil menekan kekunci [V/M] kiri, pilih «CLONE START» dengan tombol kanan dan tekan [SET]: «CLONE» muncul. Untuk membaca: mulakan bacaan di sini dan kemudian tekan kekunci [V/M] kiri. Untuk menulis: tekan kekunci [LOW] kiri («CLONE -RX-» muncul) dan kemudian mulakan penulisan di sini. Kuasa tinggi yang ditunjukkan ialah untuk VHF; pada UHF ia lebih rendah. Frekuensi disimpan dalam langkah 5 atau 12.5 kHz. {0}
+5bc2bba9	pada radio ini pemancaran tidak boleh dilumpuhkan pada saluran
+7e34f407	radio ini tiada gabungan ton ini (dibenarkan: subton semasa memancar atau pada kedua-dua arah, DCS yang sama pada kedua-dua arah; jangan sekali-kali ton berbeza pada dua arah atau kod songsang)
+646dc839	radio ini bukan {0} (pengecam {1})
+bbd47d6b	blok tidak lengkap pada alamat {0} ({1} daripada {2} bait)
+6246f0cc	imej memori tidak sah untuk {0}

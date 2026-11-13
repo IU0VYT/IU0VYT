@@ -3,6 +3,30 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.34.0 (13/11/2026)
+-------------------
+- Radio nuove dai driver di CHIRP (drv_ft7800.go, da ft7800.py e vx170.py):
+  i palmari Yaesu VX-170 (VHF) e VX-177 (UHF), 200 canali con nome, e le
+  veicolari Yaesu FT-7800 / FT-7900 (999 canali) e FT-8900 (quattro bande, 799
+  canali). Solo canali. Lettura dell'immagine, modifiche, struttura della
+  memoria e byte scambiati con la radio sono confrontati con CHIRP e risultano
+  identici.
+- La copia parte dalla radio (modalità «CLONE»), come per la FT-60: per questo
+  «Identifica» non prova queste radio e la scheda va scelta a mano.
+- Differenze volute rispetto a CHIRP: una frequenza che la radio non può
+  memorizzare (passi da 6,25 kHz) viene rifiutata; uno scostamento che non è
+  multiplo di 50 kHz o supera 12,75 MHz si scrive come frequenza di
+  trasmissione separata (CHIRP lo tronca); nelle veicolari un canale nella
+  gamma aeronautica (108-137 MHz) resta in AM. La sola ricezione non si può
+  impostare su queste radio. Come CHIRP: il canale cancellato conserva i suoi
+  dati (nella FT-7800 esce dai banchi) e il salto «P» si perde quando il
+  canale viene modificato.
+- Non ancora fatte: la FT-8800 (in CHIRP ha due liste, sinistra e destra) e le
+  impostazioni della FT-7800.
+- Catalogo: quattro schede Yaesu nuove.
+- Prove: ftx434_test.go; i quattro modelli sono nelle prove di confronto con
+  CHIRP (per la VX-170 con l'immagine della VX-177 e la sigla della VX-170).
+
 4.33.0 (13/11/2026)
 -------------------
 - Radio nuove dai driver di CHIRP (palmari Icom che mancavano): IC-T7H (60

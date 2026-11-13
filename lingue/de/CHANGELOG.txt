@@ -7,6 +7,20 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.34.0 (13.11.2026)
+-------------------
+- Neue Funkgeräte aus den CHIRP-Treibern: die Handfunkgeräte Yaesu VX-170 (VHF) und
+  VX-177 (UHF), 200 Kanäle mit Namen, und die Mobilgeräte Yaesu FT-7800 / FT-7900 (999
+  Kanäle) und FT-8900 (vier Bänder, 799 Kanäle). Nur Kanäle. Das Lesen des Abbilds,
+  Änderungen, Speicheraufbau und die mit dem Gerät ausgetauschten Bytes werden mit CHIRP
+  verglichen und sind identisch.
+- Das Klonen wird am Funkgerät gestartet, daher probiert «Identifizieren» diese Geräte
+  nicht: die Karte von Hand wählen. Eine Frequenz, die das Gerät nicht speichern kann,
+  wird abgelehnt; eine Ablage, die kein Vielfaches von 50 kHz ist oder 12,75 MHz
+  übersteigt, wird als getrennte Sendefrequenz geschrieben; bei den Mobilgeräten bleibt
+  ein Kanal im Flugfunkband in AM. Reiner Empfang lässt sich bei diesen Geräten nicht
+  einstellen. Noch nicht gemacht: das FT-8800 und die Einstellungen des FT-7800.
+
 4.33.0 (13.11.2026)
 -------------------
 - Neue Funkgeräte aus den CHIRP-Treibern (Icom-Handfunkgeräte, die fehlten): IC-T7H (60

@@ -5830,3 +5830,26 @@ d1d50ce1	Icom IC-T8A
 78ff8dbe	Die Betriebsart (FM, Breit-FM, AM) folgt der Frequenz.
 4a2dedfd	Es wird schnell geklont (38400 Baud nach der Identifikation).
 29603ad2	das Funkgerät kann keine Ablage von {0} Hz speichern
+21c84090	{0} VHF-Handfunkgerät: 200 Kanäle mit Namen aus 6 Zeichen.
+cfdf703b	{0} UHF-Handfunkgerät: 200 Kanäle mit Namen aus 6 Zeichen.
+14a958a6	{0} Dualband-Mobilgerät: 999 Kanäle mit Namen aus 6 Zeichen.
+beead202	{0} Vierband-Mobilgerät: 799 Kanäle mit Namen aus 6 Zeichen.
+8c5d8d25	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,- /| [ ] _
+825042b1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ *+,-/|[]_
+abc0b1c8	200 Kanäle mit Namen aus 6 Zeichen. Das Klonen wird am Funkgerät gestartet: ausschalten, Kabel an die MIC/SP-Buchse anschließen, mit gedrückter [MONI]-Taste einschalten, im Menü «CLONE» wählen und [F] drücken: das Gerät startet im «CLONE»-Modus neu. Zum Lesen: hier das Lesen starten und dann [PTT] kurz halten («-TX-» erscheint). Zum Schreiben: am Gerät [MONI] drücken («-RX-» erscheint) und dann hier das Schreiben starten. Frequenzen werden in Schritten von 5 oder 12,5 kHz gespeichert. {0}
+ac16acb9	Yaesu VX-170
+ad16ae4c	Yaesu VX-177
+c312d135	Hoch 50 W
+28cee59a	Mittel 20 W
+ba4af50d	Mittel 10 W
+1c7596bc	Yaesu FT-7800 / FT-7900
+feb017f4	Mobilfunkgerät. 999 Kanäle mit Namen aus 6 Zeichen. Das Klonen wird am Funkgerät gestartet: ausschalten, Kabel an die DATA-Buchse anschließen, mit gedrückter [MHz(PRI)]-Taste einschalten, mit dem Drehknopf «F-7 CLONE» wählen und [BAND(SET)] halten, bis «CLONE» erscheint. Zum Lesen: hier das Lesen starten und dann [V/M(MW)] drücken. Zum Schreiben: [LOW(ACC)] drücken («--RX--» erscheint) und dann hier das Schreiben starten. Die angegebene hohe Leistung gilt für VHF; auf UHF ist sie niedriger. Frequenzen werden in Schritten von 5 oder 12,5 kHz gespeichert. {0}
+ef1bb624	Yaesu FT-8900
+7c9df33d	linke [V/M]
+866c2e51	linke [LOW]
+5adcb358	Vierband-Mobilfunkgerät. 799 Kanäle mit Namen aus 6 Zeichen. Das Klonen wird am Funkgerät gestartet: ausschalten, Kabel an die DATA-Buchse anschließen, mit gedrückter linker [V/M]-Taste einschalten, mit dem rechten Drehknopf «CLONE START» wählen und [SET] drücken: «CLONE» erscheint. Zum Lesen: hier das Lesen starten und dann die linke [V/M]-Taste drücken. Zum Schreiben: die linke [LOW]-Taste drücken («CLONE -RX-» erscheint) und dann hier das Schreiben starten. Die angegebene hohe Leistung gilt für VHF; auf UHF ist sie niedriger. Frequenzen werden in Schritten von 5 oder 12,5 kHz gespeichert. {0}
+5bc2bba9	bei diesem Funkgerät lässt sich das Senden auf einem Kanal nicht abschalten
+7e34f407	das Funkgerät hat diese Tonkombination nicht (erlaubt: Subton beim Senden oder in beiden Richtungen, derselbe DCS in beiden Richtungen; nie verschiedene Töne in den beiden Richtungen oder invertierte Codes)
+646dc839	das Funkgerät ist kein {0} (Kennung {1})
+bbd47d6b	unvollständiger Block an Adresse {0} ({1} von {2} Byte)
+6246f0cc	Speicherabbild für das {0} ungültig

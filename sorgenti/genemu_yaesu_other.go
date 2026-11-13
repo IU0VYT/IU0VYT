@@ -123,6 +123,12 @@ func (e *ft4Emu) serve(p Port) error {
 	}
 }
 
+// yaesuEmuWait (4.34): quanto la radio simulata aspetta i primi dati prima di
+// mettersi a inviare. Con 300 ms la scrittura fatta da CHIRP a volte arrivava
+// tardi (il programma di confronto apre il collegamento e poi carica
+// l'immagine) e la prova cadeva una volta su cinque.
+const yaesuEmuWait = 1500 * time.Millisecond
+
 // FT-60: la copia parte dalla radio. Se entro poco non arriva nulla la radio
 // simulata invia la sua memoria (come dopo [PTT]); se arrivano dati li riceve
 // (come dopo [MONI]). Ogni byte ricevuto torna indietro come eco.
@@ -161,7 +167,7 @@ func (e *ft60Emu) serve(p Port) error {
 		return b, err
 	}
 	first := make([]byte, 1)
-	if err := p.ReadFull(context.Background(), first, 300*time.Millisecond); err != nil {
+	if err := p.ReadFull(context.Background(), first, yaesuEmuWait); err != nil {
 		if err != errTimeout {
 			return nil
 		}
@@ -326,3 +332,105 @@ func (e *yaesuEmu) serve(p Port) error {
 func (f vxFam) emu(m *genModel, img []byte) genEmu { return newYaesuEmu(f.opt(m).clone, img) }
 
 func (f ysfFam) emu(m *genModel, img []byte) genEmu { return newYaesuEmu(f.opt(m).clone, img) }
+
+// 4.34: VX-170 / VX-177, FT-7800, FT-8900: come la FT-60, con modello, lunghezza
+// e blocchi propri. Se entro poco non arriva nulla la radio simulata invia la
+// sua memoria; se arrivano dati li riceve. Ogni byte ricevuto torna indietro.
+type ftxEmu struct {
+	mu     sync.Mutex
+	o      *ftxOpt
+	img    []byte
+	writes int
+	silent bool // radio non in modalità clone: non invia e non conferma
+}
+
+func (ftxFam) emu(m *genModel, img []byte) genEmu {
+	o := ftxo(m)
+	mem := make([]byte, o.size)
+	copy(mem, img)
+	return &ftxEmu{o: o, img: mem}
+}
+
+func (e *ftxEmu) image() []byte {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return append([]byte{}, e.img...)
+}
+
+// blocchi: 8 byte, poi blocchi interi, poi la somma di controllo
+func (e *ftxEmu) next(a int) int {
+	switch {
+	case a == 0:
+		return 8
+	case a == e.o.size-1:
+		return e.o.size
+	case a+e.o.blk > e.o.size-1:
+		return e.o.size - 1
+	}
+	return a + e.o.blk
+}
+
+func (e *ftxEmu) serve(p Port) error {
+	if e.silent {
+		for {
+			if _, err := emuRead(p, 1); err != nil {
+				return nil
+			}
+		}
+	}
+	get := func(n int) ([]byte, error) {
+		b, err := emuRead(p, n)
+		if err == nil {
+			p.Write(b)
+		}
+		return b, err
+	}
+	first := make([]byte, 1)
+	if err := p.ReadFull(context.Background(), first, yaesuEmuWait); err != nil {
+		if err != errTimeout {
+			return nil
+		}
+		// invio
+		src := e.image()
+		for a := 0; a < len(src); {
+			end := e.next(a)
+			p.Write(src[a:end])
+			b, err := get(1)
+			if err != nil {
+				return err
+			}
+			if b[0] != 0x06 {
+				return fmt.Errorf("attesa la conferma, ricevuto %02X", b[0])
+			}
+			a = end
+		}
+		return nil
+	}
+	// ricezione
+	p.Write(first)
+	rest, err := get(7)
+	if err != nil {
+		return err
+	}
+	buf := append(first, rest...)
+	if string(buf[:len(e.o.id)]) != e.o.id {
+		return fmt.Errorf("intestazione %q", buf[:6])
+	}
+	p.Write([]byte{0x06})
+	for len(buf) < e.o.size {
+		b, err := get(e.next(len(buf)) - len(buf))
+		if err != nil {
+			return err
+		}
+		buf = append(buf, b...)
+		p.Write([]byte{0x06})
+	}
+	if ftxSum(buf) != buf[e.o.size-1] {
+		return fmt.Errorf("somma di controllo errata")
+	}
+	e.mu.Lock()
+	copy(e.img, buf)
+	e.writes++
+	e.mu.Unlock()
+	return nil
+}

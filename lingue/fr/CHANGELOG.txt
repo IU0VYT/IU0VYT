@@ -7,6 +7,20 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.34.0 (13/11/2026)
+-------------------
+- Nouvelles radios issues des pilotes de CHIRP : les portatifs Yaesu VX-170 (VHF) et
+  VX-177 (UHF), 200 canaux avec nom, et les mobiles Yaesu FT-7800 / FT-7900 (999 canaux)
+  et FT-8900 (quatre bandes, 799 canaux). Canaux seulement. La lecture de l'image, les
+  modifications, la structure de la mémoire et les octets échangés avec la radio sont
+  comparés à CHIRP et sont identiques.
+- La copie part de la radio, donc « Identifier » n'essaie pas ces radios : choisissez la
+  fiche à la main. Une fréquence que la radio ne peut pas mémoriser est refusée ; un
+  décalage qui n'est pas multiple de 50 kHz ou qui dépasse 12,75 MHz est écrit comme
+  fréquence d'émission séparée ; sur les mobiles un canal dans la bande aviation reste
+  en AM. La réception seule ne peut pas être réglée sur ces radios. Pas encore fait : le
+  FT-8800 et les réglages du FT-7800.
+
 4.33.0 (13/11/2026)
 -------------------
 - Nouvelles radios tirées des pilotes de CHIRP (portatifs Icom qui manquaient) : IC-T7H

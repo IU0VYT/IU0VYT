@@ -6,6 +6,20 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.34.0 (13/11/2026)
+-------------------
+- Radio baharu daripada pemacu CHIRP: radio genggam Yaesu VX-170 (VHF) dan VX-177 (UHF),
+  200 saluran bernama, serta radio kenderaan Yaesu FT-7800 / FT-7900 (999 saluran) dan
+  FT-8900 (empat jalur, 799 saluran). Saluran sahaja. Pembacaan imej, suntingan, susun
+  atur memori dan bait yang ditukar dengan radio dibandingkan dengan CHIRP dan didapati
+  sama.
+- Klon dimulakan dari radio, jadi «Kenal pasti» tidak mencuba radio ini: pilih kad
+  secara manual. Frekuensi yang tidak boleh disimpan oleh radio ditolak; ofset yang
+  bukan gandaan 50 kHz atau melebihi 12.75 MHz ditulis sebagai frekuensi pemancar
+  berasingan; pada radio kenderaan, saluran dalam jalur udara kekal dalam AM. Terima
+  sahaja tidak boleh ditetapkan pada radio ini. Belum dibuat: FT-8800 dan tetapan
+  FT-7800.
+
 4.33.0 (13/11/2026)
 -------------------
 - Radio baharu daripada pemacu CHIRP (radio genggam Icom yang belum ada): IC-T7H (60
