@@ -303,6 +303,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): по результатам изуче�
 («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»), из которых ничего не включено; код
 написан с нуля.
 
+RETEVIS RB39 / RB639 И НАСТРОЙКИ BF-T17 / GT-18 / FS-T3 (4.26): стороннего кода нет.
+Протокол, память и настройки получены чтением кода программ производителей (Retevis
+«RB39 CPS», «RB639» и «Retevis Analog CPS»; Baofeng «T17-T18 PMR446 PRO», «T17-T18 FRS»
+и «BAOFENG GT18 PMR»; Radioddity «Radioddity T3») и написаны заново; из этих программ
+ничего не включено.
+
 BAJETON BJ-8300 С НОВОЙ ПРОШИВКОЙ, RADIODDITY GS-10B PRO, FS-T3 / PR-T3 (4.25):
 стороннего кода нет. Протокол, память и настройки получены чтением кода программ
 производителей (Bajeton «BT-11_CPS» v1.2.6, Radioddity «GS-10B Pro_EnCPS» v1.0.3 и

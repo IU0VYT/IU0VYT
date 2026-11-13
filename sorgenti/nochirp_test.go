@@ -66,8 +66,15 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = rt13Size
 	case *rt69Opt: // 4.23: Radtel RT-69 GPS
 		size = rt69Size
+	case *auctusOpt: // 4.26: Retevis RB39 e RB639
+		size = auctusSize
 	}
 	mem := bytes.Repeat([]byte{0xFF}, size)
+	if _, ok := m.Opt.(*auctusOpt); ok { // dati di sistema come li manda la radio (9 byte)
+		mem = make([]byte, auctusSize)
+		copy(mem[auctusSys:], []byte{9, 6, 0, 1, 2, 1, 1, 0, 2, 1})
+		mem = auctusFam{}.emu(m, mem).image() // con la versione e il paese che la radio dichiara
+	}
 	if _, ok := m.Opt.(*drOpt); ok {
 		mem = drSynthImage()
 	}

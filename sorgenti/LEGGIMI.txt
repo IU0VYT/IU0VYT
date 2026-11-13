@@ -1,11 +1,22 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.25.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.26.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.26.0:
+- Radio nuove: Retevis RB39 / RB39P (FRS, 22 canali) e RB639 / RB639P (PMR446, 16
+  canali), con canali e impostazioni generali. Vengono dal codice dei programmi del
+  costruttore e non sono ancora provate con una radio vera: fai prima la sola lettura.
+  La scheda va scelta a mano («Identifica» non le riconosce); se scegli quella
+  dell'altro paese la lettura si ferma e ti indica quella giusta.
+- Impostazioni nuove per Baofeng BF-T17 / BF-T18 (PMR446 e FRS), GT-18 PMR446,
+  Radioddity PR-T5, FS-T3 e PR-T3: squelch, tempo massimo di trasmissione, VOX, guida
+  vocale, suono dei tasti, risparmio della batteria e le altre del programma del
+  costruttore.
+- Galleria: 602 modelli di 52 marche (548 con canali, 468 con impostazioni).
 Novità della 4.25.0:
 - Radio nuove: Radioddity GS-10B Pro (999 canali e impostazioni), Radioddity FS-T3 e
   PR-T3 (canali) e la Bajeton BJ-8300 con il firmware nuovo (990 canali in 10 zone da

@@ -3,6 +3,46 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.26.0 (12/11/2026)
+-------------------
+- Retevis RB39 / RB39P (FRS, 22 canali) e RB639 / RB639P (PMR446, 16 canali): driver
+  nuovo (drv_auctus.go), dal codice dei programmi del costruttore «RB39 CPS» e «RB639»
+  v1.0.7 e «Retevis Analog CPS» v1.1.2 (stesso codice, classe Auctus_V1). 2400 baud,
+  pacchetti AA, lunghezza, comando, sottocomando, dati, somma, BB; un canale per
+  pacchetto (16 byte: numero, frequenze di trasmissione e ricezione in decine di Hz,
+  toni per posizione nella tabella del programma, tipo dei toni, potenza, banda,
+  blocco su canale occupato, canale attivo). All'inizio la radio dice per quale paese
+  è fatta («FCC» o «CE»): con la scheda dell'altro paese la lettura si ferma e indica
+  la scheda giusta. «Identifica» non riconosce queste radio.
+  Impostazioni (settings_auctus.go): i nove byte di sistema (dieci nelle versioni «P»,
+  con il Bluetooth) letti con il comando 04/01 e riscritti con 04/00: tempo massimo di
+  trasmissione (60, 120, 180 s), VOX, sensibilità e ritardo del VOX, compander,
+  monitor, guida vocale, funzione del tasto laterale tenuto premuto, risparmio della
+  batteria. Ogni scelta è legata al valore che il programma manda alla radio (non alla
+  posizione nell'elenco); un valore non previsto viene mostrato come non leggibile e
+  non viene cambiato.
+- Impostazioni di Baofeng BF-T17 / BF-T18 (PMR446 e FRS), GT-18 PMR446 (anche
+  Radioddity PR-T5) e Radioddity FS-T3 / PR-T3 (settings_t17.go): blocchi 0x630 e
+  0x640 della memoria, come li leggono e li scrivono i programmi dei costruttori
+  («T17-T18 PMR446 PRO» e «T17-T18 FRS» v1.2.2, «BAOFENG GT18 PMR» v1.2.1, «Radioddity
+  T3» v1.3). Squelch, tempo massimo di trasmissione, VOX e sensibilità, eliminazione
+  della coda di rumore, tono di chiamata, scansione, blocco della trasmissione con
+  tensione bassa o alta, guida vocale e lingua, suono dei tasti, risparmio della
+  batteria, modalità dell'allarme; il segnale di fine trasmissione è nel bit 2 dei
+  modelli PMR446, nel bit 7 della BF-T17 FRS e manca nella FS-T3 / PR-T3.
+- Registri delle modifiche nelle 12 lingue: la 4.25.0 portava la data dell'11/11/2026
+  invece del 12/11/2026.
+- Conteggi: 548 radio, 468 con impostazioni, 602 in galleria, 52 marche. Traduzioni:
+  31 testi nuovi.
+- Verifiche: ogni posizione è stata letta due volte nel codice dei programmi dei
+  costruttori (nel metodo che legge dalla radio e in quello che scrive) e le scelte
+  delle impostazioni Auctus sono state confrontate nei quattro programmi; test
+  automatici nuovi con le radio simulate (drv_auctus_test.go, settings_auctus_test.go,
+  settings_t17_test.go). I programmi dei costruttori non sono mai stati eseguiti.
+  Nessuna di queste radio è provata dal vero.
+- Non fatti: Radtel RT-659 (memoria ancora da ricostruire), le altre famiglie nuove
+  dei programmi Retevis e Radioddity, le veicolari BTECH.
+
 4.25.0 (12/11/2026)
 -------------------
 - Radioddity GS-10B Pro e Bajeton BJ-8300 con il firmware nuovo (drv_bt11v126.go,

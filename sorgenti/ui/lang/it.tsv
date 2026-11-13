@@ -2074,6 +2074,8 @@ dfdf2097	GS10B Pro
 75bc403e	GS-10BPro
 bb3c8e60	999 canali in un unico elenco e impostazioni generali, come nel programma del costruttore «GS-10B Pro_EnCPS» v1.0.3 (stessa famiglia della Radtel RT-900 e della Bajeton BJ-8300). Non è nel CHIRP.{0}
 924329db	Canali come nel programma del costruttore «Radioddity T3» v1.3 (stesso protocollo della Baofeng BF-T17, senza password): la FS-T3 è la versione FRS (22 canali), la PR-T3 quella PMR446 (16 canali). Non è nel CHIRP.{0}
+3193cf7f	Versione FRS (22 canali). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
+1a5178a8	Versione PMR446 (16 canali). Canali e impostazioni generali come nel programma del costruttore. Non è nel CHIRP.{0}
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2435,6 +2437,22 @@ a8f14b11	lettura del blocco 0x{0} incompleta
 e86000e9	somma di controllo errata nel blocco 0x{0}
 c284c59d	immagine della memoria incompleta ({0} byte invece di {1})
 026c934c	la radio non ha accettato il blocco 0x{0}
+ee33b84f	Canali senza nome, 400-470 MHz, 2400 baud. Protocollo e dati ricavati dal programma del costruttore {0} e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza e banda dei canali e le impostazioni generali (tempo massimo di trasmissione, VOX, guida vocale, tasto laterale e le altre della scheda Impostazioni). La radio dice per quale paese è fatta: se non è quello di questa scheda la lettura si ferma e ti indica la scheda {1}. «Identifica» non riconosce questa radio: scegli tu la scheda giusta.
+fb93b1dc	Retevis RB39 / RB39P (FRS)
+f8d83637	FCC
+3fe59b12	«RB39 CPS» v1.0.7 / «Retevis Analog CPS» v1.1.2
+79f992a2	«Retevis RB639 / RB639P (PMR446)»
+9013f524	Retevis RB639 / RB639P (PMR446)
+418d7f80	«RB639» v1.0.7 / «Retevis Analog CPS» v1.1.2
+eb214d0c	«Retevis RB39 / RB39P (FRS)»
+dc1ee85b	risposta inattesa della radio ({0})
+703e39ff	risposta inattesa
+1866d2ff	somma di controllo errata nella risposta
+de7c4805	la radio è la versione per un altro paese ({0}): apri la scheda {1}
+f82efb14	la radio non ha indicato il paese atteso ({0}): risposta {1}
+cb38473c	dati letti incompleti ({0} byte)
+c7daaec7	identificativo {0}
+f4360ebf	immagine non adatta a questa radio: leggi prima la radio, modifica i canali e scrivili nella stessa radio
 69bcc817	Media 3 W
 c9b3a2d0	Accendi la radio con il volume a metà e su un canale libero.
 9485ef03	Retevis RT6
@@ -2461,7 +2479,6 @@ a3aaa14f	risposta inattesa dalla radio ({0})
 739f6e74	immagine della memoria incompleta
 c8a107c7	Lettura dell'area ausiliaria
 a0cf8878	immagine non adatta a questa radio (versione del firmware diversa): leggi prima la radio
-f4360ebf	immagine non adatta a questa radio: leggi prima la radio, modifica i canali e scrivili nella stessa radio
 51d202f1	Scrittura (0x{0})
 af71b5fa	Scrittura (0x{0}): la radio ha rifiutato il blocco
 362d409a	questa radio non ha canali digitali
@@ -2516,7 +2533,6 @@ afd15c76	Radio senza display: i canali non hanno nome. Ricavato dal programma de
 e411cc6c	modalità di programmazione
 892c9446	nessun identificativo dalla radio
 7396966a	conferma dell'identificativo
-c7daaec7	identificativo {0}
 58f8913c	nessuna risposta alla richiesta della password
 b02406b1	sulla radio è impostata una password di lettura e scrittura: toglila con il programma del costruttore
 e5d497f5	conferma della password
@@ -2758,7 +2774,6 @@ b461bed9	PROGROMSHXU
 68fc69b6	Accendi la radio con il cavo collegato. Canali 0-127; in banda aerea (108-136 MHz) la radio riceve in AM. Driver di CHIRP della SenhaiX 8800 (famiglia Radioddity GA-510).
 58929230	risposta inattesa alla richiesta di programmazione ({0}): è il modello giusto?
 f3d3e59a	identificativo della radio incompleto
-703e39ff	risposta inattesa
 4e85e533	immagine della memoria incompleta ({0} byte)
 8925b018	la radio ha rifiutato il blocco
 b5698865	GM-15Pro
@@ -3405,7 +3420,6 @@ cca425aa	Zastone ZT-X6
 57d8e670	canale {0} della {1}: solo simplex o ponte GMRS con +5 MHz
 665cffd1	i canali 1-30 della {0} sono canali GMRS fissi: frequenza non modificabile
 72ea2696	i canali GMRS 8-14 della {0} sono sempre a banda stretta e bassa potenza
-dc1ee85b	risposta inattesa della radio ({0})
 fcf852d1	la radio si identifica come {0}, non come {1}: scegli la versione giusta
 182aecb8	risposta inattesa al blocco 0x{0}
 d5702256	TIDRADIO TD-H8
@@ -3623,7 +3637,6 @@ fa5d724d	TYT UVL-15W
 a5ae1852	Alta 15 W
 660b1278	1000 canali (da 0 a 999) con nomi di 16 caratteri. Accendi la radio con il cavo collegato: alla fine di ogni lettura e scrittura la radio si riavvia. Se sulla radio c'è una password di lettura o scrittura, toglila prima. Si scrive solo un'immagine letta dalla radio (contiene tutta la zona dati). Modulazione AM dei canali che non cambiano frequenza, passo, canale prioritario in scansione, BCL, scrambler, compander, PTT ID e APRS si conservano; un canale cancellato esce dalle zone e dalle liste di scansione. Driver di CHIRP (sperimentale).
 bc528da5	risposta della radio troncata
-1866d2ff	somma di controllo errata nella risposta
 b606f39a	la radio ha segnalato un errore: {0}
 da480aca	risposta {0} inattesa al comando {1}
 e6ed7181	la radio non ha accettato il comando {0}
@@ -3704,7 +3717,6 @@ fdabd829	modo di inserimento sconosciuto
 8bfa6a59	scegli prima i canali da inoltrare
 83db11e7	Operazione annullata: nella radio non è stato scritto nulla. Se la radio è rimasta in modalità programmazione, spegnila e riaccendila.
 83116bfa	Copia di sicurezza: lettura della radio di destinazione
-cb38473c	dati letti incompleti ({0} byte)
 46317518	lettura della radio di destinazione non riuscita, nulla è stato scritto. {0}
 21e84b90	impossibile salvare la copia di sicurezza ({0}): nulla è stato scritto
 e30f9262	Copia di sicurezza della radio di destinazione salvata in {0}
@@ -4422,17 +4434,37 @@ c4f1815c	Per vedere e modificare le impostazioni leggi prima la radio via cavo (
 d63b0d31	impostazioni non disponibili per questa radio
 0a1d1912	{0}: impostazione sconosciuta
 d518fd3d	impostazioni non applicate: {0}
+fc8883bd	programmi del costruttore «RB39 CPS» e «Retevis Analog CPS» (finestra «System Information»)
 49659a9f	Ricezione e trasmissione
-d241cf3d	Livello squelch
-64d7ca70	Soglia di apertura dell'audio: più alto il livello, più forte deve essere un segnale per essere ascoltato. Con OFF l'audio resta sempre aperto (si sente il fruscio).
 ab87998f	Tempo massimo di trasmissione (TOT)
 5a49217d	Dopo questo tempo di trasmissione continua la radio smette di trasmettere da sola.
-f8a2ef54	Senza limite di tempo (OFF) un PTT bloccato o premuto per errore lascia la radio in trasmissione: disturbi agli altri e possibile surriscaldamento.
 6b65e33c	VOX (trasmissione a voce)
-d66c46cb	Con il VOX la radio trasmette da sola quando sente la voce, senza premere il PTT. Il livello indica la sensibilità (1 = più sensibile). OFF = VOX spento.
-6349e311	Con il VOX acceso la radio trasmette appena sente un suono: rumori ambientali o conversazioni vicine possono finire in onda.
+629b3c59	Con il VOX la radio trasmette da sola quando sente la voce, senza premere il PTT.
+9289035a	Sensibilità del VOX
+43a92045	Livello di voce che fa partire la trasmissione con il VOX (di solito numeri bassi = più sensibile; OFF, se c'è, spegne il VOX).
 9d6237aa	Ritardo del VOX
 ed3eb70a	Quanto tempo la radio continua a trasmettere dopo che hai smesso di parlare (evita di tagliare la fine delle frasi).
+78730f88	Compander
+4ea54f89	Comprime la voce in trasmissione e la espande in ricezione per ridurre il rumore di fondo: funziona bene solo se anche le altre radio lo usano.
+3a2d9774	Monitor (squelch aperto)
+3410aeb6	Tiene aperto lo squelch: si sente tutto quello che c'è sul canale, anche il fruscio e i segnali senza il tono giusto.
+8b42d3c6	Spenta
+69aee291	Guida vocale
+6114e898	La radio annuncia a voce i menu e i canali.
+f41134b1	Allarme
+e60c8ab9	Monitor
+efbcdf5c	Tasto laterale (pressione lunga)
+c9363874	Funzione del tasto laterale tenuto premuto.
+4edaa503	Risparmio della batteria
+a603c107	La radio spegne il ricevitore per brevi intervalli quando il canale è libero: più risparmio, ma i primi istanti di una chiamata possono andare persi.
+403414bd	Bluetooth
+73b10bc8	Accende o spegne il Bluetooth della radio (solo RB39P e RB639P).
+7fe587e0	Auctus
+d241cf3d	Livello squelch
+64d7ca70	Soglia di apertura dell'audio: più alto il livello, più forte deve essere un segnale per essere ascoltato. Con OFF l'audio resta sempre aperto (si sente il fruscio).
+f8a2ef54	Senza limite di tempo (OFF) un PTT bloccato o premuto per errore lascia la radio in trasmissione: disturbi agli altri e possibile surriscaldamento.
+d66c46cb	Con il VOX la radio trasmette da sola quando sente la voce, senza premere il PTT. Il livello indica la sensibilità (1 = più sensibile). OFF = VOX spento.
+6349e311	Con il VOX acceso la radio trasmette appena sente un suono: rumori ambientali o conversazioni vicine possono finire in onda.
 030ac2d7	Blocco su canale occupato
 ce3adc1b	Se attivo, la radio non trasmette mentre sul canale c'è già un segnale: evita di sovrapporsi a chi sta parlando.
 5eb00f73	Eliminazione della coda di rumore
@@ -4479,14 +4511,10 @@ c724821f	Display della banda B
 d519010b	Lingua
 b055dff9	Lingua dei menu e delle voci della radio.
 390c12f3	Russo
-69aee291	Guida vocale
-6114e898	La radio annuncia a voce i menu e i canali.
 48d3b738	Suono dei tasti
 d04ec91c	Beep alla pressione dei tasti.
 8ae50158	Uscita automatica dal menu
 d87e1da4	Dopo quanto tempo senza premere tasti la radio esce dal menu.
-4edaa503	Risparmio della batteria
-a603c107	La radio spegne il ricevitore per brevi intervalli quando il canale è libero: più risparmio, ma i primi istanti di una chiamata possono andare persi.
 c02319d0	Blocco della tastiera
 b91a39a5	Tastiera bloccata all'accensione.
 13d47bc9	Con la tastiera bloccata i tasti non rispondono finché non la sblocchi con la combinazione indicata nel manuale.
@@ -4536,8 +4564,6 @@ f638994e	Programmazione Bluetooth
 554db70a	PTT della banda C
 de29a05f	Bande, zone e modalità
 a05afacf	DTMF, allarme, APRS e funzioni remote
-629b3c59	Con il VOX la radio trasmette da sola quando sente la voce, senza premere il PTT.
-9289035a	Sensibilità del VOX
 84bd9b3c	Livello di voce che fa partire la trasmissione con il VOX acceso (1 = più sensibile).
 25a304ab	La radio ascolta alternativamente più bande.
 c624808c	Display della banda C
@@ -4590,7 +4616,6 @@ da0d6b61	Nome del canale
 cadc28e4	Nome piccolo e frequenza grande
 dac33b20	Nome grande e frequenza piccola
 c7ed3a37	Visualizzazione del canale
-8b42d3c6	Spenta
 ef7d3d0c	In ricezione e trasmissione
 7978a881	Retroilluminazione
 273f9c70	Eliminazione della coda in trasmissione
@@ -4628,7 +4653,6 @@ fe8f7e3e	Doppio collegato (DW LINK)
 deaff3e7	Schermata all'accensione
 a7ca2115	Modo VFO
 c58ba65d	Torcia
-e60c8ab9	Monitor
 83508657	Cambio VFO
 7a31c960	Scambio VFO
 aed0c96b	Squelch +
@@ -4645,7 +4669,6 @@ f3122804	Scrambler
 acc5a606	Guadagno del microfono
 0b30eeb1	Bip dei tasti
 9e7c5071	AFC (controllo automatico della frequenza)
-f8d83637	FCC
 a8b566a5	Blocco delle frequenze di trasmissione (F-Lock)
 c2809dfe	A tempo (5 s)
 0c17a34b	Lenta
@@ -4733,7 +4756,6 @@ c7ca87f2	(carrier )?squelch( level)?
 a6af9d6e	vox( switch)?
 a688830a	Con il VOX la radio trasmette da sola quando sente la voce, senza premere il PTT. Se è un livello: OFF = spento, numeri più bassi = più sensibile.
 430955af	vox (level|gain|sensitivity)
-43a92045	Livello di voce che fa partire la trasmissione con il VOX (di solito numeri bassi = più sensibile; OFF, se c'è, spegne il VOX).
 a508f936	vox delay( time)?( \(old \| new\))?
 7cf53578	Quanto tempo la radio continua a trasmettere dopo che hai smesso di parlare.
 1e8d5ba1	(rx disable vox|inhibit vox on receive)
@@ -4910,7 +4932,6 @@ ae9ec1e1	side key( function)?
 0c1eea16	input dtmf
 9014ad77	Inserimento DTMF
 854c4be9	Permette di inserire toni DTMF dalla tastiera.
-403414bd	Bluetooth
 c910819e	Bluetooth della radio (auricolari o app).
 b166c2e4	gps on
 8415fec3	GPS
@@ -5356,6 +5377,16 @@ cf0ba7aa	Nome mostrato dalla radio (di solito il nominativo), fino a 16 caratter
 0fdc29b8	Numero DMR personale (ID radio), assegnato da RadioID.net al nominativo.
 daf6364d	Prima riga del messaggio mostrato all'accensione (10 caratteri).
 7730bf65	Seconda riga del messaggio mostrato all'accensione (10 caratteri).
+0ba685f5	Funzione di scansione dei canali accesa o spenta.
+96245b83	Blocco della trasmissione con tensione bassa
+802acd28	Impedisce di trasmettere quando la tensione della batteria è troppo bassa (protegge la radio).
+bcd2bbe9	Blocco della trasmissione con tensione alta
+fc24dac8	Impedisce di trasmettere quando la tensione della batteria è troppo alta (protegge la radio).
+7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
+92aad8ad	«T17-T18 FRS» v1.2.2
+a1ad8564	«BAOFENG GT18 PMR» v1.2.1
+5ca37d7b	«Radioddity T3» v1.3
+d0e2b5a6	programma del costruttore {0}
 b0659828	archivio non valido
 dc8f0e14	file vuoto
 f8881cf2	formato non riconosciuto: usa un file .xls, .xlsx o .csv

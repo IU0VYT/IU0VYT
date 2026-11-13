@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.25.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.26.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,16 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.26.0:
+- Neue Funkgeräte: Retevis RB39 / RB39P (FRS, 22 Kanäle) und RB639 / RB639P (PMR446, 16
+  Kanäle), mit Kanälen und allgemeinen Einstellungen. Sie stammen aus dem Code der
+  Herstellerprogramme und sind noch nicht mit einem echten Funkgerät erprobt: zuerst nur
+  auslesen. Die Karte wird von Hand gewählt («Identifizieren» erkennt sie nicht); wählst
+  du die des anderen Landes, bricht das Auslesen ab und nennt die richtige.
+- Neue Einstellungen für Baofeng BF-T17 / BF-T18 (PMR446 und FRS), GT-18 PMR446,
+  Radioddity PR-T5, FS-T3 und PR-T3: Rauschsperre, maximale Sendezeit, VOX,
+  Sprachansage, Tastenton, Batteriesparen und die übrigen des Herstellerprogramms.
+- Galerie: 602 Modelle von 52 Marken (548 mit Kanälen, 468 mit Einstellungen).
 Neu in 4.25.0:
 - Neue Funkgeräte: Radioddity GS-10B Pro (999 Kanäle und Einstellungen), Radioddity
   FS-T3 und PR-T3 (Kanäle) und das Bajeton BJ-8300 mit der neuen Firmware (990 Kanäle in

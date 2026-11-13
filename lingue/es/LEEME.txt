@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.25.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.26.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,16 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.26.0:
+- Radios nuevas: Retevis RB39 / RB39P (FRS, 22 canales) y RB639 / RB639P (PMR446, 16
+  canales), con canales y ajustes generales. Vienen del código de los programas del
+  fabricante y aún no se han probado con una radio real: haz primero solo la lectura. La
+  ficha se elige a mano («Identificar» no las reconoce); si eliges la del otro país la
+  lectura se detiene e indica la correcta.
+- Ajustes nuevos para las Baofeng BF-T17 / BF-T18 (PMR446 y FRS), GT-18 PMR446,
+  Radioddity PR-T5, FS-T3 y PR-T3: squelch, tiempo máximo de transmisión, VOX, guía de
+  voz, sonido de las teclas, ahorro de batería y los demás del programa del fabricante.
+- Galería: 602 modelos de 52 marcas (548 con canales, 468 con ajustes).
 Novedades de la 4.25.0:
 - Radios nuevas: Radioddity GS-10B Pro (999 canales y ajustes), Radioddity FS-T3 y PR-T3
   (canales) y la Bajeton BJ-8300 con el firmware nuevo (990 canales en 10 zonas de 99

@@ -322,6 +322,12 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
 Dallo studio dei programmi del costruttore («RT-4D CPS», «DMR RT-6D», «Radtel RT-1000
 Pro CPS»), di cui non è incluso nulla; il codice è scritto da zero.
 
+RETEVIS RB39 / RB639 E IMPOSTAZIONI DI BF-T17 / GT-18 / FS-T3 (4.26)
+Nessun codice di terzi. Protocollo, memoria e impostazioni vengono dalla lettura del
+codice dei programmi dei costruttori (Retevis «RB39 CPS», «RB639» e «Retevis Analog
+CPS»; Baofeng «T17-T18 PMR446 PRO», «T17-T18 FRS» e «BAOFENG GT18 PMR»; Radioddity
+«Radioddity T3»), riscritti da zero; di quei programmi non è incluso nulla.
+
 BAJETON BJ-8300 CON IL FIRMWARE NUOVO, RADIODDITY GS-10B PRO, FS-T3 / PR-T3 (4.25)
 Nessun codice di terzi. Protocollo, memoria e impostazioni vengono dalla lettura del
 codice dei programmi dei costruttori (Bajeton «BT-11_CPS» v1.2.6, Radioddity

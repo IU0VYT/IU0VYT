@@ -7,7 +7,32 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
-4.25.0 (11/11/2026)
+4.26.0 (12/11/2026)
+-------------------
+- Retevis RB39 / RB39P (FRS, 22 channels) and RB639 / RB639P (PMR446, 16 channels): new
+  driver (drv_auctus.go), from the code of the manufacturer's programs «RB39 CPS» and
+  «RB639» v1.0.7 and «Retevis Analog CPS» v1.1.2. 2400 baud, one channel per packet (16
+  bytes: frequencies in tens of Hz, tones by position in the program's table, power,
+  bandwidth, busy-channel lockout, channel enabled). At the start the radio says which
+  country it is made for («FCC» or «CE»): with the card of the other country the read
+  stops and names the right card. Settings (settings_auctus.go): the nine system bytes
+  (ten in the «P» versions, with Bluetooth): maximum transmit time, VOX with sensitivity
+  and delay, compander, monitor, voice guide, function of the side key held down,
+  battery saver. Every choice is tied to the value the program sends to the radio.
+- Settings of the Baofeng BF-T17 / BF-T18 (PMR446 and FRS), GT-18 PMR446 (also
+  Radioddity PR-T5) and Radioddity FS-T3 / PR-T3 (settings_t17.go): memory blocks 0x630
+  and 0x640, as the manufacturers' programs read and write them. Squelch, maximum
+  transmit time, VOX and sensitivity, squelch tail elimination, call tone, scan,
+  transmit lockout at low or high voltage, voice guide and language, key beep, battery
+  saver, alarm mode, end-of-transmission tone (not on the FS-T3 / PR-T3).
+- Changelogs in the 12 languages: 4.25.0 carried the date of 11 November instead of 12
+  November 2026. Counts: 548 radios, 468 with settings, 602 in the gallery, 52 brands.
+  Translations: 31 new texts. Checks: every position was read twice in the code of the
+  manufacturers' programs (in the method that reads from the radio and in the one that
+  writes); new automatic tests with simulated radios. The manufacturers' programs were
+  never run. None of these radios has been tested for real.
+
+4.25.0 (12/11/2026)
 -------------------
 - Radioddity GS-10B Pro and Bajeton BJ-8300 with the new firmware (drv_bt11v126.go,
   new): protocol, memory and settings read in the code of the manufacturers' programs

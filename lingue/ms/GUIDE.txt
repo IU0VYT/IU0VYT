@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.25.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.26.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,16 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.26.0:
+- Radio baharu: Retevis RB39 / RB39P (FRS, 22 saluran) dan RB639 / RB639P (PMR446, 16
+  saluran), dengan saluran dan tetapan umum. Ia diperoleh daripada kod program pengeluar
+  dan belum diuji dengan radio sebenar: lakukan bacaan sahaja dahulu. Kad mesti dipilih
+  sendiri («Kenal pasti» tidak mengenalinya); jika anda memilih kad negara lain, bacaan
+  berhenti dan menyebut kad yang betul.
+- Tetapan baharu untuk Baofeng BF-T17 / BF-T18 (PMR446 dan FRS), GT-18 PMR446,
+  Radioddity PR-T5, FS-T3 dan PR-T3: squelch, masa pancaran maksimum, VOX, panduan
+  suara, bunyi kekunci, penjimatan bateri dan yang lain dalam program pengeluar.
+- Galeri: 602 model daripada 52 jenama (548 dengan saluran, 468 dengan tetapan).
 Baharu dalam 4.25.0:
 - Radio baharu: Radioddity GS-10B Pro (999 saluran dan tetapan), Radioddity FS-T3 dan
   PR-T3 (saluran) dan Bajeton BJ-8300 dengan firmware baharu (990 saluran dalam 10 zon

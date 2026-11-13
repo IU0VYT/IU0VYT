@@ -215,6 +215,8 @@ RADTEL RT-817A / RT-871A（4.19）：根据与厂商软件（“Radtel RT-871A C
 
 RADTEL RT-4D、RT-6D、RT-1000 PRO (4.20)：根据对厂商软件（“RT-4D CPS”、“DMR RT-6D”、“Radtel RT-1000 Pro CPS”）的研究得出，未包含其中任何内容；代码从零编写。
 
+RETEVIS RB39 / RB639 以及 BF-T17 / GT-18 / FS-T3 的设置（4.26）：没有第三方代码。协议、存储器和设置来自对制造商程序代码的阅读（Retevis「RB39 CPS」、「RB639」和「Retevis Analog CPS」；Baofeng「T17-T18 PMR446 PRO」、「T17-T18 FRS」和「BAOFENG GT18 PMR」；Radioddity「Radioddity T3」），并从零重写；不包含这些程序的任何内容。
+
 新固件的 BAJETON BJ-8300、RADIODDITY GS-10B PRO、FS-T3 / PR-T3（4.25）：没有第三方代码。协议、存储器和设置来自阅读制造商程序的代码（Bajeton「BT-11_CPS」v1.2.6、Radioddity「GS-10B Pro_EnCPS」v1.0.3 和「Radioddity T3」v1.3），并从零重写；这些程序的任何部分都未包含在内。
 
 目录（4.24）：没有新的第三方代码。新增的卡片使用已有的驱动：其中六个来自对厂家程序（Bajeton、Radioddity、Retevis、Baofeng）的比较，程序中不包含其任何内容；其余来自 CHIRP 的等效型号表（GNU GPL v3）。

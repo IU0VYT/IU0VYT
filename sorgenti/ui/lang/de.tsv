@@ -5517,3 +5517,34 @@ f3d7fa00	Hinweis, wenn der NOAA-Wetterdienst eine Warnung sendet (nur USA/Kanada
 ad2b2124	Hintergrundbeleuchtung beim UKW-Radio
 622d8193	Hintergrundbeleuchtung des Displays, während du UKW-Radio hörst.{0}
 d30f2d83	neue Firmware: 10 Zonen zu 99 Kanälen
+fb93b1dc	Retevis RB39 / RB39P (FRS)
+3fe59b12	«RB39 CPS» v1.0.7 / «Retevis Analog CPS» v1.1.2
+79f992a2	«Retevis RB639 / RB639P (PMR446)»
+9013f524	Retevis RB639 / RB639P (PMR446)
+418d7f80	«RB639» v1.0.7 / «Retevis Analog CPS» v1.1.2
+eb214d0c	«Retevis RB39 / RB39P (FRS)»
+de7c4805	das Funkgerät ist die Version für ein anderes Land ({0}): öffne die Karte {1}
+f82efb14	das Funkgerät hat das erwartete Land nicht gemeldet ({0}): Antwort {1}
+0ba685f5	Kanalsuchlauf ein- oder ausgeschaltet.
+96245b83	Sendesperre bei niedriger Spannung
+802acd28	Verhindert das Senden, wenn die Akkuspannung zu niedrig ist (schützt das Funkgerät).
+bcd2bbe9	Sendesperre bei hoher Spannung
+fc24dac8	Verhindert das Senden, wenn die Akkuspannung zu hoch ist (schützt das Funkgerät).
+7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
+92aad8ad	«T17-T18 FRS» v1.2.2
+a1ad8564	«BAOFENG GT18 PMR» v1.2.1
+5ca37d7b	«Radioddity T3» v1.3
+d0e2b5a6	Herstellerprogramm {0}
+3193cf7f	FRS-Version (22 Kanäle). Kanäle und allgemeine Einstellungen wie im Herstellerprogramm. Es ist nicht in CHIRP.{0}
+1a5178a8	PMR446-Version (16 Kanäle). Kanäle und allgemeine Einstellungen wie im Herstellerprogramm. Es ist nicht in CHIRP.{0}
+ee33b84f	Kanäle ohne Namen, 400-470 MHz, 2400 Baud. Protokoll und Daten aus dem Herstellerprogramm {0} abgeleitet und mit einem simulierten Funkgerät erprobt, nicht mit einem echten. Hier änderst du Frequenzen, Töne, Leistung und Bandbreite der Kanäle sowie die allgemeinen Einstellungen (maximale Sendezeit, VOX, Sprachansage, Seitentaste und die anderen im Reiter Einstellungen). Das Funkgerät meldet, für welches Land es gebaut ist: ist es nicht das dieser Karte, bricht das Auslesen ab und nennt die Karte {1}. «Identifizieren» erkennt dieses Funkgerät nicht: wähle die richtige Karte selbst.
+fc8883bd	Herstellerprogramme «RB39 CPS» und «Retevis Analog CPS» (Fenster «System Information»)
+78730f88	Kompander
+4ea54f89	Komprimiert die Stimme beim Senden und dehnt sie beim Empfang wieder, um das Hintergrundrauschen zu verringern: das funktioniert nur gut, wenn auch die anderen Funkgeräte ihn verwenden.
+3a2d9774	Monitor (Rauschsperre offen)
+3410aeb6	Hält die Rauschsperre offen: man hört alles, was auf dem Kanal ist, auch das Rauschen und Signale ohne den richtigen Ton.
+f41134b1	Alarm
+efbcdf5c	Seitentaste (lang drücken)
+c9363874	Funktion der gedrückt gehaltenen Seitentaste.
+73b10bc8	Schaltet das Bluetooth des Funkgeräts ein oder aus (nur RB39P und RB639P).
+7fe587e0	Auctus

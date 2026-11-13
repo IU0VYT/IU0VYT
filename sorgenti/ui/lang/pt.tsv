@@ -5517,3 +5517,34 @@ f3d7fa00	Aviso quando o serviço meteorológico NOAA emite um alerta (só EUA/Ca
 ad2b2124	Retroiluminação com o rádio FM
 622d8193	Retroiluminação do ecrã enquanto ouve o rádio FM.{0}
 d30f2d83	firmware novo: 10 zonas de 99 canais
+fb93b1dc	Retevis RB39 / RB39P (FRS)
+3fe59b12	«RB39 CPS» v1.0.7 / «Retevis Analog CPS» v1.1.2
+79f992a2	«Retevis RB639 / RB639P (PMR446)»
+9013f524	Retevis RB639 / RB639P (PMR446)
+418d7f80	«RB639» v1.0.7 / «Retevis Analog CPS» v1.1.2
+eb214d0c	«Retevis RB39 / RB39P (FRS)»
+de7c4805	o rádio é a versão para outro país ({0}): abra a ficha {1}
+f82efb14	o rádio não indicou o país esperado ({0}): resposta {1}
+0ba685f5	Função de varrimento dos canais ligada ou desligada.
+96245b83	Bloqueio da transmissão com tensão baixa
+802acd28	Impede transmitir quando a tensão da bateria é demasiado baixa (protege o rádio).
+bcd2bbe9	Bloqueio da transmissão com tensão alta
+fc24dac8	Impede transmitir quando a tensão da bateria é demasiado alta (protege o rádio).
+7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
+92aad8ad	«T17-T18 FRS» v1.2.2
+a1ad8564	«BAOFENG GT18 PMR» v1.2.1
+5ca37d7b	«Radioddity T3» v1.3
+d0e2b5a6	programa do fabricante {0}
+3193cf7f	Versão FRS (22 canais). Canais e definições gerais como no programa do fabricante. Não está no CHIRP.{0}
+1a5178a8	Versão PMR446 (16 canais). Canais e definições gerais como no programa do fabricante. Não está no CHIRP.{0}
+ee33b84f	Canais sem nome, 400-470 MHz, 2400 baud. Protocolo e dados obtidos do programa do fabricante {0} e testados com um rádio simulado, não com um rádio real. Aqui alteram-se frequências, tons, potência e largura de banda dos canais e as definições gerais (tempo máximo de transmissão, VOX, guia de voz, tecla lateral e as outras do separador Definições). O rádio diz para que país foi feito: se não for o desta ficha a leitura para e indica a ficha {1}. «Identificar» não reconhece este rádio: escolha a ficha certa.
+fc8883bd	programas do fabricante «RB39 CPS» e «Retevis Analog CPS» (janela «System Information»)
+78730f88	Compander
+4ea54f89	Comprime a voz na transmissão e expande-a na receção para reduzir o ruído de fundo: só funciona bem se os outros rádios também o usarem.
+3a2d9774	Monitor (squelch aberto)
+3410aeb6	Mantém o squelch aberto: ouve-se tudo o que há no canal, incluindo o ruído e os sinais sem o tom certo.
+f41134b1	Alarme
+efbcdf5c	Tecla lateral (pressão longa)
+c9363874	Função da tecla lateral mantida premida.
+73b10bc8	Liga ou desliga o Bluetooth do rádio (só RB39P e RB639P).
+7fe587e0	Auctus

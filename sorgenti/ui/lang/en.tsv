@@ -5517,3 +5517,34 @@ f3d7fa00	Alert when the NOAA weather service broadcasts a warning (USA/Canada on
 ad2b2124	Backlight with the FM radio
 622d8193	Display backlight while you listen to the FM radio.{0}
 d30f2d83	new firmware: 10 zones of 99 channels
+fb93b1dc	Retevis RB39 / RB39P (FRS)
+3fe59b12	«RB39 CPS» v1.0.7 / «Retevis Analog CPS» v1.1.2
+79f992a2	«Retevis RB639 / RB639P (PMR446)»
+9013f524	Retevis RB639 / RB639P (PMR446)
+418d7f80	«RB639» v1.0.7 / «Retevis Analog CPS» v1.1.2
+eb214d0c	«Retevis RB39 / RB39P (FRS)»
+de7c4805	the radio is the version for another country ({0}): open the card {1}
+f82efb14	the radio did not state the expected country ({0}): answer {1}
+0ba685f5	Channel scan function on or off.
+96245b83	Transmit lockout at low voltage
+802acd28	Prevents transmitting when the battery voltage is too low (protects the radio).
+bcd2bbe9	Transmit lockout at high voltage
+fc24dac8	Prevents transmitting when the battery voltage is too high (protects the radio).
+7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
+92aad8ad	«T17-T18 FRS» v1.2.2
+a1ad8564	«BAOFENG GT18 PMR» v1.2.1
+5ca37d7b	«Radioddity T3» v1.3
+d0e2b5a6	manufacturer's program {0}
+3193cf7f	FRS version (22 channels). Channels and general settings as in the manufacturer's program. It is not in CHIRP.{0}
+1a5178a8	PMR446 version (16 channels). Channels and general settings as in the manufacturer's program. It is not in CHIRP.{0}
+ee33b84f	Channels without names, 400-470 MHz, 2400 baud. Protocol and data derived from the manufacturer's program {0} and tested with a simulated radio, not with a real one. Here you change frequencies, tones, power and bandwidth of the channels and the general settings (maximum transmit time, VOX, voice guide, side key and the others in the Settings tab). The radio says which country it is made for: if it is not the one of this card the read stops and names the card {1}. «Identify» does not recognise this radio: choose the right card yourself.
+fc8883bd	manufacturer's programs «RB39 CPS» and «Retevis Analog CPS» («System Information» window)
+78730f88	Compander
+4ea54f89	Compresses the voice when transmitting and expands it when receiving to reduce background noise: it works well only if the other radios use it too.
+3a2d9774	Monitor (squelch open)
+3410aeb6	Keeps the squelch open: you hear everything on the channel, including the hiss and signals without the right tone.
+f41134b1	Alarm
+efbcdf5c	Side key (long press)
+c9363874	Function of the side key held down.
+73b10bc8	Turns the radio's Bluetooth on or off (RB39P and RB639P only).
+7fe587e0	Auctus

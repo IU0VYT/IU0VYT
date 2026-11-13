@@ -6,7 +6,33 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
-4.25.0 (11/11/2026)
+4.26.0 (12/11/2026)
+-------------------
+- Retevis RB39 / RB39P (FRS, 22 saluran) dan RB639 / RB639P (PMR446, 16 saluran): pemacu
+  baharu (drv_auctus.go), daripada kod program pengeluar «RB39 CPS» dan «RB639» v1.0.7
+  serta «Retevis Analog CPS» v1.1.2. 2400 baud, satu saluran bagi setiap paket (16 bait:
+  frekuensi dalam puluhan Hz, nada mengikut kedudukan dalam jadual program, kuasa, lebar
+  jalur, kunci saluran sibuk, saluran aktif). Pada permulaan radio menyatakan untuk
+  negara mana ia dibuat («FCC» atau «CE»): dengan kad negara lain, bacaan berhenti dan
+  menyebut kad yang betul. Tetapan (settings_auctus.go): sembilan bait sistem (sepuluh
+  dalam versi «P», dengan Bluetooth): masa pancaran maksimum, VOX dengan kepekaan dan
+  lengah, compander, pantau, panduan suara, fungsi kekunci sisi apabila ditekan lama,
+  penjimatan bateri. Setiap pilihan terikat kepada nilai yang dihantar oleh program
+  kepada radio.
+- Tetapan Baofeng BF-T17 / BF-T18 (PMR446 dan FRS), GT-18 PMR446 (juga Radioddity PR-T5)
+  dan Radioddity FS-T3 / PR-T3 (settings_t17.go): blok memori 0x630 dan 0x640, seperti
+  yang dibaca dan ditulis oleh program pengeluar. Squelch, masa pancaran maksimum, VOX
+  dan kepekaan, penyingkiran ekor hingar, nada panggilan, imbasan, sekatan pancaran pada
+  voltan rendah atau tinggi, panduan suara dan bahasa, bunyi kekunci, penjimatan bateri,
+  mod penggera, nada tamat pancaran (tiada pada FS-T3 / PR-T3).
+- Log perubahan dalam 12 bahasa: 4.25.0 membawa tarikh 11 November dan bukan 12 November
+  2026. Kiraan: 548 radio, 468 dengan tetapan, 602 dalam galeri, 52 jenama. Terjemahan:
+  31 teks baharu. Semakan: setiap kedudukan dibaca dua kali dalam kod program pengeluar
+  (dalam kaedah yang membaca daripada radio dan yang menulis); ujian automatik baharu
+  dengan radio simulasi. Program pengeluar tidak pernah dijalankan. Tiada satu pun radio
+  ini diuji secara sebenar.
+
+4.25.0 (12/11/2026)
 -------------------
 - Radioddity GS-10B Pro dan Bajeton BJ-8300 dengan firmware baharu (drv_bt11v126.go,
   baharu): protokol, memori dan tetapan dibaca dalam kod program pengeluar «GS-10B

@@ -7,7 +7,35 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
-4.25.0 (11.11.2026)
+4.26.0 (12.11.2026)
+-------------------
+- Retevis RB39 / RB39P (FRS, 22 Kanäle) und RB639 / RB639P (PMR446, 16 Kanäle): neuer
+  Treiber (drv_auctus.go), aus dem Code der Herstellerprogramme «RB39 CPS» und «RB639»
+  v1.0.7 und «Retevis Analog CPS» v1.1.2. 2400 Baud, ein Kanal pro Paket (16 Bytes:
+  Frequenzen in Zehner-Hz, Töne nach Position in der Tabelle des Programms, Leistung,
+  Bandbreite, Sperre bei belegtem Kanal, Kanal aktiv). Zu Beginn meldet das Funkgerät,
+  für welches Land es gebaut ist («FCC» oder «CE»): mit der Karte des anderen Landes
+  bricht das Auslesen ab und nennt die richtige Karte. Einstellungen
+  (settings_auctus.go): die neun Systembytes (zehn bei den «P»-Versionen, mit
+  Bluetooth): maximale Sendezeit, VOX mit Empfindlichkeit und Verzögerung, Kompander,
+  Monitor, Sprachansage, Funktion der gedrückt gehaltenen Seitentaste, Batteriesparen.
+  Jede Auswahl ist an den Wert gebunden, den das Programm an das Funkgerät sendet.
+- Einstellungen von Baofeng BF-T17 / BF-T18 (PMR446 und FRS), GT-18 PMR446 (auch
+  Radioddity PR-T5) und Radioddity FS-T3 / PR-T3 (settings_t17.go): Speicherblöcke 0x630
+  und 0x640, so wie die Herstellerprogramme sie lesen und schreiben. Rauschsperre,
+  maximale Sendezeit, VOX und Empfindlichkeit, Unterdrückung des Rauschschwanzes,
+  Rufton, Suchlauf, Sendesperre bei niedriger oder hoher Spannung, Sprachansage und
+  Sprache, Tastenton, Batteriesparen, Alarmmodus, Sendeende-Ton (nicht bei FS-T3 /
+  PR-T3).
+- Änderungsprotokolle in den 12 Sprachen: 4.25.0 trug das Datum 11. November statt 12.
+  November 2026. Zahlen: 548 Funkgeräte, 468 mit Einstellungen, 602 in der Galerie, 52
+  Marken. Übersetzungen: 31 neue Texte. Prüfungen: jede Position wurde zweimal im Code
+  der Herstellerprogramme gelesen (in der Methode, die aus dem Funkgerät liest, und in
+  der, die schreibt); neue automatische Tests mit simulierten Funkgeräten. Die
+  Herstellerprogramme wurden nie ausgeführt. Keines dieser Funkgeräte ist in echt
+  erprobt.
+
+4.25.0 (12.11.2026)
 -------------------
 - Radioddity GS-10B Pro und Bajeton BJ-8300 mit der neuen Firmware (drv_bt11v126.go,
   neu): Protokoll, Speicher und Einstellungen im Code der Herstellerprogramme «GS-10B

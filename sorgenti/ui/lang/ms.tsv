@@ -5517,3 +5517,34 @@ f3d7fa00	Makluman apabila perkhidmatan cuaca NOAA menyiarkan amaran (AS/Kanada s
 ad2b2124	Lampu latar dengan radio FM
 622d8193	Lampu latar paparan semasa anda mendengar radio FM.{0}
 d30f2d83	firmware baharu: 10 zon 99 saluran
+fb93b1dc	Retevis RB39 / RB39P (FRS)
+3fe59b12	«RB39 CPS» v1.0.7 / «Retevis Analog CPS» v1.1.2
+79f992a2	«Retevis RB639 / RB639P (PMR446)»
+9013f524	Retevis RB639 / RB639P (PMR446)
+418d7f80	«RB639» v1.0.7 / «Retevis Analog CPS» v1.1.2
+eb214d0c	«Retevis RB39 / RB39P (FRS)»
+de7c4805	radio ialah versi untuk negara lain ({0}): buka kad {1}
+f82efb14	radio tidak menyatakan negara yang dijangka ({0}): jawapan {1}
+0ba685f5	Fungsi imbasan saluran dihidupkan atau dimatikan.
+96245b83	Sekatan pancaran pada voltan rendah
+802acd28	Menghalang pancaran apabila voltan bateri terlalu rendah (melindungi radio).
+bcd2bbe9	Sekatan pancaran pada voltan tinggi
+fc24dac8	Menghalang pancaran apabila voltan bateri terlalu tinggi (melindungi radio).
+7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
+92aad8ad	«T17-T18 FRS» v1.2.2
+a1ad8564	«BAOFENG GT18 PMR» v1.2.1
+5ca37d7b	«Radioddity T3» v1.3
+d0e2b5a6	program pengeluar {0}
+3193cf7f	Versi FRS (22 saluran). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
+1a5178a8	Versi PMR446 (16 saluran). Saluran dan tetapan umum seperti dalam program pengeluar. Tiada dalam CHIRP.{0}
+ee33b84f	Saluran tanpa nama, 400-470 MHz, 2400 baud. Protokol dan data diperoleh daripada program pengeluar {0} dan diuji dengan radio simulasi, bukan dengan radio sebenar. Di sini anda mengubah frekuensi, nada, kuasa dan lebar jalur saluran serta tetapan umum (masa pancaran maksimum, VOX, panduan suara, kekunci sisi dan yang lain dalam tab Tetapan). Radio menyatakan untuk negara mana ia dibuat: jika bukan negara kad ini, bacaan berhenti dan menyebut kad {1}. «Kenal pasti» tidak mengenali radio ini: pilih sendiri kad yang betul.
+fc8883bd	program pengeluar «RB39 CPS» dan «Retevis Analog CPS» (tetingkap «System Information»)
+78730f88	Compander
+4ea54f89	Memampatkan suara semasa memancar dan mengembangkannya semasa menerima untuk mengurangkan hingar latar: berfungsi dengan baik hanya jika radio lain juga menggunakannya.
+3a2d9774	Pantau (squelch terbuka)
+3410aeb6	Mengekalkan squelch terbuka: anda mendengar semua yang ada pada saluran, termasuk desis dan isyarat tanpa nada yang betul.
+f41134b1	Penggera
+efbcdf5c	Kekunci sisi (tekan lama)
+c9363874	Fungsi kekunci sisi apabila ditekan lama.
+73b10bc8	Menghidupkan atau mematikan Bluetooth radio (RB39P dan RB639P sahaja).
+7fe587e0	Auctus

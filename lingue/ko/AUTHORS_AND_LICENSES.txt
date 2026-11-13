@@ -252,6 +252,8 @@ RADTEL RT-817A / RT-871A (4.19): 제조사 프로그램(«Radtel RT-871A CPS»)�
 
 RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20): 제조사 프로그램(«RT-4D CPS», «DMR RT-6D», «Radtel RT-1000 Pro CPS»)을 연구해 알아냈으며, 그 내용은 아무것도 포함되어 있지 않습니다. 코드는 처음부터 새로 작성했습니다.
 
+RETEVIS RB39 / RB639 및 BF-T17 / GT-18 / FS-T3의 설정(4.26): 제3자 코드는 없습니다. 프로토콜, 메모리, 설정은 제조사 프로그램(Retevis 「RB39 CPS」, 「RB639」, 「Retevis Analog CPS」; Baofeng 「T17-T18 PMR446 PRO」, 「T17-T18 FRS」, 「BAOFENG GT18 PMR」; Radioddity 「Radioddity T3」)의 코드를 읽어 얻었으며 처음부터 다시 작성했습니다. 그 프로그램들의 어떤 것도 포함되어 있지 않습니다.
+
 새 펌웨어의 BAJETON BJ-8300, RADIODDITY GS-10B PRO, FS-T3 / PR-T3 (4.25): 제3자 코드는 없습니다. 프로토콜, 메모리, 설정은 제조사 프로그램(Bajeton 「BT-11_CPS」 v1.2.6, Radioddity 「GS-10B Pro_EnCPS」 v1.0.3, 「Radioddity T3」 v1.3)의 코드를 읽어 얻었으며 처음부터 다시 작성했습니다. 그 프로그램들의 어떤 부분도 포함되어 있지 않습니다.
 
 카탈로그 (4.24): 새로운 제3자 코드는 없습니다. 추가된 카드는 이미 있는 드라이버를 사용합니다. 여섯 개는 제조사 프로그램(Bajeton, Radioddity, Retevis, Baofeng)의 비교에서 나왔으며 그 내용은 아무것도 포함되지 않았습니다. 나머지는 CHIRP의 동등 모델 표(GNU GPL v3)에서 나왔습니다.

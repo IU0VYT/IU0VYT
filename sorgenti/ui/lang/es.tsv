@@ -5517,3 +5517,34 @@ f3d7fa00	Aviso cuando el servicio meteorológico NOAA emite una alerta (solo EE.
 ad2b2124	Retroiluminación con la radio FM
 622d8193	Retroiluminación de la pantalla mientras escuchas la radio FM.{0}
 d30f2d83	firmware nuevo: 10 zonas de 99 canales
+fb93b1dc	Retevis RB39 / RB39P (FRS)
+3fe59b12	«RB39 CPS» v1.0.7 / «Retevis Analog CPS» v1.1.2
+79f992a2	«Retevis RB639 / RB639P (PMR446)»
+9013f524	Retevis RB639 / RB639P (PMR446)
+418d7f80	«RB639» v1.0.7 / «Retevis Analog CPS» v1.1.2
+eb214d0c	«Retevis RB39 / RB39P (FRS)»
+de7c4805	la radio es la versión para otro país ({0}): abre la ficha {1}
+f82efb14	la radio no ha indicado el país esperado ({0}): respuesta {1}
+0ba685f5	Función de exploración de canales activada o desactivada.
+96245b83	Bloqueo de la transmisión con tensión baja
+802acd28	Impide transmitir cuando la tensión de la batería es demasiado baja (protege la radio).
+bcd2bbe9	Bloqueo de la transmisión con tensión alta
+fc24dac8	Impide transmitir cuando la tensión de la batería es demasiado alta (protege la radio).
+7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
+92aad8ad	«T17-T18 FRS» v1.2.2
+a1ad8564	«BAOFENG GT18 PMR» v1.2.1
+5ca37d7b	«Radioddity T3» v1.3
+d0e2b5a6	programa del fabricante {0}
+3193cf7f	Versión FRS (22 canales). Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
+1a5178a8	Versión PMR446 (16 canales). Canales y ajustes generales como en el programa del fabricante. No está en CHIRP.{0}
+ee33b84f	Canales sin nombre, 400-470 MHz, 2400 baudios. Protocolo y datos obtenidos del programa del fabricante {0} y probados con una radio simulada, no con una radio real. Aquí se modifican frecuencias, tonos, potencia y ancho de banda de los canales y los ajustes generales (tiempo máximo de transmisión, VOX, guía de voz, tecla lateral y los demás de la pestaña Ajustes). La radio dice para qué país está hecha: si no es el de esta ficha la lectura se detiene e indica la ficha {1}. «Identificar» no reconoce esta radio: elige tú la ficha correcta.
+fc8883bd	programas del fabricante «RB39 CPS» y «Retevis Analog CPS» (ventana «System Information»)
+78730f88	Compander
+4ea54f89	Comprime la voz al transmitir y la expande al recibir para reducir el ruido de fondo: funciona bien solo si las otras radios también lo usan.
+3a2d9774	Monitor (squelch abierto)
+3410aeb6	Mantiene abierto el squelch: se oye todo lo que hay en el canal, incluso el soplido y las señales sin el tono correcto.
+f41134b1	Alarma
+efbcdf5c	Tecla lateral (pulsación larga)
+c9363874	Función de la tecla lateral mantenida pulsada.
+73b10bc8	Enciende o apaga el Bluetooth de la radio (solo RB39P y RB639P).
+7fe587e0	Auctus
