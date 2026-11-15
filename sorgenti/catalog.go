@@ -572,6 +572,7 @@ func init() {
 	catalog = append(catalog, catalog432...) // 4.32
 	catalog = append(catalog, catalog433...) // 4.33
 	catalog = append(catalog, catalog434...) // 4.34
+	catalog = append(catalog, catalog437...) // 4.37
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

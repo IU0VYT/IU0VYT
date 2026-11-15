@@ -39,6 +39,7 @@ type ysfOpt struct {
 	format string
 	ft70   bool // FT-70D: nome di 6 caratteri, nessun modo digitale noto
 	coded  bool // FT1D: i nomi sono scritti con i codici dei caratteri
+	vx8    bool // VX-8: solo analogica, senza banda stretta (vx8.py di CHIRP)
 }
 
 const ysfFlags = `
@@ -200,6 +201,50 @@ struct {
 `
 
 // caratteri della FT1D nell'ordine dei codici
+// vx8Format: VX-8R, VX-8DR, VX-8GE (vx8.py di CHIRP). Banchi e VFO come nella
+// FT1D (che in CHIRP nasce da questo driver); cambiano gli indirizzi e il canale.
+// Differenze volute da CHIRP: modificare un canale non lo toglie dai banchi
+// (CHIRP lo toglie a ogni modifica); il modo «automatico» della radio (3) resta
+// se la frequenza non cambia.
+var vx8Format = ysfFlags + `
+struct memslot {
+  u8 unknown1a:2,
+     half_deviation:1,
+     unknown1b:5;
+  u8 mode:2,
+     duplex:2,
+     tune_step:4;
+  bbcd freq[3];
+  u8 power:2,
+     unknown2:4,
+     tone_mode:2;
+  u8 charsetbits[2];
+  char label[16];
+  bbcd offset[3];
+  u8 unknown5:2,
+     tone:6;
+  u8 unknown6:1,
+     dcs:7;
+  u8 pr_frequency;
+  u8 unknown7;
+  u8 unknown8a:3,
+     unknown8b:1,
+     rx_mode_auto:1,
+     unknown8c:3;
+};
+` + ft1dFormat[strings.Index(ft1dFormat, "#seekto 0x054A;"):strings.Index(ft1dFormat, "#seekto 0x154A;")] + `#seekto 0x198A;
+struct {
+    u16 channel[100];
+} bank_members[24];
+#seekto 0x2C4A;
+struct flagslot flag[900];
+#seekto 0x328A;
+struct memslot memory[900];
+`
+
+var vx8Sums = [][3]int{{0x064A, 0x06C8, 0x06C9}, {0x06CA, 0x0748, 0x0749}, {0x074A, 0x07C8, 0x07C9}, {0x07CA, 0x0848, 0x0849},
+	{0x0000, 0xFEC9, 0xFECA}}
+
 const ft1dChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz.,:;*#_-/&()@!?^ "
 
 var ft1dSums = [][3]int{{0x064A, 0x06C8, 0x06C9}, {0x06CA, 0x0748, 0x0749}, {0x074A, 0x07C8, 0x07C9}, {0x07CA, 0x0848, 0x0849},
@@ -242,6 +287,19 @@ func init() {
 		touch("ys-ft3d", "FT3D", "R", "FT3D", "Yaesu FT3DR / FT3DE", "AH72M"),
 		touch("ys-ft5d", "FT5D", "R", "FT5D", "Yaesu FT5DR / FT5DE", "AH82M"),
 	)
+	vx8 := func(id, model, rclass, ident string) *genModel {
+		return &genModel{ID: id, Vendor: "Yaesu", Model: model, RClass: rclass, Name: "Yaesu " + model,
+			Slots: 900, First: 1, NameMax: 16, Charset: chars, Powers: p4, Bands: bands, HasScan: true, NoTxOff: true,
+			DCS: dtcsCodes, Baud: 38400, Fam: ysfFam{},
+			Opt: &ysfOpt{clone: &yaesuOpt{model: ident, size: 65227, head: 10, chunk: 32, sums: vx8Sums,
+				send: "[BAND]", recv: "[MODE] («-WAIT-»)"}, format: vx8Format, coded: true, vx8: true},
+			Notes: yaesuNote(900, 16, 38400) + yaesuCloneHow("DATA", "[FW]", "[BAND]", "[MODE]") + ysfNote}
+	}
+	genRegister(
+		vx8("ys-vx8r", "VX-8R", "VX8Radio", "AH029"),
+		vx8("ys-vx8dr", "VX-8DR", "VX8DRadio", "AH29D"),
+		vx8("ys-vx8ge", "VX-8GE", "VX8GERadio", "AH041"),
+	)
 }
 
 func (ysfFam) opt(m *genModel) *ysfOpt         { return m.Opt.(*ysfOpt) }
@@ -252,8 +310,11 @@ func (f ysfFam) rec(m *genModel, i int) *bwEl  { return f.mem(m).F("memory").I(i
 func (f ysfFam) flag(m *genModel, i int) *bwEl { return f.mem(m).F("flag").I(i) }
 
 func (f ysfFam) narrow(m *genModel) string {
-	if f.opt(m).ft70 {
+	switch o := f.opt(m); {
+	case o.ft70:
 		return "deviation"
+	case o.vx8:
+		return "half_deviation"
 	}
 	return "mode_alt"
 }
@@ -322,7 +383,7 @@ func (f ysfFam) Get(m *genModel, img []byte, i int) *Chan {
 		dcs = fmt.Sprintf("D%03dN", dtcsCodes[k])
 	}
 	mode := r.F("mode").Int(img)
-	if !o.ft70 {
+	if !o.ft70 && !o.vx8 {
 		c.Dig = mode == 0 && r.F("digmode").Int(img) != 0
 	}
 	if !c.Dig {
@@ -340,7 +401,7 @@ func (f ysfFam) Get(m *genModel, img []byte, i int) *Chan {
 		p = len(m.Powers) - 1
 	}
 	c.Power = m.powerSem(p)
-	c.Narrow = mode == 0 && !c.Dig && r.F(f.narrow(m)).Bool(img)
+	c.Narrow = mode == 0 && !c.Dig && !o.vx8 && r.F(f.narrow(m)).Bool(img)
 	c.Scan = !fl.F("skip").Bool(img) && !fl.F("pskip").Bool(img)
 	var sb strings.Builder
 	for _, b := range r.F("label").Raw(img) {
@@ -462,7 +523,7 @@ func (f ysfFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	valid, used := fl.F("valid").Bool(img), fl.F("used").Bool(img)
 	if c == nil {
 		f.debank(m, img, i)
-		if o.ft70 {
+		if o.ft70 || o.vx8 {
 			if !(valid && !used) {
 				fl.F("used").SetBool(img, false)
 			}
@@ -495,7 +556,7 @@ func (f ysfFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	// canale nuovo: valori di CHIRP (subtono 88,5 Hz, DCS 023, passo 5 kHz)
 	was := valid && (used || o.ft70)
 	kept, tone, dcs, step, oldRx, oldMode := int64(0), int64(8), int64(0), int64(0), int64(0), int64(0)
-	if o.ft70 {
+	if o.ft70 || o.vx8 {
 		kept = 600000
 	}
 	if was {
@@ -503,7 +564,7 @@ func (f ysfFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		tone, dcs, step = r.F("tone").Int(img), r.F("dcs").Int(img), r.F("tune_step").Int(img)
 		oldRx, oldMode = yaesuRound(r.F("freq").Int(img)*1000), r.F("mode").Int(img)
 	}
-	if (o.ft70 && step > 9) || step > 10 {
+	if (o.ft70 && step > 9) || (!o.vx8 && step > 10) || step > 11 {
 		step = 0
 	}
 	find := func(list []int, v int) (int64, error) {
@@ -559,6 +620,17 @@ func (f ysfFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	if o.ft70 && !valid {
 		f.wipe(img, r)
 	}
+	if o.vx8 {
+		if !valid {
+			r.Fill(img, 0)
+		}
+		// 6,25 kHz: senza questo valore la radio va fuori frequenza (commento di CHIRP)
+		u := int64(0)
+		if c.Rx%6250 == 0 && c.Rx%5000 != 0 {
+			u = 5
+		}
+		r.F("unknown1b").SetInt(img, u)
+	}
 	fl.F("used").SetBool(img, true)
 	fl.F("valid").SetBool(img, true)
 	fl.F("nosubvfo").SetBool(img, c.Rx < 30000000 || c.Rx > 88000000 && c.Rx < 108000000 || c.Rx > 580000000)
@@ -568,8 +640,8 @@ func (f ysfFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	r.F("dcs").SetInt(img, dcs)
 	r.F("tune_step").SetInt(img, step)
 	r.F("duplex").SetInt(img, dup)
-	r.F(f.narrow(m)).SetBool(img, c.Narrow && mode == 0 && !c.Dig)
-	if !o.ft70 {
+	r.F(f.narrow(m)).SetBool(img, c.Narrow && mode == 0 && !c.Dig && !o.vx8)
+	if !o.ft70 && !o.vx8 {
 		switch dm := r.F("digmode").Int(img); {
 		case !c.Dig:
 			r.F("digmode").SetInt(img, 0)
@@ -611,6 +683,8 @@ func (f ysfFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	if o.ft70 {
 		r.F("charsetbits").Fill(img, 0)
 		r.F("display_tag").SetInt(img, 1)
+	} else if o.vx8 {
+		r.F("charsetbits").Fill(img, 0)
 	} else {
 		r.F("charsetbits").SetInt(img, 0)
 	}

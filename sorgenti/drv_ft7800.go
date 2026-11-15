@@ -53,6 +53,9 @@ type ftxOpt struct {
 	send  string // tasto che avvia l'invio sulla radio
 	recv  string // tasto che mette la radio in ricezione
 	name  string // nome breve per i messaggi
+	// noSumAck (4.37, VX-150): in scrittura la radio non conferma la somma di
+	// controllo finale
+	noSumAck bool
 }
 
 const ftxVX170Format = `
@@ -587,7 +590,12 @@ func (f ftxFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 // ---------------------------------------------------------------- protocollo
 
 func (f ftxFam) Download(ctx context.Context, m *genModel, port string, prog Progress) ([]byte, string, error) {
-	o := ftxo(m)
+	return ftxDownload(ctx, m, port, ftxo(m), prog)
+}
+
+// ftxDownload: lettura con lo scambio della FT-7800 (4.37: anche per la VX-150,
+// che ha una famiglia sua)
+func ftxDownload(ctx context.Context, m *genModel, port string, o *ftxOpt, prog Progress) ([]byte, string, error) {
 	s, err := rawOpen(ctx, port, m.Baud)
 	if err != nil {
 		return nil, "", err
@@ -650,8 +658,12 @@ func (f ftxFam) Download(ctx context.Context, m *genModel, port string, prog Pro
 }
 
 func (f ftxFam) Upload(ctx context.Context, m *genModel, port string, img []byte, prog Progress) (string, error) {
-	o := ftxo(m)
-	if !f.Match(m, img) {
+	return ftxUpload(ctx, m, port, ftxo(m), img, prog)
+}
+
+// ftxUpload: scrittura con lo scambio della FT-7800 (vedi ftxDownload)
+func ftxUpload(ctx context.Context, m *genModel, port string, o *ftxOpt, img []byte, prog Progress) (string, error) {
+	if len(img) != o.size || !bytes.HasPrefix(img, []byte(o.id)) {
 		return "", fmt.Errorf("immagine della memoria non valida per la %s", o.name)
 	}
 	img = append([]byte{}, img...)
@@ -692,6 +704,9 @@ func (f ftxFam) Upload(ctx context.Context, m *genModel, port string, img []byte
 		prog(a, o.size, "Scrittura…")
 		if err := s.ft60Send(img[a:e]); err != nil {
 			return "", err
+		}
+		if e == o.size && o.noSumAck {
+			break // VX-150: la somma di controllo non viene confermata
 		}
 		if err := ack(); err != nil {
 			return "", err

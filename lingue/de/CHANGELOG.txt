@@ -7,6 +7,25 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.37.0 (13.11.2026)
+-------------------
+- Yaesu-Handfunkgeräte: acht neue Modelle aus den CHIRP-Treibern, von Grund auf neu
+  geschrieben und mit CHIRP verglichen. VX-5R (Triband, 220 Kanäle, Namen aus 8 Zeichen)
+  und VX-7R (Vierband, 450 Kanäle, Namen aus 8 Zeichen, unterschiedliche Töne für Senden
+  und Empfang): Kanäle. VX-2R (1000 Kanäle), FT-50R (100 Kanäle) und VX-150 (VHF, 199
+  Kanäle; die Leistung wird am Funkgerät gewählt): Kanäle und Einstellungen. VX-8R,
+  VX-8DR und VX-8GE (900 Kanäle, Namen aus 16 Zeichen): Kanäle und Einstellungen (APRS,
+  Suchlauf, DTMF, Anzeige).
+- Wie bei den anderen Yaesu-Geräten wird die Kopie am Funkgerät gestartet (Modus
+  «CLONE»): Diese Geräte werden von «Identifizieren» nicht abgefragt, die Registerkarte
+  wird von Hand gewählt. Gewollte Unterschiede zu CHIRP: Beim VX-8 entfernt das Ändern
+  eines Kanals ihn nicht aus seinen Bänken (nur das Löschen), die Einstellung
+  «Lautstärke VFO B» wird nicht angeboten und das APRS-Rufzeichen nimmt Buchstaben,
+  Ziffern und Leerzeichen an; beim VX-150 wird die Prüfsumme auch beim Lesen geprüft.
+- Nicht gemacht: Yaesu VX-1. Keines dieser Funkgeräte wurde an einem echten Gerät
+  getestet: zuerst lesen, dann schreiben. Galerie: 645 Modelle von 52 Marken (591 mit
+  Kanälen, 502 mit Einstellungen).
+
 4.36.0 (13.11.2026)
 -------------------
 - Korrekturversion für «Identifizieren» und die automatische Erkennung, nach den Tests

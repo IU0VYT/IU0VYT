@@ -5866,3 +5866,32 @@ faea270a	On {0} a device responds but cannot be read: if the radio is off switch
 e09c1757	Save the diagnostics
 fb81b3e0	Text file (*.txt)|*.txt
 66fd240f	the information read from the radio is not valid
+410076c0	{0} Tri-band handheld: 220 channels with 8-character names.
+d85dfd98	{0} Four-band handheld: 450 channels with 8-character names.
+2d01f800	{0} Dual-band handheld: 1000 channels with 6-character names.
+cea195a0	{0} Dual-band handheld: 100 channels with 4-character names.
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} VHF handheld: 199 channels with 7-character names.
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	Minimum 0.1 W
+09707ee6	[PTT] + [DIAL]
+b0fe5157	the radio cannot store this offset between receive and transmit ({0} MHz): it has no transmission on a separate frequency
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}The copy is started from the radio: switch it off, connect the cable to the MIC/SP jack and switch it on while holding [PTT] and [LAMP]; with the knob choose «CLONE» and press [F]. To read: start reading here and then hold [PTT] for a moment («SENDING» appears). To write: press [MONI] on the radio («SAVING» appears) and then start writing here. The power is chosen on the radio, not per channel. CHIRP driver.
+1360d7c4	the radio cannot store this offset between receive and transmit ({0} MHz): it must be a multiple of 10 kHz
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0} channels with {1}-character names, Yaesu programming cable, {2} baud.
+a0620b50	Yaesu VX-5R
+368c94ae	Minimum 0.05 W
+9cccd20c	[V/M] («CLONE WAIT»)
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
+ad75ff44	the radio does not send the data back: writing has stopped
+16a78f4c	APRS handheld: 900 channels with 16-character names. The radio declares its model: if it is a different VX-8 the program says so.

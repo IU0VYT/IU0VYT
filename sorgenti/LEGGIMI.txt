@@ -1,11 +1,17 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.36.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.37.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.37.0:
+- Otto palmari Yaesu nuovi: VX-5R e VX-7R (canali); VX-2R, FT-50R, VX-150,
+  VX-8R, VX-8DR e VX-8GE (canali e impostazioni, per la VX-8 anche APRS).
+  La copia parte dalla radio (modalità «CLONE»): la scheda si sceglie a mano e
+  le istruzioni sono nella finestra del cavo.
+- Galleria: 645 modelli di 52 marche (591 con canali, 502 con impostazioni).
 Novità della 4.36.0:
 - «Identifica» e identificazione automatica: il programma ricorda su quale cavo
   ha riconosciuto ogni radio e comincia da quelle; la prima ricerca non perde

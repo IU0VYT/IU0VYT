@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.36.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.37.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,12 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.37.0:
+- Acht neue Yaesu-Handfunkgeräte: VX-5R und VX-7R (Kanäle); VX-2R, FT-50R, VX-150,
+  VX-8R, VX-8DR und VX-8GE (Kanäle und Einstellungen, beim VX-8 auch APRS). Die Kopie
+  wird am Funkgerät gestartet (Modus «CLONE»): Die Registerkarte wird von Hand gewählt,
+  die Anleitung steht im Kabelfenster.
+- Galerie: 645 Modelle von 52 Marken (591 mit Kanälen, 502 mit Einstellungen).
 Neu in 4.36.0:
 - «Identifizieren» und automatische Erkennung: Das Programm merkt sich jetzt, an welchem
   Kabel es jedes Funkgerät erkannt hat, und beginnt mit diesen; die erste Suche verliert

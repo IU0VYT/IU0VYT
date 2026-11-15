@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.36.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.37.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,11 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.37.0:
+- Oito novos portáteis Yaesu: VX-5R e VX-7R (canais); VX-2R, FT-50R, VX-150, VX-8R,
+  VX-8DR e VX-8GE (canais e definições, no VX-8 também APRS). A cópia parte do rádio
+  (modo «CLONE»): o separador escolhe-se à mão e as instruções estão na janela do cabo.
+- Galeria: 645 modelos de 52 marcas (591 com canais, 502 com definições).
 Novidades da 4.36.0:
 - «Identificar» e identificação automática: o programa lembra-se agora do cabo em que
   reconheceu cada rádio e começa por esses, e a primeira procura já não perde segundos à

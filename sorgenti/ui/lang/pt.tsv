@@ -5866,3 +5866,32 @@ faea270a	Em {0} um dispositivo responde mas não se deixa ler: se o rádio estiv
 e09c1757	Guardar o diagnóstico
 fb81b3e0	Ficheiro de texto (*.txt)|*.txt
 66fd240f	as informações lidas do rádio não são válidas
+410076c0	{0} Portátil tribanda: 220 canais com nomes de 8 caracteres.
+d85dfd98	{0} Portátil de quatro bandas: 450 canais com nomes de 8 caracteres.
+2d01f800	{0} Portátil bibanda: 1000 canais com nomes de 6 caracteres.
+cea195a0	{0} Portátil bibanda: 100 canais com nomes de 4 caracteres.
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} Portátil VHF: 199 canais com nomes de 7 caracteres.
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	Mínima 0,1 W
+09707ee6	[PTT] + [DIAL]
+b0fe5157	o rádio não consegue memorizar este desvio entre receção e transmissão ({0} MHz): não tem transmissão numa frequência separada
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}A cópia parte do rádio: desliga-o, liga o cabo à tomada MIC/SP e liga-o mantendo premidos [PTT] e [LAMP]; com o botão rotativo escolhe «CLONE» e prime [F]. Para ler: inicia a leitura aqui e depois mantém premido [PTT] por um momento (aparece «SENDING»). Para escrever: prime [MONI] no rádio (aparece «SAVING») e depois inicia a escrita aqui. A potência escolhe-se no rádio, não por canal. Driver do CHIRP.
+1360d7c4	o rádio não consegue memorizar este desvio entre receção e transmissão ({0} MHz): tem de ser um múltiplo de 10 kHz
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0} canais com nomes de {1} caracteres, cabo de programação Yaesu, {2} baud.
+a0620b50	Yaesu VX-5R
+368c94ae	Mínima 0,05 W
+9cccd20c	[V/M] («CLONE WAIT»)
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
+ad75ff44	o rádio não devolve os dados: a escrita parou
+16a78f4c	Portátil com APRS: 900 canais com nomes de 16 caracteres. O rádio declara o seu modelo: se for outro VX-8 o programa avisa.

@@ -3,6 +3,42 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.37.0 (14/11/2026)
+-------------------
+Palmari Yaesu: otto modelli nuovi, dai driver di CHIRP (vx5.py, vx7.py, vx2.py,
+ft50.py, vx150.py, vx8.py), riscritti da zero e confrontati con CHIRP.
+- Yaesu VX-5R (tre bande, 220 canali, nomi di 8 caratteri, 9600 baud) e VX-7R
+  (quattro bande, 450 canali, nomi di 8 caratteri anche minuscoli, 19200 baud,
+  toni diversi in trasmissione e ricezione): canali.
+- Yaesu VX-2R (1000 canali, nomi di 6 caratteri, 19200 baud), FT-50R (100
+  canali, nomi di 4 caratteri, 9600 baud; non ha la trasmissione su una
+  frequenza separata) e VX-150 (VHF, 199 canali, nomi di 7 caratteri, 9600 baud;
+  la potenza si sceglie sulla radio): canali e impostazioni (42, 38 e 30 voci).
+- Yaesu VX-8R, VX-8DR e VX-8GE (900 canali, nomi di 16 caratteri, 38400 baud):
+  canali e impostazioni (56, 78 e 79 voci: APRS, scansione, DTMF, schermo).
+  Stessa famiglia della FT1D: banchi e VFO sono trattati allo stesso modo.
+- Come per le altre Yaesu la copia parte dalla radio (modalità «CLONE»): queste
+  radio non passano da «Identifica», la scheda si sceglie a mano e le istruzioni
+  sono nella finestra del cavo e nella nota del modello.
+- Copia Yaesu in più blocchi (drv_yaesuclone.go): VX-5, VX-7, VX-2 e FT-50
+  mandano la memoria in tre o più blocchi con una conferma dopo ognuno; la
+  FT-50 rimanda indietro ogni byte e la scrittura si ferma se non lo fa.
+- Differenze volute da CHIRP (in testa ai driver): VX-8, modificare un canale
+  non lo toglie dai banchi (CHIRP lo toglie a ogni modifica; qui solo quando il
+  canale viene cancellato); VX-8, il «volume del VFO B» non è offerto (CHIRP lo
+  legge da una posizione e lo scrive in un'altra) e il nominativo APRS accetta
+  lettere, cifre e spazi; VX-150, la somma di controllo viene verificata anche
+  in lettura; VX-2 e FT-50, nei testi DTMF lo spazio vale solo come
+  riempimento.
+- Prove: lettura, struttura, modifica e copia identiche a CHIRP per gli otto
+  modelli; impostazioni dei sei modelli confrontate con CHIRP con sette semi
+  diversi; yaesu437_test.go (copia in più blocchi, canali a 6,25 kHz della
+  VX-8, banchi, casi rifiutati).
+- Non fatto: Yaesu VX-1 (in CHIRP ha tre sotto-dispositivi e maschere di banda:
+  è un lavoro a parte). Nessuna di queste radio è stata provata dal vero:
+  prima la sola lettura.
+- Galleria: 645 modelli di 52 marche (591 con canali, 502 con impostazioni).
+
 4.36.0 (14/11/2026)
 -------------------
 Versione di correzione: «Identifica» e identificazione automatica, dopo le

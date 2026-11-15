@@ -7,6 +7,24 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.37.0 (13/11/2026)
+-------------------
+- Portátiles Yaesu: ocho modelos nuevos a partir de los controladores de CHIRP,
+  reescritos desde cero y comparados con CHIRP. VX-5R (tribanda, 220 canales, nombres de
+  8 caracteres) y VX-7R (cuatro bandas, 450 canales, nombres de 8 caracteres, tonos
+  distintos en transmisión y recepción): canales. VX-2R (1000 canales), FT-50R (100
+  canales) y VX-150 (VHF, 199 canales; la potencia se elige en la radio): canales y
+  ajustes. VX-8R, VX-8DR y VX-8GE (900 canales, nombres de 16 caracteres): canales y
+  ajustes (APRS, escaneo, DTMF, pantalla).
+- Como en las demás Yaesu, la copia parte de la radio (modo «CLONE»): «Identificar» no
+  interroga estas radios, la pestaña se elige a mano. Diferencias deliberadas respecto a
+  CHIRP: en la VX-8 modificar un canal no lo quita de sus bancos (solo al borrarlo), el
+  ajuste «volumen del VFO B» no se ofrece y el indicativo APRS admite letras, cifras y
+  espacios; en la VX-150 la suma de comprobación se verifica también al leer.
+- No hecho: Yaesu VX-1. Ninguna de estas radios se ha probado con un equipo real:
+  primero leer, después escribir. Galería: 645 modelos de 52 marcas (591 con canales,
+  502 con ajustes).
+
 4.36.0 (13/11/2026)
 -------------------
 - Versión de corrección para «Identificar» y la identificación automática, tras las

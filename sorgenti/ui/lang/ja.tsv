@@ -5866,3 +5866,32 @@ faea270a	{0} で機器が応答していますが、読み取れません。無�
 e09c1757	診断を保存
 fb81b3e0	テキストファイル (*.txt)|*.txt
 66fd240f	無線機から読み込んだ情報が正しくありません
+410076c0	{0} トライバンドのハンディ機：220 チャンネル、名前 8 文字。
+d85dfd98	{0} 4 バンドのハンディ機：450 チャンネル、名前 8 文字。
+2d01f800	{0} デュアルバンドのハンディ機：1000 チャンネル、名前 6 文字。
+cea195a0	{0} デュアルバンドのハンディ機：100 チャンネル、名前 4 文字。
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} VHF ハンディ機：199 チャンネル、名前 7 文字。
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	最小 0.1 W
+09707ee6	[PTT] + [DIAL]
+b0fe5157	無線機は受信と送信の間のこのオフセット（{0} MHz）を記憶できません。別の周波数で送信する機能がありません
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}コピーは無線機側から始めます。電源を切り、ケーブルを MIC/SP 端子に接続し、[PTT] と [LAMP] を押しながら電源を入れます。ダイヤルで「CLONE」を選び、[F] を押します。読み取り：ここで読み取りを開始してから [PTT] を少しの間押し続けます（「SENDING」と表示）。書き込み：無線機の [MONI] を押し（「SAVING」と表示）、それからここで書き込みを開始します。出力は無線機側で選び、チャンネルごとには設定できません。CHIRP のドライバー。
+1360d7c4	無線機は受信と送信の間のこのオフセット（{0} MHz）を記憶できません。10 kHz の倍数である必要があります
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0} チャンネル、名前 {1} 文字、Yaesu の書き込みケーブル、{2} ボー。
+a0620b50	Yaesu VX-5R
+368c94ae	最小 0.05 W
+9cccd20c	[V/M] («CLONE WAIT»)
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
+ad75ff44	無線機がデータを送り返しません。書き込みは停止しました
+16a78f4c	APRS 対応のハンディ機：900 チャンネル、名前 16 文字。無線機は自分の機種を通知します。別の VX-8 の場合はプログラムが知らせます。

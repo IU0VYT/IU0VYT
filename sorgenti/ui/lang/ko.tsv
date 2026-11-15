@@ -5866,3 +5866,32 @@ faea270a	{0}에서 장치가 응답하지만 읽을 수 없습니다: 무전기�
 e09c1757	진단 저장
 fb81b3e0	텍스트 파일 (*.txt)|*.txt
 66fd240f	무전기에서 읽은 정보가 올바르지 않습니다
+410076c0	{0} 3밴드 휴대용: 220채널, 이름 8자.
+d85dfd98	{0} 4밴드 휴대용: 450채널, 이름 8자.
+2d01f800	{0} 듀얼밴드 휴대용: 1000채널, 이름 6자.
+cea195a0	{0} 듀얼밴드 휴대용: 100채널, 이름 4자.
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} VHF 휴대용: 199채널, 이름 7자.
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	최소 0.1 W
+09707ee6	[PTT] + [DIAL]
+b0fe5157	무전기가 수신과 송신 사이의 이 오프셋({0} MHz)을 저장할 수 없습니다. 별도 주파수로 송신하는 기능이 없습니다
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}복사는 무전기에서 시작합니다. 무전기를 끄고 케이블을 MIC/SP 단자에 연결한 뒤 [PTT]와 [LAMP]를 누른 채 켭니다. 다이얼로 «CLONE»을 선택하고 [F]를 누릅니다. 읽기: 여기서 읽기를 시작한 다음 [PTT]를 잠시 누르고 있습니다(«SENDING» 표시). 쓰기: 무전기에서 [MONI]를 누르고(«SAVING» 표시) 여기서 쓰기를 시작합니다. 출력은 채널별이 아니라 무전기에서 선택합니다. CHIRP 드라이버.
+1360d7c4	무전기가 수신과 송신 사이의 이 오프셋({0} MHz)을 저장할 수 없습니다. 10 kHz의 배수여야 합니다
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0}채널, 이름 {1}자, Yaesu 프로그래밍 케이블, {2} 보드.
+a0620b50	Yaesu VX-5R
+368c94ae	최소 0.05 W
+9cccd20c	[V/M] («CLONE WAIT»)
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
+ad75ff44	무전기가 데이터를 되돌려 보내지 않습니다. 쓰기가 중단되었습니다
+16a78f4c	APRS 휴대용: 900채널, 이름 16자. 무전기가 자신의 모델을 알려 줍니다. 다른 VX-8이면 프로그램이 알려 줍니다.

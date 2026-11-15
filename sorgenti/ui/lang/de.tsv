@@ -5866,3 +5866,32 @@ faea270a	An {0} antwortet ein Gerät, lässt sich aber nicht lesen: Ist das Funk
 e09c1757	Diagnose speichern
 fb81b3e0	Textdatei (*.txt)|*.txt
 66fd240f	die vom Funkgerät gelesenen Informationen sind ungültig
+410076c0	{0} Triband-Handfunkgerät: 220 Kanäle mit Namen aus 8 Zeichen.
+d85dfd98	{0} Vierband-Handfunkgerät: 450 Kanäle mit Namen aus 8 Zeichen.
+2d01f800	{0} Dualband-Handfunkgerät: 1000 Kanäle mit Namen aus 6 Zeichen.
+cea195a0	{0} Dualband-Handfunkgerät: 100 Kanäle mit Namen aus 4 Zeichen.
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} VHF-Handfunkgerät: 199 Kanäle mit Namen aus 7 Zeichen.
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	Minimal 0,1 W
+09707ee6	[PTT] + [DIAL]
+b0fe5157	das Funkgerät kann diese Ablage zwischen Empfang und Senden ({0} MHz) nicht speichern: es kann nicht auf einer getrennten Frequenz senden
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}Die Kopie wird am Funkgerät gestartet: ausschalten, das Kabel an die Buchse MIC/SP anschließen und mit gedrückten Tasten [PTT] und [LAMP] einschalten; mit dem Drehknopf «CLONE» wählen und [F] drücken. Zum Lesen: hier das Lesen starten und dann [PTT] kurz gedrückt halten («SENDING» erscheint). Zum Schreiben: am Funkgerät [MONI] drücken («SAVING» erscheint) und dann hier das Schreiben starten. Die Leistung wird am Funkgerät gewählt, nicht pro Kanal. CHIRP-Treiber.
+1360d7c4	das Funkgerät kann diese Ablage zwischen Empfang und Senden ({0} MHz) nicht speichern: sie muss ein Vielfaches von 10 kHz sein
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0} Kanäle mit Namen aus {1} Zeichen, Yaesu-Programmierkabel, {2} Baud.
+a0620b50	Yaesu VX-5R
+368c94ae	Minimal 0,05 W
+9cccd20c	[V/M] («CLONE WAIT»)
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
+ad75ff44	das Funkgerät sendet die Daten nicht zurück: das Schreiben wurde angehalten
+16a78f4c	Handfunkgerät mit APRS: 900 Kanäle mit Namen aus 16 Zeichen. Das Funkgerät meldet sein Modell: ist es ein anderes VX-8, sagt das Programm es.

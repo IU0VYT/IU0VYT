@@ -5866,3 +5866,32 @@ faea270a	{0} 上有设备响应，但无法读取：如果电台已关机请开�
 e09c1757	保存诊断
 fb81b3e0	文本文件 (*.txt)|*.txt
 66fd240f	从电台读取的信息无效
+410076c0	{0} 三频段手持机：220 个信道，名称 8 个字符。
+d85dfd98	{0} 四频段手持机：450 个信道，名称 8 个字符。
+2d01f800	{0} 双频段手持机：1000 个信道，名称 6 个字符。
+cea195a0	{0} 双频段手持机：100 个信道，名称 4 个字符。
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} VHF 手持机：199 个信道，名称 7 个字符。
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	最低 0.1 W
+09707ee6	[PTT] + [DIAL]
+b0fe5157	电台无法存储这个收发频差（{0} MHz）：它不支持在单独的频率上发射
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}复制由电台发起：关机，把线接到 MIC/SP 插孔，按住 [PTT] 和 [LAMP] 开机；用旋钮选择“CLONE”并按 [F]。读取：先在这里开始读取，再按住 [PTT] 片刻（显示“SENDING”）。写入：先按电台上的 [MONI]（显示“SAVING”），再在这里开始写入。功率在电台上选择，不能按信道设置。CHIRP 驱动。
+1360d7c4	电台无法存储这个收发频差（{0} MHz）：必须是 10 kHz 的整数倍
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0} 个信道，名称 {1} 个字符，Yaesu 写频线，{2} 波特。
+a0620b50	Yaesu VX-5R
+368c94ae	最低 0.05 W
+9cccd20c	[V/M] («CLONE WAIT»)
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
+ad75ff44	电台没有回送数据：写入已停止
+16a78f4c	带 APRS 的手持机：900 个信道，名称 16 个字符。电台会报告自己的型号：如果是另一款 VX-8，程序会提示。

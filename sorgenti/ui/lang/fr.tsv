@@ -5866,3 +5866,32 @@ faea270a	Sur {0}, un appareil répond mais ne se laisse pas lire : si la radio e
 e09c1757	Enregistrer le diagnostic
 fb81b3e0	Fichier texte (*.txt)|*.txt
 66fd240f	les informations lues depuis la radio ne sont pas valides
+410076c0	{0} Portatif tribande : 220 canaux avec des noms de 8 caractères.
+d85dfd98	{0} Portatif quadribande : 450 canaux avec des noms de 8 caractères.
+2d01f800	{0} Portatif bibande : 1000 canaux avec des noms de 6 caractères.
+cea195a0	{0} Portatif bibande : 100 canaux avec des noms de 4 caractères.
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} Portatif VHF : 199 canaux avec des noms de 7 caractères.
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	Minimale 0,1 W
+09707ee6	[PTT] + [DIAL]
+b0fe5157	la radio ne peut pas mémoriser ce décalage entre réception et émission ({0} MHz) : elle n'a pas d'émission sur une fréquence séparée
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}La copie part de la radio : éteignez-la, branchez le câble sur la prise MIC/SP et allumez-la en maintenant [PTT] et [LAMP] ; avec le bouton rotatif choisissez « CLONE » et appuyez sur [F]. Pour lire : lancez la lecture ici puis maintenez [PTT] un instant (« SENDING » apparaît). Pour écrire : appuyez sur [MONI] sur la radio (« SAVING » apparaît) puis lancez l'écriture ici. La puissance se choisit sur la radio, pas par canal. Pilote de CHIRP.
+1360d7c4	la radio ne peut pas mémoriser ce décalage entre réception et émission ({0} MHz) : il doit être un multiple de 10 kHz
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0} canaux avec des noms de {1} caractères, câble de programmation Yaesu, {2} bauds.
+a0620b50	Yaesu VX-5R
+368c94ae	Minimale 0,05 W
+9cccd20c	[V/M] («CLONE WAIT»)
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
+ad75ff44	la radio ne renvoie pas les données : l'écriture s'est arrêtée
+16a78f4c	Portatif avec APRS : 900 canaux avec des noms de 16 caractères. La radio déclare son modèle : si c'est un autre VX-8, le programme le dit.

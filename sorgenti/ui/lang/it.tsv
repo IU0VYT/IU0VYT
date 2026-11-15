@@ -2155,6 +2155,13 @@ cc4cc2a4	{0} Bibanda 144/430 MHz con ricevitore a larga banda: 200 canali senza 
 cfdf703b	{0} Palmare UHF: 200 canali con nomi di 6 caratteri.
 14a958a6	{0} Veicolare bibanda: 999 canali con nomi di 6 caratteri.
 beead202	{0} Veicolare a quattro bande: 799 canali con nomi di 6 caratteri.
+410076c0	{0} Palmare a tre bande: 220 canali con nomi di 8 caratteri.
+d85dfd98	{0} Palmare a quattro bande: 450 canali con nomi di 8 caratteri.
+2d01f800	{0} Palmare bibanda: 1000 canali con nomi di 6 caratteri.
+cea195a0	{0} Palmare bibanda: 100 canali con nomi di 4 caratteri.
+3b76c19d	Vertex Standard VX-150
+31a78f5e	{0} Palmare VHF: 199 canali con nomi di 7 caratteri.
+16a78f4c	Palmare con APRS: 900 canali con nomi di 16 caratteri. La radio dichiara il suo modello: se è un'altra VX-8 il programma lo dice.
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2819,13 +2826,22 @@ a9d84203	identificativo della radio vuoto
 d58f256a	la radio è un altro modello ({0}): apri la scheda «{1}» o quella della stessa serie
 c477c1e6	la radio dichiara il sottotipo {0}: apri la scheda «{1}»
 6e71b0e3	Scrittura del blocco 0x{0}
+2d215726	[MONI] («WAIT»)
+da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
+450b47b8	Yaesu FT-50R
+29e44810	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|
+340754ea	Minima 0,1 W
+09707ee6	[PTT] + [DIAL]
+da70894a	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione, lo stesso subtono nei due versi, lo stesso codice DCS nei due versi)
+d9bcac02	la radio non può memorizzare la frequenza {0} MHz
+8280dc40	tono non disponibile su questa radio
+b0fe5157	la radio non può memorizzare questo scostamento fra ricezione e trasmissione ({0} MHz): non ha la trasmissione su una frequenza separata
 5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
 3c19e63e	Yaesu FT-60R / FT-60E
 0e7079a8	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !$%&'()*+,-./|;=>?@[]^_
 5cee59d0	1000 canali con nomi di 6 caratteri. La copia parte dalla radio: spegnila, collega il cavo alla presa MIC/SP, accendila tenendo premuto [MONI], scegli «F8 CLONE» con la manopola e premi [F/W]. Per leggere: avvia la lettura qui e poi tieni premuto [PTT] per un secondo. Per scrivere: premi [MONI] sulla radio (compare «--RX--») e poi avvia la scrittura qui. Banchi, canali PMS e passo di sintonia si conservano. Le frequenze si memorizzano a passi di 5 o 12,5 kHz. Driver di CHIRP.
 6065d4a7	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione o in entrambi i versi, DCS in trasmissione o in entrambi i versi, subtono e DCS misti; mai il solo tono in ricezione o codici invertiti)
 1f61babd	la radio non può memorizzare la frequenza {0} MHz (passi da 5 o 12,5 kHz)
-8280dc40	tono non disponibile su questa radio
 4315d197	la radio non può memorizzare la frequenza di trasmissione {0} MHz (passi da 5 o 12,5 kHz)
 b02e4292	il cavo non rimanda indietro i dati inviati come dovrebbe: cavo non adatto o disturbi
 7f40ae2b	In attesa della radio: tieni premuto [PTT] per un secondo…
@@ -3001,7 +3017,6 @@ d1d50ce1	Icom IC-T8A
 2eeabfb5	La potenza non è memorizzata nel canale.
 78ff8dbe	Il modo (FM, FM larga, AM) segue la frequenza.
 4a2dedfd	La copia è quella veloce (38400 baud dopo l'identificazione).
-d9bcac02	la radio non può memorizzare la frequenza {0} MHz
 29603ad2	la radio non può memorizzare uno scostamento di {0} Hz
 b3fa7827	Icom Inc.7C
 910c5b7a	Alta 5,5 W
@@ -3009,7 +3024,6 @@ b3fa7827	Icom Inc.7C
 215302ea	200 canali VHF (da 0 a 199) con nomi di 5 caratteri. {0}La copia è quella veloce (38400 baud dopo l'identificazione). Passo di sintonia, canali di scansione e di chiamata e inversione del canale si conservano. Driver di CHIRP.
 52b58449	Icom IC-T70
 c4d1c0f5	300 canali VHF/UHF (da 0 a 299) con nomi di 6 caratteri. {0}I banchi si conservano. Driver di CHIRP.
-da70894a	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione, lo stesso subtono nei due versi, lo stesso codice DCS nei due versi)
 efa0c310	con la frequenza {0} MHz la radio non può memorizzare uno scostamento di {1} Hz
 ae0e8e43	frequenza o scostamento fuori dai limiti della radio
 ee3eef34	Icom Inc.CF
@@ -3809,7 +3823,17 @@ c131b7ff	La memoria letta ha una versione che questo programma (come CHIRP) non 
 f3783eba	l'immagine non è una memoria letta da una UVL-15W con un firmware conosciuto: leggi prima la radio
 c3a805aa	WRITE START OK
 42cf6c5b	Write Complete
+6a1bd337	[MONI] («SAVING»)
+1e310812	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/ΔγΣ|
+381c064b	Yaesu VX-150
+7514bb4c	{0}La copia parte dalla radio: spegnila, collega il cavo alla presa MIC/SP e accendila tenendo premuti [PTT] e [LAMP]; con la manopola scegli «CLONE» e premi [F]. Per leggere: avvia la lettura qui e poi tieni premuto [PTT] per un momento (compare «SENDING»). Per scrivere: premi [MONI] sulla radio (compare «SAVING») e poi avvia la scrittura qui. La potenza si sceglie sulla radio, non per canale. Driver di CHIRP.
+1360d7c4	la radio non può memorizzare questo scostamento fra ricezione e trasmissione ({0} MHz): deve essere un multiplo di 10 kHz
+df393080	[MR(SKP)SC] («CLONE WAIT»)
+242c4af5	{0} canali con nomi di {1} caratteri, cavo di programmazione Yaesu, {2} baud.
+a0620b50	Yaesu VX-5R
+368c94ae	Minima 0,05 W
 056bfdb5	[V/M] («-WAIT-»)
+9cccd20c	[V/M] («CLONE WAIT»)
 c50cf2a6	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/?[]u_{0}{1}{2}{3}{4}{5}{6}{7}{8}$%{9}*#.|=\o@
 a5351dc0	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/{0}[](){}{1}{2}_{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}*{16}{17},'|
 10f76a9c	La copia parte dalla radio: spegnila, collega il cavo alla presa {0} e accendila tenendo premuto {1} (compare «CLONE»). Per leggere: avvia la lettura qui e poi premi {2} sulla radio. Per scrivere: premi {3} sulla radio (compare «-WAIT-») e poi avvia la scrittura qui; alla fine la radio non conferma, l'esito si vede sul suo schermo.
@@ -3821,6 +3845,10 @@ ce744b54	Minima 0,3 W
 d4cb95c1	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|
 4fc7572e	Alta 1,5 W
 fa4647fb	Bassa 0,1 W
+4601dfe6	Yaesu VX-2R / VX-2E
+d63e5109	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-.=
+b85c20ea	Yaesu VX-7R
+72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
 4ccec7f4	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda, scansione e nomi dei canali e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}
 2346b1b2	{0} baud. Protocollo e memoria ricavati dal programma del costruttore {1} e dal suo file di configurazione, e provati con una radio simulata, non su una radio vera. Qui si modificano frequenze, toni, potenza, banda e scansione dei canali (non hanno nome) e le impostazioni generali; blocco su canale occupato e priorità restano quelli del canale. {2}
 f55aa366	«UB-15G» (versione del 21/8/2026)
@@ -3872,6 +3900,7 @@ bff69448	Bassa 0,8 W
 efbc521d	199 canali con nomi di 6 caratteri; gamma di frequenza letta dalla radio. Driver di CHIRP (sperimentale).
 c4ec57b1	128 canali con nomi di 6 caratteri (radio GMRS). Driver di CHIRP (sperimentale).
 05583988	la radio non si è identificata
+ad75ff44	la radio non rimanda indietro i dati: la scrittura si è fermata
 c522b72a	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz.,:;*#_-/&()@!?^
 c407fae5	DATA
 55b67acf	Toni ammessi: subtono in trasmissione o nei due versi, lo stesso codice DCS nei due versi. Driver di CHIRP.
@@ -4392,6 +4421,7 @@ e2c9334e	Bajeton BJ-8300 (BT-11)
 806f7568	{0} ha risposto, ma: {1}
 8ae5e410	Ricerca della radio ({0} di {1})
 b7f429f1	Provo: {0}
+66fd240f	le informazioni lette dalla radio non sono valide
 4ec6c830	Lettura: {0}
 416bef96	{0}: lettura fatta solo dell'eco del cavo, nessuna radio
 345e6166	Ricetrasmettitore analogico FM bibanda
@@ -4444,7 +4474,6 @@ bcbd41df	la password può avere al massimo 8 caratteri
 ab14d751	la radio collegata si identifica come "BF-K6", ma l'ultima radio letta no: come il programma originale, la scrittura parte solo verso lo stesso modello letto. Leggi prima questa radio (o attiva la copia di sicurezza prima della scrittura) e riprova
 a963206e	la radio collegata ("{0}") non è il modello dell'ultima radio letta ("BF-K6"): leggi prima questa radio e riprova
 bd4ba22f	Lettura (blocco 0x{0})
-66fd240f	le informazioni lette dalla radio non sono valide
 0af1aac4	Lettura delle informazioni della radio
 201e0538	le informazioni lette dalla radio non sono valide: scrittura annullata, nessun dato è stato scritto
 36ad76e6	Collegamento (seconda fase)

@@ -33,7 +33,27 @@ type yaesuOpt struct {
 	sums  [][3]int // somme di controllo: primo byte, ultimo byte, indirizzo della somma
 	send  string   // tasto che avvia l'invio sulla radio
 	recv  string   // tasto che mette la radio in ricezione
+	// blocks (4.37): lunghezze dei blocchi della copia quando sono più di due
+	// (_block_lengths di CHIRP: VX-5 10+16+8097, VX-7 10+8+16193, VX-2
+	// 10+8+32577, FT-50 otto blocchi). Tutti i blocchi tranne l'ultimo vanno
+	// confermati con 06. Vuoto: due blocchi, head e il resto
+	blocks []int
+	// byteEcho (4.37, FT-50): in scrittura un byte alla volta, aspettando che la
+	// radio lo rimandi indietro (come fa CHIRP con questa radio)
+	byteEcho bool
 }
+
+// blockLens: lunghezze dei blocchi della copia
+func (o *yaesuOpt) blockLens() []int {
+	if len(o.blocks) > 0 {
+		return o.blocks
+	}
+	return []int{o.head, o.size - o.head}
+}
+
+// yaesuByteDelay (4.37): pause della scrittura un byte alla volta (FT-50): prima
+// di ogni byte e prima di leggerne l'eco, come CHIRP
+var yaesuByteDelay = [2]time.Duration{10 * time.Millisecond, 15 * time.Millisecond}
 
 // yaesuChunkDelay: pausa tra i pezzi in scrittura (la radio non ha controllo di flusso)
 var yaesuChunkDelay = 30 * time.Millisecond
@@ -98,7 +118,7 @@ func yaesuDownload(ctx context.Context, m *genModel, port string, o *yaesuOpt, p
 	}
 	if !bytes.HasPrefix(data, []byte(o.model)) {
 		for _, x := range genModels {
-			if xo, ok := yaesuOptOf(x); ok && bytes.HasPrefix(data, []byte(xo.model)) {
+			if xo, ok := yaesuOptOf(x); ok && xo.model != "" && bytes.HasPrefix(data, []byte(xo.model)) {
 				return nil, rErr("la radio è un altro modello: apri la scheda «%s»", x.Name)
 			}
 		}
@@ -107,10 +127,38 @@ func yaesuDownload(ctx context.Context, m *genModel, port string, o *yaesuOpt, p
 	if err := s.send([]byte{0x06}); err != nil {
 		return nil, err
 	}
+	// 4.37: blocchi intermedi, ognuno confermato con 06. Con il cavo a un filo
+	// la conferma appena inviata torna indietro prima dei dati: se il blocco
+	// comincia con 06 si guarda se arriva un byte in più (la radio, finché non
+	// riceve la conferma, non manda altro)
+	lens := o.blockLens()
+	for _, n := range lens[1 : len(lens)-1] {
+		b := readUpTo(ctx, s.p, n, 2*time.Second)
+		if ctx.Err() != nil {
+			return nil, errCancelled
+		}
+		if len(b) == n && b[0] == 0x06 {
+			if x := readUpTo(ctx, s.p, 1, 300*time.Millisecond); len(x) == 1 {
+				b = append(b[1:], x[0])
+			}
+			if ctx.Err() != nil {
+				return nil, errCancelled
+			}
+		}
+		if len(b) < n {
+			return nil, rErr("lettura incompleta: %d byte su %d", len(data)+len(b), o.size)
+		}
+		data = append(data, b...)
+		prog(len(data), o.size, "Lettura…")
+		if err := s.send([]byte{0x06}); err != nil {
+			return nil, err
+		}
+	}
+	got := len(data)
 	// con il cavo a un filo il 06 torna indietro prima dei dati: in quel caso
 	// arrivano size+1 byte, e il primo si scarta
-	rest := make([]byte, 0, o.size-o.head+1)
-	want := o.size - o.head
+	rest := make([]byte, 0, o.size-got+1)
+	want := o.size - got
 	for len(rest) < want+1 {
 		to := 2 * time.Second
 		if len(rest) >= want {
@@ -131,13 +179,13 @@ func yaesuDownload(ctx context.Context, m *genModel, port string, o *yaesuOpt, p
 		if len(b) < n {
 			break
 		}
-		prog(o.head+len(rest), o.size, "Lettura…")
+		prog(got+len(rest), o.size, "Lettura…")
 	}
 	if len(rest) == want+1 && rest[0] == 0x06 {
 		rest = rest[1:]
 	}
 	if len(rest) < want {
-		return nil, rErr("lettura incompleta: %d byte su %d", o.head+len(rest), o.size)
+		return nil, rErr("lettura incompleta: %d byte su %d", got+len(rest), o.size)
 	}
 	data = append(data, rest[:want]...)
 	if !yaesuSumsOK(o, data) {
@@ -159,31 +207,60 @@ func yaesuUpload(ctx context.Context, m *genModel, port string, o *yaesuOpt, img
 	}
 	defer s.p.Close()
 	prog(0, o.size, "Collegamento con la radio…")
-	if err := s.send(img[:o.head]); err != nil {
-		return err
-	}
 	noAck := genFail("Collegamento", rErr("la radio non conferma i dati: mettila in modalità «CLONE» e premi %s prima di avviare la scrittura", o.recv))
-	b := readUpTo(ctx, s.p, 1, 2*time.Second)
-	if ctx.Err() != nil {
-		return errCancelled
-	}
-	if len(b) == 0 {
-		return noAck
-	}
-	if b[0] != 0x06 {
-		// eco del cavo, poi la conferma
-		b = readUpTo(ctx, s.p, o.head, 2*time.Second)
+	// 4.37: tutti i blocchi tranne l'ultimo vanno confermati dalla radio
+	lens := o.blockLens()
+	pos := 0
+	for _, n := range lens[:len(lens)-1] {
+		if o.byteEcho {
+			if err := yaesuSendEcho(ctx, s, img[pos:pos+n]); err != nil {
+				if pos == 0 && err != errCancelled {
+					return noAck
+				}
+				return err
+			}
+		} else if err := s.send(img[pos : pos+n]); err != nil {
+			return err
+		}
+		b := readUpTo(ctx, s.p, 1, 2*time.Second)
 		if ctx.Err() != nil {
 			return errCancelled
 		}
-		if len(b) < o.head {
+		if len(b) == 0 {
 			return noAck
 		}
-		if b[len(b)-1] != 0x06 {
-			return rErr("risposta inattesa della radio (%02X) durante la scrittura", b[len(b)-1])
+		if b[0] != 0x06 || (img[pos] == 0x06 && !o.byteEcho) {
+			// eco del cavo, poi la conferma. Se il blocco comincia con 06 il byte
+			// letto può essere l'eco oppure già la conferma: si guarda se arriva altro
+			to := 2 * time.Second
+			if b[0] == 0x06 {
+				to = 300 * time.Millisecond
+			}
+			b2 := readUpTo(ctx, s.p, n, to)
+			if ctx.Err() != nil {
+				return errCancelled
+			}
+			if b[0] != 0x06 || len(b2) > 0 {
+				if len(b2) < n {
+					return noAck
+				}
+				if b2[len(b2)-1] != 0x06 {
+					return rErr("risposta inattesa della radio (%02X) durante la scrittura", b2[len(b2)-1])
+				}
+			}
 		}
+		pos += n
+		prog(pos, o.size, "Scrittura…")
 	}
-	for a := o.head; a < o.size; a += o.chunk {
+	if o.byteEcho {
+		// FT-50: anche l'ultimo blocco un byte alla volta; la radio non lo conferma
+		if err := yaesuSendEcho(ctx, s, img[pos:o.size]); err != nil {
+			return err
+		}
+		prog(o.size, o.size, "Scrittura completata")
+		return nil
+	}
+	for a := pos; a < o.size; a += o.chunk {
 		e := a + o.chunk
 		if e > o.size {
 			e = o.size
@@ -202,5 +279,29 @@ func yaesuUpload(ctx context.Context, m *genModel, port string, o *yaesuOpt, img
 		return errCancelled
 	}
 	prog(o.size, o.size, "Scrittura completata")
+	return nil
+}
+
+// yaesuSendEcho (4.37, FT-50): invio un byte alla volta; la radio rimanda
+// indietro ogni byte ricevuto e il byte successivo parte solo dopo l'eco
+func yaesuSendEcho(ctx context.Context, s *rawSess, data []byte) error {
+	for _, c := range data {
+		if err := s.sleep(yaesuByteDelay[0]); err != nil {
+			return err
+		}
+		if err := s.send([]byte{c}); err != nil {
+			return err
+		}
+		if err := s.sleep(yaesuByteDelay[1]); err != nil {
+			return err
+		}
+		b := readUpTo(ctx, s.p, 1, time.Second)
+		if ctx.Err() != nil {
+			return errCancelled
+		}
+		if len(b) == 0 {
+			return rErr("la radio non rimanda indietro i dati: la scrittura si è fermata")
+		}
+	}
 	return nil
 }

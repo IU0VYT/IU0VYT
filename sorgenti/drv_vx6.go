@@ -5,7 +5,7 @@
 // ALCUNA GARANZIA. Testo della licenza in LICENSE.txt; autori e licenze di terzi
 // in AUTORI_E_LICENZE.txt.
 // Parti derivate da CHIRP (https://chirpmyradio.com, GNU GPL), driver:
-// vx6.py, vx3.py (4.15).
+// vx6.py, vx3.py (4.15), vx2.py (4.37).
 // Modifiche: riscritte in Go e adattate a IU0VYT Flash da Daniele "IU0VYT" Bonifazi,
 // novembre 2026 (elenco delle modifiche per versione in CHANGELOG.txt).
 
@@ -40,7 +40,155 @@ type vxOpt struct {
 	chars  string // caratteri nell'ordine dei codici (0 = codice senza carattere)
 	narrow string // campo della deviazione ridotta
 	vx3    bool   // VX-3: due potenze, quattro modi dei toni, canale nuovo azzerato
+	// vx2 (4.37): VX-2, come la VX-3 ma con il canale nuovo tutto a zero, i campi
+	// sconosciuti azzerati a ogni scrittura (come CHIRP) e il modo «automatico»
+	vx2 bool
 }
+
+// 4.37: Yaesu VX-2R: 1000 canali con nomi di 6 caratteri; copia in tre blocchi
+// (10, 8 e 32577 byte)
+const vx2Format = `
+#seekto 0x7F52;
+u8 checksum;
+
+#seekto 0x005A;
+u8  banksoff1;
+#seekto 0x00DA;
+u8  banksoff2;
+
+#seekto 0x0068;
+u16 prioritychan1;
+
+#seekto 0x00E8;
+u16 prioritychan2;
+
+#seekto 0x110;
+struct {
+    u8  unk1;
+    u8  unk2;
+    u8  nfm_sql;
+    u8  wfm_sql;
+    u8  rfsql;
+    u8  vfomode:1,
+        cwid_en:1,
+        scan_lamp:1,
+        unk3:1,
+        ars:1,
+        beep:1,
+        split:1,
+        dtmfmode:1;
+    u8  busyled:1,
+        unk4:2,
+        bclo:1,
+        edgebeep:1,
+        unk5:2,
+        txsave:1;
+    u8  unk6:2,
+        smartsearch:1,
+        unk7:1,
+        artsinterval:1,
+        unk8:1,
+        hmrv:1,
+        moni_tcall:1;
+    u8  unk9:5,
+        dcsrev:1,
+        unk10:1,
+        mwmode:1;
+    u8  internet_mode:1,
+        internet_key:1,
+        wx_alert:1,
+        unk11:2,
+        att:1,
+        unk12:2;
+    u8  lamp;
+    u8  dimmer;
+    u8  rxsave;
+    u8  resume;
+    u8  chcounter;
+    u8  openmsgmode;
+    u8  openmsg[6];
+    u8  cwid[16];
+    u8  unk13[16];
+    u8  artsbeep;
+    u8  bell;
+    u8  apo;
+    u8  tot;
+    u8  lock;
+    u8  mymenu;
+    u8  unk14[4];
+    u8  emergmode;
+
+} settings;
+
+#seekto 0x0192;
+struct {
+    u8  digits[16];
+}   dtmf[9];
+
+#seekto 0x016A;
+struct {
+    u16 in_use;
+} bank_used[20];
+
+#seekto 0x0396;
+struct {
+    u8 name[6];
+} wxchannels[10];
+
+#seekto 0x05C2;
+struct {
+  u16 channels[100];
+} banks[20];
+
+#seekto 0x1562;
+struct {
+  u8 even_pskip:1,
+     even_skip:1,
+     even_valid:1,
+     even_masked:1,
+     odd_pskip:1,
+     odd_skip:1,
+     odd_valid:1,
+     odd_masked:1;
+} flags[500];
+
+struct mem_struct {
+  u8   unknown1:2,
+       txnarrow:1,
+       clk:1,
+       unknown2:4;
+  u8   mode:2,
+       duplex:2,
+       tune_step:4;
+  bbcd freq[3];
+  u8   power:2,
+       unknown3:4,
+       tmode:2;
+  u8   name[6];
+  bbcd offset[3];
+  u8   unknown4:2,
+       tone:6;
+  u8   unknown5:1,
+       dcs:7;
+  u8   unknown6;
+};
+
+#seekto 0x17C2;
+struct mem_struct memory[1000];
+struct {
+    struct mem_struct lower;
+    struct mem_struct upper;
+} pms[50];
+
+
+#seekto 0x03D2;
+struct mem_struct home[12];
+
+#seekto 0x04E2;
+struct mem_struct vfo[12];
+
+
+`
 
 const vx6Format = `
 #seekto 0x1ECA;
@@ -126,6 +274,8 @@ var (
 		send: "[BAND]", recv: "[V/M] («-WAIT-»)"}
 	vx3Clone = &yaesuOpt{model: "AH028", size: 32587, head: 10, chunk: 32, sums: [][3]int{{0x0000, 0x7F49, 0x7F4A}},
 		send: "[BAND]", recv: "[V/M] («-WAIT-»)"}
+	vx2Clone = &yaesuOpt{model: "AH015", size: 32595, head: 10, blocks: []int{10, 8, 32577}, chunk: 8,
+		sums: [][3]int{{0x0000, 0x7F51, 0x7F52}}, send: "[BAND]", recv: "[V/M] («CLONE WAIT»)"}
 )
 
 // caratteri delle radio nell'ordine dei codici; «u» e «o» sono simboli che non si
@@ -161,6 +311,12 @@ func init() {
 			Bands:  []band{{500000, 999000000}}, Narrow: true, HasScan: true, NoTxOff: true, DCS: dtcsCodes, Baud: 19200, Fam: vx3Fam{},
 			Opt:   &vxOpt{clone: vx3Clone, format: vx3Format, chars: vx3Chars, narrow: "txnarrow", vx3: true},
 			Notes: vxNote + vxCloneNote + ysfNote},
+		&genModel{ID: "ys-vx2", Vendor: "Yaesu", Model: "VX-2", RClass: "VX2Radio", Name: "Yaesu VX-2R / VX-2E",
+			Slots: 1000, First: 1, NameMax: 6, Charset: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ +-/[](){}_*,'|",
+			Powers: []genPower{{"Alta 1,5 W", 1.5, 0}, {"Bassa 0,1 W", 0.1, 2}},
+			Bands:  []band{{500000, 999000000}}, Narrow: true, HasScan: true, NoTxOff: true, DCS: dtcsCodes, Baud: 19200, Fam: vx3Fam{},
+			Opt:   &vxOpt{clone: vx2Clone, format: vx2Format, chars: vx3Chars, narrow: "txnarrow", vx3: true, vx2: true},
+			Notes: yaesuNote(1000, 6, 19200) + yaesuCloneHow("MIC/SP", "[F/W]", "[BAND]", "[V/M]") + ysfNote},
 	)
 }
 
@@ -448,12 +604,14 @@ func (f vxFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	// modo: resta quello del canale se la frequenza non cambia, altrimenti segue la frequenza
 	mode := icx90Mode(c.Rx) // 0 FM, 1 FM larga, 2 AM
 	mode = []int64{0, 2, 1}[mode]
-	if valid && oldRx == c.Rx && (oldMode == 1 || oldMode == 2) {
+	if valid && oldRx == c.Rx && (oldMode == 1 || oldMode == 2 || oldMode == 3 && o.vx2) {
 		mode = oldMode
 	}
 	// da qui in poi nessun errore: il canale si scrive tutto o per niente
 	if !valid {
-		if o.vx3 {
+		if o.vx2 {
+			r.Fill(img, 0)
+		} else if o.vx3 {
 			r.Fill(img, 0)
 			r.F("unknown5").SetInt(img, 0x0D)
 			r.F("unknown7b").SetInt(img, 1)
@@ -514,6 +672,12 @@ func (f vxFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		enc[0] |= 0x80
 	}
 	r.F("name").SetRaw(img, enc)
+	if o.vx2 {
+		// come CHIRP: i campi sconosciuti si azzerano a ogni scrittura
+		for _, k := range []string{"unknown1", "unknown2", "unknown3", "unknown4", "unknown5", "unknown6"} {
+			r.F(k).SetInt(img, 0)
+		}
+	}
 	return nil // la somma di controllo si aggiorna quando si scrive nella radio (come CHIRP)
 }
 

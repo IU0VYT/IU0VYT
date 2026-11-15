@@ -6,6 +6,24 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.37.0 (13/11/2026)
+-------------------
+- Radio genggam Yaesu: lapan model baharu daripada pemacu CHIRP, ditulis semula dari
+  awal dan dibandingkan dengan CHIRP. VX-5R (tiga jalur, 220 saluran, nama 8 aksara) dan
+  VX-7R (empat jalur, 450 saluran, nama 8 aksara, nada berbeza untuk penghantaran dan
+  penerimaan): saluran. VX-2R (1000 saluran), FT-50R (100 saluran) dan VX-150 (VHF, 199
+  saluran; kuasa dipilih pada radio): saluran dan tetapan. VX-8R, VX-8DR dan VX-8GE (900
+  saluran, nama 16 aksara): saluran dan tetapan (APRS, imbasan, DTMF, paparan).
+- Seperti radio Yaesu yang lain, salinan dimulakan dari radio (mod «CLONE»): radio ini
+  tidak disoal oleh «Kenal pasti», tab dipilih secara manual. Perbezaan yang
+  disengajakan daripada CHIRP: pada VX-8, mengubah saluran tidak mengeluarkannya
+  daripada bank (hanya apabila dipadam), tetapan «kelantangan VFO B» tidak ditawarkan
+  dan tanda panggilan APRS menerima huruf, digit dan ruang; pada VX-150 hasil tambah
+  semak juga disahkan semasa membaca.
+- Belum dibuat: Yaesu VX-1. Tiada satu pun radio ini diuji pada peranti sebenar: baca
+  dahulu, tulis kemudian. Galeri: 645 model daripada 52 jenama (591 dengan saluran, 502
+  dengan tetapan).
+
 4.36.0 (13/11/2026)
 -------------------
 - Versi pembetulan untuk «Kenal pasti» dan pengenalpastian automatik, selepas ujian 4.35

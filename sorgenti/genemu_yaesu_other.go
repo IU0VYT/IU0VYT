@@ -269,6 +269,19 @@ func (e *yaesuEmu) serve(p Port) error {
 		}
 	}
 	get := func(n int) ([]byte, error) {
+		if e.o.byteEcho && !e.noEcho {
+			// FT-50: ogni byte torna indietro appena arriva
+			var out []byte
+			for len(out) < n {
+				b, err := emuRead(p, 1)
+				if err != nil {
+					return nil, err
+				}
+				p.Write(b)
+				out = append(out, b[0])
+			}
+			return out, nil
+		}
 		b, err := emuRead(p, n)
 		if err == nil && !e.noEcho {
 			p.Write(b)
@@ -282,17 +295,24 @@ func (e *yaesuEmu) serve(p Port) error {
 		if err != errTimeout {
 			return nil
 		}
-		// invio: primo blocco, conferma, tutto il resto
+		// invio: ogni blocco tranne l'ultimo aspetta la conferma
 		src := e.image()
-		p.Write(src[:e.o.head])
-		b, err := get(1)
-		if err != nil {
-			return err
+		lens := e.o.blockLens()
+		pos := 0
+		for k, n := range lens {
+			p.Write(src[pos : pos+n])
+			pos += n
+			if k == len(lens)-1 {
+				break
+			}
+			b, err := get(1)
+			if err != nil {
+				return err
+			}
+			if b[0] != 0x06 {
+				return fmt.Errorf("attesa la conferma, ricevuto %02X", b[0])
+			}
 		}
-		if b[0] != 0x06 {
-			return fmt.Errorf("attesa la conferma, ricevuto %02X", b[0])
-		}
-		p.Write(src[e.o.head:])
 		return nil
 	}
 	// ricezione
@@ -308,6 +328,16 @@ func (e *yaesuEmu) serve(p Port) error {
 		return fmt.Errorf("intestazione %q", buf[:5])
 	}
 	p.Write([]byte{0x06})
+	// blocchi intermedi, ognuno confermato
+	lens := e.o.blockLens()
+	for _, n := range lens[1 : len(lens)-1] {
+		b, err := get(n)
+		if err != nil {
+			return err
+		}
+		buf = append(buf, b...)
+		p.Write([]byte{0x06})
+	}
 	for len(buf) < e.o.size {
 		n := e.o.chunk
 		if e.o.size-len(buf) < n {
@@ -433,4 +463,20 @@ func (e *ftxEmu) serve(p Port) error {
 	e.writes++
 	e.mu.Unlock()
 	return nil
+}
+
+// 4.37: VX-5, VX-7, FT-50 (copia in più blocchi confermati) e VX-150 (scambio
+// della FT-7800)
+func (f vx5Fam) emu(m *genModel, img []byte) genEmu  { return newYaesuEmu(f.yaesu(m), img) }
+func (f vx7Fam) emu(m *genModel, img []byte) genEmu  { return newYaesuEmu(f.yaesu(m), img) }
+func (f ft50Fam) emu(m *genModel, img []byte) genEmu { return newYaesuEmu(f.yaesu(m), img) }
+
+func (vx150Fam) emu(m *genModel, img []byte) genEmu {
+	o := m.Opt.(*ftxOpt)
+	mem := make([]byte, o.size)
+	copy(mem, img)
+	// la radio manda sempre la somma di controllo giusta (quella dell'immagine
+	// di prova di CHIRP non lo è: CHIRP in lettura non la controlla)
+	mem[o.size-1] = ftxSum(mem)
+	return &ftxEmu{o: o, img: mem}
 }
