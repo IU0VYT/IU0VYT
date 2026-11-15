@@ -7,7 +7,42 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
-4.39.0 (13/11/2026)
+4.40.0 (14/11/2026)
+-------------------
+- Contrôle rapide avec l'onglet déjà ouvert, étendu à 61 autres modèles et à la Bajeton
+  BJ-8300. Dans la recherche automatique, quand l'onglet d'une radio est déjà ouvert,
+  toute la mémoire n'est plus relue : pour Icom, Kenwood TH-F6 / TH-G71 / TH-D7 / TH-K2
+  et Quansheng UV-K5 et dérivées, le programme pose une question à laquelle la radio
+  répond en fonctionnement normal ; pour Bajeton BJ-9000 / BJ-7800 / BJ-7700 / BJ-8300,
+  Radtel RT-900 / RT-950 / RT-470 et les radios ayant la même mémoire, il entre en
+  programmation, lit le premier bloc et envoie la commande de sortie. Il n'est utilisé
+  que dans la recherche automatique et seulement si l'onglet de ce modèle précis est
+  ouvert ; si la radio répond mais n'est pas confirmée, le contrôle rapide est abandonné
+  pour ce modèle jusqu'au redémarrage du programme ; aucune attente envers la radio
+  n'est raccourcie. Pour Baofeng UV-5R et dérivées, BF-888S, UV-17 Pro, TIDRADIO TD-H8
+  et toutes les autres, la lecture complète reste, car leur protocole n'a pas d'étape
+  d'identification dont on sache qu'elle est sûre à elle seule.
+- Alinco (nouvelle marque), d'après alinco.py de CHIRP, réécrit de zéro et comparé à
+  CHIRP. DJ-596, DJ-175, DR-135T, DR-235T, DR-435T, DR-03T, DR-06T : 100 canaux (0 à 99)
+  avec des noms de 7 caractères, 9600 bauds. DJ-G7EG / DJ-G7T : 1000 canaux (0 à 999)
+  avec des noms de 16 caractères, 57600 bauds (19200 si la radio est réglée ainsi),
+  firmware 4_10 ou ultérieur, mode copie avec [MONI] maintenu et trois appuis sur [PTT].
+  Canaux uniquement. La réponse est lue ligne par ligne : le programme fonctionne donc
+  aussi bien avec le câble à un fil qui renvoie les données qu'avec les câbles qui ne le
+  font pas (CHIRP a besoin de cet écho) ; les octets envoyés à la radio sont les mêmes
+  que ceux de CHIRP. Dans « Identifier », les Alinco sont essayées après toutes les
+  autres : la recherche des autres radios ne change pas.
+- Une erreur de CHIRP n'est pas reprise (DJ-175) : CHIRP garde l'exclusion du balayage
+  dans les octets à partir de 0x130, qui dans cette radio sont le nom d'une des mémoires
+  hors liste, et en change un bit à chaque canal écrit ; ici ces octets ne sont pas
+  touchés et la DJ-175 n'a pas de colonne de balayage. Autres différences voulues : les
+  valeurs que la radio ne peut pas mémoriser sont refusées au lieu d'être tronquées ;
+  sur la DJ-G7 la bande aviation est écrite en AM et la radiodiffusion en FM large.
+  Aucune Alinco n'a été essayée sur un appareil réel : lire d'abord, écrire ensuite. À
+  essayer sur de vraies radios : Bajeton BJ-9000 et BJ-8300 avec l'onglet ouvert (après
+  le contrôle, la radio doit revenir au fonctionnement normal).
+
+4.39.0 (14/11/2026)
 -------------------
 - Icom : les portatifs de CHIRP qui manquaient encore (et un mobile de la même famille),
   réécrits de zéro et comparés à CHIRP. ID-80H et ID-880H : 1000 canaux (0 à 999) avec
@@ -23,7 +58,7 @@ chaque version sont aussi résumées dans LISEZMOI.txt.
   tronquées, le saut « P » du balayage est conservé, la bande aviation est en AM. Aucune
   de ces radios n'a été essayée sur un appareil réel : lire d'abord, écrire ensuite.
 
-4.38.0 (13/11/2026)
+4.38.0 (14/11/2026)
 -------------------
 - Version corrective de l'identification, après les essais des 4.36 / 4.37 sur de vraies
   radios : la Bajeton BJ-9000 se bloquait de temps en temps, surtout à la première
@@ -37,7 +72,7 @@ chaque version sont aussi résumées dans LISEZMOI.txt.
   BJ-9000 se bloque encore, utilisez « Enregistrer le diagnostic de l'identification »
   et envoyez le fichier. Aucune nouvelle radio dans cette version.
 
-4.37.0 (13/11/2026)
+4.37.0 (14/11/2026)
 -------------------
 - Portatifs Yaesu : huit nouveaux modèles issus des pilotes de CHIRP, réécrits de zéro
   et comparés à CHIRP. VX-5R (tribande, 220 canaux, noms de 8 caractères) et VX-7R
@@ -56,7 +91,7 @@ chaque version sont aussi résumées dans LISEZMOI.txt.
   lire d'abord, écrire ensuite. Galerie : 645 modèles de 52 marques (591 avec canaux,
   502 avec réglages).
 
-4.36.0 (13/11/2026)
+4.36.0 (14/11/2026)
 -------------------
 - Version corrective pour « Identifier » et l'identification automatique, après les
   essais de la 4.35 sur de vraies radios (Bajeton BJ-9000 et BJ-8300 en ordre ; Baofeng

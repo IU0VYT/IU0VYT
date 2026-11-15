@@ -7,7 +7,43 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
-4.39.0 (13.11.2026)
+4.40.0 (14.11.2026)
+-------------------
+- Kurzprüfung bei bereits offenem Reiter, erweitert auf 61 weitere Modelle und das
+  Bajeton BJ-8300. Ist bei der automatischen Suche der Reiter eines Funkgeräts schon
+  offen, wird nicht mehr der ganze Speicher neu gelesen: bei Icom, Kenwood TH-F6 /
+  TH-G71 / TH-D7 / TH-K2 und Quansheng UV-K5 und Abkömmlingen stellt das Programm eine
+  Frage, die das Gerät im Normalbetrieb beantwortet; bei Bajeton BJ-9000 / BJ-7800 /
+  BJ-7700 / BJ-8300, Radtel RT-900 / RT-950 / RT-470 und den Geräten mit demselben
+  Speicher geht es in den Programmiermodus, liest den ersten Block und sendet den Befehl
+  zum Verlassen. Sie wird nur bei der automatischen Suche benutzt und nur, wenn der
+  Reiter genau dieses Modells offen ist; antwortet das Gerät, wird aber nicht bestätigt,
+  entfällt die Kurzprüfung für dieses Modell bis zum Neustart des Programms; keine
+  Wartezeit gegenüber dem Funkgerät wird verkürzt. Für Baofeng UV-5R und Abkömmlinge,
+  BF-888S, UV-17 Pro, TIDRADIO TD-H8 und alle anderen bleibt das vollständige Lesen,
+  weil ihr Protokoll keinen Erkennungsschritt hat, der für sich allein als sicher
+  bekannt ist.
+- Alinco (neue Marke), aus alinco.py von CHIRP, von Grund auf neu geschrieben und mit
+  CHIRP verglichen. DJ-596, DJ-175, DR-135T, DR-235T, DR-435T, DR-03T, DR-06T: 100
+  Kanäle (0 bis 99) mit 7-stelligen Namen, 9600 Baud. DJ-G7EG / DJ-G7T: 1000 Kanäle (0
+  bis 999) mit 16-stelligen Namen, 57600 Baud (19200, wenn das Gerät so eingestellt
+  ist), Firmware 4_10 oder neuer, Klonmodus mit gedrückter Taste [MONI] und dreimal
+  [PTT]. Nur Kanäle. Die Antwort wird zeilenweise gelesen: das Programm arbeitet daher
+  sowohl mit dem Eindrahtkabel, das die Daten zurücksendet, als auch mit Kabeln, die das
+  nicht tun (CHIRP braucht dieses Echo); die an das Gerät gesendeten Bytes sind
+  dieselben wie bei CHIRP. Bei «Identifizieren» werden die Alinco-Geräte nach allen
+  anderen versucht, die Suche nach den anderen Geräten bleibt also unverändert.
+- Ein CHIRP-Fehler wird nicht übernommen (DJ-175): CHIRP legt den Suchlauf-Ausschluss in
+  den Bytes ab 0x130 ab, die bei diesem Gerät der Name eines der Speicher außerhalb der
+  Kanalliste sind, und ändert bei jedem geschriebenen Kanal ein Bit davon; hier bleiben
+  diese Bytes unberührt, und das DJ-175 hat keine Suchlauf-Spalte. Weitere gewollte
+  Unterschiede: Werte, die das Funkgerät nicht speichern kann, werden abgelehnt statt
+  abgeschnitten; beim DJ-G7 wird das Flugfunkband als AM und der Rundfunk als Breit-FM
+  geschrieben. Kein Alinco-Gerät wurde an einem echten Gerät getestet: zuerst lesen,
+  dann schreiben. An echten Geräten zu prüfen: Bajeton BJ-9000 und BJ-8300 mit offenem
+  Reiter (nach der Prüfung muss das Gerät in den Normalbetrieb zurückkehren).
+
+4.39.0 (14.11.2026)
 -------------------
 - Icom: die noch fehlenden Handfunkgeräte aus CHIRP (und ein Mobilgerät derselben
   Familie), von Grund auf neu geschrieben und mit CHIRP verglichen. ID-80H und ID-880H:
@@ -25,7 +61,7 @@ Version sind auch in LIESMICH.txt zusammengefasst.
   Keines dieser Funkgeräte wurde an einem echten Gerät getestet: zuerst lesen, dann
   schreiben.
 
-4.38.0 (13.11.2026)
+4.38.0 (14.11.2026)
 -------------------
 - Korrekturversion der Identifizierung nach den Tests der 4.36 / 4.37 an echten
   Funkgeräten: Das Bajeton BJ-9000 blieb gelegentlich hängen, vor allem bei der ersten
@@ -39,7 +75,7 @@ Version sind auch in LIESMICH.txt zusammengefasst.
   Vermutung. Bleibt das BJ-9000 weiterhin hängen, «Diagnose der Identifizierung
   speichern» verwenden und die Datei senden. Keine neuen Funkgeräte in dieser Version.
 
-4.37.0 (13.11.2026)
+4.37.0 (14.11.2026)
 -------------------
 - Yaesu-Handfunkgeräte: acht neue Modelle aus den CHIRP-Treibern, von Grund auf neu
   geschrieben und mit CHIRP verglichen. VX-5R (Triband, 220 Kanäle, Namen aus 8 Zeichen)
@@ -58,7 +94,7 @@ Version sind auch in LIESMICH.txt zusammengefasst.
   getestet: zuerst lesen, dann schreiben. Galerie: 645 Modelle von 52 Marken (591 mit
   Kanälen, 502 mit Einstellungen).
 
-4.36.0 (13.11.2026)
+4.36.0 (14.11.2026)
 -------------------
 - Korrekturversion für «Identifizieren» und die automatische Erkennung, nach den Tests
   der 4.35 an echten Funkgeräten (Bajeton BJ-9000 und BJ-8300 in Ordnung; Baofeng K67

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.39.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.40.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,16 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.40.0 :
+- Recherche automatique plus rapide quand l'onglet de la radio est déjà ouvert : le
+  contrôle rapide (jusqu'ici réservé à la Baofeng K67 Pro) vaut maintenant aussi pour
+  les Icom, les Kenwood TH-F6 / TH-G71 / TH-D7 / TH-K2, les Quansheng UV-K5 et dérivées,
+  les Bajeton BJ-9000, BJ-7800, BJ-7700 et BJ-8300, les Radtel RT-900 / RT-950 / RT-470
+  et les radios ayant la même mémoire. Pour les autres, la lecture complète reste.
+- Nouvelle marque : Alinco. Portatifs DJ-596, DJ-175, DJ-G7EG et DJ-G7T ; mobiles
+  DR-135T, DR-235T, DR-435T, DR-03T et DR-06T. Canaux uniquement. Fonctionne aussi avec
+  les câbles qui ne renvoient pas les données.
+- Galerie : 658 modèles de 53 marques (604 avec canaux, 502 avec réglages).
 Nouveautés de la 4.39.0 :
 - Quatre nouvelles radios Icom : ID-80H (portatif D-STAR), ID-880H (mobile D-STAR),
   IC-W32A et IC-W32E (portatifs bibandes à deux moitiés séparées : les canaux 0 à 99

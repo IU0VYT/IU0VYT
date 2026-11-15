@@ -2164,6 +2164,13 @@ cea195a0	{0} Palmare bibanda: 100 canali con nomi di 4 caratteri.
 16a78f4c	Palmare con APRS: 900 canali con nomi di 16 caratteri. La radio dichiara il suo modello: se è un'altra VX-8 il programma lo dice.
 fb76b472	Palmare bibanda con due metà separate: 100 canali VHF e 100 canali UHF con nomi di 8 caratteri, in una lista sola (da 0 a 99 VHF, da 100 a 199 UHF).
 476c4adb	1000 canali con nomi di 8 caratteri, analogici o digitali D-STAR (colonna «Modo»). La radio dichiara il suo modello: se è l'altro il programma lo dice.
+632eb841	Alinco
+88daa020	Sito Alinco
+af248e2c	100 canali con nomi di 7 caratteri.
+2d41ac44	Radio veicolare:{0}
+572e696a	Palmare bibanda 144/430 MHz:{0}
+63c1f0e9	Palmare VHF:{0}
+7db230d8	Palmare tribanda 144/430/1200 MHz con ricevitore a larga banda: 1000 canali con nomi di 16 caratteri. Serve il firmware 4_10 o successivo.
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -2506,10 +2513,31 @@ dc9f2da1	Tone
 8a9e2321	Dopo il canale 960 la memoria della radio contiene dati che non sono canali: la radio sembra avere il firmware precedente (960 canali in 15 zone da 64). Per questa radio usa la scheda «Bajeton 8300» (file .dat): da questa scheda la scrittura viene rifiutata.
 0adf3cd9	il file è di una radio non gestita da questo programma ({0} {1}, classe {2} di CHIRP)
 9ff4ee2f	formato non riconosciuto: il file non è un'immagine .img di una radio gestita
-38b033e7	AnyTone {0}
-486aeec5	Alta 5 W
-c7417b5c	Media 2 W
+f6f88092	Cavo Alinco ERW-4C / ERW-7 (o compatibile) nella presa dell'altoparlante.
+49e50118	la radio non ha questa combinazione di toni (subtono in trasmissione, lo stesso subtono o lo stesso codice DCS nei due versi; mai codici invertiti)
+90a4ed8d	Unica
+23948835	100 canali (da 0 a 99) con nomi di 7 caratteri (lettere maiuscole, cifre e spazio). {0}9600 baud; la radio va accesa normalmente. La radio non conferma i blocchi scritti: il controllo è la rilettura dei canali dopo la scrittura. DCS con lo stesso codice nei due versi, mai invertito. {1}Driver di CHIRP.
+ac3a8d9f	Alinco {0}
+2eeabfb5	La potenza non è memorizzata nel canale.
 bc60395f	Bassa 1 W
+486aeec5	Alta 5 W
+06ab8767	Bassa 0,5 W
+c7417b5c	Media 2 W
+dc3a8f63	L'esclusione dalla scansione non si gestisce da qui.
+d9bcac02	la radio non può memorizzare la frequenza {0} MHz
+29603ad2	la radio non può memorizzare uno scostamento di {0} Hz
+d0a1c599	scostamento fuori dai limiti della radio
+1ac8a309	la radio non ha riconosciuto il modello (risposta «{0}»): controlla di aver scelto la radio giusta
+e368c03f	Lettura del blocco 0x{0}
+e70d06b5	lettura del blocco 0x{0}: la radio ha risposto per un altro indirizzo ({1})
+fd062fcf	lettura del blocco 0x{0} non riuscita (risposta «{1}»)
+4e85e533	immagine della memoria incompleta ({0} byte)
+b8a90ea7	scrittura del blocco 0x{0}: i dati tornati dal cavo sono diversi da quelli inviati (disturbi o cavo non adatto). Ripeti la scrittura
+652f6cec	1000 canali (da 0 a 999) con nomi di 16 caratteri. Serve il firmware 4_10 o successivo. Per la copia: spegni la radio, collega il cavo, riaccendila e, tenendo premuto [MONI], premi e rilascia tre volte [PTT]. 57600 baud (se la radio è impostata a 19200 il programma se ne accorge; si cambia girando la manopola con [MONI] premuto). La potenza non è memorizzata nel canale. Il modo segue la frequenza: AM in banda aerea, FM larga per la radiodiffusione. DCS con lo stesso codice nei due versi, mai invertito. Driver di CHIRP.
+136cbe01	la radio non ha questa combinazione di toni (subtono in trasmissione o nei due versi, lo stesso codice DCS nei due versi; mai codici invertiti)
+6e71b0e3	Scrittura del blocco 0x{0}
+7d85b321	la radio non ha accettato il blocco 0x{0} (risposta «{1}»)
+38b033e7	AnyTone {0}
 a8e794e8	200 canali con nomi di 6 caratteri, tutti i 512 codici DCS e il tono 62,5 Hz. Blocco del canale occupato e squelch del canale si conservano. Driver di CHIRP (sperimentale).
 63a20956	tono {0} non disponibile su questa radio
 cf192ad2	codice DCS {0} non valido
@@ -2552,7 +2580,6 @@ fdeb9e08	Baofeng UV-S9X3
 765bdeea	Baofeng UV-5RX (5RX)
 2365e196	Baofeng UV-9R / UV-9R Plus
 908e346d	Media 1 W
-06ab8767	Bassa 0,5 W
 0c43eed1	Baofeng UV-6R
 dd195368	Baofeng UV-5RX3 / BTECH UV-5X3
 87fa8518	MTC UV-5R-3
@@ -2803,7 +2830,6 @@ d8f8cbdf	immagine della memoria non valida ({0} byte)
 73eb6bcc	la memoria di questa radio ({0} KiB) è diversa da quella da cui vengono i canali ({1} KiB): leggi prima questa radio
 b212ef93	Firmware della radio: {0}
 95f83ee1	Feidaxin {0}
-90a4ed8d	Unica
 fd9f6464	Accendi la radio con il cavo collegato. 99 canali senza nomi, senza potenza e banda per canale (sono impostazioni generali); blocco del canale occupato e scrambler si conservano. Driver di CHIRP (sperimentale).
 1886d1b4	la radio non è entrata in modalità di programmazione: controlla il cavo e la radio, poi riprova
 f4c6bc85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz*+-/@
@@ -2827,7 +2853,6 @@ f44f8eb2	IFT-25R
 a9d84203	identificativo della radio vuoto
 d58f256a	la radio è un altro modello ({0}): apri la scheda «{1}» o quella della stessa serie
 c477c1e6	la radio dichiara il sottotipo {0}: apri la scheda «{1}»
-6e71b0e3	Scrittura del blocco 0x{0}
 2d215726	[MONI] («WAIT»)
 da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
 450b47b8	Yaesu FT-50R
@@ -2835,7 +2860,6 @@ da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
 340754ea	Minima 0,1 W
 09707ee6	[PTT] + [DIAL]
 da70894a	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione, lo stesso subtono nei due versi, lo stesso codice DCS nei due versi)
-d9bcac02	la radio non può memorizzare la frequenza {0} MHz
 8280dc40	tono non disponibile su questa radio
 b0fe5157	la radio non può memorizzare questo scostamento fra ricezione e trasmissione ({0} MHz): non ha la trasmissione su una frequenza separata
 5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
@@ -2895,7 +2919,6 @@ b461bed9	PROGROMSHXU
 68fc69b6	Accendi la radio con il cavo collegato. Canali 0-127; in banda aerea (108-136 MHz) la radio riceve in AM. Driver di CHIRP della SenhaiX 8800 (famiglia Radioddity GA-510).
 58929230	risposta inattesa alla richiesta di programmazione ({0}): è il modello giusto?
 f3d3e59a	identificativo della radio incompleto
-4e85e533	immagine della memoria incompleta ({0} byte)
 8925b018	la radio ha rifiutato il blocco
 b5698865	GM-15Pro
 09d60e59	Baofeng GM-15 Pro
@@ -3010,16 +3033,13 @@ ead9e515	Icom IC-Q7A
 113e5d7d	la radio non ha i codici DCS
 bed9a66d	la radio non può memorizzare la frequenza {0} MHz (multipli di 5 o di 6,25 kHz)
 1dba35ec	la radio non può memorizzare uno scostamento di {0} Hz (multipli di 1 kHz)
-d0a1c599	scostamento fuori dai limiti della radio
 6ab5aa11	Icom IC-T7H
 ea02ff43	60 canali VHF/UHF (da 1 a 60) senza nome. {0}{1}{2}Driver di CHIRP.
 d1d50ce1	Icom IC-T8A
 3b3557f2	100 canali (da 0 a 99) sui 50, 144 e 430 MHz, con nomi di 4 caratteri. {0}{1}{2}Driver di CHIRP.
 66736872	La radio non ha il DCS.
-2eeabfb5	La potenza non è memorizzata nel canale.
 78ff8dbe	Il modo (FM, FM larga, AM) segue la frequenza.
 4a2dedfd	La copia è quella veloce (38400 baud dopo l'identificazione).
-29603ad2	la radio non può memorizzare uno scostamento di {0} Hz
 b3fa7827	Icom Inc.7C
 910c5b7a	Alta 5,5 W
 03a68a88	Icom IC-V80
@@ -4437,6 +4457,7 @@ e2c9334e	Bajeton BJ-8300 (BT-11)
 b7f429f1	Provo: {0}
 66fd240f	le informazioni lette dalla radio non sono valide
 4ec6c830	Lettura: {0}
+c16f2ebf	{0}: controllo breve non riuscito ({1}): si passa alla lettura normale
 416bef96	{0}: lettura fatta solo dell'eco del cavo, nessuna radio
 345e6166	Ricetrasmettitore analogico FM bibanda
 c7348b0b	K67 Pro (5RH Pro)
@@ -4453,6 +4474,8 @@ e1351ee8	Ricerca interrotta. Se la radio è rimasta in modalità programmazione,
 cf513052	nessuna radio identificata da aprire
 a7f52778	modello non compatibile con la radio identificata
 a8e9c0ce	la memoria letta non è quella di questo modello
+fbfd1ba8	controllo breve non disponibile
+2461cdc2	Lettura del primo blocco
 651fd784	GNU General Public License versione 3 o successiva (GPL-3.0-or-later)
 d6fc58d6	IU0VYT-FLASH-VERSIONE:{0};
 5ed9899f	IU0VYT-Flash

@@ -1,11 +1,21 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.39.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.40.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.40.0:
+- Ricerca automatica più veloce con la scheda già aperta: il controllo breve
+  (prima solo per la Baofeng K67 Pro) ora vale anche per le Icom, le Kenwood
+  TH-F6 / TH-G71 / TH-D7 / TH-K2, le Quansheng UV-K5 e derivate, le Bajeton
+  BJ-9000, BJ-7800, BJ-7700 e BJ-8300, le Radtel RT-900 / RT-950 / RT-470 e le
+  radio con la stessa memoria. Per le altre resta la lettura intera.
+- Marca nuova: Alinco. Palmari DJ-596, DJ-175, DJ-G7EG e DJ-G7T; veicolari
+  DR-135T, DR-235T, DR-435T, DR-03T e DR-06T. Solo canali. Funziona anche con
+  i cavi che non rimandano indietro i dati.
+- Galleria: 658 modelli di 53 marche (604 con canali, 502 con impostazioni).
 Novità della 4.39.0:
 - Quattro radio Icom nuove: ID-80H (palmare D-STAR), ID-880H (veicolare
   D-STAR), IC-W32A e IC-W32E (palmari bibanda con due metà separate: da 0 a 99

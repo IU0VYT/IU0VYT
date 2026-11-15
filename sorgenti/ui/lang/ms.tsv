@@ -5909,3 +5909,26 @@ fb76b472	Radio genggam dwijalur dengan dua separuh berasingan: 100 saluran VHF d
 b791bb51	200 saluran dengan nama 8 aksara: 0 hingga 99 separuh VHF, 100 hingga 199 separuh UHF (100 + nombor yang kelihatan pada radio). {0}{1}{2}Pemacu CHIRP.
 a7b25476	kedudukan 0 hingga 99 ialah separuh VHF radio (118 hingga 174 MHz): {0} MHz perlu diletakkan pada kedudukan 100 hingga 199
 17179ec6	kedudukan 100 hingga 199 ialah separuh UHF radio (400 hingga 470 MHz): {0} MHz perlu diletakkan pada kedudukan 0 hingga 99
+632eb841	Alinco
+88daa020	Laman web Alinco
+af248e2c	100 saluran dengan nama 7 aksara.
+2d41ac44	Radio kenderaan:{0}
+572e696a	Radio genggam dwijalur 144/430 MHz:{0}
+63c1f0e9	Radio genggam VHF:{0}
+7db230d8	Radio genggam tiga jalur 144/430/1200 MHz dengan penerima jalur lebar: 1000 saluran dengan nama 16 aksara. Perisian tegar 4_10 atau lebih baharu diperlukan.
+f6f88092	Kabel Alinco ERW-4C / ERW-7 (atau yang serasi) pada bicu pembesar suara.
+49e50118	radio tidak mempunyai gabungan ton ini (ton semasa memancar, ton yang sama atau kod DCS yang sama dalam dua arah; tiada kod songsang)
+23948835	100 saluran (0 hingga 99) dengan nama 7 aksara (huruf besar, angka dan ruang). {0}9600 baud; radio dihidupkan seperti biasa. Radio tidak mengesahkan blok yang ditulis: semakannya ialah pembacaan semula saluran selepas penulisan. DCS dengan kod yang sama dalam dua arah, tidak pernah songsang. {1}Pemacu CHIRP.
+ac3a8d9f	Alinco {0}
+dc3a8f63	Pengecualian imbasan tidak diurus dari sini.
+1ac8a309	radio tidak mengenali model (jawapan «{0}»): semak bahawa anda memilih radio yang betul
+e368c03f	Membaca blok 0x{0}
+e70d06b5	bacaan blok 0x{0}: radio menjawab untuk alamat lain ({1})
+fd062fcf	bacaan blok 0x{0} gagal (jawapan «{1}»)
+b8a90ea7	penulisan blok 0x{0}: data yang dikembalikan oleh kabel berbeza daripada yang dihantar (gangguan atau kabel tidak sesuai). Ulang penulisan
+652f6cec	1000 saluran (0 hingga 999) dengan nama 16 aksara. Perisian tegar 4_10 atau lebih baharu diperlukan. Untuk penyalinan: matikan radio, sambungkan kabel, hidupkan semula dan, sambil menekan [MONI], tekan dan lepaskan [PTT] tiga kali. 57600 baud (jika radio ditetapkan kepada 19200 program akan mengesannya; ia ditukar dengan memutar tombol sambil menekan [MONI]). Kuasa tidak disimpan dalam saluran. Mod mengikut frekuensi: AM pada jalur udara, FM lebar untuk siaran. DCS dengan kod yang sama dalam dua arah, tidak pernah songsang. Pemacu CHIRP.
+136cbe01	radio tidak mempunyai gabungan ton ini (ton semasa memancar atau dalam dua arah, kod DCS yang sama dalam dua arah; tiada kod songsang)
+7d85b321	radio tidak menerima blok 0x{0} (jawapan «{1}»)
+c16f2ebf	{0}: semakan ringkas gagal ({1}): beralih kepada bacaan biasa
+fbfd1ba8	semakan ringkas tidak tersedia
+2461cdc2	Membaca blok pertama

@@ -5909,3 +5909,26 @@ fb76b472	Portatif bibande à deux moitiés séparées : 100 canaux VHF et 100 ca
 b791bb51	200 canaux avec des noms de 8 caractères : de 0 à 99 la moitié VHF, de 100 à 199 la moitié UHF (100 + le numéro affiché sur la radio). {0}{1}{2}Pilote de CHIRP.
 a7b25476	les positions 0 à 99 sont la moitié VHF de la radio (de 118 à 174 MHz) : {0} MHz va dans les positions 100 à 199
 17179ec6	les positions 100 à 199 sont la moitié UHF de la radio (de 400 à 470 MHz) : {0} MHz va dans les positions 0 à 99
+632eb841	Alinco
+88daa020	Site Alinco
+af248e2c	100 canaux avec des noms de 7 caractères.
+2d41ac44	Radio mobile :{0}
+572e696a	Portatif bibande 144/430 MHz :{0}
+63c1f0e9	Portatif VHF :{0}
+7db230d8	Portatif tribande 144/430/1200 MHz avec récepteur large bande : 1000 canaux avec des noms de 16 caractères. Le firmware 4_10 ou ultérieur est nécessaire.
+f6f88092	Câble Alinco ERW-4C / ERW-7 (ou compatible) dans la prise haut-parleur.
+49e50118	la radio n'a pas cette combinaison de tonalités (tonalité en émission, la même tonalité ou le même code DCS dans les deux sens ; jamais de codes inversés)
+23948835	100 canaux (de 0 à 99) avec des noms de 7 caractères (lettres majuscules, chiffres et espace). {0}9600 bauds ; la radio s'allume normalement. La radio ne confirme pas les blocs écrits : le contrôle est la relecture des canaux après l'écriture. DCS avec le même code dans les deux sens, jamais inversé. {1}Pilote de CHIRP.
+ac3a8d9f	Alinco {0}
+dc3a8f63	L'exclusion du balayage ne se gère pas d'ici.
+1ac8a309	la radio n'a pas reconnu le modèle (réponse « {0} ») : vérifie que tu as choisi la bonne radio
+e368c03f	Lecture du bloc 0x{0}
+e70d06b5	lecture du bloc 0x{0} : la radio a répondu pour une autre adresse ({1})
+fd062fcf	échec de la lecture du bloc 0x{0} (réponse « {1} »)
+b8a90ea7	écriture du bloc 0x{0} : les données renvoyées par le câble diffèrent de celles envoyées (parasites ou câble inadapté). Répète l'écriture
+652f6cec	1000 canaux (de 0 à 999) avec des noms de 16 caractères. Le firmware 4_10 ou ultérieur est nécessaire. Pour la copie : éteins la radio, branche le câble, rallume-la et, en maintenant [MONI], appuie trois fois sur [PTT]. 57600 bauds (si la radio est réglée sur 19200 le programme s'en aperçoit ; on change en tournant le bouton avec [MONI] maintenu). La puissance n'est pas mémorisée dans le canal. Le mode suit la fréquence : AM en bande aviation, FM large pour la radiodiffusion. DCS avec le même code dans les deux sens, jamais inversé. Pilote de CHIRP.
+136cbe01	la radio n'a pas cette combinaison de tonalités (tonalité en émission ou dans les deux sens, le même code DCS dans les deux sens ; jamais de codes inversés)
+7d85b321	la radio n'a pas accepté le bloc 0x{0} (réponse « {1} »)
+c16f2ebf	{0} : contrôle rapide non réussi ({1}) : on passe à la lecture normale
+fbfd1ba8	contrôle rapide non disponible
+2461cdc2	Lecture du premier bloc

@@ -597,6 +597,14 @@ def main():
     elif cmd == "clone":
         addr, op = sys.argv[3], sys.argv[4]
         pipe = SockPipe(addr, cls.BAUD_RATE)
+        if cls.__module__.endswith(".alinco"):
+            # 4.40: alinco.py aspetta 0,1 s prima di ogni blocco (256 blocchi): con
+            # la radio simulata la pausa non serve; i byte inviati sono gli stessi
+            import types
+            fast = types.ModuleType("time")
+            fast.__dict__.update(time.__dict__)
+            fast.sleep = lambda s: None
+            sys.modules[cls.__module__].time = fast
         if op == "download":
             r = cls(pipe)
             r.status_fn = lambda s: None

@@ -5909,3 +5909,26 @@ fb76b472	Portátil bibanda con dos mitades separadas: 100 canales VHF y 100 cana
 b791bb51	200 canales con nombres de 8 caracteres: de 0 a 99 la mitad VHF, de 100 a 199 la mitad UHF (100 + el número que se ve en la radio). {0}{1}{2}Controlador de CHIRP.
 a7b25476	las posiciones de 0 a 99 son la mitad VHF de la radio (de 118 a 174 MHz): {0} MHz va en las posiciones de 100 a 199
 17179ec6	las posiciones de 100 a 199 son la mitad UHF de la radio (de 400 a 470 MHz): {0} MHz va en las posiciones de 0 a 99
+632eb841	Alinco
+88daa020	Sitio de Alinco
+af248e2c	100 canales con nombres de 7 caracteres.
+2d41ac44	Radio móvil:{0}
+572e696a	Portátil bibanda 144/430 MHz:{0}
+63c1f0e9	Portátil VHF:{0}
+7db230d8	Portátil tribanda 144/430/1200 MHz con receptor de banda ancha: 1000 canales con nombres de 16 caracteres. Hace falta el firmware 4_10 o posterior.
+f6f88092	Cable Alinco ERW-4C / ERW-7 (o compatible) en la toma del altavoz.
+49e50118	la radio no tiene esta combinación de tonos (subtono en transmisión, el mismo subtono o el mismo código DCS en los dos sentidos; nunca códigos invertidos)
+23948835	100 canales (de 0 a 99) con nombres de 7 caracteres (letras mayúsculas, cifras y espacio). {0}9600 baudios; la radio se enciende normalmente. La radio no confirma los bloques escritos: el control es la relectura de los canales después de la escritura. DCS con el mismo código en los dos sentidos, nunca invertido. {1}Controlador de CHIRP.
+ac3a8d9f	Alinco {0}
+dc3a8f63	La exclusión del escaneo no se gestiona desde aquí.
+1ac8a309	la radio no reconoció el modelo (respuesta «{0}»): comprueba que has elegido la radio correcta
+e368c03f	Lectura del bloque 0x{0}
+e70d06b5	lectura del bloque 0x{0}: la radio respondió para otra dirección ({1})
+fd062fcf	lectura del bloque 0x{0} fallida (respuesta «{1}»)
+b8a90ea7	escritura del bloque 0x{0}: los datos devueltos por el cable son distintos de los enviados (interferencias o cable no adecuado). Repite la escritura
+652f6cec	1000 canales (de 0 a 999) con nombres de 16 caracteres. Hace falta el firmware 4_10 o posterior. Para la copia: apaga la radio, conecta el cable, vuelve a encenderla y, manteniendo pulsado [MONI], pulsa y suelta tres veces [PTT]. 57600 baudios (si la radio está ajustada a 19200 el programa lo detecta; se cambia girando el mando con [MONI] pulsado). La potencia no se memoriza en el canal. El modo sigue la frecuencia: AM en banda aérea, FM ancha para la radiodifusión. DCS con el mismo código en los dos sentidos, nunca invertido. Controlador de CHIRP.
+136cbe01	la radio no tiene esta combinación de tonos (subtono en transmisión o en los dos sentidos, el mismo código DCS en los dos sentidos; nunca códigos invertidos)
+7d85b321	la radio no aceptó el bloque 0x{0} (respuesta «{1}»)
+c16f2ebf	{0}: comprobación breve fallida ({1}): se pasa a la lectura normal
+fbfd1ba8	comprobación breve no disponible
+2461cdc2	Lectura del primer bloque

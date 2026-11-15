@@ -170,6 +170,20 @@ nos ficheiros do CHIRP usados:
                                             2024 Dan Smith
   4.21 (CHIRP 337b385, 09/11/2026), Kenwood:
   drivers/tk8180.py                         Copyright 2019 Dan Smith
+  4.33 - 4.40 (CHIRP 337b385, 09/11/2026), Icom, Yaesu, Alinco:
+  drivers/ict7h.py                          Copyright 2012 Eric Allen
+  drivers/ict8.py                           Copyright 2012 Dan Smith
+  drivers/icq7.py, drivers/id880.py,
+  drivers/ft7800.py, drivers/vx7.py,
+  drivers/vx8.py                            Copyright 2010 Dan Smith
+  drivers/icp7.py                           Copyright 2017 SASANO Takayoshi (JG1UAA)
+  drivers/icw32.py, drivers/ft50.py         Copyright 2011 Dan Smith
+  drivers/vx170.py                          Copyright 2014 Jens Jensen
+  drivers/vx2.py                            Copyright 2013 Jens Jensen
+  drivers/vx5.py                            Copyright 2011 Dan Smith, 2012 Tom Hayward
+  drivers/vx150.py                          Copyright 2024 CHIRP contributors
+  drivers/alinco.py                         Copyright 2011 Dan Smith, 2016 Matt Weyland
+  chirp/directory.py                        Copyright 2010 Dan Smith, 2012 Tom Hayward
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 

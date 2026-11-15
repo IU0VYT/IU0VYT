@@ -7,7 +7,39 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
-4.39.0 (13/11/2026)
+4.40.0 (14/11/2026)
+-------------------
+- Quick check with the tab already open, extended to 61 more models and to the Bajeton
+  BJ-8300. In the automatic search, when a radio's tab is already open, the whole memory
+  is no longer read again: for Icom, Kenwood TH-F6 / TH-G71 / TH-D7 / TH-K2 and
+  Quansheng UV-K5 and derivatives the program asks a question the radio answers in
+  normal operation; for Bajeton BJ-9000 / BJ-7800 / BJ-7700 / BJ-8300, Radtel RT-900 /
+  RT-950 / RT-470 and the radios with the same memory it enters programming mode, reads
+  the first block and sends the exit command. It is used only in the automatic search
+  and only if the tab of that very model is open; if the radio answers but is not
+  confirmed, the quick check is dropped for that model until the program is restarted;
+  no wait towards the radio is shortened. For Baofeng UV-5R and derivatives, BF-888S,
+  UV-17 Pro, TIDRADIO TD-H8 and all the others the full read remains, because their
+  protocol has no identification step that is known to be safe on its own.
+- Alinco (new brand), from CHIRP's alinco.py, rewritten from scratch and compared with
+  CHIRP. DJ-596, DJ-175, DR-135T, DR-235T, DR-435T, DR-03T, DR-06T: 100 channels (0 to
+  99) with 7-character names, 9600 baud. DJ-G7EG / DJ-G7T: 1000 channels (0 to 999) with
+  16-character names, 57600 baud (19200 if the radio is set that way), firmware 4_10 or
+  later, clone mode with [MONI] held and [PTT] pressed three times. Channels only. The
+  answer is read line by line, so the program works both with the one-wire cable that
+  echoes the data and with cables that do not (CHIRP needs the echo); the bytes sent to
+  the radio are the same as CHIRP's. In «Identify» the Alinco radios are tried after all
+  the others, so the search for the other radios is unchanged.
+- A CHIRP error is not copied (DJ-175): CHIRP keeps the scan skip in the bytes from
+  0x130, which in this radio are the name of one of the memories outside the channel
+  list, and changes one bit of it at every channel written; here those bytes are left
+  untouched and the DJ-175 has no scan column. Other intended differences: values the
+  radio cannot store are refused instead of truncated; on the DJ-G7 the air band is
+  written as AM and broadcast as wide FM. No Alinco radio has been tested on a real
+  device: read first, write later. To be tested on real radios: Bajeton BJ-9000 and
+  BJ-8300 with the tab open (after the check the radio must return to normal operation).
+
+4.39.0 (14/11/2026)
 -------------------
 - Icom: the CHIRP handhelds that were still missing (and a mobile of the same family),
   rewritten from scratch and compared with CHIRP. ID-80H and ID-880H: 1000 channels (0
@@ -22,7 +54,7 @@ also summarized in GUIDE.txt.
   cannot store are refused instead of truncated, the «P» scan skip is kept, the air band
   is AM. None of these radios has been tested on a real device: read first, write later.
 
-4.38.0 (13/11/2026)
+4.38.0 (14/11/2026)
 -------------------
 - Fix release for identification, after the tests of 4.36 / 4.37 on real radios: the
   Bajeton BJ-9000 occasionally froze, mostly at the first identification (the battery
@@ -35,7 +67,7 @@ also summarized in GUIDE.txt.
   the BJ-9000 still freezes, use «Save the identification diagnostics» and send the
   file. No new radios in this version.
 
-4.37.0 (13/11/2026)
+4.37.0 (14/11/2026)
 -------------------
 - Yaesu handhelds: eight new models from the CHIRP drivers, rewritten from scratch and
   compared with CHIRP. VX-5R (tri-band, 220 channels, 8-character names) and VX-7R
@@ -54,7 +86,7 @@ also summarized in GUIDE.txt.
   first, write later. Gallery: 645 models of 52 brands (591 with channels, 502 with
   settings).
 
-4.36.0 (13/11/2026)
+4.36.0 (14/11/2026)
 -------------------
 - Fix release for «Identify» and automatic identification, after the tests of 4.35 on
   real radios (Bajeton BJ-9000 and BJ-8300 fine; Baofeng K67 Pro recognised late, and

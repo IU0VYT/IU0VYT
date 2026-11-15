@@ -5909,3 +5909,26 @@ fb76b472	Portátil bibanda com duas metades separadas: 100 canais VHF e 100 cana
 b791bb51	200 canais com nomes de 8 caracteres: de 0 a 99 a metade VHF, de 100 a 199 a metade UHF (100 + o número que se vê no rádio). {0}{1}{2}Driver do CHIRP.
 a7b25476	as posições de 0 a 99 são a metade VHF do rádio (de 118 a 174 MHz): {0} MHz vai nas posições de 100 a 199
 17179ec6	as posições de 100 a 199 são a metade UHF do rádio (de 400 a 470 MHz): {0} MHz vai nas posições de 0 a 99
+632eb841	Alinco
+88daa020	Site da Alinco
+af248e2c	100 canais com nomes de 7 caracteres.
+2d41ac44	Rádio móvel:{0}
+572e696a	Portátil bibanda 144/430 MHz:{0}
+63c1f0e9	Portátil VHF:{0}
+7db230d8	Portátil tribanda 144/430/1200 MHz com recetor de banda larga: 1000 canais com nomes de 16 caracteres. É necessário o firmware 4_10 ou posterior.
+f6f88092	Cabo Alinco ERW-4C / ERW-7 (ou compatível) na tomada do altifalante.
+49e50118	o rádio não tem esta combinação de tons (subtom em transmissão, o mesmo subtom ou o mesmo código DCS nos dois sentidos; nunca códigos invertidos)
+23948835	100 canais (de 0 a 99) com nomes de 7 caracteres (letras maiúsculas, algarismos e espaço). {0}9600 baud; o rádio liga-se normalmente. O rádio não confirma os blocos escritos: o controlo é a releitura dos canais depois da escrita. DCS com o mesmo código nos dois sentidos, nunca invertido. {1}Controlador do CHIRP.
+ac3a8d9f	Alinco {0}
+dc3a8f63	A exclusão da pesquisa não se gere a partir daqui.
+1ac8a309	o rádio não reconheceu o modelo (resposta «{0}»): verifica se escolheste o rádio certo
+e368c03f	Leitura do bloco 0x{0}
+e70d06b5	leitura do bloco 0x{0}: o rádio respondeu para outro endereço ({1})
+fd062fcf	falha na leitura do bloco 0x{0} (resposta «{1}»)
+b8a90ea7	escrita do bloco 0x{0}: os dados devolvidos pelo cabo são diferentes dos enviados (interferências ou cabo inadequado). Repete a escrita
+652f6cec	1000 canais (de 0 a 999) com nomes de 16 caracteres. É necessário o firmware 4_10 ou posterior. Para a cópia: desliga o rádio, liga o cabo, volta a ligá-lo e, mantendo [MONI] premido, prime e solta três vezes [PTT]. 57600 baud (se o rádio estiver definido para 19200 o programa dá por isso; muda-se rodando o botão com [MONI] premido). A potência não é memorizada no canal. O modo segue a frequência: AM na banda aérea, FM larga para a radiodifusão. DCS com o mesmo código nos dois sentidos, nunca invertido. Controlador do CHIRP.
+136cbe01	o rádio não tem esta combinação de tons (subtom em transmissão ou nos dois sentidos, o mesmo código DCS nos dois sentidos; nunca códigos invertidos)
+7d85b321	o rádio não aceitou o bloco 0x{0} (resposta «{1}»)
+c16f2ebf	{0}: verificação breve falhada ({1}): passa-se à leitura normal
+fbfd1ba8	verificação breve não disponível
+2461cdc2	Leitura do primeiro bloco

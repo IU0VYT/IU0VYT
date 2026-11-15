@@ -3,6 +3,88 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.40.0 (14/11/2026)
+-------------------
+Controllo breve con la scheda già aperta per le altre radio; Alinco, marca
+nuova con 9 radio.
+- Controllo breve esteso. Nella ricerca automatica, quando la scheda di una
+  radio è già aperta, per dire «Radio già identificata!! Scheda Radio già
+  aperta» non serve rileggere tutta la memoria: basta sapere che sul cavo c'è
+  ancora quella radio. Fino alla 4.39 lo faceva solo la Baofeng K67 Pro. Ora
+  vale per altri 61 modelli e per la Bajeton BJ-8300:
+  * Icom (19 modelli: tutte le Icom che passano da «Identifica»), Kenwood
+    TH-F6A, TH-F7E, TH-G71, TH-D7, TH-K2 (6), Quansheng UV-K5 / UV-K6 / UV-K1
+    con tutti i firmware, Retevis RA79, MaxTalker TK-6 (11): una domanda a cui
+    la radio risponde in funzionamento normale, senza entrare in
+    programmazione;
+  * Bajeton BJ-9000, BJ-7800, BJ-7700, Radtel RT-900, RT-920, RT-950, RT-470 e
+    famiglia, Radioddity GS-10B, Talkpod A36plus, Hiroyasu HI-8811 e le altre
+    con la stessa memoria (25) e Bajeton BJ-8300: ingresso in programmazione,
+    lettura del primo blocco e comando di uscita, cioè l'inizio e la fine di
+    ogni lettura normale (la forma del controllo della K67 Pro).
+- Dove il controllo breve non c'è, e perché: Baofeng UV-5R e derivate,
+  BF-888S e famiglia, UV-17 Pro, TIDRADIO TD-H8 e tutte le altre. Nel loro
+  protocollo l'identificazione è il primo passo di una lettura e non è noto
+  che cosa fa la radio se la lettura non segue: una radio lasciata a metà può
+  restare in programmazione, e da qui non si può provare. Per queste resta la
+  lettura intera, come prima. Le Yaesu non passano da «Identifica».
+- Sicurezze del controllo breve: si usa solo nella ricerca automatica e solo
+  se è aperta la scheda di QUEL modello; se la radio risponde ma il controllo
+  non la conferma, per quel modello non si usa più fino al riavvio del
+  programma e la ricerca prosegue con la lettura normale; le attese verso la
+  radio sono quelle della lettura normale, niente è accorciato.
+- Alinco (marca nuova), da alinco.py di CHIRP, riscritto da zero e confrontato
+  con CHIRP: palmari DJ-596 (bibanda), DJ-175 (VHF) e DJ-G7EG / DJ-G7T
+  (tribanda 144/430/1200 MHz con ricevitore a larga banda); veicolari DR-135T,
+  DR-235T, DR-435T, DR-03T e DR-06T. Solo canali.
+  * DJ-596, DJ-175, DR-x35, DR-03T, DR-06T: 100 canali (da 0 a 99) con nomi di
+    7 caratteri, 9600 baud, la radio si accende normalmente.
+  * DJ-G7: 1000 canali (da 0 a 999) con nomi di 16 caratteri, 57600 baud
+    (19200 se la radio è impostata così: il programma se ne accorge). Serve il
+    firmware 4_10 o successivo; per la copia: [MONI] premuto e tre volte [PTT].
+- Cavo Alinco: quello a un filo rimanda indietro tutto quello che riceve e
+  CHIRP conta su quell'eco (con un cavo che non la fa non funziona). Qui la
+  risposta si legge a righe e il programma capisce da solo se il cavo fa l'eco
+  oppure no: funziona con tutti e due. I byte inviati alla radio sono gli
+  stessi di CHIRP, con le stesse pause.
+- DJ-596, DJ-175 e veicolari: la radio non conferma i blocchi scritti (nemmeno
+  con CHIRP). Il controllo è la rilettura dei canali dopo la scrittura; se il
+  cavo rimanda dati diversi da quelli inviati la scrittura si ferma e lo dice.
+  Non è noto se le radio vere rispondono «OK» ai blocchi scritti (CHIRP non
+  lo chiede e non lo legge): se lo fanno il programma lo tollera.
+- Errore di CHIRP non copiato (DJ-175): CHIRP tiene l'esclusione dalla
+  scansione nei byte da 0x130, che in questa radio sono il nome di una delle
+  memorie fuori elenco: ogni canale scritto ne cambia un bit. Qui quei byte
+  non si toccano e la colonna della scansione, per la DJ-175, non c'è.
+- Altre differenze volute da CHIRP (in testa al driver): frequenze e
+  scostamenti che la radio non può memorizzare vengono rifiutati invece di
+  essere troncati; toni che la radio non ha vengono rifiutati con un
+  messaggio; DJ-G7: la banda aerea si scrive in AM e la radiodiffusione in FM
+  larga, e l'AM, l'FM larga e lo squelch «al contrario» di un canale restano
+  se non si cambiano la frequenza o il tono.
+- «Identifica»: le Alinco si provano dopo tutte le altre radio, così la
+  ricerca delle altre resta com'era, con gli stessi tempi; una Alinco già
+  riconosciuta su quella porta si prova per prima, come le altre. DR-135T e
+  DR-03T, DR-435T e DR-06T rispondono allo stesso nome: si distinguono dai
+  limiti di banda scritti nella memoria (come CHIRP con i file).
+- Prove: lettura, modifica, struttura e copia identiche a CHIRP per i 9
+  modelli Alinco; alinco440_test.go (limiti dei canali, cavo con e senza eco,
+  blocco letto male, radio che non risponde, eco rovinata, radio che conferma
+  i blocchi, blocco rifiutato, DJ-G7 a 19200 baud anche in «Identifica», posto
+  nel giro di «Identifica»); identquick_test.go
+  (controllo breve: pochi byte con la scheda aperta, lettura intera con la
+  scheda chiusa, un'altra radio sullo stesso cavo, elenco delle famiglie).
+- Nessuna Alinco è stata provata dal vero: prima la sola lettura.
+- Da provare con le radio vere: Bajeton BJ-9000 e BJ-8300 con la scheda
+  aperta. Dopo il controllo la radio deve tornare al funzionamento normale;
+  se resta in programmazione il controllo breve di quella famiglia va tolto.
+- AUTORI_E_LICENZE (in tutte le lingue): aggiunti gli autori dei driver di
+  CHIRP usati dalla 4.33 in poi (Icom, Yaesu, Alinco), che nell'elenco
+  mancavano; nei sorgenti erano già indicati.
+- Registri delle modifiche nelle 12 lingue: le versioni dalla 4.36 alla 4.39
+  portavano la data del 13/11 invece del 14/11. Corretta.
+- Galleria: 658 modelli di 53 marche (604 con canali, 502 con impostazioni).
+
 4.39.0 (14/11/2026)
 -------------------
 Icom: i palmari di CHIRP che mancavano (e una veicolare della stessa

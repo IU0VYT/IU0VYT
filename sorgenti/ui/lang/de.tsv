@@ -5909,3 +5909,26 @@ fb76b472	Dualband-Handfunkgerät mit zwei getrennten Hälften: 100 VHF-Kanäle u
 b791bb51	200 Kanäle mit 8-stelligen Namen: 0 bis 99 die VHF-Hälfte, 100 bis 199 die UHF-Hälfte (100 + die am Funkgerät angezeigte Nummer). {0}{1}{2}CHIRP-Treiber.
 a7b25476	die Positionen 0 bis 99 sind die VHF-Hälfte des Funkgeräts (118 bis 174 MHz): {0} MHz gehört in die Positionen 100 bis 199
 17179ec6	die Positionen 100 bis 199 sind die UHF-Hälfte des Funkgeräts (400 bis 470 MHz): {0} MHz gehört in die Positionen 0 bis 99
+632eb841	Alinco
+88daa020	Alinco-Website
+af248e2c	100 Kanäle mit 7-stelligen Namen.
+2d41ac44	Mobilfunkgerät:{0}
+572e696a	Dualband-Handfunkgerät 144/430 MHz:{0}
+63c1f0e9	VHF-Handfunkgerät:{0}
+7db230d8	Triband-Handfunkgerät 144/430/1200 MHz mit Breitbandempfänger: 1000 Kanäle mit 16-stelligen Namen. Firmware 4_10 oder neuer erforderlich.
+f6f88092	Alinco-Kabel ERW-4C / ERW-7 (oder kompatibel) in der Lautsprecherbuchse.
+49e50118	das Funkgerät hat diese Tonkombination nicht (Ton beim Senden, derselbe Ton oder derselbe DCS-Code in beiden Richtungen; nie invertierte Codes)
+23948835	100 Kanäle (0 bis 99) mit 7-stelligen Namen (Großbuchstaben, Ziffern und Leerzeichen). {0}9600 Baud; das Funkgerät wird normal eingeschaltet. Das Funkgerät bestätigt die geschriebenen Blöcke nicht: die Kontrolle ist das erneute Lesen der Kanäle nach dem Schreiben. DCS mit demselben Code in beiden Richtungen, nie invertiert. {1}CHIRP-Treiber.
+ac3a8d9f	Alinco {0}
+dc3a8f63	Der Scan-Ausschluss wird hier nicht verwaltet.
+1ac8a309	das Funkgerät hat das Modell nicht erkannt (Antwort «{0}»): prüfe, ob du das richtige Funkgerät gewählt hast
+e368c03f	Lesen von Block 0x{0}
+e70d06b5	Lesen von Block 0x{0}: das Funkgerät hat für eine andere Adresse geantwortet ({1})
+fd062fcf	Lesen von Block 0x{0} fehlgeschlagen (Antwort «{1}»)
+b8a90ea7	Schreiben von Block 0x{0}: die vom Kabel zurückgegebenen Daten weichen von den gesendeten ab (Störungen oder ungeeignetes Kabel). Wiederhole das Schreiben
+652f6cec	1000 Kanäle (0 bis 999) mit 16-stelligen Namen. Firmware 4_10 oder neuer erforderlich. Zum Klonen: Funkgerät ausschalten, Kabel anschließen, wieder einschalten und bei gedrückter Taste [MONI] dreimal [PTT] drücken und loslassen. 57600 Baud (ist das Funkgerät auf 19200 eingestellt, merkt es das Programm; geändert wird es durch Drehen des Knopfes bei gedrücktem [MONI]). Die Leistung wird nicht im Kanal gespeichert. Die Betriebsart folgt der Frequenz: AM im Flugfunkband, Breit-FM für Rundfunk. DCS mit demselben Code in beiden Richtungen, nie invertiert. CHIRP-Treiber.
+136cbe01	das Funkgerät hat diese Tonkombination nicht (Ton beim Senden oder in beiden Richtungen, derselbe DCS-Code in beiden Richtungen; nie invertierte Codes)
+7d85b321	das Funkgerät hat Block 0x{0} nicht angenommen (Antwort «{1}»)
+c16f2ebf	{0}: Kurzprüfung fehlgeschlagen ({1}): es folgt das normale Lesen
+fbfd1ba8	Kurzprüfung nicht verfügbar
+2461cdc2	Lesen des ersten Blocks

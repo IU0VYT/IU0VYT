@@ -5909,3 +5909,26 @@ fb76b472	Dual-band handheld with two separate halves: 100 VHF channels and 100 U
 b791bb51	200 channels with 8-character names: 0 to 99 the VHF half, 100 to 199 the UHF half (100 + the number shown on the radio). {0}{1}{2}CHIRP driver.
 a7b25476	positions 0 to 99 are the VHF half of the radio (118 to 174 MHz): {0} MHz goes in positions 100 to 199
 17179ec6	positions 100 to 199 are the UHF half of the radio (400 to 470 MHz): {0} MHz goes in positions 0 to 99
+632eb841	Alinco
+88daa020	Alinco website
+af248e2c	100 channels with 7-character names.
+2d41ac44	Mobile radio:{0}
+572e696a	144/430 MHz dual-band handheld:{0}
+63c1f0e9	VHF handheld:{0}
+7db230d8	144/430/1200 MHz tri-band handheld with wide-band receiver: 1000 channels with 16-character names. Firmware 4_10 or later is required.
+f6f88092	Alinco ERW-4C / ERW-7 cable (or compatible) in the speaker jack.
+49e50118	the radio does not have this tone combination (tone on transmit, the same tone or the same DCS code in both directions; never inverted codes)
+23948835	100 channels (0 to 99) with 7-character names (capital letters, digits and space). {0}9600 baud; the radio is switched on normally. The radio does not confirm the written blocks: the check is the re-reading of the channels after writing. DCS with the same code in both directions, never inverted. {1}CHIRP driver.
+ac3a8d9f	Alinco {0}
+dc3a8f63	Scan exclusion is not handled from here.
+1ac8a309	the radio did not recognise the model (answer «{0}»): check that you chose the right radio
+e368c03f	Reading block 0x{0}
+e70d06b5	reading of block 0x{0}: the radio answered for another address ({1})
+fd062fcf	reading of block 0x{0} failed (answer «{1}»)
+b8a90ea7	writing of block 0x{0}: the data returned by the cable differ from the data sent (noise or unsuitable cable). Repeat the write
+652f6cec	1000 channels (0 to 999) with 16-character names. Firmware 4_10 or later is required. For the copy: switch the radio off, connect the cable, switch it on again and, holding [MONI], press and release [PTT] three times. 57600 baud (if the radio is set to 19200 the program notices; it is changed by turning the dial with [MONI] held). Power is not stored in the channel. The mode follows the frequency: AM on the air band, wide FM for broadcast. DCS with the same code in both directions, never inverted. CHIRP driver.
+136cbe01	the radio does not have this tone combination (tone on transmit or in both directions, the same DCS code in both directions; never inverted codes)
+7d85b321	the radio did not accept block 0x{0} (answer «{1}»)
+c16f2ebf	{0}: quick check failed ({1}): switching to the normal read
+fbfd1ba8	quick check not available
+2461cdc2	Reading the first block

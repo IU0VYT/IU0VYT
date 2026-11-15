@@ -1,5 +1,12 @@
 ab-ar518: ab-ar518
 ab-ar63: ab-ar63
+al-dj175: al-dj175
+al-dj596: al-dj596
+al-djg7eg: al-djg7eg
+al-djg7t: al-djg7t
+al-dr135t: al-dr03t al-dr135t
+al-dr235t: al-dr235t
+al-dr435t: al-dr06t al-dr435t
 as-uva37: ab-ar730 as-uva37 tp-a36plus tp-a36plus8w
 at-termn8r: at-obltr8r at-termn8r kw-tk260 kw-tk270 kw-tk272 kw-tk278 kw-tk360 kw-tk370 kw-tk372 kw-tk378 kyd-nc630a
 bf-1901: bf-1901 bf-1904 bf-1909 bf-9700 mv-ra425

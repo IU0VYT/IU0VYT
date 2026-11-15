@@ -7,7 +7,42 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
-4.39.0 (13/11/2026)
+4.40.0 (14/11/2026)
+-------------------
+- Verificação breve com o separador já aberto, alargada a mais 61 modelos e ao Bajeton
+  BJ-8300. Na pesquisa automática, quando o separador de um rádio já está aberto, a
+  memória inteira deixa de ser relida: para Icom, Kenwood TH-F6 / TH-G71 / TH-D7 / TH-K2
+  e Quansheng UV-K5 e derivados o programa faz uma pergunta a que o rádio responde em
+  funcionamento normal; para Bajeton BJ-9000 / BJ-7800 / BJ-7700 / BJ-8300, Radtel
+  RT-900 / RT-950 / RT-470 e os rádios com a mesma memória entra em programação, lê o
+  primeiro bloco e envia o comando de saída. Só é usada na pesquisa automática e só se
+  estiver aberto o separador desse mesmo modelo; se o rádio responder mas não for
+  confirmado, a verificação breve deixa de ser usada para esse modelo até reiniciar o
+  programa; nenhuma espera para o rádio é encurtada. Para Baofeng UV-5R e derivados,
+  BF-888S, UV-17 Pro, TIDRADIO TD-H8 e todos os outros mantém-se a leitura completa,
+  porque o seu protocolo não tem um passo de identificação que se saiba seguro por si
+  só.
+- Alinco (marca nova), a partir de alinco.py do CHIRP, reescrito de raiz e comparado com
+  o CHIRP. DJ-596, DJ-175, DR-135T, DR-235T, DR-435T, DR-03T, DR-06T: 100 canais (de 0 a
+  99) com nomes de 7 caracteres, 9600 baud. DJ-G7EG / DJ-G7T: 1000 canais (de 0 a 999)
+  com nomes de 16 caracteres, 57600 baud (19200 se o rádio estiver definido assim),
+  firmware 4_10 ou posterior, modo de cópia com [MONI] premido e três toques em [PTT].
+  Apenas canais. A resposta é lida linha a linha, pelo que o programa funciona tanto com
+  o cabo de um fio que devolve os dados como com os que não o fazem (o CHIRP precisa
+  desse eco); os bytes enviados ao rádio são os mesmos do CHIRP. Em «Identificar» os
+  Alinco são tentados depois de todos os outros, pelo que a pesquisa dos outros rádios
+  não muda.
+- Um erro do CHIRP não é copiado (DJ-175): o CHIRP guarda a exclusão do varrimento nos
+  bytes a partir de 0x130, que neste rádio são o nome de uma das memórias fora da lista,
+  e altera um bit a cada canal escrito; aqui esses bytes não são tocados e o DJ-175 não
+  tem coluna de varrimento. Outras diferenças intencionais: os valores que o rádio não
+  consegue memorizar são recusados em vez de truncados; no DJ-G7 a banda aérea é escrita
+  em AM e a radiodifusão em FM larga. Nenhum Alinco foi testado num equipamento real:
+  primeiro ler, depois escrever. A testar em rádios reais: Bajeton BJ-9000 e BJ-8300 com
+  o separador aberto (depois da verificação o rádio deve voltar ao funcionamento
+  normal).
+
+4.39.0 (14/11/2026)
 -------------------
 - Icom: os portáteis do CHIRP que ainda faltavam (e um móvel da mesma família),
   reescritos de raiz e comparados com o CHIRP. ID-80H e ID-880H: 1000 canais (de 0 a
@@ -23,7 +58,7 @@ LEIAME.txt.
   «P» do varrimento mantém-se, a banda aérea é em AM. Nenhum destes rádios foi testado
   num equipamento real: primeiro ler, depois escrever.
 
-4.38.0 (13/11/2026)
+4.38.0 (14/11/2026)
 -------------------
 - Versão de correção da identificação, depois dos testes da 4.36 / 4.37 com rádios
   reais: o Bajeton BJ-9000 bloqueava de vez em quando, sobretudo na primeira
@@ -37,7 +72,7 @@ LEIAME.txt.
   Se o BJ-9000 continuar a bloquear, usa «Guardar o diagnóstico da identificação» e
   envia o ficheiro. Nenhum rádio novo nesta versão.
 
-4.37.0 (13/11/2026)
+4.37.0 (14/11/2026)
 -------------------
 - Portáteis Yaesu: oito modelos novos a partir dos drivers do CHIRP, reescritos de raiz
   e comparados com o CHIRP. VX-5R (tribanda, 220 canais, nomes de 8 caracteres) e VX-7R
@@ -55,7 +90,7 @@ LEIAME.txt.
   ler, depois escrever. Galeria: 645 modelos de 52 marcas (591 com canais, 502 com
   definições).
 
-4.36.0 (13/11/2026)
+4.36.0 (14/11/2026)
 -------------------
 - Versão de correção para «Identificar» e a identificação automática, depois dos testes
   da 4.35 com rádios reais (Bajeton BJ-9000 e BJ-8300 em ordem; Baofeng K67 Pro

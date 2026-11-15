@@ -48,6 +48,7 @@ const BRAND_COLOR = {
   Zartek: '#e64980', Ruyage: '#74b816', TDXone: '#4263eb',
   Yaesu: '#0d5c9e', Icom: '#b3261e', // 4.14
   Kenwood: '#1a1a1a', // 4.15
+  Alinco: '#00695c', // 4.40
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];

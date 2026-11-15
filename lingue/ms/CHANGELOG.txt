@@ -6,7 +6,42 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
-4.39.0 (13/11/2026)
+4.40.0 (14/11/2026)
+-------------------
+- Semakan ringkas dengan tab yang sudah dibuka, diperluas kepada 61 model lagi dan
+  kepada Bajeton BJ-8300. Dalam carian automatik, apabila tab sesebuah radio sudah
+  dibuka, seluruh memori tidak lagi dibaca semula: bagi Icom, Kenwood TH-F6 / TH-G71 /
+  TH-D7 / TH-K2 serta Quansheng UV-K5 dan terbitannya, program menghantar pertanyaan
+  yang dijawab oleh radio dalam operasi biasa; bagi Bajeton BJ-9000 / BJ-7800 / BJ-7700
+  / BJ-8300, Radtel RT-900 / RT-950 / RT-470 dan radio dengan memori yang sama, ia
+  memasuki mod pengaturcaraan, membaca blok pertama dan menghantar arahan keluar. Ia
+  digunakan hanya dalam carian automatik dan hanya jika tab model itu sendiri dibuka;
+  jika radio menjawab tetapi tidak disahkan, semakan ringkas tidak digunakan lagi untuk
+  model itu sehingga program dimulakan semula; tiada tempoh menunggu radio yang
+  dipendekkan. Bagi Baofeng UV-5R dan terbitannya, BF-888S, UV-17 Pro, TIDRADIO TD-H8
+  dan semua yang lain, bacaan penuh kekal kerana protokolnya tidak mempunyai langkah
+  pengenalpastian yang diketahui selamat dengan sendirinya.
+- Alinco (jenama baharu), daripada alinco.py CHIRP, ditulis semula dari awal dan
+  dibandingkan dengan CHIRP. DJ-596, DJ-175, DR-135T, DR-235T, DR-435T, DR-03T, DR-06T:
+  100 saluran (0 hingga 99) dengan nama 7 aksara, 9600 baud. DJ-G7EG / DJ-G7T: 1000
+  saluran (0 hingga 999) dengan nama 16 aksara, 57600 baud (19200 jika radio ditetapkan
+  begitu), perisian tegar 4_10 atau lebih baharu, mod klon dengan menekan [MONI] dan
+  menekan [PTT] tiga kali. Saluran sahaja. Jawapan dibaca baris demi baris, jadi program
+  berfungsi dengan kabel satu wayar yang memulangkan data dan juga dengan kabel yang
+  tidak berbuat demikian (CHIRP memerlukan gema itu); bait yang dihantar ke radio sama
+  seperti CHIRP. Dalam «Kenal pasti», radio Alinco dicuba selepas semua yang lain, jadi
+  carian radio lain tidak berubah.
+- Ralat CHIRP tidak disalin (DJ-175): CHIRP menyimpan pengecualian imbasan dalam bait
+  mulai 0x130, yang dalam radio ini ialah nama salah satu memori di luar senarai
+  saluran, dan mengubah satu bit pada setiap saluran yang ditulis; di sini bait itu
+  tidak disentuh dan DJ-175 tidak mempunyai lajur imbasan. Perbezaan lain yang
+  disengajakan: nilai yang tidak dapat disimpan oleh radio ditolak dan bukannya
+  dipangkas; pada DJ-G7 jalur udara ditulis sebagai AM dan siaran sebagai FM lebar.
+  Tiada radio Alinco yang diuji pada peranti sebenar: baca dahulu, tulis kemudian. Untuk
+  diuji pada radio sebenar: Bajeton BJ-9000 dan BJ-8300 dengan tab dibuka (selepas
+  semakan, radio mesti kembali kepada operasi biasa).
+
+4.39.0 (14/11/2026)
 -------------------
 - Icom: radio genggam CHIRP yang masih belum ada (dan sebuah radio kenderaan daripada
   keluarga yang sama), ditulis semula dari awal dan dibandingkan dengan CHIRP. ID-80H
@@ -23,7 +58,7 @@ folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
   «P» dikekalkan, jalur udara dalam AM. Tiada satu pun radio ini diuji pada peranti
   sebenar: baca dahulu, tulis kemudian.
 
-4.38.0 (13/11/2026)
+4.38.0 (14/11/2026)
 -------------------
 - Versi pembetulan pengenalpastian, selepas ujian 4.36 / 4.37 pada radio sebenar:
   Bajeton BJ-9000 kadang-kadang tersekat, terutamanya pada pengenalpastian pertama
@@ -37,7 +72,7 @@ folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
   BJ-9000 masih tersekat, gunakan «Simpan diagnosis pengenalpastian» dan hantar failnya.
   Tiada radio baharu dalam versi ini.
 
-4.37.0 (13/11/2026)
+4.37.0 (14/11/2026)
 -------------------
 - Radio genggam Yaesu: lapan model baharu daripada pemacu CHIRP, ditulis semula dari
   awal dan dibandingkan dengan CHIRP. VX-5R (tiga jalur, 220 saluran, nama 8 aksara) dan
@@ -55,7 +90,7 @@ folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
   dahulu, tulis kemudian. Galeri: 645 model daripada 52 jenama (591 dengan saluran, 502
   dengan tetapan).
 
-4.36.0 (13/11/2026)
+4.36.0 (14/11/2026)
 -------------------
 - Versi pembetulan untuk «Kenal pasti» dan pengenalpastian automatik, selepas ujian 4.35
   pada radio sebenar (Bajeton BJ-9000 dan BJ-8300 baik; Baofeng K67 Pro dikenali lewat,

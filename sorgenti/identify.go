@@ -1154,8 +1154,10 @@ func genIdentFill(m *genModel, cands []*genModel, mem []byte, note string, st *p
 	default:
 		r.add("Collegamento", "cavo di programmazione sulla porta %s, %d baud", port, m.Baud)
 	}
-	r.add("Firmware / identificativo", "%s", note)
-	dmrInfo(m, mem, r)
+	if mem != nil {
+		r.add("Firmware / identificativo", "%s", note)
+		dmrInfo(m, mem, r)
+	}
 	if st != nil {
 		r.add("Testo inviato dalla radio", "%s", identRuns(st.first))
 	}
@@ -1168,6 +1170,9 @@ func genIdentFill(m *genModel, cands []*genModel, mem []byte, note string, st *p
 		}
 	}
 	sort.Slice(r.Others, func(i, j int) bool { return r.Others[i].Name < r.Others[j].Name })
+	if mem == nil {
+		return // 4.40: controllo breve, memoria non letta
+	}
 	r.Count = len(packed(genChans(m, mem)))
 }
 
@@ -1358,6 +1363,13 @@ func (a *App) identPlan(req *identReq) []identProbe {
 		if identPopular[kind] {
 			return 1500
 		}
+		// 4.40: famiglie che lo dichiarano (Alinco) in coda al giro: per le altre
+		// radio la ricerca resta quella di prima, con gli stessi tempi
+		if m := genByID[kind]; m != nil {
+			if _, ok := m.Fam.(interface{ identLast() }); ok {
+				return 2500
+			}
+		}
 		return 2000
 	}
 	probeRank := func(p identProbe) int {
@@ -1367,7 +1379,7 @@ func (a *App) identPlan(req *identReq) []identProbe {
 		case p.bt:
 			return rank(kindDAT)
 		}
-		r := 2000
+		r := 9999
 		for _, m := range p.kinds {
 			r = min(r, rank(m.ID))
 		}
@@ -1567,9 +1579,14 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 			// basta il controllo breve (vedi k67Check); l'interfaccia dirà
 			// «Radio già identificata!! Scheda Radio già aperta» senza aspettare
 			// la lettura di tutta la memoria, che non userebbe
-			quick := p.k67 && j.Auto && a.autoTabOpen(kindXLC)
+			// 4.40: lo stesso per la Bajeton BJ-8300 (btCheck, vedi identquick.go)
+			quick := j.Auto && identQuickAllowed(kind) && a.autoTabOpen(kind)
 			st, silent, err := probe(ctx, req.Port, func(pctx context.Context) error {
 				var e error
+				if quick && p.bt {
+					info, e = btCheck(pctx, req.Port, j.prog)
+					return e
+				}
 				if quick {
 					var ki k67Info
 					ki, e = k67Check(pctx, req.Port, &k67Opts{Password: creq.Password, Baud: creq.Baud}, j.prog)
@@ -1597,6 +1614,12 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 			}
 			if err != nil {
 				answer(p.name, err)
+				if quick && st != nil && st.radioSure() {
+					// 4.40: la radio ha risposto ma il controllo breve non è andato a
+					// buon fine: da qui in poi, per lei, solo la lettura normale
+					identQuickOff(kind)
+					identDiag.add(probeKey(req.Port), "  controllo breve non riuscito: per questa radio non si usa più fino al riavvio")
+				}
 				if j.Auto && p.known && st != nil && st.radioSure() {
 					j.knownFail.Store(true) // vedi cableJob.knownFail
 				}
@@ -1654,6 +1677,37 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 					j.readStop()
 				}
 				return
+			}
+			// 4.40: ricerca automatica con la scheda di un modello del gruppo già
+			// aperta e una famiglia che ha il controllo breve (identquick.go):
+			// basta sapere che sul cavo c'è ancora quella radio
+			if qm := a.identQuickModel(j, p.kinds); qm != nil {
+				j.prog(i, len(plan), "Provo: "+qm.Name)
+				identDiag.add(probeKey(req.Port), "  scheda già aperta: controllo breve di %s", qm.Name)
+				st, silent, err := probe(ctx, req.Port, func(pctx context.Context) error {
+					return qm.Fam.(genQuicker).quick(pctx, qm, req.Port)
+				}, probeOpt{known: p.known})
+				if err == errCancelled && ctx.Err() != nil {
+					return nil, errCancelled
+				}
+				if silent {
+					continue // nessuna risposta al saluto del gruppo
+				}
+				if err == nil {
+					genIdentFill(qm, nil, nil, "", st, req.Port, res)
+					res.Already = true
+					res.Seconds = int(time.Since(start).Seconds())
+					identDiag.add(probeKey(req.Port), "  controllo breve riuscito: memoria non riletta")
+					a.rememberRadio(req.Port, qm.ID)
+					return res, nil
+				}
+				// la radio ha risposto ma non è (più) quella della scheda, o non
+				// ha risposto come previsto: per questo modello il controllo breve
+				// non si usa più e si prosegue con la lettura normale
+				identQuickOff(qm.ID)
+				j.logf("%s: controllo breve non riuscito (%v): si passa alla lettura normale", qm.Name, err)
+				identDiag.add(probeKey(req.Port), "  controllo breve non riuscito (%v): lettura normale, e per questo modello non si usa più fino al riavvio", err)
+				_ = sleepCtx(ctx, identPause)
 			}
 			for k, m := range p.kinds {
 				mem, note, st, silent, err := readWith(m)
@@ -1929,6 +1983,10 @@ func identCanMatch(m *genModel) bool {
 	switch m.Fam.(type) {
 	case rdtyFam, uvb5Fam, bft1Fam, rt22Fam, uv3rFam, tytFam:
 		return true
+	case alincoFam:
+		// 4.40: DR-135T e DR-03T, DR-435T e DR-06T rispondono allo stesso nome: si
+		// distinguono dai limiti di banda scritti nella memoria (come CHIRP con i file)
+		return alincoO(m).sig != nil
 	}
 	return false
 }
@@ -1980,8 +2038,10 @@ func (a *App) identFillMain(kind string, file []byte, info interface{}, k6 bool,
 		}
 		r.add("Memorie", "%d canali (%d zone da %d)", datZones*datPerZone, datZones, datPerZone)
 		r.add("Collegamento", "cavo di programmazione sulla porta %s, 57600 baud", port)
-		if v := datVer(file); v != "" {
-			r.add("Formato del file", "BT-11_CPS v%s", v)
+		if file != nil {
+			if v := datVer(file); v != "" {
+				r.add("Formato del file", "BT-11_CPS v%s", v)
+			}
 		}
 	}
 	r.add("Numero di serie", "%s", "non disponibile: il protocollo di programmazione di questa radio non lo comunica")

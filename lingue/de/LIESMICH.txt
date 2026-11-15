@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.39.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.40.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,16 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.40.0:
+- Schnellere automatische Suche, wenn der Reiter des Funkgeräts schon offen ist: die
+  Kurzprüfung (bisher nur für das Baofeng K67 Pro) gilt jetzt auch für die Icom-Geräte,
+  die Kenwood TH-F6 / TH-G71 / TH-D7 / TH-K2, die Quansheng UV-K5 und Abkömmlinge, die
+  Bajeton BJ-9000, BJ-7800, BJ-7700 und BJ-8300, die Radtel RT-900 / RT-950 / RT-470 und
+  die Geräte mit demselben Speicher. Für die anderen bleibt das vollständige Lesen.
+- Neue Marke: Alinco. Handfunkgeräte DJ-596, DJ-175, DJ-G7EG und DJ-G7T; Mobilgeräte
+  DR-135T, DR-235T, DR-435T, DR-03T und DR-06T. Nur Kanäle. Funktioniert auch mit
+  Kabeln, die die Daten nicht zurücksenden.
+- Galerie: 658 Modelle von 53 Marken (604 mit Kanälen, 502 mit Einstellungen).
 Neu in 4.39.0:
 - Vier neue Icom-Funkgeräte: ID-80H (D-STAR-Handfunkgerät), ID-880H (D-STAR-Mobilgerät),
   IC-W32A und IC-W32E (Dualband-Handfunkgeräte mit zwei getrennten Hälften: Kanäle 0 bis

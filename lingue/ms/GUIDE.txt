@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.39.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.40.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,16 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.40.0:
+- Carian automatik lebih pantas apabila tab radio sudah dibuka: semakan ringkas (sebelum
+  ini hanya untuk Baofeng K67 Pro) kini turut meliputi radio Icom, Kenwood TH-F6 /
+  TH-G71 / TH-D7 / TH-K2, Quansheng UV-K5 dan terbitannya, Bajeton BJ-9000, BJ-7800,
+  BJ-7700 dan BJ-8300, Radtel RT-900 / RT-950 / RT-470 serta radio dengan memori yang
+  sama. Bagi yang lain, bacaan penuh kekal.
+- Jenama baharu: Alinco. Radio genggam DJ-596, DJ-175, DJ-G7EG dan DJ-G7T; radio
+  kenderaan DR-135T, DR-235T, DR-435T, DR-03T dan DR-06T. Saluran sahaja. Ia juga
+  berfungsi dengan kabel yang tidak memulangkan data.
+- Galeri: 658 model daripada 53 jenama (604 dengan saluran, 502 dengan tetapan).
 Baharu dalam 4.39.0:
 - Empat radio Icom baharu: ID-80H (radio genggam D-STAR), ID-880H (radio kenderaan
   D-STAR), IC-W32A dan IC-W32E (radio genggam dwijalur dengan dua separuh berasingan:
