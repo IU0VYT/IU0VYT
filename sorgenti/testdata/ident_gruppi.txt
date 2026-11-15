@@ -41,7 +41,7 @@ bt-gmrsv1: bt-gmrsv1 bt-mursv1
 bt-gmrsv2: bt-gmrsv2 bt-mursv2
 ex-qrz1: ex-qrz1
 fdx-268a: fdx-150a fdx-160a fdx-268a fdx-268b fdx-288a fdx-288b fdx-450a fdx-460a fdx-460uh
-ic-p7: ic-e90 ic-id31 ic-id51 ic-id51plus ic-id51plus2 ic-p7 ic-q7a ic-t10 ic-t70 ic-t7h ic-t8a ic-u82 ic-v80 ic-v82 ic-v86
+ic-p7: ic-e90 ic-id31 ic-id51 ic-id51plus ic-id51plus2 ic-id80 ic-id880 ic-p7 ic-q7a ic-t10 ic-t70 ic-t7h ic-t8a ic-u82 ic-v80 ic-v82 ic-v86 ic-w32a ic-w32e
 ksun-m6: ksun-m6
 kw-thd72: kw-thd72 kw-thd74 kw-thd75
 kw-thd7: kw-thd7 kw-thd7g

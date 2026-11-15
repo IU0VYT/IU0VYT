@@ -228,3 +228,36 @@ func (f thd72Fam) chirpEncodeFix(m *genModel, base, ref, out []byte) {
 	copy(f.name(999).Raw(ref), f.name(999).Raw(out))
 	f.flag(999).F("skip").SetInt(ref, f.flag(999).F("skip").Int(out))
 }
+
+// 4.39 ID-80H / ID-880H: come per le altre D-STAR il salto «P» vale «escluso»
+func (id880Fam) chirpRefFix(m *genModel, g *Chan, c *chirpChan) {
+	if c.Skip == "P" {
+		c.Scan = false
+	}
+}
+
+// 4.39: CHIRP scrive l'«indicatore del nome» a 0x0FB8, dentro i canali 98-101
+// (errore di CHIRP, vedi drv_id880.go): qui quei byte non si toccano
+func (f id880Fam) chirpEncodeFix(m *genModel, base, ref, out []byte) {
+	for k := 0x0FB8; k < 0x0FB8+132; k++ {
+		if out[k] == base[k] {
+			ref[k] = out[k]
+		}
+	}
+}
+
+// 4.39 IC-W32E: CHIRP, dopo la lettura dalla radio, tiene 4064 byte; il file
+// della IC-W32E (anche l'immagine di prova di CHIRP) ne ha uno in più, a zero,
+// che è il modo in cui CHIRP stesso distingue i file dei due modelli: qui la
+// lettura lo aggiunge subito, così il file salvato si riapre come IC-W32E
+func (f icw32Fam) chirpCloneFix(m *genModel, ref []byte) []byte {
+	o := f.icom(m)
+	if len(ref) == o.size-o.extra {
+		return append(append([]byte{}, ref...), make([]byte, o.extra)...)
+	}
+	return ref
+}
+
+// 4.39 IC-W32: in CHIRP la struttura è quella di due sotto-radio (gli stessi nomi
+// a indirizzi diversi): il confronto campo per campo non si può fare
+func (icw32Fam) chirpNoLayout() {}

@@ -7,6 +7,22 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.39.0 (13/11/2026)
+-------------------
+- Icom: os portáteis do CHIRP que ainda faltavam (e um móvel da mesma família),
+  reescritos de raiz e comparados com o CHIRP. ID-80H e ID-880H: 1000 canais (de 0 a
+  999) com nomes de 8 caracteres, analógicos ou D-STAR, cópia rápida a 38400 baud.
+  IC-W32A e IC-W32E: o rádio tem duas metades separadas, VHF e UHF, com 100 canais cada;
+  no programa é uma só lista de 200 posições (de 0 a 99 VHF, de 100 a 199 UHF) e cada
+  metade aceita apenas as frequências da sua banda. Apenas canais; os quatro rádios são
+  interrogados por «Identificar» como os outros Icom.
+- Um erro do CHIRP não é copiado (ID-80H / ID-880H): quando o CHIRP escreve um canal
+  ativa também um «indicador de nome» num endereço que fica dentro dos canais 98-101 e
+  estraga-os; aqui esse endereço não é tocado. Outras diferenças intencionais: os
+  valores que o rádio não consegue memorizar são recusados em vez de truncados, o salto
+  «P» do varrimento mantém-se, a banda aérea é em AM. Nenhum destes rádios foi testado
+  num equipamento real: primeiro ler, depois escrever.
+
 4.38.0 (13/11/2026)
 -------------------
 - Versão de correção da identificação, depois dos testes da 4.36 / 4.37 com rádios

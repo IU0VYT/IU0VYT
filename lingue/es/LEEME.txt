@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.38.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.39.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,11 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.39.0:
+- Cuatro radios Icom nuevas: ID-80H (portátil D-STAR), ID-880H (móvil D-STAR), IC-W32A e
+  IC-W32E (portátiles bibanda con dos mitades separadas: los canales de 0 a 99 son VHF,
+  de 100 a 199 UHF). Solo canales.
+- Galería: 649 modelos de 52 marcas (595 con canales, 502 con ajustes).
 Novedades de la 4.38.0:
 - Corrección de la identificación: la Bajeton BJ-9000 se bloqueaba de vez en cuando,
   sobre todo en la primera identificación. El programa vuelve a escuchar el puerto

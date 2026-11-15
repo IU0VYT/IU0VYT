@@ -33,6 +33,7 @@ type icomOpt struct {
 	model  [4]byte
 	end    string   // firma del modello nel pacchetto di chiusura
 	size   int      // byte della memoria
+	extra  int      // byte in coda al file che la radio non manda (IC-W32E: uno, a zero, distingue i file da quelli della IC-W32A)
 	ranges [][3]int // zone da scrivere: inizio, fine, lunghezza dei blocchi
 	twice  bool     // la radio vuole l'identificazione due volte prima della scrittura
 	fast   bool     // copia veloce: dopo l'identificazione si passa a 38400 baud
@@ -294,8 +295,8 @@ func icomDownload(ctx context.Context, port string, baud int, o *icomOpt, prog P
 		addr = a + n
 		prog(addr, o.size, "Lettura…")
 	}
-	if addr != o.size {
-		return nil, rErr("lettura incompleta: %d byte su %d", addr, o.size)
+	if addr != o.size-o.extra {
+		return nil, rErr("lettura incompleta: %d byte su %d", addr, o.size-o.extra)
 	}
 	prog(o.size, o.size, "Lettura completata")
 	return icomFlip(o, img), nil

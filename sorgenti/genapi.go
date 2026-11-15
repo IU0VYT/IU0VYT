@@ -285,7 +285,13 @@ func genTrySet(m *genModel, c *Chan) (err error) {
 		}
 	}()
 	n := *c
-	return m.Fam.Set(m, make([]byte, genMinSize(m)), 0, &n)
+	slot := 0
+	if f, ok := m.Fam.(interface {
+		trySlot(m *genModel, c *Chan) int
+	}); ok {
+		slot = f.trySlot(m, &n) // 4.39: radio con posizioni riservate a una banda (Icom IC-W32)
+	}
+	return m.Fam.Set(m, make([]byte, genMinSize(m)), slot, &n)
 }
 
 // ---------------------------------------------------------------- cavo

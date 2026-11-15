@@ -1,11 +1,16 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.38.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.39.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.39.0:
+- Quattro radio Icom nuove: ID-80H (palmare D-STAR), ID-880H (veicolare
+  D-STAR), IC-W32A e IC-W32E (palmari bibanda con due metà separate: da 0 a 99
+  i canali VHF, da 100 a 199 i canali UHF). Solo canali.
+- Galleria: 649 modelli di 52 marche (595 con canali, 502 con impostazioni).
 Novità della 4.38.0:
 - Correzione dell'identificazione: la Bajeton BJ-9000 ogni tanto si bloccava,
   soprattutto alla prima identificazione. Il programma è tornato ad ascoltare

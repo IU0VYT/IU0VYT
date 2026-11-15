@@ -5895,3 +5895,17 @@ b85c20ea	Yaesu VX-7R
 72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
 ad75ff44	radio tidak menghantar semula data: penulisan telah berhenti
 16a78f4c	Radio genggam dengan APRS: 900 saluran dengan nama 16 aksara. Radio mengisytiharkan modelnya: jika ia VX-8 yang lain, program akan memaklumkannya.
+476c4adb	1000 saluran dengan nama 8 aksara, analog atau digital D-STAR (lajur «Mod»). Radio mengisytiharkan modelnya: jika ia model yang satu lagi, program akan memaklumkannya.
+01414bb4	Icom Inc.B1
+f095e89e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !"#$%&'()*+,-./:;
+fc3bc54b	{0} 1000 saluran (0 hingga 999) dengan nama 8 aksara, analog atau D-STAR. {1}Saluran D-STAR baharu dicipta dengan «CQCQCQ». Pemacu CHIRP.
+5163e040	Radio kenderaan VHF/UHF.
+37e99e13	Radio genggam VHF/UHF.
+3fc6bfec	Kabel klon Icom (yang dinyatakan dalam manual radio); radio dihidupkan seperti biasa. Salinan pantas pada 38400 baud. 
+2a5b995f	radio tidak dapat menyimpan frekuensi {0} MHz (gandaan 5, 6.25 atau 9 kHz)
+478aafcf	radio tidak dapat menyimpan anjakan {0} Hz (gandaan 5, 6.25 atau 9 kHz sahaja)
+fb76b472	Radio genggam dwijalur dengan dua separuh berasingan: 100 saluran VHF dan 100 saluran UHF dengan nama 8 aksara, dalam satu senarai (0 hingga 99 VHF, 100 hingga 199 UHF).
+348e489d	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-./
+b791bb51	200 saluran dengan nama 8 aksara: 0 hingga 99 separuh VHF, 100 hingga 199 separuh UHF (100 + nombor yang kelihatan pada radio). {0}{1}{2}Pemacu CHIRP.
+a7b25476	kedudukan 0 hingga 99 ialah separuh VHF radio (118 hingga 174 MHz): {0} MHz perlu diletakkan pada kedudukan 100 hingga 199
+17179ec6	kedudukan 100 hingga 199 ialah separuh UHF radio (400 hingga 470 MHz): {0} MHz perlu diletakkan pada kedudukan 0 hingga 99

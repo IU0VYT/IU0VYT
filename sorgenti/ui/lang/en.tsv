@@ -5895,3 +5895,17 @@ b85c20ea	Yaesu VX-7R
 72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
 ad75ff44	the radio does not send the data back: writing has stopped
 16a78f4c	APRS handheld: 900 channels with 16-character names. The radio declares its model: if it is a different VX-8 the program says so.
+476c4adb	1000 channels with 8-character names, analog or D-STAR digital («Mode» column). The radio declares its model: if it is the other one the program says so.
+01414bb4	Icom Inc.B1
+f095e89e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !"#$%&'()*+,-./:;
+fc3bc54b	{0} 1000 channels (0 to 999) with 8-character names, analog or D-STAR. {1}A new D-STAR channel starts with «CQCQCQ». CHIRP driver.
+5163e040	VHF/UHF mobile radio.
+37e99e13	VHF/UHF handheld.
+3fc6bfec	Icom cloning cable (the one given in the radio's manual); the radio is switched on normally. Fast clone at 38400 baud. 
+2a5b995f	the radio cannot store the frequency {0} MHz (multiples of 5, 6.25 or 9 kHz)
+478aafcf	the radio cannot store an offset of {0} Hz (multiples of 5, 6.25 or 9 kHz)
+fb76b472	Dual-band handheld with two separate halves: 100 VHF channels and 100 UHF channels with 8-character names, in a single list (0 to 99 VHF, 100 to 199 UHF).
+348e489d	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-./
+b791bb51	200 channels with 8-character names: 0 to 99 the VHF half, 100 to 199 the UHF half (100 + the number shown on the radio). {0}{1}{2}CHIRP driver.
+a7b25476	positions 0 to 99 are the VHF half of the radio (118 to 174 MHz): {0} MHz goes in positions 100 to 199
+17179ec6	positions 100 to 199 are the UHF half of the radio (400 to 470 MHz): {0} MHz goes in positions 0 to 99

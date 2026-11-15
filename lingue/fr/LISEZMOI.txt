@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.38.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.39.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,11 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.39.0 :
+- Quatre nouvelles radios Icom : ID-80H (portatif D-STAR), ID-880H (mobile D-STAR),
+  IC-W32A et IC-W32E (portatifs bibandes à deux moitiés séparées : les canaux 0 à 99
+  sont VHF, 100 à 199 UHF). Canaux uniquement.
+- Galerie : 649 modèles de 52 marques (595 avec canaux, 502 avec réglages).
 Nouveautés de la 4.38.0 :
 - Correction de l'identification : la Bajeton BJ-9000 se bloquait de temps en temps,
   surtout à la première identification. Le programme écoute de nouveau le port pendant

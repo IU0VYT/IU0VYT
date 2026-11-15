@@ -6,6 +6,23 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.39.0 (13/11/2026)
+-------------------
+- Icom: radio genggam CHIRP yang masih belum ada (dan sebuah radio kenderaan daripada
+  keluarga yang sama), ditulis semula dari awal dan dibandingkan dengan CHIRP. ID-80H
+  dan ID-880H: 1000 saluran (0 hingga 999) dengan nama 8 aksara, analog atau D-STAR,
+  salinan pantas pada 38400 baud. IC-W32A dan IC-W32E: radio mempunyai dua separuh
+  berasingan, VHF dan UHF, dengan 100 saluran setiap satu; dalam program ia satu senarai
+  200 kedudukan (0 hingga 99 VHF, 100 hingga 199 UHF) dan setiap separuh hanya menerima
+  frekuensi jalurnya. Saluran sahaja; keempat-empat radio disoal oleh «Kenal pasti»
+  seperti radio Icom yang lain.
+- Satu ralat CHIRP tidak disalin (ID-80H / ID-880H): apabila CHIRP menulis saluran, ia
+  turut menetapkan «penanda nama» pada alamat yang berada di dalam saluran 98-101 lalu
+  merosakkannya; di sini alamat itu tidak disentuh. Perbezaan lain yang disengajakan:
+  nilai yang tidak dapat disimpan oleh radio ditolak dan bukan dipotong, langkau imbasan
+  «P» dikekalkan, jalur udara dalam AM. Tiada satu pun radio ini diuji pada peranti
+  sebenar: baca dahulu, tulis kemudian.
+
 4.38.0 (13/11/2026)
 -------------------
 - Versi pembetulan pengenalpastian, selepas ujian 4.36 / 4.37 pada radio sebenar:

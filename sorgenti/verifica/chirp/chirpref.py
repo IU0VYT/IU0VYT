@@ -172,7 +172,20 @@ def zoned(r):
         return "x140"
     if hasattr(r, "_get_memory_mapping") and hasattr(r, "_compact_mappings") and r.get_features().has_sub_devices:
         return "x80"
+    if type(r).__name__ in FIXED_SUBS:
+        # 4.39: radio con sotto-radio fisse, ognuna con i suoi canali (Icom IC-W32:
+        # VHF e UHF): in IU0VYT Flash una lista sola, una sotto-radio dopo l'altra
+        return "fixed"
     return None
+
+
+FIXED_SUBS = ("ICW32ARadio", "ICW32ERadio")
+
+
+def fixed_subs(r):
+    subs = r.get_sub_devices()
+    lo, hi = subs[0].get_features().memory_bounds
+    return subs, lo, hi - lo + 1
 
 
 def x80_groups(r):
@@ -193,6 +206,12 @@ def zoned_target(r, pos, delete=False):
     del canale presente; per una posizione vuota la zona del canale che la
     precede (la prima zona se non c'è) e il primo numero libero. Restituisce
     (None, None) per la cancellazione di una posizione già vuota."""
+    if zoned(r) == "fixed":
+        subs, lo, n = fixed_subs(r)
+        p = pos + 1 - lo  # pos è il numero del canale meno uno; il primo canale ha il numero lo
+        if p < 0 or p // n >= len(subs):
+            return None, None
+        return subs[p // n], lo + p % n
     if zoned(r) == "x481":
         z, num = pos // 250, pos % 250 + 1
         for sub in r.get_sub_devices():
@@ -267,6 +286,13 @@ def zoned_target(r, pos, delete=False):
 
 
 def decode(r):
+    if zoned(r) == "fixed":
+        subs, lo, n = fixed_subs(r)
+        out = []
+        for sub in subs:
+            for k in range(lo, lo + n):
+                out.append(mem_to_json(sub, sub.get_memory(k)))
+        return out
     if zoned(r) == "x481":
         out = [None] * (32 * 250)
         for sub in r.get_sub_devices():

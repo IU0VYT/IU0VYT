@@ -99,6 +99,7 @@ func (e *icomEmu) serve(p Port) error {
 				continue
 			}
 			src := icomFlip(e.o, e.image())
+			src = src[:len(src)-e.o.extra] // IC-W32E: l'ultimo byte del file non è nella radio
 			blk := 0
 			for a := 0; a < len(src); a += 32 {
 				n := 32
@@ -167,3 +168,7 @@ func (icq7Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(icq7Opt, 
 
 // 4.33: IC-P7
 func (icp7Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(icp7Opt, img) }
+
+func (f id880Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(f.icom(m), img) }
+
+func (f icw32Fam) emu(m *genModel, img []byte) genEmu { return newIcomEmu(f.icom(m), img) }

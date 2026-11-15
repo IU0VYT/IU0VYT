@@ -2162,6 +2162,8 @@ cea195a0	{0} Palmare bibanda: 100 canali con nomi di 4 caratteri.
 3b76c19d	Vertex Standard VX-150
 31a78f5e	{0} Palmare VHF: 199 canali con nomi di 7 caratteri.
 16a78f4c	Palmare con APRS: 900 canali con nomi di 16 caratteri. La radio dichiara il suo modello: se è un'altra VX-8 il programma lo dice.
+fb76b472	Palmare bibanda con due metà separate: 100 canali VHF e 100 canali UHF con nomi di 8 caratteri, in una lista sola (da 0 a 99 VHF, da 100 a 199 UHF).
+476c4adb	1000 canali con nomi di 8 caratteri, analogici o digitali D-STAR (colonna «Modo»). La radio dichiara il suo modello: se è l'altro il programma lo dice.
 65260961	Sito TYT
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
@@ -3035,8 +3037,12 @@ a339fbf5	Icom Inc.AC
 fa4140af	Icom Inc.B8
 d6c3cb9f	Icom IC-T10
 160df882	200 canali VHF/UHF (da 0 a 199) con nomi di 6 caratteri. {0}Passo di sintonia, canali di scansione e di chiamata, inversione e blocco della trasmissione del canale si conservano. Driver di CHIRP.
-f03ef25a	Icom Inc.CD
 fe5c79a7	Icom {0}
+348e489d	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-./
+b791bb51	200 canali con nomi di 8 caratteri: da 0 a 99 la metà VHF, da 100 a 199 la metà UHF (100 + il numero che si vede sulla radio). {0}{1}{2}Driver di CHIRP.
+a7b25476	le posizioni da 0 a 99 sono la metà VHF della radio (da 118 a 174 MHz): {0} MHz va nelle posizioni da 100 a 199
+17179ec6	le posizioni da 100 a 199 sono la metà UHF della radio (da 400 a 470 MHz): {0} MHz va nelle posizioni da 0 a 99
+f03ef25a	Icom Inc.CD
 2972bf65	200 canali {0} (da 0 a 199) con nomi di 5 caratteri. {1}La potenza non è memorizzata nel canale. Banchi, nominativi D-STAR, passo di sintonia e canali in modo digitale DV si conservano. Driver di CHIRP.
 f5084846	la radio è l'altro modello della serie: apri la scheda «Icom {0}»
 ecbb6013	Icom IC-E90 / IC-T90
@@ -3048,6 +3054,14 @@ aedc7408	Cavo dati Icom OPC-2350LU (USB) oppure OPC-2218LU, nella presa «DATA»
 2257eeef	500 canali {0} (da 0 a 499) con nomi di 16 caratteri, analogici o D-STAR. {1}Un canale D-STAR nuovo nasce con «CQCQCQ». Driver di CHIRP.
 6c223c47	VHF/UHF (banda aerea in AM)
 514eb061	CQCQCQ
+01414bb4	Icom Inc.B1
+f095e89e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !"#$%&'()*+,-./:;
+fc3bc54b	{0} 1000 canali (da 0 a 999) con nomi di 8 caratteri, analogici o D-STAR. {1}Un canale D-STAR nuovo nasce con «CQCQCQ». Driver di CHIRP.
+5163e040	Radio veicolare VHF/UHF.
+37e99e13	Palmare VHF/UHF.
+3fc6bfec	Cavo di copia Icom (quello indicato nel manuale della radio); la radio va accesa normalmente. Copia veloce a 38400 baud.
+2a5b995f	la radio non può memorizzare la frequenza {0} MHz (multipli di 5, di 6,25 o di 9 kHz)
+478aafcf	la radio non può memorizzare uno scostamento di {0} Hz (multipli di 5, di 6,25 o di 9 kHz)
 eee8f7c6	Accendi la radio, poi collega il cavo al connettore microfono/altoparlante (ben inserito).
 07b28617	IJV V3
 37f9648b	Quansheng UV-K5 (firmware IJV V3, 200 canali)

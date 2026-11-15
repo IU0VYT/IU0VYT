@@ -3,6 +3,41 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.39.0 (14/11/2026)
+-------------------
+Icom: i palmari di CHIRP che mancavano (e una veicolare della stessa
+famiglia), riscritti da zero e confrontati con CHIRP.
+- Icom ID-80H (palmare D-STAR) e ID-880H (veicolare D-STAR), da id880.py: 1000
+  canali (da 0 a 999) con nomi di 8 caratteri, analogici o D-STAR, copia veloce
+  a 38400 baud. I due modelli hanno la stessa memoria e si distinguono dal
+  modello dichiarato dalla radio. Solo canali.
+- Icom IC-W32A e IC-W32E (palmari bibanda), da icw32.py: la radio ha due metà
+  separate, VHF e UHF, con 100 canali ciascuna e nomi di 8 caratteri. Nel
+  programma è una lista sola di 200 posizioni: da 0 a 99 la metà VHF, da 100 a
+  199 la metà UHF (100 + il numero che si vede sulla radio). Ogni metà accetta
+  solo le frequenze della sua banda: se si prova a mettere un canale nella
+  metà sbagliata il programma dice in quali posizioni va. Solo canali.
+- Queste quattro radio passano da «Identifica» come le altre Icom (stesso
+  saluto, il modello lo dichiara la radio).
+- Errore di CHIRP non copiato (ID-80H / ID-880H): CHIRP, quando scrive un
+  canale, accende anche un «indicatore del nome» a un indirizzo che cade
+  dentro i canali 98-101, e così li rovina. Nelle memorie lette da radio vere
+  in quel punto ci sono canali, non indicatori. Qui quell'indirizzo non si
+  tocca.
+- Altre differenze volute da CHIRP (in testa ai driver): frequenze e
+  scostamenti che la radio non può memorizzare vengono rifiutati invece di
+  essere troncati; il salto «P» della scansione resta; la banda aerea è in AM;
+  il file della IC-W32E ha in coda il byte che lo distingue da quello della
+  IC-W32A (lo stesso delle immagini di CHIRP).
+- Conversione da altre radio: i canali vengono provati sulla metà giusta della
+  IC-W32 (prima un canale UHF sarebbe stato scartato).
+- Prove: lettura, modifica e copia identiche a CHIRP per i quattro modelli,
+  struttura per ID-80H / ID-880H; icom439_test.go (canali D-STAR, 6,25 e 9 kHz,
+  canali 98-101, le due metà della IC-W32, regola della banda per posizione).
+  Lo script di confronto con CHIRP ora conosce le radio con sotto-radio fisse.
+- Nessuna di queste radio è stata provata dal vero: prima la sola lettura.
+- Galleria: 649 modelli di 52 marche (595 con canali, 502 con impostazioni).
+
 4.38.0 (14/11/2026)
 -------------------
 Versione di correzione dell'identificazione, dopo la prova della 4.36 / 4.37

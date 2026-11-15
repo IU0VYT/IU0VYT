@@ -747,6 +747,9 @@ func TestChirpLayout(t *testing.T) {
 		if !ok {
 			continue
 		}
+		if _, no := m.Fam.(interface{ chirpNoLayout() }); no {
+			continue // struttura non confrontabile campo per campo (dichiarato nel driver)
+		}
 		root := lf.layout(m)
 		key := fmt.Sprintf("%p", root)
 		if done[key] {

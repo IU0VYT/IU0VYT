@@ -5895,3 +5895,17 @@ b85c20ea	Yaesu VX-7R
 72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
 ad75ff44	电台没有回送数据：写入已停止
 16a78f4c	带 APRS 的手持机：900 个信道，名称 16 个字符。电台会报告自己的型号：如果是另一款 VX-8，程序会提示。
+476c4adb	1000 个信道，名称 8 个字符，模拟或数字 D-STAR（“模式”列）。电台会报告自己的型号：如果是另一款，程序会提示。
+01414bb4	Icom Inc.B1
+f095e89e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !"#$%&'()*+,-./:;
+fc3bc54b	{0} 1000 个信道（0 到 999），名称 8 个字符，模拟或 D-STAR。{1}新建的 D-STAR 信道带“CQCQCQ”。CHIRP 驱动。
+5163e040	VHF/UHF 车载电台。
+37e99e13	VHF/UHF 手持机。
+3fc6bfec	Icom 克隆线（电台说明书中指定的那种）；电台正常开机。38400 波特快速复制。
+2a5b995f	电台无法存储频率 {0} MHz（5、6.25 或 9 kHz 的整数倍）
+478aafcf	电台无法存储 {0} Hz 的频差（只能是 5、6.25 或 9 kHz 的倍数）
+fb76b472	双频段手持机，分为独立的两半：100 个 VHF 信道和 100 个 UHF 信道，名称 8 个字符，合在一个列表中（0 到 99 为 VHF，100 到 199 为 UHF）。
+348e489d	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-./
+b791bb51	200 个信道，名称 8 个字符：0 到 99 为 VHF 一半，100 到 199 为 UHF 一半（100 + 电台上显示的编号）。{0}{1}{2}CHIRP 驱动。
+a7b25476	位置 0 到 99 是电台的 VHF 一半（118 到 174 MHz）：{0} MHz 应放在位置 100 到 199
+17179ec6	位置 100 到 199 是电台的 UHF 一半（400 到 470 MHz）：{0} MHz 应放在位置 0 到 99

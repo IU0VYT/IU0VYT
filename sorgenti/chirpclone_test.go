@@ -188,6 +188,11 @@ func TestChirpClone(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			if fx, ok := m.Fam.(interface {
+				chirpCloneFix(m *genModel, ref []byte) []byte
+			}); ok {
+				dlC = fx.chirpCloneFix(m, dlC) // differenze volute nell'immagine letta (dichiarate nel driver)
+			}
 			if !bytes.Equal(dlC, got) {
 				t.Errorf("lettura: immagine diversa da quella letta da CHIRP (%d / %d byte): %s", len(dlC), len(got), diffRanges(dlC, got))
 			}

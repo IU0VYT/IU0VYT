@@ -5895,3 +5895,17 @@ b85c20ea	Yaesu VX-7R
 72bd598b	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!"#$%&'()*+-=
 ad75ff44	o rádio não devolve os dados: a escrita parou
 16a78f4c	Portátil com APRS: 900 canais com nomes de 16 caracteres. O rádio declara o seu modelo: se for outro VX-8 o programa avisa.
+476c4adb	1000 canais com nomes de 8 caracteres, analógicos ou digitais D-STAR (coluna «Modo»). O rádio declara o seu modelo: se for o outro, o programa avisa.
+01414bb4	Icom Inc.B1
+f095e89e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !"#$%&'()*+,-./:;
+fc3bc54b	{0} 1000 canais (de 0 a 999) com nomes de 8 caracteres, analógicos ou D-STAR. {1}Um canal D-STAR novo nasce com «CQCQCQ». Driver do CHIRP.
+5163e040	Rádio móvel VHF/UHF.
+37e99e13	Portátil VHF/UHF.
+3fc6bfec	Cabo de clonagem Icom (o indicado no manual do rádio); o rádio liga-se normalmente. Cópia rápida a 38400 baud. 
+2a5b995f	o rádio não consegue memorizar a frequência {0} MHz (múltiplos de 5, de 6,25 ou de 9 kHz)
+478aafcf	o rádio não consegue memorizar um desvio de {0} Hz (múltiplos de 5, de 6,25 ou de 9 kHz)
+fb76b472	Portátil bibanda com duas metades separadas: 100 canais VHF e 100 canais UHF com nomes de 8 caracteres, numa só lista (de 0 a 99 VHF, de 100 a 199 UHF).
+348e489d	ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890-./
+b791bb51	200 canais com nomes de 8 caracteres: de 0 a 99 a metade VHF, de 100 a 199 a metade UHF (100 + o número que se vê no rádio). {0}{1}{2}Driver do CHIRP.
+a7b25476	as posições de 0 a 99 são a metade VHF do rádio (de 118 a 174 MHz): {0} MHz vai nas posições de 100 a 199
+17179ec6	as posições de 100 a 199 são a metade UHF do rádio (de 400 a 470 MHz): {0} MHz vai nas posições de 0 a 99

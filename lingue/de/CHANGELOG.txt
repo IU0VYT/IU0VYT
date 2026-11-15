@@ -7,6 +7,24 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.39.0 (13.11.2026)
+-------------------
+- Icom: die noch fehlenden Handfunkgeräte aus CHIRP (und ein Mobilgerät derselben
+  Familie), von Grund auf neu geschrieben und mit CHIRP verglichen. ID-80H und ID-880H:
+  1000 Kanäle (0 bis 999) mit 8-stelligen Namen, analog oder D-STAR, schnelles Klonen
+  mit 38400 Baud. IC-W32A und IC-W32E: Das Funkgerät hat zwei getrennte Hälften, VHF und
+  UHF, mit je 100 Kanälen; im Programm ist es eine einzige Liste mit 200 Positionen (0
+  bis 99 VHF, 100 bis 199 UHF), und jede Hälfte nimmt nur die Frequenzen ihres Bandes
+  an. Nur Kanäle; die vier Geräte werden von «Identifizieren» wie die anderen
+  Icom-Geräte abgefragt.
+- Ein CHIRP-Fehler wird nicht übernommen (ID-80H / ID-880H): Beim Schreiben eines Kanals
+  setzt CHIRP auch ein «Namens-Flag» an einer Adresse, die innerhalb der Kanäle 98-101
+  liegt, und beschädigt sie; hier bleibt diese Adresse unberührt. Weitere gewollte
+  Unterschiede: Werte, die das Funkgerät nicht speichern kann, werden abgelehnt statt
+  abgeschnitten, der Suchlauf-Sprung «P» bleibt erhalten, das Flugfunkband ist AM.
+  Keines dieser Funkgeräte wurde an einem echten Gerät getestet: zuerst lesen, dann
+  schreiben.
+
 4.38.0 (13.11.2026)
 -------------------
 - Korrekturversion der Identifizierung nach den Tests der 4.36 / 4.37 an echten
