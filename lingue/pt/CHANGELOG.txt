@@ -7,6 +7,20 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.38.0 (13/11/2026)
+-------------------
+- Versão de correção da identificação, depois dos testes da 4.36 / 4.37 com rádios
+  reais: o Bajeton BJ-9000 bloqueava de vez em quando, sobretudo na primeira
+  identificação (era preciso retirar a bateria). Com a 4.35 não acontecia. A escuta da
+  porta durante um segundo antes da primeira saudação (uma vez por minuto para cada
+  porta e velocidade) volta a ser a da 4.35: a 4.36 saltava-a para o rádio já
+  reconhecido nessa porta e, depois de uma escuta sem bytes, para todas as outras
+  velocidades. Custo: a primeira identificação de um rádio já reconhecido começa um
+  segundo mais tarde; tudo o resto da 4.36 mantém-se.
+- Não verificado a partir da nuvem: que fosse essa a causa do bloqueio é uma hipótese.
+  Se o BJ-9000 continuar a bloquear, usa «Guardar o diagnóstico da identificação» e
+  envia o ficheiro. Nenhum rádio novo nesta versão.
+
 4.37.0 (13/11/2026)
 -------------------
 - Portáteis Yaesu: oito modelos novos a partir dos drivers do CHIRP, reescritos de raiz

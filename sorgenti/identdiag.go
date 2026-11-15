@@ -232,8 +232,7 @@ func (a *App) identDiagReport() string {
 
 // note dell'apertura della porta (vedi identSpontSample)
 const (
-	diagNoteKnown = " (radio già nota: senza ascolto)"
-	diagNoteCut   = " (ascolto interrotto)"
+	diagNoteCut = " (ascolto interrotto)"
 )
 
 func diagNoteSpont(data []byte) string {

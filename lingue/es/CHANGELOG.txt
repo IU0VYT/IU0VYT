@@ -7,6 +7,20 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.38.0 (13/11/2026)
+-------------------
+- Versión de corrección de la identificación, tras las pruebas de la 4.36 / 4.37 con
+  radios reales: la Bajeton BJ-9000 se bloqueaba de vez en cuando, sobre todo en la
+  primera identificación (había que quitar la batería). Con la 4.35 no ocurría. La
+  escucha del puerto durante un segundo antes del primer saludo (una vez por minuto para
+  cada puerto y velocidad) vuelve a ser la de la 4.35: la 4.36 la omitía para la radio
+  ya reconocida en ese puerto y, tras una escucha sin bytes, para todas las demás
+  velocidades. Coste: la primera identificación de una radio ya reconocida empieza un
+  segundo más tarde; todo lo demás de la 4.36 se mantiene.
+- No verificado desde la nube: que esa fuera la causa del bloqueo es una hipótesis. Si
+  la BJ-9000 se sigue bloqueando, usa «Guardar el diagnóstico de la identificación» y
+  envía el archivo. Ninguna radio nueva en esta versión.
+
 4.37.0 (13/11/2026)
 -------------------
 - Portátiles Yaesu: ocho modelos nuevos a partir de los controladores de CHIRP,

@@ -7,6 +7,19 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.38.0 (13/11/2026)
+-------------------
+- Fix release for identification, after the tests of 4.36 / 4.37 on real radios: the
+  Bajeton BJ-9000 occasionally froze, mostly at the first identification (the battery
+  had to be removed). With 4.35 it did not happen. The one-second listening of the port
+  before the first greeting (once a minute for each port and speed) is back as in 4.35:
+  version 4.36 skipped it for the radio already recognised on that port and, after a
+  silent listening, for all the other speeds. Cost: the first identification of an
+  already recognised radio starts one second later; everything else from 4.36 remains.
+- Not verified from the cloud: that this was the cause of the freeze is a hypothesis. If
+  the BJ-9000 still freezes, use «Save the identification diagnostics» and send the
+  file. No new radios in this version.
+
 4.37.0 (13/11/2026)
 -------------------
 - Yaesu handhelds: eight new models from the CHIRP drivers, rewritten from scratch and

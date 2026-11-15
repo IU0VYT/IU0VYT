@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.37.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.38.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,12 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.38.0 :
+- Correction de l'identification : la Bajeton BJ-9000 se bloquait de temps en temps,
+  surtout à la première identification. Le programme écoute de nouveau le port pendant
+  une seconde avant le premier appel, comme dans la 4.35, y compris pour la radio déjà
+  reconnue sur ce câble. Les autres améliorations de la 4.36 restent.
+- Galerie : 645 modèles de 52 marques (591 avec canaux, 502 avec réglages).
 Nouveautés de la 4.37.0 :
 - Huit nouveaux portatifs Yaesu : VX-5R et VX-7R (canaux) ; VX-2R, FT-50R, VX-150,
   VX-8R, VX-8DR et VX-8GE (canaux et réglages, pour le VX-8 aussi l'APRS). La copie part

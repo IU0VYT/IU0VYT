@@ -6,6 +6,20 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.38.0 (13/11/2026)
+-------------------
+- Versi pembetulan pengenalpastian, selepas ujian 4.36 / 4.37 pada radio sebenar:
+  Bajeton BJ-9000 kadang-kadang tersekat, terutamanya pada pengenalpastian pertama
+  (bateri perlu ditanggalkan). Dengan 4.35 perkara ini tidak berlaku. Pendengaran port
+  selama satu saat sebelum sapaan pertama (sekali seminit bagi setiap port dan kelajuan)
+  kembali seperti dalam 4.35: versi 4.36 melangkaunya untuk radio yang sudah dikenali
+  pada port itu dan, selepas pendengaran tanpa bait, untuk semua kelajuan lain. Kosnya:
+  pengenalpastian pertama radio yang sudah dikenali bermula satu saat lebih lewat; yang
+  lain daripada 4.36 dikekalkan.
+- Tidak disahkan dari awan: bahawa inilah punca radio tersekat hanyalah hipotesis. Jika
+  BJ-9000 masih tersekat, gunakan «Simpan diagnosis pengenalpastian» dan hantar failnya.
+  Tiada radio baharu dalam versi ini.
+
 4.37.0 (13/11/2026)
 -------------------
 - Radio genggam Yaesu: lapan model baharu daripada pemacu CHIRP, ditulis semula dari

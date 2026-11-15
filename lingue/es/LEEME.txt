@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.37.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.38.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,12 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.38.0:
+- Corrección de la identificación: la Bajeton BJ-9000 se bloqueaba de vez en cuando,
+  sobre todo en la primera identificación. El programa vuelve a escuchar el puerto
+  durante un segundo antes del primer saludo, como en la 4.35, también para la radio ya
+  reconocida en ese cable. Las demás mejoras de la 4.36 se mantienen.
+- Galería: 645 modelos de 52 marcas (591 con canales, 502 con ajustes).
 Novedades de la 4.37.0:
 - Ocho portátiles Yaesu nuevos: VX-5R y VX-7R (canales); VX-2R, FT-50R, VX-150, VX-8R,
   VX-8DR y VX-8GE (canales y ajustes, en la VX-8 también APRS). La copia parte de la

@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.37.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.38.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,12 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.38.0:
+- Korrektur der Identifizierung: Das Bajeton BJ-9000 blieb gelegentlich hängen, vor
+  allem bei der ersten Identifizierung. Das Programm lauscht wieder eine Sekunde am
+  Port, bevor es den ersten Gruß sendet, wie in 4.35, auch beim Funkgerät, das an diesem
+  Kabel schon erkannt wurde. Die übrigen Verbesserungen der 4.36 bleiben.
+- Galerie: 645 Modelle von 52 Marken (591 mit Kanälen, 502 mit Einstellungen).
 Neu in 4.37.0:
 - Acht neue Yaesu-Handfunkgeräte: VX-5R und VX-7R (Kanäle); VX-2R, FT-50R, VX-150,
   VX-8R, VX-8DR und VX-8GE (Kanäle und Einstellungen, beim VX-8 auch APRS). Die Kopie

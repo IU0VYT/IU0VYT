@@ -7,6 +7,20 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.38.0 (13/11/2026)
+-------------------
+- Version corrective de l'identification, après les essais des 4.36 / 4.37 sur de vraies
+  radios : la Bajeton BJ-9000 se bloquait de temps en temps, surtout à la première
+  identification (il fallait retirer la batterie). Avec la 4.35 cela n'arrivait pas.
+  L'écoute du port pendant une seconde avant le premier appel (une fois par minute pour
+  chaque port et chaque vitesse) est redevenue celle de la 4.35 : la 4.36 la sautait
+  pour la radio déjà reconnue sur ce port et, après une écoute sans octet, pour toutes
+  les autres vitesses. Coût : la première identification d'une radio déjà reconnue
+  commence une seconde plus tard ; tout le reste de la 4.36 demeure.
+- Non vérifié depuis le cloud : que ce soit la cause du blocage est une hypothèse. Si la
+  BJ-9000 se bloque encore, utilisez « Enregistrer le diagnostic de l'identification »
+  et envoyez le fichier. Aucune nouvelle radio dans cette version.
+
 4.37.0 (13/11/2026)
 -------------------
 - Portatifs Yaesu : huit nouveaux modèles issus des pilotes de CHIRP, réécrits de zéro

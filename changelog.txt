@@ -3,6 +3,35 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.38.0 (14/11/2026)
+-------------------
+Versione di correzione dell'identificazione, dopo la prova della 4.36 / 4.37
+sulle radio vere: il resto funziona, ma la Bajeton BJ-9000 ogni tanto si
+bloccava, soprattutto alla prima identificazione (per sbloccarla bisognava
+togliere la batteria). Con la 4.35 non succedeva.
+- Ascolto della porta prima del primo saluto: è tornato quello della 4.35. Il
+  programma, appena aperta la porta, ascolta per un secondo senza inviare nulla
+  (una volta al minuto per ogni porta e velocità). Serve a scoprire le radio che
+  trasmettono da sole, ma è anche il silenzio che la radio trova fra l'apertura
+  della porta e il saluto. La 4.36, per guadagnare tempo, lo saltava per la
+  radio già riconosciuta su quella porta e, dopo un ascolto senza byte, per
+  tutte le altre velocità: era l'unica cosa cambiata in quello che la BJ-9000
+  riceve sul suo cavo.
+- Che cosa si perde: la prima identificazione di una radio già riconosciuta
+  comincia un secondo dopo (una volta al minuto). Tutto il resto della 4.36
+  resta: radio ricordate per cavo e provate per prime, velocità della K67 Pro
+  ricordata, preparazione dei protocolli all'avvio, riquadro solo durante la
+  lettura, avviso per la radio spenta, controllo breve della K67 Pro con la
+  scheda aperta, diagnosi.
+- Regola confermata: anche l'ascolto è un'attesa verso la radio, e le attese
+  verso la radio non si accorciano senza una misura su radio vere.
+- Non verificato dal cloud: che la causa del blocco fosse questa è un'ipotesi
+  (le radio simulate non si bloccano). Se la BJ-9000 si blocca ancora: appena
+  l'hai sbloccata, «Salva la diagnosi dell'identificazione» e invia il file.
+- Prova aggiornata (TestIdentListenBeforeFirst): anche la radio già nota
+  aspetta l'ascolto; entro un minuto l'ascolto non si ripete.
+- Nessuna radio nuova in questa versione.
+
 4.37.0 (14/11/2026)
 -------------------
 Palmari Yaesu: otto modelli nuovi, dai driver di CHIRP (vx5.py, vx7.py, vx2.py,

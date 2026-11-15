@@ -1,11 +1,16 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.37.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.38.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.38.0:
+- Correzione dell'identificazione: la Bajeton BJ-9000 ogni tanto si bloccava,
+  soprattutto alla prima identificazione. Il programma è tornato ad ascoltare
+  la porta per un secondo prima del primo saluto, come nella 4.35, anche per
+  la radio già riconosciuta su quel cavo. Le altre migliorie della 4.36 restano.
 Novità della 4.37.0:
 - Otto palmari Yaesu nuovi: VX-5R e VX-7R (canali); VX-2R, FT-50R, VX-150,
   VX-8R, VX-8DR e VX-8GE (canali e impostazioni, per la VX-8 anche APRS).

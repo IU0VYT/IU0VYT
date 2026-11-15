@@ -165,11 +165,12 @@ func TestIdentK67BaudRemembered(t *testing.T) {
 	}
 }
 
-// 4.36: l'ascolto della porta prima dei tentativi (un secondo, per scoprire le
-// radio che trasmettono da sole) si faceva per ogni velocità: ora una porta che
-// tace si ascolta una volta sola, e il tentativo di una radio già riconosciuta
-// su quella porta parte senza ascolto.
-func TestIdentListenOnce(t *testing.T) {
+// 4.38: l'ascolto della porta prima dei tentativi (un secondo, una volta al
+// minuto per porta e velocità) è anche il silenzio fra l'apertura della porta
+// e il primo saluto: si fa sempre, anche per la radio già riconosciuta su
+// quella porta (la 4.36 lo saltava e la Bajeton BJ-9000 vera ogni tanto si
+// bloccava alla prima identificazione).
+func TestIdentListenBeforeFirst(t *testing.T) {
 	f, s, p, l, l9 := identFirstWait, identSilentMax, identPause, identSpontListen, identSpontListen9600
 	identFirstWait, identSilentMax, identPause = 20*time.Millisecond, 40*time.Millisecond, 10*time.Millisecond
 	identSpontListen, identSpontListen9600 = 150*time.Millisecond, 150*time.Millisecond
@@ -179,30 +180,50 @@ func TestIdentListenOnce(t *testing.T) {
 		identSpontReset()
 	})
 	identAttach(t, func(p Port) {}, "") // cavo senza radio
-	run := func(c *apiClient) (listens, noListen int) {
+	run := func(c *apiClient, reset bool) (listens int) {
 		identDiagReset()
-		identSpontReset()
+		if reset {
+			identSpontReset()
+		}
 		c.must("identify/start", map[string]string{"port": "COM6", "brand": "Baofeng"})
 		if st := identWait(c); st["state"] != "done" || st["result"].(map[string]interface{})["found"] == true {
 			t.Fatalf("ricerca senza radio: %v", st)
 		}
-		return diagCount("ascolto di"), diagCount("senza ascolto")
+		if k := diagCount("senza ascolto"); k != 0 {
+			t.Fatalf("%d tentativi dichiarati senza ascolto\n%s", k, identDiag.text())
+		}
+		return diagCount("ascolto di")
 	}
 	c := newAPIClient(t)
-	if n, k := run(c); n != 1 || k != 0 {
-		t.Fatalf("porta senza ricordi: %d ascolti, %d tentativi senza ascolto\n%s", n, k, identDiag.text())
+	// porta senza ricordi: un ascolto per ogni velocità del piano (qui si contano
+	// solo le due della K67 Pro), il primo al primo tentativo
+	bauds := map[int]bool{}
+	identPortMu.Lock()
+	for _, pr := range c.app.identPlan(&identReq{Port: "COM6", Brand: "Baofeng"}) {
+		if pr.k67 {
+			bauds[pr.baud] = true
+		}
+	}
+	identPortMu.Unlock()
+	n := run(c, true)
+	if n < 2 || n < len(bauds) {
+		t.Fatalf("porta senza ricordi: %d ascolti con almeno %d velocità nel piano\n%s", n, len(bauds), identDiag.text())
 	}
 	if !strings.Contains(strings.Split(identDiag.text(), "\r\n")[2], "ascolto di") {
 		t.Fatalf("l'ascolto non è al primo tentativo:\n%s", identDiag.text()[:600])
 	}
-	// K67 Pro già riconosciuta su questa porta: il suo tentativo parte subito,
-	// l'ascolto si fa al tentativo seguente
+	// subito dopo (entro identSpontTTL) non si ascolta di nuovo
+	if k := run(c, false); k != 0 {
+		t.Fatalf("seconda ricerca entro un minuto: %d ascolti", k)
+	}
+	// K67 Pro già riconosciuta su questa porta: è il primo tentativo e anche
+	// lei aspetta l'ascolto prima del saluto
 	c.app.rememberRadio("COM6", kindXLC)
-	if n, k := run(c); n != 1 || k != 1 {
-		t.Fatalf("radio nota: %d ascolti, %d tentativi senza ascolto", n, k)
+	if k := run(c, true); k != n {
+		t.Fatalf("radio nota: %d ascolti, senza ricordi %d", k, n)
 	}
 	lines := strings.Split(identDiag.text(), "\r\n")
-	if !strings.Contains(lines[1], "K67") || !strings.Contains(lines[2], "senza ascolto") {
+	if !strings.Contains(lines[1], "K67") || !strings.Contains(lines[2], "ascolto di") {
 		t.Fatalf("primo tentativo:\n%s", strings.Join(lines[:4], "\n"))
 	}
 }
@@ -264,6 +285,11 @@ func TestAutoIdentRadioOff(t *testing.T) {
 	oldS, oldF, oldU, oldK, oldL, oldQ := autoSettle, autoRetryFast, autoRetryUnknown, autoRetryKnown, listPortsFunc, autoQuiet
 	autoSettle, autoRetryFast, autoQuiet = 10*time.Millisecond, 20*time.Millisecond, 10*time.Millisecond
 	autoRetryUnknown, autoRetryKnown = 4*time.Second, 150*time.Millisecond
+	// l'ascolto di un secondo per velocità (una volta al minuto) qui dura meno:
+	// la prova guarda l'ordine dei tentativi, non i tempi veri
+	oldSL, oldSL9 := identSpontListen, identSpontListen9600
+	identSpontListen, identSpontListen9600 = 150*time.Millisecond, 150*time.Millisecond
+	t.Cleanup(func() { identSpontListen, identSpontListen9600 = oldSL, oldSL9 })
 	t.Cleanup(func() {
 		autoSettle, autoRetryFast, autoRetryUnknown, autoRetryKnown, listPortsFunc, autoQuiet = oldS, oldF, oldU, oldK, oldL, oldQ
 	})

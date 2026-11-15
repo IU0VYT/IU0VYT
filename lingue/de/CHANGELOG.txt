@@ -7,6 +7,20 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.38.0 (13.11.2026)
+-------------------
+- Korrekturversion der Identifizierung nach den Tests der 4.36 / 4.37 an echten
+  Funkgeräten: Das Bajeton BJ-9000 blieb gelegentlich hängen, vor allem bei der ersten
+  Identifizierung (der Akku musste entfernt werden). Mit der 4.35 geschah das nicht. Das
+  einsekündige Lauschen am Port vor dem ersten Gruß (einmal pro Minute für jeden Port
+  und jede Geschwindigkeit) ist wieder wie in 4.35: Die 4.36 übersprang es beim
+  Funkgerät, das an diesem Port schon erkannt war, und nach einem Lauschen ohne Bytes
+  bei allen anderen Geschwindigkeiten. Preis: Die erste Identifizierung eines schon
+  erkannten Funkgeräts beginnt eine Sekunde später; alles andere aus der 4.36 bleibt.
+- Aus der Cloud nicht überprüft: Dass dies die Ursache des Hängens war, ist eine
+  Vermutung. Bleibt das BJ-9000 weiterhin hängen, «Diagnose der Identifizierung
+  speichern» verwenden und die Datei senden. Keine neuen Funkgeräte in dieser Version.
+
 4.37.0 (13.11.2026)
 -------------------
 - Yaesu-Handfunkgeräte: acht neue Modelle aus den CHIRP-Treibern, von Grund auf neu

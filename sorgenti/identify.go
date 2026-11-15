@@ -619,10 +619,9 @@ func openPort(name string, baud int) (Port, error) {
 	// tentativo finisce presto come con una porta senza radio (prima ogni modello
 	// sembrava rispondere e la ricerca durava alcuni minuti)
 	st.mu.Lock()
-	known := st.known
 	st.listenFrom = time.Now()
 	st.mu.Unlock()
-	sp, note := identSpontSample(st.ctx, probeKey(name), baud, p, known)
+	sp, note := identSpontSample(st.ctx, probeKey(name), baud, p)
 	st.mu.Lock()
 	st.spont = sp
 	st.listened += time.Since(st.listenFrom) // il tempo d'ascolto non conta come silenzio della radio
@@ -656,24 +655,22 @@ var (
 	identSpontListen9600 = time.Second
 )
 
-// identSpontQuiet: chiave di identSpont per «la porta tace a qualsiasi velocità»
-const identSpontQuiet = "*"
-
 // identSpontSample: ascolto della porta appena aperta; i byte che non sono
 // disturbi della linea si ricordano (validi identSpontTTL). Restituisce anche
 // una nota per la diagnosi.
 //
-// 4.36: l'ascolto dura identSpontListen (un secondo) e prima si ripeteva per
-// ogni velocità, una volta al minuto: con tre radio già note a velocità diverse
-// la prima ricerca partiva con tre secondi di solo ascolto. Ora:
-//   - una porta su cui in un secondo non è arrivato NESSUN byte tace a
-//     qualsiasi velocità (una radio che trasmette da sola a un'altra velocità
-//     si vedrebbe comunque, come disturbi): per identSpontTTL non si ascolta
-//     più, nemmeno alle altre velocità. Vale per gli ascolti da 9600 baud in
-//     su: a velocità più basse una trasmissione veloce può non vedersi;
-//   - il tentativo di una radio già riconosciuta su quella porta (noListen)
-//     parte subito, senza ascolto: se la radio è quella, risponde.
-func identSpontSample(ctx context.Context, key string, baud int, p Port, noListen bool) ([]byte, string) {
+// L'ascolto dura identSpontListen (un secondo) e si fa una volta al minuto per
+// ogni porta e velocità, PRIMA di inviare qualcosa. Oltre a scoprire le radio
+// che trasmettono da sole, è anche il silenzio che la radio trova fra
+// l'apertura della porta e il primo saluto.
+//
+// 4.38: la 4.36 aveva tolto questo ascolto per la radio già riconosciuta sulla
+// porta e, dopo un ascolto senza byte, per tutte le altre velocità. Con la
+// Bajeton BJ-9000 vera (prova del 14/11/2026) la radio ogni tanto si bloccava,
+// soprattutto alla prima identificazione; con la 4.35, che ascoltava sempre,
+// non succedeva. L'ascolto è tornato quello della 4.35: è un'attesa verso la
+// radio e, come le altre, non si accorcia senza una misura su radio vere.
+func identSpontSample(ctx context.Context, key string, baud int, p Port) ([]byte, string) {
 	k := fmt.Sprintf("%s|%d", key, baud)
 	identSpont.Lock()
 	if r, ok := identSpont.m[k]; ok && time.Since(r.at) < identSpontTTL {
@@ -683,14 +680,7 @@ func identSpontSample(ctx context.Context, key string, baud int, p Port, noListe
 		}
 		return r.data, ""
 	}
-	if r, ok := identSpont.m[key+"|"+identSpontQuiet]; ok && time.Since(r.at) < identSpontTTL {
-		identSpont.Unlock()
-		return nil, ""
-	}
 	identSpont.Unlock()
-	if noListen {
-		return nil, diagNoteKnown
-	}
 	var got []byte
 	buf := make([]byte, 1)
 	listen := identSpontListen
@@ -722,9 +712,6 @@ func identSpontSample(ctx context.Context, key string, baud int, p Port, noListe
 		identSpont.m = map[string]identSpontRec{}
 	}
 	identSpont.m[k] = identSpontRec{time.Now(), c}
-	if len(got) == 0 && baud >= 9600 {
-		identSpont.m[key+"|"+identSpontQuiet] = identSpontRec{time.Now(), nil}
-	}
 	identSpont.Unlock()
 	return c, diagNoteListen(time.Since(t0), got)
 }

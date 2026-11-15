@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.37.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.38.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,12 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.38.0:
+- Identification fix: the Bajeton BJ-9000 occasionally froze, mostly at the first
+  identification. The program again listens to the port for one second before the first
+  greeting, as in 4.35, also for the radio already recognised on that cable. The other
+  improvements of 4.36 remain.
+- Gallery: 645 models of 52 brands (591 with channels, 502 with settings).
 What's new in 4.37.0:
 - Eight new Yaesu handhelds: VX-5R and VX-7R (channels); VX-2R, FT-50R, VX-150, VX-8R,
   VX-8DR and VX-8GE (channels and settings, for the VX-8 also APRS). The copy is started
