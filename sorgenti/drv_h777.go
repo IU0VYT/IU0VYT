@@ -357,12 +357,7 @@ type h777Sess struct {
 }
 
 func (s *h777Sess) sleep(d time.Duration) error {
-	select {
-	case <-s.ctx.Done():
-		return errCancelled
-	case <-time.After(d):
-		return nil
-	}
+	return drvSleep(s.ctx, s.p, d)
 }
 
 func (s *h777Sess) read(n int, to time.Duration) ([]byte, error) {

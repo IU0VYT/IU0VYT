@@ -40,12 +40,7 @@ func rawOpen(ctx context.Context, port string, baud int) (*rawSess, error) {
 }
 
 func (s *rawSess) sleep(d time.Duration) error {
-	select {
-	case <-s.ctx.Done():
-		return errCancelled
-	case <-time.After(d):
-		return nil
-	}
+	return drvSleep(s.ctx, s.p, d)
 }
 
 // read: esattamente n byte; errTimeout diventa un errore "la radio non risponde"

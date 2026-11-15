@@ -1,11 +1,18 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.34.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.35.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.35.0:
+- «Identifica» e identificazione automatica: tolto il «giro veloce» della 4.31,
+  che con le radio vere poteva lasciare la radio bloccata in programmazione e
+  rendere la ricerca lenta. Le attese sono di nuovo quelle di prima.
+- La ricerca prova gli stessi gruppi di radio su ogni PC (prima cambiavano da
+  un avvio all'altro) e non scambia più per una radio l'eco di un cavo.
+- Galleria: 637 modelli di 52 marche (583 con canali, 496 con impostazioni).
 Novità della 4.34.0:
 - Radio nuove: Yaesu VX-170 e VX-177 (palmari), FT-7800 / FT-7900 e FT-8900
   (veicolari), solo canali, con i driver di CHIRP.

@@ -5853,3 +5853,4 @@ ef1bb624	Yaesu FT-8900
 646dc839	das Funkgerät ist kein {0} (Kennung {1})
 bbd47d6b	unvollständiger Block an Adresse {0} ({1} von {2} Byte)
 6246f0cc	Speicherabbild für das {0} ungültig
+416bef96	{0}: gelesen wurde nur das Echo des Kabels, kein Funkgerät

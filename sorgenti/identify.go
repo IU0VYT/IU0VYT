@@ -40,6 +40,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 	"unicode/utf16"
 )
@@ -51,39 +52,71 @@ var (
 	identFirstWait = 350 * time.Millisecond  // attesa massima di ogni lettura prima della prima risposta
 	identSilentMax = 700 * time.Millisecond  // tentativo abbandonato se la radio tace
 	identPause     = 1000 * time.Millisecond // pausa dopo un tentativo a cui la radio ha risposto
-	// 4.31: giro veloce. Una radio accesa risponde al saluto in poche decine di
-	// millisecondi: prima del giro con le attese piene se ne fa uno con attese
-	// brevi, che da solo trova quasi tutte le radio in un quarto del tempo. Il giro
-	// con le attese piene resta, per le radio lente.
-	identFastWait   = 100 * time.Millisecond // giro veloce: attesa della prima risposta
-	identFastSilent = 320 * time.Millisecond // giro veloce: tentativo abbandonato se la radio tace
-	// giro veloce: dopo una domanda rimasta senza risposta il driver ne fa subito
-	// un'altra oppure il tentativo si chiude (niente ripetizioni né pause)
-	identFastIdle = 30 * time.Millisecond
-	// giro veloce: una domanda (stessi byte, stessa velocità) a cui la radio non ha
-	// risposto in questo giro, ripetuta dallo stesso driver o da un altro, non
-	// aspetta di nuovo: la prima volta ha già avuto tutta l'attesa. Il giro con le
-	// attese piene resta com'era prima della 4.31
-	identReplayWaitFast = 10 * time.Millisecond
-	identPortMu         sync.Mutex // solo per i test: prove in sequenza
+	identPortMu    sync.Mutex                // solo per i test: prove in sequenza
 )
 
 // ---------------------------------------------------------------- radio finta muta
 
 // silentPort: radio che non risponde mai; registra i byte inviati dal driver.
+//
+// 4.35: la trascrizione finisce per CONTEGGIO e non più per tempo. Prima ogni
+// driver veniva fermato dopo 1,5 secondi di orologio: i driver che ripetono il
+// saluto con delle pause, o che aspettano la radio fino a una scadenza, venivano
+// tagliati in un punto diverso a ogni avvio e secondo il carico del PC (478
+// driver insieme), e modelli con lo stesso identico saluto finivano in gruppi di
+// ricerca diversi (famiglia Retevis RT22 / Baofeng T20: da 4 a 6 gruppi invece
+// di uno; Kenwood TK-x80). Su un PC lento il piano di ricerca poteva cambiare
+// ancora di più. Ora la trascrizione si chiude dopo identTxMax byte inviati,
+// dopo identTxReads letture rimaste senza risposta o quando il driver rinuncia
+// da solo: lo stesso risultato su ogni PC.
 type silentPort struct {
-	tx  *bytes.Buffer
-	max int
-	mu  *sync.Mutex
+	st *silentState
+}
+
+// silentState: trascrizione di un modello (resta la stessa se il driver riapre
+// la porta)
+type silentState struct {
+	mu     sync.Mutex
+	tx     bytes.Buffer
+	reads  int
+	done   bool
+	slept  time.Duration // pause chieste dal driver (tempo «virtuale»)
+	cancel func()        // ferma il driver quando la trascrizione è completa
+}
+
+// finish (con st.mu preso): trascrizione completa. Il driver viene fermato: molti
+// aspettano la radio rileggendo la porta fino a una scadenza e, con una porta che
+// risponde subito «niente», terrebbero occupato il processore per secondi
+func (st *silentState) finish() {
+	st.done = true
+	if st.cancel != nil {
+		st.cancel()
+	}
 }
 
 var errIdentEnough = errors.New("trascrizione completa")
 
+// identTxReads: letture senza risposta dopo le quali la trascrizione è completa.
+// Un driver che aspetta la radio fino a una scadenza (ciclo di letture a tempo)
+// le supera in pochi millisecondi; i driver che contano i tentativi non ci
+// arrivano mai
+const identTxReads = 400
+
+// identTxSleep: pause sommate dopo le quali la trascrizione è completa (un driver
+// che fra un saluto e l'altro aspetta a lungo, come quello della UV-5R, resta
+// nel gruppo del suo primo saluto: è il comportamento di sempre)
+const identTxSleep = 1500 * time.Millisecond
+
 func (p *silentPort) Write(b []byte) error {
-	p.mu.Lock()
-	defer p.mu.Unlock()
-	p.tx.Write(b)
-	if p.tx.Len() >= p.max {
+	st := p.st
+	st.mu.Lock()
+	defer st.mu.Unlock()
+	if st.done {
+		return errIdentEnough
+	}
+	st.tx.Write(b)
+	if st.tx.Len() >= identTxMax {
+		st.finish()
 		return errIdentEnough
 	}
 	return nil
@@ -92,16 +125,60 @@ func (p *silentPort) ReadFull(ctx context.Context, b []byte, timeout time.Durati
 	if ctx.Err() != nil {
 		return errCancelled
 	}
+	st := p.st
+	st.mu.Lock()
+	defer st.mu.Unlock()
+	st.reads++
+	if st.done || st.reads > identTxReads {
+		st.finish()
+		return errIdentEnough
+	}
 	return errTimeout
 }
 func (p *silentPort) Purge() error { return nil }
 func (p *silentPort) SetBaud(baud int) error {
-	p.mu.Lock()
-	defer p.mu.Unlock()
-	fmt.Fprintf(p.tx, "\x00<baud %d>\x00", baud)
+	st := p.st
+	st.mu.Lock()
+	defer st.mu.Unlock()
+	if !st.done {
+		fmt.Fprintf(&st.tx, "\x00<baud %d>\x00", baud)
+	}
 	return nil
 }
 func (p *silentPort) Close() error { return nil }
+
+// identSilentPort: la porta è quella di una trascrizione
+func identSilentPort(p Port) bool {
+	_, ok := p.(*silentPort)
+	return ok
+}
+
+// drvSleep: pausa di un driver, interrotta se l'operazione viene annullata.
+// Durante la trascrizione del saluto (identTranscripts) non c'è nessuna radio e
+// le pause non si aspettano: così la trascrizione non dipende dal tempo
+func drvSleep(ctx context.Context, p Port, d time.Duration) error {
+	if sp, ok := p.(*silentPort); ok {
+		// le pause si sommano senza aspettare: oltre identTxSleep la trascrizione
+		// è completa (come quando si fermava a tempo, ma senza dipendere dal PC)
+		st := sp.st
+		st.mu.Lock()
+		st.slept += d
+		if st.slept >= identTxSleep && !st.done {
+			st.finish()
+		}
+		st.mu.Unlock()
+		if ctx.Err() != nil {
+			return errCancelled
+		}
+		return nil
+	}
+	select {
+	case <-ctx.Done():
+		return errCancelled
+	case <-time.After(d):
+		return nil
+	}
+}
 
 const identTxMax = 96
 
@@ -119,36 +196,53 @@ const identSilentName = "\x00IDENT:"
 func identTranscripts() map[string]string {
 	identTxOnce.Do(func() {
 		keys := map[string]string{}
-		var mu sync.Mutex
-		bufs := map[string]*bytes.Buffer{}
+		sts := map[string]*silentState{}
 		var list []*genModel
 		for _, m := range genModels {
 			if m.Conn == "" {
 				list = append(list, m)
-				bufs[m.ID] = &bytes.Buffer{}
+				sts[m.ID] = &silentState{}
 			}
 		}
 		probeReg.Lock()
 		probeReg.silent = func(name string, baud int) (Port, error) {
-			tx := bufs[strings.TrimPrefix(name, identSilentName)]
-			if tx == nil {
+			st := sts[strings.TrimPrefix(name, identSilentName)]
+			if st == nil {
 				return nil, errors.New("porta sconosciuta")
 			}
-			mu.Lock()
-			fmt.Fprintf(tx, "<%d>", baud)
-			mu.Unlock()
-			return &silentPort{tx: tx, max: identTxMax, mu: &mu}, nil
+			st.mu.Lock()
+			defer st.mu.Unlock()
+			if st.done {
+				return nil, errIdentEnough
+			}
+			fmt.Fprintf(&st.tx, "<%d>", baud)
+			return &silentPort{st: st}, nil
 		}
 		probeReg.Unlock()
+		late := int32(0)
 		var wg sync.WaitGroup
 		for _, m := range list {
 			wg.Add(1)
 			go func(m *genModel) {
 				defer wg.Done()
-				ctx, cancel := context.WithTimeout(context.Background(), 1500*time.Millisecond)
+				// la scadenza è solo una rete di sicurezza: la trascrizione finisce
+				// per conteggio (vedi silentPort)
+				ctx, cancel := context.WithTimeout(context.Background(), identTxTimeout)
 				defer cancel()
-				defer func() { _ = recover() }()
-				_, _, _ = m.Fam.Download(ctx, m, identSilentName+m.ID, func(int, int, string) {})
+				st := sts[m.ID]
+				st.mu.Lock()
+				st.cancel = cancel
+				st.mu.Unlock()
+				func() {
+					defer func() { _ = recover() }()
+					_, _, _ = m.Fam.Download(ctx, m, identSilentName+m.ID, func(int, int, string) {})
+				}()
+				st.mu.Lock()
+				if ctx.Err() != nil && !st.done {
+					atomic.AddInt32(&late, 1) // fermata dal tempo: chiave non garantita
+				}
+				st.done = true
+				st.mu.Unlock()
 			}(m)
 		}
 		wg.Wait()
@@ -156,18 +250,28 @@ func identTranscripts() map[string]string {
 		probeReg.silent = nil
 		probeReg.Unlock()
 		for _, m := range list {
-			mu.Lock()
-			b := bufs[m.ID].Bytes()
+			st := sts[m.ID]
+			st.mu.Lock()
+			b := st.tx.Bytes()
 			if len(b) > identTxMax+32 {
 				b = b[:identTxMax+32]
 			}
 			keys[m.ID] = string(b)
-			mu.Unlock()
+			st.mu.Unlock()
 		}
 		identTxKeys = keys
+		identTxLate = int(atomic.LoadInt32(&late))
 	})
 	return identTxKeys
 }
+
+// identTxTimeout: tempo massimo di una trascrizione (rete di sicurezza);
+// identTxLate: trascrizioni fermate dal tempo invece che dal conteggio (deve
+// restare zero: lo controlla una prova)
+var (
+	identTxTimeout = 5 * time.Second
+	identTxLate    int
+)
 
 // ---------------------------------------------------------------- porta controllata
 
@@ -183,7 +287,6 @@ type probePort struct {
 // pari) e la Quansheng TG-UV2+ (due bit di stop) parlavano con la porta in 8N1
 // e non venivano riconosciute.
 func (p probePort) SetEvenParity(on bool) error {
-	p.st.lineSet('E', fmt.Sprint(on))
 	if x, ok := p.Port.(interface{ SetEvenParity(bool) error }); ok {
 		return x.SetEvenParity(on)
 	}
@@ -191,7 +294,6 @@ func (p probePort) SetEvenParity(on bool) error {
 }
 
 func (p probePort) SetTwoStopBits(on bool) error {
-	p.st.lineSet('S', fmt.Sprint(on))
 	if x, ok := p.Port.(interface{ SetTwoStopBits(bool) error }); ok {
 		return x.SetTwoStopBits(on)
 	}
@@ -200,7 +302,6 @@ func (p probePort) SetTwoStopBits(on bool) error {
 
 // SetRTS (4.9): RTS spento per la Retevis C2
 func (p probePort) SetRTS(on bool) error {
-	p.st.lineSet('R', fmt.Sprint(on))
 	if x, ok := p.Port.(interface{ SetRTS(bool) error }); ok {
 		return x.SetRTS(on)
 	}
@@ -209,7 +310,6 @@ func (p probePort) SetRTS(on bool) error {
 
 // SetDTR (4.13): DTR spento per il firmware IJV V6
 func (p probePort) SetDTR(on bool) error {
-	p.st.lineSet('D', fmt.Sprint(on))
 	if x, ok := p.Port.(interface{ SetDTR(bool) error }); ok {
 		return x.SetDTR(on)
 	}
@@ -218,17 +318,12 @@ func (p probePort) SetDTR(on bool) error {
 
 func (p probePort) unwrapPort() Port { return p.Port }
 
-// SetBaud (4.31): la velocità fa parte della «domanda» (vedi identDead)
-func (p probePort) SetBaud(baud int) error {
-	p.st.lineSet('B', fmt.Sprint(baud))
-	return p.Port.SetBaud(baud)
-}
-
 type probeState struct {
 	mu      sync.Mutex
 	key     string // porta (vedi probeKey)
-	tx      []byte
-	genuine bool // la radio ha risposto (byte «puliti» diversi dall'eco di quelli inviati)
+	tx      []byte // byte inviati in questo tentativo, senza i disturbi di linea (vedi cleanBytes)
+	prev    []byte // ultimi byte inviati sulla porta prima di questo tentativo (eco ritardata)
+	genuine bool   // la radio ha risposto (byte «puliti» diversi dall'eco di quelli inviati)
 	first   []byte
 	// 4.4: risposta SICURA di una radio, per il riquadro «Identificazione Radio In
 	// Corso»: byte che non sono disturbi della linea (0x00, 0xFF e simili, per es.
@@ -247,68 +342,6 @@ type probeState struct {
 	listened   time.Duration
 	listenFrom time.Time
 	ctx        context.Context // tentativo (l'ascolto si interrompe con la ricerca)
-	// 4.31: giro veloce e domande ripetute (vedi identFastWait, identReplayWait)
-	fast     bool
-	line     string // velocità e impostazioni della linea, parte della «domanda»
-	lineKV   map[byte]string
-	stim     []byte    // byte inviati dopo l'ultima lettura
-	pend     string    // domanda in attesa di risposta
-	pendDead bool      // … già rimasta senza risposta in questo giro
-	timeouts int       // letture rimaste senza risposta in questo tentativo
-	deadAt   time.Time // ultima lettura rimasta senza risposta
-	streak   int       // letture a vuoto di fila senza una domanda nuova
-}
-
-// identDead: per porta, le domande (linea + byte inviati) rimaste senza risposta
-// nel giro in corso
-var identDead struct {
-	sync.Mutex
-	m map[string]map[string]bool
-}
-
-// identDeadReset: comincia un giro nuovo sulla porta
-func identDeadReset(key string) {
-	identDead.Lock()
-	if identDead.m == nil {
-		identDead.m = map[string]map[string]bool{}
-	}
-	identDead.m[key] = map[string]bool{}
-	identDead.Unlock()
-}
-
-func identDeadHas(key, q string) bool {
-	identDead.Lock()
-	defer identDead.Unlock()
-	return identDead.m[key][q]
-}
-
-func identDeadAdd(key, q string) {
-	identDead.Lock()
-	if m := identDead.m[key]; m != nil && len(m) < 4096 {
-		m[q] = true
-	}
-	identDead.Unlock()
-}
-
-// lineSet: impostazione della linea (B velocità, E parità, S bit di stop, R RTS,
-// D DTR); una porta appena aperta (O) riparte dalle impostazioni normali
-func (s *probeState) lineSet(k byte, v string) {
-	s.mu.Lock()
-	if k == 'O' {
-		s.lineKV = map[byte]string{}
-		k = 'B'
-	}
-	if s.lineKV == nil {
-		s.lineKV = map[byte]string{}
-	}
-	s.lineKV[k] = v
-	s.line = ""
-	for _, c := range [...]byte{'B', 'E', 'S', 'R', 'D'} {
-		if x, ok := s.lineKV[c]; ok {
-			s.line += string(c) + x + "|"
-		}
-	}
-	s.mu.Unlock()
 }
 
 // silence: tempo del tentativo senza l'ascolto della porta
@@ -356,13 +389,16 @@ var identSent struct {
 
 const identSentMax = 2048
 
+// identTxEcho: byte (senza disturbi) ricordati per ogni tentativo
+const identTxEcho = 1 << 16
+
 func identSentAdd(key string, b []byte) {
 	identSent.Lock()
 	defer identSent.Unlock()
 	if identSent.m == nil {
 		identSent.m = map[string][]byte{}
 	}
-	h := append(identSent.m[key], b...)
+	h := append(identSent.m[key], cleanBytes(b)...) // 4.35: senza i disturbi di linea
 	if len(h) > identSentMax {
 		h = append([]byte{}, h[len(h)-identSentMax:]...)
 	}
@@ -402,6 +438,23 @@ func (s *probeState) radioSure() bool {
 	return s.sure
 }
 
+// echoOnly (4.35): tutto quello che è arrivato nel tentativo è l'eco, anche con
+// dei byte persi, di quello che è stato inviato: nessuna radio ha risposto. Vale
+// solo con abbastanza byte diversi fra loro (una radio vuota che risponde solo
+// con delle conferme 0x06, uguali a quelle inviate dal programma, non è un'eco)
+func (s *probeState) echoOnly() bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.sure || len(s.clean) < 8 {
+		return false
+	}
+	seen := map[byte]bool{}
+	for _, c := range s.clean {
+		seen[c] = true
+	}
+	return len(seen) >= 4 && isSubsequence(s.clean, append(append([]byte{}, s.prev...), s.tx...))
+}
+
 // identProbing (4.9): sulla porta è in corso un tentativo di «Identifica»
 // (i driver che provano più saluti possono cambiarne l'ordine per rispondere
 // entro identSilentMax)
@@ -415,20 +468,6 @@ func identProbing(port string) bool {
 // risponde durante la ricerca (vedi probeState.onAnswer)
 type identAnswerKey struct{}
 
-// identFastKey (4.31): valore del contesto che chiede un tentativo del giro veloce
-type identFastKey struct{}
-
-// idle (4.31, giro veloce): dopo una lettura a vuoto il driver non ha fatto una
-// domanda nuova entro d, oppure continua a ripetere domande già fatte
-func (s *probeState) idle(d time.Duration) bool {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if s.genuine || s.deadAt.IsZero() {
-		return false
-	}
-	return s.streak >= 2 || (time.Since(s.deadAt) >= d && len(s.stim) == 0 && (s.pend == "" || s.pendDead))
-}
-
 func (s *probeState) answered() bool {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -437,11 +476,11 @@ func (s *probeState) answered() bool {
 
 func (p probePort) Write(b []byte) error {
 	p.st.mu.Lock()
-	if len(p.st.tx) < 4096 {
-		p.st.tx = append(p.st.tx, b...)
-	}
-	if len(p.st.stim) < 512 {
-		p.st.stim = append(p.st.stim, b...)
+	// 4.35: si ricordano TUTTI i byte inviati nel tentativo, senza i disturbi di
+	// linea (prima i primi 4096 byte grezzi: un driver che manda pacchetti lunghi,
+	// pieni di zeri, usciva dal conto e la sua eco sembrava la risposta di una radio)
+	if len(p.st.tx) < identTxEcho {
+		p.st.tx = append(p.st.tx, cleanBytes(b)...)
 	}
 	key := p.st.key
 	p.st.mu.Unlock()
@@ -450,50 +489,10 @@ func (p probePort) Write(b []byte) error {
 }
 
 func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration) error {
-	// 4.31, giro veloce: prima della prima risposta ogni lettura è l'attesa di una
-	// «domanda» (i byte inviati dopo la lettura precedente). Attesa del giro veloce
-	// la prima volta; quasi nulla se la stessa domanda è già rimasta senza risposta
-	// in questo giro o se dopo una lettura a vuoto non è stato inviato niente di nuovo
-	if !p.st.answered() && !p.st.fast && timeout > identFirstWait {
+	if !p.st.answered() && timeout > identFirstWait {
 		timeout = identFirstWait
 	}
-	if !p.st.answered() && p.st.fast {
-		s := p.st
-		s.mu.Lock()
-		first, replay := identFastWait, identReplayWaitFast
-		if len(s.stim) > 0 {
-			// domanda nuova: resta in sospeso finché una lettura non va a vuoto (in
-			// mezzo può esserci la lettura dell'eco del cavo)
-			s.pend = s.line + string(s.stim)
-			s.stim = s.stim[:0]
-			s.pendDead = identDeadHas(s.key, s.pend)
-		}
-		if s.pendDead || (s.pend == "" && s.timeouts > 0) {
-			first = replay
-		}
-		s.mu.Unlock()
-		if timeout > first {
-			timeout = first
-		}
-	}
 	err := p.Port.ReadFull(ctx, b, timeout)
-	if err != nil && ctx.Err() == nil && p.st.fast && !p.st.answered() {
-		s := p.st
-		s.mu.Lock()
-		s.timeouts++
-		q, dead := s.pend, s.pendDead
-		s.pend, s.pendDead = "", false
-		s.deadAt = time.Now()
-		if q != "" && !dead {
-			s.streak = 0
-		} else {
-			s.streak++ // domanda ripetuta o lettura senza domanda
-		}
-		s.mu.Unlock()
-		if q != "" && !dead {
-			identDeadAdd(s.key, q)
-		}
-	}
 	if err == nil && len(p.st.spont) > 0 {
 		// 4.7: byte uguali a quelli che la radio trasmette da sola (vedi
 		// identSpontSample): per il driver è come se la radio tacesse
@@ -523,13 +522,14 @@ func (p probePort) ReadFull(ctx context.Context, b []byte, timeout time.Duration
 			// per proseguire il tentativo conta l'eco di questo tentativo (come prima
 			// della 4.4); quella dei precedenti solo per il riquadro: altrimenti una
 			// conferma 0x06 già inviata da un altro tentativo sembrerebbe un'eco
-			if !bytes.Contains(cleanBytes(s.tx), s.clean) {
+			if !bytes.Contains(s.tx, s.clean) {
 				s.genuine = true // la radio ha risposto: il tentativo prosegue
-				echo := cleanBytes(append(identSentGet(s.key), s.tx...))
+				echo := append(identSentGet(s.key), s.tx...)
 				// eco con dei byte persi (es. letture scartate dai driver): i byte
 				// ricevuti compaiono, nello stesso ordine, tra quelli inviati in
-				// questo tentativo o alla fine del precedente
-				recent := cleanBytes(append(identSentTail(s.key, identEchoTail), s.tx...))
+				// questo tentativo o alla fine del precedente (s.prev: presi
+				// all'inizio del tentativo)
+				recent := append(append([]byte{}, s.prev...), s.tx...)
 				if !bytes.Contains(echo, s.clean) && !isSubsequence(s.clean, recent) && (len(s.clean) >= identSureBytes || s.hits >= 2) {
 					if identSureHook != nil {
 						identSureHook(s.key, s.clean, echo)
@@ -584,16 +584,6 @@ func openPort(name string, baud int) (Port, error) {
 	// inviare nulla; quei byte non contano come risposta della radio, così ogni
 	// tentativo finisce presto come con una porta senza radio (prima ogni modello
 	// sembrava rispondere e la ricerca durava alcuni minuti)
-	st.lineSet('O', fmt.Sprint(baud))
-	st.mu.Lock()
-	fast := st.fast
-	st.mu.Unlock()
-	// 4.31: nel giro veloce si ascolta solo dove qualcosa ha già risposto (o se
-	// l'ascolto di meno di un minuto fa è ancora valido): senza byte in arrivo non
-	// c'è nulla da scartare
-	if fast && !identSpontNeeded(probeKey(name), baud) {
-		return probePort{p, st}, nil
-	}
 	st.mu.Lock()
 	st.listenFrom = time.Now()
 	st.mu.Unlock()
@@ -671,37 +661,6 @@ func identSpontSample(ctx context.Context, key string, baud int, p Port) []byte 
 	return c
 }
 
-// identSpontWant (4.31): velocità a cui, nel giro veloce, qualcosa ha risposto: da
-// lì in poi anche il giro veloce ascolta la porta prima dei tentativi
-var identSpontWant struct {
-	sync.Mutex
-	m map[string]time.Time
-}
-
-func identSpontAsk(key string) {
-	identSpontWant.Lock()
-	if identSpontWant.m == nil {
-		identSpontWant.m = map[string]time.Time{}
-	}
-	identSpontWant.m[key] = time.Now()
-	identSpontWant.Unlock()
-}
-
-// identSpontNeeded: nel giro veloce, ascolto da fare (qualcosa ha risposto su
-// questa porta da meno di identSpontTTL) o già fatto e ancora valido
-func identSpontNeeded(key string, baud int) bool {
-	identSpontWant.Lock()
-	at, ok := identSpontWant.m[key]
-	identSpontWant.Unlock()
-	if ok && time.Since(at) < identSpontTTL {
-		return true
-	}
-	identSpont.Lock()
-	defer identSpont.Unlock()
-	r, ok := identSpont.m[fmt.Sprintf("%s|%d", key, baud)]
-	return ok && time.Since(r.at) < identSpontTTL
-}
-
 // identBeacon: un byte ripetuto (es. 0x01 del caricatore delle Bajeton in modalità
 // aggiornamento, ogni 0,7 s a 9600 baud)
 func identBeacon(b []byte) bool {
@@ -776,9 +735,8 @@ func probe(ctx context.Context, port string, fn func(ctx context.Context) error)
 	key := probeKey(port)
 	pctx, cancel := context.WithCancel(ctx)
 	defer cancel()
-	st = &probeState{key: key, ctx: pctx}
+	st = &probeState{key: key, ctx: pctx, prev: identSentTail(key, identEchoTail)}
 	st.onAnswer, _ = ctx.Value(identAnswerKey{}).(func())
-	st.fast, _ = ctx.Value(identFastKey{}).(bool)
 	probeReg.Lock()
 	if probeReg.m == nil {
 		probeReg.m = map[string]*probeState{}
@@ -796,28 +754,12 @@ func probe(ctx context.Context, port string, fn func(ctx context.Context) error)
 	timedOut := false
 	var tmu sync.Mutex
 	silentMax := identSilentMax
-	if st.fast {
-		silentMax = identFastSilent
-	}
 	go func() {
 		start := time.Now()
 		wait := silentMax
-		if st.fast {
-			wait = 10 * time.Millisecond
-		}
 		for {
 			select {
 			case <-time.After(wait):
-				if st.fast && st.silence(start) < silentMax && !st.idle(identFastIdle) {
-					continue
-				}
-				if st.fast && !st.answered() {
-					tmu.Lock()
-					timedOut = true
-					tmu.Unlock()
-					cancel()
-					return
-				}
 				// 4.7: l'ascolto della porta prima del tentativo non è silenzio della
 				// radio (con un ascolto più lungo di identSilentMax il tentativo si
 				// chiuderebbe prima di inviare il saluto)
@@ -848,11 +790,6 @@ func probe(ctx context.Context, port string, fn func(ctx context.Context) error)
 	close(stop)
 	if ctx.Err() != nil {
 		return st, false, errCancelled
-	}
-	if st.fast && err != nil && st.answered() {
-		// qualcosa ha risposto ma il tentativo è fallito: da qui, anche nel giro
-		// veloce, si ascolta la porta prima dei tentativi (radio che trasmette da sola)
-		identSpontAsk(key)
 	}
 	tmu.Lock()
 	to := timedOut
@@ -1138,8 +1075,6 @@ type identProbe struct {
 	k67   bool
 	baud  int // K67: velocità
 	bt    bool
-	prio  bool // 4.31: radio già riconosciute su questo PC o con una scheda aperta: attese piene anche nel giro veloce
-	rep   bool // 4.31: ripetizione di una radio nota in mezzo al piano (ascolto continuo)
 }
 
 var (
@@ -1233,6 +1168,10 @@ func (a *App) identPlan(req *identReq) []identProbe {
 			if f, ok := m.Fam.(interface{ identGroup() string }); ok {
 				key += "|" + f.identGroup()
 			}
+			// 4.35: lo stesso, deciso dal modello (vedi kwlOpt.identGroup)
+			if o, ok := m.Opt.(interface{ identGroup() string }); ok {
+				key += "|" + o.identGroup()
+			}
 		}
 		g := groups[key]
 		if g == nil {
@@ -1316,9 +1255,6 @@ func (a *App) identPlan(req *identReq) []identProbe {
 	// del gruppo (es. Retevis RT22 dopo una Baofeng T22 conosciuta) verrebbe
 	// scambiata per quello
 	sort.SliceStable(out, func(i, j int) bool { return probeRank(out[i]) < probeRank(out[j]) })
-	for i := range out {
-		out[i].prio = probeRank(out[i]) < 1500
-	}
 	return out
 }
 
@@ -1346,24 +1282,7 @@ func (a *App) runIdentify(ctx context.Context, j *cableJob, req *identReq) (*ide
 		plan = identInterleaveKnown(plan, a.knownProbes(plan))
 	}
 	res.Tried = 0
-	// 4.31: giro veloce e poi giro con le attese piene (vedi identFastWait). Via
-	// USB non serve (se la radio manca l'apertura fallisce subito). Nell'ascolto
-	// continuo i giri si ripetono: uno sì e uno no si fa anche quello pieno
-	passes := []bool{true, false}
-	switch {
-	case strings.EqualFold(req.Port, "USB"):
-		passes = []bool{false}
-	case j.Auto && identRoundNext(probeKey(req.Port))%2 == 1:
-		passes = []bool{true}
-	}
-	var err error
-	for n, fast := range passes {
-		identDeadReset(probeKey(req.Port))
-		res, err = a.identRun(ctx, j, req, plan, start, res, identPass{fast: fast, n: n, of: len(passes)})
-		if err != nil || res == nil || res.Found {
-			break
-		}
-	}
+	res, err := a.identRun(ctx, j, req, plan, start, res)
 	if err == nil {
 		// 4.6: nome esatto della radio (e delle altre con la stessa gestione)
 		a.identCardNames(res)
@@ -1414,58 +1333,17 @@ func identInterleaveKnown(plan []identProbe, n int) []identProbe {
 	out := append([]identProbe{}, plan[:n]...)
 	for i, p := range plan[n:] {
 		if i > 0 && i%identKnownEvery == 0 {
-			for _, k := range plan[:n] {
-				k.rep = true
-				out = append(out, k)
-			}
+			out = append(out, plan[:n]...)
 		}
 		out = append(out, p)
 	}
 	return out
 }
 
-// identPass (4.31): un giro della ricerca. fast: attese brevi; n di of: per
-// l'avanzamento mostrato
-type identPass struct {
-	fast  bool
-	n, of int
-}
-
-// identRounds: giri di ascolto continuo fatti su ogni porta
-var identRounds struct {
-	sync.Mutex
-	m map[string]int
-}
-
-func identRoundNext(key string) int {
-	identRounds.Lock()
-	defer identRounds.Unlock()
-	if identRounds.m == nil {
-		identRounds.m = map[string]int{}
-	}
-	identRounds.m[key]++
-	return identRounds.m[key]
-}
-
-func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []identProbe, start time.Time, res *identResult, pass identPass) (*identResult, error) {
-	total, base := len(plan)*pass.of, len(plan)*pass.n
-	// tentativo veloce: solo il primo di ogni gruppo e non per le radio già
-	// riconosciute su questo PC o con una scheda aperta, che hanno subito le attese piene
-	pctxFor := func(fast bool) context.Context {
-		if fast {
-			return context.WithValue(ctx, identFastKey{}, true)
-		}
-		return ctx
-	}
+func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []identProbe, start time.Time, res *identResult) (*identResult, error) {
 	answer := func(who string, err error) {
 		if err != nil && err != errCancelled {
-			line := who + ": " + err.Error()
-			for _, x := range res.Answers {
-				if x == line {
-					return // già annotata nel giro precedente
-				}
-			}
-			res.Answers = append(res.Answers, line)
+			res.Answers = append(res.Answers, who+": "+err.Error())
 			j.logf("%s ha risposto, ma: %v", who, err)
 		}
 	}
@@ -1473,14 +1351,8 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 		if ctx.Err() != nil {
 			return nil, errCancelled
 		}
-		if !pass.fast && pass.n > 0 && p.prio && !p.rep {
-			continue // già provato con le attese piene nel giro veloce
-		}
-		// nel giro veloce le ripetizioni delle radio note sono veloci anche loro
-		// (con le attese piene, ogni otto tentativi, lo allungherebbero di molto)
-		fast := pass.fast && (!p.prio || p.rep)
-		j.set(fmt.Sprintf("Ricerca della radio (%d di %d)", base+i+1, total), true)
-		j.prog(base+i, total, "Provo: "+p.name)
+		j.set(fmt.Sprintf("Ricerca della radio (%d di %d)", i+1, len(plan)), true)
+		j.prog(i, len(plan), "Provo: "+p.name)
 		res.Tried++
 		switch {
 		case p.k67 || p.bt:
@@ -1492,7 +1364,7 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 			var file []byte
 			var info interface{}
 			var k6 bool
-			st, silent, err := probe(pctxFor(fast), req.Port, func(pctx context.Context) error {
+			st, silent, err := probe(ctx, req.Port, func(pctx context.Context) error {
 				var e error
 				file, info, k6, e = a.cableRead(pctx, j, creq)
 				if e == nil {
@@ -1520,10 +1392,10 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 			a.rememberRadio(kind)
 			return res, nil
 		default:
-			readWith := func(m *genModel, fast bool) (mem []byte, note string, st *probeState, silent bool, err error) {
-				j.set(fmt.Sprintf("Ricerca della radio (%d di %d)", base+i+1, total), true)
-				j.prog(base+i, total, "Provo: "+m.Name)
-				st, silent, err = probe(pctxFor(fast), req.Port, func(pctx context.Context) error {
+			readWith := func(m *genModel) (mem []byte, note string, st *probeState, silent bool, err error) {
+				j.set(fmt.Sprintf("Ricerca della radio (%d di %d)", i+1, len(plan)), true)
+				j.prog(i, len(plan), "Provo: "+m.Name)
+				st, silent, err = probe(ctx, req.Port, func(pctx context.Context) error {
 					var e error
 					mem, note, e = m.Fam.Download(pctx, m, req.Port, func(done, total int, msg string) {
 						j.mu.Lock()
@@ -1539,7 +1411,7 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 				return
 			}
 			for k, m := range p.kinds {
-				mem, note, st, silent, err := readWith(m, fast && k == 0)
+				mem, note, st, silent, err := readWith(m)
 				if err == errCancelled && ctx.Err() != nil {
 					return nil, errCancelled
 				}
@@ -1552,6 +1424,18 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 				if err != nil {
 					answer(m.Name, err)
 					_ = sleepCtx(ctx, identPause)
+					continue
+				}
+				// 4.35: lettura «riuscita» in cui tutti i byte arrivati erano l'eco,
+				// anche con dei byte persi, di quelli inviati (vedi echoOnly).
+				// Succede con un cavo che rimanda indietro i dati, senza
+				// radio, e un driver che accetta come risposta un pacchetto uguale alla
+				// sua richiesta (Radtel RT-5D): non è una radio
+				if !strings.EqualFold(req.Port, "USB") && st != nil && st.echoOnly() {
+					j.logf("%s: lettura fatta solo dell'eco del cavo, nessuna radio", m.Name)
+					if k == 0 {
+						break
+					}
 					continue
 				}
 				// letta. I modelli del gruppo con lo stesso saluto possono avere
@@ -1590,7 +1474,7 @@ func (a *App) identRun(ctx context.Context, j *cableJob, req *identReq, plan []i
 					}
 					seen[identShape(o)] = true
 					_ = sleepCtx(ctx, identPause)
-					mem2, note2, st2, silent2, err2 := readWith(o, false)
+					mem2, note2, st2, silent2, err2 := readWith(o)
 					if err2 == errCancelled && ctx.Err() != nil {
 						return nil, errCancelled
 					}

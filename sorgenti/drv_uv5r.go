@@ -501,12 +501,7 @@ func (s *uv5rSess) read(n int, timeout time.Duration) ([]byte, error) {
 }
 
 func (s *uv5rSess) sleep(d time.Duration) error {
-	select {
-	case <-s.ctx.Done():
-		return errCancelled
-	case <-time.After(d):
-		return nil
-	}
+	return drvSleep(s.ctx, s.p, d)
 }
 
 // doIdent: _do_ident di CHIRP

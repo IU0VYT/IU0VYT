@@ -1,0 +1,164 @@
+ab-ar518: ab-ar518
+ab-ar63: ab-ar63
+as-uva37: ab-ar730 as-uva37 tp-a36plus tp-a36plus8w
+at-termn8r: at-obltr8r at-termn8r kw-tk260 kw-tk270 kw-tk272 kw-tk278 kw-tk360 kw-tk370 kw-tk372 kw-tk378 kyd-nc630a
+bf-1901: bf-1901 bf-1904 bf-1909 bf-9700 mv-ra425
+bf-888s: bf-888s bf-88st bf-c2 bf-gt22 bf-gt68 bf-m4 bf-mp31 bf-t20frs bf-t22frs bf-v8a bt-frsb1 mt-mt8s mv-ra100 rd-ga2s rt-h777plus td-m8s td-v2
+bf-dm32uv: bf-dm32uv
+bf-dr1801uv: bf-dr1801uv
+bf-f11: bf-f11
+bf-f8hppro: bf-f8hppro
+bf-gm15pro: bf-gm15pro rd-gm30 rd-mu5
+bf-gm5rh: bf-gm5rh bf-uv5gplus
+bf-hseries: bf-hseries td-h6
+bf-k6: bf-k6
+bf-t17frs: bf-t17frs
+bf-t17pmr: bf-gt18pmr bf-t17pmr
+bf-t20: bf-t20 bf-t22 bf-w31e lt-lt316 rt-rt22 rt-rt22frs rt-rt622 tid-tdm8 wln-kdc1 zt-ztx6
+bf-t22: bf-t22
+bf-t8: bf-g11s bf-t8 bt-frsa1 rt-rb27b rt-rb27v rt-rb627b rt-rt16
+bf-uv17: bf-uv13pro bf-uv17 rd-ga510v2 rtl-rt620
+bf-uv17pro: bf-k5plus bf-uv17pro bf-uv17r bf-uv17rplus bf-uv21l bf-uv21prov2 bf-uv21r bf-uv25 bf-uv5rh bf-uv5rm bf-uv5rmplus mt-mt5rm mt-p15
+bf-uv17progps: bf-ar152pro bf-gm21 bf-uv17progps bf-uv21progps bf-uv25plus bf-uv28plus bf-uv28pro bf-uv29pro bf-uv32 bf-uv5rmini bf-uv7b rd-gm30plus rd-gm30pro
+bf-uv3r: bf-uv3r
+bf-uv5g: bf-uv5g
+bf-uv5gmini: bf-uv5gmini
+bf-uv5rx3-btech: bf-uv5rx3-btech
+bf-uv6: bf-uv6
+bf-uv6r: bf-uv6r
+bf-uv82: bf-uv82 bf-uv82hp bf-uv82x3
+bf-uv9g: bf-uv9g
+bf-uvb5: bf-t1 bf-uvb5
+bf-uvs9x3: bf-5rx bf-f8hp bf-gt5r bf-uv5gpro bf-uv5r bf-uv5rx3 bf-uvs9x3 in-kt980hp
+bf-v12d: bf-v12d
+bf-w31d: bf-1901d bf-1904d bf-1909d bf-888sd bf-889d bf-t20d bf-v10d bf-v1d bf-v2d bf-v4d bf-v5d bf-v6d bf-v8d bf-v9d bf-w31d
+bj-7700: bj-7700 bj-7700nbt rd-gs10b rt-rt900 rt-rt900bt
+bj-9000: bj-9000 bj-9000-960 rtl-rt950
+bj-dm5000: bj-dm5000 rtl-rt1000pro rtl-rt4d rtl-rt6d
+bj-uv55: bj-uv55
+bob-x3plus: bob-x3plus
+bt-gmrsv1: bt-gmrsv1 bt-mursv1
+bt-gmrsv2: bt-gmrsv2 bt-mursv2
+ex-qrz1: ex-qrz1
+fdx-268a: fdx-150a fdx-160a fdx-268a fdx-268b fdx-288a fdx-288b fdx-450a fdx-460a fdx-460uh
+ic-p7: ic-e90 ic-id31 ic-id51 ic-id51plus ic-id51plus2 ic-p7 ic-q7a ic-t10 ic-t70 ic-t7h ic-t8a ic-u82 ic-v80 ic-v82 ic-v86
+ksun-m6: ksun-m6
+kw-thd72: kw-thd72 kw-thd74 kw-thd75
+kw-thd7: kw-thd7 kw-thd7g
+kw-thf6: kw-thf6 kw-thf7 kw-thg71 kw-thk2
+kw-tk2140k: kw-tk2140k kw-tk260g kw-tk270g kw-tk272g kw-tk278g kw-tk3140k kw-tk3140k2 kw-tk3140k3 kw-tk360g kw-tk370g kw-tk372g kw-tk378g kw-tk388g
+kw-tk2180: kw-tk2180 kw-tk3180e kw-tk3180k kw-tk3180k2 kw-tk7180 kw-tk7180e kw-tk8180 kw-tk8180e
+kw-tk280: kw-tk280 kw-tk380 kw-tk481 kw-tk780 kw-tk880 kw-tk981
+kyd-ip620: kyd-ip620
+lch-hguv98: lch-hguv98
+mtc-uv5r3: mtc-uv5r3
+ogd77: ogd77 ogd77-uv380
+pux-px2r: pux-px2r
+pux-px777: pux-px777
+px-888k: px-888k
+qs-tguv2p: qs-tguv2p
+qs-tk11: qs-tk11
+qs-uvk5-fagci: mt-tk6 qs-uvk1 qs-uvk1-f4hwn5 qs-uvk5 qs-uvk5-egz qs-uvk5-f4hwn qs-uvk5-fagci qs-uvk5-losehu qs-uvk5-osfw rt-ra79
+qs-uvk5-ijv3: qs-uvk5-ijv3 qs-uvk5-ijv3x
+qs-uvk5-nunu: qs-uvk5-nunu
+qs-uvk5-uvkx: qs-uvk5-uvkx
+qs-uvk5v3-ijv4: qs-uvk5v3-ijv4 qs-uvk5v3-ijv5
+qs-uvk5v3-ijv6: qs-uvk5v3-ijv6
+qyt-kt8r: qyt-kt8r
+rd-db40g: rd-db40g
+rd-echo: rd-echo
+rd-gs10bpro: bj-7800 bj-8300-990 rd-gs10bpro rt-rt920
+rd-r2: rd-r2 rt-h777s rt-rt24 rt-rt24v
+rd-t3: bf-t9 rd-t3 rt-rb18 rt-rb618
+rd-ub15g: rd-db35g rd-db35uv rd-ub15g rd-ub15g-110
+rg-rh5rv2: rg-rh5rv2
+rt-c2: rt-c2
+rt-c66: rt-c66
+rt-c6: rt-c6
+rt-h777: rt-h777
+rt-h777h-frs: rt-h777h-frs rt-h777h-pmr
+rt-h777v4: rt-h777v4
+rt-ha1g: rt-ha1g
+rt-ha1uv: rt-ha1uv
+rt-ha2: rt-ha2
+rt-p2: rt-p2 rt-p62
+rt-ra685: ab-arf5 rt-ra685 rt-ra85
+rt-ra89: rt-ra89
+rt-rb15: rt-rb15 rt-rb615
+rt-rb17: rt-rb17 rt-rb17v rt-rb617
+rt-rb17a: rt-rb17a
+rt-rb17p: rt-rb17p
+rt-rb19p: rt-rb19p
+rt-rb23: rt-rb23 rt-rb26 rt-rb626 rt-rb89
+rt-rb28: rt-rb28
+rt-rb28b: rt-rb28b
+rt-rb29: rt-rb29 rt-rb629
+rt-rb39: rt-rb39 rt-rb639
+rt-rb48: rt-rb48
+rt-rb628: rt-rb628
+rt-rb628b: rt-rb628b
+rt-rb648: rt-rb648
+rt-rb75: rt-rb75
+rt-rb85: rt-rb85
+rt-rb87: rt-rb87
+rt-rt15: rt-rt15
+rt-rt18: rt-rt18
+rt-rt19: rt-rt19
+rt-rt1: rt-rt1
+rt-rt20: rt-rt20
+rt-rt21: rt-rt21 rt-rt21v
+rt-rt21h: rt-rt21h
+rt-rt22s: rt-rb19 rt-rb619 rt-rt22s
+rt-rt23: rt-rt23
+rt-rt26: rt-rt26 tyt-thuv8000
+rt-rt29u: rt-rt29u rt-rt29v
+rt-rt330: rt-rt330
+rt-rt40b: rt-rt40b
+rt-rt470: hy-hi8811 rt-rt400 rt-rt470 rt-rt470l rt-rt470x rt-rt470xbt rt-rt495 rt-rt630
+rt-rt47: rt-rt47 rt-rt47v rt-rt647
+rt-rt619: rt-rt619
+rt-rt68: rt-rt668 rt-rt68
+rt-rt6: bf-a58 bf-a58s bf-gt3wp bf-uv82wp bf-uv9r rt-rt6
+rt-rt730: rt-rt730
+rt-rt76: rt-rt76
+rt-rt76p: rt-rt76p
+rt-rt86: rt-rt86
+rt-rt86a: rt-rt86a
+rt-rt86s: rt-rt86s
+rt-rt87: rt-rt87
+rt-t18: rt-t18
+rtl-rt13: rtl-rt13
+rtl-rt480: rtl-rt480 rtl-rt68
+rtl-rt490: ab-ar869 bor-8rs hg-hg590 jjcc-jc8629 jp-8800plus mml-jc8629 rtl-rt490 soc-fb8629 soc-jc8629
+rtl-rt5d: rtl-rt5d
+rtl-rt830: rtl-rt830 rtl-rt850
+rtl-rt880-nicfw: rtl-rt880-nicfw rtl-rt950pro-nicfw
+rtl-rt880g: rtl-rt871a rtl-rt880g
+ry-uv58plus: rtl-rt890-m7ocm ry-uv58plus
+shx-8800: as-ac580 cg-xtr5 rd-gs5b shx-8800
+td-712plus: td-712plus td-777s-16 td-777s-22 td-br09 td-frs td-m11plus td-m11plus-16 td-m11plus-22 td-m7 td-pmr td-v900
+td-m2pro: td-m2pro
+td-tdh3-nicfw: td-tdh3-nicfw
+td-tdh3: td-638uv td-638uvgmrs td-638uvham td-h11 td-h11gmrs td-h11ham td-h3plus td-h3plusgmrs td-h3plusham td-h4 td-h4gmrs td-h4ham td-h7plus td-h7plusgmrs td-h7plusham td-h8g4 td-h8g4gmrs td-h8g4ham td-h9 td-h9gmrs td-h9ham td-tdh3 td-tdh3gmrs td-tdh3ham
+td-tdh8: td-tdh8 td-tdh8gmrs td-tdh8ham td-uv68
+td-tdh8g3: td-tdh8g3 td-tdh8g3gmrs td-tdh8g3ham
+tdr-tdm11-22: tdr-tdm11-16 tdr-tdm11-16v095 tdr-tdm11-22
+tdx-tdq8a: tdx-tdq8a
+tyt-th350: tyt-th350 tyt-th350us
+tyt-thuv3r: tyt-thuv3r tyt-thuv3r25
+tyt-thuv88: rt-rt85 tyt-thuv88
+tyt-thuv98: tyt-thuv98
+tyt-thuvf1: tyt-thuvf1
+tyt-thuvf8d: tyt-thuvf8d
+tyt-uvl15w: tyt-uvl15w
+wx-kg816: wx-kg805g wx-kg816 wx-kg818
+wx-kg935g: wx-kg935g wx-kg935gplus wx-kg935h wx-kguv8h
+wx-kguv6: wx-kguv6
+wx-kguv8d: rtl-rt69 wx-kguv8d
+wx-kguv8dplus: wx-kguv8dplus
+wx-kguv8e: wx-kguv8e
+wx-kguv9dplus: wx-kguv9dplus wx-kguv9gpro wx-kguv9gx wx-kguv9k wx-kguv9px
+wx-kguvd1p: wx-kguvd1p
+wx-kgxs20g: wx-kgxs20g wx-kgxs20gplus wx-kgxs20h
+ys-ft4xr: ys-ft25r ys-ft25r-s3 ys-ft4vr ys-ft4xe ys-ft4xr ys-ft65e ys-ft65e-s3 ys-ft65r ys-ft65r-s3
+zt-za758: zt-za758

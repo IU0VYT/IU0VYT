@@ -1,6 +1,6 @@
 IU0VYT Flash
-Version: 4.34.0
-Erstellt: 2026-11-13T13:55
+Version: 4.35.0
+Erstellt: 2026-11-13T22:25
 
 Das Programm liest seine Version aus versione.txt im Hauptordner; diese Datei dient
 nur zur Information.

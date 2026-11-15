@@ -22,6 +22,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -106,8 +107,17 @@ func TestUpdateAPI(t *testing.T) {
 	cur := makeZip(t, map[string][]byte{"IU0VYT Flash/versione.txt": []byte("versione=" + appVersion + "\n")}, false)
 	newer := bigPackage(t, "9.0")
 	old := makeZip(t, map[string][]byte{"G/LEGGIMI.txt": []byte("Versione 2.1 - x\n")}, false)
+	// served: byte inviati dal server di prova. Il conto si aggiorna quando la
+	// funzione che serve la richiesta finisce, cioè un attimo DOPO che il programma
+	// ha ricevuto la risposta: prima di leggerlo si aspetta che le richieste in
+	// corso siano finite (4.35: senza questa attesa la prova cadeva ogni tanto,
+	// «letti 1 byte», quando la macchina era carica)
 	var served int64
+	var smu sync.Mutex
+	var inflight sync.WaitGroup
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		inflight.Add(1)
+		defer inflight.Done()
 		var body []byte
 		switch strings.TrimSuffix(r.URL.Path, "/norange") {
 		case "/uguale.zip":
@@ -150,7 +160,9 @@ func TestUpdateAPI(t *testing.T) {
 		} else {
 			http.ServeContent(cw, r, "p.zip", time.Time{}, bytes.NewReader(body))
 		}
+		smu.Lock()
 		served += cw.n
+		smu.Unlock()
 	}))
 	defer srv.Close()
 	defer func() { updateSource = defaultUpdateURL }()
@@ -186,7 +198,10 @@ func TestUpdateAPI(t *testing.T) {
 	for path, want := range map[string]float64{"/uguale.zip": 0, "/nuova.zip": 1, "/vecchia.zip": -1, "/github.zip": 1,
 		"/uguale.zip/norange": 0, "/nuova.zip/norange": 1, "/rifiuta.zip": 1} {
 		updateSource = srv.URL + path
+		inflight.Wait()
+		smu.Lock()
 		served = 0
+		smu.Unlock()
 		// l'indirizzo indicato dall'interfaccia viene ignorato
 		r, code := call("update/check", map[string]string{"url": srv.URL + "/vecchia.zip"})
 		if code != 200 || r["cmp"] != want {
@@ -194,8 +209,12 @@ func TestUpdateAPI(t *testing.T) {
 		}
 		if want == 1 && !strings.HasSuffix(path, "/norange") && path != "/rifiuta.zip" {
 			// verifica senza scaricare il pacchetto: solo indice e versione.txt
-			if served > 200<<10 || int64(r["read"].(float64)) != served || int64(r["size"].(float64)) != int64(len(newer)) {
-				t.Fatalf("%s: letti %d byte su %d (%v)", path, served, len(newer), r)
+			inflight.Wait()
+			smu.Lock()
+			got := served
+			smu.Unlock()
+			if got > 200<<10 || int64(r["read"].(float64)) != got || int64(r["size"].(float64)) != int64(len(newer)) {
+				t.Fatalf("%s: letti %d byte su %d (%v)", path, got, len(newer), r)
 			}
 		}
 	}

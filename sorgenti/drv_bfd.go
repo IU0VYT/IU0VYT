@@ -354,12 +354,7 @@ func (s *pmrSess) xfer(cmd, want []byte, what string) error {
 }
 
 func (s *pmrSess) sleep(d time.Duration) error {
-	select {
-	case <-s.ctx.Done():
-		return errCancelled
-	case <-time.After(d):
-		return nil
-	}
+	return drvSleep(s.ctx, s.p, d)
 }
 
 var bfdIdent = []byte("P3107\xF7\x00\x00")

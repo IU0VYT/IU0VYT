@@ -7,6 +7,28 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.35.0 (13/11/2026)
+-------------------
+- Versión de corrección para «Identificar» y la identificación automática. Eliminada la
+  «vuelta rápida» introducida en la 4.31: esperaba la respuesta al saludo solo 0,1
+  segundos, y una radio real, más lenta que la simulada, entraba en programación cuando
+  el intento ya se había abandonado; quedaba bloqueada, recibía los saludos de todas las
+  demás radios y la búsqueda se volvía lenta (comunicado con Baofeng K67 Pro,
+  Bajeton BJ-8300 y BJ-9000). Vuelve a haber una sola vuelta con las esperas usadas
+  hasta la 4.30.
+- Los grupos de búsqueda (modelos con el mismo saludo) ya no dependen de la velocidad
+  del PC: el saludo de cada controlador se registraba durante 1,5 segundos de reloj y
+  una veintena de modelos cambiaban de grupo de un arranque a otro (la familia Retevis
+  RT22 / Baofeng T20 se dividía en 4-6 grupos). El registro termina ahora por recuento y
+  da siempre el mismo resultado; la «Preparando los protocolos» tarda unos 0,6
+  segundos en lugar de 1,5.
+- Cable que devuelve los datos (eco), sin radio: un controlador que envía paquetes
+  largos (Radtel RT-5D) hacía aparecer el recuadro «Identificación de la radio en curso»
+  y podía acabar «leyendo» una radio que no está. El programa recuerda ahora todos los
+  bytes enviados, y una lectura hecha solo del eco no es una radio. Pruebas nuevas:
+  radio lenta en todo el plan de búsqueda, saludos estables, lista fija de grupos, eco
+  con paquetes largos. Ninguna radio nueva en esta versión.
+
 4.34.0 (13/11/2026)
 -------------------
 - Radios nuevas a partir de los controladores de CHIRP: los portátiles Yaesu VX-170

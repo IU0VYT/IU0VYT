@@ -5853,3 +5853,4 @@ ef1bb624	Yaesu FT-8900
 646dc839	the radio is not a {0} (identifier {1})
 bbd47d6b	incomplete block at address {0} ({1} of {2} bytes)
 6246f0cc	memory image not valid for the {0}
+416bef96	{0}: the read was only the echo of the cable, no radio

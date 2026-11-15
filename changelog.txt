@@ -3,6 +3,45 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.35.0 (13/11/2026)
+-------------------
+Versione di correzione: «Identifica» e identificazione automatica.
+- Tolto il «giro veloce» della ricerca introdotto nella 4.31. Aspettava la
+  risposta al saluto solo 0,1 secondi: una radio vera, che risponde più
+  lentamente della radio simulata delle prove, entrava in programmazione ma il
+  tentativo era già stato abbandonato. La radio restava bloccata in
+  programmazione, riceveva i saluti di tutte le altre radio e la ricerca
+  diventava lenta (segnalato con Baofeng K67 Pro, Bajeton BJ-8300 e BJ-9000). Ora c'è di nuovo un solo giro con le attese delle
+  versioni fino alla 4.30 (0,35 secondi per la prima risposta, tentativo chiuso
+  dopo 0,7 secondi di silenzio). Riprodotto con radio simulate che rispondono
+  dopo 150-250 millisecondi: con la 4.34 la K67 Pro veniva trovata dopo 24
+  secondi, la BJ-8300 dopo 25 e la BJ-9000 dopo 32, sempre dopo un tentativo
+  abbandonato a metà; ora subito, come la radio che risponde all'istante.
+- I gruppi di ricerca (modelli con lo stesso saluto, provati con un solo
+  tentativo) non dipendono più dalla velocità del PC. Il saluto di ogni driver
+  veniva registrato per 1,5 secondi di orologio, con tutti i driver insieme: a
+  ogni avvio una ventina di modelli finivano in gruppi diversi. La famiglia
+  Retevis RT22 / Baofeng T20 / T22 / W31E, che ha un saluto solo, veniva
+  divisa in 4-6 gruppi, e una radio poteva essere proposta con la scheda
+  sbagliata. Ora la registrazione finisce per conteggio (byte inviati, letture
+  senza risposta, pause sommate) e dà sempre lo stesso risultato: quella
+  famiglia è un gruppo solo, gli altri gruppi sono quelli di prima, e la
+  «Preparazione dei protocolli» passa da 1,5 a circa 0,6 secondi.
+- Cavo che rimanda indietro i dati (eco), senza radio: un driver che manda
+  pacchetti lunghi (Radtel RT-5D) faceva comparire il riquadro
+  «Identificazione Radio In Corso» e poteva arrivare a «leggere» una radio che
+  non c'è. Il programma ricordava solo i primi 4096 byte inviati; ora li
+  ricorda tutti, e una lettura fatta solo dell'eco non è una radio.
+- Prove nuove (ident435_test.go): radio lenta su tutto il piano di ricerca;
+  saluti uguali da un calcolo all'altro, anche con il processore occupato;
+  elenco dei gruppi fissato in testdata/ident_gruppi.txt (chi aggiunge una
+  radio deve guardare in che gruppo finisce e rigenerarlo con
+  IU0VYT_SCRIVI_GRUPPI=1); eco con pacchetti lunghi. La prova
+  TestAutoIdentBanner, che cadeva a volte, cadeva per l'errore dell'eco.
+  Corretta anche la prova TestUpdateAPI, che ogni tanto leggeva il conto dei
+  byte serviti prima che il server di prova lo avesse aggiornato.
+- Nessuna radio nuova in questa versione.
+
 4.34.0 (13/11/2026)
 -------------------
 - Radio nuove dai driver di CHIRP (drv_ft7800.go, da ft7800.py e vx170.py):

@@ -6,6 +6,28 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.35.0 (13/11/2026)
+-------------------
+- Versi pembetulan untuk «Kenal pasti» dan pengenalpastian automatik. «Pusingan pantas»
+  yang diperkenalkan dalam 4.31 dibuang: ia menunggu jawapan kepada salam hanya 0.1
+  saat, maka radio sebenar, yang lebih perlahan daripada radio simulasi, memasuki mod
+  pengaturcaraan selepas percubaan sudah ditinggalkan; radio itu tersekat, menerima
+  salam semua radio lain, dan carian menjadi perlahan (dilaporkan dengan
+  Baofeng K67 Pro, Bajeton BJ-8300 dan BJ-9000). Kini hanya ada satu pusingan dengan
+  masa menunggu yang digunakan sehingga 4.30.
+- Kumpulan carian (model dengan salam yang sama) tidak lagi bergantung pada kelajuan PC:
+  salam setiap pemacu dirakam selama 1.5 saat masa sebenar, dan kira-kira dua puluh
+  model berubah kumpulan dari satu permulaan ke permulaan yang lain (keluarga Retevis
+  RT22 / Baofeng T20 dipecahkan kepada 4-6 kumpulan). Rakaman kini tamat mengikut kiraan
+  dan sentiasa memberi hasil yang sama; «Menyediakan protokol» mengambil kira-kira 0.6
+  saat dan bukan 1.5.
+- Kabel yang memulangkan data (gema), tanpa radio: pemacu yang menghantar paket panjang
+  (Radtel RT-5D) menyebabkan kotak «Pengenalpastian radio sedang dijalankan» muncul dan
+  boleh berakhir dengan «membaca» radio yang tiada. Program kini mengingati semua bait
+  yang dihantar, dan bacaan yang hanya terdiri daripada gema bukanlah radio. Ujian
+  baharu: radio perlahan pada keseluruhan pelan carian, salam yang stabil, senarai
+  kumpulan yang tetap, gema dengan paket panjang. Tiada radio baharu dalam versi ini.
+
 4.34.0 (13/11/2026)
 -------------------
 - Radio baharu daripada pemacu CHIRP: radio genggam Yaesu VX-170 (VHF) dan VX-177 (UHF),

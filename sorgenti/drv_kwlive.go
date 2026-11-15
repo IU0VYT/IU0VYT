@@ -155,6 +155,13 @@ func init() {
 
 func kwlo(m *genModel) *kwlOpt { return m.Opt.(*kwlOpt) }
 
+// identGroup (4.35): i modelli che provano più velocità (TH-F6, TH-F7, TH-G71,
+// TH-K2) e quelli che provano solo 9600 baud (TH-D7) cominciano con la stessa
+// domanda, ma restano in due gruppi di «Identifica» come sempre: il tentativo
+// del gruppo lo fa il primo modello, e solo quello del primo gruppo prova anche
+// le altre velocità
+func (o *kwlOpt) identGroup() string { return fmt.Sprint(o.bauds) }
+
 func kwlSize(m *genModel) int { return kwlHead + m.Slots*kwlRec }
 
 // kwlBlank: immagine senza canali

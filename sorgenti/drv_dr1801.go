@@ -671,12 +671,7 @@ func (l *drLink) open(baud int) error {
 }
 
 func (l *drLink) sleep(d time.Duration) error {
-	select {
-	case <-l.ctx.Done():
-		return errCancelled
-	case <-time.After(d):
-		return nil
-	}
+	return drvSleep(l.ctx, l.p, d)
 }
 
 // risposta: pacchetto completo con il comando atteso (gli altri si scartano)

@@ -335,12 +335,7 @@ func (s *bfcSess) recv(n int) ([]byte, error) {
 }
 
 func (s *bfcSess) sleep(d time.Duration) error {
-	select {
-	case <-s.ctx.Done():
-		return errCancelled
-	case <-time.After(d):
-		return nil
-	}
+	return drvSleep(s.ctx, s.p, d)
 }
 
 func (s *bfcSess) doIdent(magic []byte) ([]byte, error) {

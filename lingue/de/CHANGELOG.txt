@@ -7,6 +7,27 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.35.0 (13.11.2026)
+-------------------
+- Korrekturversion für «Identifizieren» und die automatische Erkennung. Der in 4.31
+  eingeführte «schnelle Durchgang» wurde entfernt: Er wartete nur 0,1 Sekunden auf die
+  Antwort auf den Verbindungsaufbau; ein echtes Funkgerät, langsamer als das simulierte,
+  ging in den Programmiermodus, als der Versuch schon abgebrochen war, blieb hängen,
+  erhielt die Verbindungsversuche aller anderen Geräte, und die Suche wurde langsam (gemeldet mit Baofeng K67 Pro, Bajeton BJ-8300 und BJ-9000). Es gibt
+  wieder einen einzigen Durchgang mit den Wartezeiten bis 4.30.
+- Die Suchgruppen (Modelle mit demselben Verbindungsaufbau) hängen nicht mehr von der
+  Geschwindigkeit des PCs ab: Der Verbindungsaufbau jedes Treibers wurde 1,5 Sekunden
+  Echtzeit lang aufgezeichnet, und rund zwanzig Modelle landeten von Start zu Start in
+  anderen Gruppen (die Familie Retevis RT22 / Baofeng T20 wurde in 4-6 Gruppen geteilt).
+  Die Aufzeichnung endet jetzt nach Zählung und liefert immer dasselbe Ergebnis;
+  «Vorbereitung der Protokolle» dauert etwa 0,6 statt 1,5 Sekunden.
+- Kabel, das die Daten zurückschickt (Echo), ohne Funkgerät: Ein Treiber mit langen
+  Paketen (Radtel RT-5D) ließ das Feld «Funkgerät wird erkannt» erscheinen und konnte am
+  Ende ein nicht vorhandenes Gerät «lesen». Das Programm merkt sich jetzt alle
+  gesendeten Bytes, und ein nur aus dem Echo bestehendes Lesen ist kein Funkgerät. Neue
+  Tests: langsames Funkgerät über den ganzen Suchplan, stabile Verbindungsaufbauten,
+  feste Gruppenliste, Echo mit langen Paketen. Keine neuen Funkgeräte in dieser Version.
+
 4.34.0 (13.11.2026)
 -------------------
 - Neue Funkgeräte aus den CHIRP-Treibern: die Handfunkgeräte Yaesu VX-170 (VHF) und

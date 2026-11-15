@@ -7,6 +7,28 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.35.0 (13/11/2026)
+-------------------
+- Version corrective pour « Identifier » et l'identification automatique. Suppression du
+  « tour rapide » introduit dans la 4.31 : il n'attendait la réponse au salut que 0,1
+  seconde, si bien qu'une vraie radio, plus lente que la radio simulée, entrait en
+  programmation alors que la tentative était déjà abandonnée ; elle restait bloquée,
+  recevait les saluts de toutes les autres radios et la recherche devenait lente (signalé avec Baofeng K67 Pro, Bajeton BJ-8300 et BJ-9000). Il y a de nouveau
+  un seul tour avec les attentes utilisées jusqu'à la 4.30.
+- Les groupes de recherche (modèles avec le même salut) ne dépendent plus de la vitesse
+  du PC : le salut de chaque pilote était enregistré pendant 1,5 seconde d'horloge et
+  une vingtaine de modèles changeaient de groupe d'un démarrage à l'autre (la famille
+  Retevis RT22 / Baofeng T20 était divisée en 4 à 6 groupes). L'enregistrement se
+  termine maintenant par comptage et donne toujours le même résultat ; la « Préparation
+  des protocoles » prend environ 0,6 seconde au lieu de 1,5.
+- Câble qui renvoie les données (écho), sans radio : un pilote qui envoie de longs
+  paquets (Radtel RT-5D) faisait apparaître le cadre « Identification de la radio en
+  cours » et pouvait finir par « lire » une radio absente. Le programme se souvient
+  maintenant de tous les octets envoyés, et une lecture faite du seul écho n'est pas une
+  radio. Nouveaux tests : radio lente sur tout le plan de recherche, saluts stables,
+  liste fixe des groupes, écho avec de longs paquets. Aucune nouvelle radio dans cette
+  version.
+
 4.34.0 (13/11/2026)
 -------------------
 - Nouvelles radios issues des pilotes de CHIRP : les portatifs Yaesu VX-170 (VHF) et

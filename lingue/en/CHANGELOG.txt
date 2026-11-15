@@ -7,6 +7,27 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.35.0 (13/11/2026)
+-------------------
+- Fix release for «Identify» and automatic identification. Removed the «fast pass»
+  introduced in 4.31: it waited only 0.1 seconds for the answer to the handshake, so a
+  real radio, slower than the simulated one, entered programming mode after the attempt
+  had already been abandoned; it stayed stuck, received the handshakes of all the other
+  radios, and the search became slow (reported with Baofeng K67 Pro, Bajeton
+  BJ-8300 and BJ-9000). There is again a single pass with the waits used up to 4.30.
+- The search groups (models with the same handshake) no longer depend on the speed of
+  the PC: each driver's handshake was recorded for 1.5 seconds of wall-clock time, and
+  about twenty models ended up in different groups from one start to the next (the
+  Retevis RT22 / Baofeng T20 family was split into 4-6 groups). The recording now ends
+  by count and always gives the same result; «Preparing the protocols» takes about 0.6
+  seconds instead of 1.5.
+- A cable that echoes the data, with no radio: a driver sending long packets (Radtel
+  RT-5D) made the «Radio identification in progress» box appear and could end up
+  «reading» a radio that is not there. The program now remembers all the bytes it sent,
+  and a read made only of the echo is not a radio. New tests: slow radio over the whole
+  search plan, stable handshakes, fixed list of groups, echo with long packets. No new
+  radios in this version.
+
 4.34.0 (13/11/2026)
 -------------------
 - New radios from the CHIRP drivers: the Yaesu VX-170 (VHF) and VX-177 (UHF) handhelds,
