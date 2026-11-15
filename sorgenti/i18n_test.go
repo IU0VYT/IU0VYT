@@ -309,6 +309,18 @@ func extractGo(t testing.TB, out map[string]*uiStr, order *[]string, file string
 				skip[x.Tag] = true
 			}
 		case *ast.CallExpr:
+			// 4.36: righe della diagnosi dell'identificazione (identdiag.go): restano
+			// in italiano in tutte le lingue
+			if se, ok := x.Fun.(*ast.SelectorExpr); ok {
+				id, _ := se.X.(*ast.Ident)
+				if (id != nil && id.Name == "identDiag" && se.Sel.Name == "add") || se.Sel.Name == "diagNote" {
+					for _, a := range x.Args {
+						if bl, ok := a.(*ast.BasicLit); ok {
+							skip[bl] = true
+						}
+					}
+				}
+			}
 			// espressioni regolari, chiavi di mappe, nomi di file: non sono testi
 			if se, ok := x.Fun.(*ast.SelectorExpr); ok {
 				if id, ok := se.X.(*ast.Ident); ok && (id.Name == "regexp" || id.Name == "filepath" || id.Name == "os" || id.Name == "exec" || id.Name == "syscall" || id.Name == "strings" && se.Sel.Name != "Join") {
@@ -456,7 +468,7 @@ func extractUI(t testing.TB) []*uiStr {
 	gofiles, _ := filepath.Glob("*.go")
 	sort.Strings(gofiles)
 	for _, f := range gofiles {
-		if strings.HasSuffix(f, "_test.go") || strings.HasPrefix(f, "genemu") {
+		if strings.HasSuffix(f, "_test.go") || strings.HasPrefix(f, "genemu") || f == "identdiag.go" {
 			continue
 		}
 		extractGo(t, out, &order, f)

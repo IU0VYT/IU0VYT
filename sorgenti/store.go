@@ -49,6 +49,9 @@ type Settings struct {
 	// KnownRadios (4.3): modelli riconosciuti dall'identificazione, il più recente
 	// per primo: le ricerche successive cominciano da questi
 	KnownRadios []string `json:"knownRadios,omitempty"`
+	// PortRadios (4.36): per ogni porta, i modelli riconosciuti su quella porta
+	// (il più recente per primo): le ricerche su quella porta cominciano da questi
+	PortRadios map[string][]string `json:"portRadios,omitempty"`
 	// ModelCards (4.6): per ogni scheda (gestione) la radio della galleria scelta
 	// l'ultima volta, con il suo nome (es. «bj-9000» → Radtel RT-950 Pro)
 	ModelCards  map[string]string `json:"modelCards,omitempty"`

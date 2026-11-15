@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.35.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.36.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,19 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.36.0:
+- «Identifizieren» und automatische Erkennung: Das Programm merkt sich jetzt, an welchem
+  Kabel es jedes Funkgerät erkannt hat, und beginnt mit diesen; die erste Suche verliert
+  keine Sekunden mehr mit Lauschen und Vorbereiten. Das Feld «Funkgerät wird erkannt»
+  erscheint nur, während das Funkgerät tatsächlich gelesen wird, mit Modell und
+  Fortschritt; ist das Funkgerät angeschlossen, aber ausgeschaltet, bittet das Programm,
+  es einzuschalten, und erkennt es, sobald es an ist. Bei bereits geöffneter
+  Registerkarte der K67 Pro wird das Funkgerät in ein paar Sekunden erkannt, ohne den
+  ganzen Speicher erneut zu lesen. Neue Schaltfläche «Diagnose der Identifizierung
+  speichern» in der Registerkarte «Identifizieren»: eine Textdatei mit den Zeiten und
+  den ersten Bytes der letzten Suchen, die man dem Autor schickt, wenn die Erkennung
+  langsam oder falsch ist.
+- Galerie: 637 Modelle von 52 Marken (583 mit Kanälen, 496 mit Einstellungen).
 Neu in 4.35.0:
 - «Identifizieren» und automatische Erkennung: Der «schnelle Durchgang» der 4.31 wurde
   entfernt; er konnte echte Funkgeräte im Programmiermodus hängen lassen und die Suche

@@ -67,6 +67,7 @@ func main() {
 		app.token = t
 	}
 	app.startAutoIdent()
+	identWarmUp()
 	ln, url, err := app.listen()
 	if err != nil {
 		fmt.Println(err)

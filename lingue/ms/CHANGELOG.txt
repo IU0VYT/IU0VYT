@@ -6,6 +6,41 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.36.0 (13/11/2026)
+-------------------
+- Versi pembetulan untuk «Kenal pasti» dan pengenalpastian automatik, selepas ujian 4.35
+  pada radio sebenar (Bajeton BJ-9000 dan BJ-8300 baik; Baofeng K67 Pro dikenali lewat,
+  dan kotak «Pengenalpastian radio sedang dijalankan» muncul walaupun radio disambungkan
+  tetapi dimatikan). Program mengingati pada kabel (port) mana ia mengenali setiap
+  radio: pada port itu ia mencuba dahulu radio yang sudah dikenali di situ, yang terkini
+  dahulu, kemudian radio lain yang diketahui, kemudian semua yang lain; bagi K67 Pro ia
+  juga mengingati kelajuan radio itu menjawab. Mendengar selama satu saat sebelum
+  percubaan dilakukan sekali sahaja pada port yang senyap dan bukan sekali bagi setiap
+  kelajuan, dan tidak dilakukan langsung bagi radio yang sudah dikenali pada port itu;
+  protokol disediakan di latar belakang sejurus selepas program dimulakan. Dalam carian
+  automatik, radio yang diketahui pada sesuatu port dicuba semula setiap 4 percubaan dan
+  bukan 8: radio yang dihidupkan selepas kabel disambung menunggu paling lama kira-kira
+  4 saat dan bukan kira-kira 8.
+- Kotak «Pengenalpastian radio sedang dijalankan» muncul hanya semasa radio yang telah
+  menjawab benar-benar dibaca, dan menunjukkan model serta kemajuan. Peranti yang
+  menjawab tetapi tidak dapat dibaca (biasanya radio dimatikan) dilaporkan sekali
+  sahaja, dengan notis yang meminta radio dihidupkan; selepas itu program mencuba semula
+  secara senyap, radio yang diketahui setiap 3 saat dan keseluruhan pelan setiap 30
+  saat, dan mengenali radio sebaik sahaja ia hidup. Dengan tab K67 Pro sudah terbuka,
+  program tidak lagi membaca semula seluruh memori (26 saat pada 19200 baud) untuk
+  menyatakan «Radio sudah dikenal pasti»: ia membuat semakan ringkas (jabat tangan, blok
+  pertama, penutup), iaitu arahan yang sama digunakan oleh program pengeluar sebelum
+  setiap penulisan.
+- Diagnosis pengenalpastian: butang «Simpan diagnosis pengenalpastian» dalam tab «Kenal
+  pasti» menulis percubaan carian terkini ke dalam fail teks, dengan masa hingga
+  milisaat serta bait pertama yang dihantar dan diterima. Ia tidak mengandungi saluran,
+  kata laluan K67 Pro mahupun data peribadi, dan sentiasa dalam bahasa Itali. Ujian
+  baharu: radio mengikut port, kelajuan K67 Pro, mendengar sekali sahaja, radio yang
+  dimatikan tetapi menjawab jabat tangan, tab yang sudah terbuka, diagnosis tanpa kata
+  laluan. Tidak dapat disahkan dengan radio simulasi dan perlu dicuba pada K67 Pro
+  sebenar: apa yang dijawab oleh radio yang dimatikan, dan semakan ringkas dengan tab
+  terbuka. Tiada radio baharu dalam versi ini.
+
 4.35.0 (13/11/2026)
 -------------------
 - Versi pembetulan untuk «Kenal pasti» dan pengenalpastian automatik. «Pusingan pantas»

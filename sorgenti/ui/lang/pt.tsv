@@ -976,8 +976,6 @@ dad41bf2	só rádios DMR
 cb490c05	🔄 Ativar identificação automática
 f841c2d5	Ligue o cabo: o rádio é reconhecido sozinho, mesmo que o ligue depois, e abre-se o seu separador com os canais lidos.
 8c51a753	Vários cabos: cada rádio é procurado no seu cabo, todos ao mesmo tempo.
-962c591c	Os rádios já identificados antes são reconhecidos mais depressa.
-f40431b2	Enquanto um rádio responde aparece em baixo «Identificação do rádio em curso».
 e920a7bf	Para outro rádio no mesmo cabo prima
 54a5250f	«🔎 Identificar rádio»
 2238bcb0	em cima à direita.
@@ -993,7 +991,6 @@ d9d58141	USB — rádios DMR ligados diretamente (RD-5R, DM-1801, DM-1701)
 998e8fa1	Pesquisa falhada
 add639aa	O rádio respondeu a {0} {1} sem concluir a leitura
 835c01a2	Nenhum rádio reconhecido após {0} tentativas ({1} s). {2} {3}
-98bcbe1d	O rádio respondeu, mas a leitura não teve êxito com nenhum dos protocolos: veja os detalhes.
 8de9aa8a	O rádio não respondeu a nenhum protocolo.
 79554675	O rádio transmite dados sozinho, sem que o programa lhe peça nada:
 042e7d70	normalmente significa que está em modo de atualização do firmware (ligado mantendo premidas algumas teclas). Desligue-o e volte a ligá-lo normalmente para ler os canais, ou use o separador «Firmware» se quiser atualizá-lo.
@@ -1467,7 +1464,6 @@ aed8b737	usb serial
 1c7443df	rádio DMR ligado por USB
 1e0e7d42	Um rádio responde em {0}: identificação em curso…
 739aca35	À escuta em {0} (ligue o rádio ao cabo e ligue-o, mesmo depois do cabo)
-96011e1c	Em {0} responde um rádio, mas não está entre os modelos conhecidos
 d37f1bed	Rádio reconhecido em {0}: para outro rádio prima «Identificar rádio»
 38c872ac	Pesquisa interrompida em {0}
 f263d343	A aguardar a ligação do cabo de programação
@@ -5854,3 +5850,19 @@ ef1bb624	Yaesu FT-8900
 bbd47d6b	bloco incompleto no endereço {0} ({1} bytes de {2})
 6246f0cc	imagem da memória inválida para o {0}
 416bef96	{0}: a leitura era apenas o eco do cabo, nenhum rádio
+23f2b6f0	Guarda num ficheiro de texto os tempos e os primeiros bytes trocados com o rádio nas últimas pesquisas: serve a quem desenvolve o programa para perceber uma identificação lenta ou errada. Não contém os canais do rádio nem dados pessoais.
+e1b4186c	Os rádios já identificados antes são reconhecidos mais depressa: o programa lembra-se do cabo em que os encontrou e começa por esses.
+5ce1746c	Enquanto lê um rádio que respondeu aparece em baixo «Identificação do rádio em curso», com o modelo e o progresso da leitura.
+07d08937	Um rádio desligado não pode ser identificado: se o programa avisar que um dispositivo responde mas não se deixa ler, ligue-o.
+f10b533e	🩺 Guardar o diagnóstico da identificação
+586fd2d1	se a identificação for lenta ou errar: repita o teste, depois guarde o diagnóstico e envie-o ao autor
+d3c7f344	Diagnóstico guardado em {0}
+72cfa688	O rádio respondeu, mas a leitura não teve êxito com nenhum dos protocolos: veja os detalhes. Se estiver desligado, ligue-o e repita a pesquisa; se estiver ligado, desligue-o e volte a ligá-lo.
+b7ac62dc	Em {0} um dispositivo responde mas não se deixa ler
+d6a8f8af	Se o rádio estiver desligado, ligue-o: é reconhecido automaticamente. Se estiver ligado, desligue-o e volte a ligá-lo.
+ec2133fe	Um dispositivo responde em {0}: verificação em curso…
+faea270a	Em {0} um dispositivo responde mas não se deixa ler: se o rádio estiver desligado ligue-o, se estiver ligado desligue-o e volte a ligá-lo (a pesquisa retoma sozinha); se mesmo assim não for reconhecido, o modelo não está entre os suportados
+3ae7680d	IU0VYT_diagnosi_identifica_{0}.txt
+e09c1757	Guardar o diagnóstico
+fb81b3e0	Ficheiro de texto (*.txt)|*.txt
+66fd240f	as informações lidas do rádio não são válidas

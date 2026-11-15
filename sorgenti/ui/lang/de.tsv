@@ -976,8 +976,6 @@ dad41bf2	nur DMR-Funkgeräte
 cb490c05	🔄 Automatische Identifizierung aktivieren
 f841c2d5	Kabel anschließen: Das Funkgerät wird selbst erkannt, auch wenn Sie es später einschalten, und seine Registerkarte öffnet sich mit den gelesenen Kanälen.
 8c51a753	Mehrere Kabel: Jedes Funkgerät wird an seinem Kabel gesucht, alle gleichzeitig.
-962c591c	Früher bereits identifizierte Funkgeräte werden schneller erkannt.
-f40431b2	Während ein Funkgerät antwortet, erscheint unten «Identifizierung des Funkgeräts läuft».
 e920a7bf	Für ein anderes Funkgerät am selben Kabel drücken Sie
 54a5250f	«🔎 Funkgerät identifizieren»
 2238bcb0	oben rechts.
@@ -993,7 +991,6 @@ d9d58141	USB — direkt angeschlossene DMR-Funkgeräte (RD-5R, DM-1801, DM-1701)
 998e8fa1	Suche fehlgeschlagen
 add639aa	Das Funkgerät hat auf {0} {1} geantwortet, ohne das Lesen abzuschließen
 835c01a2	Kein Funkgerät erkannt nach {0} Versuchen ({1} s). {2} {3}
-98bcbe1d	Das Funkgerät hat geantwortet, aber mit keinem der Protokolle war das Lesen erfolgreich: siehe Details.
 8de9aa8a	Das Funkgerät hat auf kein Protokoll geantwortet.
 79554675	Das Funkgerät sendet von selbst Daten, ohne dass das Programm etwas anfragt:
 042e7d70	Meist bedeutet das, dass es im Firmware-Aktualisierungsmodus ist (mit gedrückten Tasten eingeschaltet). Aus- und normal wieder einschalten, um die Kanäle zu lesen, oder die Registerkarte «Firmware» verwenden, um es zu aktualisieren.
@@ -1467,7 +1464,6 @@ aed8b737	usb serial
 1c7443df	per USB angeschlossenes DMR-Funkgerät
 1e0e7d42	Ein Funkgerät antwortet an {0}: Identifizierung läuft…
 739aca35	Lauschen an {0} (Funkgerät anschließen und einschalten, auch nach dem Kabel)
-96011e1c	An {0} antwortet ein Funkgerät, das aber nicht zu den bekannten Modellen gehört
 d37f1bed	Funkgerät an {0} erkannt: Für ein anderes Funkgerät «Funkgerät identifizieren» drücken
 38c872ac	Suche an {0} unterbrochen
 f263d343	Warten auf den Anschluss des Programmierkabels
@@ -5854,3 +5850,19 @@ ef1bb624	Yaesu FT-8900
 bbd47d6b	unvollständiger Block an Adresse {0} ({1} von {2} Byte)
 6246f0cc	Speicherabbild für das {0} ungültig
 416bef96	{0}: gelesen wurde nur das Echo des Kabels, kein Funkgerät
+23f2b6f0	Speichert in einer Textdatei die Zeiten und die ersten Bytes, die bei den letzten Suchen mit dem Funkgerät ausgetauscht wurden: Das hilft dem Entwickler, eine langsame oder falsche Identifizierung zu verstehen. Sie enthält weder die Kanäle des Funkgeräts noch persönliche Daten.
+e1b4186c	Früher bereits identifizierte Funkgeräte werden schneller erkannt: Das Programm merkt sich, an welchem Kabel es sie gefunden hat, und beginnt mit diesen.
+5ce1746c	Während ein Funkgerät gelesen wird, das geantwortet hat, erscheint unten «Identifizierung des Funkgeräts läuft» mit dem Modell und dem Lesefortschritt.
+07d08937	Ein ausgeschaltetes Funkgerät kann nicht identifiziert werden: Meldet das Programm, dass ein Gerät antwortet, sich aber nicht lesen lässt, schalte es ein.
+f10b533e	🩺 Diagnose der Identifizierung speichern
+586fd2d1	wenn die Identifizierung langsam oder falsch ist: Versuch wiederholen, dann die Diagnose speichern und an den Autor senden
+d3c7f344	Diagnose gespeichert in {0}
+72cfa688	Das Funkgerät hat geantwortet, aber mit keinem der Protokolle war das Lesen erfolgreich: siehe Details. Ist es aus, schalte es ein und wiederhole die Suche; ist es an, schalte es aus und wieder ein.
+b7ac62dc	An {0} antwortet ein Gerät, lässt sich aber nicht lesen
+d6a8f8af	Ist das Funkgerät aus, schalte es ein: Es wird von selbst erkannt. Ist es an, schalte es aus und wieder ein.
+ec2133fe	An {0} antwortet ein Gerät: Prüfung läuft…
+faea270a	An {0} antwortet ein Gerät, lässt sich aber nicht lesen: Ist das Funkgerät aus, schalte es ein, ist es an, schalte es aus und wieder ein (die Suche läuft von selbst weiter); wird es auch dann nicht erkannt, gehört das Modell nicht zu den unterstützten
+3ae7680d	IU0VYT_diagnosi_identifica_{0}.txt
+e09c1757	Diagnose speichern
+fb81b3e0	Textdatei (*.txt)|*.txt
+66fd240f	die vom Funkgerät gelesenen Informationen sind ungültig

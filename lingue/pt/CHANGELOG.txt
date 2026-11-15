@@ -7,6 +7,39 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.36.0 (13/11/2026)
+-------------------
+- Versão de correção para «Identificar» e a identificação automática, depois dos testes
+  da 4.35 com rádios reais (Bajeton BJ-9000 e BJ-8300 em ordem; Baofeng K67 Pro
+  reconhecido com atraso, e caixa «Identificação do rádio em curso» visível mesmo com o
+  rádio ligado ao cabo mas desligado). O programa lembra-se do cabo (porta) em que
+  reconheceu cada rádio: nessa porta experimenta primeiro os rádios já reconhecidos aí,
+  o último primeiro, depois os outros rádios conhecidos e depois tudo o resto; do K67
+  Pro lembra-se também da velocidade a que respondeu. A escuta de um segundo antes das
+  tentativas faz-se uma só vez numa porta em silêncio em vez de uma vez por velocidade,
+  e não se faz para um rádio já reconhecido nessa porta; os protocolos são preparados em
+  segundo plano pouco depois de o programa arrancar. Na procura automática os rádios
+  conhecidos numa porta voltam a ser experimentados a cada 4 tentativas em vez de 8: um
+  rádio ligado depois do cabo espera no máximo cerca de 4 segundos em vez de cerca de 8.
+- A caixa «Identificação do rádio em curso» aparece apenas enquanto um rádio que
+  respondeu está realmente a ser lido, e mostra o modelo e o progresso. Um dispositivo
+  que responde mas não se deixa ler (normalmente o rádio está desligado) é comunicado
+  uma só vez, com um aviso a pedir para ligar o rádio; depois o programa volta a tentar
+  em silêncio, os rádios conhecidos a cada 3 segundos e todo o plano a cada 30, e
+  reconhece o rádio logo que esteja ligado. Com o separador da K67 Pro já aberto, o
+  programa já não relê toda a memória (26 segundos a 19200 baud) para dizer «Rádio já
+  identificado»: faz uma verificação breve (saudação, primeiro bloco, fecho), os mesmos
+  comandos que o programa do fabricante usa antes de cada escrita.
+- Diagnóstico da identificação: o botão «Guardar o diagnóstico da identificação» do
+  separador «Identificar» escreve num ficheiro de texto as tentativas das últimas
+  procuras, com os tempos ao milissegundo e os primeiros bytes enviados e recebidos. Não
+  contém os canais, nem a palavra-passe da K67 Pro, nem dados pessoais, e está sempre em
+  italiano. Testes novos: rádios por porta, velocidade da K67 Pro, escuta única, rádio
+  desligado que responde à saudação, separador já aberto, diagnóstico sem a
+  palavra-passe. Não verificável com rádios simulados e a experimentar numa K67 Pro
+  real: o que responde o rádio desligado e a verificação breve com o separador aberto.
+  Nenhum rádio novo nesta versão.
+
 4.35.0 (13/11/2026)
 -------------------
 - Versão de correção para «Identificar» e a identificação automática. Removida a «volta

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.35.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.36.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,18 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.36.0:
+- «Identificar» e identificação automática: o programa lembra-se agora do cabo em que
+  reconheceu cada rádio e começa por esses, e a primeira procura já não perde segundos à
+  escuta e em preparação. A caixa «Identificação do rádio em curso» aparece apenas
+  enquanto o rádio está realmente a ser lido, com o modelo e o progresso; se o rádio
+  estiver ligado ao cabo mas desligado, o programa pede para o ligar e reconhece-o logo
+  que esteja ligado. Com o separador da K67 Pro já aberto, o rádio é reconhecido em um
+  par de segundos, sem reler toda a memória. Novo botão «Guardar o diagnóstico da
+  identificação» no separador «Identificar»: um ficheiro de texto com os tempos e os
+  primeiros bytes das últimas procuras, para enviar ao autor se a identificação for
+  lenta ou errar.
+- Galeria: 637 modelos de 52 marcas (583 com canais, 496 com definições).
 Novidades da 4.35.0:
 - «Identificar» e identificação automática: removida a «volta rápida» da 4.31, que com
   os rádios reais podia deixar o rádio bloqueado em programação e tornar a procura

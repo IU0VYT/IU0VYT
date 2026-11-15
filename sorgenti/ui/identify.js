@@ -37,8 +37,9 @@ const Identify = {
       <ul class="note idlist">
         <li>Collega il cavo: la radio viene riconosciuta da sola, anche se la accendi dopo, e si apre la sua scheda con i canali letti.</li>
         <li>Più cavi: ogni radio viene cercata sul suo cavo, tutte insieme.</li>
-        <li>Le radio già identificate in passato vengono riconosciute più velocemente.</li>
-        <li>Mentre una radio risponde compare in basso «Identificazione Radio In Corso».</li>
+        <li>Le radio già identificate in passato vengono riconosciute più velocemente: il programma ricorda su quale cavo le ha trovate e comincia da quelle.</li>
+        <li>Mentre legge una radio che ha risposto compare in basso «Identificazione Radio In Corso», con il modello e l'avanzamento della lettura.</li>
+        <li>Una radio spenta non si può identificare: se il programma avvisa che un dispositivo risponde ma non si lascia leggere, accendila.</li>
         <li>Per un'altra radio sullo stesso cavo premi <b>«🔎 Identifica Radio»</b> in alto a destra.</li>
         <li>La scelta resta memorizzata.</li>
       </ul>
@@ -53,11 +54,14 @@ const Identify = {
       <p class="note" style="margin-top:14px"><b>Radio non trovata?</b> Accendila con il volume a metà, inserisci lo spinotto fino in fondo e
       controlla la porta. UV-17, UV-13Pro e GM-15 Pro vanno accese <b>dopo</b> aver collegato il cavo. Radio DMR con cavo USB diretto
       (RD-5R, DM-1801, DM-1701): porta «USB».</p>
+      <div class="convrow"><button class="btn" data-diag title="Salva in un file di testo i tempi e i primi byte scambiati con la radio nelle ultime ricerche: serve a chi sviluppa il programma per capire un'identificazione lenta o sbagliata. Non contiene i canali della radio né dati personali.">🩺 Salva la diagnosi dell'identificazione</button>
+        <span class="note">se l'identificazione è lenta o sbaglia: ripeti la prova, poi salva la diagnosi e inviala all'autore</span></div>
     </div></div>`;
     $('[data-refresh]', page).onclick = () => this.loadPorts(page).catch(reportError);
     $('[data-go]', page).onclick = () => this.start(page).catch(reportError);
     $('[data-stop]', page).onclick = () => api('cable/cancel', {}, { quiet: true }).catch(reportError);
     $('[data-auto]', page).onclick = () => AutoIdent.toggle().catch(reportError);
+    $('[data-diag]', page).onclick = () => this.saveDiag().catch(reportError);
     AutoIdent.paint();
     await this.loadPorts(page);
   },
@@ -71,6 +75,12 @@ const Identify = {
     if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
     $('[data-portnote]', page).textContent = r.ports.length ? `Le letture vengono salvate anche in: ${r.backupDir}`
       : 'Nessuna porta seriale trovata: collega il cavo e verifica che il driver (es. CH340 o Prolific) sia installato, poi premi Aggiorna.';
+  },
+
+  // 4.36: diagnosi dell'identificazione (tempi e primi byte delle ultime ricerche)
+  async saveDiag() {
+    const r = await api('identify/diag', {}, { quiet: true });
+    toast(`Diagnosi salvata in ${r.path}`);
   },
 
   async start(page) {
@@ -126,7 +136,7 @@ const Identify = {
       <ul class="warnlist">${r.answers.map(a => '<li>' + esc(a) + '</li>').join('')}</ul></details>` : '';
     if (!r.found) {
       box.innerHTML = `<div class="infores bad">Nessuna radio riconosciuta dopo ${r.tried} tentativi (${r.seconds} s).
-        ${(r.answers || []).length ? 'La radio ha risposto, ma con nessuno dei protocolli la lettura è andata a buon fine: vedi i dettagli.' : 'La radio non ha risposto a nessun protocollo.'}
+        ${(r.answers || []).length ? 'La radio ha risposto, ma con nessuno dei protocolli la lettura è andata a buon fine: vedi i dettagli. Se è spenta, accendila e ripeti la ricerca; se è accesa, spegnila e riaccendila.' : 'La radio non ha risposto a nessun protocollo.'}
         ${r.spont ? '<br><b>La radio trasmette dati da sola, senza che il programma le chieda nulla:</b> di solito vuol dire che è in modalità aggiornamento firmware (accesa tenendo premuti dei tasti). Spegnila e riaccendila normalmente per leggere i canali, oppure usa la scheda «Firmware» se vuoi aggiornarla.' : ''}</div>${answers}`;
       return;
     }
@@ -172,13 +182,16 @@ const Identify = {
 // ------------------------------------------------------------ identificazione automatica (4.0-4.2)
 // Controllo in sottofondo (ogni secondo e mezzo), in qualsiasi scheda: stato nella
 // scheda «Identifica»; il riquadro «Identificazione Radio In Corso» compare solo
-// quando una radio collegata risponde e sparisce quando è riconosciuta o la
-// ricerca finisce. Quando il programma riconosce una radio ne mostra i dati e apre
+// mentre una radio che ha risposto si fa leggere (4.36: con il modello e
+// l'avanzamento) e sparisce quando è riconosciuta o la lettura cade. Se un
+// dispositivo risponde ma non si lascia leggere (radio spenta) compare una
+// volta un avviso in alto. Quando il programma riconosce una radio ne mostra i dati e apre
 // la sua scheda, poi la ricerca su quel cavo si ferma: il pulsante «Identifica
 // Radio» della barra in alto (attivo solo con l'opzione attiva) la fa ripartire.
 const AutoIdent = {
   st: null,
   seq: null, // ultimo esito già mostrato
+  noticeSeq: null, // ultimo avviso «risponde ma non si lascia leggere» già mostrato
   busy: false,
 
   start() {
@@ -190,11 +203,24 @@ const AutoIdent = {
     tick();
   },
 
+  // schede delle radio aperte con dei dati (4.36): se la radio collegata è una di
+  // queste il programma non ne rilegge la memoria (vedi found, «già aperta»)
+  openKinds() {
+    return [...document.querySelectorAll('.tab[data-tab]')].map(t => t.dataset.tab).filter(k => Views[k] && Views[k].loaded);
+  },
+
   async tick(body) {
-    const r = await api('identify/auto', body || {}, { quiet: true });
+    const r = await api('identify/auto', Object.assign({ open: this.openKinds() }, body || {}), { quiet: true });
     this.st = r;
     if (this.seq === null) this.seq = r.seq; // esiti precedenti all'apertura della pagina: non si ripetono
+    if (this.noticeSeq === null) this.noticeSeq = r.noticeSeq || 0;
     this.paint();
+    // 4.36: un dispositivo risponde ma non si lascia leggere (di solito la radio è spenta)
+    if (r.notice && r.notice.seq > this.noticeSeq) {
+      this.noticeSeq = r.notice.seq;
+      idBanner(`Su ${r.notice.port} un dispositivo risponde ma non si lascia leggere`,
+        'Se la radio è spenta, accendila: viene riconosciuta da sola. Se è accesa, spegnila e riaccendila.', 15000);
+    }
     // 4.3: più radio (una per cavo) possono essere riconosciute insieme
     const evs = (r.events || []).filter(e => e.seq > this.seq);
     if (evs.length && !this.busy) {
@@ -233,7 +259,12 @@ const AutoIdent = {
     if (ban) {
       const show = !!(st && st.enabled && st.searching);
       ban.hidden = !show;
-      if (show) $('.ab-port', ban).textContent = (st.answering || []).length ? `(${st.answering.join(', ')})` : '';
+      // 4.36: porta, modello in lettura e avanzamento (i nomi delle radio non si traducono)
+      if (show) {
+        const rd = (st.reading || []).map(x => x.port + (x.name ? ' — ' + x.name : '') + (x.pct ? ': ' + x.pct + ' %' : ''));
+        const el = $('.ab-port', ban);
+        el.textContent = rd.length ? `(${rd.join(' · ')})` : ((st.answering || []).length ? `(${st.answering.join(', ')})` : '');
+      }
     }
     const page = $('#page-ident');
     const btn = page && $('[data-auto]', page);
@@ -253,8 +284,15 @@ const AutoIdent = {
       Identify.show(page, Identify.result);
     }
     const already = [], opened = [], kept = [];
+    let again = false;
     for (const ev of evs) {
       const r = ev.result;
+      // 4.36: scheda già aperta, memoria non riletta. Se nel frattempo la
+      // scheda è stata chiusa non c'è niente da aprire: si ripete la ricerca
+      if (r.already) {
+        if (Views[r.kind] && Views[r.kind].loaded && $(`.tab[data-tab="${r.kind}"]`)) already.push(ev); else again = true;
+        continue;
+      }
       // 4.6: radio che via cavo non si distinguono (stessa gestione, nomi diversi):
       // si chiede quale sia, la prima volta; poi il programma la ricorda
       let choice = r.kind + (r.card ? '#' + r.card : '');
@@ -292,6 +330,7 @@ const AutoIdent = {
       idBanner(already.length > 1 ? 'Radio già identificate!! Schede radio già aperte' : 'Radio già identificata!! Scheda Radio già aperta',
         already.map(ev => ev.result.name + ' (' + ev.port + ')').join(' · '));
     }
+    if (again) this.tick({ rescan: true }).catch(() => {});
     if (!opened.length) return;
     const list = [];
     for (const ev of opened) {
@@ -345,7 +384,7 @@ function pickModelDlg(r, port) {
 }
 
 // idBanner (4.3): avviso ben visibile in alto, si chiude da solo dopo alcuni secondi
-function idBanner(title, detail) {
+function idBanner(title, detail, ms) {
   let b = $('#idbanner');
   if (!b) {
     b = document.createElement('div');
@@ -356,6 +395,6 @@ function idBanner(title, detail) {
   b.innerHTML = `<b>${esc(title)}</b>${detail ? `<span>${esc(detail)}</span>` : ''}`;
   b.hidden = false;
   clearTimeout(idBanner.t);
-  idBanner.t = setTimeout(() => { b.hidden = true; }, 7000);
+  idBanner.t = setTimeout(() => { b.hidden = true; }, ms || 7000);
   b.onclick = () => { b.hidden = true; };
 }

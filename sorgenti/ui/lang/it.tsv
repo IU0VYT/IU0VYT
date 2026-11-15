@@ -965,6 +965,7 @@ d82dbd21	Programma indipendente, non affiliato ai costruttori delle radio. I mar
 92d88c49	FLASH
 c1cef063	non indicata
 d592c003	· compilata il {0}
+23f2b6f0	Salva in un file di testo i tempi e i primi byte scambiati con la radio nelle ultime ricerche: serve a chi sviluppa il programma per capire un'identificazione lenta o sbagliata. Non contiene i canali della radio né dati personali.
 174584c3	Riconosce la radio collegata e ne mostra marca, modello, tipo e firmware. Usa solo comandi di lettura:
 8584251c	nella radio non viene scritto nulla.
 8ac6a684	1. Collegamento
@@ -978,8 +979,9 @@ dad41bf2	solo radio DMR
 cb490c05	🔄 Abilita identificazione automatica
 f841c2d5	Collega il cavo: la radio viene riconosciuta da sola, anche se la accendi dopo, e si apre la sua scheda con i canali letti.
 8c51a753	Più cavi: ogni radio viene cercata sul suo cavo, tutte insieme.
-962c591c	Le radio già identificate in passato vengono riconosciute più velocemente.
-f40431b2	Mentre una radio risponde compare in basso «Identificazione Radio In Corso».
+e1b4186c	Le radio già identificate in passato vengono riconosciute più velocemente: il programma ricorda su quale cavo le ha trovate e comincia da quelle.
+5ce1746c	Mentre legge una radio che ha risposto compare in basso «Identificazione Radio In Corso», con il modello e l'avanzamento della lettura.
+07d08937	Una radio spenta non si può identificare: se il programma avvisa che un dispositivo risponde ma non si lascia leggere, accendila.
 e920a7bf	Per un'altra radio sullo stesso cavo premi
 54a5250f	«🔎 Identifica Radio»
 2238bcb0	in alto a destra.
@@ -990,12 +992,15 @@ b6e9ddea	🔎 Identifica la radio
 c803172d	Accendila con il volume a metà, inserisci lo spinotto fino in fondo e controlla la porta. UV-17, UV-13Pro e GM-15 Pro vanno accese
 1cbbc3b9	dopo
 1bcec61d	aver collegato il cavo. Radio DMR con cavo USB diretto (RD-5R, DM-1801, DM-1701): porta «USB».
+f10b533e	🩺 Salva la diagnosi dell'identificazione
+586fd2d1	se l'identificazione è lenta o sbaglia: ripeti la prova, poi salva la diagnosi e inviala all'autore
 d9d58141	USB — radio DMR collegate direttamente (RD-5R, DM-1801, DM-1701)
 10c99eed	Le letture vengono salvate anche in: {0}
+d3c7f344	Diagnosi salvata in {0}
 998e8fa1	Ricerca non riuscita
 add639aa	La radio ha risposto a {0} {1} senza completare la lettura
 835c01a2	Nessuna radio riconosciuta dopo {0} tentativi ({1} s). {2} {3}
-98bcbe1d	La radio ha risposto, ma con nessuno dei protocolli la lettura è andata a buon fine: vedi i dettagli.
+72cfa688	La radio ha risposto, ma con nessuno dei protocolli la lettura è andata a buon fine: vedi i dettagli. Se è spenta, accendila e ripeti la ricerca; se è accesa, spegnila e riaccendila.
 8de9aa8a	La radio non ha risposto a nessun protocollo.
 79554675	La radio trasmette dati da sola, senza che il programma le chieda nulla:
 042e7d70	di solito vuol dire che è in modalità aggiornamento firmware (accesa tenendo premuti dei tasti). Spegnila e riaccendila normalmente per leggere i canali, oppure usa la scheda «Firmware» se vuoi aggiornarla.
@@ -1009,6 +1014,8 @@ eaca0fcf	come «Leggi dalla radio»: poi puoi modificarli e salvarli
 d1ed37b2	Copia della lettura
 5cdbe3ab	Apertura…
 28b12cd7	Ricerca interrotta. Per riprenderla premi «Identifica Radio».
+b7ac62dc	Su {0} un dispositivo risponde ma non si lascia leggere
+d6a8f8af	Se la radio è spenta, accendila: viene riconosciuta da sola. Se è accesa, spegnila e riaccendila.
 548a2440	Ricerca di una nuova radio sul cavo di programmazione: collega la radio e accendila.
 f93de9e6	Nessun cavo di programmazione collegato: collegalo al PC e alla radio.
 2c899286	Identificazione automatica attiva: collega la radio con il cavo di programmazione.
@@ -1468,12 +1475,17 @@ aed8b737	usb serial
 4589b53e	seriale usb
 1c7443df	radio DMR collegata via USB
 1e0e7d42	Una radio risponde su {0}: identificazione in corso…
+ec2133fe	Un dispositivo risponde su {0}: controllo in corso…
 739aca35	In ascolto su {0} (collega la radio e accendila, anche dopo il cavo)
-96011e1c	Su {0} una radio risponde ma non è tra i modelli conosciuti
+faea270a	Su {0} un dispositivo risponde ma non si lascia leggere: se la radio è spenta accendila, se è accesa spegnila e riaccendila (la ricerca riprende da sola); se non viene riconosciuta nemmeno così, il modello non è tra quelli gestiti
 d37f1bed	Radio riconosciuta su {0}: per un'altra radio premi «Identifica Radio»
 38c872ac	Ricerca interrotta su {0}
 f263d343	In attesa del collegamento del cavo di programmazione
 f0bec433	attiva prima l'identificazione automatica nella scheda «Identifica»
+3ae7680d	IU0VYT_diagnosi_identifica_{0}.txt
+e09c1757	Salva la diagnosi
+fb81b3e0	File di testo (*.txt)|*.txt
+28f1898f	impossibile salvare: {0}
 8ba4358b	UV-5RM/5RH, chip BK4819, V0.14 del 23/11/2023 (5RH_BK_V0.14_231123.BF)
 7517c977	UV-5RM/5RH, chip BK4819, V0.13 del 20/11/2023 (5RH_BK_V0.13_231120.BF)
 d956edd8	UV-5RM/5RH, chip BK4819, V0.12 cinese tradizionale del 27/10/2023 (5RH_BK_Fangti_V0.12_231027.BF)
@@ -2448,7 +2460,6 @@ a6dd1fd5	scegli il formato di destinazione
 35090f88	CSV (*.csv)|*.csv
 1ac7d465	Excel (*.xlsx)|*.xlsx
 10f4b012	Salva il file convertito
-28f1898f	impossibile salvare: {0}
 5c42bcf1	Importa canali da un file
 899b3172	il file non contiene canali
 03343b80	non è un file Bajeton/BT-11 valido (KDH.RadioData mancante)
@@ -4433,6 +4444,7 @@ bcbd41df	la password può avere al massimo 8 caratteri
 ab14d751	la radio collegata si identifica come "BF-K6", ma l'ultima radio letta no: come il programma originale, la scrittura parte solo verso lo stesso modello letto. Leggi prima questa radio (o attiva la copia di sicurezza prima della scrittura) e riprova
 a963206e	la radio collegata ("{0}") non è il modello dell'ultima radio letta ("BF-K6"): leggi prima questa radio e riprova
 bd4ba22f	Lettura (blocco 0x{0})
+66fd240f	le informazioni lette dalla radio non sono valide
 0af1aac4	Lettura delle informazioni della radio
 201e0538	le informazioni lette dalla radio non sono valide: scrittura annullata, nessun dato è stato scritto
 36ad76e6	Collegamento (seconda fase)

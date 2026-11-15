@@ -47,6 +47,17 @@ type cableJob struct {
 	Auto bool `json:"auto"`
 	// answered: durante la ricerca una radio ha risposto (identificazione automatica)
 	answered atomic.Bool
+	// reading (4.36): la radio che ha risposto si sta facendo LEGGERE (il saluto è
+	// andato a buon fine e i dati della memoria stanno arrivando); readName: il
+	// modello che la sta leggendo. Il riquadro «Identificazione Radio In Corso»
+	// compare solo in questo caso (vedi autoident.go)
+	reading  atomic.Bool
+	readName string
+	// knownFail (4.36, ricerca automatica): una radio già riconosciuta su questa
+	// porta ha risposto al suo saluto ma la lettura non è riuscita. Di solito è
+	// spenta (resta alimentata dal cavo) o si sta accendendo: l'interfaccia lo
+	// dice subito, senza aspettare la fine del giro (vedi autoNoticeLocked)
+	knownFail atomic.Bool
 	// sess: radio riconosciuta dalla ricerca (4.3: una per ricerca, più porte insieme)
 	sess    *identSession
 	cancel  context.CancelFunc
@@ -68,7 +79,37 @@ func (j *cableJob) isRunning() bool {
 func (j *cableJob) prog(done, total int, msg string) {
 	j.mu.Lock()
 	j.Done, j.Total, j.Msg = done, total, msg
+	read := j.Op == "identify" && done > 0 && j.readName != ""
 	j.mu.Unlock()
+	if read {
+		j.reading.Store(true)
+	}
+}
+
+// readStart / readStop (4.36): tentativo di lettura di un modello durante
+// «Identifica» (vedi cableJob.reading)
+func (j *cableJob) readStart(name string) {
+	j.reading.Store(false)
+	j.mu.Lock()
+	j.readName = name
+	j.mu.Unlock()
+}
+
+func (j *cableJob) readStop() {
+	j.mu.Lock()
+	j.readName = ""
+	j.mu.Unlock()
+	j.reading.Store(false)
+}
+
+// readState: modello in lettura e percentuale (0-100)
+func (j *cableJob) readState() (name string, pct int) {
+	j.mu.Lock()
+	defer j.mu.Unlock()
+	if j.Total > 0 {
+		pct = max(0, min(100, j.Done*100/j.Total))
+	}
+	return j.readName, pct
 }
 
 func (j *cableJob) note(f string, a ...interface{}) {

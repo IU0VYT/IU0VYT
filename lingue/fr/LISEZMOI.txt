@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.35.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.36.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,19 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.36.0 :
+- « Identifier » et identification automatique : le programme se souvient maintenant du
+  câble sur lequel il a reconnu chaque radio et commence par celles-ci, et la première
+  recherche ne perd plus de secondes en écoute et en préparation. Le cadre «
+  Identification de la radio en cours » n'apparaît que pendant la lecture effective de
+  la radio, avec le modèle et l'avancement ; si la radio est branchée mais éteinte, le
+  programme demande de l'allumer et la reconnaît dès qu'elle est allumée. Avec l'onglet
+  de la K67 Pro déjà ouvert, la radio est reconnue en deux secondes environ, sans relire
+  toute la mémoire. Nouveau bouton « Enregistrer le diagnostic de l'identification »
+  dans l'onglet « Identifier » : un fichier texte avec les temps et les premiers octets
+  des dernières recherches, à envoyer à l'auteur si l'identification est lente ou se
+  trompe.
+- Galerie : 637 modèles de 52 marques (583 avec canaux, 496 avec réglages).
 Nouveautés de la 4.35.0 :
 - « Identifier » et identification automatique : suppression du « tour rapide » de la
   4.31, qui avec les vraies radios pouvait laisser la radio bloquée en programmation et

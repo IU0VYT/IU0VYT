@@ -264,6 +264,40 @@ func k67Read(ctx context.Context, port string, o *k67Opts, prog Progress) ([]byt
 	return xorBytes(img, s.seed), s.info, nil
 }
 
+// k67Check (4.36): controllo breve della radio, senza leggerne tutta la memoria:
+// saluto, primo blocco (quello con le informazioni della radio) e chiusura.
+// Serve all'identificazione automatica quando la scheda della K67 Pro è già
+// aperta: per dire «radio già identificata» non serve rileggere 48 KiB (a 19200
+// baud sono 26 secondi), basta sapere che la radio è quella. Sono gli stessi
+// comandi della lettura normale, fermata dopo il primo blocco; il programma
+// originale fa la stessa cosa (saluto, blocco 0, chiusura) prima di ogni
+// scrittura (readDevInfo, vedi k67Write).
+func k67Check(ctx context.Context, port string, o *k67Opts, prog Progress) (k67Info, error) {
+	s, err := k67Open(port, o)
+	if err != nil {
+		return k67Info{}, err
+	}
+	defer s.p.Close()
+	s.ctx = ctx
+	prog(0, 4096, "Collegamento con la radio…")
+	if err := s.handShake('R'); err != nil {
+		return s.info, k67Fail("Collegamento", err)
+	}
+	blk, err := s.readBlock(0)
+	if err != nil {
+		return s.info, k67Fail(fmt.Sprintf("Lettura (blocco 0x%04X)", 0), err)
+	}
+	if allSame(xorBytes(blk[:128], s.seed)) {
+		return s.info, fmt.Errorf("le informazioni lette dalla radio non sono valide")
+	}
+	prog(4096, 4096, "Lettura completata")
+	if err := s.end(); err != nil {
+		return s.info, k67Fail("Chiusura", err)
+	}
+	s.info.Baud = s.baud
+	return s.info, nil
+}
+
 // k67Write scrive l'immagine (primi 0xC000 byte del file). Come il programma
 // originale, prima legge i 128 byte di informazioni della radio e li mette al
 // posto di quelli del file.

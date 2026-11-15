@@ -976,8 +976,6 @@ dad41bf2	radios DMR uniquement
 cb490c05	🔄 Activer l'identification automatique
 f841c2d5	Branchez le câble : la radio est reconnue toute seule, même si vous l'allumez après, et son onglet s'ouvre avec les canaux lus.
 8c51a753	Plusieurs câbles : chaque radio est recherchée sur son câble, toutes en même temps.
-962c591c	Les radios déjà identifiées auparavant sont reconnues plus vite.
-f40431b2	Pendant qu'une radio répond, « Identification de la radio en cours » apparaît en bas.
 e920a7bf	Pour une autre radio sur le même câble, appuyez sur
 54a5250f	« 🔎 Identifier la radio »
 2238bcb0	en haut à droite.
@@ -993,7 +991,6 @@ d9d58141	USB — radios DMR branchées directement (RD-5R, DM-1801, DM-1701)
 998e8fa1	Échec de la recherche
 add639aa	La radio a répondu à {0} {1} sans terminer la lecture
 835c01a2	Aucune radio reconnue après {0} tentatives ({1} s). {2} {3}
-98bcbe1d	La radio a répondu, mais la lecture n'a réussi avec aucun des protocoles : voir les détails.
 8de9aa8a	La radio n'a répondu à aucun protocole.
 79554675	La radio transmet des données toute seule, sans que le programme ne lui demande rien :
 042e7d70	cela signifie en général qu'elle est en mode mise à jour du firmware (allumée en maintenant des touches). Éteignez-la et rallumez-la normalement pour lire les canaux, ou utilisez l'onglet « Firmware » si vous voulez la mettre à jour.
@@ -1467,7 +1464,6 @@ aed8b737	usb serial
 1c7443df	radio DMR branchée en USB
 1e0e7d42	Une radio répond sur {0} : identification en cours…
 739aca35	À l'écoute sur {0} (branchez la radio et allumez-la, même après le câble)
-96011e1c	Sur {0}, une radio répond mais ne fait pas partie des modèles connus
 d37f1bed	Radio reconnue sur {0} : pour une autre radio, appuyez sur « Identifier la radio »
 38c872ac	Recherche interrompue sur {0}
 f263d343	En attente du branchement du câble de programmation
@@ -5854,3 +5850,19 @@ ef1bb624	Yaesu FT-8900
 bbd47d6b	bloc incomplet à l'adresse {0} ({1} octets sur {2})
 6246f0cc	image de la mémoire non valide pour le {0}
 416bef96	{0} : la lecture n'était que l'écho du câble, aucune radio
+23f2b6f0	Enregistre dans un fichier texte les temps et les premiers octets échangés avec la radio lors des dernières recherches : cela aide le développeur à comprendre une identification lente ou erronée. Il ne contient ni les canaux de la radio ni des données personnelles.
+e1b4186c	Les radios déjà identifiées auparavant sont reconnues plus vite : le programme se souvient du câble sur lequel il les a trouvées et commence par celles-ci.
+5ce1746c	Pendant la lecture d'une radio qui a répondu, « Identification de la radio en cours » apparaît en bas, avec le modèle et l'avancement de la lecture.
+07d08937	Une radio éteinte ne peut pas être identifiée : si le programme signale qu'un appareil répond mais ne se laisse pas lire, allumez-la.
+f10b533e	🩺 Enregistrer le diagnostic de l'identification
+586fd2d1	si l'identification est lente ou se trompe : répétez l'essai, puis enregistrez le diagnostic et envoyez-le à l'auteur
+d3c7f344	Diagnostic enregistré dans {0}
+72cfa688	La radio a répondu, mais la lecture n'a réussi avec aucun des protocoles : voir les détails. Si elle est éteinte, allumez-la et répétez la recherche ; si elle est allumée, éteignez-la et rallumez-la.
+b7ac62dc	Sur {0}, un appareil répond mais ne se laisse pas lire
+d6a8f8af	Si la radio est éteinte, allumez-la : elle est reconnue automatiquement. Si elle est allumée, éteignez-la et rallumez-la.
+ec2133fe	Un appareil répond sur {0} : vérification en cours…
+faea270a	Sur {0}, un appareil répond mais ne se laisse pas lire : si la radio est éteinte allumez-la, si elle est allumée éteignez-la et rallumez-la (la recherche reprend toute seule) ; si elle n'est toujours pas reconnue, le modèle ne fait pas partie de ceux pris en charge
+3ae7680d	IU0VYT_diagnosi_identifica_{0}.txt
+e09c1757	Enregistrer le diagnostic
+fb81b3e0	Fichier texte (*.txt)|*.txt
+66fd240f	les informations lues depuis la radio ne sont pas valides

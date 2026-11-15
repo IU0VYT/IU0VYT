@@ -7,6 +7,40 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.36.0 (13/11/2026)
+-------------------
+- Versión de corrección para «Identificar» y la identificación automática, tras las
+  pruebas de la 4.35 con radios reales (Bajeton BJ-9000 y BJ-8300 bien; Baofeng K67 Pro
+  reconocida con retraso, y recuadro «Identificación de la radio en curso» visible
+  incluso con la radio conectada pero apagada). El programa recuerda en qué cable
+  (puerto) reconoció cada radio: en ese puerto prueba primero las radios ya reconocidas
+  allí, la última primero, luego las demás radios conocidas y luego todo lo demás; de la
+  K67 Pro recuerda también la velocidad a la que respondió. La escucha de un segundo
+  antes de los intentos se hace una sola vez en un puerto en silencio en lugar de una
+  vez por velocidad, y no se hace para una radio ya reconocida en ese puerto; los
+  protocolos se preparan en segundo plano poco después de arrancar el programa. En la
+  búsqueda automática las radios conocidas en un puerto se vuelven a probar cada 4
+  intentos en lugar de cada 8: una radio encendida después del cable espera como máximo
+  unos 4 segundos en lugar de unos 8.
+- El recuadro «Identificación de la radio en curso» aparece solo mientras una radio que
+  ha respondido se está leyendo de verdad, y muestra el modelo y el avance. Un
+  dispositivo que responde pero no se deja leer (normalmente la radio está apagada) se
+  comunica una sola vez, con un aviso que pide encender la radio; después el programa
+  reintenta en silencio, las radios conocidas cada 3 segundos y todo el plan cada 30, y
+  reconoce la radio en cuanto está encendida. Con la pestaña de la K67 Pro ya abierta,
+  el programa ya no relee toda la memoria (26 segundos a 19200 baudios) para decir
+  «Radio ya identificada»: hace una comprobación breve (saludo, primer bloque, cierre),
+  los mismos comandos que el programa del fabricante usa antes de cada escritura.
+- Diagnóstico de la identificación: el botón «Guardar el diagnóstico de la
+  identificación» de la pestaña «Identificar» escribe en un archivo de texto los
+  intentos de las últimas búsquedas, con los tiempos al milisegundo y los primeros bytes
+  enviados y recibidos. No contiene los canales, ni la contraseña de la K67 Pro, ni
+  datos personales, y está siempre en italiano. Pruebas nuevas: radios por puerto,
+  velocidad de la K67 Pro, escucha única, radio apagada que responde al saludo, pestaña
+  ya abierta, diagnóstico sin la contraseña. No verificable con radios simuladas y por
+  probar en una K67 Pro real: qué responde la radio apagada y la comprobación breve con
+  la pestaña abierta. Ninguna radio nueva en esta versión.
+
 4.35.0 (13/11/2026)
 -------------------
 - Versión de corrección para «Identificar» y la identificación automática. Eliminada la

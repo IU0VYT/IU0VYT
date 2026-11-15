@@ -7,6 +7,38 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.36.0 (13/11/2026)
+-------------------
+- Fix release for «Identify» and automatic identification, after the tests of 4.35 on
+  real radios (Bajeton BJ-9000 and BJ-8300 fine; Baofeng K67 Pro recognised late, and
+  the «Radio identification in progress» box shown even with the radio connected but
+  switched off). The program remembers on which cable (port) it recognised each radio:
+  on that port it first tries the radios already recognised there, the latest first,
+  then the other known radios, then everything else; for the K67 Pro it also remembers
+  the speed at which it answered. The one-second listening before the attempts is done
+  once on a silent port instead of once per speed, and not at all for a radio already
+  recognised on that port; the protocols are prepared in the background shortly after
+  the program starts. In the automatic search the radios known on a port are retried
+  every 4 attempts instead of every 8: a radio switched on after the cable waits about 4
+  seconds at most instead of about 8.
+- The «Radio identification in progress» box appears only while a radio that has
+  answered is actually being read, and shows the model and the progress. A device that
+  answers but cannot be read (usually the radio is switched off) is reported once, with
+  a notice asking to switch the radio on; the program then retries silently, the known
+  radios every 3 seconds and the whole plan every 30, and recognises the radio as soon
+  as it is on. With the K67 Pro tab already open, the program no longer re-reads the
+  whole memory (26 seconds at 19200 baud) to say «Radio already identified»: it makes a
+  short check (handshake, first block, close), the same commands the manufacturer's
+  program uses before every write.
+- Identification diagnostics: the «Save the identification diagnostics» button in the
+  «Identify» tab writes to a text file the attempts of the latest searches, with timings
+  to the millisecond and the first bytes sent and received. It contains neither the
+  channels, nor the K67 Pro password, nor personal data, and is always in Italian. New
+  tests: radios per port, K67 Pro speed, single listening, switched-off radio answering
+  the handshake, tab already open, diagnostics without the password. Not verifiable with
+  simulated radios and to be tried on a real K67 Pro: what the switched-off radio
+  answers, and the short check with the tab open. No new radios in this version.
+
 4.35.0 (13/11/2026)
 -------------------
 - Fix release for «Identify» and automatic identification. Removed the «fast pass»

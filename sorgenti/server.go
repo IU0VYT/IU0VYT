@@ -33,7 +33,7 @@ import (
 //go:embed ui
 var uiFiles embed.FS
 
-const appVersion = "4.35.0"
+const appVersion = "4.36.0"
 
 var errNeedPath = errors.New("needPath")
 var errCancel = errors.New("annullato")
@@ -161,6 +161,7 @@ func (a *App) handler() http.Handler {
 	api("identify/start", a.apiIdentifyStart)
 	api("identify/open", a.apiIdentifyOpen)
 	api("identify/auto", a.apiIdentifyAuto)
+	api("identify/diag", a.apiIdentifyDiag)
 	api("usb/driver", a.apiUSBDriver)
 	api("fw6x2", a.apiFw6x2)
 	api("rename", a.apiRename)

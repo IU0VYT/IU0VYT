@@ -976,8 +976,6 @@ dad41bf2	DMR radios only
 cb490c05	🔄 Enable automatic identification
 f841c2d5	Connect the cable: the radio is recognised by itself, even if you switch it on later, and its tab opens with the channels read.
 8c51a753	Several cables: each radio is searched for on its own cable, all together.
-962c591c	Radios already identified in the past are recognised faster.
-f40431b2	While a radio responds, «Radio Identification In Progress» appears at the bottom.
 e920a7bf	For another radio on the same cable press
 54a5250f	«🔎 Identify Radio»
 2238bcb0	at the top right.
@@ -993,7 +991,6 @@ d9d58141	USB — DMR radios connected directly (RD-5R, DM-1801, DM-1701)
 998e8fa1	Search failed
 add639aa	The radio responded to {0} {1} without completing the reading
 835c01a2	No radio recognised after {0} attempts ({1} s). {2} {3}
-98bcbe1d	The radio responded, but the reading did not succeed with any of the protocols: see the details.
 8de9aa8a	The radio did not respond to any protocol.
 79554675	The radio transmits data by itself, without the program asking it anything:
 042e7d70	it usually means that it is in firmware update mode (switched on while holding some keys). Switch it off and on again normally to read the channels, or use the «Firmware» tab if you want to update it.
@@ -1467,7 +1464,6 @@ aed8b737	usb serial
 1c7443df	DMR radio connected via USB
 1e0e7d42	A radio responds on {0}: identification in progress…
 739aca35	Listening on {0} (connect the radio and switch it on, even after the cable)
-96011e1c	On {0} a radio responds but it is not among the known models
 d37f1bed	Radio recognised on {0}: for another radio press «Identify Radio»
 38c872ac	Search stopped on {0}
 f263d343	Waiting for the programming cable to be connected
@@ -5854,3 +5850,19 @@ ef1bb624	Yaesu FT-8900
 bbd47d6b	incomplete block at address {0} ({1} of {2} bytes)
 6246f0cc	memory image not valid for the {0}
 416bef96	{0}: the read was only the echo of the cable, no radio
+23f2b6f0	Saves to a text file the timings and the first bytes exchanged with the radio during the latest searches: it helps the developer understand a slow or wrong identification. It contains neither the radio's channels nor personal data.
+e1b4186c	Radios already identified in the past are recognised faster: the program remembers on which cable it found them and starts from those.
+5ce1746c	While it reads a radio that has responded, «Radio Identification In Progress» appears at the bottom, with the model and the reading progress.
+07d08937	A radio that is switched off cannot be identified: if the program warns that a device responds but cannot be read, switch it on.
+f10b533e	🩺 Save the identification diagnostics
+586fd2d1	if identification is slow or wrong: repeat the test, then save the diagnostics and send them to the author
+d3c7f344	Diagnostics saved in {0}
+72cfa688	The radio responded, but the reading did not succeed with any of the protocols: see the details. If it is off, switch it on and repeat the search; if it is on, switch it off and on again.
+b7ac62dc	On {0} a device responds but cannot be read
+d6a8f8af	If the radio is off, switch it on: it is recognised automatically. If it is on, switch it off and on again.
+ec2133fe	A device responds on {0}: checking…
+faea270a	On {0} a device responds but cannot be read: if the radio is off switch it on, if it is on switch it off and on again (the search resumes by itself); if it is still not recognised, the model is not among the supported ones
+3ae7680d	IU0VYT_diagnosi_identifica_{0}.txt
+e09c1757	Save the diagnostics
+fb81b3e0	Text file (*.txt)|*.txt
+66fd240f	the information read from the radio is not valid

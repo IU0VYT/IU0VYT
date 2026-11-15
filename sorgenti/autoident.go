@@ -21,14 +21,20 @@ package main
 //     successivo (le radio già riconosciute in passato si provano per prime,
 //     vedi identPlan e Settings.KnownRadios);
 //   - il riquadro «Identificazione Radio In Corso» compare solo mentre una radio
-//     risponde davvero (byte che non sono l'eco del cavo) e sparisce quando è
-//     riconosciuta o non viene riconosciuta;
+//     si fa LEGGERE (4.36: il saluto è andato a buon fine e stanno arrivando i
+//     dati della memoria) e sparisce quando è riconosciuta o la lettura cade.
+//     Prima bastava una risposta qualsiasi che non fosse l'eco del cavo: una
+//     radio spenta ma collegata può rispondere al saluto (resta alimentata dal
+//     cavo) senza farsi leggere, e il riquadro compariva per una radio spenta;
 //   - quando una radio è riconosciuta l'interfaccia ne mostra i dati e apre la sua
 //     scheda (o avvisa che la scheda è già aperta); la ricerca su QUEL cavo si
 //     ferma (l'opzione resta attiva) finché non si preme «Identifica Radio» o non
 //     si ricollega il cavo; gli altri cavi continuano;
-//   - una radio che risponde ma non viene riconosciuta (modello non gestito) si
-//     riprova solo ogni autoRetryUnknown, per non far lampeggiare il riquadro;
+//   - un dispositivo che risponde ma non si lascia leggere (radio spenta o non
+//     pronta, oppure modello non gestito): l'interfaccia lo dice una volta, con
+//     un avviso (autoNotice); poi si riprovano ogni autoRetryKnown, in silenzio,
+//     solo le radio già riconosciute (la radio spenta, una volta accesa, si
+//     trova in pochi secondi) e ogni autoRetryUnknown tutto il giro;
 //   - si interrogano solo le porte dei cavi di programmazione (adattatori
 //     USB-seriale CH340, Prolific, Silicon Labs, FTDI…), mai porte Bluetooth,
 //     modem o porte seriali di sistema;
@@ -38,7 +44,9 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
+	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
@@ -49,7 +57,8 @@ var (
 	autoTick         = time.Second             // controllo di porte e dispositivi
 	autoSettle       = 1500 * time.Millisecond // attesa dopo il collegamento del cavo
 	autoRetryFast    = 300 * time.Millisecond  // 4.3: pausa tra due giri di ricerca (ascolto continuo)
-	autoRetryUnknown = 30 * time.Second        // radio che risponde ma non è riconosciuta
+	autoRetryUnknown = 30 * time.Second        // radio che risponde ma non è riconosciuta: giro completo
+	autoRetryKnown   = 3 * time.Second         // 4.36: come sopra, giro delle sole radio già riconosciute
 	autoQuiet        = 1500 * time.Millisecond // pausa dopo un saluto interrotto (la radio torna pronta)
 	autoEventsMax    = 16                      // esiti ricordati per l'interfaccia
 	// usbRadioPresentFunc: c'è un dispositivo USB di una radio DMR conosciuta
@@ -68,6 +77,17 @@ type autoPort struct {
 	unknown    bool // l'ultima ricerca ha avuto risposte ma nessun modello riconosciuto
 	launching  bool // 4.7: ricerca in partenza (vedi autoLaunch)
 	run        *autoRun
+	// fullAt (4.36): con unknown, momento del prossimo giro completo; fino ad
+	// allora si riprovano solo le radio già riconosciute
+	fullAt time.Time
+}
+
+// autoNotice (4.36): un dispositivo risponde su una porta ma non si lascia
+// leggere; l'interfaccia mostra l'avviso una volta per ogni seq
+type autoNotice struct {
+	Seq  int    `json:"seq"`
+	Port string `json:"port"`
+	When string `json:"when"`
 }
 
 // autoEvent: esito dell'ultima ricerca automatica che ha trovato la radio
@@ -79,18 +99,25 @@ type autoEvent struct {
 }
 
 type autoRun struct {
-	p   *autoPort
-	job *cableJob
+	p         *autoPort
+	job       *cableJob
+	knownOnly bool // 4.36: giro delle sole radio già riconosciute
 }
 
 type autoIdent struct {
-	mu         sync.Mutex
-	ports      map[string]*autoPort
-	usbWas     bool
-	usb        *autoPort
-	seq        int
-	events     []*autoEvent          // ultimi esiti (radio riconosciute), il più recente per ultimo
-	sessions   map[int]*identSession // radio di ogni esito (identify/open con "seq")
+	mu        sync.Mutex
+	ports     map[string]*autoPort
+	usbWas    bool
+	usb       *autoPort
+	seq       int
+	events    []*autoEvent          // ultimi esiti (radio riconosciute), il più recente per ultimo
+	sessions  map[int]*identSession // radio di ogni esito (identify/open con "seq")
+	notice    *autoNotice           // 4.36: ultimo avviso «risponde ma non si lascia leggere»
+	noticeSeq int
+	// openTabs (4.36): schede delle radio aperte nell'interfaccia, come le ha
+	// dette l'ultima richiesta di stato (openAt); vedi autoTabOpen
+	openTabs   map[string]bool
+	openAt     time.Time
 	status     string
 	quietUntil time.Time
 	stop       chan struct{}
@@ -275,22 +302,43 @@ func (a *App) autoStep(now time.Time) {
 	}
 }
 
+// autoNoticeLocked (4.36): su p un dispositivo risponde ma non si lascia
+// leggere. L'interfaccia mostra l'avviso una volta; da qui in poi la porta è
+// «unknown» finché una radio non viene riconosciuta o il dispositivo tace
+func (a *App) autoNoticeLocked(p *autoPort, now time.Time) {
+	p.unknown = true
+	p.fullAt = now.Add(autoRetryUnknown)
+	a.auto.noticeSeq++
+	a.auto.notice = &autoNotice{Seq: a.auto.noticeSeq, Port: p.name, When: now.Format("15:04:05")}
+	identDiag.add(probeKey(p.name), "*** un dispositivo risponde ma non si lascia leggere: avviso all'utente")
+}
+
 func (a *App) autoStatusLocked() {
 	all := a.autoAllLocked()
 	sort.Slice(all, func(i, j int) bool { return portLess(all[i].name, all[j].name) })
-	var answering, listening, found, unknown, paused []string
+	for _, p := range all {
+		// una radio già nota ha risposto senza farsi leggere: avviso subito,
+		// mentre il giro continua (la radio accesa nel frattempo viene trovata)
+		if p.run != nil && !p.unknown && p.run.job.knownFail.Load() {
+			a.autoNoticeLocked(p, time.Now())
+		}
+	}
+	var answering, checking, listening, found, unknown, paused []string
 	for _, p := range all {
 		switch {
-		case p.run != nil && p.run.job.answered.Load():
+		case p.run != nil && p.run.job.answered.Load() && p.run.job.reading.Load():
 			answering = append(answering, p.name)
+		case p.unknown && !p.paused:
+			// anche durante i giri di controllo, che sono silenziosi
+			unknown = append(unknown, p.name)
+		case p.run != nil && p.run.job.answered.Load():
+			checking = append(checking, p.name)
 		case p.run != nil:
 			listening = append(listening, p.name)
 		case p.done:
 			found = append(found, p.name)
 		case p.paused:
 			paused = append(paused, p.name)
-		case p.unknown:
-			unknown = append(unknown, p.name)
 		default:
 			listening = append(listening, p.name)
 		}
@@ -299,11 +347,14 @@ func (a *App) autoStatusLocked() {
 	if len(answering) > 0 {
 		parts = append(parts, "Una radio risponde su "+strings.Join(answering, ", ")+": identificazione in corso…")
 	}
+	if len(checking) > 0 {
+		parts = append(parts, "Un dispositivo risponde su "+strings.Join(checking, ", ")+": controllo in corso…")
+	}
 	if len(listening) > 0 {
 		parts = append(parts, "In ascolto su "+strings.Join(listening, ", ")+" (collega la radio e accendila, anche dopo il cavo)")
 	}
 	if len(unknown) > 0 {
-		parts = append(parts, "Su "+strings.Join(unknown, ", ")+" una radio risponde ma non è tra i modelli conosciuti")
+		parts = append(parts, "Su "+strings.Join(unknown, ", ")+" un dispositivo risponde ma non si lascia leggere: se la radio è spenta accendila, se è accesa spegnila e riaccendila (la ricerca riprende da sola); se non viene riconosciuta nemmeno così, il modello non è tra quelli gestiti")
 	}
 	if len(found) > 0 {
 		parts = append(parts, "Radio riconosciuta su "+strings.Join(found, ", ")+": per un'altra radio premi «Identifica Radio»")
@@ -414,7 +465,12 @@ func comNumber(s string) (int, bool) {
 
 // autoLaunch: avvia la ricerca su p in un goroutine (senza a.auto.mu)
 func (a *App) autoLaunch(p *autoPort) {
-	j, err := a.startIdentify(&identReq{Port: p.name}, true)
+	a.auto.mu.Lock()
+	// 4.36: dopo una risposta non riconosciuta, fino al prossimo giro completo
+	// si riprovano solo le radio già riconosciute
+	knownOnly := p.unknown && time.Now().Before(p.fullAt) && a.hasKnownRadios(p.name)
+	a.auto.mu.Unlock()
+	j, err := a.startIdentify(&identReq{Port: p.name, KnownOnly: knownOnly}, true)
 	a.auto.mu.Lock()
 	defer a.auto.mu.Unlock()
 	p.launching = false
@@ -428,10 +484,37 @@ func (a *App) autoLaunch(p *autoPort) {
 		}
 		return
 	}
-	r := &autoRun{p: p, job: j}
+	r := &autoRun{p: p, job: j, knownOnly: knownOnly}
 	p.run = r
 	go a.autoWait(r)
 	a.autoStatusLocked()
+}
+
+// autoTabOpen (4.36): l'interfaccia ha aperta, con dei dati, la scheda di questa
+// radio (l'ha detto negli ultimi secondi: l'interfaccia chiede lo stato ogni
+// secondo e mezzo)
+func (a *App) autoTabOpen(kind string) bool {
+	a.auto.mu.Lock()
+	defer a.auto.mu.Unlock()
+	return a.auto.openTabs[kind] && time.Since(a.auto.openAt) < 10*time.Second
+}
+
+// hasKnownRadios: ci sono radio già riconosciute da riprovare su questa porta
+func (a *App) hasKnownRadios(port string) bool {
+	st := a.store.Get()
+	return len(st.PortRadios[probeKey(port)]) > 0 || len(st.KnownRadios) > 0
+}
+
+// autoUnknownNext: prossima ricerca su una porta con un dispositivo che
+// risponde ma non si lascia leggere
+func (a *App) autoUnknownNext(p *autoPort, now time.Time) time.Time {
+	if t := now.Add(autoRetryKnown); t.Before(p.fullAt) && a.hasKnownRadios(p.name) {
+		return t
+	}
+	if p.fullAt.After(now) {
+		return p.fullAt
+	}
+	return now.Add(autoRetryKnown)
 }
 
 // autoEnabledLocked: come autoEnabled (le impostazioni hanno un loro blocco)
@@ -485,9 +568,20 @@ func (a *App) autoWait(r *autoRun) {
 	case j.answered.Load():
 		// una radio ha risposto davvero (vedi probeState.sure) ma non è stata
 		// riconosciuta. 4.4: non basta una risposta qualsiasi dei driver (Answers):
-		// i disturbi di un cavo senza radio sembravano una radio sconosciuta
-		p.unknown = true
-		p.next = now.Add(autoRetryUnknown)
+		// i disturbi di un cavo senza radio sembravano una radio sconosciuta.
+		// 4.36: l'interfaccia lo dice una volta (autoNotice), poi si riprova in
+		// silenzio: spesso le radio già riconosciute, ogni tanto tutto il giro
+		if !p.unknown {
+			a.autoNoticeLocked(p, now)
+		} else if !r.knownOnly {
+			p.fullAt = now.Add(autoRetryUnknown)
+		}
+		p.next = a.autoUnknownNext(p, now)
+	case p.unknown && r.knownOnly:
+		// giro delle sole radio note senza risposta: il dispositivo può essere
+		// un modello non gestito, che a quelle non risponde. Si resta in silenzio
+		// fino al prossimo giro completo
+		p.next = a.autoUnknownNext(p, now)
 	default:
 		// nessuna risposta: si ascolta di nuovo subito (la radio può essere accesa dopo)
 		p.unknown = false
@@ -505,6 +599,7 @@ func (a *App) autoRescan() int {
 	n := 0
 	for _, p := range a.autoAllLocked() {
 		p.done, p.paused, p.unknown, p.tries, p.next = false, false, false, 0, now
+		p.fullAt = time.Time{}
 		n++
 	}
 	return n
@@ -560,9 +655,20 @@ func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 		Enabled *bool `json:"enabled"`
 		Stop    bool  `json:"stop"`   // riquadro: «Interrompi»
 		Rescan  bool  `json:"rescan"` // «Identifica Radio»
+		// Open (4.36): schede delle radio aperte nell'interfaccia (vedi autoTabOpen)
+		Open *[]string `json:"open"`
 	}
 	if err := decode(r, &req); err != nil {
 		return nil, err
+	}
+	if req.Open != nil {
+		a.auto.mu.Lock()
+		a.auto.openTabs = map[string]bool{}
+		for _, k := range *req.Open {
+			a.auto.openTabs[k] = true
+		}
+		a.auto.openAt = time.Now()
+		a.auto.mu.Unlock()
 	}
 	if req.Enabled != nil {
 		st := a.store.Get()
@@ -598,14 +704,18 @@ func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 	all := a.autoAllLocked()
 	sort.Slice(all, func(i, j int) bool { return portLess(all[i].name, all[j].name) })
 	ports, searchPorts, answering := []string{}, []string{}, []string{}
+	reading := []map[string]interface{}{}
 	paused := false
 	for _, p := range all {
 		ports = append(ports, p.name)
 		paused = paused || p.paused
 		if p.run != nil {
 			searchPorts = append(searchPorts, p.name)
-			if p.run.job.answered.Load() {
-				answering = append(answering, p.name) // una radio ha risposto: riquadro visibile
+			// 4.36: riquadro visibile solo mentre la radio che ha risposto si fa leggere
+			if j := p.run.job; j.answered.Load() && j.reading.Load() {
+				answering = append(answering, p.name)
+				name, pct := j.readState()
+				reading = append(reading, map[string]interface{}{"port": p.name, "name": name, "pct": pct})
 			}
 		}
 	}
@@ -615,7 +725,10 @@ func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 	}
 	out := map[string]interface{}{"enabled": a.autoEnabled(), "status": a.auto.status, "ports": ports,
 		"searching": len(answering) > 0, "answering": answering, "busy": len(searchPorts) > 0, "searchPorts": searchPorts,
-		"seq": a.auto.seq, "paused": paused, "events": events}
+		"seq": a.auto.seq, "paused": paused, "events": events, "reading": reading, "noticeSeq": a.auto.noticeSeq}
+	if a.auto.notice != nil {
+		out["notice"] = a.auto.notice
+	}
 	if len(searchPorts) > 0 {
 		out["searchPort"] = searchPorts[0]
 	}
@@ -626,4 +739,30 @@ func (a *App) apiIdentifyAuto(r *http.Request) (interface{}, error) {
 		out["last"] = a.auto.events[n-1]
 	}
 	return out, nil
+}
+
+// identify/diag: salva la diagnosi in un file di testo scelto dall'utente
+func (a *App) apiIdentifyDiag(r *http.Request) (interface{}, error) {
+	var req struct {
+		Path string `json:"path"`
+	}
+	if err := decode(r, &req); err != nil {
+		return nil, err
+	}
+	out := []byte("\xEF\xBB\xBF" + a.identDiagReport()) // con BOM: il Blocco note lo apre in UTF-8
+	p := req.Path
+	if p == "" {
+		suggest := "IU0VYT_diagnosi_identifica_" + time.Now().Format("2006-01-02_15-04-05") + ".txt"
+		if d := a.store.Get().LastDir; d != "" {
+			suggest = filepath.Join(d, suggest)
+		}
+		var err error
+		if p, err = a.dialog(true, "Salva la diagnosi", "File di testo (*.txt)|*.txt", suggest, "txt"); err != nil {
+			return nil, err
+		}
+	}
+	if err := writeAtomic(p, out); err != nil {
+		return nil, fmt.Errorf("impossibile salvare: %v", err)
+	}
+	return map[string]interface{}{"path": p, "bytes": len(out), "lines": identDiag.count()}, nil
 }

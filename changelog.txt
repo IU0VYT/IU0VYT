@@ -3,6 +3,62 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.36.0 (14/11/2026)
+-------------------
+Versione di correzione: «Identifica» e identificazione automatica, dopo le
+prove della 4.35 sulle radio vere (Bajeton BJ-9000 e BJ-8300 a posto; Baofeng
+K67 Pro riconosciuta in ritardo, e riquadro «Identificazione Radio In Corso»
+anche con la radio collegata ma spenta).
+- Il programma ricorda su quale cavo (porta) ha riconosciuto ogni radio. Su
+  quella porta prova per prime le radio già riconosciute lì, l'ultima per
+  prima, poi le altre radio note, poi tutto il resto. Prima l'elenco delle
+  radio note era uno solo: con tre radio su due cavi quella collegata poteva
+  essere provata per terza, dopo due tentativi a vuoto.
+- Della K67 Pro si ricorda anche la velocità a cui ha risposto (19200 o 115200
+  baud) quando è «Identifica» a leggerla; prima solo dalla scheda della radio.
+- Ascolto della porta prima dei tentativi (un secondo, per scoprire le radio
+  che trasmettono da sole): si ripeteva per ogni velocità, una volta al minuto,
+  e con tre radio note la prima ricerca cominciava con tre secondi di solo
+  ascolto. Ora una porta che tace si ascolta una volta sola, e il tentativo di
+  una radio già riconosciuta su quella porta parte subito, senza ascolto.
+- La «Preparazione dei protocolli» si fa poco dopo l'avvio del programma, in
+  sottofondo, e non più alla prima ricerca.
+- Ricerca automatica, radio accesa dopo aver collegato il cavo: le radio già
+  riconosciute su quella porta si riprovano ogni 4 tentativi degli altri
+  modelli (prima ogni 8, insieme alle radio note di tutte le porte): l'attesa
+  massima scende da circa 8 a circa 4 secondi.
+- Il riquadro «Identificazione Radio In Corso» compare solo mentre una radio
+  che ha risposto si fa leggere, e mostra il modello e l'avanzamento della
+  lettura (per esempio «COM5 — Baofeng K67 Pro: 40 %»). Prima bastava una
+  risposta qualsiasi: una radio spenta ma collegata, che risponde al saluto
+  senza farsi leggere, lo faceva comparire.
+- Dispositivo che risponde ma non si lascia leggere (di solito la radio è
+  spenta): il programma lo dice una volta, con un avviso in alto e nella
+  scheda «Identifica» («se la radio è spenta accendila»), poi riprova in
+  silenzio: le radio già riconosciute ogni 3 secondi, tutto il giro ogni 30.
+  Se una radio già nota risponde senza farsi leggere l'avviso arriva subito,
+  non alla fine del giro. Appena la radio viene accesa è riconosciuta.
+- K67 Pro con la scheda già aperta: per dire «Radio già identificata!! Scheda
+  Radio già aperta» il programma non rilegge più tutta la memoria (48 KiB: a
+  19200 baud sono 26 secondi) ma fa un controllo breve: saluto, primo blocco e
+  chiusura, gli stessi comandi che il programma del costruttore usa prima di
+  ogni scrittura. La ricerca manuale e la scheda chiusa leggono tutto, come
+  prima.
+- Diagnosi dell'identificazione: nella scheda «Identifica» il pulsante «Salva
+  la diagnosi dell'identificazione» scrive in un file di testo i tentativi
+  delle ultime ricerche con i tempi al millisecondo e i primi byte inviati e
+  ricevuti. Serve a capire che cosa succede con una radio vera (le radio
+  simulate delle prove rispondono all'istante e sempre allo stesso modo). Non
+  contiene i canali, la password della K67 Pro né dati personali; resta in
+  italiano in tutte le lingue.
+- Prove nuove (ident436_test.go): radio per porta, velocità della K67 Pro,
+  ascolto una volta sola, radio spenta che risponde al saluto (nessun riquadro,
+  un avviso solo, radio riconosciuta appena accesa), scheda già aperta,
+  diagnosi senza password.
+- Non verificato dal cloud, da provare sulla K67 Pro vera: che cosa risponde la
+  radio spenta (lo dirà la diagnosi) e il controllo breve con la scheda aperta.
+- Nessuna radio nuova in questa versione.
+
 4.35.0 (13/11/2026)
 -------------------
 Versione di correzione: «Identifica» e identificazione automatica.

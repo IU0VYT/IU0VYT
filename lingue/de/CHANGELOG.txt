@@ -7,6 +7,42 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.36.0 (13.11.2026)
+-------------------
+- Korrekturversion für «Identifizieren» und die automatische Erkennung, nach den Tests
+  der 4.35 an echten Funkgeräten (Bajeton BJ-9000 und BJ-8300 in Ordnung; Baofeng K67
+  Pro verspätet erkannt, und das Feld «Funkgerät wird erkannt» erschien auch bei
+  angeschlossenem, aber ausgeschaltetem Funkgerät). Das Programm merkt sich, an welchem
+  Kabel (Anschluss) es jedes Funkgerät erkannt hat: An diesem Anschluss prüft es zuerst
+  die dort schon erkannten Geräte, das letzte zuerst, dann die anderen bekannten Geräte,
+  dann alles Übrige; für die K67 Pro merkt es sich auch die Geschwindigkeit, mit der sie
+  geantwortet hat. Das einsekündige Lauschen vor den Versuchen erfolgt an einem stillen
+  Anschluss nur einmal statt einmal pro Geschwindigkeit und für ein an diesem Anschluss
+  schon erkanntes Gerät gar nicht; die Protokolle werden kurz nach dem Programmstart im
+  Hintergrund vorbereitet. In der automatischen Suche werden die an einem Anschluss
+  bekannten Geräte alle 4 statt alle 8 Versuche erneut geprüft: Ein nach dem Kabel
+  eingeschaltetes Gerät wartet höchstens etwa 4 statt etwa 8 Sekunden.
+- Das Feld «Funkgerät wird erkannt» erscheint nur, während ein Funkgerät, das
+  geantwortet hat, tatsächlich gelesen wird, und zeigt Modell und Fortschritt. Ein
+  Gerät, das antwortet, sich aber nicht lesen lässt (meist ist das Funkgerät
+  ausgeschaltet), wird einmal gemeldet, mit dem Hinweis, das Funkgerät einzuschalten;
+  danach versucht es das Programm still weiter, die bekannten Geräte alle 3 Sekunden und
+  den ganzen Plan alle 30, und erkennt das Funkgerät, sobald es an ist. Bei bereits
+  geöffneter Registerkarte der K67 Pro liest das Programm für «Funkgerät bereits
+  identifiziert» nicht mehr den ganzen Speicher (26 Sekunden bei 19200 Baud), sondern
+  macht eine kurze Prüfung (Verbindungsaufbau, erster Block, Abschluss): dieselben
+  Befehle, die das Programm des Herstellers vor jedem Schreiben verwendet.
+- Diagnose der Identifizierung: Die Schaltfläche «Diagnose der Identifizierung
+  speichern» in der Registerkarte «Identifizieren» schreibt die Versuche der letzten
+  Suchen in eine Textdatei, mit Zeiten auf die Millisekunde und den ersten gesendeten
+  und empfangenen Bytes. Sie enthält weder die Kanäle noch das Passwort der K67 Pro noch
+  persönliche Daten und ist immer auf Italienisch. Neue Tests: Geräte pro Anschluss,
+  Geschwindigkeit der K67 Pro, einmaliges Lauschen, ausgeschaltetes Gerät, das auf den
+  Verbindungsaufbau antwortet, bereits geöffnete Registerkarte, Diagnose ohne Passwort.
+  Mit simulierten Geräten nicht prüfbar und an einer echten K67 Pro zu testen: was das
+  ausgeschaltete Gerät antwortet und die kurze Prüfung bei geöffneter Registerkarte.
+  Keine neuen Funkgeräte in dieser Version.
+
 4.35.0 (13.11.2026)
 -------------------
 - Korrekturversion für «Identifizieren» und die automatische Erkennung. Der in 4.31

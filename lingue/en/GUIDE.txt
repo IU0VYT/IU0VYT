@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.35.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.36.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,18 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.36.0:
+- «Identify» and automatic identification: the program now remembers on which cable it
+  recognised each radio and starts from those, and the first search no longer loses
+  seconds listening and preparing. The «Radio identification in progress» box appears
+  only while the radio is actually being read, with the model and the progress; if the
+  radio is connected but switched off, the program asks you to switch it on and
+  recognises it as soon as it is on. With the K67 Pro tab already open the radio is
+  recognised in a couple of seconds, without re-reading the whole memory. New button
+  «Save the identification diagnostics» in the «Identify» tab: a text file with the
+  timings and the first bytes of the latest searches, to send to the author when
+  identification is slow or wrong.
+- Gallery: 637 models of 52 brands (583 with channels, 496 with settings).
 What's new in 4.35.0:
 - «Identify» and automatic identification: removed the «fast pass» of 4.31, which with
   real radios could leave the radio stuck in programming mode and make the search slow.

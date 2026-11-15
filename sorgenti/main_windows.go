@@ -239,6 +239,7 @@ func main() {
 	}
 	theApp = app
 	app.startAutoIdent()
+	identWarmUp()
 	ln, url, err := app.listen()
 	if err != nil {
 		msgBox("Impossibile avviare il programma:\n"+err.Error(), mbOK|mbIconError)

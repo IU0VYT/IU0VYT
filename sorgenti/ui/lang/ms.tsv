@@ -976,8 +976,6 @@ dad41bf2	radio DMR sahaja
 cb490c05	🔄 Dayakan pengenalpastian automatik
 f841c2d5	Sambungkan kabel: radio dikenali dengan sendirinya, walaupun anda menghidupkannya kemudian, dan tabnya dibuka dengan saluran yang dibaca.
 8c51a753	Beberapa kabel: setiap radio dicari pada kabelnya sendiri, semuanya serentak.
-962c591c	Radio yang pernah dikenal pasti sebelum ini dikenali dengan lebih pantas.
-f40431b2	Semasa radio bertindak balas, «Pengenalpastian Radio Sedang Berjalan» muncul di bahagian bawah.
 e920a7bf	Untuk radio lain pada kabel yang sama tekan
 54a5250f	«🔎 Kenal pasti Radio»
 2238bcb0	di kanan atas.
@@ -993,7 +991,6 @@ d9d58141	USB — radio DMR yang disambungkan terus (RD-5R, DM-1801, DM-1701)
 998e8fa1	Carian gagal
 add639aa	Radio bertindak balas kepada {0} {1} tanpa melengkapkan bacaan
 835c01a2	Tiada radio dikenali selepas {0} percubaan ({1} s). {2} {3}
-98bcbe1d	Radio bertindak balas, tetapi bacaan tidak berjaya dengan mana-mana protokol: lihat butiran.
 8de9aa8a	Radio tidak bertindak balas kepada sebarang protokol.
 79554675	Radio menghantar data dengan sendirinya, tanpa diminta oleh program:
 042e7d70	ini biasanya bermakna ia berada dalam mod kemas kini perisian tegar (dihidupkan sambil menekan beberapa kekunci). Matikan dan hidupkan semula seperti biasa untuk membaca saluran, atau gunakan tab «Perisian tegar» jika anda mahu mengemas kininya.
@@ -1467,7 +1464,6 @@ aed8b737	usb serial
 1c7443df	Radio DMR disambungkan melalui USB
 1e0e7d42	Sebuah radio bertindak balas pada {0}: pengenalpastian sedang berjalan…
 739aca35	Mendengar pada {0} (sambungkan radio dan hidupkannya, walaupun selepas kabel)
-96011e1c	Pada {0} sebuah radio bertindak balas tetapi ia tiada dalam kalangan model yang dikenali
 d37f1bed	Radio dikenali pada {0}: untuk radio lain tekan «Kenal pasti Radio»
 38c872ac	Carian dihentikan pada {0}
 f263d343	Menunggu kabel pengaturcaraan disambungkan
@@ -5854,3 +5850,19 @@ ef1bb624	Yaesu FT-8900
 bbd47d6b	blok tidak lengkap pada alamat {0} ({1} daripada {2} bait)
 6246f0cc	imej memori tidak sah untuk {0}
 416bef96	{0}: bacaan hanyalah gema kabel, tiada radio
+23f2b6f0	Menyimpan dalam fail teks masa dan bait pertama yang ditukar dengan radio dalam carian terkini: ia membantu pembangun program memahami pengenalpastian yang perlahan atau salah. Ia tidak mengandungi saluran radio mahupun data peribadi.
+e1b4186c	Radio yang pernah dikenal pasti sebelum ini dikenali dengan lebih pantas: program mengingati pada kabel mana ia menemuinya dan bermula daripada radio itu.
+5ce1746c	Semasa membaca radio yang telah bertindak balas, «Pengenalpastian Radio Sedang Berjalan» muncul di bahagian bawah, dengan model dan kemajuan bacaan.
+07d08937	Radio yang dimatikan tidak boleh dikenal pasti: jika program memberi amaran bahawa suatu peranti bertindak balas tetapi tidak dapat dibaca, hidupkannya.
+f10b533e	🩺 Simpan diagnosis pengenalpastian
+586fd2d1	jika pengenalpastian perlahan atau salah: ulangi ujian, kemudian simpan diagnosis dan hantar kepada pengarang
+d3c7f344	Diagnosis disimpan dalam {0}
+72cfa688	Radio bertindak balas, tetapi bacaan tidak berjaya dengan mana-mana protokol: lihat butiran. Jika ia dimatikan, hidupkannya dan ulangi carian; jika ia hidup, matikan dan hidupkan semula.
+b7ac62dc	Pada {0} suatu peranti bertindak balas tetapi tidak dapat dibaca
+d6a8f8af	Jika radio dimatikan, hidupkannya: ia dikenali secara automatik. Jika ia hidup, matikan dan hidupkan semula.
+ec2133fe	Suatu peranti bertindak balas pada {0}: sedang diperiksa…
+faea270a	Pada {0} suatu peranti bertindak balas tetapi tidak dapat dibaca: jika radio dimatikan hidupkannya, jika ia hidup matikan dan hidupkan semula (carian disambung sendiri); jika masih tidak dikenali, model itu tiada dalam kalangan yang disokong
+3ae7680d	IU0VYT_diagnosi_identifica_{0}.txt
+e09c1757	Simpan diagnosis
+fb81b3e0	Fail teks (*.txt)|*.txt
+66fd240f	maklumat yang dibaca daripada radio tidak sah

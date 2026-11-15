@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.35.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.36.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,18 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.36.0:
+- «Kenal pasti» dan pengenalpastian automatik: program kini mengingati pada kabel mana
+  ia mengenali setiap radio dan bermula daripada radio itu, dan carian pertama tidak
+  lagi kehilangan beberapa saat untuk mendengar dan bersedia. Kotak «Pengenalpastian
+  radio sedang dijalankan» muncul hanya semasa radio benar-benar dibaca, dengan model
+  dan kemajuan; jika radio disambungkan tetapi dimatikan, program meminta anda
+  menghidupkannya dan mengenalinya sebaik sahaja ia hidup. Dengan tab K67 Pro sudah
+  terbuka, radio dikenali dalam beberapa saat tanpa membaca semula seluruh memori.
+  Butang baharu «Simpan diagnosis pengenalpastian» dalam tab «Kenal pasti»: fail teks
+  dengan masa dan bait pertama carian terkini, untuk dihantar kepada pengarang jika
+  pengenalpastian perlahan atau salah.
+- Galeri: 637 model daripada 52 jenama (583 dengan saluran, 496 dengan tetapan).
 Baharu dalam 4.35.0:
 - «Kenal pasti» dan pengenalpastian automatik: «pusingan pantas» versi 4.31 dibuang
   kerana dengan radio sebenar ia boleh menyebabkan radio tersekat dalam mod
