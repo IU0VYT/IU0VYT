@@ -271,6 +271,7 @@ DMR 無線機 RD-5R、DM-1801、DM-1701 のメモリーと USB のプロトコ�
 - dmrconfig（https://github.com/OpenRTX/dmrconfig）、Copyright (C) 2018-2019 Serge Vakulenko KK6ABQ、3 条項 BSD ライセンス（全文は下記）：rd5r.c、dm1801.c、uv380.c、hid.c、hid-windows.c、dfu-libusb.c、dfu-windows.c；
 - qdmr（https://github.com/hmatuschek/qdmr）、Hannes Matuschek DM3MAT、GNU GPL v3：radioddity_interface.cc、dm1701_codeplug.cc、tyt_interface.cc（比較用）。
 派生部分を含む IU0VYT Flash のファイル：drv_rdty.go、drv_tyt.go、usb_windows.go、genemu_rdty_other.go、genemu_tyt_other.go、identify.go（3.8 以降：DMR ID、名前、最後にプログラムした日付、CPS のバージョンの位置。rd5r.c、gd77.c、uv380.c の print_id と print_version と同じ）。試験用の verifica/dmrconfig/tcpdev.c（dmrconfig 用の TCP 接続。dmrconfig 自体は含まれていないので、そのサイトからダウンロードします）。
+4.45 からは AnyTone ファミリー（AT-D868UV、AT-D878UV、AT-D878UV II、BTECH DMR-6X2、DMR-6X2 PRO）も含みます。dmrconfig からは anytone_ht.c、anytone_ht-map.h、serial.c、qdmr（比較）からは anytone_interface.cc、anytone_codeplug.hh、d868uv_codeplug.cc、dmr6x2uv_codeplug.hh。IU0VYT Flash のファイル：drv_anytone.go と genemu_anytone_other.go。
 dmrconfig のライセンスの全文：
 
   BSD 3-Clause License

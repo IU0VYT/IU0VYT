@@ -445,6 +445,10 @@ genemu_rdty_other.go, genemu_tyt_other.go, identify.go (dalla 3.8: posizioni di 
 DMR, nome, data dell'ultima programmazione e versione del CPS, come print_id e
 print_version di rd5r.c, gd77.c e uv380.c); per le prove, verifica/dmrconfig/tcpdev.c
 (collegamento TCP per dmrconfig, che non è incluso: si scarica dal suo sito).
+Dalla 4.45 anche la famiglia AnyTone (AT-D868UV, AT-D878UV, AT-D878UV II, BTECH DMR-6X2
+e DMR-6X2 PRO): da dmrconfig anytone_ht.c, anytone_ht-map.h e serial.c; da qdmr
+(confronto) anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc e
+dmr6x2uv_codeplug.hh. File di IU0VYT Flash: drv_anytone.go e genemu_anytone_other.go.
 Testo della licenza di dmrconfig:
 
   BSD 3-Clause License

@@ -434,6 +434,11 @@ Archivos de IU0VYT Flash con partes derivadas: drv_rdty.go, drv_tyt.go,
 usb_windows.go, genemu_rdty_other.go, genemu_tyt_other.go, identify.go (desde la 3.8:
 posiciones del ID DMR, del nombre, de la fecha de la última programación y de la
 versión del CPS, como print_id y print_version de rd5r.c, gd77.c y uv380.c); para las
+Desde la 4.45 también la familia AnyTone (AT-D868UV, AT-D878UV, AT-D878UV II, BTECH
+DMR-6X2 y DMR-6X2 PRO): de dmrconfig anytone_ht.c, anytone_ht-map.h y serial.c; de qdmr
+(comparación) anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc y
+dmr6x2uv_codeplug.hh. Archivos de IU0VYT Flash: drv_anytone.go y
+genemu_anytone_other.go.
 pruebas, verifica/dmrconfig/tcpdev.c (conexión TCP para dmrconfig, que no se incluye:
 se descarga de su sitio).
 Texto de la licencia de dmrconfig:

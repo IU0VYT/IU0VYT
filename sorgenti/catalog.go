@@ -55,6 +55,16 @@ const (
 const notesSerieD = "Serie D (PMR446 con canali analogici e digitali criptati). Protocollo e memoria ricavati dal programma del costruttore " +
 	"«BF Series CPS» (app «intercom-configuration»): la radio comunica il proprio modello e il programma lo controlla."
 
+// 4.45: schede che restano «non compatibili», con il motivo
+const (
+	md1702Tools = "https://github.com/OK2MOP/MD1702-tools"
+	notesDM1702 = "Radio DMR della piattaforma «MD-1702» (USB 0483:5780). Il collegamento USB è stato ricostruito dal progetto MD1702-tools di " +
+		"OK2MOP, ma la disposizione dei canali non è documentata e l'autore segnala radio bloccate scrivendo su alcune versioni del firmware. " +
+		"Per prudenza qui non si legge e non si scrive: si programma con il programma del costruttore."
+	notesUV8 = "Non compatibile: nemmeno CHIRP la gestisce (segnalazione #1225 di CHIRP: la radio segna i canali vuoti in un modo che non è " +
+		"stato ricostruito). Si programma con il programma del costruttore «UV-8»."
+)
+
 func cps(url string) catLink    { return catLink{"cps", "Programma del costruttore (CPS)", url} }
 func manual(url string) catLink { return catLink{"manual", "Manuale", url} }
 
@@ -298,10 +308,10 @@ var catalog = []catItem{
 		Links: []catLink{cps("https://s3.amazonaws.com/s3.image.ro/download/BF9700Setup_EN.rar"), manual("http://s3.image.ro.s3.amazonaws.com/download/BF-9700USERMANUAL.pdf")}},
 	{ID: "uv-9s", Brand: "Baofeng", Name: "UV-9S", Type: "analog", Drivers: []string{"bf-uv5rx3"},
 		Notes: "Nella tabella dei modelli equivalenti di CHIRP la UV-9S corrisponde alla Radioddity UV-5RX3."},
-	{ID: "uv-8d", Brand: "Baofeng", Name: "UV-8D", Type: "analog"},
+	{ID: "uv-8d", Brand: "Baofeng", Name: "UV-8D", Type: "analog", Notes: notesUV8},
 	{ID: "uv-e70", Brand: "Baofeng", Name: "UV-E70", Type: "analog", Drivers: []string{"bf-uv82wp"},
 		Notes: "Sperimentale: con CHIRP la UV-E70 è stata letta e scritta con il driver della UV-82WP, tenendo il volume a metà (segnalazione #11280 di CHIRP). Compatibilità segnalata dagli utenti di CHIRP, non confermata dal costruttore: prima della scrittura il programma salva sempre una copia della radio, controlla che i canali letti siano corretti prima di modificare."},
-	{ID: "bf-uv8", Brand: "Baofeng", Name: "BF-UV8", Type: "analog"},
+	{ID: "bf-uv8", Brand: "Baofeng", Name: "BF-UV8", Aliases: []string{"UV-8"}, Type: "analog", Notes: notesUV8},
 	{ID: "bf-r3", Brand: "Baofeng", Name: "BF-R3", Type: "analog", Drivers: []string{"bf-uv5rx3"},
 		Notes: "Nella tabella dei modelli equivalenti di CHIRP la BF-R3 corrisponde alla Radioddity UV-5RX3."},
 	{ID: "h-series", Brand: "Baofeng", Name: "Serie H (H-31, H-32, BF-H2/H5/H6)", Aliases: []string{"H-31", "H-32", "BF-H2", "BF-H5", "BF-H6"}, Models: []string{"H-31", "H-32", "BF-H2", "BF-H5", "BF-H6"}, Type: "analog", Drivers: []string{"bf-hseries"},
@@ -351,9 +361,16 @@ var catalog = []catItem{
 		Links: []catLink{{"cps", "Programmi «T17-T18 PMR446 PRO» e «T17-T18 FRS» v1.2.2 (pagina dei download Radioddity)", rdDown}},
 		Notes: "Protocollo e memoria ricavati dai programmi del costruttore e provati con il loro codice originale: 99 canali (versione PMR446) o 35 (versione FRS per gli USA). " +
 			"Se è impostata la password di lettura e scrittura, toglila prima con il programma del costruttore."},
-	{ID: "bf-pmr-old", Brand: "Baofeng", Name: "BF-528 / 600S / 666S / 700S / 800S", Aliases: []string{"BF-528", "BF-600S", "BF-666S", "BF-700S", "BF-800S"}, Models: []string{"BF-528", "BF-600S", "BF-666S", "BF-700S", "BF-800S"}, Type: "pmr",
-		Notes: "La BF-777S è gestita con la BF-888S (tabella dei modelli equivalenti di CHIRP). Per questi modelli non c'è una conferma di compatibilità: la BF-666S è indicata come probabile clone della BF-888S, ma senza prove."},
-	{ID: "bf-t-series", Brand: "Baofeng", Name: "BF-T6 / T7 / T11 / T12 / T15 / T16 / T26 / T51 / T57", Aliases: []string{"BF-T6", "BF-T7", "BF-T11", "BF-T12", "BF-T15", "BF-T16", "BF-T26", "BF-T51", "BF-T57"}, Models: []string{"BF-T6", "BF-T7", "BF-T11", "BF-T12", "BF-T15", "BF-T16", "BF-T26", "BF-T51", "BF-T57"}, Type: "pmr"},
+	{ID: "bf-pmr-old", Brand: "Baofeng", Name: "BF-528 / 600S / 700S / 800S", Aliases: []string{"BF-528", "BF-600S", "BF-700S", "BF-800S"}, Models: []string{"BF-528", "BF-600S", "BF-700S", "BF-800S"}, Type: "pmr",
+		Notes: "La BF-666S e la BF-777S sono gestite con la BF-888S. Per questi modelli non c'è una conferma di compatibilità."},
+	{ID: "bf-666s", Brand: "Baofeng", Name: "BF-666S", Aliases: []string{"BF666S"}, Type: "pmr", Drivers: []string{"bf-888s"}, // 4.45
+		Notes: "Gli sviluppatori di CHIRP indicano che BF-666S, BF-777S e BF-888S si programmano allo stesso modo (segnalazioni #377 e #1535 " +
+			"di CHIRP): si usa il driver della BF-888S. Non provata qui su una radio vera: prima la sola lettura."},
+	{ID: "bf-t-series", Brand: "Baofeng", Name: "BF-T7 / T11 / T12 / T15 / T16 / T26 / T51 / T57", Aliases: []string{"BF-T7", "BF-T11", "BF-T12", "BF-T15", "BF-T16", "BF-T26", "BF-T51", "BF-T57"}, Models: []string{"BF-T7", "BF-T11", "BF-T12", "BF-T15", "BF-T16", "BF-T26", "BF-T51", "BF-T57"}, Type: "pmr"},
+	{ID: "bf-t6", Brand: "Baofeng", Name: "BF-T6", Aliases: []string{"BFT6"}, Type: "pmr", Drivers: []string{"bf-t8"}, // 4.45
+		Notes: "Sperimentale. La BF-T8 di CHIRP alla lettura si presenta con il nome «BF-T6»: è probabile che le due radio abbiano la stessa " +
+			"memoria, ma manca la conferma su una BF-T6 vera. Se la radio non risponde con quel nome la lettura si ferma senza modificarla. " +
+			"Prima di scrivere controlla che i canali letti siano quelli della radio."},
 	{ID: "bf-other", Brand: "Baofeng", Name: "BF-358 / A68 / B5 / B6 / E51 / S88", Aliases: []string{"BF-358", "BF-A68", "BF-B5", "BF-B6", "BF-E51", "BF-S88"}, Models: []string{"BF-358", "BF-A68", "BF-B5", "BF-B6", "BF-E51", "BF-S88"}, Type: "pmr"},
 	{ID: "ar888s", Brand: "Baofeng", Name: "AR888S / TH-888S", Aliases: []string{"AR888S", "TH888S", "TH-888S"}, Models: []string{"AR888S", "TH-888S"}, Type: "pmr", Drivers: []string{"bf-888s"},
 		Notes: "Nella tabella dei modelli equivalenti di CHIRP la TH-888S corrisponde alla BF-888: si usa il driver della BF-888S."},
@@ -375,23 +392,26 @@ var catalog = []catItem{
 			"oppure il driver generico WinUSB (Zadig). Memoria e protocollo dei programmi liberi " +
 			"dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche, cancellazione e scrittura identiche)." +
 			ogd77Note},
-	{ID: "dmr-6x2", Brand: "Baofeng", Name: "DMR-6X2 (BTECH)", Aliases: []string{"BTECH DMR-6X2", "BaofengTech DMR-6X2"}, Type: "dmr", FW: "link", Guide: "6x2",
+	{ID: "dmr-6x2", Brand: "Baofeng", Name: "DMR-6X2 (BTECH)", Aliases: []string{"BTECH DMR-6X2", "BaofengTech DMR-6X2"}, Type: "dmr", Drivers: []string{"bt-dmr6x2"}, FW: "link", Guide: "6x2",
 		Links: []catLink{{"fw", "Pacchetto ufficiale 2.21b: firmware 2.21, CPS, driver USB e istruzioni (BTECH)", btechUp + "2025/05/DMR-6X2-221b.zip"},
 			{"info", "Annuncio dei firmware 2.21 e 1.21 (BTECH, 1/4/2025)", btechFw221},
 			{"info", "Programmi e firmware BTECH", "https://baofengtech.com/software/"}},
-		Notes: "Radio DMR del marchio BTECH (BaofengTech, Stati Uniti), derivata dalle AnyTone. I canali si programmano con il CPS del costruttore " +
-			"(protocollo non gestito qui). Firmware: aggiornamento guidato con il programma ufficiale «Firmware_Update» del pacchetto: qui si controllano " +
+		Notes: "Radio DMR del marchio BTECH (BaofengTech, Stati Uniti), derivata dalle AnyTone. Canali e zone si leggono e si scrivono da qui " +
+			"con il cavo USB della radio (memoria e protocollo del programma libero dmrconfig, verificati con il suo codice originale). " +
+			"Firmware: aggiornamento guidato con il programma ufficiale «Firmware_Update» del pacchetto: qui si controllano " +
 			"i file (modello, versione, integrità) e si segue la procedura; la scrittura la fa il programma BTECH. L'aggiornamento cancella la " +
-			"programmazione: prima salva il codeplug con il CPS."},
-	{ID: "dmr-6x2-pro", Brand: "Baofeng", Name: "DMR-6X2 PRO (BTECH)", Aliases: []string{"BTECH DMR-6X2 PRO", "DMR-6X2II"}, Type: "dmr", FW: "link", Guide: "6x2",
+			"programmazione: prima salva la memoria della radio."},
+	{ID: "dmr-6x2-pro", Brand: "Baofeng", Name: "DMR-6X2 PRO (BTECH)", Aliases: []string{"BTECH DMR-6X2 PRO", "DMR-6X2II"}, Type: "dmr", Drivers: []string{"bt-dmr6x2pro"}, FW: "link", Guide: "6x2",
 		Links: []catLink{{"fw", "Pacchetto ufficiale 1.21e: firmware 1.21, CPS, driver USB e istruzioni (BTECH)", btechUp + "2025/10/DMR-6X2-PRO-121e.zip"},
 			{"info", "Annuncio dei firmware 2.21 e 1.21 (BTECH, 1/4/2025)", btechFw221},
 			{"info", "Programmi e firmware BTECH", "https://baofengtech.com/software/"}},
-		Notes: "Seconda serie della DMR-6X2 (firmware «DMR_6X2II», numerazione 1.x; la 1.21 è uscita insieme alla 2.21 della DMR-6X2). Il firmware " +
-			"è un file diverso da quello della DMR-6X2 (identificativo «D6X2UV2»): non usare quello dell'altra radio. Le icone (DMR_6X2_PIC) sono le stesse. Aggiornamento guidato con il programma ufficiale, come per la DMR-6X2."},
+		Notes: "Seconda serie della DMR-6X2 (firmware «DMR_6X2II», identificativo «D6X2UV2»): il firmware è un file diverso, non usare quello " +
+			"dell'altra radio. Aggiornamento guidato con il programma ufficiale, come per la DMR-6X2. Canali e zone (sperimentale): come per " +
+			"la DMR-6X2, con gli indirizzi che il programma libero qdmr usa per questo modello."},
 	{ID: "dm-1702", Brand: "Baofeng", Name: "DM-1702", Type: "dmr",
-		Links: []catLink{{"cps", "Programma «DM-1702 MD Setup» v1.00.76 (pagina dei download Baofeng)", bfDown}},
-		Notes: "Radio DMR: il programma del costruttore («DM-1702 MD Setup», famiglia TYT MD) non è documentato; il codeplug si gestisce con quel programma."},
+		Links: []catLink{{"cps", "Programma «DM-1702 MD Setup» v1.00.76 (pagina dei download Baofeng)", bfDown},
+			{"info", "MD1702-tools (strumenti di OK2MOP per il collegamento USB)", md1702Tools}},
+		Notes: notesDM1702},
 	{ID: "dm-1801", Brand: "Baofeng", Name: "DM-1801", Type: "dmr", Drivers: []string{"bf-dm1801", "ogd77"}, FW: "sgl",
 		Links: []catLink{catLink{"info", "dmrconfig (programma libero da riga di comando, licenza BSD)", "https://github.com/OpenRTX/dmrconfig"}, catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}},
 		Notes: "Radio DMR (piattaforma della Radioddity GD-77), collegata via USB come dispositivo HID: nessuna porta COM e nessun driver da installare. " +
@@ -401,7 +421,9 @@ var catalog = []catItem{
 		Links: []catLink{{"cps", "Programma «CPS DMR Radio» v1.60 (pagina dei download Radioddity)", rdDown}},
 		Notes: "Sperimentale. Il costruttore pubblica per la DM-1801 Pro lo stesso programma della DM-32UV (stesso eseguibile «DMR CPS.exe», v1.60): si usa il driver della DM-32UV. " +
 			"Se la radio si identifica con un modello diverso, il programma si ferma prima di leggere o scrivere."},
-	{ID: "dm-1703", Brand: "Baofeng", Name: "DM-1703", Type: "dmr"},
+	{ID: "dm-1703", Brand: "Baofeng", Name: "DM-1703", Type: "dmr",
+		Links: []catLink{{"info", "MD1702-tools (strumenti di OK2MOP per il collegamento USB)", md1702Tools}},
+		Notes: notesDM1702},
 	{ID: "dr-1801uv", Brand: "Baofeng", Name: "DR-1801UV", Aliases: []string{"BF-1801A6", "DR-1801", "BTECH BF-1801A6"}, Type: "dmr", Drivers: []string{"bf-dr1801uv"},
 		Links: []catLink{{"cps", "Programma «DR-1801A6» (pacchetto «Baofeng_DR-1801UV_Programming_Software», pagina dei download Baofeng)", bfDown},
 			catLink{"info", "qdmr (programma libero per radio DMR, GPL)", "https://dm3mat.de/software/qdmr"}},
@@ -576,6 +598,7 @@ func init() {
 	catalog = append(catalog, catalog439...) // 4.39
 	catalog = append(catalog, catalog440...) // 4.40
 	catalog = append(catalog, catalog441...) // 4.41
+	catalog = append(catalog, catalog445...) // 4.45
 	for i := range catalog {
 		c := &catalog[i]
 		if n, ok := fwFamily[c.FW]; ok && c.ID != "uv-25-plus" && c.ID != "uv-5rm" && c.ID != "uv-5rh" && c.Brand != "Radtel" {

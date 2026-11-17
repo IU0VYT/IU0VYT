@@ -7,6 +7,10 @@
  * radio simulata di IU0VYT Flash, così che il codice ORIGINALE di dmrconfig
  * (hid.c, dfu-libusb.c, serial.c e i driver delle radio) parli con la radio
  * simulata. Variabili d'ambiente: DMRCONFIG_HID e DMRCONFIG_DFU = host:porta.
+ * Radio seriali (famiglia AnyTone, 4.45): DMRCONFIG_SERIAL = percorso di una
+ * pseudo-terminale (es. /dev/pts/3) collegata alla radio simulata; qui sotto le
+ * funzioni di libudev usate da serial.c sono sostituite e presentano quella
+ * porta come un dispositivo USB 28e9:018a (non serve più collegare libudev).
  *
  * HID: ogni scambio è il rapporto di 42 byte inviato (come hid-windows.c:
  * 01 00 lunghezza(2) dati) e il rapporto di 42 byte ricevuto (03 00 lunghezza 00 dati).
@@ -22,6 +26,7 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include <libusb.h>
+#include <libudev.h>
 #include "util.h"
 
 static int tcp_open(const char *env)
@@ -151,3 +156,36 @@ int libusb_control_transfer(libusb_device_handle *h, uint8_t rt, uint8_t rq, uin
         xread(dfu_fd, data, res);
     return res;
 }
+
+/*
+ * Porta seriale (4.45): serial.c cerca con libudev una porta «tty» il cui
+ * dispositivo USB ha i codici 28e9:018a; qui l'elenco contiene la sola porta
+ * indicata da DMRCONFIG_SERIAL (nessuna, se la variabile manca).
+ */
+static int udev_dummy;
+
+struct udev *udev_new(void) { return (struct udev*)&udev_dummy; }
+struct udev *udev_unref(struct udev *u) { return NULL; }
+struct udev_enumerate *udev_enumerate_new(struct udev *u) { return (struct udev_enumerate*)&udev_dummy; }
+struct udev_enumerate *udev_enumerate_unref(struct udev_enumerate *e) { return NULL; }
+int udev_enumerate_add_match_subsystem(struct udev_enumerate *e, const char *s) { return 0; }
+int udev_enumerate_scan_devices(struct udev_enumerate *e) { return 0; }
+struct udev_list_entry *udev_enumerate_get_list_entry(struct udev_enumerate *e)
+{
+    return getenv("DMRCONFIG_SERIAL") ? (struct udev_list_entry*)&udev_dummy : NULL;
+}
+struct udev_list_entry *udev_list_entry_get_next(struct udev_list_entry *l) { return NULL; }
+const char *udev_list_entry_get_name(struct udev_list_entry *l) { return "radio-simulata"; }
+struct udev_device *udev_device_new_from_syspath(struct udev *u, const char *p) { return (struct udev_device*)&udev_dummy; }
+struct udev_device *udev_device_get_parent_with_subsystem_devtype(struct udev_device *d,
+    const char *subsystem, const char *devtype) { return d; }
+const char *udev_device_get_devnode(struct udev_device *d) { return getenv("DMRCONFIG_SERIAL"); }
+const char *udev_device_get_sysattr_value(struct udev_device *d, const char *attr)
+{
+    if (strcmp(attr, "idVendor") == 0)
+        return "28e9";
+    if (strcmp(attr, "idProduct") == 0)
+        return "018a";
+    return NULL;
+}
+struct udev_device *udev_device_unref(struct udev_device *d) { return NULL; }

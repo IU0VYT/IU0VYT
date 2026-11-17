@@ -85,7 +85,29 @@ func init() {
 			"toni e solo ricezione; per i canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati (i canali DMR " +
 			"nuovi: color code 1, slot 1, senza contatto). Contatti, gruppi, messaggi, rubrica e impostazioni della radio non si toccano. " +
 			"La scrittura cancella e riscrive la memoria dei canali (circa 1 minuto)."})
+	// 4.45: le altre radio che dmrconfig gestisce con lo stesso codice (uv380.c),
+	// riconosciute dal nome con cui rispondono
+	for _, x := range []struct {
+		id, model, name, ident string
+		watts                  [3]float64
+	}{
+		{"tyt-mduv380", "MD-UV380", "TYT MD-UV380", "MD-UV380", [3]float64{5, 2.5, 1}},
+		{"tyt-mduv390", "MD-UV390", "TYT MD-UV390 / Retevis RT3S", "MD-UV390", [3]float64{5, 2.5, 1}},
+		{"tyt-md2017", "MD-2017", "TYT MD-2017 / Retevis RT82", "2017", [3]float64{5, 2.5, 1}},
+		{"tyt-md9600", "MD-9600", "TYT MD-9600", "MD9600", [3]float64{}},
+	} {
+		genRegister(&genModel{ID: x.id, Vendor: "TYT", Model: x.model, RClass: "IU0VYT_TYT_" + strings.ReplaceAll(x.ident, "-", ""), Name: x.name,
+			Slots: tytNCh, First: 1, NameMax: 16, Charset: charsetASCII,
+			Powers: []genPower{{"Alta", x.watts[0], 0}, {"Media", x.watts[1], 1}, {"Bassa", x.watts[2], 2}},
+			Bands:  []band{{136000000, 174000000}, {400000000, 480000000}}, Narrow: true, HasScan: false, NoChirp: true,
+			DCS: dtcsCodes, Baud: 0, Fam: tytFam{}, Opt: &tytOpt{ident: x.ident}, Digital: "DMR", Conn: "dfu", Notes: tytNote445})
+	}
 }
+
+// 4.45: nota comune a MD-UV380, MD-UV390 / RT3S, MD-2017 / RT82 e MD-9600
+const tytNote445 = "Come la Baofeng DM-1701: stessa memoria e stesso protocollo (il programma libero dmrconfig usa lo stesso codice). USB in " +
+	"modalità DFU: serve il driver USB del programma del costruttore (STTub30) oppure WinUSB installato con Zadig. Se la radio risponde " +
+	"con un altro nome il programma si ferma prima di leggere o scrivere. Non provata su una radio vera: prima la sola lettura."
 
 func tytRec(img []byte, i int) []byte { return img[tytChOff+i*tytChSize:][:tytChSize] }
 

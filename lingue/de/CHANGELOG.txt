@@ -7,6 +7,23 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.45.0 (17.11.2026)
+-------------------
+- DMR-Funkgeräte der AnyTone-Familie: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,
+  AT-D878UV II Plus sowie BTECH DMR-6X2 und DMR-6X2 PRO (diese beiden waren «nicht
+  kompatibel»). Kanäle und Zonen über das USB-Kabel des Funkgeräts, mit Speicher und
+  Protokoll des freien Programms dmrconfig, mit dessen Originalcode geprüft; das DMR-6X2
+  PRO ist experimentell.
+- Bei den AnyTone-Geräten werden nur Kanäle, Zonen und Suchlauflisten geschrieben:
+  Kontakte, Gruppen, Nachrichten, IDs und Einstellungen werden nicht angetastet.
+  «Identifizieren» probiert sie nach allen anderen Funkgeräten.
+- TYT MD-UV380, MD-UV390, MD-2017, MD-9600 sowie Retevis RT3S und RT82 mit der
+  Original-Firmware (gleicher Speicher wie beim Baofeng DM-1701). Baofeng BF-666S
+  (Treiber des BF-888S) und BF-T6 (experimentell, Treiber des BF-T8).
+- Bei den Karten, die «nicht kompatibel» bleiben (UV-8D, BF-UV8, DM-1702 und DM-1703),
+  steht jetzt der Grund. Keines der neuen Funkgeräte wurde an echter Hardware getestet:
+  zuerst nur lesen.
+
 4.44.0 (17.11.2026)
 -------------------
 - Radtel RT-480 und RT-68 (32 Einstellungen) und RT-5D (43): Tabellen aus den Programmen

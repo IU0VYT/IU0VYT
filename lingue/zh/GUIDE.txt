@@ -1,11 +1,16 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.44.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.45.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.45.0 的新内容：
+- AnyTone 系列 DMR 电台：AnyTone AT-D868UV、AT-D878UV / AT-D878UV Plus、AT-D878UV II Plus，以及 BTECH DMR-6X2 和 DMR-6X2 PRO（后两款原先为“不兼容”）。通过电台的 USB 线读写信道和区域，存储和协议依据自由软件 dmrconfig，并已用其原始代码验证；DMR-6X2 PRO 为实验性支持。
+- 使用原厂固件的 TYT MD-UV380、MD-UV390、MD-2017、MD-9600 以及 Retevis RT3S 和 RT82（存储与 Baofeng DM-1701 相同）。Baofeng BF-666S（使用 BF-888S 的驱动）和 BF-T6（实验性，使用 BF-T8 的驱动）。
+- 仍为“不兼容”的卡片（UV-8D、BF-UV8、DM-1702 和 DM-1703）现在写明了原因。新增的电台均未在真机上测试：请先只读取。
+- 图库：54 个品牌的 673 个型号（623 个支持信道，556 个支持设置）。
 4.44.0 的新内容：
 - 又有八款原先只有信道的电台有了设置（Radtel RT-480、RT-68、RT-5D、RT-69 GPS、RT-4D、RT-6D、RT-1000 Pro、Bajeton DM-5000），取自厂家程序。
 - RT-480 和 RT-68：写入时，常规设置区现在也会写入电台。RT-4D、RT-6D 和 RT-1000 Pro：电台文件现在也包含设置（旧文件仍然有效）。

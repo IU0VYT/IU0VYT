@@ -427,6 +427,10 @@ genemu_rdty_other.go, genemu_tyt_other.go, identify.go (sejak 3.8: kedudukan ID 
 nama, tarikh pengaturcaraan terakhir dan versi CPS, seperti print_id dan print_version
 dalam rd5r.c, gd77.c dan uv380.c); untuk ujian, verifica/dmrconfig/tcpdev.c
 (sambungan TCP untuk dmrconfig, yang tidak disertakan: ia dimuat turun dari lamannya).
+Sejak 4.45 juga keluarga AnyTone (AT-D868UV, AT-D878UV, AT-D878UV II, BTECH DMR-6X2 dan
+DMR-6X2 PRO): daripada dmrconfig anytone_ht.c, anytone_ht-map.h dan serial.c; daripada
+qdmr (perbandingan) anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc dan
+dmr6x2uv_codeplug.hh. Fail IU0VYT Flash: drv_anytone.go dan genemu_anytone_other.go.
 Teks lesen dmrconfig:
 
   BSD 3-Clause License

@@ -8,6 +8,7 @@ al-dr135t: al-dr03t al-dr135t
 al-dr235t: al-dr235t
 al-dr435t: al-dr06t al-dr435t
 as-uva37: ab-ar730 as-uva37 tp-a36plus tp-a36plus8w
+at-d868uv: at-d868uv at-d878uv at-d878uv2 bt-dmr6x2 bt-dmr6x2pro
 at-termn8r: at-obltr8r at-termn8r kw-tk260 kw-tk270 kw-tk272 kw-tk278 kw-tk360 kw-tk370 kw-tk372 kw-tk378 kyd-nc630a
 bf-1901: bf-1901 bf-1904 bf-1909 bf-9700 mv-ra425
 bf-888s: bf-888s bf-88st bf-c2 bf-gt22 bf-gt68 bf-m4 bf-mp31 bf-t20frs bf-t22frs bf-v8a bt-frsb1 mt-mt8s mv-ra100 rd-ga2s rt-h777plus td-m8s td-v2

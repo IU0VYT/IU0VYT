@@ -3,6 +3,49 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.45.0 (17/11/2026)
+-------------------
+Radio DMR della famiglia AnyTone e della famiglia TYT, e le schede «non
+compatibili» che si potevano rendere compatibili (punto 3 dei lavori).
+- Famiglia AnyTone (drv_anytone.go): AnyTone AT-D868UV, AT-D878UV / AT-D878UV
+  Plus, AT-D878UV II Plus, BTECH DMR-6X2 e DMR-6X2 PRO. Le due BTECH erano
+  «non compatibili» (solo aggiornamento guidato del firmware). La radio si
+  collega con il suo cavo USB e compare come porta seriale. Memoria e
+  protocollo sono quelli del programma libero dmrconfig (anytone_ht.c,
+  serial.c), confrontati con qdmr; il file .img è lo stesso di dmrconfig.
+  4000 canali analogici e DMR: frequenze, nomi, modo, potenza, banda, toni e
+  solo ricezione; nei canali DMR color code, slot, contatto e lista dei
+  gruppi restano quelli impostati. Un canale nuovo entra nella prima zona con
+  un posto libero; un canale cancellato esce da zone e liste di scansione.
+  SCRITTURA: solo canali validi, zone e liste di scansione (dmrconfig
+  riscrive tutta la memoria): contatti, gruppi, messaggi, ID e impostazioni
+  non si toccano. La DMR-6X2 PRO è sperimentale: dmrconfig non la conosce,
+  gli indirizzi sono quelli di qdmr.
+- Verifica della famiglia AnyTone con il codice originale di dmrconfig
+  (prova TestAnytoneDmrconfig, tre file di esempio): canali letti uguali,
+  nove modifiche con memoria identica byte per byte, lettura dalla radio
+  simulata uguale, ogni blocco scritto uguale a quello di dmrconfig. Due
+  errori di dmrconfig non sono copiati: il canale A e B della zona n scritto
+  nella posizione 2·n, e l'inizio di un contatto valido saltato se segue un
+  contatto vuoto.
+- «Identifica»: la famiglia AnyTone è provata per ultima, insieme alle
+  Alinco; mostra anche ID DMR e nome della radio.
+- Famiglia TYT MD-UV380 (drv_tyt.go, la stessa della Baofeng DM-1701): TYT
+  MD-UV380, MD-UV390, MD-2017, MD-9600 e Retevis RT3S e RT82 con il firmware
+  originale. dmrconfig usa per tutte lo stesso codice (uv380.c); la radio è
+  riconosciuta dal nome con cui risponde.
+- Baofeng BF-666S: scheda a parte, con il driver della BF-888S (segnalazioni
+  #377 e #1535 di CHIRP). Baofeng BF-T6: scheda a parte, sperimentale, con il
+  driver della BF-T8 (che alla lettura si presenta con il nome «BF-T6»).
+- Schede che restano «non compatibili»: per UV-8D, BF-UV8, DM-1702 e DM-1703
+  ora è scritto il motivo. Restano com'erano BJ-98 Plus, M20D, 5RHam, le
+  serie BF-V, BF-T, BF-33C, BF-528…, DM-5R, DM-V1, BF-T3 e le Kenwood che si
+  programmano con il KPG.
+- Galleria: 673 modelli di 54 marche (623 con canali, 556 con impostazioni);
+  le schede «non compatibili» scendono da 54 a 50.
+- Nessuna delle radio nuove è stata provata dal vero: prima la sola lettura.
+
+
 4.44.0 (17/11/2026)
 -------------------
 Impostazioni per altre otto radio che avevano solo i canali, ricavate dai

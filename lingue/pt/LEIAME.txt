@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.44.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.45.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,18 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.45.0:
+- Rádios DMR da família AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,
+  AT-D878UV II Plus e BTECH DMR-6X2 e DMR-6X2 PRO (estes dois eram «não compatíveis»).
+  Canais e zonas com o cabo USB do rádio, com a memória e o protocolo do programa livre
+  dmrconfig, verificados com o seu código original; o DMR-6X2 PRO é experimental.
+- TYT MD-UV380, MD-UV390, MD-2017, MD-9600 e Retevis RT3S e RT82 com o firmware original
+  (mesma memória do Baofeng DM-1701). Baofeng BF-666S (controlador do BF-888S) e BF-T6
+  (experimental, controlador do BF-T8).
+- Nas fichas que continuam «não compatíveis» (UV-8D, BF-UV8, DM-1702 e DM-1703) está
+  agora escrito o motivo. Nenhum dos rádios novos foi testado em equipamento real:
+  primeiro só a leitura.
+- Galeria: 673 modelos de 54 marcas (623 com canais, 556 com definições).
 Novidades da 4.44.0:
 - Definições para mais oito rádios que só tinham os canais (Radtel RT-480, RT-68, RT-5D,
   RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro, Bajeton DM-5000), a partir dos programas dos

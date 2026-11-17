@@ -1849,7 +1849,6 @@ a5fe24ca	MRA-1904
 ae84eb8c	Protocol and memory derived from the manufacturer's program («BF Series CPS»): analogue and digital (encrypted) channels.
 de561ee4	«T17-T18 PMR446 PRO» and «T17-T18 FRS» v1.2.2 programs (Radioddity download page)
 6237822e	Protocol and memory derived from the manufacturer's programs and tested with their original code: 99 channels (PMR446 version) or 35 (FRS version for the USA). If the read and write password is set, remove it first with the manufacturer's program.
-8473a0c3	The BF-777S is handled with the BF-888S (CHIRP's table of equivalent models). For these models there is no confirmation of compatibility: the BF-666S is indicated as a probable clone of the BF-888S, but without evidence.
 739f0718	In CHIRP's table of equivalent models the TH-888S corresponds to the BF-888: the BF-888S driver is used.
 7a55f903	BF-T3 (for children)
 0d34ff68	«GT-22 CPS» program («GT-22 Programming Software» package, Radioddity download page)
@@ -1865,14 +1864,11 @@ b82b0847	BTECH DMR-6X2
 878e93e9	Official 2.21b package: firmware 2.21, CPS, USB driver and instructions (BTECH)
 a84f8b14	Announcement of firmware 2.21 and 1.21 (BTECH, 1/4/2025)
 e3983541	BTECH programs and firmware
-113bda28	DMR radio of the BTECH brand (BaofengTech, USA), derived from the AnyTone radios. The channels are programmed with the manufacturer's CPS (protocol not handled here). Firmware: guided update with the official «Firmware_Update» program of the package: here the files are checked (model, version, integrity) and the procedure is followed; the writing is done by the BTECH program. The update erases the programming: first save the codeplug with the CPS.
 fbf7920b	DMR-6X2 PRO (BTECH)
 7179d818	BTECH DMR-6X2 PRO
 c224a773	DMR-6X2II
 65eab1f6	Official 1.21e package: firmware 1.21, CPS, USB driver and instructions (BTECH)
-03d4eaa7	Second series of the DMR-6X2 («DMR_6X2II» firmware, 1.x numbering; 1.21 came out together with 2.21 of the DMR-6X2). The firmware is a different file from that of the DMR-6X2 (identifier «D6X2UV2»): do not use that of the other radio. The icons (DMR_6X2_PIC) are the same. Guided update with the official program, as for the DMR-6X2.
 5f81c272	«DM-1702 MD Setup» v1.00.76 program (Baofeng download page)
-9fc225b8	DMR radio: the manufacturer's program («DM-1702 MD Setup», TYT MD family) is not documented; the codeplug is managed with that program.
 8f42ee90	DM-1801 Pro
 9eccd68c	«CPS DMR Radio» v1.60 program (Radioddity download page)
 bb8e3c94	Experimental. For the DM-1801 Pro the manufacturer publishes the same program as the DM-32UV (same «DMR CPS.exe» executable, v1.60): the DM-32UV driver is used. If the radio identifies itself as a different model, the program stops before reading or writing.
@@ -5308,7 +5304,6 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (OpenGD77 firmware)
 9785f3bc	Retevis RT3
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
-850cccbc	{0} With TYT's original firmware these radios are not supported.
 b9ae89b8	Radioddity GD-77
 38c31cf1	Radioddity GD-77S
 829ca215	Baofeng RD-5R
@@ -6256,3 +6251,29 @@ cfd00999	rs871Pick: manca {0}
 fd0b5918	«RT-69 GPS» (889G)
 15d735f7	ANI-ST
 138e76d2	DT-ANI
+ed27abff	DMR radio of the «MD-1702» platform (USB 0483:5780). The USB link was reconstructed by OK2MOP's MD1702-tools project, but the layout of the channels is not documented and the author reports radios bricked by writing to some firmware versions. As a precaution nothing is read or written here: program it with the manufacturer's program.
+3f85cb94	Not compatible: not even CHIRP supports it (CHIRP issue #1225: the radio marks empty channels in a way that has not been worked out). Program it with the manufacturer's «UV-8» program.
+933ff816	The BF-666S and BF-777S are handled with the BF-888S. For these models there is no confirmation of compatibility.
+70e2396e	The CHIRP developers state that the BF-666S, BF-777S and BF-888S are programmed in the same way (CHIRP issues #377 and #1535): the BF-888S driver is used. Not tested here on a real radio: read only first.
+972d3a2a	Experimental. CHIRP's BF-T8 identifies itself when read with the name «BF-T6»: the two radios probably have the same memory, but confirmation on a real BF-T6 is missing. If the radio does not answer with that name, reading stops without changing it. Before writing, check that the channels read are those of the radio.
+bd9e89ea	DMR radio of the BTECH brand (BaofengTech, United States), derived from the AnyTone radios. Channels and zones are read and written from here with the radio's USB cable (memory and protocol of the free program dmrconfig, verified with its original code). Firmware: guided update with the official «Firmware_Update» program of the package: here the files are checked (model, version, integrity) and the procedure is followed; the writing is done by the BTECH program. The update erases the programming: save the radio's memory first.
+14f85b7a	Second series of the DMR-6X2 (firmware «DMR_6X2II», identifier «D6X2UV2»): the firmware is a different file, do not use the one for the other radio. Guided update with the official program, as for the DMR-6X2. Channels and zones (experimental): as for the DMR-6X2, with the addresses that the free program qdmr uses for this model.
+25dd7543	MD1702-tools (OK2MOP's tools for the USB link)
+f023d637	{0} With the original firmware the MD-UV380, MD-UV390, MD-2017 and MD-9600 have their own tab; the MD-380 is not supported.
+6f673a7c	DMR radio with 4000 channels, connected with its own USB cable (serial port). Memory and protocol of the free programs dmrconfig and qdmr, verified with the original dmrconfig code. Only channels, zones and scan lists are written. «Identify» tries it after all the other radios.
+c3827a39	With the original firmware: same memory and same protocol as the Baofeng DM-1701, via USB in DFU mode (the free program dmrconfig uses the same code for these models).
+5732831a	AT-D878UV / AT-D878UV Plus
+3ce8fe8d	AT-D878UV Plus
+3f0b0583	D878UV Plus
+15e852ed	AT-D878UV II Plus
+c9665837	AT-D878UVII Plus
+9835a587	TYT MD-UV390
+33158a39	It connects with the radio's USB cable, which appears as a serial port (COM); if Windows does not create it, the manufacturer's «USB Virtual Com Port» driver is needed. You can change frequencies, names (16 characters), mode (analog / DMR), power, bandwidth, tones and receive only; in DMR channels the color code, slot, contact and group list stay as set. A new channel goes into the first zone with a free place. Only channels, zones and scan lists are written: contacts, groups, messages, IDs and settings are not touched. Not tested on a real radio: read only first.
+10a3ed24	AnyTone AT-D868UV
+9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
+bccf031b	AnyTone AT-D878UV II Plus
+ce976301	Experimental: model not present in dmrconfig, addresses from the free program qdmr.
+161b4b8c	the radio stores frequencies in 10 Hz steps
+2219008e	TYT MD-UV390 / Retevis RT3S
+1e8c276f	TYT MD-2017 / Retevis RT82
+33c3b9a7	Like the Baofeng DM-1701: same memory and same protocol (the free program dmrconfig uses the same code). USB in DFU mode: you need the USB driver of the manufacturer's program (STTub30) or WinUSB installed with Zadig. If the radio answers with a different name, the program stops before reading or writing. Not tested on a real radio: read only first.

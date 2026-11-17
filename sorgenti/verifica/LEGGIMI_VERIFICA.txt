@@ -138,6 +138,23 @@ collegamento TCP verso la radio simulata di questo programma
    sintetiche), sette modifiche con memoria identica byte per byte a quella scritta da
    dmrconfig, lettura e scrittura via USB di dmrconfig e di questo programma uguali.
 
+FAMIGLIA ANYTONE (4.45): AT-D868UV, AT-D878UV, AT-D878UV II, BTECH DMR-6X2 e DMR-6X2 PRO
+Lo stesso dmrconfig-tcp serve per la famiglia AnyTone, che usa una porta seriale:
+tcpdev.c sostituisce le funzioni di libudev usate da serial.c e presenta come porta
+USB 28e9:018a la pseudo-terminale indicata da DMRCONFIG_SERIAL (la crea la prova), così
+il codice ORIGINALE di serial.c e anytone_ht.c parla con la radio simulata. Con questo
+tcpdev.c non serve più l'opzione -ludev.
+     DMRCONFIG=percorso/dmrconfig-tcp DMRCONFIG_EX=percorso/dmrconfig/examples \
+     go test -mod=vendor -run 'TestAnytone' -v .
+   Prova (tre file di esempio di dmrconfig, AT-D868UV e DMR-6X2): canali letti uguali;
+   nove modifiche, poi dmrconfig stampa la configurazione della memoria modificata e
+   la riapplica alla memoria di partenza: memoria identica byte per byte (fuori dal
+   confronto solo la tabella del canale A e B delle zone, dove dmrconfig scrive nella
+   posizione sbagliata); lettura di dmrconfig dalla radio simulata uguale a quella di
+   questo programma; ogni blocco scritto da questo programma (solo canali, zone e
+   liste di scansione) è uguale a quello scritto da dmrconfig allo stesso indirizzo.
+   TestAnytoneZones, TestAnytoneChannel e TestAnytoneProtocol non usano dmrconfig.
+
 GT-22 E GT-68 (cartella "t17", 3.6)
 Lo stesso programma .NET 8 "t17/harness" carica i programmi del costruttore «GT-22»
 (GT-22.exe) e «BF_V1_FH» (pacchetto GT-68), che hanno la stessa classe del protocollo:

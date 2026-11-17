@@ -350,6 +350,7 @@ Radtel «New RT470 serial Bootloader Pro».
 والاسم وتاريخ آخر برمجة وإصدار CPS، مثل print_id وprint_version في rd5r.c وgd77.c
 وuv380.c)؛ وللاختبارات verifica/dmrconfig/tcpdev.c (اتصال TCP لـ dmrconfig، غير
 المضمّن: يُنزَّل من موقعه).
+منذ 4.45 أيضاً عائلة AnyTone ‏(AT-D868UV و AT-D878UV و AT-D878UV II و BTECH DMR-6X2 و DMR-6X2 PRO): من dmrconfig الملفات anytone_ht.c و anytone_ht-map.h و serial.c؛ ومن qdmr (للمقارنة) anytone_interface.cc و anytone_codeplug.hh و d868uv_codeplug.cc و dmr6x2uv_codeplug.hh. ملفات IU0VYT Flash: ‏drv_anytone.go و genemu_anytone_other.go.
 نص رخصة dmrconfig:
 
   BSD 3-Clause License

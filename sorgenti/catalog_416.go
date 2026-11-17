@@ -30,5 +30,5 @@ var catalog416 = []catItem{
 		Aliases: []string{"OpenUV380", "OpenMD9600", "Retevis RT3S", "Retevis RT3", "Retevis RT82", "Retevis RT90"}, Type: "dmr",
 		Drivers: []string{"ogd77-uv380"},
 		Links:   []catLink{info("Sito di OpenGD77", ogd77Site), info("qdmr (programma libero per radio DMR, GPL)", qdmrSite)},
-		Notes:   ogd77CatNote + " Con il firmware originale di TYT queste radio non sono gestite."},
+		Notes:   ogd77CatNote + " Con il firmware originale MD-UV380, MD-UV390, MD-2017 e MD-9600 hanno la loro scheda; la MD-380 non è gestita."},
 }

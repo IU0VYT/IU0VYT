@@ -436,6 +436,11 @@ usb_windows.go, genemu_rdty_other.go, genemu_tyt_other.go, identify.go (depuis l
 version du CPS, comme print_id et print_version de rd5r.c, gd77.c et uv380.c) ; pour
 les tests, verifica/dmrconfig/tcpdev.c (connexion TCP pour dmrconfig, qui n'est pas
 inclus : il se télécharge sur son site).
+Depuis la 4.45, également la famille AnyTone (AT-D868UV, AT-D878UV, AT-D878UV II, BTECH
+DMR-6X2 et DMR-6X2 PRO) : de dmrconfig anytone_ht.c, anytone_ht-map.h et serial.c ; de
+qdmr (comparaison) anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc et
+dmr6x2uv_codeplug.hh. Fichiers d'IU0VYT Flash : drv_anytone.go et
+genemu_anytone_other.go.
 Texte de la licence de dmrconfig :
 
   BSD 3-Clause License

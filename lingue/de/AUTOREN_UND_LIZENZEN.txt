@@ -440,6 +440,11 @@ Positionen von DMR-ID, Name, Datum der letzten Programmierung und CPS-Version, w
 print_id und print_version von rd5r.c, gd77.c und uv380.c); für die Tests
 verifica/dmrconfig/tcpdev.c (TCP-Verbindung für dmrconfig, das nicht enthalten ist: es
 wird von seiner Website heruntergeladen).
+Seit 4.45 auch die AnyTone-Familie (AT-D868UV, AT-D878UV, AT-D878UV II, BTECH DMR-6X2
+und DMR-6X2 PRO): aus dmrconfig anytone_ht.c, anytone_ht-map.h und serial.c; aus qdmr
+(Vergleich) anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc und
+dmr6x2uv_codeplug.hh. Dateien von IU0VYT Flash: drv_anytone.go und
+genemu_anytone_other.go.
 Text der Lizenz von dmrconfig:
 
   BSD 3-Clause License

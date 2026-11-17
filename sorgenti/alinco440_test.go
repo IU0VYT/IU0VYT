@@ -614,7 +614,15 @@ func TestAlincoIdentLast(t *testing.T) {
 				first = i
 			}
 		} else {
-			last = i
+			// 4.45: anche la famiglia AnyTone si prova in coda, insieme alle Alinco
+			lastToo := false
+			for _, m := range p.kinds {
+				_, ok := m.Fam.(interface{ identLast() })
+				lastToo = lastToo || ok
+			}
+			if !lastToo {
+				last = i
+			}
 		}
 	}
 	if n != 7 || first < last {

@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.44.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.45.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,18 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.45.0:
+- Radio DMR keluarga AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus, AT-D878UV
+  II Plus serta BTECH DMR-6X2 dan DMR-6X2 PRO (dua yang terakhir ini dahulu «tidak
+  serasi»). Saluran dan zon melalui kabel USB radio, dengan memori dan protokol program
+  bebas dmrconfig, disahkan dengan kod asalnya; DMR-6X2 PRO bersifat eksperimen.
+- TYT MD-UV380, MD-UV390, MD-2017, MD-9600 serta Retevis RT3S dan RT82 dengan perisian
+  tegar asal (memori yang sama seperti Baofeng DM-1701). Baofeng BF-666S (pemacu
+  BF-888S) dan BF-T6 (eksperimen, pemacu BF-T8).
+- Bagi kad yang kekal «tidak serasi» (UV-8D, BF-UV8, DM-1702 dan DM-1703), sebabnya kini
+  dinyatakan. Tiada satu pun radio baharu diuji pada peranti sebenar: baca sahaja
+  dahulu.
+- Galeri: 673 model daripada 54 jenama (623 dengan saluran, 556 dengan tetapan).
 Baharu dalam 4.44.0:
 - Tetapan untuk lapan lagi radio yang sebelum ini hanya ada saluran (Radtel RT-480,
   RT-68, RT-5D, RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro, Bajeton DM-5000), daripada program

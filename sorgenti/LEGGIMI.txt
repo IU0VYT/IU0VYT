@@ -1,11 +1,24 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.44.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.45.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.45.0:
+- Radio DMR della famiglia AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV
+  Plus, AT-D878UV II Plus e BTECH DMR-6X2 e DMR-6X2 PRO (queste due erano «non
+  compatibili»). Canali e zone con il cavo USB della radio, con memoria e
+  protocollo del programma libero dmrconfig, verificati con il suo codice
+  originale; la DMR-6X2 PRO è sperimentale.
+- TYT MD-UV380, MD-UV390, MD-2017, MD-9600 e Retevis RT3S e RT82 con il firmware
+  originale (stessa memoria della Baofeng DM-1701). Baofeng BF-666S (driver
+  della BF-888S) e BF-T6 (sperimentale, driver della BF-T8).
+- Per le schede che restano «non compatibili» UV-8D, BF-UV8, DM-1702 e DM-1703
+  ora è scritto il motivo. Nessuna delle radio nuove è stata provata dal vero:
+  prima la sola lettura.
+- Galleria: 673 modelli di 54 marche (623 con canali, 556 con impostazioni).
 Novità della 4.44.0:
 - Impostazioni per altre otto radio che avevano solo i canali: Radtel RT-480,
   RT-68, RT-5D, RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro e Bajeton DM-5000, dai
@@ -1244,11 +1257,26 @@ RADTEL RT-950 PRO E BAJETON BJ-9000 (4.6)
 - (3.6) RD-5R, DM-1801 e DM-1701 sono verificate con dmrconfig stesso, compilato con un
   collegamento verso la radio simulata: canali letti uguali, modifiche con memoria
   identica byte per byte, lettura e scrittura via USB identiche.
+- (4.45) Famiglia AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus, AT-D878UV II
+  Plus, BTECH DMR-6X2 e DMR-6X2 PRO. La radio si collega con il suo cavo USB e compare
+  come porta COM. 4000 canali, zone e liste di scansione; la memoria e il file .img
+  sono quelli di dmrconfig. Si scrivono solo canali, zone e liste di scansione:
+  contatti, gruppi, messaggi, ID e impostazioni non si toccano. Verificata con il
+  codice originale di dmrconfig (canali letti uguali, modifiche con memoria identica
+  byte per byte, ogni blocco scritto uguale). La mappa di dmrconfig è del 2018-2019;
+  gli indirizzi di canali, zone e liste sono gli stessi che il programma libero qdmr
+  usa oggi per questi modelli, ma con un firmware recente la scrittura non è stata
+  provata su una radio vera: prima la sola lettura. La DMR-6X2 PRO è sperimentale
+  (dmrconfig non la conosce). «Identifica» prova questa famiglia per ultima.
+- (4.45) TYT MD-UV380, MD-UV390 / Retevis RT3S, MD-2017 / Retevis RT82 e MD-9600 con il
+  firmware originale: stessa memoria e stesso protocollo della DM-1701 (dmrconfig usa
+  lo stesso codice); la radio è riconosciuta dal nome con cui risponde.
 Ancora non gestite: radio DMR con protocolli non documentati o programmi nativi
-(DM-1702, DM-5R, M20D, DMR-6X2 / 6X2 PRO: per la DMR-6X2 dmrconfig e qdmr hanno una
-mappa scritta per firmware vecchi, non confrontabile con quelli attuali), le PMR
-senza un programma pubblicato (BF-T3, BF-T6…T57, BF-V1…V6A, BF-33C, BF-358…), 5RHam,
-UV-8D / BF-UV8 e BJ-98 Plus: link ai programmi ufficiali nella galleria quando esistono.
+(DM-5R, M20D; DM-1702 e DM-1703: il collegamento USB è noto dal progetto MD1702-tools,
+ma la disposizione dei canali non è documentata e l'autore segnala radio bloccate), le
+PMR senza un programma pubblicato (BF-T3, BF-T7…T57, BF-V1…V6A, BF-33C, BF-358…),
+5RHam, UV-8D / BF-UV8 e BJ-98 Plus: link ai programmi ufficiali nella galleria quando
+esistono.
 
 IMPOSTAZIONI DELLE RADIO (3.6)
 - Pulsante "⚙ Impostazioni…" nella scheda della radio, dopo aver letto la radio via

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.44.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.45.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,19 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.45.0:
+- DMR radios of the AnyTone family: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,
+  AT-D878UV II Plus and BTECH DMR-6X2 and DMR-6X2 PRO (these two were «not compatible»).
+  Channels and zones with the radio's USB cable, with the memory and protocol of the
+  free program dmrconfig, verified with its original code; the DMR-6X2 PRO is
+  experimental.
+- TYT MD-UV380, MD-UV390, MD-2017, MD-9600 and Retevis RT3S and RT82 with the original
+  firmware (same memory as the Baofeng DM-1701). Baofeng BF-666S (BF-888S driver) and
+  BF-T6 (experimental, BF-T8 driver).
+- For the tabs that remain «not compatible» (UV-8D, BF-UV8, DM-1702 and DM-1703) the
+  reason is now written. None of the new radios has been tested on real hardware: read
+  only first.
+- Gallery: 673 models of 54 brands (623 with channels, 556 with settings).
 What's new in 4.44.0:
 - Settings for eight more radios that had channels only (Radtel RT-480, RT-68, RT-5D,
   RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro, Bajeton DM-5000), from the manufacturers'

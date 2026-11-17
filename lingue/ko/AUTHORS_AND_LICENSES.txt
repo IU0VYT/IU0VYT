@@ -326,6 +326,7 @@ DMR 무전기 RD-5R, DM-1801, DM-1701의 메모리와 USB 프로토콜은 다음
 genemu_rdty_other.go, genemu_tyt_other.go, identify.go(3.8부터: rd5r.c, gd77.c, uv380.c의
 print_id와 print_version처럼 DMR ID, 이름, 마지막 프로그래밍 날짜, CPS 버전의 위치). 시험용으로
 verifica/dmrconfig/tcpdev.c(dmrconfig용 TCP 연결. dmrconfig는 포함되지 않으며 그 사이트에서 내려받음).
+4.45부터 AnyTone 계열(AT-D868UV, AT-D878UV, AT-D878UV II, BTECH DMR-6X2, DMR-6X2 PRO)도 포함합니다: dmrconfig의 anytone_ht.c, anytone_ht-map.h, serial.c; qdmr(비교)의 anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc, dmr6x2uv_codeplug.hh. IU0VYT Flash 파일: drv_anytone.go와 genemu_anytone_other.go.
 dmrconfig 라이선스 글:
 
   BSD 3-Clause License

@@ -356,6 +356,7 @@ genemu_rdty_other.go, genemu_tyt_other.go, identify.go (3.8 से: DMR ID, न�
 प्रोग्रामिंग की तारीख़ और CPS संस्करण के स्थान, rd5r.c, gd77.c और uv380.c के print_id
 और print_version की तरह); परीक्षणों के लिए verifica/dmrconfig/tcpdev.c (dmrconfig के
 लिए TCP कनेक्शन, जो शामिल नहीं है: उसे उसकी साइट से डाउनलोड किया जाता है)।
+4.45 से AnyTone परिवार (AT-D868UV, AT-D878UV, AT-D878UV II, BTECH DMR-6X2 और DMR-6X2 PRO) भी: dmrconfig से anytone_ht.c, anytone_ht-map.h और serial.c; qdmr (तुलना) से anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc और dmr6x2uv_codeplug.hh। IU0VYT Flash की फ़ाइलें: drv_anytone.go और genemu_anytone_other.go।
 dmrconfig के लाइसेंस का पाठ:
 
   BSD 3-Clause License

@@ -1728,6 +1728,8 @@ e0efdc52	un tentativo
 63f186e1	Scrittura completata, ma la rilettura di verifica non è riuscita dopo {0} in {1} secondi ({2}). La scrittura era già terminata: per controllare, quando la radio è di nuovo accesa e pronta usa «Leggi dalla radio».
 f0740aa3	Scrittura completata, ma la rilettura di verifica non è riuscita: {0}
 bd9a7dd8	Serie D (PMR446 con canali analogici e digitali criptati). Protocollo e memoria ricavati dal programma del costruttore «BF Series CPS» (app «intercom-configuration»): la radio comunica il proprio modello e il programma lo controlla.
+ed27abff	Radio DMR della piattaforma «MD-1702» (USB 0483:5780). Il collegamento USB è stato ricostruito dal progetto MD1702-tools di OK2MOP, ma la disposizione dei canali non è documentata e l'autore segnala radio bloccate scrivendo su alcune versioni del firmware. Per prudenza qui non si legge e non si scrive: si programma con il programma del costruttore.
+3f85cb94	Non compatibile: nemmeno CHIRP la gestisce (segnalazione #1225 di CHIRP: la radio segna i canali vuoti in un modo che non è stato ricostruito). Si programma con il programma del costruttore «UV-8».
 d033b61f	Programma del costruttore (CPS)
 f6da2992	Manuale
 5c15fb83	Programma BT-11_CPS v1.0.8 (Google Drive Bajeton)
@@ -1877,7 +1879,9 @@ a5fe24ca	MRA-1904
 ae84eb8c	Protocollo e memoria ricavati dal programma del costruttore («BF Series CPS»): canali analogici e digitali (criptati).
 de561ee4	Programmi «T17-T18 PMR446 PRO» e «T17-T18 FRS» v1.2.2 (pagina dei download Radioddity)
 6237822e	Protocollo e memoria ricavati dai programmi del costruttore e provati con il loro codice originale: 99 canali (versione PMR446) o 35 (versione FRS per gli USA). Se è impostata la password di lettura e scrittura, toglila prima con il programma del costruttore.
-8473a0c3	La BF-777S è gestita con la BF-888S (tabella dei modelli equivalenti di CHIRP). Per questi modelli non c'è una conferma di compatibilità: la BF-666S è indicata come probabile clone della BF-888S, ma senza prove.
+933ff816	La BF-666S e la BF-777S sono gestite con la BF-888S. Per questi modelli non c'è una conferma di compatibilità.
+70e2396e	Gli sviluppatori di CHIRP indicano che BF-666S, BF-777S e BF-888S si programmano allo stesso modo (segnalazioni #377 e #1535 di CHIRP): si usa il driver della BF-888S. Non provata qui su una radio vera: prima la sola lettura.
+972d3a2a	Sperimentale. La BF-T8 di CHIRP alla lettura si presenta con il nome «BF-T6»: è probabile che le due radio abbiano la stessa memoria, ma manca la conferma su una BF-T6 vera. Se la radio non risponde con quel nome la lettura si ferma senza modificarla. Prima di scrivere controlla che i canali letti siano quelli della radio.
 739f0718	Nella tabella dei modelli equivalenti di CHIRP la TH-888S corrisponde alla BF-888: si usa il driver della BF-888S.
 7a55f903	BF-T3 (per bambini)
 0d34ff68	Programma «GT-22 CPS» (pacchetto «GT-22 Programming Software», pagina dei download Radioddity)
@@ -1894,14 +1898,14 @@ b82b0847	BTECH DMR-6X2
 878e93e9	Pacchetto ufficiale 2.21b: firmware 2.21, CPS, driver USB e istruzioni (BTECH)
 a84f8b14	Annuncio dei firmware 2.21 e 1.21 (BTECH, 1/4/2025)
 e3983541	Programmi e firmware BTECH
-113bda28	Radio DMR del marchio BTECH (BaofengTech, Stati Uniti), derivata dalle AnyTone. I canali si programmano con il CPS del costruttore (protocollo non gestito qui). Firmware: aggiornamento guidato con il programma ufficiale «Firmware_Update» del pacchetto: qui si controllano i file (modello, versione, integrità) e si segue la procedura; la scrittura la fa il programma BTECH. L'aggiornamento cancella la programmazione: prima salva il codeplug con il CPS.
+bd9e89ea	Radio DMR del marchio BTECH (BaofengTech, Stati Uniti), derivata dalle AnyTone. Canali e zone si leggono e si scrivono da qui con il cavo USB della radio (memoria e protocollo del programma libero dmrconfig, verificati con il suo codice originale). Firmware: aggiornamento guidato con il programma ufficiale «Firmware_Update» del pacchetto: qui si controllano i file (modello, versione, integrità) e si segue la procedura; la scrittura la fa il programma BTECH. L'aggiornamento cancella la programmazione: prima salva la memoria della radio.
 fbf7920b	DMR-6X2 PRO (BTECH)
 7179d818	BTECH DMR-6X2 PRO
 c224a773	DMR-6X2II
 65eab1f6	Pacchetto ufficiale 1.21e: firmware 1.21, CPS, driver USB e istruzioni (BTECH)
-03d4eaa7	Seconda serie della DMR-6X2 (firmware «DMR_6X2II», numerazione 1.x; la 1.21 è uscita insieme alla 2.21 della DMR-6X2). Il firmware è un file diverso da quello della DMR-6X2 (identificativo «D6X2UV2»): non usare quello dell'altra radio. Le icone (DMR_6X2_PIC) sono le stesse. Aggiornamento guidato con il programma ufficiale, come per la DMR-6X2.
+14f85b7a	Seconda serie della DMR-6X2 (firmware «DMR_6X2II», identificativo «D6X2UV2»): il firmware è un file diverso, non usare quello dell'altra radio. Aggiornamento guidato con il programma ufficiale, come per la DMR-6X2. Canali e zone (sperimentale): come per la DMR-6X2, con gli indirizzi che il programma libero qdmr usa per questo modello.
 5f81c272	Programma «DM-1702 MD Setup» v1.00.76 (pagina dei download Baofeng)
-9fc225b8	Radio DMR: il programma del costruttore («DM-1702 MD Setup», famiglia TYT MD) non è documentato; il codeplug si gestisce con quel programma.
+25dd7543	MD1702-tools (strumenti di OK2MOP per il collegamento USB)
 b6763080	Radio DMR (piattaforma della Radioddity GD-77), collegata via USB come dispositivo HID: nessuna porta COM e nessun driver da installare. Memoria e protocollo dei programmi liberi dmrconfig e qdmr, verificati con il codice originale di dmrconfig (lettura, modifiche e scrittura identiche).{0}
 8f42ee90	DM-1801 Pro
 9eccd68c	Programma «CPS DMR Radio» v1.60 (pagina dei download Radioddity)
@@ -2032,7 +2036,7 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (firmware OpenGD77)
 9785f3bc	Retevis RT3
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
-850cccbc	{0} Con il firmware originale di TYT queste radio non sono gestite.
+f023d637	{0} Con il firmware originale MD-UV380, MD-UV390, MD-2017 e MD-9600 hanno la loro scheda; la MD-380 non è gestita.
 b3a8e214	Canali letti e scritti un canale per volta con i comandi del PC, come fanno i driver di CHIRP per queste radio: la radio resta accesa normalmente (9600 baud) e si scrivono solo i canali cambiati. Provato con una radio simulata, non su una radio vera.
 51b9b9e9	Radio professionale: banda e numero dei canali dipendono dalla versione, letta dalla memoria della radio.
 5aae083d	La RT-860 si legge e si scrive con la scheda «Radtel RT-880G»: il programma di Radtel usa lo stesso collegamento e la stessa memoria dei canali della RT-880G (confronto con il programma del costruttore, non provato su una radio vera).
@@ -2186,7 +2190,17 @@ ad68d871	AOR
 9cdd2da2	Sito AOR
 e747f447	{0}Ricevitore palmare a larga banda (da 0,1 a 2040 MHz): le 1000 memorie di scansione, nomi di 12 caratteri; canali di sola ricezione.
 d8547031	Palmare bibanda con ricevitore a larga banda e D-STAR: banda A 800 memorie, banda B 400 memorie (anche D-STAR), più limiti di scansione e canali di chiamata; nomi di 8 caratteri. Le due bande si scelgono come due radio distinte.
+6f673a7c	Radio DMR con 4000 canali, collegata con il suo cavo USB (porta seriale). Memoria e protocollo dei programmi liberi dmrconfig e qdmr, verificati con il codice originale di dmrconfig. Si scrivono solo canali, zone e liste di scansione. «Identifica» la prova dopo tutte le altre radio.
+c3827a39	Con il firmware originale: stessa memoria e stesso protocollo della Baofeng DM-1701, via USB in modalità DFU (il programma libero dmrconfig usa lo stesso codice per questi modelli).
+4717b662	Sito AnyTone
+5732831a	AT-D878UV / AT-D878UV Plus
+3ce8fe8d	AT-D878UV Plus
+3f0b0583	D878UV Plus
+15e852ed	AT-D878UV II Plus
+c9665837	AT-D878UVII Plus
 65260961	Sito TYT
+9835a587	TYT MD-UV390
+90e0a554	TYT MD-2017
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
 d10461a3	{0} Versione con passo da 2,5 kHz e due potenze.
@@ -2272,7 +2286,6 @@ f13beda2	MURS-V1
 f03bec0f	MURS-V2
 03464bb3	FRS-A1
 1b0f21d4	TERMN-8R
-4717b662	Sito AnyTone
 83e24e48	{0} 200 canali con nomi di 6 caratteri, tutti i 512 codici DCS. Qui un canale messo in sola ricezione torna a trasmettere quando lo si chiede (CHIRP non toglie mai la sola ricezione).
 840916a7	OBLTR-8R
 e0d052c2	{0} 200 canali con nomi di 6 caratteri, tutti i 512 codici DCS.
@@ -2551,15 +2564,32 @@ b8a90ea7	scrittura del blocco 0x{0}: i dati tornati dal cavo sono diversi da que
 136cbe01	la radio non ha questa combinazione di toni (subtono in trasmissione o nei due versi, lo stesso codice DCS nei due versi; mai codici invertiti)
 6e71b0e3	Scrittura del blocco 0x{0}
 7d85b321	la radio non ha accettato il blocco 0x{0} (risposta «{1}»)
+33158a39	Si collega con il cavo USB della radio, che compare come porta seriale (COM); se Windows non la crea serve il driver «USB Virtual Com Port» del costruttore. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda, toni e solo ricezione; nei canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati. Un canale nuovo entra nella prima zona con un posto libero. Si scrivono solo canali, zone e liste di scansione: contatti, gruppi, messaggi, ID e impostazioni non si toccano. Non provata su una radio vera: prima la sola lettura.
+10a3ed24	AnyTone AT-D868UV
+9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
+bccf031b	AnyTone AT-D878UV II Plus
+080b4631	DMR-6X2
+ce976301	Sperimentale: modello non presente in dmrconfig, indirizzi del programma libero qdmr.
+161b4b8c	la radio memorizza le frequenze a passi di 10 Hz
+041ed24c	i dati non sono una memoria della {0}
+87b16176	canale {0} fuori dalla memoria
+d487a1bd	frequenza {0} MHz fuori dai limiti della radio
+8280dc40	tono non disponibile su questa radio
+ab7e4ad9	Zone {0}
+5f99e3ab	PROGRAM
+dc1ee85b	risposta inattesa della radio ({0})
+af43920a	END
+dac9a0ff	risposta inattesa alla lettura del blocco {0}
+ad0ffaa9	dati del blocco {0} non validi (somma di controllo)
+4226e9d1	la radio ha rifiutato il blocco {0} (risposta {1})
+dd4fab56	modello errato: la radio si identifica come {0} (attesa {1})
 38b033e7	AnyTone {0}
 a8e794e8	200 canali con nomi di 6 caratteri, tutti i 512 codici DCS e il tono 62,5 Hz. Blocco del canale occupato e squelch del canale si conservano. Driver di CHIRP (sperimentale).
 63a20956	tono {0} non disponibile su questa radio
 cf192ad2	codice DCS {0} non valido
-5f99e3ab	PROGRAM
 7557473a	la radio non risponde
 427741a6	risposta inattesa della radio
 c122ad12	modello non supportato ({0})
-af43920a	END
 1779cf11	la radio non ha chiuso la sessione correttamente
 a8f14b11	lettura del blocco 0x{0} incompleta
 8d36966a	la radio ha rifiutato il blocco 0x{0}
@@ -2598,7 +2628,6 @@ f8d83637	FCC
 9013f524	Retevis RB639 / RB639P (PMR446)
 418d7f80	«RB639» v1.0.7 / «Retevis Analog CPS» v1.1.2
 eb214d0c	«Retevis RB39 / RB39P (FRS)»
-dc1ee85b	risposta inattesa della radio ({0})
 703e39ff	risposta inattesa
 1866d2ff	somma di controllo errata nella risposta
 de7c4805	la radio è la versione per un altro paese ({0}): apri la scheda {1}
@@ -2820,9 +2849,6 @@ ce2f21ad	la pagina a {0} non è stata confermata: riprova o ripristina la copia 
 086c0fcd	Bajeton DM-5000
 591b5c2d	Radio DMR. Protocollo e memoria ricavati dal programma del costruttore «BAJETON DM-5000 CPS» (versione 250726). Qui si modificano frequenze, nome, potenza, scansione e toni; per i canali DMR gruppo, contatto, slot e color code restano quelli impostati (un canale DMR nuovo prende i valori predefiniti del programma: primo gruppo e primo contatto, slot 1, color code 0). Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale cancellato viene tolto dalle zone. Contatti, gruppi e messaggi non si toccano; le impostazioni generali si cambiano dalla scheda «Impostazioni». Se sulla radio è impostata una password, toglila prima con il programma del costruttore.
 5746c8c0	Zone-{0}
-dac9a0ff	risposta inattesa alla lettura del blocco {0}
-ad0ffaa9	dati del blocco {0} non validi (somma di controllo)
-4226e9d1	la radio ha rifiutato il blocco {0} (risposta {1})
 d08ab8f3	sulla radio è impostata una password: toglila con il programma del costruttore
 bc157e4c	Lettura: {0}…
 bb3e8e20	Scrittura: {0}…
@@ -2835,7 +2861,6 @@ a9f47dcd	Radio DMR (piattaforma Auctus A6). Protocollo e memoria ricavati dal pr
 771d2240	dati della radio non validi
 1c6e4dd8	la radio ha {0} canali
 6e373654	memoria dei canali piena
-ab7e4ad9	Zone {0}
 414a1cc6	la radio non è pronta al collegamento
 53f036ab	sulla radio è impostata una password di programmazione: toglila con il programma del costruttore
 492724ef	Richiesta di lettura
@@ -2853,7 +2878,6 @@ a7cffaf9	Quansheng UV-K5 / UV-K6 (firmware R3b0rn di fagci)
 0f59247c	Minima
 612fe095	Firmware libero R3b0rn di fagci (la radio risponde «R3b0rn»). Accendi la radio, poi collega il cavo al connettore microfono/altoparlante. I canali dipendono dalla memoria montata: 298 con quella originale, fino a 1024 con una memoria più grande; le posizioni oltre quelle della radio non si possono usare. Nomi di 9 caratteri; un canale senza nome prende come nome la frequenza, perché per il firmware un canale senza nome non esiste. «Scan» mette il canale nella lista di scansione 1 (le altre liste si conservano). Modulazione e ricevitore del canale restano quelli impostati sulla radio (FM per un canale nuovo, AM nella banda aerea). Si leggono e si scrivono solo i canali: impostazioni, VFO, preset e correzione SSB non si toccano. Le versioni vecchie del firmware, con la memoria disposta in altro modo, vengono rifiutate. Ricavato dai sorgenti del firmware.
 baa18d66	la memoria di questa radio ha {0} canali
-d487a1bd	frequenza {0} MHz fuori dai limiti della radio
 0104eb8c	la radio non può memorizzare la frequenza di trasmissione {0} MHz
 67cbd442	carattere non ammesso nel nome
 05e30fdf	lettura della memoria a 0x{0} incompleta
@@ -2896,7 +2920,6 @@ da2e3f0e	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|0123456789
 340754ea	Minima 0,1 W
 09707ee6	[PTT] + [DIAL]
 da70894a	la radio non ha questa combinazione di toni (ammessi: subtono in trasmissione, lo stesso subtono nei due versi, lo stesso codice DCS nei due versi)
-8280dc40	tono non disponibile su questa radio
 b0fe5157	la radio non può memorizzare questo scostamento fra ricezione e trasmissione ({0} MHz): non ha la trasmissione su una frequenza separata
 5ae28ef9	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ !`o$%&'()*+,-./|;/=>?@[u]^_
 3c19e63e	Yaesu FT-60R / FT-60E
@@ -3325,7 +3348,6 @@ d016c282	Baofeng DM-1801A
 123293fe	TYT MD-UV380
 f4a22d9b	TYT MD-380
 a23ee16e	Baofeng DM-1701
-90e0a554	TYT MD-2017
 f24ec890	Baofeng DM-1701 (RGB)
 c1ba3e92	Bassa 500 mW
 18565b4f	Minima 50 mW
@@ -3399,7 +3421,6 @@ eb66210d	la modalità di programmazione
 459a3ae1	il cambio di banco
 3f5f6088	ENDR
 a93369f3	la fine della lettura
-041ed24c	i dati non sono una memoria della {0}
 aa8d0e78	il blocco 0x{0}
 445f6867	ENDW
 436e2777	la fine della scrittura
@@ -3757,12 +3778,13 @@ dd733ff8	Quansheng TK11
 9c299967	nome {0}: la radio accetta solo lettere senza accenti
 fe4cfcf0	risposta al collegamento non valida: è una Quansheng TK11?
 7e0d9a2f	Radio DMR collegata via USB in modalità DFU: serve il driver USB del costruttore (pacchetto «DM-1701 CPS», cartella «DM-1701 USB Driver», lo stesso usato dal suo programma: si installa con il pulsante «Installa il driver USB…» della finestra «Leggi dalla radio») oppure il driver generico WinUSB installato con Zadig. Memoria e protocollo come nei programmi liberi dmrconfig e qdmr, confrontati con il codice di dmrconfig. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda, toni e solo ricezione; per i canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati (i canali DMR nuovi: color code 1, slot 1, senza contatto). Contatti, gruppi, messaggi, rubrica e impostazioni della radio non si toccano. La scrittura cancella e riscrive la memoria dei canali (circa 1 minuto).
-87b16176	canale {0} fuori dalla memoria
+2219008e	TYT MD-UV390 / Retevis RT3S
+1e8c276f	TYT MD-2017 / Retevis RT82
+33c3b9a7	Come la Baofeng DM-1701: stessa memoria e stesso protocollo (il programma libero dmrconfig usa lo stesso codice). USB in modalità DFU: serve il driver USB del programma del costruttore (STTub30) oppure WinUSB installato con Zadig. Se la radio risponde con un altro nome il programma si ferma prima di leggere o scrivere. Non provata su una radio vera: prima la sola lettura.
 696a4209	richiesta USB rifiutata dalla radio (errore {0})
 5fcd787f	risposta USB troppo lunga
 5c42bfed	stato DFU non valido
 e92ef7fe	la radio non torna pronta (DFU)
-dd4fab56	modello errato: la radio si identifica come {0} (attesa {1})
 a7ce5425	blocco {0} incompleto
 874ff183	Cancellazione della memoria dei canali…
 c5eb2cdb	TYT TH-UVF1
@@ -4093,7 +4115,6 @@ d3b01e7c	il file .spi non è un file di aggiornamento delle radio DMR-6X2
 a53065d3	il file .CDI ha {0} byte, attesi {1} ({2} file)
 ca74580b	dimensioni coerenti: {0} file, {1} byte (.spi, .CDI e .CDD concordano)
 096ce0bd	dimensioni non coerenti: .spi {0} byte, somma del .CDI {1}, .CDD {2}: file incompleto o danneggiato, non usarlo
-080b4631	DMR-6X2
 7eea02ef	aggiornamento non riconosciuto ({0}): questo controllo conosce solo i pacchetti BTECH DMR-6X2 e DMR-6X2 PRO
 d289a1db	identificativo {0} non coerente con il file {1}
 04be1c53	identificativo del modello nel .spi: {0}

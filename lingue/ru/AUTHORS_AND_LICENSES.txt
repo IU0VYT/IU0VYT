@@ -418,6 +418,10 @@ genemu_rdty_other.go, genemu_tyt_other.go, identify.go (с 3.8: положени
 имени, даты последнего программирования и версии CPS, как print_id и print_version в
 rd5r.c, gd77.c и uv380.c); для проверок — verifica/dmrconfig/tcpdev.c (TCP-соединение
 для dmrconfig, который в пакет не входит: он загружается с его сайта).
+С версии 4.45 также семейство AnyTone (AT-D868UV, AT-D878UV, AT-D878UV II, BTECH DMR-6X2
+и DMR-6X2 PRO): из dmrconfig — anytone_ht.c, anytone_ht-map.h и serial.c; из qdmr
+(сравнение) — anytone_interface.cc, anytone_codeplug.hh, d868uv_codeplug.cc и
+dmr6x2uv_codeplug.hh. Файлы IU0VYT Flash: drv_anytone.go и genemu_anytone_other.go.
 Текст лицензии dmrconfig:
 
   BSD 3-Clause License

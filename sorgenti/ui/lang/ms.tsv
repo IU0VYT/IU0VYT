@@ -1849,7 +1849,6 @@ a5fe24ca	MRA-1904
 ae84eb8c	Protokol dan memori diperoleh daripada program pengeluar («BF Series CPS»): saluran analog dan digital (tersulit).
 de561ee4	Program «T17-T18 PMR446 PRO» dan «T17-T18 FRS» v1.2.2 (halaman muat turun Radioddity)
 6237822e	Protokol dan memori diperoleh daripada program pengeluar dan diuji dengan kod asalnya: 99 saluran (versi PMR446) atau 35 (versi FRS untuk AS). Jika kata laluan baca dan tulis ditetapkan, buangnya dahulu dengan program pengeluar.
-8473a0c3	BF-777S dikendalikan dengan BF-888S (jadual model setara CHIRP). Bagi model-model ini tiada pengesahan keserasian: BF-666S dinyatakan sebagai kemungkinan klon BF-888S, tetapi tanpa bukti.
 739f0718	Dalam jadual model setara CHIRP, TH-888S sepadan dengan BF-888: pemacu BF-888S digunakan.
 7a55f903	BF-T3 (untuk kanak-kanak)
 0d34ff68	Program «GT-22 CPS» (pakej «GT-22 Programming Software», halaman muat turun Radioddity)
@@ -1865,14 +1864,11 @@ b82b0847	BTECH DMR-6X2
 878e93e9	Pakej rasmi 2.21b: perisian tegar 2.21, CPS, pemacu USB dan arahan (BTECH)
 a84f8b14	Pengumuman perisian tegar 2.21 dan 1.21 (BTECH, 1/4/2025)
 e3983541	Program dan perisian tegar BTECH
-113bda28	Radio DMR jenama BTECH (BaofengTech, AS), berasal daripada radio AnyTone. Saluran diprogram dengan CPS pengeluar (protokol tidak dikendalikan di sini). Perisian tegar: kemas kini berpandu dengan program rasmi «Firmware_Update» dalam pakej: di sini fail disemak (model, versi, keutuhan) dan prosedur diikuti; penulisan dilakukan oleh program BTECH. Kemas kini memadam pengaturcaraan: simpan codeplug dengan CPS dahulu.
 fbf7920b	DMR-6X2 PRO (BTECH)
 7179d818	BTECH DMR-6X2 PRO
 c224a773	DMR-6X2II
 65eab1f6	Pakej rasmi 1.21e: perisian tegar 1.21, CPS, pemacu USB dan arahan (BTECH)
-03d4eaa7	Siri kedua DMR-6X2 (perisian tegar «DMR_6X2II», penomboran 1.x; 1.21 dikeluarkan bersama 2.21 bagi DMR-6X2). Perisian tegarnya ialah fail yang berbeza daripada DMR-6X2 (pengecam «D6X2UV2»): jangan gunakan perisian tegar radio yang satu lagi. Ikon (DMR_6X2_PIC) adalah sama. Kemas kini berpandu dengan program rasmi, seperti untuk DMR-6X2.
 5f81c272	Program «DM-1702 MD Setup» v1.00.76 (halaman muat turun Baofeng)
-9fc225b8	Radio DMR: program pengeluar («DM-1702 MD Setup», keluarga TYT MD) tidak didokumenkan; codeplug diurus dengan program itu.
 8f42ee90	DM-1801 Pro
 9eccd68c	Program «CPS DMR Radio» v1.60 (halaman muat turun Radioddity)
 bb8e3c94	Eksperimen. Untuk DM-1801 Pro pengeluar menerbitkan program yang sama dengan DM-32UV (fail boleh laku «DMR CPS.exe» yang sama, v1.60): pemacu DM-32UV digunakan. Jika radio mengenal pasti dirinya sebagai model lain, program berhenti sebelum membaca atau menulis.
@@ -5308,7 +5304,6 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600 (perisian tegar OpenGD
 9785f3bc	Retevis RT3
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
-850cccbc	{0} Dengan perisian tegar asal TYT, radio ini tidak dikendalikan.
 b9ae89b8	Radioddity GD-77
 38c31cf1	Radioddity GD-77S
 829ca215	Baofeng RD-5R
@@ -6256,3 +6251,29 @@ cfd00999	rs871Pick: manca {0}
 fd0b5918	«RT-69 GPS» (889G)
 15d735f7	ANI-ST
 138e76d2	DT-ANI
+ed27abff	Radio DMR platform «MD-1702» (USB 0483:5780). Sambungan USB telah dibina semula oleh projek MD1702-tools oleh OK2MOP, tetapi susunan saluran tidak didokumenkan dan penulisnya melaporkan radio yang tersekat apabila menulis pada beberapa versi perisian tegar. Sebagai langkah berjaga-jaga, tiada bacaan atau penulisan di sini: programkan dengan program pengeluar.
+3f85cb94	Tidak serasi: CHIRP pun tidak menyokongnya (isu CHIRP #1225: radio menanda saluran kosong dengan cara yang belum dapat dibina semula). Programkan dengan program pengeluar «UV-8».
+933ff816	BF-666S dan BF-777S diurus bersama BF-888S. Untuk model-model ini tiada pengesahan keserasian.
+70e2396e	Pembangun CHIRP menyatakan bahawa BF-666S, BF-777S dan BF-888S diprogramkan dengan cara yang sama (isu CHIRP #377 dan #1535): pemacu BF-888S digunakan. Belum diuji di sini pada radio sebenar: baca sahaja dahulu.
+972d3a2a	Eksperimen. BF-T8 dalam CHIRP memperkenalkan dirinya semasa dibaca dengan nama «BF-T6»: kedua-dua radio berkemungkinan mempunyai memori yang sama, tetapi pengesahan pada BF-T6 sebenar belum ada. Jika radio tidak menjawab dengan nama itu, bacaan berhenti tanpa mengubahnya. Sebelum menulis, pastikan saluran yang dibaca ialah saluran radio itu.
+bd9e89ea	Radio DMR jenama BTECH (BaofengTech, Amerika Syarikat), terbitan daripada AnyTone. Saluran dan zon dibaca dan ditulis dari sini dengan kabel USB radio (memori dan protokol program bebas dmrconfig, disahkan dengan kod asalnya). Perisian tegar: kemas kini berpandu dengan program rasmi «Firmware_Update» dalam pakej: di sini fail diperiksa (model, versi, integriti) dan prosedur diikuti; penulisan dilakukan oleh program BTECH. Kemas kini memadamkan pengaturcaraan: simpan memori radio dahulu.
+14f85b7a	Siri kedua DMR-6X2 (perisian tegar «DMR_6X2II», pengecam «D6X2UV2»): perisian tegarnya fail yang berbeza, jangan gunakan fail radio yang satu lagi. Kemas kini berpandu dengan program rasmi, seperti DMR-6X2. Saluran dan zon (eksperimen): seperti DMR-6X2, dengan alamat yang digunakan oleh program bebas qdmr untuk model ini.
+25dd7543	MD1702-tools (alat OK2MOP untuk sambungan USB)
+f023d637	{0} Dengan perisian tegar asal, MD-UV380, MD-UV390, MD-2017 dan MD-9600 mempunyai kad sendiri; MD-380 tidak disokong.
+6f673a7c	Radio DMR dengan 4000 saluran, disambungkan dengan kabel USB sendiri (port bersiri). Memori dan protokol program bebas dmrconfig dan qdmr, disahkan dengan kod asal dmrconfig. Hanya saluran, zon dan senarai imbasan ditulis. «Kenal pasti» mencubanya selepas semua radio lain.
+c3827a39	Dengan perisian tegar asal: memori dan protokol yang sama seperti Baofeng DM-1701, melalui USB dalam mod DFU (program bebas dmrconfig menggunakan kod yang sama untuk model-model ini).
+5732831a	AT-D878UV / AT-D878UV Plus
+3ce8fe8d	AT-D878UV Plus
+3f0b0583	D878UV Plus
+15e852ed	AT-D878UV II Plus
+c9665837	AT-D878UVII Plus
+9835a587	TYT MD-UV390
+33158a39	Ia disambungkan dengan kabel USB radio, yang muncul sebagai port bersiri (COM); jika Windows tidak menciptanya, pemacu «USB Virtual Com Port» daripada pengeluar diperlukan. Anda boleh mengubah frekuensi, nama (16 aksara), mod (analog / DMR), kuasa, lebar jalur, ton dan terima sahaja; dalam saluran DMR, kod warna, slot, kenalan dan senarai kumpulan kekal seperti yang ditetapkan. Saluran baharu masuk ke zon pertama yang mempunyai tempat kosong. Hanya saluran, zon dan senarai imbasan ditulis: kenalan, kumpulan, mesej, ID dan tetapan tidak disentuh. Belum diuji pada radio sebenar: baca sahaja dahulu.
+10a3ed24	AnyTone AT-D868UV
+9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
+bccf031b	AnyTone AT-D878UV II Plus
+ce976301	Eksperimen: model tiada dalam dmrconfig, alamat daripada program bebas qdmr.
+161b4b8c	radio menyimpan frekuensi dalam langkah 10 Hz
+2219008e	TYT MD-UV390 / Retevis RT3S
+1e8c276f	TYT MD-2017 / Retevis RT82
+33c3b9a7	Seperti Baofeng DM-1701: memori dan protokol yang sama (program bebas dmrconfig menggunakan kod yang sama). USB dalam mod DFU: pemacu USB program pengeluar (STTub30) atau WinUSB yang dipasang dengan Zadig diperlukan. Jika radio menjawab dengan nama lain, program berhenti sebelum membaca atau menulis. Belum diuji pada radio sebenar: baca sahaja dahulu.

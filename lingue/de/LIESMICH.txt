@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.44.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.45.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,19 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.45.0:
+- DMR-Funkgeräte der AnyTone-Familie: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,
+  AT-D878UV II Plus sowie BTECH DMR-6X2 und DMR-6X2 PRO (diese beiden waren «nicht
+  kompatibel»). Kanäle und Zonen über das USB-Kabel des Funkgeräts, mit Speicher und
+  Protokoll des freien Programms dmrconfig, mit dessen Originalcode geprüft; das DMR-6X2
+  PRO ist experimentell.
+- TYT MD-UV380, MD-UV390, MD-2017, MD-9600 sowie Retevis RT3S und RT82 mit der
+  Original-Firmware (gleicher Speicher wie beim Baofeng DM-1701). Baofeng BF-666S
+  (Treiber des BF-888S) und BF-T6 (experimentell, Treiber des BF-T8).
+- Bei den Karten, die «nicht kompatibel» bleiben (UV-8D, BF-UV8, DM-1702 und DM-1703),
+  steht jetzt der Grund. Keines der neuen Funkgeräte wurde an echter Hardware getestet:
+  zuerst nur lesen.
+- Galerie: 673 Modelle von 54 Marken (623 mit Kanälen, 556 mit Einstellungen).
 Neu in 4.44.0:
 - Einstellungen für acht weitere Funkgeräte, die nur Kanäle hatten (Radtel RT-480,
   RT-68, RT-5D, RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro, Bajeton DM-5000), aus den

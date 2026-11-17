@@ -1849,7 +1849,6 @@ a5fe24ca	MRA-1904
 ae84eb8c	协议和存储结构源自厂家程序（“BF Series CPS”）：模拟和数字（加密）信道。
 de561ee4	“T17-T18 PMR446 PRO”和“T17-T18 FRS” v1.2.2 程序（Radioddity 下载页面）
 6237822e	协议和存储结构源自厂家程序，并已用其原始代码测试：99 个信道（PMR446 版）或 35 个（美国 FRS 版）。如果设置了读写密码，请先用厂家程序将其清除。
-8473a0c3	BF-777S 按 BF-888S 管理（CHIRP 等效型号表）。这些型号的兼容性尚无确认：BF-666S 被认为可能是 BF-888S 的克隆机，但没有证据。
 739f0718	在 CHIRP 的等效型号表中，TH-888S 对应 BF-888：使用 BF-888S 的驱动。
 7a55f903	BF-T3（儿童用）
 0d34ff68	“GT-22 CPS”程序（“GT-22 Programming Software”软件包，Radioddity 下载页面）
@@ -1865,14 +1864,11 @@ b82b0847	BTECH DMR-6X2
 878e93e9	官方软件包 2.21b：固件 2.21、CPS、USB 驱动和说明（BTECH）
 a84f8b14	固件 2.21 和 1.21 发布公告（BTECH，2025-04-01）
 e3983541	BTECH 程序和固件
-113bda28	BTECH 品牌（BaofengTech，美国）的 DMR 电台，源自 AnyTone。信道需用厂家 CPS 编程（此处不支持其协议）。固件：使用软件包中的官方“Firmware_Update”程序引导升级：在此检查文件（型号、版本、完整性）并按步骤操作；写入由 BTECH 程序完成。升级会清除编程数据：请先用 CPS 保存码表。
 fbf7920b	DMR-6X2 PRO (BTECH)
 7179d818	BTECH DMR-6X2 PRO
 c224a773	DMR-6X2II
 65eab1f6	官方软件包 1.21e：固件 1.21、CPS、USB 驱动和说明（BTECH）
-03d4eaa7	DMR-6X2 的第二代（“DMR_6X2II”固件，版本号 1.x；1.21 与 DMR-6X2 的 2.21 同时发布）。其固件文件与 DMR-6X2 不同（标识“D6X2UV2”）：请勿使用另一款电台的固件。图标（DMR_6X2_PIC）相同。与 DMR-6X2 一样，使用官方程序引导升级。
 5f81c272	“DM-1702 MD Setup” v1.00.76 程序（Baofeng 下载页面）
-9fc225b8	DMR 电台：厂家程序（“DM-1702 MD Setup”，TYT MD 系列）未公开；码表需用该程序管理。
 8f42ee90	DM-1801 Pro
 9eccd68c	“CPS DMR Radio” v1.60 程序（Radioddity 下载页面）
 bb8e3c94	实验性。厂家为 DM-1801 Pro 发布的程序与 DM-32UV 相同（同一可执行文件“DMR CPS.exe”，v1.60）：使用 DM-32UV 的驱动。如果电台识别为其他型号，程序会在读写前停止。
@@ -5308,7 +5304,6 @@ b3258a71	MD-UV380 / MD-UV390 / MD-380 / MD-2017 / MD-9600（OpenGD77 固件）
 9785f3bc	Retevis RT3
 17fa422d	Retevis RT82
 8ff72d7e	Retevis RT90
-850cccbc	{0} 使用 TYT 原厂固件时不支持这些电台。
 b9ae89b8	Radioddity GD-77
 38c31cf1	Radioddity GD-77S
 829ca215	Baofeng RD-5R
@@ -6256,3 +6251,29 @@ cfd00999	rs871Pick: manca {0}
 fd0b5918	«RT-69 GPS» (889G)
 15d735f7	ANI-ST
 138e76d2	DT-ANI
+ed27abff	“MD-1702”平台的 DMR 电台（USB 0483:5780）。USB 连接已由 OK2MOP 的 MD1702-tools 项目还原，但信道的排列没有文档，而且作者报告在某些固件版本上写入后电台变砖。为谨慎起见，这里不读取也不写入：请用厂家程序编程。
+3f85cb94	不兼容：连 CHIRP 也不支持（CHIRP 问题 #1225：电台标记空信道的方式尚未还原）。请用厂家程序“UV-8”编程。
+933ff816	BF-666S 和 BF-777S 按 BF-888S 处理。这些型号的兼容性尚无确认。
+70e2396e	CHIRP 的开发者指出 BF-666S、BF-777S 和 BF-888S 的编程方式相同（CHIRP 问题 #377 和 #1535）：使用 BF-888S 的驱动。此处未在真机上测试：请先只读取。
+972d3a2a	实验性。CHIRP 的 BF-T8 在读取时自报名称为“BF-T6”：两种电台很可能存储相同，但缺少在真正的 BF-T6 上的确认。如果电台不以该名称应答，读取会停止且不作修改。写入前请确认读出的信道就是电台里的信道。
+bd9e89ea	BTECH 品牌（BaofengTech，美国）的 DMR 电台，源自 AnyTone。信道和区域可在此通过电台的 USB 线读取和写入（存储和协议依据自由软件 dmrconfig，并已用其原始代码验证）。固件：使用包内官方程序“Firmware_Update”的引导式升级：在此检查文件（型号、版本、完整性）并按步骤操作；写入由 BTECH 程序完成。升级会清除编程数据：请先保存电台的存储内容。
+14f85b7a	DMR-6X2 的第二代（固件“DMR_6X2II”，标识“D6X2UV2”）：固件是不同的文件，不要使用另一种电台的固件。与 DMR-6X2 一样使用官方程序进行引导式升级。信道和区域（实验性）：与 DMR-6X2 相同，采用自由软件 qdmr 为该型号使用的地址。
+25dd7543	MD1702-tools（OK2MOP 的 USB 连接工具）
+f023d637	{0} 使用原厂固件时，MD-UV380、MD-UV390、MD-2017 和 MD-9600 有各自的卡片；MD-380 不受支持。
+6f673a7c	4000 信道的 DMR 电台，用自带的 USB 线连接（串口）。存储和协议依据自由软件 dmrconfig 和 qdmr，并已用 dmrconfig 原始代码验证。只写入信道、区域和扫描列表。“识别”会在其他所有电台之后才尝试它。
+c3827a39	使用原厂固件时：存储和协议与 Baofeng DM-1701 相同，通过 USB 的 DFU 模式连接（自由软件 dmrconfig 对这些型号使用同一套代码）。
+5732831a	AT-D878UV / AT-D878UV Plus
+3ce8fe8d	AT-D878UV Plus
+3f0b0583	D878UV Plus
+15e852ed	AT-D878UV II Plus
+c9665837	AT-D878UVII Plus
+9835a587	TYT MD-UV390
+33158a39	用电台的 USB 线连接，电台会显示为串口（COM）；如果 Windows 没有自动创建，需要厂家的“USB Virtual Com Port”驱动。可修改频率、名称（16 个字符）、模式（模拟 / DMR）、功率、带宽、亚音和仅接收；DMR 信道的色码、时隙、联系人和群组列表保持原设置。新信道进入第一个有空位的区域。只写入信道、区域和扫描列表：联系人、群组、短信、ID 和设置都不会改动。未在真机上测试：请先只读取。
+10a3ed24	AnyTone AT-D868UV
+9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
+bccf031b	AnyTone AT-D878UV II Plus
+ce976301	实验性：dmrconfig 中没有该型号，地址取自自由软件 qdmr。
+161b4b8c	电台以 10 Hz 为步进保存频率
+2219008e	TYT MD-UV390 / Retevis RT3S
+1e8c276f	TYT MD-2017 / Retevis RT82
+33c3b9a7	与 Baofeng DM-1701 相同：存储和协议一致（自由软件 dmrconfig 使用同一套代码）。USB 的 DFU 模式：需要厂家程序的 USB 驱动（STTub30），或用 Zadig 安装的 WinUSB。如果电台以其他名称应答，程序会在读写前停止。未在真机上测试：请先只读取。

@@ -1085,6 +1085,17 @@ func dmrInfo(m *genModel, mem []byte, r *identResult) {
 				r.add("Ultima programmazione", "%s-%s-%s %s:%s", d[0:4], d[4:6], d[6:8], d[8:10], d[10:12])
 			}
 		}
+	case atFam:
+		// 4.45: primo ID della tabella degli ID della radio (anytone_ht.c print_id)
+		if len(mem) < atOffRadioID+32 {
+			return
+		}
+		if id, ok := bcdID(mem[atOffRadioID : atOffRadioID+4]); ok && id != 0 {
+			r.add("ID DMR", "%d", id)
+		}
+		if n := mem[atOffRadioID+5]; n != 0 && n != 0xFF {
+			r.add("Nome della radio", "%s", identText(mem[atOffRadioID+5:atOffRadioID+21]))
+		}
 	case tytFam:
 		const ts, gs = 0x2001, 0x2040
 		if len(mem) < gs+0x90 {
@@ -1982,6 +1993,8 @@ func identCanMatch(m *genModel) bool {
 	}
 	switch m.Fam.(type) {
 	case rdtyFam, uvb5Fam, bft1Fam, rt22Fam, uv3rFam, tytFam:
+		return true
+	case atFam: // 4.45: il modello è scritto in testa alla memoria
 		return true
 	case alincoFam:
 		// 4.40: DR-135T e DR-03T, DR-435T e DR-06T rispondono allo stesso nome: si

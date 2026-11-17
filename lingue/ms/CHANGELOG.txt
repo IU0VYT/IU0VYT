@@ -6,6 +6,21 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.45.0 (17/11/2026)
+-------------------
+- Radio DMR keluarga AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus, AT-D878UV
+  II Plus serta BTECH DMR-6X2 dan DMR-6X2 PRO (dua yang terakhir ini dahulu «tidak
+  serasi»). Saluran dan zon melalui kabel USB radio, dengan memori dan protokol program
+  bebas dmrconfig, disahkan dengan kod asalnya; DMR-6X2 PRO bersifat eksperimen.
+- Pada AnyTone hanya saluran, zon dan senarai imbasan ditulis: kenalan, kumpulan, mesej,
+  ID dan tetapan tidak disentuh. «Kenal pasti» mencubanya selepas semua radio lain.
+- TYT MD-UV380, MD-UV390, MD-2017, MD-9600 serta Retevis RT3S dan RT82 dengan perisian
+  tegar asal (memori yang sama seperti Baofeng DM-1701). Baofeng BF-666S (pemacu
+  BF-888S) dan BF-T6 (eksperimen, pemacu BF-T8).
+- Bagi kad yang kekal «tidak serasi» (UV-8D, BF-UV8, DM-1702 dan DM-1703), sebabnya kini
+  dinyatakan. Tiada satu pun radio baharu diuji pada peranti sebenar: baca sahaja
+  dahulu.
+
 4.44.0 (17/11/2026)
 -------------------
 - Radtel RT-480 dan RT-68 (32 tetapan) serta RT-5D (43): jadual diambil daripada program

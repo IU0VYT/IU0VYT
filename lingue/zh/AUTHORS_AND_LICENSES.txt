@@ -271,6 +271,7 @@ DMR 电台 RD-5R、DM-1801 和 DM-1701 的存储和 USB 协议源自：
 - dmrconfig（https://github.com/OpenRTX/dmrconfig），Copyright (C) 2018-2019 Serge Vakulenko KK6ABQ，3 条款 BSD 许可证（全文见下）：rd5r.c、dm1801.c、uv380.c、hid.c、hid-windows.c、dfu-libusb.c、dfu-windows.c；
 - qdmr（https://github.com/hmatuschek/qdmr），Hannes Matuschek DM3MAT，GNU GPL v3：radioddity_interface.cc、dm1701_codeplug.cc、tyt_interface.cc（用于比对）。
 IU0VYT Flash 中包含派生部分的文件：drv_rdty.go、drv_tyt.go、usb_windows.go、genemu_rdty_other.go、genemu_tyt_other.go、identify.go（自 3.8 起：DMR ID、名称、最近编程日期和 CPS 版本的位置，与 rd5r.c、gd77.c 和 uv380.c 中的 print_id 和 print_version 相同）；用于测试的 verifica/dmrconfig/tcpdev.c（为 dmrconfig 提供 TCP 连接，dmrconfig 本身不包含在内：需从其网站下载）。
+自 4.45 起还包括 AnyTone 系列（AT-D868UV、AT-D878UV、AT-D878UV II、BTECH DMR-6X2 和 DMR-6X2 PRO）：来自 dmrconfig 的 anytone_ht.c、anytone_ht-map.h 和 serial.c；来自 qdmr（对照）的 anytone_interface.cc、anytone_codeplug.hh、d868uv_codeplug.cc 和 dmr6x2uv_codeplug.hh。IU0VYT Flash 的文件：drv_anytone.go 和 genemu_anytone_other.go。
 dmrconfig 许可证全文：
 
   BSD 3-Clause License
