@@ -7,6 +7,28 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.41.0 (16.11.2026)
+-------------------
+- Neue Funkgeräte nach den CHIRP-Treibern, von Grund auf neu geschrieben. Yaesu VX-1R:
+  Kanäle und Einstellungen, 260 Positionen (zwei Speichergruppen, Suchlaufgrenzen,
+  «Home»-Kanäle und Mittelwelle). Icom IC-91AD / IC-92AD: Kanal für Kanal bei
+  eingeschaltetem Gerät programmiert; Band A 800 Speicher, Band B 400 Speicher, auch
+  D-STAR. BTECH UV-PRO: über Bluetooth, die 30 Kanäle der aktiven Gruppe; Schreiben nur
+  mit der vom Autor des Treibers getesteten Firmware-Version, und jeder Kanal wird nach
+  dem Schreiben zurückgelesen. Empfänger AOR AR8200 (neue Marke): die 1000
+  Suchlaufspeicher, reine Empfangskanäle; am Ende wird die Tastatur an das Gerät
+  zurückgegeben.
+- So werden die Geräte getestet, die CHIRP Kanal für Kanal programmiert (sie haben keine
+  .img-Datei): Der CHIRP-Treiber wird mit dem simulierten Gerät verbunden und muss
+  dieselben Kanäle lesen, und dieselben Änderungen mit CHIRP und von hier müssen
+  dieselben Schreibbefehle senden. Dabei gefundene CHIRP-Fehler werden nicht übernommen:
+  im heutigen CHIRP bricht jedes Lesen und Schreiben eines Kanals des IC-91/92AD mit
+  einem Fehler ab, und ein AM-Kanal des AR8200 lässt sich nicht schreiben; hier
+  funktioniert beides.
+- Einstellungen aus CHIRP für Funkgeräte, die bisher nur Kanäle hatten: Yaesu FT-7800 /
+  FT-7900 (26), Icom IC-Q7A (21), TIDRADIO TD-M11 (12), dazu das VX-1R (38). Keines der
+  neuen Geräte wurde an einem echten Gerät erprobt: zuerst nur lesen.
+
 4.40.0 (14.11.2026)
 -------------------
 - Kurzprüfung bei bereits offenem Reiter, erweitert auf 61 weitere Modelle und das

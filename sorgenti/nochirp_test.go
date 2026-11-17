@@ -121,6 +121,9 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 	if _, ok := m.Fam.(kwlFam); ok { // 4.17: Kenwood programmate un canale per volta
 		mem = kwlBlank(m)
 	}
+	if b, ok := m.Fam.(interface{ blankImg(*genModel) []byte }); ok { // 4.41: radio «live» con immagine propria
+		mem = b.blankImg(m)
+	}
 	if _, ok := m.Fam.(fagciFam); ok { // 4.18: firmware R3b0rn di fagci (EEPROM originale di 8 KiB)
 		mem = fagciBlank(2)
 	}

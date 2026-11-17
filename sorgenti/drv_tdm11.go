@@ -17,10 +17,14 @@ package main
 // indirizzo little endian e somma di controllo di un byte; 'E' per uscire.
 //
 // Differenza voluta da CHIRP: CHIRP, prima di scrivere, mette data e ora della
-// programmazione in un punto sbagliato della memoria (subito dopo i canali: sul
-// 16 PMR dentro i canali nascosti 19-20); qui la memoria si scrive com'è.
-// Per lo stesso motivo (mappa delle impostazioni subito dopo i canali invece
-// che a 0x300) le impostazioni di CHIRP per questa radio non si usano.
+// programmazione nella memoria; qui la memoria si scrive com'è. Nella versione
+// di CHIRP usata fino alla 4.9 le metteva in un punto sbagliato (subito dopo i
+// canali: sul 16 PMR dentro i canali nascosti 19-20) e aveva lì anche la mappa
+// delle impostazioni, che per questo non si usavano. 4.41: nel CHIRP di oggi
+// (337b385) le impostazioni sono a 0x300 e data e ora a 0x406, e le due
+// immagini di prova di CHIRP lo confermano (a 0x307 la versione del firmware
+// del modello, a 0x310 la banda, a 0x320 la password vuota, a 0x406 una data):
+// le impostazioni ora si gestiscono con la tabella ricavata da CHIRP.
 
 import (
 	"bytes"

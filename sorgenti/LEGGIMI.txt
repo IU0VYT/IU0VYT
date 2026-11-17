@@ -1,11 +1,18 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.40.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.41.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.41.0:
+- Radio nuove (i palmari di CHIRP che mancavano): Yaesu VX-1R (canali e
+  impostazioni), Icom IC-91AD e IC-92AD (due bande, anche D-STAR), BTECH
+  UV-PRO (via Bluetooth, senza cavo) e il ricevitore AOR AR8200 (marca nuova).
+- Impostazioni per radio che avevano solo i canali: Yaesu FT-7800 / FT-7900,
+  Icom IC-Q7A, TIDRADIO TD-M11.
+- Galleria: 663 modelli di 54 marche (609 con canali, 506 con impostazioni).
 Novità della 4.40.0:
 - Ricerca automatica più veloce con la scheda già aperta: il controllo breve
   (prima solo per la Baofeng K67 Pro) ora vale anche per le Icom, le Kenwood

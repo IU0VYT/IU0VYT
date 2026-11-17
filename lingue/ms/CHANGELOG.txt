@@ -6,6 +6,26 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.41.0 (16/11/2026)
+-------------------
+- Radio baharu daripada pemacu CHIRP, ditulis semula dari awal. Yaesu VX-1R: saluran dan
+  tetapan, 260 kedudukan (dua kumpulan memori, had imbasan, saluran «home» dan gelombang
+  sederhana). Icom IC-91AD / IC-92AD: diprogram satu saluran pada satu masa dengan radio
+  dihidupkan; jalur A 800 memori, jalur B 400 memori, juga D-STAR. BTECH UV-PRO: melalui
+  Bluetooth, 30 saluran kumpulan aktif; penulisan hanya dengan versi firmware yang diuji
+  oleh pengarang pemacu, dan setiap saluran dibaca semula selepas ditulis. Penerima AOR
+  AR8200 (jenama baharu): 1000 memori imbasan, saluran terima sahaja; pada akhirnya
+  papan kekunci dikembalikan kepada radio.
+- Cara radio yang diprogram CHIRP satu saluran pada satu masa diuji (tiada fail .img):
+  pemacu CHIRP disambungkan kepada radio simulasi dan mesti membaca saluran yang sama,
+  dan perubahan yang sama dibuat dengan CHIRP dan dari sini mesti menghantar arahan
+  tulis yang sama. Ralat CHIRP yang ditemui dengan cara ini tidak disalin: dalam CHIRP
+  hari ini setiap bacaan dan penulisan saluran IC-91/92AD terhenti dengan ralat, dan
+  saluran AM AR8200 tidak boleh ditulis; di sini kedua-duanya berfungsi.
+- Tetapan daripada CHIRP untuk radio yang sebelum ini hanya ada saluran: Yaesu FT-7800 /
+  FT-7900 (26), Icom IC-Q7A (21), TIDRADIO TD-M11 (12), serta VX-1R (38). Tiada satu pun
+  radio baharu diuji pada radio sebenar: mulakan dengan bacaan sahaja.
+
 4.40.0 (14/11/2026)
 -------------------
 - Semakan ringkas dengan tab yang sudah dibuka, diperluas kepada 61 model lagi dan

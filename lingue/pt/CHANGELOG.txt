@@ -7,6 +7,26 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.41.0 (16/11/2026)
+-------------------
+- Rádios novos a partir dos drivers do CHIRP, reescritos de raiz. Yaesu VX-1R: canais e
+  definições, 260 posições (dois grupos de memórias, limites de varrimento, canais
+  «home» e onda média). Icom IC-91AD / IC-92AD: programados um canal de cada vez com o
+  rádio ligado; banda A 800 memórias, banda B 400 memórias, também D-STAR. BTECH UV-PRO:
+  por Bluetooth, os 30 canais do grupo ativo; escrita só com a versão do firmware
+  testada pelo autor do driver, e cada canal é lido de novo depois de escrito. Recetor
+  AOR AR8200 (marca nova): as 1000 memórias de varrimento, canais só de receção; no fim
+  o teclado é devolvido ao rádio.
+- Como são testados os rádios que o CHIRP programa um canal de cada vez (não têm
+  ficheiro .img): o driver do CHIRP é ligado ao rádio simulado e tem de ler os mesmos
+  canais, e as mesmas alterações feitas com o CHIRP e a partir daqui têm de enviar os
+  mesmos comandos de escrita. Os erros do CHIRP encontrados assim não são copiados: no
+  CHIRP de hoje cada leitura e cada escrita de um canal do IC-91/92AD para com um erro,
+  e um canal em AM do AR8200 não pode ser escrito; aqui ambos funcionam.
+- Definições tiradas do CHIRP para rádios que só tinham os canais: Yaesu FT-7800 /
+  FT-7900 (26), Icom IC-Q7A (21), TIDRADIO TD-M11 (12), mais o VX-1R (38). Nenhum dos
+  rádios novos foi testado com um rádio real: comece só pela leitura.
+
 4.40.0 (14/11/2026)
 -------------------
 - Verificação breve com o separador já aberto, alargada a mais 61 modelos e ao Bajeton

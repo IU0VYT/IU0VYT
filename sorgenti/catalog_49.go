@@ -144,7 +144,7 @@ var catalog49 = []catItem{
 	{ID: "tid-td-m11", Brand: "TIDRADIO", Name: "TD-M11", Aliases: []string{"TD-M11 22 FRS", "TD-M11 16 PMR"}, Type: "pmr",
 		Drivers: []string{"tdr-tdm11-22", "tdr-tdm11-16", "tdr-tdm11-16v095"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: chirpNote("TDM11_22") + " Tre versioni: 22 FRS (firmware 0.9.4), 16 PMR (firmware 1.0.3) e 16 PMR con firmware 0.9.5; leggendo la radio il programma riconosce la versione. " +
-			"Qui data e ora della programmazione non si scrivono (CHIRP le scrive in un punto sbagliato della memoria) e le impostazioni di CHIRP non si usano (mappa errata)."},
+			"Qui data e ora della programmazione non si scrivono."},
 	{ID: "tdx-td-q8a", Brand: "TDXone", Name: "TD-Q8A", Type: "analog", Drivers: []string{"tdx-tdq8a"},
 		Notes: chirpNote("TDXoneTDQ8A") + " 128 canali con nomi di 6 caratteri, solo CTCSS. In CHIRP la copia via cavo non funziona con Python 3: qui il protocollo è quello del suo driver, provato con la radio simulata (da verificare con una radio vera)."},
 	{ID: "tyt-th-uv8000", Brand: "TYT", Name: "TH-UV8000D", Aliases: []string{"TH-UV8000E", "TH-UV8000"}, Type: "analog", Drivers: []string{"tyt-thuv8000"}, Links: []catLink{info("Sito TYT", tytWeb)},

@@ -109,6 +109,8 @@ var chirpTestImage = map[string]string{
 	"qs-uvk5-osfw":     "Quansheng_UV-K5.img",
 	"mtc-uv5r3":        "BTECH_UV-5X3.img",
 	"tdr-tdm11-16v095": "TIDRADIO_TD-M11_16_PMR.img",
+	"tdr-tdm11-16":     "TIDRADIO_TD-M11_16_PMR.img", // 4.41
+	"tdr-tdm11-22":     "TIDRADIO_TD-M11_22_FRS.img",
 	"bt-gmrsv1":        "BTECH_GMRS-V1.img",
 	"bt-gmrsv2":        "BTECH_GMRS-V2.img",
 	"bt-mursv1":        "BTECH_MURS-V1.img",
@@ -581,7 +583,9 @@ func chirpEdits(m *genModel, img []byte) []struct {
 		if ci, ok := m.Fam.(interface {
 			chirpInvalid(*genModel, *Chan) bool
 		}); ok && ci.chirpInvalid(m, last) {
-			last.Tx = uhf
+			if last.Tx = uhf; ci.chirpInvalid(m, last) {
+				last.TxTone = "" // 4.41: radio senza toni (ricevitore AOR AR8200)
+			}
 		}
 		out = append(out, struct {
 			N    int

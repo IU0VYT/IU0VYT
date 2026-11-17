@@ -85,6 +85,10 @@ func genMinSize(m *genModel) int {
 	if lf, ok := m.Fam.(interface{ layout(m *genModel) *bwEl }); ok {
 		return lf.layout(m).ByteLen()
 	}
+	// 4.41: radio «live» con immagine propria (senza mappa della memoria)
+	if sf, ok := m.Fam.(interface{ imgSize(m *genModel) int }); ok {
+		return sf.imgSize(m)
+	}
 	return 0
 }
 

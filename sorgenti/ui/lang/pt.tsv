@@ -2049,7 +2049,6 @@ c69691cf	Programas da Radtel
 4f97911a	TD-M11 22 FRS
 027b444f	TD-M11 16 PMR
 3afe7ac3	Programas da TIDRADIO
-b4d18fc3	{0} Três versões: 22 FRS (firmware 0.9.4), 16 PMR (firmware 1.0.3) e 16 PMR com firmware 0.9.5; ao ler o rádio o programa reconhece a versão. Aqui a data e a hora da programação não são escritas (o CHIRP escreve-as num ponto errado da memória) e as definições do CHIRP não são usadas (mapa errado).
 781758b3	{0} 128 canais com nomes de 6 caracteres, só CTCSS. No CHIRP a cópia por cabo não funciona com Python 3: aqui o protocolo é o do seu controlador, testado com o rádio simulado (a verificar com um rádio real).
 85530b38	{0} 128 canais com nomes de 6 caracteres, repetidor de banda cruzada.
 8384b984	UVL-15W
@@ -5932,3 +5931,96 @@ b8a90ea7	escrita do bloco 0x{0}: os dados devolvidos pelo cabo são diferentes d
 c16f2ebf	{0}: verificação breve falhada ({1}): passa-se à leitura normal
 fbfd1ba8	verificação breve não disponível
 2461cdc2	Leitura do primeiro bloco
+b62bc537	Canais com os comandos do driver do CHIRP, que programa este rádio um canal de cada vez (sem ficheiro .img): verificado com os testes automáticos ligando o driver do CHIRP ao rádio simulado (mesmos canais lidos, mesmos comandos de escrita). Os ficheiros estão no formato do IU0VYT Flash. 
+6ee3a5b0	{0} Portátil bibanda 144/430 MHz com recetor de banda larga: 260 posições (dois grupos de memórias, limites de varrimento, canais «home» e onda média), nomes de 6 caracteres.
+ad57d640	UV-PRO
+cda62780	UV-Pro
+708984e9	UVPRO
+a241b34e	{0}Por Bluetooth (porta série SPP), sem cabo: os 30 canais do grupo ativo no rádio, nomes de 10 caracteres. A escrita só é admitida com a versão do firmware testada pelo autor do driver do CHIRP (147).
+ad68d871	AOR
+9cdd2da2	Sítio da AOR
+e747f447	{0}Recetor portátil de banda larga (de 0,1 a 2040 MHz): as 1000 memórias de varrimento, nomes de 12 caracteres; canais só de receção.
+d8547031	Portátil bibanda com recetor de banda larga e D-STAR: banda A 800 memórias, banda B 400 memórias (também D-STAR), mais limites de varrimento e canais de chamada; nomes de 8 caracteres. As duas bandas escolhem-se como dois rádios distintos.
+4572fc76	{0} Três versões: 22 FRS (firmware 0.9.4), 16 PMR (firmware 1.0.3) e 16 PMR com firmware 0.9.5; ao ler o rádio o programa reconhece a versão. Aqui a data e a hora da programação não são escritas.
+3e5d97db	IU0VYT-AOR-AR8200{0}
+073720ca	AOR AR8200
+94836e89	Recetor
+ea549fe6	Recetor: os canais são só de receção, sem tons. São geridas as 1000 memórias de varrimento: dez pares de bancos (A/a … J/j) de 100 posições, divididas entre os dois bancos como está definido no rádio (se alterar a divisão, leia de novo). Nomes de 12 caracteres. Um canal novo, ou ao qual altere a frequência, fica em modo automático (modo e passo escolhidos pelo rádio), ou FM estreita se o pedir; modo, passo, atenuador, desvio, limitador de ruído e proteção ficam como estão no rádio enquanto a frequência não mudar. «Excluído do varrimento» é o «pass» do canal. Frequências de busca, frequências excluídas, VFO e definições não são geridos aqui. Rádio ligado, cabo CC8200, velocidade definida no rádio (19200, 9600 ou 4800 baud, tentadas por esta ordem: com o rádio desligado o erro chega ao fim de quase três minutos). A leitura completa demora alguns minutos; antes de escrever o rádio é lido de novo e só são enviados os canais alterados. No fim o programa devolve o teclado ao rádio. Comandos do driver do CHIRP, testados com um rádio simulado.
+d94fc845	o rádio é um recetor: os canais não têm tons
+b2c76a24	o rádio é um recetor: os canais não têm frequência de transmissão
+3fbe1bbc	frequência {0} MHz fora dos limites do rádio (de 0,1 a 2040 MHz)
+d29b74e6	o rádio não pode memorizar a frequência {0} Hz (múltiplos de 50 Hz)
+3f7ac650	o rádio não respondeu como esperado ao comando {0} ({1})
+d236ecf4	Ligação ao rádio a {0} baud…
+6144364d	o rádio não responde: verifique se está ligado, o cabo e a porta
+6cf88e6d	o rádio não deu a tabela de desvios (comando OL)
+cd2797d0	divisão dos bancos
+b0e3c9a4	o rádio não deu a lista do banco {0} (comando MA)
+3519bf0a	o rádio respondeu com outro canal ({0}{1} em vez de {2}{3})
+c10355a5	imagem da memória inválida (posição {0})
+b8455a30	a divisão dos bancos no rádio já não é a de quando foi lido: leia o rádio de novo. Nada foi escrito
+d12d2575	a tabela de desvios no rádio já não é a de quando foi lido: leia o rádio de novo. Nada foi escrito
+48e11f02	escolha do canal
+c7825ae0	eliminação do canal
+1b579799	o rádio recusou o canal {0} (posição {1}): está protegido, ou o banco está protegido? Os canais já escritos ficam, os outros não
+f303b6bb	IU0VYT-ICOM-IC9X{0}
+dea9bf3f	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 !"#$%&'()*+,-./:;
+50c6ddf3	Programa-se com o rádio ligado normalmente (não em modo de cópia) e o cabo de dados do fabricante: o programa lê e escreve um canal de cada vez. Antes de escrever o rádio é lido de novo e só são enviadas as posições alteradas. As duas bandas leem-se e escrevem-se em separado (como no CHIRP): escolha a banda na lista de rádios. 
+df5e6d7f	O passo, o modo e o banco de um canal ficam como estão enquanto a frequência não mudar; um canal novo fica em AM na banda aérea e abaixo de 30 MHz. Os bancos e as listas de indicativos não são alterados aqui. Comandos do driver do CHIRP, testados com um rádio simulado.
+6668d4dd	Icom IC-91AD / IC-92AD (banda A)
+03df69e4	Banda A (recetor de banda larga): posições 0-799 memórias, 800-849 limites de varrimento (0A, 0B … 24A, 24B), 850 e 851 canais de chamada. Nomes de 8 caracteres; FM, FM larga (de 76 a 108 MHz) e AM. {0}{1}
+7e66bc0e	Icom IC-91AD / IC-92AD (banda B)
+ff7f8b31	Banda B (144/430 MHz, também D-STAR): posições 0-399 memórias, 400-449 limites de varrimento, 450 e 451 canais de chamada. Nomes de 8 caracteres; canais analógicos (FM, FM estreita, AM) ou D-STAR: dos canais D-STAR conservam-se os indicativos (UR, RPT1, RPT2) e o código digital, um canal D-STAR novo nasce com «CQCQCQ». {0}{1}
+ccb0e2e4	o D-STAR só existe na banda B do rádio
+b4da7420	o rádio não pode memorizar a frequência {0} MHz (múltiplos de 5, de 6,25, de 8,33 ou de 9 kHz)
+e0ec8818	desvio fora dos limites do rádio (menos de 100 MHz)
+44e94657	o rádio não responde: verifique se está ligado, o cabo de dados e a porta
+2d8ef1a7	resposta inesperada do rádio ao ler a posição {0}
+3b3e5a22	o rádio respondeu com outra posição ({0} em vez de {1})
+ea9e52ee	a posição {0} tem um comprimento inesperado ({1} bytes): a banda escolhida é a certa?
+5e0aed19	o rádio recusou a posição {0}: os canais já escritos ficam, os outros não
+71937202	IU0VYT-BTECH-UVPRO{0}
+03335f8a	BTECH UV-PRO
+191ae680	Programa-se por Bluetooth, sem cabo: emparelhe o rádio com o PC e escolha a porta série Bluetooth de saída do rádio («SPP Dev»). Leem-se e escrevem-se os 30 canais (de 0 a 29) do grupo ativo no rádio: para outro grupo, mude-o no rádio e leia de novo. Nomes de 10 caracteres; códigos DCS só normais. De 108 a 136 MHz o rádio só recebe (AM): esses canais são guardados só de receção e sem tons. A escrita só é admitida com a versão do firmware testada pelo autor do driver do CHIRP (147): com outra versão o rádio lê-se mas não se escreve. Cada canal escrito é lido de novo e, se não coincidir, repõe-se o anterior. Os canais DMR não são alterados aqui. Comandos do driver do CHIRP (experimental), testados com um rádio simulado.
+aa96ec75	o rádio não deu esta posição na leitura: não pode ser escrita
+a541d752	a posição contém um canal DMR: altera-se com a aplicação do fabricante
+b04f7a76	o rádio só memoriza os códigos DCS normais (N), não os invertidos
+f6556ec3	frequência {0} MHz fora das bandas do rádio (108-136 só receção, 136-174 e 400-520 MHz)
+260340c0	de 108 a 136 MHz o rádio só recebe: sem desvio
+8508dcc3	de 108 a 136 MHz o rádio recebe em AM: sem tons
+3a20306f	frequência de transmissão {0} MHz fora das bandas do rádio (136-174 e 400-520 MHz)
+20146deb	dados inesperados do rádio ({0} {1}): a porta escolhida é a Bluetooth do rádio?
+b1183971	o rádio não responde aos comandos
+fc7cbfb2	o rádio não deu as suas informações
+53d43082	resposta vazia do rádio ao ler o canal {0}
+8b6adcfa	o rádio recusou a escrita do canal {0} (resultado {1})
+040dc4a7	o rádio confirmou o canal {0} em vez do {1}
+e4ff1f00	Grupo lido (o ativo no rádio): {0} («{1}»).
+0e8796a8	Grupo lido (o ativo no rádio): {0}.
+02f4ab46	O rádio tem a versão {0} do firmware: a escrita só é admitida com a versão {1}.
+690e0c88	escrita não admitida: o rádio tem a versão {0} do firmware, o driver só foi testado com a {1}. Nada foi escrito
+0e7ecebf	o rádio está agora no grupo {0}, os canais tinham sido lidos do grupo {1}: reponha esse grupo no rádio ou leia de novo. Nada foi escrito
+6c2eae64	o canal {0} não pode ser escrito: o rádio não o dá na leitura (resultado {1}, {2} bytes)
+6ed02a77	o canal {0} no rádio é DMR: altera-se com a aplicação do fabricante
+4e05eaca	o canal {0} relido do rádio não é o escrito
+214685ca	{0}; o canal anterior foi reposto e verificado
+de2cd57c	{0}; NÃO foi possível repor o canal anterior: leia o rádio de novo antes de outras alterações
+dd137488	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|-?%&_${3}\{4}
+ca929537	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|?%&_$\
+685725cc	Yaesu VX-1R
+3d5ece56	Baixa 0,2 W
+3c05af59	Alta 1 W
+8a4f70b4	260 posições: 1-52 memórias do grupo 1 (completas), 53-72 limites de varrimento e 73-80 canais «home» do grupo 1; 81-222 memórias do grupo 2 (sem desvio próprio nem tom), 223-242 limites de varrimento e 243-250 canais «home» do grupo 2; 251-260 onda média (de 0,5 a 1,7 MHz). O rádio usa um grupo de cada vez (menu «GRP»). Nomes de 6 caracteres. O modo segue a frequência: FM larga de 76 a 108 MHz, AM na banda aérea. As potências indicadas valem com alimentação externa (com bateria 0,5 e 0,05 W). Para a cópia: desligue o rádio, ligue o cabo à tomada MIC/SP e volte a ligá-lo mantendo [FW] premido. Leitura: inicie a leitura e depois prima [DWN] no rádio («CLN OUT»). Escrita: prima [UP] no rádio («CLN IN») e depois inicie a escrita. Se o rádio não aceitar a cópia tem de ser reposto nos valores de fábrica ([M/V] e [AR] premidos ao ligar, depois [FW]). Driver do CHIRP.
+4dc8bee6	YAESU
+565fb9bb	as posições de 251 a 260 são as memórias de onda média (de 0,5 a 1,7 MHz): {0} MHz vai nas posições de 1 a 250
+c3fbaaf4	a onda média ({0} MHz) vai nas posições de 251 a 260
+4af611dc	as memórias de onda média são só de receção: sem desvio nem tons
+3e0ef066	o rádio recebe de 76 a 999 MHz (e a onda média nas posições de 251 a 260): {0} MHz não pode ser memorizado
+5444fe1c	as memórias do grupo 2 (posições de 81 a 250) não memorizam o tom: use uma posição de 1 a 80
+315c9b94	as memórias do grupo 2 (posições de 81 a 250) só têm o desvio normal da banda (600 kHz em VHF, 5 MHz em UHF): use uma posição de 1 a 80
+58d8555e	os dados recebidos não são os de um VX-1: verifique se escolheu o rádio certo
+608ccdcb	[UP] («CLN IN»)
+a0cce57a	banda A
+9fcce3e7	banda B
+88098e0a	canal {0}: o rádio memoriza {1} MHz em vez de {2} MHz (o passo dessa banda)
+42954be8	frequência {0} MHz fora da banda B do rádio (118-174 e 350-470 MHz): use a banda A

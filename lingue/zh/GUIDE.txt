@@ -1,11 +1,15 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.40.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.41.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.41.0 的新内容：
+- 新增电台（CHIRP 中此前缺少的手持机）：Yaesu VX-1R（信道和设置）、Icom IC-91AD 和 IC-92AD（两个频段，也支持 D-STAR）、BTECH UV-PRO（蓝牙，无需写频线）以及 AOR AR8200 接收机（新品牌）。
+- 为此前只有信道的电台增加了设置：Yaesu FT-7800 / FT-7900、Icom IC-Q7A、TIDRADIO TD-M11。
+- 图库：54 个品牌的 663 个型号（609 个支持信道，506 个支持设置）。
 4.40.0 的新内容：
 - 电台的标签页已打开时，自动搜索更快：快速检查（此前仅用于 Baofeng K67 Pro）现在也用于 Icom 各机型、Kenwood TH-F6 / TH-G71 / TH-D7 / TH-K2、Quansheng UV-K5 及其衍生机型、Bajeton BJ-9000、BJ-7800、BJ-7700 和 BJ-8300、Radtel RT-900 / RT-950 / RT-470 以及内存相同的电台。其他电台仍然完整读取。
 - 新品牌：Alinco。手持机 DJ-596、DJ-175、DJ-G7EG 和 DJ-G7T；车载机 DR-135T、DR-235T、DR-435T、DR-03T 和 DR-06T。仅信道。使用不回送数据的线缆也能工作。

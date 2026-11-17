@@ -57,6 +57,12 @@ MAGIC = chirp_common.CloneModeRadio.MAGIC
 
 
 def find_class(name):
+    if "." in name:
+        # 4.41: classe non registrata (sottoradio di una radio «live»), scritta
+        # come modulo.Classe
+        import importlib
+        mod, cn = name.rsplit(".", 1)
+        return getattr(importlib.import_module("chirp.drivers." + mod), cn)
     found = [cls for cls in directory.DRV_TO_RADIO.values() if cls.__name__ == name]
     # 4.15: due classi con lo stesso nome (Kenwood TH-D74 e TH-D72: copia della
     # memoria in thd74.py / thd72.py, comandi diretti in kenwood_live.py): vale
@@ -172,6 +178,11 @@ def zoned(r):
         return "x140"
     if hasattr(r, "_get_memory_mapping") and hasattr(r, "_compact_mappings") and r.get_features().has_sub_devices:
         return "x80"
+    if type(r).__name__ == "VX1Radio":
+        # 4.41: Yaesu VX-1 (vx1.py): tre sotto-radio di lunghezza diversa (CG1 80,
+        # CG2 170, BC 10; i canali speciali L/U e «home» hanno i numeri in coda
+        # a quelli normali): in IU0VYT Flash una lista sola di 260 posizioni
+        return "vx1"
     if type(r).__name__ in FIXED_SUBS:
         # 4.39: radio con sotto-radio fisse, ognuna con i suoi canali (Icom IC-W32:
         # VHF e UHF): in IU0VYT Flash una lista sola, una sotto-radio dopo l'altra
@@ -180,6 +191,19 @@ def zoned(r):
 
 
 FIXED_SUBS = ("ICW32ARadio", "ICW32ERadio")
+
+
+VX1_SIZES = (80, 170, 10)
+
+
+def vx1_target(r, pos):
+    """Sotto-radio e numero del canale per la posizione pos (da 0)."""
+    subs = r.get_sub_devices()
+    for sub, n in zip(subs, VX1_SIZES):
+        if pos < n:
+            return sub, pos + 1
+        pos -= n
+    return None, None
 
 
 def fixed_subs(r):
@@ -206,6 +230,8 @@ def zoned_target(r, pos, delete=False):
     del canale presente; per una posizione vuota la zona del canale che la
     precede (la prima zona se non c'è) e il primo numero libero. Restituisce
     (None, None) per la cancellazione di una posizione già vuota."""
+    if zoned(r) == "vx1":
+        return vx1_target(r, pos)
     if zoned(r) == "fixed":
         subs, lo, n = fixed_subs(r)
         p = pos + 1 - lo  # pos è il numero del canale meno uno; il primo canale ha il numero lo
@@ -286,6 +312,12 @@ def zoned_target(r, pos, delete=False):
 
 
 def decode(r):
+    if zoned(r) == "vx1":
+        out = []
+        for sub, n in zip(r.get_sub_devices(), VX1_SIZES):
+            for k in range(1, n + 1):
+                out.append(mem_to_json(sub, sub.get_memory(k)))
+        return out
     if zoned(r) == "fixed":
         subs, lo, n = fixed_subs(r)
         out = []
@@ -391,7 +423,8 @@ def json_to_mem(r, n, c):
     pol = [t[2] if t and t[0] == "DTCS" else "N", rx[2] if rx and rx[0] == "DTCS" else "N"]
     mem.dtcs_polarity = "".join(pol)
     if t is None and rx is None:
-        mem.tmode = ""
+        if not ("tmode" in fixed and mem.tmode == ""):  # 4.41: ricevitore senza toni (AOR AR8200)
+            mem.tmode = ""
     elif t and t[0] == "Tone" and rx is None:
         mem.tmode, mem.rtone = "Tone", t[1]
     elif t and rx and t[0] == "Tone" and rx[0] == "Tone" and t[1] == rx[1]:
@@ -476,6 +509,18 @@ class SockPipe:
                 break
             self.buf += d
         out, self.buf = self.buf[:size], self.buf[size:]
+        return out
+
+    def readline(self):
+        # 4.41: come pyserial (fino a LF, o quello che arriva entro il tempo)
+        out = b""
+        while True:
+            c = self.read(1)
+            if not c:
+                break
+            out += c
+            if c == b"\n":
+                break
         return out
 
     def inWaiting(self):
@@ -656,6 +701,49 @@ def main():
             r.sync_out()
         pipe.close()
         print(json.dumps({"ok": True}))
+    elif cmd == "live":
+        # 4.41: radio «live» (un comando per canale, senza immagine): le
+        # operazioni del file, in ordine, sulla radio simulata; per ognuna il
+        # canale letto, "ok" oppure l'errore
+        addr = sys.argv[3]
+        ops = json.load(open(sys.argv[4]))
+        if cls.__module__.endswith(".ic9x"):
+            # ic9x_ll.py dichiara il canale come «mem[1]» e poi ne usa i campi
+            # come se fosse uno solo: con la bitwise di oggi ogni lettura e ogni
+            # scrittura di CHIRP si ferma con un AttributeError. Qui si corregge
+            # la dichiarazione (un canale solo), il resto è il driver com'è
+            from chirp.drivers import ic9x_ll
+            ic9x_ll.MEMORY_FRAME_FORMAT = ic9x_ll.MEMORY_FRAME_FORMAT.replace("} mem[1];", "} mem;")
+            assert "} mem;" in ic9x_ll.MEMORY_FRAME_FORMAT
+        pipe = SockPipe(addr, getattr(cls, "BAUD_RATE", 9600))
+        r = cls(pipe)
+        r.get_features()  # come l'interfaccia di CHIRP, prima di leggere (ar8200.py ne ha bisogno)
+        res = []
+        for op in ops:
+            try:
+                if op["op"] == "get":
+                    mem = r.get_memory(op["n"])
+                    j = mem_to_json(r, mem)
+                    if j is not None:
+                        for k in ("dv_urcall", "dv_rpt1call", "dv_rpt2call", "dv_code", "tuning_step"):
+                            if hasattr(mem, k):
+                                j[k] = getattr(mem, k)
+                    res.append(j)
+                elif op["op"] == "set":
+                    r.set_memory(json_to_mem(r, op["n"], op["chan"]))
+                    res.append("ok")
+                elif op["op"] == "del":
+                    r.erase_memory(op["n"])
+                    res.append("ok")
+                elif op["op"] == "sleep":
+                    time.sleep(op["s"])
+                    res.append("ok")
+                else:
+                    res.append({"error": "operazione sconosciuta"})
+            except Exception as ex:
+                res.append({"error": "%s: %s" % (type(ex).__name__, ex)})
+        pipe.close()
+        print(json.dumps(res))
     else:
         raise SystemExit("comando sconosciuto")
 

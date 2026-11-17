@@ -3,6 +3,88 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.41.0 (16/11/2026)
+-------------------
+I palmari di CHIRP che mancavano (Yaesu VX-1R, Icom IC-91AD / IC-92AD, BTECH
+UV-PRO, ricevitore AOR AR8200) e le impostazioni per quattro radio che avevano
+solo i canali.
+- Yaesu VX-1R (vx1.py di CHIRP, riscritto da zero): canali e impostazioni. 260
+  posizioni: 1-52 memorie del gruppo 1, 53-72 limiti di scansione, 73-80
+  canali «home»; 81-222 memorie del gruppo 2 (senza scostamento proprio né
+  tono, come nella radio), 223-242 limiti, 243-250 «home»; 251-260 onde medie.
+  La copia parte dalla radio: [FW] premuto all'accensione, poi [DWN] per
+  leggere e [UP] per scrivere. Lettura, modifica, struttura e copia identiche
+  a CHIRP, anche nelle zone che la prova generale non tocca (yaesu441_test.go).
+  Le onde medie stanno in un byte (passi di circa 4,7 kHz): si scrive la
+  frequenza più vicina, come in CHIRP, e il programma lo segnala. Nelle
+  conversioni da un'altra radio si riempiono solo le memorie normali (limiti
+  di scansione e canali «home» restano quelli della radio) e i canali con il
+  tono o con uno scostamento particolare vanno nel gruppo 1 finché c'è posto;
+  quelli che non trovano posto sono esclusi con un avviso.
+- Icom IC-91A / IC-91AD / IC-92AD (ic9x.py di CHIRP): la radio accesa
+  normalmente si programma un canale per volta, col cavo dati. Le due bande
+  sono due radio distinte, come in CHIRP: banda A 800 memorie, 50 limiti di
+  scansione e 2 canali di chiamata; banda B 400 memorie (anche D-STAR), 50
+  limiti e 2 canali di chiamata. Dei canali D-STAR restano i nominativi.
+  Una frequenza fuori dalla banda scelta viene rifiutata con un messaggio.
+- BTECH UV-PRO (btech_uvpro.py di CHIRP): via Bluetooth, senza cavo, i 30
+  canali del gruppo attivo sulla radio. Come CHIRP: si scrive solo con la
+  versione del firmware provata dall'autore del driver (147); ogni canale
+  viene riletto dopo la scrittura e, se non coincide, si rimette quello di
+  prima. In più: se la radio è su un altro gruppo rispetto alla lettura, non
+  si scrive.
+- AOR AR8200 (ar8200.py di CHIRP; AOR è una marca nuova): ricevitore palmare
+  a larga banda, le 1000 memorie di scansione nei dieci banchi doppi. I canali
+  sono di sola ricezione, senza toni. Un canale nuovo prende il modo
+  automatico della radio; modo, passo, attenuatore, scostamento, limitatore e
+  protezione di un canale restano quelli impostati finché non cambia la
+  frequenza. Alla fine il programma manda il comando EX, che restituisce la
+  tastiera alla radio (con CHIRP la radio va spenta e riaccesa). Frequenze di
+  ricerca, frequenze escluse, VFO e impostazioni non si gestiscono.
+- Come sono provate le radio che CHIRP programma un canale per volta (non
+  hanno file .img): il driver di CHIRP viene collegato alla radio simulata e
+  deve leggere gli stessi canali; poi le stesse modifiche si fanno con CHIRP e
+  da qui e i comandi di scrittura devono essere gli stessi. Risultato: uguali
+  per IC-91/92AD (13 e 11 modifiche), UV-PRO (13) e AR8200 (8).
+- Errori di CHIRP trovati con queste prove, e non copiati:
+  * IC-91/92AD: nel CHIRP di oggi ogni lettura e ogni scrittura di un canale
+    si ferma con un errore (il canale è dichiarato come elenco di un elemento
+    e poi usato come uno solo). Qui funziona; per il confronto la
+    dichiarazione è stata corretta nel programma di prova.
+  * IC-91/92AD: CHIRP scrive in ogni canale non D-STAR della banda B il
+    nominativo di ripetitore del suo esempio. Qui restano quelli della radio
+    (vuoti in un canale nuovo).
+  * AR8200: CHIRP non riesce a scrivere un canale in AM (si ferma con un
+    errore); qui si scrive. CHIRP ripete cinque volte, con quasi otto secondi
+    di attese, la richiesta dell'elenco della scansione selettiva: qui una
+    volta.
+  * VX-1R: in un canale nuovo CHIRP lascia i due bit «mostra il nome» e
+    «sposta il clock» com'erano nella posizione vuota; qui il nome si mostra
+    se c'è e il clock non si sposta (i valori che CHIRP dichiara predefiniti).
+- Impostazioni da CHIRP per radio che avevano solo i canali: Yaesu FT-7800 /
+  FT-7900 (26), Icom IC-Q7A (21), TIDRADIO TD-M11 nelle tre versioni (12), più
+  la VX-1R (38). Ognuna letta e modificata come CHIRP in sette serie di prove.
+  Per la TD-M11 fino alla 4.40 le impostazioni non si usavano perché nel CHIRP
+  di allora la mappa era sbagliata; nel CHIRP di oggi è a 0x300, e le due
+  immagini di prova di CHIRP lo confermano (versione del firmware, banda,
+  password vuota al posto giusto).
+- Radio con solo i canali per le quali CHIRP non ha impostazioni da cui
+  partire: Icom IC-P7, IC-T7H, IC-T8A, IC-T70, IC-W32, Quansheng UV-K1
+  (nessuna); Icom ID-31, ID-51, ID-80, ID-880 (solo gli elenchi dei
+  nominativi D-STAR);
+  Wouxun KG-XS20 (il driver di CHIRP si ferma con un errore); TIDRADIO TD-UV68
+  e Baojie BJ-UV55 (nessuna immagine di CHIRP adatta). Per queste servono i
+  programmi dei costruttori: prossima versione.
+- Nelle conversioni da un'altra radio i canali che IC-91/92AD, UV-PRO e AR8200
+  non possono memorizzare vengono saltati con un avviso, invece di fermare la
+  scrittura; verso l'AR8200 resta la frequenza di ricezione, senza toni.
+- «Identifica» non prova queste cinque radio: la VX-1R non risponde a nessuna
+  domanda, le altre vogliono sequenze lunghe che a un'altra radio non vanno
+  mandate (IC-91/92AD), una porta Bluetooth (UV-PRO) o minuti di tentativi
+  (AR8200). Si scelgono dall'elenco.
+- Nessuna di queste radio è stata provata dal vero: prima la sola lettura.
+- Galleria: 663 modelli di 54 marche (609 con canali, 506 con impostazioni).
+
 4.40.0 (14/11/2026)
 -------------------
 Controllo breve con la scheda già aperta per le altre radio; Alinco, marca

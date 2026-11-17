@@ -49,6 +49,7 @@ const BRAND_COLOR = {
   Yaesu: '#0d5c9e', Icom: '#b3261e', // 4.14
   Kenwood: '#1a1a1a', // 4.15
   Alinco: '#00695c', // 4.40
+  AOR: '#37474f', // 4.41
 };
 function brandColor(b) {
   if (BRAND_COLOR[b]) return BRAND_COLOR[b];

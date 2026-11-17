@@ -16,7 +16,7 @@ var catalog433 = []catItem{
 	{ID: "ic-t8a", Brand: "Icom", Name: "IC-T8A", Aliases: []string{"IC-T8"}, Type: "analog", Drivers: []string{"ic-t8a"},
 		Links: []catLink{info("Sito Icom", icomWeb)}, Notes: chirpNoteCh("ICT8ARadio") + " Tribanda 50/144/430 MHz: 100 canali con nomi di 4 caratteri."},
 	{ID: "ic-q7a", Brand: "Icom", Name: "IC-Q7A", Aliases: []string{"IC-Q7"}, Type: "analog", Drivers: []string{"ic-q7a"},
-		Links: []catLink{info("Sito Icom", icomWeb)}, Notes: chirpNoteCh("ICQ7Radio") + " Bibanda 144/430 MHz con ricevitore a larga banda: 200 canali senza nome."},
+		Links: []catLink{info("Sito Icom", icomWeb)}, Notes: chirpNote("ICQ7Radio") + " Bibanda 144/430 MHz con ricevitore a larga banda: 200 canali senza nome."},
 	{ID: "ic-p7", Brand: "Icom", Name: "IC-P7", Type: "analog", Drivers: []string{"ic-p7"},
 		Links: []catLink{info("Sito Icom", icomWeb)}, Notes: chirpNoteCh("ICP7Radio") + " Bibanda 144/430 MHz con ricevitore a larga banda: 1000 canali con nomi di 6 caratteri."},
 }

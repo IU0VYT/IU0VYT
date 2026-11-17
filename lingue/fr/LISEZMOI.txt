@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.40.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.41.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,13 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.41.0 :
+- Nouvelles radios (les portatifs de CHIRP qui manquaient) : Yaesu VX-1R (canaux et
+  réglages), Icom IC-91AD et IC-92AD (deux bandes, aussi D-STAR), BTECH UV-PRO (par
+  Bluetooth, sans câble) et le récepteur AOR AR8200 (nouvelle marque).
+- Réglages pour des radios qui n'avaient que les canaux : Yaesu FT-7800 / FT-7900, Icom
+  IC-Q7A, TIDRADIO TD-M11.
+- Galerie : 663 modèles de 54 marques (609 avec canaux, 506 avec réglages).
 Nouveautés de la 4.40.0 :
 - Recherche automatique plus rapide quand l'onglet de la radio est déjà ouvert : le
   contrôle rapide (jusqu'ici réservé à la Baofeng K67 Pro) vaut maintenant aussi pour

@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.40.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.41.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,13 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.41.0:
+- Neue Funkgeräte (die Handfunkgeräte aus CHIRP, die noch fehlten): Yaesu VX-1R (Kanäle
+  und Einstellungen), Icom IC-91AD und IC-92AD (zwei Bänder, auch D-STAR), BTECH UV-PRO
+  (über Bluetooth, ohne Kabel) und der Empfänger AOR AR8200 (neue Marke).
+- Einstellungen für Funkgeräte, die bisher nur Kanäle hatten: Yaesu FT-7800 / FT-7900,
+  Icom IC-Q7A, TIDRADIO TD-M11.
+- Galerie: 663 Modelle von 54 Marken (609 mit Kanälen, 506 mit Einstellungen).
 Neu in 4.40.0:
 - Schnellere automatische Suche, wenn der Reiter des Funkgeräts schon offen ist: die
   Kurzprüfung (bisher nur für das Baofeng K67 Pro) gilt jetzt auch für die Icom-Geräte,

@@ -229,7 +229,20 @@ func genWrite(m *genModel, base []byte, chs []*Chan, rep *Report) ([]byte, error
 			return nil, fmt.Errorf("canale %d: %v", i+m.First, err)
 		}
 		if want != nil {
-			if back := m.Fam.Get(m, out, i); back == nil || back.Rx != want.Rx || (!want.TxOff && back.Tx != want.Tx) {
+			// 4.41: posizioni in cui la radio ha un passo suo e arrotonda la
+			// frequenza (onde medie della Yaesu VX-1R): si rilegge quella arrotondata
+			wantRx, wantTx := want.Rx, want.Tx
+			if rr, ok := m.Fam.(interface {
+				roundRx(m *genModel, i int, hz int64) int64
+			}); ok {
+				if r := rr.roundRx(m, i, want.Rx); r != want.Rx {
+					wantRx, wantTx = r, want.Tx+r-want.Rx
+					if rep != nil {
+						rep.note("canale %d: la radio memorizza %s MHz al posto di %s MHz (il passo di quella banda)", i+m.First, fmtMHz6(r), fmtMHz6(want.Rx))
+					}
+				}
+			}
+			if back := m.Fam.Get(m, out, i); back == nil || back.Rx != wantRx || (!want.TxOff && back.Tx != wantTx) {
 				return nil, fmt.Errorf("errore interno: il canale %d non si rilegge uguale", i+m.First)
 			}
 		}

@@ -1,7 +1,7 @@
-versione=4.40.0
-compilazione=2026-11-14T23:09
-radio=604
-impostazioni=502
-galleria=658
+versione=4.41.0
+compilazione=2026-11-16T12:59
+radio=609
+impostazioni=506
+galleria=663
 firmware=58
-marche=53
+marche=54

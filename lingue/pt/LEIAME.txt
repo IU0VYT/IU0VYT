@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.40.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.41.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,13 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.41.0:
+- Rádios novos (os portáteis do CHIRP que faltavam): Yaesu VX-1R (canais e definições),
+  Icom IC-91AD e IC-92AD (duas bandas, também D-STAR), BTECH UV-PRO (por Bluetooth, sem
+  cabo) e o recetor AOR AR8200 (marca nova).
+- Definições para rádios que só tinham os canais: Yaesu FT-7800 / FT-7900, Icom IC-Q7A,
+  TIDRADIO TD-M11.
+- Galeria: 663 modelos de 54 marcas (609 com canais, 506 com definições).
 Novidades da 4.40.0:
 - Pesquisa automática mais rápida quando o separador do rádio já está aberto: a
   verificação breve (até agora só para o Baofeng K67 Pro) vale agora também para os

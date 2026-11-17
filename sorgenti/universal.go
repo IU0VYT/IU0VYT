@@ -704,6 +704,13 @@ func genPlace(m *genModel, mem []byte, chs []*Chan, rep *Report) []*Chan {
 		}
 		return c == nil || genValidate(m, c, i) == nil
 	}
+	// 4.41: posizioni speciali in mezzo alle memorie (Yaesu VX-1R: limiti di
+	// scansione e canali «home»): una conversione non ci mette niente, restano
+	// come sono nell'immagine di base
+	skip := func(int) bool { return false }
+	if sk, ok := m.Fam.(interface{ placeSkip(*genModel, int) bool }); ok {
+		skip = func(i int) bool { return sk.placeSkip(m, i) }
+	}
 	final := make([]*Chan, m.Slots)
 	fixed := make([]bool, m.Slots)
 	var pending []*Chan
@@ -713,6 +720,11 @@ func genPlace(m *genModel, mem []byte, chs []*Chan, rep *Report) []*Chan {
 			c = chs[i]
 		}
 		switch {
+		case skip(i):
+			final[i], fixed[i] = genGet(m, mem, i), true
+			if c != nil {
+				pending = append(pending, c)
+			}
 		case ok(i, c):
 			final[i] = c
 		case c != nil && ok(i, nil):

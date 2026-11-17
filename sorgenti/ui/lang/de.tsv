@@ -2049,7 +2049,6 @@ c69691cf	Programme von Radtel
 4f97911a	TD-M11 22 FRS
 027b444f	TD-M11 16 PMR
 3afe7ac3	Programme von TIDRADIO
-b4d18fc3	{0} Drei Versionen: 22 FRS (Firmware 0.9.4), 16 PMR (Firmware 1.0.3) und 16 PMR mit Firmware 0.9.5; beim Lesen erkennt das Programm die Version. Hier werden Datum und Uhrzeit der Programmierung nicht geschrieben (CHIRP schreibt sie an eine falsche Stelle im Speicher), und die Einstellungen von CHIRP werden nicht verwendet (falsche Speicherkarte).
 781758b3	{0} 128 Kanäle mit Namen aus 6 Zeichen, nur CTCSS. In CHIRP funktioniert die Übertragung per Kabel mit Python 3 nicht: Hier ist das Protokoll das seines Treibers, mit dem simulierten Funkgerät getestet (mit einem echten Funkgerät zu prüfen).
 85530b38	{0} 128 Kanäle mit Namen aus 6 Zeichen, Crossband-Repeater.
 8384b984	UVL-15W
@@ -5932,3 +5931,96 @@ b8a90ea7	Schreiben von Block 0x{0}: die vom Kabel zurückgegebenen Daten weichen
 c16f2ebf	{0}: Kurzprüfung fehlgeschlagen ({1}): es folgt das normale Lesen
 fbfd1ba8	Kurzprüfung nicht verfügbar
 2461cdc2	Lesen des ersten Blocks
+b62bc537	Kanäle mit den Befehlen des CHIRP-Treibers, der dieses Funkgerät Kanal für Kanal programmiert (ohne .img-Datei): mit den automatischen Tests geprüft, indem der CHIRP-Treiber mit dem simulierten Funkgerät verbunden wurde (gleiche gelesene Kanäle, gleiche Schreibbefehle). Die Dateien haben das Format von IU0VYT Flash. 
+6ee3a5b0	{0} Dualband-Handfunkgerät 144/430 MHz mit Breitbandempfänger: 260 Positionen (zwei Speichergruppen, Suchlaufgrenzen, «Home»-Kanäle und Mittelwelle), Namen mit 6 Zeichen.
+ad57d640	UV-PRO
+cda62780	UV-Pro
+708984e9	UVPRO
+a241b34e	{0}Über Bluetooth (serieller SPP-Port), ohne Kabel: die 30 Kanäle der am Funkgerät aktiven Gruppe, Namen mit 10 Zeichen. Schreiben ist nur mit der vom Autor des CHIRP-Treibers getesteten Firmware-Version (147) erlaubt.
+ad68d871	AOR
+9cdd2da2	AOR-Website
+e747f447	{0}Breitband-Handempfänger (0,1 bis 2040 MHz): die 1000 Suchlaufspeicher, Namen mit 12 Zeichen; reine Empfangskanäle.
+d8547031	Dualband-Handfunkgerät mit Breitbandempfänger und D-STAR: Band A 800 Speicher, Band B 400 Speicher (auch D-STAR), dazu Suchlaufgrenzen und Anrufkanäle; Namen mit 8 Zeichen. Die beiden Bänder werden wie zwei getrennte Funkgeräte gewählt.
+4572fc76	{0} Drei Versionen: 22 FRS (Firmware 0.9.4), 16 PMR (Firmware 1.0.3) und 16 PMR mit Firmware 0.9.5; beim Lesen erkennt das Programm die Version. Datum und Uhrzeit der Programmierung werden hier nicht geschrieben.
+3e5d97db	IU0VYT-AOR-AR8200{0}
+073720ca	AOR AR8200
+94836e89	Empfänger
+ea549fe6	Empfänger: Die Kanäle sind nur für den Empfang, ohne Töne. Verwaltet werden die 1000 Suchlaufspeicher: zehn Bankpaare (A/a … J/j) mit 100 Positionen, auf die beiden Bänke so verteilt, wie es am Gerät eingestellt ist (nach einer Änderung der Aufteilung neu lesen). Namen mit 12 Zeichen. Ein neuer Kanal, oder einer, dessen Frequenz geändert wird, erhält den Automatikmodus (Betriebsart und Schrittweite wählt das Gerät) oder auf Wunsch Schmalband-FM; Betriebsart, Schrittweite, Abschwächer, Ablage, Störbegrenzer und Schutz bleiben wie am Gerät eingestellt, solange die Frequenz gleich bleibt. «Vom Suchlauf ausgeschlossen» ist das «Pass» des Kanals. Suchfrequenzen, Pass-Frequenzen, VFO und Einstellungen werden hier nicht verwaltet. Gerät eingeschaltet, Kabel CC8200, Geschwindigkeit wie am Gerät eingestellt (19200, 9600 oder 4800 Baud, in dieser Reihenfolge versucht: bei ausgeschaltetem Gerät kommt der Fehler nach fast drei Minuten). Das vollständige Lesen dauert einige Minuten; vor dem Schreiben wird das Gerät neu gelesen, und nur die geänderten Kanäle werden gesendet. Am Ende gibt das Programm die Tastatur an das Gerät zurück. Befehle des CHIRP-Treibers, mit einem simulierten Gerät getestet.
+d94fc845	das Gerät ist ein Empfänger: die Kanäle haben keine Töne
+b2c76a24	das Gerät ist ein Empfänger: die Kanäle haben keine Sendefrequenz
+3fbe1bbc	Frequenz {0} MHz außerhalb der Grenzen des Geräts (0,1 bis 2040 MHz)
+d29b74e6	das Gerät kann die Frequenz {0} Hz nicht speichern (Vielfache von 50 Hz)
+3f7ac650	das Gerät hat auf den Befehl {0} nicht wie erwartet geantwortet ({1})
+d236ecf4	Verbindung mit dem Funkgerät mit {0} Baud…
+6144364d	das Gerät antwortet nicht: prüfe, ob es eingeschaltet ist, das Kabel und den Port
+6cf88e6d	das Gerät hat die Ablagetabelle nicht geliefert (Befehl OL)
+cd2797d0	Aufteilung der Bänke
+b0e3c9a4	das Gerät hat die Liste der Bank {0} nicht geliefert (Befehl MA)
+3519bf0a	das Gerät hat mit einem anderen Kanal geantwortet ({0}{1} statt {2}{3})
+c10355a5	ungültiges Speicherabbild (Position {0})
+b8455a30	die Aufteilung der Bänke am Gerät ist nicht mehr die vom Zeitpunkt des Lesens: Gerät neu lesen. Es wurde nichts geschrieben
+d12d2575	die Ablagetabelle am Gerät ist nicht mehr die vom Zeitpunkt des Lesens: Gerät neu lesen. Es wurde nichts geschrieben
+48e11f02	Kanalwahl
+c7825ae0	Löschen des Kanals
+1b579799	das Gerät hat den Kanal {0} (Position {1}) abgelehnt: ist er geschützt, oder ist die Bank geschützt? Die bereits geschriebenen Kanäle bleiben, die anderen nicht
+f303b6bb	IU0VYT-ICOM-IC9X{0}
+dea9bf3f	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 !"#$%&'()*+,-./:;
+50c6ddf3	Programmiert wird bei normal eingeschaltetem Gerät (nicht im Klonmodus) mit dem Datenkabel des Herstellers: Das Programm liest und schreibt einen Kanal nach dem anderen. Vor dem Schreiben wird das Gerät neu gelesen, und nur die geänderten Positionen werden gesendet. Die beiden Bänder werden getrennt gelesen und geschrieben (wie in CHIRP): wähle das Band in der Liste der Funkgeräte. 
+df5e6d7f	Schrittweite, Betriebsart und Bank eines Kanals bleiben wie eingestellt, solange die Frequenz gleich bleibt; ein neuer Kanal erhält AM im Flugfunkband und unter 30 MHz. Bänke und Rufzeichenlisten werden hier nicht geändert. Befehle des CHIRP-Treibers, mit einem simulierten Gerät getestet.
+6668d4dd	Icom IC-91AD / IC-92AD (Band A)
+03df69e4	Band A (Breitbandempfänger): Positionen 0-799 Speicher, 800-849 Suchlaufgrenzen (0A, 0B … 24A, 24B), 850 und 851 Anrufkanäle. Namen mit 8 Zeichen; FM, Breitband-FM (76 bis 108 MHz) und AM. {0}{1}
+7e66bc0e	Icom IC-91AD / IC-92AD (Band B)
+ff7f8b31	Band B (144/430 MHz, auch D-STAR): Positionen 0-399 Speicher, 400-449 Suchlaufgrenzen, 450 und 451 Anrufkanäle. Namen mit 8 Zeichen; analoge Kanäle (FM, Schmalband-FM, AM) oder D-STAR: bei D-STAR-Kanälen bleiben die Rufzeichen (UR, RPT1, RPT2) und der Digitalcode erhalten, ein neuer D-STAR-Kanal beginnt mit «CQCQCQ». {0}{1}
+ccb0e2e4	D-STAR gibt es nur im Band B des Geräts
+b4da7420	das Gerät kann die Frequenz {0} MHz nicht speichern (Vielfache von 5, 6,25, 8,33 oder 9 kHz)
+e0ec8818	Ablage außerhalb der Grenzen des Geräts (weniger als 100 MHz)
+44e94657	das Gerät antwortet nicht: prüfe, ob es eingeschaltet ist, das Datenkabel und den Port
+2d8ef1a7	unerwartete Antwort des Geräts beim Lesen der Position {0}
+3b3e5a22	das Gerät hat mit einer anderen Position geantwortet ({0} statt {1})
+ea9e52ee	die Position {0} hat eine unerwartete Länge ({1} Byte): ist das gewählte Band das richtige?
+5e0aed19	das Gerät hat die Position {0} abgelehnt: die bereits geschriebenen Kanäle bleiben, die anderen nicht
+71937202	IU0VYT-BTECH-UVPRO{0}
+03335f8a	BTECH UV-PRO
+191ae680	Programmiert wird über Bluetooth, ohne Kabel: Kopple das Funkgerät mit dem PC und wähle den ausgehenden seriellen Bluetooth-Port des Geräts («SPP Dev»). Gelesen und geschrieben werden die 30 Kanäle (0 bis 29) der am Gerät aktiven Gruppe: für eine andere Gruppe diese am Gerät wechseln und neu lesen. Namen mit 10 Zeichen; nur normale DCS-Codes. Von 108 bis 136 MHz empfängt das Gerät nur (AM): diese Kanäle werden als reine Empfangskanäle ohne Töne gespeichert. Schreiben ist nur mit der vom Autor des CHIRP-Treibers getesteten Firmware-Version (147) erlaubt: mit einer anderen Version lässt sich das Gerät lesen, aber nicht schreiben. Jeder geschriebene Kanal wird zurückgelesen und, wenn er nicht übereinstimmt, wird der vorherige wiederhergestellt. DMR-Kanäle werden hier nicht geändert. Befehle des CHIRP-Treibers (experimentell), mit einem simulierten Gerät getestet.
+aa96ec75	das Gerät hat diese Position beim Lesen nicht geliefert: sie kann nicht geschrieben werden
+a541d752	die Position enthält einen DMR-Kanal: er wird mit der App des Herstellers geändert
+b04f7a76	das Gerät speichert nur normale DCS-Codes (N), keine invertierten
+f6556ec3	Frequenz {0} MHz außerhalb der Bänder des Geräts (108-136 nur Empfang, 136-174 und 400-520 MHz)
+260340c0	von 108 bis 136 MHz empfängt das Gerät nur: keine Ablage
+8508dcc3	von 108 bis 136 MHz empfängt das Gerät in AM: keine Töne
+3a20306f	Sendefrequenz {0} MHz außerhalb der Bänder des Geräts (136-174 und 400-520 MHz)
+20146deb	unerwartete Daten vom Gerät ({0} {1}): ist der gewählte Port der Bluetooth-Port des Geräts?
+b1183971	das Gerät antwortet nicht auf die Befehle
+fc7cbfb2	das Gerät hat seine Informationen nicht geliefert
+53d43082	leere Antwort des Geräts beim Lesen des Kanals {0}
+8b6adcfa	das Gerät hat das Schreiben des Kanals {0} abgelehnt (Ergebnis {1})
+040dc4a7	das Gerät hat den Kanal {0} statt {1} bestätigt
+e4ff1f00	Gelesene Gruppe (die am Gerät aktive): {0} («{1}»).
+0e8796a8	Gelesene Gruppe (die am Gerät aktive): {0}.
+02f4ab46	Das Gerät hat die Firmware-Version {0}: Schreiben ist nur mit der Version {1} erlaubt.
+690e0c88	Schreiben nicht erlaubt: das Gerät hat die Firmware-Version {0}, der Treiber wurde nur mit {1} getestet. Es wurde nichts geschrieben
+0e7ecebf	das Gerät steht jetzt auf Gruppe {0}, die Kanäle waren aus Gruppe {1} gelesen worden: diese Gruppe am Gerät wieder einstellen oder neu lesen. Es wurde nichts geschrieben
+6c2eae64	der Kanal {0} kann nicht geschrieben werden: das Gerät liefert ihn beim Lesen nicht (Ergebnis {1}, {2} Byte)
+6ed02a77	der Kanal {0} am Gerät ist DMR: er wird mit der App des Herstellers geändert
+4e05eaca	der vom Gerät zurückgelesene Kanal {0} ist nicht der geschriebene
+214685ca	{0}; der vorherige Kanal wurde wiederhergestellt und geprüft
+de2cd57c	{0}; der vorherige Kanal konnte NICHT wiederhergestellt werden: das Gerät vor weiteren Änderungen neu lesen
+dd137488	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/{0}{1}{2}|-?%&_${3}\{4}
+ca929537	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ()+-=*/|?%&_$\
+685725cc	Yaesu VX-1R
+3d5ece56	Niedrig 0,2 W
+3c05af59	Hoch 1 W
+8a4f70b4	260 Positionen: 1-52 Speicher der Gruppe 1 (vollständig), 53-72 Suchlaufgrenzen und 73-80 «Home»-Kanäle der Gruppe 1; 81-222 Speicher der Gruppe 2 (ohne eigene Ablage und ohne Ton), 223-242 Suchlaufgrenzen und 243-250 «Home»-Kanäle der Gruppe 2; 251-260 Mittelwelle (0,5 bis 1,7 MHz). Das Gerät nutzt jeweils eine Gruppe (Menü «GRP»). Namen mit 6 Zeichen. Die Betriebsart folgt der Frequenz: Breitband-FM von 76 bis 108 MHz, AM im Flugfunkband. Die angegebenen Leistungen gelten mit externer Stromversorgung (mit Akku 0,5 und 0,05 W). Zum Klonen: Gerät ausschalten, Kabel an die Buchse MIC/SP anschließen und mit gedrückter Taste [FW] wieder einschalten. Lesen: das Lesen starten und dann am Gerät [DWN] drücken («CLN OUT»). Schreiben: am Gerät [UP] drücken («CLN IN») und dann das Schreiben starten. Nimmt das Gerät die Kopie nicht an, muss es auf die Werkseinstellungen zurückgesetzt werden ([M/V] und [AR] beim Einschalten gedrückt, dann [FW]). CHIRP-Treiber.
+4dc8bee6	YAESU
+565fb9bb	die Positionen 251 bis 260 sind die Mittelwellenspeicher (0,5 bis 1,7 MHz): {0} MHz gehört in die Positionen 1 bis 250
+c3fbaaf4	Mittelwelle ({0} MHz) gehört in die Positionen 251 bis 260
+4af611dc	die Mittelwellenspeicher sind nur für den Empfang: keine Ablage und keine Töne
+3e0ef066	das Gerät empfängt von 76 bis 999 MHz (und Mittelwelle in den Positionen 251 bis 260): {0} MHz kann nicht gespeichert werden
+5444fe1c	die Speicher der Gruppe 2 (Positionen 81 bis 250) speichern den Ton nicht: verwende eine Position von 1 bis 80
+315c9b94	die Speicher der Gruppe 2 (Positionen 81 bis 250) haben nur die normale Ablage des Bandes (600 kHz auf VHF, 5 MHz auf UHF): verwende eine Position von 1 bis 80
+58d8555e	die empfangenen Daten sind nicht die eines VX-1: prüfe, ob du das richtige Funkgerät gewählt hast
+608ccdcb	[UP] («CLN IN»)
+a0cce57a	Band A
+9fcce3e7	Band B
+88098e0a	Kanal {0}: das Gerät speichert {1} MHz statt {2} MHz (die Schrittweite dieses Bandes)
+42954be8	Frequenz {0} MHz außerhalb von Band B des Geräts (118-174 und 350-470 MHz): verwende Band A

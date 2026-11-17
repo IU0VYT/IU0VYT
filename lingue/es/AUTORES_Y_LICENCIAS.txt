@@ -185,6 +185,11 @@ indicados en los archivos de CHIRP usados:
   drivers/vx150.py                          Copyright 2024 CHIRP contributors
   drivers/alinco.py                         Copyright 2011 Dan Smith, 2016 Matt Weyland
   chirp/directory.py                        Copyright 2010 Dan Smith, 2012 Tom Hayward
+  4.41 (CHIRP 337b385, 09/11/2026), Yaesu, Icom, BTECH, AOR:
+  drivers/vx1.py                            Copyright 2026 Don Barber (N3LP)
+  drivers/ic9x.py, drivers/ic9x_ll.py       Copyright 2008 Dan Smith
+  drivers/btech_uvpro.py                    Copyright 2026 Michael Sasarak
+  drivers/ar8200.py                         Copyright 2026 Darius Rad
   F4HWN Fusion 5.9.0 «Quansheng UV-K1 / UV-K5 V3» (GNU GPL v2+): VE2ZJM, armel F4HWN,
   egzumer, JOC2 - https://github.com/armel/uv-k1-k5v3-firmware-custom
 
