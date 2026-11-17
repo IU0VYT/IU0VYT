@@ -1,11 +1,19 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.43.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.44.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.44.0:
+- Impostazioni per altre otto radio che avevano solo i canali: Radtel RT-480,
+  RT-68, RT-5D, RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro e Bajeton DM-5000, dai
+  programmi dei costruttori.
+- RT-480 e RT-68: in scrittura ora arriva alla radio anche il blocco delle
+  impostazioni generali. RT-4D, RT-6D e RT-1000 Pro: il file della radio
+  contiene anche le impostazioni (i file vecchi restano validi).
+- Galleria: 663 modelli di 54 marche (609 con canali, 554 con impostazioni).
 Novità della 4.43.0:
 - Corretto un errore: per 33 radio (fra cui Baofeng UV-17 Pro, UV-17 Pro GPS,
   UV-21 Pro, UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22 e HA1G, Kenwood
@@ -1189,8 +1197,9 @@ RADTEL RT-950 PRO E BAJETON BJ-9000 (4.6)
   e toni dei canali analogici; i canali DMR nuovi prendono i valori predefiniti del
   programma (primo gruppo, primo contatto, slot 1, color code 0). Un canale nuovo
   entra nella zona 1 se non è già in una zona; un canale cancellato viene tolto dalle
-  zone. Contatti, gruppi, messaggi e impostazioni non si toccano. Se sulla radio è
-  impostata una password, toglila prima con il programma del costruttore.
+  zone. Contatti, gruppi e messaggi non si toccano; dalla 4.44 le impostazioni
+  generali si cambiano dalla scheda «Impostazioni». Se sulla radio è impostata una
+  password, toglila prima con il programma del costruttore.
   ATTENZIONE: alcuni antivirus segnalano come pericolosi i pacchetti «DMR R5000 Update
   Tool» pubblicati per il firmware: questo programma non li usa e non li contiene.
 - (3.4) UV-28 Pro: stesso programma «BF-UVs CPS» delle altre (la radio si identifica
@@ -1430,7 +1439,8 @@ prima la sola lettura e segnala ogni problema.
 RADTEL RT-69 GPS (4.23)
 - 999 canali con nomi di 12 caratteri, 19200 baud.
 - Si modificano frequenze, nome, toni, potenza (alta, media, bassa), banda e
-  scansione. Il resto del canale e le impostazioni della radio tornano come sono.
+  scansione. Il resto del canale e le impostazioni della radio tornano come sono
+  (dalla 4.44 alcune impostazioni si cambiano dalla scheda «Impostazioni»).
 - Prima di scrivere il programma legge dalla radio le sue bande e controlla che ogni
   canale ci stia dentro (come fa il programma di Radtel): se un canale è fuori banda
   la scrittura non parte e viene indicata la frequenza.
@@ -1445,8 +1455,9 @@ RADTEL RT-480, RT-68 (4.22)
 - Si modificano frequenze (a passi di 1,25 kHz), nome, potenza (alta, bassa), banda,
   scansione e toni. Codice di segnalazione, PTT ID, scrambler e blocco su canale
   occupato di un canale esistente restano come sono.
-- Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si
-  toccano. Un canale deve avere sempre la frequenza di trasmissione.
+- Si scrivono canali, nomi e, dalla 4.44, il blocco delle impostazioni generali
+  (scheda «Impostazioni»); VFO, tasti laterali e DTMF della radio non si toccano.
+  Un canale deve avere sempre la frequenza di trasmissione.
 Ricavate dal programma del costruttore e provate solo con una radio simulata: fai
 prima la sola lettura e segnala ogni problema.
 
@@ -1468,8 +1479,9 @@ RADTEL RT-5D (4.21)
   toni. Le altre voci di un canale esistente restano come sono; un canale DMR nuovo
   prende i valori predefiniti del programma di Radtel.
 - La lettura prende tutta la memoria e la scrittura la rimanda tutta com'è nel file,
-  come fa il programma di Radtel. Contatti, gruppi, chiavi e impostazioni non si
-  modificano qui: ma se scrivi un file letto tempo fa, tornano quelli di allora.
+  come fa il programma di Radtel. Contatti, gruppi e chiavi non si modificano qui
+  (le impostazioni, dalla 4.44, sì: scheda «Impostazioni»): ma se scrivi un file
+  letto tempo fa, tornano quelli di allora.
   Prima di scrivere fai sempre una lettura fresca.
 - Nome e identificativo del modello non vengono mai scritti.
 Ricavata dal programma del costruttore e provata solo con una radio simulata: fai
@@ -1497,8 +1509,10 @@ RADTEL RT-4D, RT-6D, RT-1000 PRO (4.20)
   valori predefiniti del programma di Radtel (primo contatto, slot 1, color code 1).
 - Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale
   cancellato viene tolto dalle zone.
-- Si scrivono solo canali e zone. Contatti, gruppi, messaggi, radio FM e impostazioni
-  non si toccano (impostazioni e VFO vengono riscritti come sono sulla radio).
+- Si scrivono canali e zone e, dalla 4.44, le voci della scheda «Impostazioni».
+  Contatti, gruppi, messaggi e radio FM non si toccano (il resto delle impostazioni
+  e il VFO vengono riscritti come sono sulla radio). Dalla 4.44 il file della radio
+  contiene anche il blocco delle impostazioni: i file più vecchi restano validi.
 - RT-1000 Pro: l'esclusione dalla scansione non si gestisce (resta com'è sulla radio).
 - Le potenze sono indicate come alta e bassa (i watt non sono nel programma).
 - «Identifica» non distingue queste radio dalle altre Radtel e Bajeton con lo stesso

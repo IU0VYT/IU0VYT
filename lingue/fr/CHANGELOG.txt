@@ -7,6 +7,29 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.44.0 (17/11/2026)
+-------------------
+- Radtel RT-480 et RT-68 (32 réglages) et RT-5D (43) : tables tirées des programmes du
+  constructeur. Pour la RT-480 et la RT-68, l'écriture change : jusqu'à la 4.43 on
+  n'écrivait que les canaux et les noms ; maintenant le premier bloc des réglages (64
+  octets à 0x3A00) est écrit juste après, comme le fait le programme du constructeur, à
+  partir des octets lus dans la radio. VFO, touches latérales et DTMF ne sont toujours
+  pas écrits.
+- Radtel RT-69 GPS (21 réglages) : sa mémoire est celle de la Wouxun KG-UV8D Plus, et le
+  programme du constructeur lit et écrit les mêmes adresses que la table CHIRP ; seuls
+  les éléments dont les choix ont aussi été vérifiés sont affichés. Radtel RT-4D, RT-6D
+  et RT-1000 Pro (34 réglages communs aux trois programmes du constructeur) : la mémoire
+  lue porte maintenant aussi, à la fin, le bloc des réglages (1024 octets de plus) ; les
+  fichiers enregistrés auparavant restent valides, mais n'affichent pas de réglages tant
+  que la radio n'est pas relue. À l'écriture, le bloc des réglages reste celui qui vient
+  d'être lu dans la radio, et seuls les éléments de l'onglet Réglages y sont reportés,
+  bit par bit.
+- Bajeton DM-5000 (53 réglages) : les éléments que son programme a à la même position et
+  avec les mêmes choix que la RT-871A. Non faits dans cette version : nicFW880 /
+  nicFW950 (le pilote n'écrit pas le bloc des réglages), OpenGD77, fagci R3b0rn, LOSEHU,
+  UV-K1, DR-1801UV, BF-T9. Aucun des nouveaux réglages n'a été essayé sur une vraie
+  radio.
+
 4.43.0 (16/11/2026)
 -------------------
 - Erreur corrigée, présente depuis que les réglages existent : pour 33 radios issues de

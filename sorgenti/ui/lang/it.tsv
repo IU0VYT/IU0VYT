@@ -2818,7 +2818,7 @@ ce2f21ad	la pagina a {0} non è stata confermata: riprova o ripristina la copia 
 1b7e6c39	radio FM
 7e876315	area sconosciuta {0}
 086c0fcd	Bajeton DM-5000
-e9d49aad	Radio DMR. Protocollo e memoria ricavati dal programma del costruttore «BAJETON DM-5000 CPS» (versione 250726). Qui si modificano frequenze, nome, potenza, scansione e toni; per i canali DMR gruppo, contatto, slot e color code restano quelli impostati (un canale DMR nuovo prende i valori predefiniti del programma: primo gruppo e primo contatto, slot 1, color code 0). Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale cancellato viene tolto dalle zone. Contatti, gruppi, messaggi e impostazioni della radio non si toccano. Se sulla radio è impostata una password, toglila prima con il programma del costruttore.
+591b5c2d	Radio DMR. Protocollo e memoria ricavati dal programma del costruttore «BAJETON DM-5000 CPS» (versione 250726). Qui si modificano frequenze, nome, potenza, scansione e toni; per i canali DMR gruppo, contatto, slot e color code restano quelli impostati (un canale DMR nuovo prende i valori predefiniti del programma: primo gruppo e primo contatto, slot 1, color code 0). Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale cancellato viene tolto dalle zone. Contatti, gruppi e messaggi non si toccano; le impostazioni generali si cambiano dalla scheda «Impostazioni». Se sulla radio è impostata una password, toglila prima con il programma del costruttore.
 5746c8c0	Zone-{0}
 dac9a0ff	risposta inattesa alla lettura del blocco {0}
 ad0ffaa9	dati del blocco {0} non validi (somma di controllo)
@@ -3465,7 +3465,7 @@ fe1ad29c	PROIUAM
 93e16d7b	Retevis RT26
 66369328	16 canali UHF senza nome. Copia a 4800 baud. Blocco del canale occupato, eliminazione della coda (STE) e PTT ID si conservano. Driver di CHIRP.
 b6bcffc3	Radtel {0}
-a454c0ed	Protocollo e memoria ricavati dal programma del costruttore «Radio Programing Software» (versioni 1.5.2 e 1.5.3). Accendi la radio con il cavo collegato. Canali da 0 a 255, come nel programma del costruttore; frequenze a passi di 1,25 kHz. Qui si modificano frequenze, nome, potenza, banda, scansione e toni; codice di segnalazione, PTT ID, scrambler e blocco su canale occupato restano quelli impostati. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano.
+165a67a8	Protocollo e memoria ricavati dal programma del costruttore «Radio Programing Software» (versioni 1.5.2 e 1.5.3). Accendi la radio con il cavo collegato. Canali da 0 a 255, come nel programma del costruttore; frequenze a passi di 1,25 kHz. Qui si modificano frequenze, nome, potenza, banda, scansione e toni; codice di segnalazione, PTT ID, scrambler e blocco su canale occupato restano quelli impostati. Si scrivono canali, nomi e le impostazioni generali; VFO, tasti laterali e DTMF della radio non si toccano.
 bc8e418f	la radio non può memorizzare la frequenza {0} MHz (multipli di 1,25 kHz)
 e1f47135	Bassa 3 W
 86691197	Accendi la radio con il cavo collegato. Canali 1-256. Driver di CHIRP della famiglia Radtel RT-490 («sperimentale» in CHIRP). I canali in AM restano in AM se la frequenza resta nella banda aerea (108-136 MHz).{0}
@@ -3483,8 +3483,8 @@ eeb1014d	HamGeek HG-590
 3d2d8311	la radio non è entrata in programmazione dopo cinque tentativi (risposta {0})
 61774c49	gamme della radio {0}
 88b83d68	Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale cancellato viene tolto dalle zone. Se sulla radio è impostata una password, toglila prima con il programma del costruttore. «Identifica» non distingue questa radio dalle altre Radtel e Bajeton con lo stesso collegamento: scegli tu la scheda giusta.
-76b4acd2	Radio DMR. Protocollo e memoria ricavati dai programmi del costruttore «RT-4D CPS» (versione 2.07) e «DMR RT-6D» (versione 2.06). Qui si modificano frequenze, nome, potenza, banda, scansione e toni; le altre voci del canale restano quelle impostate (un canale DMR nuovo prende i valori predefiniti del programma: primo contatto, slot 1, color code 1). Si scrivono solo canali e zone: contatti, gruppi, messaggi e impostazioni della radio non si toccano.{0}
-8d2388c9	Protocollo e memoria ricavati dal programma del costruttore «Radtel RT-1000 Pro CPS» (versione del 6 agosto 2026). Qui si modificano frequenze, nome, potenza, banda e toni; le altre voci del canale, scansione compresa, restano quelle impostate. Si scrivono solo canali e zone: radio FM e impostazioni della radio non si toccano.{0}
+2720fe3f	Radio DMR. Protocollo e memoria ricavati dai programmi del costruttore «RT-4D CPS» (versione 2.07) e «DMR RT-6D» (versione 2.06). Qui si modificano frequenze, nome, potenza, banda, scansione e toni; le altre voci del canale restano quelle impostate (un canale DMR nuovo prende i valori predefiniti del programma: primo contatto, slot 1, color code 1). Si scrivono canali, zone e le impostazioni generali della scheda «Impostazioni»: contatti, gruppi, messaggi e il resto della radio non si toccano.{0}
+5c4795b8	Protocollo e memoria ricavati dal programma del costruttore «Radtel RT-1000 Pro CPS» (versione del 6 agosto 2026). Qui si modificano frequenze, nome, potenza, banda e toni; le altre voci del canale, scansione compresa, restano quelle impostate. Si scrivono canali, zone e le impostazioni generali della scheda «Impostazioni»: radio FM e il resto della radio non si toccano.{0}
 d90df803	Zone{0}
 2d0e3a60	Scrittura: canali…
 a7f04ce8	Scrittura: zone…
@@ -5740,13 +5740,73 @@ cf0ba7aa	Nome mostrato dalla radio (di solito il nominativo), fino a 16 caratter
 0fdc29b8	Numero DMR personale (ID radio), assegnato da RadioID.net al nominativo.
 daf6364d	Prima riga del messaggio mostrato all'accensione (10 caratteri).
 7730bf65	Seconda riga del messaggio mostrato all'accensione (10 caratteri).
-d6151086	Nel programma del costruttore questa voce è letta in modo diverso da come è scritta: qui si segue la scrittura. Se sulla radio l'effetto non è quello atteso, rimetti il valore di prima.
-6af4461c	Livello del VOX
-4c6be8c8	Livello di voce che fa partire la trasmissione con il VOX.
-f51b5b8f	Per quanto tempo la radio resta in trasmissione dopo che la voce è cessata.
+bba8dc05	La radio non trasmette se sul canale c'è già un segnale.
+ba2a90b3	Bip di trasmissione («Tx Beep»)
+78a976ee	Tono di chiamata dei ponti
+b07eb047	Frequenza del tono che apre i ponti ripetitori (in Europa di solito 1750 Hz).
+e1df03d9	La radio ascolta le due bande (A e B) alternandole.
+4e8162d2	Modo di lavoro
+09162f06	Banda A: sul display
+3159c3d9	Banda B: sul display
+c01040ca	CO: la scansione riparte quando il segnale sparisce; TO: riparte dopo il tempo di sosta; SE: si ferma sul primo segnale.
+40821b7a	Abilita la funzione radio FM.
+0e83a136	Segnale acustico a ogni pressione di un tasto.
+f5416c3d	La radio annuncia a voce canali e funzioni.
+dc697424	Blocco automatico dei tasti
+88774891	Dopo questo tempo senza toccare i tasti la tastiera si blocca da sola.
+7735bf5f	Tasti bloccati
+fcc3a1bc	Stato del blocco della tastiera.
+57835d0f	4 ore
+536d3013	8 ore
+8160f8a6	16 ore
+3740377f	24 ore
+de7c0552	Toni della tastiera
+9fe487ad	Toni dell'identificativo
+b7688203	Tastiera e identificativo
 903de02f	A inizio trasmissione
 acf9776b	A fine trasmissione
 de5f87a4	A inizio e a fine
+5ff3f880	Ritardo del codice identificativo
+0d7185ea	Sul posto (SITE)
+347785df	Tono trasmesso (TONE)
+5d7a78f9	Codice trasmesso (CODE)
+c4b5da24	Tipo di allarme
+ba8fc313	«Radio Programing Software» v1.5.2 / v1.5.3
+e1209b49	Ritardo dopo la coda del ponte
+16d336bb	Tempo di attesa dopo la fine della trasmissione prima di riaprire l'ascolto: serve a non sentire la coda del ponte.
+48e2b94e	Che cosa la radio invia quando rilasci il PTT: niente, un tono (roger beep), un identificativo MDC1200 oppure la posizione GPS.
+33f7d5d8	Tono 1
+36f7da91	Tono 2
+22bdad69	Invia la posizione GPS
+f7ee54a0	Logo all'accensione
+72df9544	«RT-4D CPS» V2.07, «DMR RT-6D» V2.06, «RT-1000 Pro CPS»
+7ca28132	«BAJETON DM-5000 CPS» (250726)
+0b7d9ed8	Tasti programmabili
+db2d8bf5	Lettura della frequenza
+0847ddf2	Canali meteo NOAA
+68e6a9fd	Ricerca del tono (CTCSS/DCS)
+283ceee9	Livello squelch (canali digitali)
+f51b5b8f	Per quanto tempo la radio resta in trasmissione dopo che la voce è cessata.
+d1184be9	Frequenza del tono di coda
+5f804bc1	Tono di inizio trasmissione
+9402a713	La radio emette un tono quando inizia a trasmettere.
+feb987fd	Durata della chiamata digitale
+fedfacab	Per quanto tempo, dopo una chiamata digitale ricevuta, il PTT risponde a quella chiamata.
+5ebadd97	In attesa la radio spegne il ricevitore a intervalli: più alto il rapporto, più batteria si risparmia (e più facile è perdere l'inizio di una chiamata).
+52197f7b	Ritorno dal doppio ascolto
+8d74aaae	Tempo dopo il quale, finita una chiamata sull'altra banda, la radio torna alla banda principale.
+1566b209	Banda corrente
+5f62cc51	Banda su cui la radio lavora.
+21d3170b	Banda A: modo di lavoro
+a226ce12	Banda B: modo di lavoro
+343ac6c1	Dopo questo tempo senza toccare i tasti la radio esce dal menu.
+04b07d4d	Tasto in alto, pressione breve
+d1f25d27	Tasto laterale 3, pressione breve
+3721a7de	Tasto laterale 3, pressione lunga
+ec87d22c	«RT-5D CPS» 2.0.5
+d6151086	Nel programma del costruttore questa voce è letta in modo diverso da come è scritta: qui si segue la scrittura. Se sulla radio l'effetto non è quello atteso, rimetti il valore di prima.
+6af4461c	Livello del VOX
+4c6be8c8	Livello di voce che fa partire la trasmissione con il VOX.
 361de9e5	Tono di trasmissione
 5eff59ac	Tono emesso quando si preme o si rilascia il PTT.
 04774500	Corta
@@ -5769,29 +5829,18 @@ bfe6572c	− (trasmissione più bassa)
 91fffb5f	In modo VFO: se la trasmissione è spostata rispetto alla ricezione (ponti ripetitori) e in quale verso.
 9bfbd69c	Scrambler (codice)
 66f3fb31	Inversione della voce: si capisce solo con radio che usano lo stesso codice.
-5ebadd97	In attesa la radio spegne il ricevitore a intervalli: più alto il rapporto, più batteria si risparmia (e più facile è perdere l'inizio di una chiamata).
-e1df03d9	La radio ascolta le due bande (A e B) alternandole.
-1566b209	Banda corrente
-5f62cc51	Banda su cui la radio lavora.
 fa38c884	Banda selezionata
 b2b0b49a	Banda che sta ricevendo
 5396342b	Priorità di trasmissione
 8dba904e	Con il doppio ascolto: premendo il PTT si trasmette sulla banda selezionata oppure su quella che sta ricevendo.
-4e8162d2	Modo di lavoro
 49ce251a	Canale mostrato come
 0cc37dd4	Canale della banda A
 0fc3828d	Canale della banda B
-0847ddf2	Canali meteo NOAA
 859fc2d5	Tasto radio
 1d9c3d17	Che cosa si ascolta con la funzione radio: le stazioni FM oppure i canali meteo NOAA (attivi solo in Nord America).
 58531701	Ascolto dei canali durante la radio
 66954822	Mentre si ascolta la radio FM la radio continua a sorvegliare il canale e passa alla chiamata quando arriva.
-f5416c3d	La radio annuncia a voce canali e funzioni.
-0e83a136	Segnale acustico a ogni pressione di un tasto.
 d69474fa	Dopo questo tempo senza toccare i tasti il display si spegne.
-dc697424	Blocco automatico dei tasti
-88774891	Dopo questo tempo senza toccare i tasti la tastiera si blocca da sola.
-0b7d9ed8	Tasti programmabili
 c227c504	Nessuna funzione
 73ea4b1b	Allarme remoto
 41bc3c33	Display acceso/spento
@@ -5802,23 +5851,17 @@ c227c504	Nessuna funzione
 d20e644c	Comprime la voce in trasmissione e la espande in ricezione per ridurre il rumore: serve solo fra radio che lo usano entrambe.
 2bd42c33	Impedisce di cambiare frequenza dai tasti.
 4d66be8f	Remoto (trasmesso)
-c4b5da24	Tipo di allarme
 b8f22727	L'allarme suona solo sulla radio oppure viene anche trasmesso.
-40821b7a	Abilita la funzione radio FM.
 e74899c9	Display acceso
 2a99768b	Durata del display acceso
 b5cd3b7c	LED acceso
 3ea3bfc2	Durata del LED acceso
-7735bf5f	Tasti bloccati
-fcc3a1bc	Stato del blocco della tastiera.
 0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
 92f22ee4	«Radtel RT-850 programming software» (UV5118)
 4ebd3ae5	Gamme bloccate
 8a5e2a25	Doppio ascolto sì/no
 1e94bc3f	Retroilluminazione sì/no
 30111395	Diretta / inversione
-db2d8bf5	Lettura della frequenza
-68e6a9fd	Ricerca del tono (CTCSS/DCS)
 8a31aa90	Invio del tono singolo
 fbf57709	Ricezione AM/FM
 0f716668	Salva canale
@@ -5834,16 +5877,9 @@ ea75db5c	Frequenze invertite
 3875e9d6	Livello dell'audio in ricezione (0-63).
 8ec31dfb	Soglia del canale adiacente
 a1410ed8	Soglia con cui la radio scarta i disturbi dei canali vicini (0-10). Se non hai un motivo preciso, lascia il valore che c'è.
-e1209b49	Ritardo dopo la coda del ponte
-16d336bb	Tempo di attesa dopo la fine della trasmissione prima di riaprire l'ascolto: serve a non sentire la coda del ponte.
 6828f256	Soglia del VOX
-5f804bc1	Tono di inizio trasmissione
-9402a713	La radio emette un tono quando inizia a trasmettere.
 6a08bdd7	Che cosa la radio invia quando rilasci il PTT: niente, un tono (roger beep), il nominativo oppure la posizione GPS.
-33f7d5d8	Tono 1
-36f7da91	Tono 2
 169c5cdd	Invia il nominativo
-22bdad69	Invia la posizione GPS
 0ec95515	Frequenza del tono singolo (Hz)
 bd59a58b	Frequenza del tono inviato con la funzione «Invio del tono singolo» (per esempio 1750 Hz per aprire i ponti).
 2063fedd	Gamma del frequenzimetro
@@ -5861,13 +5897,8 @@ c8ab699a	840-920 MHz
 205f5dc5	920-1000 MHz
 f6929a5d	Banda del PTT principale
 6bc98c4f	Su quale banda trasmette il tasto PTT principale.
-21d3170b	Banda A: modo di lavoro
-09162f06	Banda A: sul display
-a226ce12	Banda B: modo di lavoro
-3159c3d9	Banda B: sul display
 510bda43	Direzione della scansione
 ec3ce716	In giù
-c01040ca	CO: la scansione riparte quando il segnale sparisce; TO: riparte dopo il tempo di sosta; SE: si ferma sul primo segnale.
 1db503f6	Al termine della scansione torna a
 e50f1121	Canale di partenza
 fc7b50fb	Canale corrente
@@ -5875,7 +5906,6 @@ e093b102	Sosta della scansione
 d7257747	Tempo di sosta su un canale occupato (modo TO).
 e50cff45	Avvio del salvaschermo
 de3bb41c	Dopo questo tempo parte il salvaschermo.
-343ac6c1	Dopo questo tempo senza toccare i tasti la radio esce dal menu.
 cb6cfa0e	Cifre per inserire la frequenza
 913374e8	Numero di cifre da battere sulla tastiera per inserire una frequenza.
 798cebd6	6 cifre
@@ -5913,6 +5943,8 @@ dab5681b	Regolazione dell'ora via radio
 16399562	La radio regola l'orologio con i dati ricevuti.
 c07d51a5	Con i comandi remoti attivi chi conosce i codici può agire sulla radio a distanza: attivali solo se ti servono.
 2700c301	«Radtel RT-871A CPS» (250707)
+35a06be1	rs871Pick: {0}
+cfd00999	rs871Pick: manca {0}
 0ba685f5	Funzione di scansione dei canali accesa o spenta.
 96245b83	Blocco della trasmissione con tensione bassa
 802acd28	Impedisce di trasmettere quando la tensione della batteria è troppo bassa (protegge la radio).
@@ -6028,6 +6060,9 @@ e36ad11e	15 seconds
 d405b9a4	2 minutes
 21d03b33	3 minutes
 ed9db3bd	«Baofeng T22 CPS» (PMR446)
+fd0b5918	«RT-69 GPS» (889G)
+15d735f7	ANI-ST
+138e76d2	DT-ANI
 7025b545	settings_twin: {0}
 f47e9acb	Ascolto del canale prioritario
 948f479e	La radio controlla ogni tanto i canali segnati come prioritari mentre è su un altro canale.

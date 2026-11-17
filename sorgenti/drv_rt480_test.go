@@ -226,7 +226,9 @@ func TestRT480Clone(t *testing.T) {
 	if err := f.Set(m, got, 7, &Chan{Rx: 446006250, Tx: 446006250, Name: "PMR 1", Power: 2, Scan: true, Narrow: true}); err != nil {
 		t.Fatal(err)
 	}
-	// le impostazioni nel file sono diverse: non devono arrivare alla radio
+	// tutto ciò che viene dopo i canali è diverso nel file: alla radio deve arrivare
+	// solo il primo blocco delle impostazioni (0x3A00-0x3A3F, 4.44), non VFO, tasti
+	// laterali e DTMF
 	copy(got[rt480ChEnd:], bytes.Repeat([]byte{0x33}, rt480Size()-rt480ChEnd))
 	if _, err := f.Upload(context.Background(), m, "COM7", got, noProg); err != nil {
 		t.Fatal(err)
@@ -235,14 +237,17 @@ func TestRT480Clone(t *testing.T) {
 	for a := 0; a < 0x2000; a += 0x40 {
 		want = append(want, 'W'<<16|a)
 	}
-	want = append(want, 'E'<<16)
+	want = append(want, 'W'<<16|0x3A00, 'E'<<16)
 	cmp("scrittura")
 	after := e.image()
 	if !bytes.Equal(after[:rt480ChEnd], got[:rt480ChEnd]) {
 		t.Fatal("canali scritti diversi dal file")
 	}
-	if !bytes.Equal(after[rt480ChEnd:], base[rt480ChEnd:]) {
-		t.Fatal("impostazioni, VFO o DTMF scritti")
+	if !bytes.Equal(after[rt480SetOff:rt480SetOff+0x40], got[rt480SetOff:rt480SetOff+0x40]) {
+		t.Fatal("blocco delle impostazioni non scritto")
+	}
+	if !bytes.Equal(after[rt480SetOff+0x40:], base[rt480SetOff+0x40:]) {
+		t.Fatal("VFO, tasti laterali o DTMF scritti")
 	}
 	if g := f.Get(m, after, 7); g == nil || g.Name != "PMR 1" || g.Rx != 446006250 {
 		t.Fatalf("canale 7 nella radio: %+v", g)

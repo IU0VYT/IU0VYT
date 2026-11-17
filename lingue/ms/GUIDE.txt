@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.43.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.44.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,14 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.44.0:
+- Tetapan untuk lapan lagi radio yang sebelum ini hanya ada saluran (Radtel RT-480,
+  RT-68, RT-5D, RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro, Bajeton DM-5000), daripada program
+  pengeluar.
+- RT-480 dan RT-68: semasa menulis, blok tetapan umum kini turut sampai ke radio. RT-4D,
+  RT-6D dan RT-1000 Pro: fail radio kini turut mengandungi tetapan (fail lama kekal
+  sah).
+- Galeri: 663 model daripada 54 jenama (609 dengan saluran, 554 dengan tetapan).
 Baharu dalam 4.43.0:
 - Ralat dibetulkan: bagi 33 radio (termasuk Baofeng UV-17 Pro, UV-17 Pro GPS, UV-21 Pro,
   UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22, HA1G, Kenwood TK-2140 / TK-3140) dan bagi

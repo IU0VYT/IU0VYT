@@ -4,6 +4,12 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
 
 本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.12）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
 
+4.44.0（2026/11/17）
+-------------------
+- Radtel RT-480 和 RT-68（32 项设置）以及 RT-5D（43 项）：表格取自厂家程序。RT-480 和 RT-68 的写入方式有变化：4.43 及以前只写入信道和名称；现在紧接着还写入第一个设置区（0x3A00 处的 64 字节），与厂家程序的做法相同，并以从电台读出的字节为基础。VFO、侧键和 DTMF 仍然不写入。
+- Radtel RT-69 GPS（21 项设置）：其存储结构与 Wouxun KG-UV8D Plus 相同，厂家程序读写的地址与 CHIRP 表格一致；只显示选项也经过核对的项目。Radtel RT-4D、RT-6D 和 RT-1000 Pro（三个厂家程序共有的 34 项设置）：读出的存储内容现在在末尾还带有设置区（多 1024 字节）；以前保存的文件仍然有效，但在重新读取电台之前不显示设置。写入时，设置区仍然是刚从电台读出的那一份，只把“设置”选项卡中的项目逐位写进去。
+- Bajeton DM-5000（53 项设置）：其程序中位置和选项都与 RT-871A 相同的项目。本版本未做：nicFW880 / nicFW950（驱动不写入设置区）、OpenGD77、fagci R3b0rn、LOSEHU、UV-K1、DR-1801UV、BF-T9。新增的设置均未在真实电台上试过。
+
 4.43.0（2026/11/16）
 -------------------
 - 修复了自设置功能出现以来就存在的错误：对于取自 CHIRP 的 33 款电台和 4.42 新增的 8 款“孪生”电台，通过数据线读取电台后，“设置”选项卡提示所打开的存储内容与设置表不符；只有打开 CHIRP 的 .img 文件才能看到设置。原因：只有长度与 CHIRP 文件相同的存储内容才会得到设置表，而 CHIRP 文件末尾带有型号名称或其他区域，我们的驱动读取的存储内容要短几个字节。现在只要存储内容与电台的存储映射一样长即可。涉及的电台：Baofeng UV-17、UV-17Pro、UV-17Pro GPS、UV-17R Plus、UV-21Pro GPS、UV-21Pro V2、UV-25、UV-32、UV-5G Plus、UV-5RH、K5 Plus、UV-6 / UV-7、UV-5G (GMRS)、MP31；MaxTalker P15、MT-5RM；Retevis RT22、RT22FRS、RT622、RB17、HA1G、HA1UV；Kenwood TK-2140K、TK-3140K / K2 / K3；Radioddity R2；WLN KD-C1；Zastone ZT-X6；Luiton LT-316；TID TD-M8；TYT TH-UV8000D / E；Yaesu FT5DR / FT5DE；UV-17R、UV-21R、UV-21L、UV-25 Plus、UV-28 Pro、UV-29 Pro、UV-7B、AR-152 Pro。新增的测试用我们的驱动读取模拟电台，并检查设置表是否存在。

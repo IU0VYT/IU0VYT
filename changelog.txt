@@ -3,6 +3,51 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.44.0 (17/11/2026)
+-------------------
+Impostazioni per altre otto radio che avevano solo i canali, ricavate dai
+programmi dei costruttori.
+- Radtel RT-480 e RT-68: 32 impostazioni dal programma «Radio Programing
+  Software» (squelch, VOX, TOT, doppio ascolto, display delle due bande,
+  scansione, code del ponte, tono di chiamata, lingua, retroilluminazione,
+  blocco dei tasti, schermata di accensione, spegnimento automatico, PTT ID,
+  allarme). CAMBIA LA SCRITTURA: fino alla 4.43 si scrivevano solo canali e
+  nomi; ora, subito dopo, si scrive anche il primo blocco delle impostazioni
+  (64 byte a 0x3A00), come fa il programma del costruttore, partendo dai byte
+  letti dalla radio. VFO, tasti laterali e DTMF restano non scritti.
+- Radtel RT-5D: 43 impostazioni dal programma «RT-5D CPS» 2.0.5 (squelch
+  analogico e digitale, VOX e ritardo, TOT, code, toni di inizio e fine,
+  doppio ascolto e ritorno, modo e display delle due bande, radio FM, canale
+  meteo, lingua, retroilluminazione, uscita dal menu, blocco dei tasti, cinque
+  tasti programmabili, PTT ID, allarme).
+- Radtel RT-69 GPS: 21 impostazioni. La memoria è quella della Wouxun KG-UV8D
+  Plus: il programma del costruttore («RT-69 GPS», 889G) legge e scrive gli
+  stessi indirizzi della tabella di CHIRP. Si mostrano solo le voci di cui
+  sono state verificate anche le scelte (15 interruttori e 6 elenchi);
+  l'ascolto dei toni DTMF ha l'ordine del programma, diverso da CHIRP. Tempi e
+  livelli (TOT, retroilluminazione, VOX…) non ancora.
+- Radtel RT-4D, RT-6D e RT-1000 Pro: 34 impostazioni comuni ai tre programmi
+  del costruttore (confrontati in automatico casella per casella: lettura e
+  scrittura coincidono; 28 voci hanno posizione e scelte della RT-871A).
+  CAMBIA IL FILE DELLA RADIO: la memoria letta ora ha in coda anche il blocco
+  delle impostazioni (1024 byte in più). I file salvati prima restano validi:
+  per quelli le impostazioni non si mostrano finché non si rilegge la radio.
+  In scrittura il blocco delle impostazioni è sempre quello appena letto dalla
+  radio (come prima); da questa versione vi si riportano, bit per bit, le sole
+  voci della scheda «Impostazioni». Password, testi e byte non conosciuti
+  restano quelli della radio.
+- Bajeton DM-5000: 53 impostazioni, cioè le voci che il suo programma
+  («BAJETON DM-5000 CPS») ha alla stessa posizione e con le stesse scelte
+  della RT-871A, comprese le quattro gamme bloccate. Non mostrate perché
+  diverse: passo, display delle bande, tasti programmabili.
+- Non fatte in questa versione, con il motivo: nicFW880 / nicFW950 (il blocco
+  delle impostazioni è documentato dall'autore, ma il driver non lo scrive e
+  non è noto se la radio lo riscrive da sola allo spegnimento); OpenGD77,
+  fagci R3b0rn, LOSEHU, UV-K1, DR-1801UV, BF-T9 (servono i sorgenti dei
+  firmware o un'analisi a parte).
+- Nessuna delle impostazioni nuove è stata provata su una radio vera.
+- Galleria: 663 modelli di 54 marche (609 con canali, 554 con impostazioni).
+
 4.43.0 (16/11/2026)
 -------------------
 Corretto un errore che nascondeva le impostazioni dopo la lettura via cavo;

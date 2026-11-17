@@ -22,7 +22,9 @@ package main
 // blocchi 0-127 (zone, letti 0x78-0xF7), poi contatti, gruppi, cifratura,
 // messaggi, radio FM. Qui la scrittura si ferma dopo le zone: impostazioni e VFO
 // vengono riscritti con i dati appena letti dalla radio (come fa il programma,
-// byte 14 e 15 delle impostazioni a FF), il resto non si tocca.
+// byte 14 e 15 delle impostazioni a FF), il resto non si tocca. Dalla 4.44 il
+// blocco delle impostazioni letto sta anche in coda all'immagine e, in scrittura,
+// le sole voci modificabili (settings_rt4d.go) vengono prese da lì.
 // Prima di scrivere il programma legge il blocco 0 e il blocco 8 (password nei
 // byte 0-11).
 //
@@ -69,6 +71,12 @@ const (
 	rt4dZoneMax  = 250
 	rt4dZoneOff  = rt4dChBlocks * dm5kBlock
 	rt4dSize     = (rt4dChBlocks + rt4dZnBlocks) * dm5kBlock
+	// 4.44: dopo canali e zone l'immagine porta anche il blocco delle impostazioni
+	// (blocco 8 della radio, 1024 byte) così com'è stato letto. Le immagini salvate
+	// con le versioni precedenti sono più corte (rt4dSize) e restano valide: per
+	// quelle le impostazioni non si mostrano e in scrittura si fa come prima.
+	rt4dCfgOff  = rt4dSize
+	rt4dSizeCfg = rt4dSize + dm5kBlock
 
 	rt4dBlkCfg  = 8
 	rt4dBlkCh   = 16
@@ -109,11 +117,11 @@ func init() {
 			m.Notes = "Radio DMR. Protocollo e memoria ricavati dai programmi del costruttore «RT-4D CPS» (versione 2.07) e «DMR RT-6D» (versione 2.06). " +
 				"Qui si modificano frequenze, nome, potenza, banda, scansione e toni; le altre voci del canale restano quelle impostate " +
 				"(un canale DMR nuovo prende i valori predefiniti del programma: primo contatto, slot 1, color code 1). " +
-				"Si scrivono solo canali e zone: contatti, gruppi, messaggi e impostazioni della radio non si toccano." + rt4dNoteEnd
+				"Si scrivono canali, zone e le impostazioni generali della scheda «Impostazioni»: contatti, gruppi, messaggi e il resto della radio non si toccano." + rt4dNoteEnd
 		} else {
 			m.Notes = "Protocollo e memoria ricavati dal programma del costruttore «Radtel RT-1000 Pro CPS» (versione del 6 agosto 2026). " +
 				"Qui si modificano frequenze, nome, potenza, banda e toni; le altre voci del canale, scansione compresa, restano quelle impostate. " +
-				"Si scrivono solo canali e zone: radio FM e impostazioni della radio non si toccano." + rt4dNoteEnd
+				"Si scrivono canali, zone e le impostazioni generali della scheda «Impostazioni»: radio FM e il resto della radio non si toccano." + rt4dNoteEnd
 		}
 		genRegister(m)
 	}
@@ -322,6 +330,8 @@ func (f rt4dFam) Download(ctx context.Context, m *genModel, port string, prog Pr
 		}
 	}
 	_ = l.p.Write(dm5kEnd)
+	// 4.44: in coda il blocco delle impostazioni letto all'inizio
+	img = append(img, b8...)
 	prog(rt4dSize, rt4dSize, "Lettura completata")
 	return img, "", nil
 }
@@ -358,6 +368,14 @@ func (f rt4dFam) Upload(ctx context.Context, m *genModel, port string, img []byt
 	}
 	cfg := append([]byte{}, b8...)
 	cfg[14], cfg[15] = 0xFF, 0xFF // come il programma
+	// 4.44: le impostazioni modificabili (settings_rt4d.go) si prendono
+	// dall'immagine, bit per bit; tutto il resto del blocco (password, testi,
+	// byte che non conosciamo) resta quello appena letto dalla radio
+	if len(img) >= rt4dSizeCfg {
+		for _, f := range rt4dCfgFields() {
+			cfg[f[0]] = cfg[f[0]]&^byte(f[1]) | img[rt4dCfgOff+f[0]]&byte(f[1])
+		}
+	}
 	if err := l.writeBlock(0x90, 0, cfg); err != nil {
 		return "", genFail("Scrittura", err)
 	}

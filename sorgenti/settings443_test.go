@@ -365,6 +365,9 @@ func checkProv443(t *testing.T, kind string, want map[string]twin443) (*setTable
 	if o, ok := m.Opt.(*rt830Opt); ok {
 		size = o.size()
 	}
+	if n, ok := provSize443[kind]; ok {
+		size = n
+	}
 	img := make([]byte, size)
 	if len(img) == 0 {
 		t.Fatalf("%s: dimensione dell'immagine sconosciuta", kind)
@@ -425,6 +428,13 @@ func checkProv443(t *testing.T, kind string, want map[string]twin443) (*setTable
 	return tb, img
 }
 
+// provSize443: lunghezza dell'immagine delle radio senza mappa dichiarata;
+// provRadio443: memoria di partenza della radio simulata (se non basta azzerata)
+var (
+	provSize443  = map[string]int{}
+	provRadio443 = map[string][]byte{}
+)
+
 func bitsLow443(mask byte) int {
 	n := 0
 	for mask>>uint(n)&1 == 0 {
@@ -444,6 +454,9 @@ func cable443(t *testing.T, kind string, img []byte, vals map[string]string) {
 		}
 	}
 	radio := make([]byte, len(img))
+	if base, ok := provRadio443[kind]; ok { // radio simulata con un contenuto di partenza preciso
+		radio = append([]byte{}, base...)
+	}
 	if _, ok := m.Opt.(*rt830Opt); ok { // radio senza password: blocco della password a FF
 		for i := 0; i < 16; i++ {
 			radio[i], img[i] = 0xFF, 0xFF

@@ -106,7 +106,7 @@ func init() {
 			"Qui si modificano frequenze, nome, potenza, scansione e toni; per i canali DMR gruppo, contatto, slot e color code restano " +
 			"quelli impostati (un canale DMR nuovo prende i valori predefiniti del programma: primo gruppo e primo contatto, slot 1, color code 0). " +
 			"Un canale nuovo viene aggiunto alla zona 1 se non è in nessuna zona; un canale cancellato viene tolto dalle zone. " +
-			"Contatti, gruppi, messaggi e impostazioni della radio non si toccano. Se sulla radio è impostata una password, toglila prima con il programma del costruttore."})
+			"Contatti, gruppi e messaggi non si toccano; le impostazioni generali si cambiano dalla scheda «Impostazioni». Se sulla radio è impostata una password, toglila prima con il programma del costruttore."})
 }
 
 func (dm5kFam) rec(img []byte, i int) []byte {

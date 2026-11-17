@@ -2452,7 +2452,6 @@ ce2f21ad	halaman pada {0} tidak disahkan: cuba lagi atau pulihkan salinan sandar
 1b7e6c39	Radio FM
 7e876315	kawasan tidak dikenali {0}
 086c0fcd	Bajeton DM-5000
-e9d49aad	Radio DMR. Protokol dan memori diperoleh daripada program pengeluar «BAJETON DM-5000 CPS» (versi 250726). Di sini frekuensi, nama, kuasa, imbasan dan ton diubah; bagi saluran DMR, kumpulan, kenalan, slot dan kod warna kekal seperti yang ditetapkan (saluran DMR baharu mengambil nilai lalai program: kumpulan pertama dan kenalan pertama, slot 1, kod warna 0). Saluran baharu ditambah ke zon 1 jika ia tiada dalam mana-mana zon; saluran yang dipadam dibuang daripada zon. Kenalan, kumpulan, mesej dan tetapan radio tidak disentuh. Jika kata laluan ditetapkan pada radio, buangnya dahulu dengan program pengeluar.
 5746c8c0	Zone-{0}
 dac9a0ff	jawapan tidak dijangka semasa membaca blok {0}
 ad0ffaa9	data blok {0} tidak sah (hasil tambah semak)
@@ -5406,8 +5405,6 @@ fbb7a5e0	Radio DMR: 1024 saluran dengan nama 16 aksara, 250 zon, 18-660 dan 840-
 c1cbfbcc	1024 saluran dengan nama 16 aksara, 250 zon, 18-660 dan 840-1000 MHz, 115200 baud. Saluran yang sama seperti RT-4D, analog sahaja; pengecualian daripada imbasan tidak diurus (kekal seperti pada radio).{0}
 88b83d68	Saluran baharu ditambah ke zon 1 jika ia tiada dalam mana-mana zon; saluran yang dipadam dikeluarkan daripada zon. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar. «Kenal pasti» tidak dapat membezakan radio ini daripada radio Radtel dan Bajeton lain dengan sambungan yang sama: pilih sendiri tab yang betul.
 b6bcffc3	Radtel {0}
-76b4acd2	Radio DMR. Protokol dan memori diperoleh daripada program pengeluar «RT-4D CPS» (versi 2.07) dan «DMR RT-6D» (versi 2.06). Di sini frekuensi, nama, kuasa, lebar jalur, imbasan dan nada diubah; butiran lain saluran kekal seperti yang ditetapkan (saluran DMR baharu mengambil nilai lalai program: kenalan pertama, slot 1, color code 1). Hanya saluran dan zon ditulis: kenalan, kumpulan, mesej dan tetapan radio tidak disentuh.{0}
-8d2388c9	Protokol dan memori diperoleh daripada program pengeluar «Radtel RT-1000 Pro CPS» (versi 6 Ogos 2026). Di sini frekuensi, nama, kuasa, lebar jalur dan nada diubah; butiran lain saluran, termasuk imbasan, kekal seperti yang ditetapkan. Hanya saluran dan zon ditulis: radio FM dan tetapan radio tidak disentuh.{0}
 d90df803	Zone{0}
 2d0e3a60	Penulisan: saluran…
 a7f04ce8	Penulisan: zon…
@@ -5788,7 +5785,6 @@ a3fb2872	Saluran tanpa nama dan tetapan umum. Tiada dalam CHIRP.{0}
 6aa904a9	22 saluran FRS (Amerika Syarikat). Program pengeluar adalah sama dengan program Baofeng T22 versi FRS. Ini bukan TD-M8 tanpa «S», yang mempunyai kad lain. {0}
 c506923a	16 saluran FRS (Amerika Syarikat). Arahan program pengeluar menyatakan ia juga untuk Pofung F8, F8i, F8U, F8X dan BF-V8. {0}
 368f65ab	22 saluran tanpa nama, 400-480 MHz, 9600 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-13» 1.7 dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, ton, kuasa, lebar jalur dan imbasan; lompatan frekuensi, scrambler dan kunci saluran sibuk kekal seperti yang ditetapkan. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar.
-a454c0ed	Protokol dan memori diperoleh daripada program pengeluar «Radio Programing Software» (versi 1.5.2 dan 1.5.3). Hidupkan radio dengan kabel disambungkan. Saluran 0 hingga 255, seperti dalam program pengeluar; frekuensi dalam langkah 1.25 kHz. Di sini anda mengubah frekuensi, nama, kuasa, lebar jalur, imbasan dan ton; kod isyarat, PTT ID, pengacak dan kunci saluran sibuk kekal seperti yang ditetapkan. Hanya saluran dan nama yang ditulis: tetapan, VFO dan DTMF radio tidak disentuh.
 09a39cef	999 saluran dengan nama 12 aksara, 19200 baud. Protokol dan memori diperoleh daripada program pengeluar «RT-69 GPS» dan diuji dengan radio simulasi, bukan pada radio sebenar. Di sini anda mengubah frekuensi, nama, ton, kuasa, lebar jalur dan imbasan; bahagian lain saluran dan tetapan radio kekal seperti sedia ada. Sebelum menulis, seperti program pengeluar, setiap saluran disemak supaya berada dalam jalur radio. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar.
 56c39478	Radio tanpa nama saluran (128 saluran). Protokol dan memori diperoleh daripada program pengeluar. Di sini anda mengubah frekuensi, kuasa, lebar jalur, imbasan dan ton; had pemancaran, penyulitan, jenis DCS dan kod senyap saluran kekal seperti yang ditetapkan. Tetapan dan VFO radio ditulis semula seperti sedia ada. Jika kata laluan ditetapkan pada radio, buang dahulu dengan program pengeluar.
 affbd219	Radio tanpa paparan: saluran tidak mempunyai nama. Diperoleh daripada program pengeluar «T20 FRS» (v1.0.1, program yang sama diberikan oleh Baofeng untuk T22 versi FRS dan oleh TIDRADIO untuk TD-M8S); jika kata laluan baca dan tulis ditetapkan pada radio, buangnya dahulu dengan program itu.
@@ -6221,3 +6217,42 @@ e36ad11e	15 seconds
 d405b9a4	2 minutes
 21d03b33	3 minutes
 7025b545	settings_twin: {0}
+591b5c2d	Radio DMR. Protokol dan memori diperoleh daripada program pengeluar «BAJETON DM-5000 CPS» (versi 250726). Di sini frekuensi, nama, kuasa, imbasan dan ton diubah; bagi saluran DMR, kumpulan, kenalan, slot dan kod warna kekal seperti yang ditetapkan (saluran DMR baharu mengambil nilai lalai program: kumpulan pertama dan kenalan pertama, slot 1, kod warna 0). Saluran baharu ditambah ke zon 1 jika ia tiada dalam mana-mana zon; saluran yang dipadam dibuang daripada zon. Kenalan, kumpulan dan mesej tidak disentuh; tetapan umum diubah daripada tab «Tetapan». Jika kata laluan ditetapkan pada radio, buangnya dahulu dengan program pengeluar.
+165a67a8	Protokol dan memori diperoleh daripada program pengeluar «Radio Programing Software» (versi 1.5.2 dan 1.5.3). Hidupkan radio dengan kabel disambungkan. Saluran 0 hingga 255, seperti dalam program pengeluar; frekuensi dalam langkah 1.25 kHz. Di sini anda mengubah frekuensi, nama, kuasa, lebar jalur, imbasan dan ton; kod isyarat, PTT ID, pengacak dan kunci saluran sibuk kekal seperti yang ditetapkan. Saluran, nama dan tetapan umum ditulis; VFO, kekunci sisi dan DTMF radio tidak disentuh.
+2720fe3f	Radio DMR. Protokol dan memori diperoleh daripada program pengeluar «RT-4D CPS» (versi 2.07) dan «DMR RT-6D» (versi 2.06). Di sini frekuensi, nama, kuasa, lebar jalur, imbasan dan nada diubah; butiran lain saluran kekal seperti yang ditetapkan (saluran DMR baharu mengambil nilai lalai program: kenalan pertama, slot 1, color code 1). Saluran, zon dan tetapan umum pada tab «Tetapan» ditulis: kenalan, kumpulan, mesej dan bahagian lain radio tidak disentuh.{0}
+5c4795b8	Protokol dan memori diperoleh daripada program pengeluar «Radtel RT-1000 Pro CPS» (versi 6 Ogos 2026). Di sini frekuensi, nama, kuasa, lebar jalur dan nada diubah; butiran lain saluran, termasuk imbasan, kekal seperti yang ditetapkan. Saluran, zon dan tetapan umum pada tab «Tetapan» ditulis: radio FM dan bahagian lain radio tidak disentuh.{0}
+bba8dc05	Radio tidak memancar jika sudah ada isyarat pada saluran.
+ba2a90b3	Bip pemancaran («Tx Beep»)
+78a976ee	Nada panggilan pengulang
+b07eb047	Frekuensi nada yang membuka pengulang (di Eropah biasanya 1750 Hz).
+57835d0f	4 jam
+536d3013	8 jam
+8160f8a6	16 jam
+3740377f	24 jam
+de7c0552	Nada papan kekunci
+9fe487ad	Nada pengenal
+b7688203	Papan kekunci dan pengenal
+5ff3f880	Lengah kod pengenal
+0d7185ea	Di tempat (SITE)
+347785df	Nada dipancarkan (TONE)
+5d7a78f9	Kod dipancarkan (CODE)
+ba8fc313	«Radio Programing Software» v1.5.2 / v1.5.3
+48e2b94e	Apa yang dihantar radio apabila PTT dilepaskan: tiada, nada (roger beep), pengenal MDC1200 atau kedudukan GPS.
+f7ee54a0	Logo semasa dihidupkan
+72df9544	«RT-4D CPS» V2.07, «DMR RT-6D» V2.06, «RT-1000 Pro CPS»
+7ca28132	«BAJETON DM-5000 CPS» (250726)
+283ceee9	Tahap squelch (saluran digital)
+d1184be9	Frekuensi nada ekor
+feb987fd	Tempoh tahan panggilan digital
+fedfacab	Berapa lama, selepas panggilan digital diterima, PTT menjawab panggilan itu.
+52197f7b	Kembali daripada dengar berkembar
+8d74aaae	Masa selepas panggilan pada jalur lain tamat sebelum radio kembali ke jalur utama.
+04b07d4d	Kekunci atas, tekanan pendek
+d1f25d27	Kekunci sisi 3, tekanan pendek
+3721a7de	Kekunci sisi 3, tekanan lama
+ec87d22c	«RT-5D CPS» 2.0.5
+35a06be1	rs871Pick: {0}
+cfd00999	rs871Pick: manca {0}
+fd0b5918	«RT-69 GPS» (889G)
+15d735f7	ANI-ST
+138e76d2	DT-ANI

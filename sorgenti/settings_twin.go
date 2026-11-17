@@ -123,6 +123,25 @@ var twinSettings = map[string]twinSet{
 	"bf-t22": {class: "W31E", prog: "«Baofeng T22 CPS» (PMR446)",
 		only:  []string{"squelch", "tot", "vox", "voxgain", "voxdelay", "save", "beep"},
 		limit: map[string]int{"voxgain": 6, "voxdelay": 6}},
+	// 4.44, Radtel RT-69 GPS: la memoria è quella della Wouxun KG-UV8D Plus. Nel
+	// programma del costruttore «RT-69 GPS» (889G.exe) le due griglie delle
+	// impostazioni leggono e scrivono gli stessi indirizzi della classe
+	// KGUV8DPlusRadio di CHIRP (griglia di sinistra: 0x818, 0x815, 0x856, 0x816,
+	// 0x817, 0x821, 0x819-0x81D, 0x820, 0x838, 0x830, 0x831, 0x83B, 0x860, 0x81F,
+	// 0x81E, 0x839, 0x83A, 0x83C, 0x82E; di destra: 0x855, 0x83D-0x83F, 0x846,
+	// 0x847, 0x840, 0x864-0x867, 0x869, 0x800) e i titoli delle righe confermano il
+	// significato. Si mostrano solo le voci di cui ho verificato anche le scelte: i
+	// quindici interruttori (0 spento, 1 acceso) e gli elenchi che il programma
+	// mostra con gli stessi valori di CHIRP. Differenze trovate: l'ascolto dei DTMF
+	// ha un altro ordine (programma: spento, tastiera, identificativo, entrambi) e
+	// l'impostazione del ponte a bande incrociate non è confrontabile: la prima ha le
+	// scelte del programma, la seconda non si mostra. Tempi e livelli (TOT,
+	// retroilluminazione, VOX, squilli, tempi DTMF e del ponte) non si mostrano
+	// perché il numero di scelte del programma non è stato verificato.
+	"rtl-rt69": {class: "KGUV8DPlusRadio", prog: "«RT-69 GPS» (889G)", anyClass: true, size: rt69Size,
+		only: []string{"channel_menu", "voice", "power_save", "autolock", "keylock", "beep", "stopwatch", "ani_sw", "bcl_a", "bcl_b",
+			"prich_sw", "rpt_spk", "rpt_ptt", "rpt_tone", "scan_det", "roger_beep", "ptt_id", "scan_rev", "alert", "language", "dtmf_st"},
+		repl: map[string]twinRepl{"dtmf_st": {0x03, []string{"Off", "DT-ST", "ANI-ST", "DT-ANI"}}}},
 }
 
 // twinMatch: p è una chiave intera oppure, se finisce con «.» o «/», un prefisso

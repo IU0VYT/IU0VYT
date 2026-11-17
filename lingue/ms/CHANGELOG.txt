@@ -6,6 +6,27 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.44.0 (17/11/2026)
+-------------------
+- Radtel RT-480 dan RT-68 (32 tetapan) serta RT-5D (43): jadual diambil daripada program
+  pengeluar. Bagi RT-480 dan RT-68 penulisan berubah: sehingga 4.43 hanya saluran dan
+  nama ditulis; kini blok tetapan pertama (64 bait pada 0x3A00) turut ditulis sejurus
+  selepas itu, seperti yang dilakukan oleh program pengeluar, berdasarkan bait yang
+  dibaca daripada radio. VFO, kekunci sisi dan DTMF masih tidak ditulis.
+- Radtel RT-69 GPS (21 tetapan): memorinya sama dengan Wouxun KG-UV8D Plus, dan program
+  pengeluar membaca dan menulis alamat yang sama seperti jadual CHIRP; hanya item yang
+  pilihannya turut disahkan dipaparkan. Radtel RT-4D, RT-6D dan RT-1000 Pro (34 tetapan
+  yang sama dalam ketiga-tiga program pengeluar): memori yang dibaca kini turut membawa
+  blok tetapan di hujungnya (1024 bait lagi); fail yang disimpan sebelum ini kekal sah,
+  tetapi tidak memaparkan tetapan sehingga radio dibaca semula. Semasa menulis, blok
+  tetapan masih yang baru dibaca daripada radio, dan hanya item pada tab Tetapan disalin
+  ke dalamnya, bit demi bit.
+- Bajeton DM-5000 (53 tetapan): item yang dalam programnya berada pada kedudukan yang
+  sama dan dengan pilihan yang sama seperti RT-871A. Tidak dibuat dalam versi ini:
+  nicFW880 / nicFW950 (pemacu tidak menulis blok tetapan), OpenGD77, fagci R3b0rn,
+  LOSEHU, UV-K1, DR-1801UV, BF-T9. Tiada satu pun tetapan baharu telah dicuba pada radio
+  sebenar.
+
 4.43.0 (16/11/2026)
 -------------------
 - Ralat dibetulkan, wujud sejak tetapan diperkenalkan: bagi 33 radio yang diambil

@@ -2433,7 +2433,6 @@ ce2f21ad	la page à {0} n'a pas été confirmée : réessayez ou restaurez la co
 1b7e6c39	radio FM
 7e876315	zone inconnue {0}
 086c0fcd	Bajeton DM-5000
-e9d49aad	Radio DMR. Protocole et mémoire tirés du programme du constructeur « BAJETON DM-5000 CPS » (version 250726). Ici on modifie fréquences, nom, puissance, balayage et tonalités ; pour les canaux DMR, groupe, contact, slot et color code restent ceux définis (un nouveau canal DMR prend les valeurs par défaut du programme : premier groupe et premier contact, slot 1, color code 0). Un nouveau canal est ajouté à la zone 1 s'il n'est dans aucune zone ; un canal supprimé est retiré des zones. Contacts, groupes, messages et réglages de la radio ne sont pas touchés. Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur.
 5746c8c0	Zone-{0}
 dac9a0ff	réponse inattendue à la lecture du bloc {0}
 ad0ffaa9	données du bloc {0} non valides (somme de contrôle)
@@ -5406,8 +5405,6 @@ fbb7a5e0	Radio DMR : 1024 canaux avec des noms de 16 caractères, 250 zones, 18-
 c1cbfbcc	1024 canaux avec des noms de 16 caractères, 250 zones, 18-660 et 840-1000 MHz, 115200 bauds. Même canal que la RT-4D, analogique seulement ; l'exclusion du balayage n'est pas gérée (elle reste telle qu'elle est sur la radio).{0}
 88b83d68	Un canal nouveau est ajouté à la zone 1 s'il n'est dans aucune zone ; un canal supprimé est retiré des zones. Si un mot de passe est défini sur la radio, enlevez-le d'abord avec le programme du constructeur. « Identifier » ne distingue pas cette radio des autres Radtel et Bajeton utilisant la même liaison : choisissez vous-même le bon onglet.
 b6bcffc3	Radtel {0}
-76b4acd2	Radio DMR. Protocole et mémoire tirés des programmes du constructeur « RT-4D CPS » (version 2.07) et « DMR RT-6D » (version 2.06). Ici on modifie les fréquences, le nom, la puissance, la largeur de bande, le balayage et les tonalités ; les autres éléments du canal restent tels qu'ils sont réglés (un canal DMR nouveau prend les valeurs par défaut du programme : premier contact, slot 1, color code 1). Seuls les canaux et les zones sont écrits : les contacts, les groupes, les messages et les réglages de la radio ne sont pas modifiés.{0}
-8d2388c9	Protocole et mémoire tirés du programme du constructeur « Radtel RT-1000 Pro CPS » (version du 6 août 2026). Ici on modifie les fréquences, le nom, la puissance, la largeur de bande et les tonalités ; les autres éléments du canal, balayage compris, restent tels qu'ils sont réglés. Seuls les canaux et les zones sont écrits : la radio FM et les réglages de la radio ne sont pas modifiés.{0}
 d90df803	Zone{0}
 2d0e3a60	Écriture : canaux…
 a7f04ce8	Écriture : zones…
@@ -5788,7 +5785,6 @@ a3fb2872	Canaux sans nom et réglages généraux. Absent de CHIRP.{0}
 6aa904a9	22 canaux FRS (États-Unis). Le programme du constructeur est le même que celui de la Baofeng T22 en version FRS. Ce n'est pas la TD-M8 sans « S », qui a une autre fiche. {0}
 c506923a	16 canaux FRS (États-Unis). Les instructions du programme du constructeur l'indiquent aussi pour les Pofung F8, F8i, F8U, F8X et BF-V8. {0}
 368f65ab	22 canaux sans nom, 400-480 MHz, 9600 bauds. Protocole et mémoire tirés du programme du constructeur « RT-13 » 1.7 et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie les fréquences, les tonalités, la puissance, la largeur de bande et le balayage ; le saut de fréquence, le brouilleur et le blocage sur canal occupé restent tels qu'ils sont réglés. Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur.
-a454c0ed	Protocole et mémoire tirés du programme du constructeur « Radio Programing Software » (versions 1.5.2 et 1.5.3). Allumez la radio avec le câble branché. Canaux de 0 à 255, comme dans le programme du constructeur ; fréquences par pas de 1,25 kHz. Ici on modifie les fréquences, le nom, la puissance, la largeur de bande, le balayage et les tonalités ; le code de signalisation, le PTT ID, le brouilleur et le blocage sur canal occupé restent tels qu'ils sont réglés. Seuls les canaux et les noms sont écrits : les réglages, le VFO et le DTMF de la radio ne sont pas touchés.
 09a39cef	999 canaux avec des noms de 12 caractères, 19200 bauds. Protocole et mémoire tirés du programme du constructeur « RT-69 GPS » et essayés avec une radio simulée, pas sur une vraie radio. Ici on modifie les fréquences, le nom, les tonalités, la puissance, la largeur de bande et le balayage ; le reste du canal et les réglages de la radio restent tels quels. Avant d'écrire, on vérifie, comme le fait le programme du constructeur, que chaque canal est dans les bandes de la radio. Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur.
 56c39478	Radio sans noms de canaux (128 canaux). Protocole et mémoire tirés du programme du constructeur. Ici on modifie les fréquences, la puissance, la largeur de bande, le balayage et les tonalités ; la limite d'émission, le chiffrement, le type de DCS et le code de silencieux du canal restent tels qu'ils sont réglés. Les réglages et le VFO de la radio reviennent tels quels. Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur.
 affbd219	Radio sans écran : les canaux n'ont pas de nom. Tiré du programme du constructeur « T20 FRS » (v1.0.1, le même que Baofeng fournit pour la T22 en version FRS et TIDRADIO pour la TD-M8S) ; si le mot de passe de lecture et d'écriture est défini sur la radio, retirez-le d'abord avec ce programme.
@@ -6221,3 +6217,42 @@ e36ad11e	15 seconds
 d405b9a4	2 minutes
 21d03b33	3 minutes
 7025b545	settings_twin: {0}
+591b5c2d	Radio DMR. Protocole et mémoire tirés du programme du constructeur « BAJETON DM-5000 CPS » (version 250726). Ici on modifie fréquences, nom, puissance, balayage et tonalités ; pour les canaux DMR, groupe, contact, slot et color code restent ceux définis (un nouveau canal DMR prend les valeurs par défaut du programme : premier groupe et premier contact, slot 1, color code 0). Un nouveau canal est ajouté à la zone 1 s'il n'est dans aucune zone ; un canal supprimé est retiré des zones. Contacts, groupes et messages ne sont pas touchés ; les réglages généraux se modifient depuis l'onglet « Réglages ». Si un mot de passe est défini sur la radio, retirez-le d'abord avec le programme du constructeur.
+165a67a8	Protocole et mémoire tirés du programme du constructeur « Radio Programing Software » (versions 1.5.2 et 1.5.3). Allumez la radio avec le câble branché. Canaux de 0 à 255, comme dans le programme du constructeur ; fréquences par pas de 1,25 kHz. Ici on modifie les fréquences, le nom, la puissance, la largeur de bande, le balayage et les tonalités ; le code de signalisation, le PTT ID, le brouilleur et le blocage sur canal occupé restent tels qu'ils sont réglés. On écrit les canaux, les noms et les réglages généraux ; le VFO, les touches latérales et le DTMF de la radio ne sont pas touchés.
+2720fe3f	Radio DMR. Protocole et mémoire tirés des programmes du constructeur « RT-4D CPS » (version 2.07) et « DMR RT-6D » (version 2.06). Ici on modifie les fréquences, le nom, la puissance, la largeur de bande, le balayage et les tonalités ; les autres éléments du canal restent tels qu'ils sont réglés (un canal DMR nouveau prend les valeurs par défaut du programme : premier contact, slot 1, color code 1). On écrit les canaux, les zones et les réglages généraux de l'onglet « Réglages » : les contacts, les groupes, les messages et le reste de la radio ne sont pas modifiés.{0}
+5c4795b8	Protocole et mémoire tirés du programme du constructeur « Radtel RT-1000 Pro CPS » (version du 6 août 2026). Ici on modifie les fréquences, le nom, la puissance, la largeur de bande et les tonalités ; les autres éléments du canal, balayage compris, restent tels qu'ils sont réglés. On écrit les canaux, les zones et les réglages généraux de l'onglet « Réglages » : la radio FM et le reste de la radio ne sont pas modifiés.{0}
+bba8dc05	La radio n'émet pas s'il y a déjà un signal sur le canal.
+ba2a90b3	Bip d'émission (« Tx Beep »)
+78a976ee	Tonalité d'appel des relais
+b07eb047	Fréquence de la tonalité qui ouvre les relais (en Europe, généralement 1750 Hz).
+57835d0f	4 heures
+536d3013	8 heures
+8160f8a6	16 heures
+3740377f	24 heures
+de7c0552	Tonalités du clavier
+9fe487ad	Tonalités de l'identifiant
+b7688203	Clavier et identifiant
+5ff3f880	Délai du code d'identification
+0d7185ea	Sur place (SITE)
+347785df	Tonalité émise (TONE)
+5d7a78f9	Code émis (CODE)
+ba8fc313	«Radio Programing Software» v1.5.2 / v1.5.3
+48e2b94e	Ce que la radio envoie quand vous relâchez le PTT : rien, une tonalité (roger beep), un identifiant MDC1200 ou la position GPS.
+f7ee54a0	Logo à l'allumage
+72df9544	«RT-4D CPS» V2.07, «DMR RT-6D» V2.06, «RT-1000 Pro CPS»
+7ca28132	«BAJETON DM-5000 CPS» (250726)
+283ceee9	Niveau de squelch (canaux numériques)
+d1184be9	Fréquence de la tonalité de queue
+feb987fd	Durée de maintien de l'appel numérique
+fedfacab	Pendant combien de temps, après un appel numérique reçu, le PTT répond à cet appel.
+52197f7b	Retour de la double veille
+8d74aaae	Temps après lequel, une fois terminé un appel sur l'autre bande, la radio revient à la bande principale.
+04b07d4d	Touche du haut, appui court
+d1f25d27	Touche latérale 3, appui court
+3721a7de	Touche latérale 3, appui long
+ec87d22c	«RT-5D CPS» 2.0.5
+35a06be1	rs871Pick: {0}
+cfd00999	rs871Pick: manca {0}
+fd0b5918	«RT-69 GPS» (889G)
+15d735f7	ANI-ST
+138e76d2	DT-ANI

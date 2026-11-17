@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.43.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.44.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,14 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.44.0:
+- Definições para mais oito rádios que só tinham os canais (Radtel RT-480, RT-68, RT-5D,
+  RT-69 GPS, RT-4D, RT-6D, RT-1000 Pro, Bajeton DM-5000), a partir dos programas dos
+  fabricantes.
+- RT-480 e RT-68: na escrita, o bloco das definições gerais chega agora também ao rádio.
+  RT-4D, RT-6D e RT-1000 Pro: o ficheiro do rádio contém agora também as definições (os
+  ficheiros antigos continuam válidos).
+- Galeria: 663 modelos de 54 marcas (609 com canais, 554 com definições).
 Novidades da 4.43.0:
 - Erro corrigido: em 33 rádios (entre eles Baofeng UV-17 Pro, UV-17 Pro GPS, UV-21 Pro,
   UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22, HA1G, Kenwood TK-2140 / TK-3140) e nos 8

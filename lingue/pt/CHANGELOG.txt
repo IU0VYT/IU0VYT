@@ -7,6 +7,27 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.44.0 (17/11/2026)
+-------------------
+- Radtel RT-480 e RT-68 (32 definições) e RT-5D (43): tabelas tiradas dos programas do
+  fabricante. No RT-480 e no RT-68 a escrita muda: até à 4.43 só se escreviam canais e
+  nomes; agora, logo a seguir, escreve-se também o primeiro bloco das definições (64
+  bytes em 0x3A00), como faz o programa do fabricante, a partir dos bytes lidos do
+  rádio. VFO, teclas laterais e DTMF continuam a não ser escritos.
+- Radtel RT-69 GPS (21 definições): a sua memória é a do Wouxun KG-UV8D Plus, e o
+  programa do fabricante lê e escreve os mesmos endereços da tabela do CHIRP; só se
+  mostram os elementos cujas opções também foram verificadas. Radtel RT-4D, RT-6D e
+  RT-1000 Pro (34 definições comuns aos três programas do fabricante): a memória lida
+  traz agora também, no fim, o bloco das definições (mais 1024 bytes); os ficheiros
+  guardados antes continuam válidos, mas não mostram definições até o rádio ser lido de
+  novo. Na escrita, o bloco das definições continua a ser o acabado de ler do rádio, e
+  só os elementos do separador Definições são copiados para ele, bit a bit.
+- Bajeton DM-5000 (53 definições): os elementos que o seu programa tem na mesma posição
+  e com as mesmas opções do RT-871A. Não feitos nesta versão: nicFW880 / nicFW950 (o
+  controlador não escreve o bloco das definições), OpenGD77, fagci R3b0rn, LOSEHU,
+  UV-K1, DR-1801UV, BF-T9. Nenhuma das definições novas foi experimentada num rádio
+  real.
+
 4.43.0 (16/11/2026)
 -------------------
 - Erro corrigido, presente desde que existem as definições: em 33 rádios vindos do CHIRP

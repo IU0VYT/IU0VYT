@@ -209,8 +209,9 @@ func TestRT4DClone(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !bytes.Equal(got, base) {
-			t.Fatalf("%s: lettura diversa", id)
+		// 4.44: in coda all'immagine il blocco delle impostazioni (blocco 8) com'è nella radio
+		if len(got) != rt4dSizeCfg || !bytes.Equal(got[:rt4dSize], base) || !bytes.Equal(got[rt4dCfgOff:], radio[rt4dBlkCfg]) {
+			t.Fatalf("%s: lettura diversa (%d byte)", id, len(got))
 		}
 		// blocchi letti: 8, poi 16-63, poi 0x78-0xF7
 		if len(e.reads) != 1+48+128 || e.reads[0] != 8 || e.reads[1] != 16 || e.reads[48] != 63 || e.reads[49] != 0x78 || e.reads[176] != 0xF7 {
@@ -245,7 +246,7 @@ func TestRT4DClone(t *testing.T) {
 				t.Fatalf("%s: scrittura %d = %06X, attesa %06X", id, k, e.writes[k], want[k])
 			}
 		}
-		if !bytes.Equal(e.image(), got) {
+		if !bytes.Equal(e.image()[:rt4dSize], got[:rt4dSize]) {
 			t.Fatalf("%s: canali o zone scritti diversi", id)
 		}
 		for n, d := range radio {

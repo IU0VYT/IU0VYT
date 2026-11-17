@@ -7,6 +7,29 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.44.0 (17.11.2026)
+-------------------
+- Radtel RT-480 und RT-68 (32 Einstellungen) und RT-5D (43): Tabellen aus den Programmen
+  des Herstellers. Bei RT-480 und RT-68 ändert sich das Schreiben: Bis 4.43 wurden nur
+  Kanäle und Namen geschrieben; jetzt wird direkt danach auch der erste
+  Einstellungsblock (64 Bytes ab 0x3A00) geschrieben, wie es das Herstellerprogramm tut,
+  ausgehend von den aus dem Gerät gelesenen Bytes. VFO, Seitentasten und DTMF werden
+  weiterhin nicht geschrieben.
+- Radtel RT-69 GPS (21 Einstellungen): Der Speicher ist der der Wouxun KG-UV8D Plus, und
+  das Herstellerprogramm liest und schreibt dieselben Adressen wie die CHIRP-Tabelle;
+  angezeigt werden nur die Einträge, deren Auswahlmöglichkeiten ebenfalls geprüft
+  wurden. Radtel RT-4D, RT-6D und RT-1000 Pro (34 Einstellungen, die den drei
+  Herstellerprogrammen gemeinsam sind): Der gelesene Speicher trägt jetzt am Ende auch
+  den Einstellungsblock (1024 Bytes mehr); früher gespeicherte Dateien bleiben gültig,
+  zeigen aber keine Einstellungen, bis das Gerät erneut gelesen wird. Beim Schreiben
+  bleibt der Einstellungsblock der gerade aus dem Gerät gelesene, und nur die Einträge
+  des Tabs Einstellungen werden bitweise hineinkopiert.
+- Bajeton DM-5000 (53 Einstellungen): die Einträge, die sein Programm an derselben
+  Position und mit denselben Auswahlmöglichkeiten wie die RT-871A hat. In dieser Version
+  nicht gemacht: nicFW880 / nicFW950 (der Treiber schreibt den Einstellungsblock nicht),
+  OpenGD77, fagci R3b0rn, LOSEHU, UV-K1, DR-1801UV, BF-T9. Keine der neuen Einstellungen
+  wurde an einem echten Gerät erprobt.
+
 4.43.0 (16.11.2026)
 -------------------
 - Fehler behoben, der seit Einführung der Einstellungen bestand: Bei 33 aus CHIRP

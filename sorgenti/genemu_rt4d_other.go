@@ -34,6 +34,9 @@ var rt4dEmuAreas = map[byte][2]int{
 
 func (rt4dFam) emu(m *genModel, img []byte) genEmu {
 	e := &rt4dEmu{blocks: map[int][]byte{}}
+	if len(img) >= rt4dSizeCfg { // 4.44: l'immagine porta anche il blocco delle impostazioni
+		e.blocks[rt4dBlkCfg] = append([]byte{}, img[rt4dCfgOff:rt4dSizeCfg]...)
+	}
 	img = append(append([]byte{}, img...), bytes.Repeat([]byte{0xFF}, rt4dSize)...)
 	for k := 0; k < rt4dChBlocks; k++ {
 		e.blocks[rt4dBlkCh+k] = append([]byte{}, img[k*dm5kBlock:(k+1)*dm5kBlock]...)
@@ -61,7 +64,8 @@ func (e *rt4dEmu) image() []byte {
 	for k := 0; k < rt4dZnBlocks; k++ {
 		img = append(img, e.block(rt4dBlkZone+k)...)
 	}
-	return img
+	// 4.44: in coda il blocco delle impostazioni, come nell'immagine letta dal driver
+	return append(img, e.block(rt4dBlkCfg)...)
 }
 
 func (e *rt4dEmu) serve(p Port) error {

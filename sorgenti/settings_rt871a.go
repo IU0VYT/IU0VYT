@@ -236,6 +236,34 @@ func rt871aSetTable() *setTable {
 
 var rt871aSettings = rt871aSetTable()
 
+// rs871Pick (4.44): le voci «keys» della tabella della RT-871A, spostate di
+// «delta» byte, per le radio dello stesso progetto del costruttore («DM550_NOLCD»)
+// che le hanno alla stessa posizione nel blocco delle impostazioni e con le
+// stesse scelte (verificato programma per programma: settings_rt4d.go)
+func rs871Pick(keys []string, delta int) []setDef {
+	var out []setDef
+	for _, key := range keys {
+		found := false
+		for _, d := range rt871aSettings.Settings {
+			if d.Key != key {
+				continue
+			}
+			if len(d.Enc.Fields) != 1 {
+				panic("rs871Pick: " + key)
+			}
+			e := *d.Enc
+			e.Fields = [][2]interface{}{{d.Enc.Fields[0][0].(float64) + float64(delta), d.Enc.Fields[0][1]}}
+			d.Enc = &e
+			out = append(out, d)
+			found = true
+		}
+		if !found {
+			panic("rs871Pick: manca " + key)
+		}
+	}
+	return out
+}
+
 func init() {
 	settingsProviders = append(settingsProviders, settingsProvider{
 		has: func(kind string) bool { return kind == "rtl-rt871a" },

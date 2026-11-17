@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**Versi 4.43.0** · Windows · antara muka dalam 13 bahasa (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · satu fail boleh laku sahaja, tanpa pemasangan
+**Versi 4.44.0** · Windows · antara muka dalam 13 bahasa (italiano, English, Français, Deutsch, Español, Português, Русский, 中文, 日本語, 한국어, العربية, Bahasa Melayu, हिन्दी) · satu fail boleh laku sahaja, tanpa pemasangan
 
 Program untuk amatur radio dan pengguna radio pemancar-penerima daripada **54 jenama** (**Baofeng**, **Bajeton**, **Quansheng**, **Retevis**, **Radtel**, **Radioddity**, **TIDRADIO**, **TYT**, **Hiroyasu**, Talkpod, Anysecu, MaxTalker, Abbree, Intek, Maverick, BTECH, WLN, Zastone, Luiton, TID, Explorer, MMLradio, JJCC, Socotran, Jianpai, Boristone, HamGeek, SenhaiX, Cignus, Puxing, Feidaxin, KYD, KSUN, Lanchonlh, Boblov, Wouxun, AnyTone, QYT, Rugged, Baojie, MTC, Zartek, Ruyage, TDXone, Yaesu, Icom, Kenwood, Alinco, AOR): ia membaca dan menulis saluran, frekuensi dan tetapan melalui kabel pengaturcaraan, mengurus arkib pengulang Itali dan mengemas kini perisian tegar radio yang disokong.
 
@@ -44,7 +44,7 @@ Program untuk amatur radio dan pengguna radio pemancar-penerima daripada **54 je
 ## Ciri-ciri
 
 - **Saluran dan frekuensi** bagi 609 model (termasuk radio PMR digital dan DMR, juga melalui USB): baca dan tulis melalui kabel, fail `.img` yang serasi dengan CHIRP, fail asal Baofeng K67 Pro (`.xlc`) dan Bajeton 8300 (`.dat`).
-- **Tetapan radio** (menu, paparan, VOX, squelch, TOT, DTMF, kekunci…) bagi 546 model, dengan huraian setiap item dan amaran yang perlu disahkan untuk item yang sensitif.
+- **Tetapan radio** (menu, paparan, VOX, squelch, TOT, DTMF, kekunci…) bagi 554 model, dengan huraian setiap item dan amaran yang perlu disahkan untuk item yang sensitif.
 - **Pengenalpastian radio yang disambungkan**: program mengecamnya sendiri dan menunjukkan jenama, model, jenis, perisian tegar dan maklumat lain yang dilaporkannya (bagi radio DMR USB juga ID DMR dan nama). Dengan **pengenalpastian automatik** (butang dalam tab «Kenal pasti», pilihan diingati) anda hanya perlu menyambungkan kabel, tidak kira tab mana yang sedang dibuka: program mendengar semua port kabel serentak, juga mengecam radio yang dihidupkan selepas kabel disambungkan dan beberapa radio yang disambungkan pada kabel berlainan, mencuba dahulu radio yang pernah dikenal pasti dan yang paling biasa, tidak terkeliru oleh radio dalam mod kemas kini perisian tegar dan membuka tab setiap radio dengan saluran yang dibaca; kotak «Pengenalpastian Radio Sedang Berjalan» hanya muncul untuk kabel dengan radio yang menjawab; untuk radio lain ada butang **«🔎 Kenal pasti Radio»** di bahagian atas kanan.
 - **Majukan ke radio lain**: saluran yang ditanda dalam satu radio ditulis terus ke radio lain yang disambungkan, dipilih mengikut jenama dan model, dengan semakan keserasian, penyesuaian, salinan sandaran dan pengesahan.
 - **Penukar universal**: saluran mana-mana radio atau fail (K67 `.xlc`, Bajeton `.dat`, imej `.img` juga daripada CHIRP, CSV CHIRP, Excel/CSV) ke format mana-mana radio lain, disesuaikan dengan peraturannya.

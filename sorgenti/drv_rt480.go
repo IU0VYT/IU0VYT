@@ -24,8 +24,9 @@ package main
 // Il programma legge 0x0000-0x1FFF (canali e nomi), 0x3A00-0x3A7F (impostazioni
 // e VFO) e 0x3B00-0x3C3F (DTMF); l'immagine è la fila di queste tre aree. In
 // scrittura il programma ricostruisce impostazioni, VFO e DTMF dalle sue
-// finestre: qui si scrivono solo canali e nomi (0x0000-0x1FFF), con gli stessi
-// pacchetti, e il resto della radio non si tocca.
+// finestre: qui si scrivono canali e nomi (0x0000-0x1FFF) e, dalla 4.44, il primo
+// blocco delle impostazioni (0x3A00-0x3A3F) così com'è nell'immagine, con gli
+// stessi pacchetti; VFO, tasti laterali (0x3A40) e DTMF non si toccano.
 //
 // Canale (16 byte da 0x0000, 256 canali numerati da 0 a 255; libero = primo
 // byte a FF):
@@ -49,7 +50,9 @@ import (
 const (
 	rt480Slots   = 256
 	rt480NameOff = 0x1000
-	rt480ChEnd   = 0x2000 // fine di canali e nomi: l'area che si scrive
+	rt480ChEnd   = 0x2000 // fine di canali e nomi
+	rt480SetAddr = 0x3A00 // blocco delle impostazioni generali nella radio (64 byte)
+	rt480SetOff  = 0x2000 // lo stesso blocco nell'immagine (seconda area letta)
 	rt480Hello   = "PROGROMS19U"
 	rt480Timeout = 6 * time.Second
 )
@@ -84,7 +87,7 @@ func init() {
 			Notes: "Protocollo e memoria ricavati dal programma del costruttore «Radio Programing Software» (versioni 1.5.2 e 1.5.3). " +
 				"Accendi la radio con il cavo collegato. Canali da 0 a 255, come nel programma del costruttore; frequenze a passi di 1,25 kHz. " +
 				"Qui si modificano frequenze, nome, potenza, banda, scansione e toni; codice di segnalazione, PTT ID, scrambler e blocco " +
-				"su canale occupato restano quelli impostati. Si scrivono solo canali e nomi: impostazioni, VFO e DTMF della radio non si toccano."})
+				"su canale occupato restano quelli impostati. Si scrivono canali, nomi e le impostazioni generali; VFO, tasti laterali e DTMF della radio non si toccano."})
 	}
 }
 
@@ -329,9 +332,23 @@ func (f rt480Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 	if _, err := s.rt480Enter(); err != nil {
 		return "", genFail("Identificazione", err)
 	}
+	// blocchi da scrivere: (indirizzo nella radio, posizione nell'immagine)
+	type blk struct{ addr, off int }
+	var blocks []blk
 	for a := 0; a < rt480ChEnd; a += 0x40 {
-		prog(a, rt480ChEnd, "Scrittura…")
-		if err := s.send(append([]byte{'W', byte(a >> 8), byte(a), 0x40}, img[a:a+0x40]...)); err != nil {
+		blocks = append(blocks, blk{a, a})
+	}
+	// 4.44: anche il blocco delle impostazioni generali (0x3A00-0x3A3F), che il
+	// programma del costruttore scrive subito dopo i nomi con lo stesso pacchetto.
+	// Qui parte dai byte letti dalla radio, con le sole voci cambiate
+	// (settings_rt480.go). Le immagini più corte (non dovrebbero esistere) restano
+	// alla sola scrittura di canali e nomi.
+	if len(img) >= rt480SetOff+0x40 {
+		blocks = append(blocks, blk{rt480SetAddr, rt480SetOff})
+	}
+	for i, b := range blocks {
+		prog(i*0x40, len(blocks)*0x40, "Scrittura…")
+		if err := s.send(append([]byte{'W', byte(b.addr >> 8), byte(b.addr), 0x40}, img[b.off:b.off+0x40]...)); err != nil {
 			return "", err
 		}
 		ack, err := readByte(ctx, s.p, rt480Timeout)
@@ -340,7 +357,7 @@ func (f rt480Fam) Upload(ctx context.Context, m *genModel, port string, img []by
 		}
 		if err != nil {
 			_ = s.send([]byte{'E'})
-			return "", genFail(fmt.Sprintf("Scrittura (0x%04X)", a), err)
+			return "", genFail(fmt.Sprintf("Scrittura (0x%04X)", b.addr), err)
 		}
 	}
 	// uscita dalla programmazione, come dopo la lettura

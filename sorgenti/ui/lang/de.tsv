@@ -2433,7 +2433,6 @@ ce2f21ad	die Seite bei {0} wurde nicht bestätigt: erneut versuchen oder die Sic
 1b7e6c39	UKW-Radio
 7e876315	unbekannter Bereich {0}
 086c0fcd	Bajeton DM-5000
-e9d49aad	DMR-Funkgerät. Protokoll und Speicher aus dem Herstellerprogramm «BAJETON DM-5000 CPS» (Version 250726) abgeleitet. Hier werden Frequenzen, Name, Leistung, Suchlauf und Töne geändert; bei DMR-Kanälen bleiben Gruppe, Kontakt, Slot und Colour Code wie eingestellt (ein neuer DMR-Kanal erhält die Standardwerte des Programms: erste Gruppe und erster Kontakt, Slot 1, Colour Code 0). Ein neuer Kanal wird Zone 1 hinzugefügt, wenn er in keiner Zone ist; ein gelöschter Kanal wird aus den Zonen entfernt. Kontakte, Gruppen, Nachrichten und Einstellungen des Funkgeräts werden nicht angetastet. Ist am Funkgerät ein Passwort gesetzt, zuerst mit dem Herstellerprogramm entfernen.
 5746c8c0	Zone-{0}
 dac9a0ff	unerwartete Antwort beim Lesen von Block {0}
 ad0ffaa9	Daten von Block {0} ungültig (Prüfsumme)
@@ -5406,8 +5405,6 @@ fbb7a5e0	DMR-Funkgerät: 1024 Kanäle mit Namen aus 16 Zeichen, 250 Zonen, 18-66
 c1cbfbcc	1024 Kanäle mit Namen aus 16 Zeichen, 250 Zonen, 18-660 und 840-1000 MHz, 115200 Baud. Derselbe Kanal wie beim RT-4D, nur analog; der Ausschluss vom Suchlauf wird nicht verwaltet (er bleibt, wie er im Funkgerät ist).{0}
 88b83d68	Ein neuer Kanal wird der Zone 1 hinzugefügt, wenn er in keiner Zone ist; ein gelöschter Kanal wird aus den Zonen entfernt. Ist im Funkgerät ein Passwort gesetzt, entferne es zuerst mit dem Programm des Herstellers. «Identifizieren» kann dieses Funkgerät nicht von den anderen Radtel- und Bajeton-Geräten mit derselben Verbindung unterscheiden: wähle selbst die richtige Karte.
 b6bcffc3	Radtel {0}
-76b4acd2	DMR-Funkgerät. Protokoll und Speicher aus den Programmen des Herstellers «RT-4D CPS» (Version 2.07) und «DMR RT-6D» (Version 2.06) abgeleitet. Hier werden Frequenzen, Name, Leistung, Bandbreite, Suchlauf und Töne geändert; die übrigen Angaben des Kanals bleiben, wie sie eingestellt sind (ein neuer DMR-Kanal erhält die Standardwerte des Programms: erster Kontakt, Slot 1, Color Code 1). Geschrieben werden nur Kanäle und Zonen: Kontakte, Gruppen, Nachrichten und Einstellungen des Funkgeräts bleiben unberührt.{0}
-8d2388c9	Protokoll und Speicher aus dem Programm des Herstellers «Radtel RT-1000 Pro CPS» (Version vom 6. August 2026) abgeleitet. Hier werden Frequenzen, Name, Leistung, Bandbreite und Töne geändert; die übrigen Angaben des Kanals, einschließlich Suchlauf, bleiben, wie sie eingestellt sind. Geschrieben werden nur Kanäle und Zonen: UKW-Radio und Einstellungen des Funkgeräts bleiben unberührt.{0}
 d90df803	Zone{0}
 2d0e3a60	Schreiben: Kanäle…
 a7f04ce8	Schreiben: Zonen…
@@ -5788,7 +5785,6 @@ a3fb2872	Kanäle ohne Namen und allgemeine Einstellungen. Nicht in CHIRP.{0}
 6aa904a9	22 FRS-Kanäle (USA). Das Herstellerprogramm ist dasselbe wie für das Baofeng T22 in der FRS-Version. Es ist nicht das TD-M8 ohne «S», das eine eigene Karte hat. {0}
 c506923a	16 FRS-Kanäle (USA). Die Anleitung des Herstellerprogramms nennt es auch für Pofung F8, F8i, F8U, F8X und BF-V8. {0}
 368f65ab	22 Kanäle ohne Namen, 400-480 MHz, 9600 Baud. Protokoll und Speicher aus dem Programm des Herstellers «RT-13» 1.7 abgeleitet und mit einem simulierten Funkgerät geprüft, nicht an einem echten. Hier werden Frequenzen, Töne, Leistung, Bandbreite und Suchlauf geändert; Frequenzsprung, Scrambler und Sperre bei belegtem Kanal bleiben wie eingestellt. Ist am Funkgerät ein Passwort gesetzt, entferne es zuerst mit dem Programm des Herstellers.
-a454c0ed	Protokoll und Speicher aus dem Programm des Herstellers «Radio Programing Software» (Versionen 1.5.2 und 1.5.3) abgeleitet. Schalte das Funkgerät mit angeschlossenem Kabel ein. Kanäle 0 bis 255, wie im Programm des Herstellers; Frequenzen in Schritten von 1,25 kHz. Hier werden Frequenzen, Name, Leistung, Bandbreite, Suchlauf und Töne geändert; Signalisierungscode, PTT-ID, Scrambler und Sperre bei belegtem Kanal bleiben wie eingestellt. Geschrieben werden nur Kanäle und Namen: Einstellungen, VFO und DTMF des Funkgeräts werden nicht angerührt.
 09a39cef	999 Kanäle mit Namen aus 12 Zeichen, 19200 Baud. Protokoll und Speicher aus dem Programm des Herstellers «RT-69 GPS» abgeleitet und mit einem simulierten Funkgerät geprüft, nicht an einem echten. Hier werden Frequenzen, Name, Töne, Leistung, Bandbreite und Suchlauf geändert; der Rest des Kanals und die Einstellungen des Funkgeräts bleiben, wie sie sind. Vor dem Schreiben wird, wie im Programm des Herstellers, geprüft, dass jeder Kanal in den Bändern des Funkgeräts liegt. Ist am Funkgerät ein Passwort gesetzt, entferne es zuerst mit dem Programm des Herstellers.
 56c39478	Funkgerät ohne Kanalnamen (128 Kanäle). Protokoll und Speicher aus dem Programm des Herstellers abgeleitet. Hier werden Frequenzen, Leistung, Bandbreite, Suchlauf und Töne geändert; Sendebegrenzung, Verschlüsselung, DCS-Typ und Stummschaltcode des Kanals bleiben wie eingestellt. Einstellungen und VFO des Funkgeräts kommen unverändert zurück. Ist am Funkgerät ein Passwort gesetzt, entferne es zuerst mit dem Programm des Herstellers.
 affbd219	Funkgerät ohne Display: Die Kanäle haben keine Namen. Aus dem Herstellerprogramm «T20 FRS» (v1.0.1, dasselbe, das Baofeng für das T22 in der FRS-Version und TIDRADIO für das TD-M8S anbietet) abgeleitet; ist am Funkgerät das Lese- und Schreibpasswort gesetzt, zuerst mit diesem Programm entfernen.
@@ -6221,3 +6217,42 @@ e36ad11e	15 seconds
 d405b9a4	2 minutes
 21d03b33	3 minutes
 7025b545	settings_twin: {0}
+591b5c2d	DMR-Funkgerät. Protokoll und Speicher aus dem Herstellerprogramm «BAJETON DM-5000 CPS» (Version 250726) abgeleitet. Hier werden Frequenzen, Name, Leistung, Suchlauf und Töne geändert; bei DMR-Kanälen bleiben Gruppe, Kontakt, Slot und Colour Code wie eingestellt (ein neuer DMR-Kanal erhält die Standardwerte des Programms: erste Gruppe und erster Kontakt, Slot 1, Colour Code 0). Ein neuer Kanal wird Zone 1 hinzugefügt, wenn er in keiner Zone ist; ein gelöschter Kanal wird aus den Zonen entfernt. Kontakte, Gruppen und Nachrichten werden nicht angetastet; die allgemeinen Einstellungen ändert man im Tab «Einstellungen». Ist am Funkgerät ein Passwort gesetzt, zuerst mit dem Herstellerprogramm entfernen.
+165a67a8	Protokoll und Speicher aus dem Programm des Herstellers «Radio Programing Software» (Versionen 1.5.2 und 1.5.3) abgeleitet. Schalte das Funkgerät mit angeschlossenem Kabel ein. Kanäle 0 bis 255, wie im Programm des Herstellers; Frequenzen in Schritten von 1,25 kHz. Hier werden Frequenzen, Name, Leistung, Bandbreite, Suchlauf und Töne geändert; Signalisierungscode, PTT-ID, Scrambler und Sperre bei belegtem Kanal bleiben wie eingestellt. Geschrieben werden Kanäle, Namen und die allgemeinen Einstellungen; VFO, Seitentasten und DTMF des Funkgeräts werden nicht angerührt.
+2720fe3f	DMR-Funkgerät. Protokoll und Speicher aus den Programmen des Herstellers «RT-4D CPS» (Version 2.07) und «DMR RT-6D» (Version 2.06) abgeleitet. Hier werden Frequenzen, Name, Leistung, Bandbreite, Suchlauf und Töne geändert; die übrigen Angaben des Kanals bleiben, wie sie eingestellt sind (ein neuer DMR-Kanal erhält die Standardwerte des Programms: erster Kontakt, Slot 1, Color Code 1). Geschrieben werden Kanäle, Zonen und die allgemeinen Einstellungen des Tabs «Einstellungen»: Kontakte, Gruppen, Nachrichten und der Rest des Funkgeräts bleiben unberührt.{0}
+5c4795b8	Protokoll und Speicher aus dem Programm des Herstellers «Radtel RT-1000 Pro CPS» (Version vom 6. August 2026) abgeleitet. Hier werden Frequenzen, Name, Leistung, Bandbreite und Töne geändert; die übrigen Angaben des Kanals, einschließlich Suchlauf, bleiben, wie sie eingestellt sind. Geschrieben werden Kanäle, Zonen und die allgemeinen Einstellungen des Tabs «Einstellungen»: UKW-Radio und der Rest des Funkgeräts bleiben unberührt.{0}
+bba8dc05	Das Funkgerät sendet nicht, wenn auf dem Kanal bereits ein Signal vorhanden ist.
+ba2a90b3	Sendeton («Tx Beep»)
+78a976ee	Rufton für Relais
+b07eb047	Frequenz des Tons, der Relais öffnet (in Europa meist 1750 Hz).
+57835d0f	4 Stunden
+536d3013	8 Stunden
+8160f8a6	16 Stunden
+3740377f	24 Stunden
+de7c0552	Tastaturtöne
+9fe487ad	Töne der Kennung
+b7688203	Tastatur und Kennung
+5ff3f880	Verzögerung des Kennungscodes
+0d7185ea	Vor Ort (SITE)
+347785df	Gesendeter Ton (TONE)
+5d7a78f9	Gesendeter Code (CODE)
+ba8fc313	«Radio Programing Software» v1.5.2 / v1.5.3
+48e2b94e	Was das Funkgerät sendet, wenn du die PTT loslässt: nichts, einen Ton (Roger-Beep), eine MDC1200-Kennung oder die GPS-Position.
+f7ee54a0	Logo beim Einschalten
+72df9544	«RT-4D CPS» V2.07, «DMR RT-6D» V2.06, «RT-1000 Pro CPS»
+7ca28132	«BAJETON DM-5000 CPS» (250726)
+283ceee9	Squelch-Pegel (digitale Kanäle)
+d1184be9	Frequenz des Nachlauftons
+feb987fd	Haltezeit des digitalen Anrufs
+fedfacab	Wie lange die PTT nach einem empfangenen digitalen Anruf auf diesen Anruf antwortet.
+52197f7b	Rückkehr aus der Zweikanalüberwachung
+8d74aaae	Zeit, nach der das Funkgerät nach dem Ende eines Anrufs auf dem anderen Band zum Hauptband zurückkehrt.
+04b07d4d	Obere Taste, kurzer Druck
+d1f25d27	Seitentaste 3, kurzer Druck
+3721a7de	Seitentaste 3, langer Druck
+ec87d22c	«RT-5D CPS» 2.0.5
+35a06be1	rs871Pick: {0}
+cfd00999	rs871Pick: manca {0}
+fd0b5918	«RT-69 GPS» (889G)
+15d735f7	ANI-ST
+138e76d2	DT-ANI

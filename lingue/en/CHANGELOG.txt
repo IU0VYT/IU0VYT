@@ -7,6 +7,27 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.44.0 (17/11/2026)
+-------------------
+- Radtel RT-480 and RT-68 (32 settings) and RT-5D (43): tables taken from the
+  manufacturer's programs. For RT-480 and RT-68 writing changes: until 4.43 only
+  channels and names were written; now the first settings block (64 bytes at 0x3A00) is
+  written right after them, as the manufacturer's program does, starting from the bytes
+  read from the radio. VFO, side keys and DTMF are still not written.
+- Radtel RT-69 GPS (21 settings): its memory is that of the Wouxun KG-UV8D Plus, and the
+  manufacturer's program reads and writes the same addresses as the CHIRP table; only
+  the entries whose choices were also verified are shown. Radtel RT-4D, RT-6D and
+  RT-1000 Pro (34 settings common to the three manufacturer's programs): the memory read
+  now also carries the settings block at the end (1024 more bytes); files saved earlier
+  remain valid, but show no settings until the radio is read again. When writing, the
+  settings block is still the one just read from the radio, and only the entries of the
+  Settings tab are copied into it, bit by bit.
+- Bajeton DM-5000 (53 settings): the entries that its program has at the same position
+  and with the same choices as the RT-871A. Not done in this version: nicFW880 /
+  nicFW950 (the driver does not write the settings block), OpenGD77, fagci R3b0rn,
+  LOSEHU, UV-K1, DR-1801UV, BF-T9. None of the new settings has been tried on a real
+  radio.
+
 4.43.0 (16/11/2026)
 -------------------
 - Bug fixed, present ever since settings exist: for 33 radios taken from CHIRP and for

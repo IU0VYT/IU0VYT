@@ -7,6 +7,28 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.44.0 (17/11/2026)
+-------------------
+- Radtel RT-480 y RT-68 (32 ajustes) y RT-5D (43): tablas tomadas de los programas del
+  fabricante. En la RT-480 y la RT-68 cambia la escritura: hasta la 4.43 solo se
+  escribían canales y nombres; ahora, justo después, se escribe también el primer bloque
+  de ajustes (64 bytes en 0x3A00), como hace el programa del fabricante, a partir de los
+  bytes leídos de la radio. VFO, teclas laterales y DTMF siguen sin escribirse.
+- Radtel RT-69 GPS (21 ajustes): su memoria es la de la Wouxun KG-UV8D Plus, y el
+  programa del fabricante lee y escribe las mismas direcciones que la tabla de CHIRP;
+  solo se muestran los elementos cuyas opciones también se han verificado. Radtel RT-4D,
+  RT-6D y RT-1000 Pro (34 ajustes comunes a los tres programas del fabricante): la
+  memoria leída lleva ahora también, al final, el bloque de ajustes (1024 bytes más);
+  los archivos guardados antes siguen siendo válidos, pero no muestran ajustes hasta que
+  se vuelve a leer la radio. Al escribir, el bloque de ajustes sigue siendo el recién
+  leído de la radio, y solo se copian en él, bit a bit, los elementos de la pestaña
+  Ajustes.
+- Bajeton DM-5000 (53 ajustes): los elementos que su programa tiene en la misma posición
+  y con las mismas opciones que la RT-871A. No hechos en esta versión: nicFW880 /
+  nicFW950 (el controlador no escribe el bloque de ajustes), OpenGD77, fagci R3b0rn,
+  LOSEHU, UV-K1, DR-1801UV, BF-T9. Ninguno de los ajustes nuevos se ha probado en una
+  radio real.
+
 4.43.0 (16/11/2026)
 -------------------
 - Error corregido, presente desde que existen los ajustes: en 33 radios tomadas de CHIRP

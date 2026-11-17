@@ -54,8 +54,8 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = o.memsize()
 	case *dm5kOpt:
 		size = dm5kSize()
-	case *rt4dOpt: // 4.20: Radtel RT-4D, RT-6D, RT-1000 Pro
-		size = rt4dSize
+	case *rt4dOpt: // 4.20: Radtel RT-4D, RT-6D, RT-1000 Pro (4.44: con il blocco delle impostazioni in coda)
+		size = rt4dSizeCfg
 	case *rt5dOpt: // 4.21: Radtel RT-5D
 		size = rt5dSize()
 	case *rt480Opt: // 4.22: Radtel RT-480 e RT-68
