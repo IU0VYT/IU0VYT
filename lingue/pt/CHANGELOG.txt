@@ -7,6 +7,30 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.43.0 (16/11/2026)
+-------------------
+- Erro corrigido, presente desde que existem as definições: em 33 rádios vindos do CHIRP
+  e nos 8 «gémeos» acrescentados na 4.42, depois de ler o rádio por cabo o separador
+  Definições respondia que a memória aberta não correspondia à tabela das definições; as
+  definições só se viam ao abrir um ficheiro .img do CHIRP. Causa: a tabela só era dada
+  às memórias tão longas como o ficheiro do CHIRP, que termina com o nome do modelo ou
+  outras zonas, enquanto a memória lida pelo nosso controlador é alguns bytes mais
+  curta. Agora basta que a memória seja tão longa como o mapa do rádio. Rádios afetados:
+  Baofeng UV-17, UV-17Pro, UV-17Pro GPS, UV-17R Plus, UV-21Pro GPS, UV-21Pro V2, UV-25,
+  UV-32, UV-5G Plus, UV-5RH, K5 Plus, UV-6 / UV-7, UV-5G (GMRS), MP31; MaxTalker P15,
+  MT-5RM; Retevis RT22, RT22FRS, RT622, RB17, HA1G, HA1UV; Kenwood TK-2140K, TK-3140K /
+  K2 / K3; Radioddity R2; WLN KD-C1; Zastone ZT-X6; Luiton LT-316; TID TD-M8; TYT
+  TH-UV8000D / E; Yaesu FT5DR / FT5DE; UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro,
+  UV-29 Pro, UV-7B, AR-152 Pro. Um teste novo lê os rádios simulados com o nosso
+  controlador e verifica que a tabela existe.
+- Radtel RT-817A / RT-871A (65 definições), RT-830 (26) e RT-850 (36): tabelas tiradas
+  dos programas do fabricante. No RT-830 e no RT-850 dois elementos têm um aviso, porque
+  esses programas os leem de forma diferente de como os escrevem: segue-se a escrita.
+- Radtel RT-400 (33 definições) e RT-330 (30): a tabela do CHIRP do rádio com o mesmo
+  bloco de definições (RT-470), limitada aos elementos que os programas do fabricante
+  leem e escrevem da mesma forma. Nenhuma das definições novas foi experimentada num
+  rádio real.
+
 4.42.0 (16/11/2026)
 -------------------
 - Separador Início: com 54 marcas a caixa das marcas tinha ficado demasiado alta e a

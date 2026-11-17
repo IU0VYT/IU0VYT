@@ -4,6 +4,12 @@ Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 或更高版本
 
 本文件是 CHANGELOG.txt 最新条目的中文译本。以前各版本（1.0 - 4.12）的完整历史见软件包主文件夹中的意大利文原文 CHANGELOG.txt；每个版本的主要新内容也在 GUIDE.txt 中有概述。
 
+4.43.0（2026/11/16）
+-------------------
+- 修复了自设置功能出现以来就存在的错误：对于取自 CHIRP 的 33 款电台和 4.42 新增的 8 款“孪生”电台，通过数据线读取电台后，“设置”选项卡提示所打开的存储内容与设置表不符；只有打开 CHIRP 的 .img 文件才能看到设置。原因：只有长度与 CHIRP 文件相同的存储内容才会得到设置表，而 CHIRP 文件末尾带有型号名称或其他区域，我们的驱动读取的存储内容要短几个字节。现在只要存储内容与电台的存储映射一样长即可。涉及的电台：Baofeng UV-17、UV-17Pro、UV-17Pro GPS、UV-17R Plus、UV-21Pro GPS、UV-21Pro V2、UV-25、UV-32、UV-5G Plus、UV-5RH、K5 Plus、UV-6 / UV-7、UV-5G (GMRS)、MP31；MaxTalker P15、MT-5RM；Retevis RT22、RT22FRS、RT622、RB17、HA1G、HA1UV；Kenwood TK-2140K、TK-3140K / K2 / K3；Radioddity R2；WLN KD-C1；Zastone ZT-X6；Luiton LT-316；TID TD-M8；TYT TH-UV8000D / E；Yaesu FT5DR / FT5DE；UV-17R、UV-21R、UV-21L、UV-25 Plus、UV-28 Pro、UV-29 Pro、UV-7B、AR-152 Pro。新增的测试用我们的驱动读取模拟电台，并检查设置表是否存在。
+- Radtel RT-817A / RT-871A（65 项设置）、RT-830（26 项）和 RT-850（36 项）：表格取自厂家程序。RT-830 和 RT-850 各有一项带有提示，因为这些程序读取它们的方式与写入方式不同：这里以写入为准。
+- Radtel RT-400（33 项设置）和 RT-330（30 项）：使用设置区相同的电台（RT-470）的 CHIRP 表格，并仅保留厂家程序以相同方式读写的项目。新增的设置均未在真实电台上试过。
+
 4.42.0（2026/11/16）
 -------------------
 - “主页”选项卡：品牌增加到 54 个后，品牌框变得太高，页面下部超出窗口且无法滚动。现在品牌框更宽、列数更多，页面放不下时会自动缩小（每次窗口大小、语言或选项卡变化时）。阿拉伯语界面下标题字母的顺序是反的：已修正。

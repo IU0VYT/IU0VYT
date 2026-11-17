@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.42.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.43.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,14 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.43.0:
+- Fehler behoben: Bei 33 Funkgeräten (darunter Baofeng UV-17 Pro, UV-17 Pro GPS, UV-21
+  Pro, UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22, HA1G, Kenwood TK-2140 / TK-3140) und
+  bei den 8 «Zwillingen» der 4.42 erschienen die Einstellungen nach dem Auslesen per
+  Kabel nicht, sondern nur beim Öffnen einer CHIRP-Datei.
+- Einstellungen für fünf weitere Radtel-Geräte (RT-817A / RT-871A, RT-830, RT-850,
+  RT-330, RT-400) aus den Programmen des Herstellers.
+- Galerie: 663 Modelle von 54 Marken (609 mit Kanälen, 546 mit Einstellungen).
 Neu in 4.42.0:
 - Der Start-Tab passt jetzt vollständig ins Fenster: breiterer Markenkasten und eine
   Seite, die sich selbst an die Fenstergröße anpasst.

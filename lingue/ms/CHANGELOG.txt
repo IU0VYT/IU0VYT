@@ -6,6 +6,31 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.43.0 (16/11/2026)
+-------------------
+- Ralat dibetulkan, wujud sejak tetapan diperkenalkan: bagi 33 radio yang diambil
+  daripada CHIRP dan bagi 8 «kembar» yang ditambah dalam 4.42, selepas radio dibaca
+  melalui kabel, tab Tetapan menjawab bahawa memori yang dibuka tidak sepadan dengan
+  jadual tetapan; tetapan hanya kelihatan apabila fail .img CHIRP dibuka. Punca: jadual
+  hanya diberikan kepada memori yang sepanjang fail CHIRP, yang berakhir dengan nama
+  model atau kawasan lain, sedangkan memori yang dibaca oleh pemacu kami lebih pendek
+  beberapa bait. Kini cukup jika memori sepanjang peta memori radio. Radio yang
+  terlibat: Baofeng UV-17, UV-17Pro, UV-17Pro GPS, UV-17R Plus, UV-21Pro GPS, UV-21Pro
+  V2, UV-25, UV-32, UV-5G Plus, UV-5RH, K5 Plus, UV-6 / UV-7, UV-5G (GMRS), MP31;
+  MaxTalker P15, MT-5RM; Retevis RT22, RT22FRS, RT622, RB17, HA1G, HA1UV; Kenwood
+  TK-2140K, TK-3140K / K2 / K3; Radioddity R2; WLN KD-C1; Zastone ZT-X6; Luiton LT-316;
+  TID TD-M8; TYT TH-UV8000D / E; Yaesu FT5DR / FT5DE; UV-17R, UV-21R, UV-21L, UV-25
+  Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro. Ujian baharu membaca radio simulasi
+  dengan pemacu kami dan memeriksa bahawa jadual itu ada.
+- Radtel RT-817A / RT-871A (65 tetapan), RT-830 (26) dan RT-850 (36): jadual diambil
+  daripada program pengeluar. Pada RT-830 dan RT-850 dua item mempunyai amaran, kerana
+  program tersebut membacanya dengan cara yang berbeza daripada cara menulisnya: cara
+  penulisan diikuti.
+- Radtel RT-400 (33 tetapan) dan RT-330 (30): jadual CHIRP bagi radio dengan blok
+  tetapan yang sama (RT-470), dihadkan kepada item yang dibaca dan ditulis oleh program
+  pengeluar dengan cara yang sama. Tiada satu pun tetapan baharu telah dicuba pada radio
+  sebenar.
+
 4.42.0 (16/11/2026)
 -------------------
 - Tab Laman Utama: dengan 54 jenama, kotak jenama menjadi terlalu tinggi dan bahagian

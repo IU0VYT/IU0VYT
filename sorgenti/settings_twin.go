@@ -47,6 +47,7 @@ package main
 // il livello del VOX arriva a 5 e il ritardo ha sei valori (0,5-3 s).
 
 import (
+	"encoding/hex"
 	"strings"
 	"sync"
 )
@@ -57,6 +58,19 @@ type twinSet struct {
 	only  []string
 	drop  []string
 	limit map[string]int
+	// 4.43: gemelle con una classe propria (RClass diversa) ma con il blocco delle
+	// impostazioni allo stesso indirizzo di una classe di CHIRP
+	anyClass bool
+	within   [2]int              // se non zero: solo le voci con tutti i byte in [inizio, fine)
+	size     int                 // se non zero: lunghezza minima dell'immagine (al posto di quella di CHIRP)
+	repl     map[string]twinRepl // scelte del programma del costruttore al posto di quelle di CHIRP
+}
+
+// twinRepl: le scelte di una voce come le ha il programma del costruttore (valori
+// 0, 1, 2… nei bit della maschera)
+type twinRepl struct {
+	mask byte
+	opts []string
 }
 
 var (
@@ -67,10 +81,45 @@ var (
 	twinUVsBase  = twinSet{class: "UV17ProGPS", prog: "«BF-UVs CPS»", only: []string{"settings."}, drop: twinUVsDrop, limit: twinUVsLimit}
 )
 
+// Radtel RT-400 e RT-330 (4.43): i programmi del costruttore («JJCC-7700 CPS» e «Radio
+// CPS») leggono il blocco delle impostazioni a 0x9000 in tre righe di 16 byte
+// (GetFunCfgImf_Part1 / 2 / 3) alle stesse posizioni della famiglia MML JC-8810 di
+// CHIRP (classe RT470Radio): squelch 0, risparmio 1, VOX 2, luce 3, doppio ascolto 4,
+// TOT 5, beep 6, voce 7 e 8, toni DTMF 9, scansione 0x0A, PTT-ID 0x0B e 0x0C, display
+// 0x0D e 0x0E; blocco tasti 0x10, allarme 0x11 e 0x12, coda 0x14-0x16, fine
+// trasmissione 0x17, radio FM 0x19, VFO / canali 0x1A, tastiera 0x1B, messaggio
+// d'accensione 0x1C, tono 0x1E; ritardo del VOX 0x20, uscita dal menu 0x21.
+// Differenze trovate confrontando voce per voce e scelta per scelta:
+//   - TOT: nei due programmi le scelte sono spento, 30, 60 … 240 s (nove, a passi di
+//     30 s); nella tabella di CHIRP sono sei con altri valori: si usano quelle dei
+//     programmi;
+//   - tasti laterali e superiore (0x2B-0x30): CHIRP usa codici non in fila, i
+//     programmi elenchi diversi per modello (nella RT-400 0x2F è il tasto laterale 2
+//     premuto a lungo, nella RT-330 il banco corrente; in CHIRP è «RX end tail»): tolti;
+//   - RT-400: «QT save» ha l'ordine tutti, TX, RX (CHIRP: tutti, RX, TX);
+//   - RT-330: non ha «QT save» né la trasmissione del doppio ascolto; la fine
+//     trasmissione ha due scelte; l'identificativo ANI ha 20 valori invece di 60
+//     (tolto); la prima scelta della luce è «OFF» (in CHIRP «On»).
+//
+// Le altre aree (VFO a 0x8000, DTMF a 0xA000, nomi ANI a 0xB000) non sono state
+// confrontate e non si mostrano.
+var (
+	jcSetBlock = [2]int{0x9000, 0x9030}
+	jcKeys     = []string{"skey2_sp", "skey2_lp", "skey3_sp", "skey3_lp", "topkey_sp", "rxendtail"}
+	jcTOT      = []string{"Off", "30 seconds", "60 seconds", "90 seconds", "120 seconds", "150 seconds", "180 seconds", "210 seconds", "240 seconds"}
+)
+
 var twinSettings = map[string]twinSet{
 	"bf-uv17r": twinT6, "bf-uv21r": twinT6, "bf-uv21l": twinT6,
 	"bf-uv25plus": twinUVs, "bf-uv28pro": twinUVs,
 	"bf-uv29pro": twinUVsBase, "bf-uv7b": twinUVsBase, "bf-ar152pro": twinUVsBase,
+	"rt-rt400": {class: "RT470Radio", prog: "«JJCC-7700 CPS» v1.0.8", anyClass: true, within: jcSetBlock, size: 0x9040,
+		drop: jcKeys, repl: map[string]twinRepl{"tot": {0x0F, jcTOT}, "qtsave": {0x03, []string{"All", "TX", "RX"}}}},
+	"rt-rt330": {class: "RT470Radio", prog: "«Radio CPS» v1.1.0 (RT-330)", anyClass: true, within: jcSetBlock, size: 0x9040,
+		drop:  append([]string{"ani", "qtsave", "dualtx"}, jcKeys...),
+		limit: map[string]int{"roger": 2},
+		repl: map[string]twinRepl{"tot": {0x0F, jcTOT},
+			"abr": {0x0F, []string{"Off", "5 seconds", "10 seconds", "15 seconds", "20 seconds", "30 seconds", "1 minute", "2 minutes", "3 minutes"}}}},
 	"bf-t22": {class: "W31E", prog: "«Baofeng T22 CPS» (PMR446)",
 		only:  []string{"squelch", "tot", "vox", "voxgain", "voxdelay", "save", "beep"},
 		limit: map[string]int{"voxgain": 6, "voxdelay": 6}},
@@ -93,12 +142,41 @@ func twinTable(tw twinSet) *setTable {
 	}
 	// «CHIRP+»: l'interfaccia scrive che la tabella è di CHIRP, verificata sul programma
 	t := &setTable{Class: src.Class, Size: src.Size, Source: "CHIRP+" + t17Src(tw.prog)}
+	if tw.size > 0 {
+		t.Size = tw.size
+	}
 	for _, d := range src.Settings {
 		if len(tw.only) > 0 && !twinMatch(d.Key, tw.only) {
 			continue
 		}
 		if twinMatch(d.Key, tw.drop) {
 			continue
+		}
+		if tw.within != [2]int{} {
+			offs, _, err := d.Enc.fields()
+			in := err == nil && len(offs)+len(d.Enc.Offs) > 0
+			for _, a := range append(offs, d.Enc.Offs...) {
+				in = in && a >= tw.within[0] && a < tw.within[1]
+			}
+			if !in {
+				continue
+			}
+		}
+		if r, ok := tw.repl[d.Key]; ok {
+			offs, _, err := d.Enc.fields()
+			if err != nil || len(offs) != 1 || d.Type != "list" {
+				panic("settings_twin: " + d.Key)
+			}
+			sh := 0
+			for r.mask>>sh&1 == 0 {
+				sh++
+			}
+			e := &setEnc{Kind: "table", Fields: [][2]interface{}{{float64(offs[0]), hex.EncodeToString([]byte{r.mask})}}}
+			for i := range r.opts {
+				v := hex.EncodeToString([]byte{byte(i<<sh) & r.mask})
+				e.Table = append(e.Table, &v)
+			}
+			d.Enc, d.Options = e, append([]string(nil), r.opts...)
 		}
 		if n, ok := tw.limit[d.Key]; ok && d.Type == "list" && d.Enc != nil && n < len(d.Options) {
 			e := *d.Enc
@@ -124,10 +202,13 @@ func twinTablesMap() map[string]*setTable {
 		byDef := map[string]*setTable{}
 		for id, tw := range twinSettings {
 			m := genByID[id]
-			if m == nil || !m.NoChirp || m.RClass != tw.class {
+			if m == nil || !m.NoChirp || (m.RClass != tw.class && !tw.anyClass) {
 				continue // la gemella deve dichiarare la stessa classe di CHIRP
 			}
-			k := tw.class + "|" + strings.Join(tw.only, ",") + "|" + strings.Join(tw.drop, ",") + "|" + tw.prog
+			k := id
+			if !tw.anyClass {
+				k = tw.class + "|" + strings.Join(tw.only, ",") + "|" + strings.Join(tw.drop, ",") + "|" + tw.prog
+			}
 			if byDef[k] == nil {
 				byDef[k] = twinTable(tw)
 			}
@@ -152,10 +233,11 @@ func init() {
 				return nil
 			}
 			t := twinTablesMap()[kind]
-			if t == nil || len(img) < t.Size {
+			if t == nil {
 				return nil
 			}
-			return t
+			// 4.43: l'immagine letta dal driver è più corta di quella di CHIRP (vedi fitSetTable)
+			return fitSetTable(genByID[kind], t, img)
 		},
 	})
 }

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.42.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.43.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,14 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.43.0 :
+- Erreur corrigée : pour 33 radios (dont Baofeng UV-17 Pro, UV-17 Pro GPS, UV-21 Pro,
+  UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22, HA1G, Kenwood TK-2140 / TK-3140) et pour
+  les 8 « jumelles » de la 4.42, les réglages n'apparaissaient pas après la lecture de
+  la radio par câble, mais seulement en ouvrant un fichier CHIRP.
+- Réglages pour cinq autres Radtel (RT-817A / RT-871A, RT-830, RT-850, RT-330, RT-400),
+  d'après les programmes du constructeur.
+- Galerie : 663 modèles de 54 marques (609 avec canaux, 546 avec réglages).
 Nouveautés de la 4.42.0 :
 - L'onglet Accueil tient maintenant en entier dans la fenêtre : cadre des marques plus
   large et page qui s'adapte toute seule à la taille de la fenêtre.

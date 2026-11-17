@@ -6045,3 +6045,179 @@ b26d2b6b	Side key 1
 b36d2cfe	Side key 2
 82cf4523	Indicator that pulses in standby («breathing light»)
 f552ed5e	The radio's indicator pulses slowly while the radio is on and in standby.
+d6151086	In the manufacturer's program this setting is read differently from how it is written: here the writing is followed. If the effect on the radio is not the expected one, put back the previous value.
+6af4461c	VOX level
+4c6be8c8	Voice level that starts transmission with VOX.
+f51b5b8f	How long the radio keeps transmitting after the voice has stopped.
+361de9e5	Transmission tone
+5eff59ac	Tone emitted when the PTT is pressed or released.
+04774500	Short
+63d152a0	Long
+9d8cf0b8	End-of-transmission tail
+0b094a9c	Tone that removes the hiss at the end of transmission.
+46f57faf	0,25 kHz
+af1c7ca6	1,25 kHz
+227cc35d	Step by which the keys change the frequency in VFO mode.
+51cebd75	+ (transmit higher)
+bfe6572c	− (transmit lower)
+91fffb5f	In VFO mode: whether transmission is shifted with respect to reception (repeaters) and in which direction.
+9bfbd69c	Scrambler (code)
+66f3fb31	Voice inversion: it can be understood only by radios using the same code.
+5ebadd97	While waiting the radio switches the receiver off at intervals: the higher the ratio, the more battery is saved (and the easier it is to miss the start of a call).
+e1df03d9	The radio listens to the two bands (A and B) alternately.
+1566b209	Current band
+5f62cc51	Band the radio works on.
+b2b0b49a	Band that is receiving
+5396342b	Transmit priority
+8dba904e	With dual watch: pressing the PTT transmits on the selected band or on the one that is receiving.
+4e8162d2	Working mode
+49ce251a	Channel shown as
+0cc37dd4	Channel of band A
+0fc3828d	Channel of band B
+0847ddf2	NOAA weather channels
+859fc2d5	Radio key
+1d9c3d17	What you listen to with the radio function: FM stations or the NOAA weather channels (active only in North America).
+58531701	Channel watch during radio
+66954822	While listening to the FM radio, the radio keeps watching the channel and switches to the call when it arrives.
+f5416c3d	The radio announces channels and functions by voice.
+0e83a136	Beep at every key press.
+d69474fa	After this time without touching the keys the display turns off.
+dc697424	Automatic key lock
+88774891	After this time without touching the keys the keypad locks by itself.
+c227c504	No function
+73ea4b1b	Remote alarm
+41bc3c33	Display on/off
+4b24f37e	Frequency lock
+6d510efd	Frequency and tone search
+69ac5d15	Repeater shift
+40900ab0	In VFO mode transmission is shifted with respect to reception (repeaters).
+d20e644c	Compresses the voice in transmission and expands it in reception to reduce noise: useful only between radios that both use it.
+2bd42c33	Prevents changing frequency from the keys.
+4d66be8f	Remote (transmitted)
+c4b5da24	Alarm type
+b8f22727	The alarm sounds only on the radio or is also transmitted.
+40821b7a	Enables the FM radio function.
+e74899c9	Display on
+2a99768b	Display-on time
+b5cd3b7c	LED on
+3ea3bfc2	LED-on time
+7735bf5f	Keys locked
+fcc3a1bc	State of the keypad lock.
+0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
+92f22ee4	«Radtel RT-850 programming software» (UV5118)
+4ebd3ae5	Locked ranges
+8a5e2a25	Dual watch on/off
+1e94bc3f	Backlight on/off
+30111395	Talkaround / reverse
+db2d8bf5	Frequency reading
+68e6a9fd	Tone search (CTCSS/DCS)
+8a31aa90	Send single tone
+fbf57709	AM/FM reception
+0f716668	Save channel
+e2158ebc	20 kHz
+cc19ce03	500 kHz
+4baefa89	1 MHz
+286e8545	5 MHz
+7dab84fd	«Diretta» trasmette sulla frequenza di ricezione, senza passare dal ponte; «Frequenze invertite» scambia ricezione e trasmissione (per ascoltare l'ingresso del ponte).
+50d50889	Microphone amplification in transmission (0-31).
+97767e02	Reception volume
+3875e9d6	Audio level in reception (0-63).
+8ec31dfb	Adjacent channel threshold
+a1410ed8	Threshold with which the radio rejects interference from nearby channels (0-10). Unless you have a precise reason, leave the value as it is.
+e1209b49	Delay after the repeater tail
+16d336bb	Waiting time after the end of transmission before reopening reception: it avoids hearing the repeater tail.
+6828f256	VOX threshold
+5f804bc1	Start-of-transmission tone
+9402a713	The radio emits a tone when it starts transmitting.
+6a08bdd7	What the radio sends when you release the PTT: nothing, a tone (roger beep), the call sign or the GPS position.
+169c5cdd	Send the call sign
+22bdad69	Send the GPS position
+0ec95515	Single tone frequency (Hz)
+bd59a58b	Frequency of the tone sent with the «Send single tone» function (for example 1750 Hz to open repeaters).
+2063fedd	Frequency counter range
+e44b1f4d	Range in which the «Frequency reading» function looks for the signal.
+2f193534	18-64 MHz
+79e921d1	64-136 MHz
+15f5f061	136-174 MHz
+aceefc8d	174-240 MHz
+f000362e	240-320 MHz
+172a3144	320-400 MHz
+38b8b55b	400-480 MHz
+517bb4f2	480-560 MHz
+4d24f57c	560-640 MHz
+c8ab699a	840-920 MHz
+205f5dc5	920-1000 MHz
+f6929a5d	Main PTT band
+6bc98c4f	Which band the main PTT key transmits on.
+21d3170b	Band A: working mode
+09162f06	Band A: on the display
+a226ce12	Band B: working mode
+3159c3d9	Band B: on the display
+510bda43	Scan direction
+ec3ce716	Down
+c01040ca	CO: scanning resumes when the signal disappears; TO: it resumes after the dwell time; SE: it stops on the first signal.
+1db503f6	At the end of scanning return to
+e50f1121	Starting channel
+fc7b50fb	Current channel
+e093b102	Scan dwell
+d7257747	Dwell time on a busy channel (TO mode).
+e50cff45	Screen saver start
+de3bb41c	After this time the screen saver starts.
+343ac6c1	After this time without touching the keys the radio leaves the menu.
+cb6cfa0e	Digits for entering the frequency
+913374e8	Number of digits to type on the keypad to enter a frequency.
+798cebd6	6 digits
+590cd4f0	8 digits
+0bbea147	Voice indicator refresh
+408c86e5	How often the voice level in transmission is refreshed on the display.
+f5a8980c	Signal indicator refresh
+f860a2ce	How often the received signal strength is refreshed on the display.
+3a0c4ad1	Power save start
+efadfed0	Time without signals after which battery saving starts.
+0c496f71	Key {0}, long press
+677f6000	Range {0}
+bb3fdef7	What is allowed between the two frequencies given below: everything, reception only or nothing.
+5dee346e	Free
+5ef9b7ea	Locked
+a7661999	Range {0}: from (MHz)
+f2fbf1f9	Range {0}: to (MHz)
+2ce78fb1	What the alarm key does: only the radio sounds, the alarm is transmitted, or both.
+7ab59ed8	Local and remote
+51a66fac	Automatic DTMF sending
+4cb7978a	When the radio sends the DTMF code chosen below by itself.
+bb5f903a	DTMF code to send
+e132d568	DTMF-{0}{1}
+22066c91	DTMF: delay before sending
+4d733da8	DTMF: duration of each digit
+12b83b47	DTMF: pause between digits
+05f1deca	Show received DTMF
+a694d839	DTMF: transmission level
+939db74a	Level of the transmitted DTMF tones (0-127).
+02ebbb79	DTMF: decoding threshold
+8497e757	Minimum level for a received DTMF tone to be recognised (0-63).
+7ac7e2f3	Remote commands via DTMF
+f270db7b	The radio accepts remote commands received in DTMF.
+dab5681b	Clock setting over the air
+16399562	The radio sets the clock with the data received.
+c07d51a5	With remote commands enabled, anyone who knows the codes can act on the radio from a distance: enable them only if you need them.
+2700c301	«Radtel RT-871A CPS» (250707)
+0dc6b4aa	Off
+86cc09a7	30 seconds
+1f37498e	60 seconds
+f777d6b9	90 seconds
+02579e3f	120 seconds
+e382ab38	150 seconds
+ba727161	180 seconds
+6201f2a1	210 seconds
+0adb7730	240 seconds
+429a8c2f	«JJCC-7700 CPS» v1.0.8
+75afe364	All
+307bedb4	«Radio CPS» v1.1.0 (RT-330)
+1c820e4d	5 seconds
+a339de11	10 seconds
+e36ad11e	15 seconds
+6b27c5e2	20 seconds
+983277c4	1 minute
+d405b9a4	2 minutes
+21d03b33	3 minutes
+7025b545	settings_twin: {0}

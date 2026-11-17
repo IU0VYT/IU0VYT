@@ -6045,3 +6045,179 @@ b26d2b6b	Tecla lateral 1
 b36d2cfe	Tecla lateral 2
 82cf4523	Indicador que pulsa em espera («breathing light»)
 f552ed5e	O indicador do rádio pulsa lentamente enquanto o rádio está ligado e em espera.
+d6151086	No programa do fabricante esta definição é lida de forma diferente de como é escrita: aqui segue-se a escrita. Se o efeito no rádio não for o esperado, volte a colocar o valor anterior.
+6af4461c	Nível do VOX
+4c6be8c8	Nível de voz que inicia a transmissão com o VOX.
+f51b5b8f	Durante quanto tempo o rádio continua a transmitir depois de a voz cessar.
+361de9e5	Tom de transmissão
+5eff59ac	Tom emitido ao premir ou soltar o PTT.
+04774500	Curta
+63d152a0	Longa
+9d8cf0b8	Cauda de fim de transmissão
+0b094a9c	Tom que elimina o ruído de fundo no fim da transmissão.
+46f57faf	0,25 kHz
+af1c7ca6	1,25 kHz
+227cc35d	Passo com que as teclas mudam a frequência em modo VFO.
+51cebd75	+ (transmissão mais alta)
+bfe6572c	− (transmissão mais baixa)
+91fffb5f	Em modo VFO: se a transmissão está deslocada em relação à receção (repetidores) e em que sentido.
+9bfbd69c	Scrambler (código)
+66f3fb31	Inversão da voz: só se percebe com rádios que usam o mesmo código.
+5ebadd97	Em espera o rádio desliga o recetor a intervalos: quanto maior a relação, mais bateria se poupa (e mais fácil é perder o início de uma chamada).
+e1df03d9	O rádio escuta as duas bandas (A e B) alternadamente.
+1566b209	Banda atual
+5f62cc51	Banda em que o rádio trabalha.
+b2b0b49a	Banda que está a receber
+5396342b	Prioridade de transmissão
+8dba904e	Com a dupla escuta: ao premir o PTT transmite-se na banda selecionada ou na que está a receber.
+4e8162d2	Modo de trabalho
+49ce251a	Canal mostrado como
+0cc37dd4	Canal da banda A
+0fc3828d	Canal da banda B
+0847ddf2	Canais meteorológicos NOAA
+859fc2d5	Tecla de rádio
+1d9c3d17	O que se ouve com a função de rádio: as estações FM ou os canais meteorológicos NOAA (ativos só na América do Norte).
+58531701	Escuta dos canais durante o rádio
+66954822	Enquanto se ouve o rádio FM, o rádio continua a vigiar o canal e passa para a chamada quando ela chega.
+f5416c3d	O rádio anuncia por voz canais e funções.
+0e83a136	Sinal sonoro a cada pressão de uma tecla.
+d69474fa	Após este tempo sem tocar nas teclas o ecrã apaga-se.
+dc697424	Bloqueio automático das teclas
+88774891	Após este tempo sem tocar nas teclas o teclado bloqueia-se sozinho.
+c227c504	Nenhuma função
+73ea4b1b	Alarme remoto
+41bc3c33	Ecrã ligado/desligado
+4b24f37e	Bloqueio da frequência
+6d510efd	Procura de frequência e tom
+69ac5d15	Desvio para repetidores
+40900ab0	Em modo VFO a transmissão está deslocada em relação à receção (repetidores).
+d20e644c	Comprime a voz na transmissão e expande-a na receção para reduzir o ruído: só serve entre rádios que o usem ambos.
+2bd42c33	Impede a mudança de frequência pelas teclas.
+4d66be8f	Remoto (transmitido)
+c4b5da24	Tipo de alarme
+b8f22727	O alarme soa só no rádio ou também é transmitido.
+40821b7a	Ativa a função de rádio FM.
+e74899c9	Ecrã ligado
+2a99768b	Duração do ecrã ligado
+b5cd3b7c	LED ligado
+3ea3bfc2	Duração do LED ligado
+7735bf5f	Teclas bloqueadas
+fcc3a1bc	Estado do bloqueio do teclado.
+0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
+92f22ee4	«Radtel RT-850 programming software» (UV5118)
+4ebd3ae5	Gamas bloqueadas
+8a5e2a25	Dupla escuta sim/não
+1e94bc3f	Retroiluminação sim/não
+30111395	Direto / inversão
+db2d8bf5	Leitura da frequência
+68e6a9fd	Procura do tom (CTCSS/DCS)
+8a31aa90	Envio do tom único
+fbf57709	Receção AM/FM
+0f716668	Guardar canal
+e2158ebc	20 kHz
+cc19ce03	500 kHz
+4baefa89	1 MHz
+286e8545	5 MHz
+7dab84fd	«Diretta» trasmette sulla frequenza di ricezione, senza passare dal ponte; «Frequenze invertite» scambia ricezione e trasmissione (per ascoltare l'ingresso del ponte).
+50d50889	Amplificação do microfone na transmissão (0-31).
+97767e02	Volume de receção
+3875e9d6	Nível do áudio na receção (0-63).
+8ec31dfb	Limiar do canal adjacente
+a1410ed8	Limiar com que o rádio rejeita as interferências dos canais vizinhos (0-10). Se não tiver um motivo concreto, deixe o valor que está.
+e1209b49	Atraso após a cauda do repetidor
+16d336bb	Tempo de espera após o fim da transmissão antes de reabrir a escuta: serve para não ouvir a cauda do repetidor.
+6828f256	Limiar do VOX
+5f804bc1	Tom de início de transmissão
+9402a713	O rádio emite um tom quando começa a transmitir.
+6a08bdd7	O que o rádio envia quando solta o PTT: nada, um tom (roger beep), o indicativo ou a posição GPS.
+169c5cdd	Enviar o indicativo
+22bdad69	Enviar a posição GPS
+0ec95515	Frequência do tom único (Hz)
+bd59a58b	Frequência do tom enviado com a função «Envio do tom único» (por exemplo 1750 Hz para abrir os repetidores).
+2063fedd	Gama do frequencímetro
+e44b1f4d	Gama em que a função «Leitura da frequência» procura o sinal.
+2f193534	18-64 MHz
+79e921d1	64-136 MHz
+15f5f061	136-174 MHz
+aceefc8d	174-240 MHz
+f000362e	240-320 MHz
+172a3144	320-400 MHz
+38b8b55b	400-480 MHz
+517bb4f2	480-560 MHz
+4d24f57c	560-640 MHz
+c8ab699a	840-920 MHz
+205f5dc5	920-1000 MHz
+f6929a5d	Banda do PTT principal
+6bc98c4f	Em que banda transmite a tecla PTT principal.
+21d3170b	Banda A: modo de trabalho
+09162f06	Banda A: no ecrã
+a226ce12	Banda B: modo de trabalho
+3159c3d9	Banda B: no ecrã
+510bda43	Direção do varrimento
+ec3ce716	Para baixo
+c01040ca	CO: o varrimento recomeça quando o sinal desaparece; TO: recomeça após o tempo de paragem; SE: para no primeiro sinal.
+1db503f6	No fim do varrimento voltar a
+e50f1121	Canal de partida
+fc7b50fb	Canal atual
+e093b102	Paragem do varrimento
+d7257747	Tempo de paragem num canal ocupado (modo TO).
+e50cff45	Início da proteção de ecrã
+de3bb41c	Após este tempo a proteção de ecrã começa.
+343ac6c1	Após este tempo sem tocar nas teclas o rádio sai do menu.
+cb6cfa0e	Algarismos para introduzir a frequência
+913374e8	Número de algarismos a digitar no teclado para introduzir uma frequência.
+798cebd6	6 algarismos
+590cd4f0	8 algarismos
+0bbea147	Atualização do indicador de voz
+408c86e5	De quanto em quanto tempo o nível da voz na transmissão é atualizado no ecrã.
+f5a8980c	Atualização do indicador de sinal
+f860a2ce	De quanto em quanto tempo a intensidade do sinal recebido é atualizada no ecrã.
+3a0c4ad1	Início da poupança
+efadfed0	Tempo sem sinais após o qual começa a poupança de bateria.
+0c496f71	Tecla {0}, pressão longa
+677f6000	Gama {0}
+bb3fdef7	O que é permitido entre as duas frequências indicadas abaixo: tudo, só a receção ou nada.
+5dee346e	Livre
+5ef9b7ea	Bloqueada
+a7661999	Gama {0}: de (MHz)
+f2fbf1f9	Gama {0}: até (MHz)
+2ce78fb1	O que faz a tecla de alarme: soa só o rádio, o alarme é transmitido ou as duas coisas.
+7ab59ed8	Local e remoto
+51a66fac	Envio automático do DTMF
+4cb7978a	Quando o rádio envia sozinho o código DTMF escolhido abaixo.
+bb5f903a	Código DTMF a enviar
+e132d568	DTMF-{0}{1}
+22066c91	DTMF: atraso antes do envio
+4d733da8	DTMF: duração de cada algarismo
+12b83b47	DTMF: pausa entre algarismos
+05f1deca	Mostrar os DTMF recebidos
+a694d839	DTMF: nível de transmissão
+939db74a	Nível dos tons DTMF transmitidos (0-127).
+02ebbb79	DTMF: limiar de descodificação
+8497e757	Nível mínimo para que um tom DTMF recebido seja reconhecido (0-63).
+7ac7e2f3	Comandos remotos por DTMF
+f270db7b	O rádio aceita os comandos remotos recebidos em DTMF.
+dab5681b	Acerto da hora por rádio
+16399562	O rádio acerta o relógio com os dados recebidos.
+c07d51a5	Com os comandos remotos ativos, quem conhecer os códigos pode atuar sobre o rádio à distância: ative-os só se precisar deles.
+2700c301	«Radtel RT-871A CPS» (250707)
+0dc6b4aa	Off
+86cc09a7	30 seconds
+1f37498e	60 seconds
+f777d6b9	90 seconds
+02579e3f	120 seconds
+e382ab38	150 seconds
+ba727161	180 seconds
+6201f2a1	210 seconds
+0adb7730	240 seconds
+429a8c2f	«JJCC-7700 CPS» v1.0.8
+75afe364	All
+307bedb4	«Radio CPS» v1.1.0 (RT-330)
+1c820e4d	5 seconds
+a339de11	10 seconds
+e36ad11e	15 seconds
+6b27c5e2	20 seconds
+983277c4	1 minute
+d405b9a4	2 minutes
+21d03b33	3 minutes
+7025b545	settings_twin: {0}

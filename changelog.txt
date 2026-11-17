@@ -3,6 +3,57 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.43.0 (16/11/2026)
+-------------------
+Corretto un errore che nascondeva le impostazioni dopo la lettura via cavo;
+impostazioni per altre cinque Radtel.
+- ERRORE CORRETTO, presente da quando esistono le impostazioni: per 33 radio
+  prese da CHIRP e per le 8 «gemelle» aggiunte nella 4.42, dopo aver letto la
+  radio via cavo la scheda «Impostazioni» rispondeva «La memoria aperta non
+  corrisponde alla tabella delle impostazioni di questa radio». Le
+  impostazioni si vedevano solo aprendo un file .img di CHIRP. Causa: la
+  tabella era data solo alle memorie lunghe quanto il file di CHIRP, che in
+  coda ha il nome del modello o altre zone; la memoria letta dal nostro driver
+  è più corta di pochi byte. Ora basta che la memoria sia lunga quanto la
+  mappa della radio; le voci che starebbero in zone non lette non vengono
+  mostrate (nelle radio provate non ce ne sono).
+  Radio interessate: Baofeng UV-17, UV-17Pro, UV-17Pro GPS, UV-17R Plus,
+  UV-21Pro GPS, UV-21Pro V2, UV-25, UV-32, UV-5G Plus, UV-5RH, K5 Plus,
+  UV-6 / UV-7, UV-5G (GMRS), MP31; MaxTalker P15 e MT-5RM; Retevis RT22,
+  RT22FRS, RT622, RB17, HA1G, HA1UV; Kenwood TK-2140K, TK-3140K / K2 / K3;
+  Radioddity R2; WLN KD-C1; Zastone ZT-X6; Luiton LT-316; TID TD-M8; TYT
+  TH-UV8000D / E; Yaesu FT5DR / FT5DE; e le gemelle della 4.42: UV-17R,
+  UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro.
+  Le prove non se ne erano accorte perché usavano le immagini di CHIRP: ora
+  una prova nuova legge le radio simulate con il nostro driver e controlla
+  che la tabella ci sia. In più, una volta sola e a mano, su 341 radio di
+  CHIRP è stato controllato che le voci cambiate arrivino alla radio
+  simulata e tornino uguali alla rilettura (unica eccezione sotto).
+- Radtel RT-817A / RT-871A: 65 impostazioni dal programma del costruttore
+  «Radtel RT-871A CPS» (squelch, passo, VOX, toni di inizio e fine, tono
+  singolo, doppio ascolto e bande A e B, scansione, tempi del display e del
+  blocco dei tasti, risparmio, 14 tasti programmabili, 4 gamme bloccate,
+  DTMF e comandi remoti). La radio è parente della RT-880G di CHIRP ma la
+  mappa coincide solo in parte: la tabella è propria.
+- Radtel RT-830 (26 impostazioni) e RT-850 (36): dai rispettivi programmi del
+  costruttore. Due voci hanno un avviso perché in quei programmi sono lette
+  in modo diverso da come sono scritte (tono di trasmissione della RT-830,
+  ascolto dei canali durante la radio FM della RT-850): qui si segue la
+  scrittura.
+- Radtel RT-400 (33 impostazioni) e RT-330 (30): tabella di CHIRP della radio
+  con lo stesso blocco di impostazioni (RT-470), limitata alle voci che i
+  programmi del costruttore «JJCC-7700 CPS» e «Radio CPS» leggono e scrivono
+  allo stesso modo; TOT, «QT save» e retroilluminazione hanno le scelte dei
+  programmi del costruttore.
+- Se sulla radio è impostata una password, RT-830 e RT-850 non vengono
+  scritte (come prima): va tolta con il programma del costruttore.
+- Limite noto, uguale a CHIRP: nella Retevis RT76P il messaggio di accensione
+  si può cambiare nella scheda ma non viene scritto nella radio.
+- Restano senza impostazioni, fra le Radtel: RT-4D, RT-5D, RT-6D, RT-69 GPS,
+  RT-480, RT-68, RT-1000 Pro.
+- Nessuna delle impostazioni nuove è stata provata su una radio vera.
+- Galleria: 663 modelli di 54 marche (609 con canali, 546 con impostazioni).
+
 4.42.0 (16/11/2026)
 -------------------
 La scheda Home entra tutta nella finestra; impostazioni per 30 modelli che

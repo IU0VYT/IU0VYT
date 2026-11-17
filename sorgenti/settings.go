@@ -137,10 +137,80 @@ func settingsFor(kind string, img []byte) *setTable {
 		return nil
 	}
 	t := chirpSettings()[m.RClass]
-	if t == nil || len(img) < t.Size {
+	if t == nil {
 		return nil
 	}
-	return t
+	return fitSetTable(m, t, img)
+}
+
+// fitSetTable (4.43): la tabella t adattata all'immagine img della radio m.
+//
+// La lunghezza scritta nelle tabelle di CHIRP è quella dell'immagine di CHIRP, che
+// per diverse radio è più lunga di quella che legge il nostro driver: CHIRP
+// aggiunge in coda il nome del modello o l'impronta della radio (UV-17 Pro e
+// parenti: 8 o 11 byte; RT22, TK-2140…) oppure legge anche zone che il driver non
+// tocca (MP31, HA1G). Fino alla 4.42 la tabella era data solo alle immagini lunghe
+// almeno quanto quella di CHIRP: così le impostazioni si vedevano aprendo un file
+// .img di CHIRP ma non dopo aver letto la radio via cavo («La memoria aperta non
+// corrisponde alla tabella…»). Ora basta che l'immagine sia lunga quanto la mappa
+// della radio usata dal driver; le voci che starebbero oltre la fine dell'immagine
+// (cioè in zone che il driver non legge e non scrive) non vengono mostrate.
+func fitSetTable(m *genModel, t *setTable, img []byte) *setTable {
+	if len(img) >= t.Size {
+		return t
+	}
+	if min := genMinSize(m); min <= 0 || len(img) < min {
+		return nil
+	}
+	k := fitKey{t, len(img)}
+	fitMu.Lock()
+	defer fitMu.Unlock()
+	if c := fitCache[k]; c != nil {
+		return c
+	}
+	c := &setTable{Class: t.Class, Size: len(img), Source: t.Source}
+	for _, d := range t.Settings {
+		if setDefEnd(&d) <= len(img) {
+			c.Settings = append(c.Settings, d)
+		}
+	}
+	fitCache[k] = c
+	return c
+}
+
+type fitKey struct {
+	t *setTable
+	n int
+}
+
+var (
+	fitMu    sync.Mutex
+	fitCache = map[fitKey]*setTable{}
+)
+
+// setDefEnd: primo byte dopo l'ultimo usato dalla voce (0 se non ne usa)
+func setDefEnd(d *setDef) int {
+	if d.Enc == nil {
+		return 0
+	}
+	end := 0
+	if offs, masks, err := d.Enc.fields(); err == nil {
+		for i, a := range offs {
+			if e := a + len(masks[i]); e > end {
+				end = e
+			}
+		}
+	}
+	w := 1
+	if d.Enc.Fmt == "utf16le" {
+		w = 2
+	}
+	for _, a := range d.Enc.Offs {
+		if a+w > end {
+			end = a + w
+		}
+	}
+	return end
 }
 
 // ---------------------------------------------------------------- codifiche

@@ -6045,3 +6045,179 @@ b26d2b6b	Touche latérale 1
 b36d2cfe	Touche latérale 2
 82cf4523	Voyant qui pulse en veille (« breathing light »)
 f552ed5e	Le voyant de la radio pulse lentement lorsque la radio est allumée et en veille.
+d6151086	Dans le programme du constructeur, ce réglage est lu d'une manière différente de celle dont il est écrit : ici on suit l'écriture. Si l'effet sur la radio n'est pas celui attendu, remettez la valeur précédente.
+6af4461c	Niveau du VOX
+4c6be8c8	Niveau de voix qui déclenche l'émission avec le VOX.
+f51b5b8f	Durée pendant laquelle la radio reste en émission après l'arrêt de la voix.
+361de9e5	Tonalité d'émission
+5eff59ac	Tonalité émise lorsqu'on appuie sur le PTT ou qu'on le relâche.
+04774500	Courte
+63d152a0	Longue
+9d8cf0b8	Queue de fin d'émission
+0b094a9c	Tonalité qui supprime le souffle en fin d'émission.
+46f57faf	0,25 kHz
+af1c7ca6	1,25 kHz
+227cc35d	Pas avec lequel les touches changent la fréquence en mode VFO.
+51cebd75	+ (émission plus haute)
+bfe6572c	− (émission plus basse)
+91fffb5f	En mode VFO : si l'émission est décalée par rapport à la réception (relais) et dans quel sens.
+9bfbd69c	Brouilleur (code)
+66f3fb31	Inversion de la voix : compréhensible seulement par les radios qui utilisent le même code.
+5ebadd97	En attente, la radio éteint le récepteur par intervalles : plus le rapport est élevé, plus on économise la batterie (et plus il est facile de manquer le début d'un appel).
+e1df03d9	La radio écoute les deux bandes (A et B) en alternance.
+1566b209	Bande courante
+5f62cc51	Bande sur laquelle la radio travaille.
+b2b0b49a	Bande en réception
+5396342b	Priorité d'émission
+8dba904e	Avec la double veille : en appuyant sur le PTT, on émet sur la bande sélectionnée ou sur celle qui reçoit.
+4e8162d2	Mode de travail
+49ce251a	Canal affiché comme
+0cc37dd4	Canal de la bande A
+0fc3828d	Canal de la bande B
+0847ddf2	Canaux météo NOAA
+859fc2d5	Touche radio
+1d9c3d17	Ce que l'on écoute avec la fonction radio : les stations FM ou les canaux météo NOAA (actifs uniquement en Amérique du Nord).
+58531701	Veille des canaux pendant la radio
+66954822	Pendant l'écoute de la radio FM, la radio continue de surveiller le canal et passe à l'appel lorsqu'il arrive.
+f5416c3d	La radio annonce vocalement les canaux et les fonctions.
+0e83a136	Signal sonore à chaque appui sur une touche.
+d69474fa	Après ce temps sans toucher les touches, l'écran s'éteint.
+dc697424	Verrouillage automatique des touches
+88774891	Après ce temps sans toucher les touches, le clavier se verrouille tout seul.
+c227c504	Aucune fonction
+73ea4b1b	Alarme distante
+41bc3c33	Écran allumé/éteint
+4b24f37e	Verrouillage de la fréquence
+6d510efd	Recherche de fréquence et de tonalité
+69ac5d15	Décalage pour les relais
+40900ab0	En mode VFO, l'émission est décalée par rapport à la réception (relais).
+d20e644c	Compresse la voix en émission et l'étend en réception pour réduire le bruit : utile seulement entre radios qui l'utilisent toutes les deux.
+2bd42c33	Empêche de changer de fréquence avec les touches.
+4d66be8f	Distante (émise)
+c4b5da24	Type d'alarme
+b8f22727	L'alarme sonne seulement sur la radio ou est aussi émise.
+40821b7a	Active la fonction radio FM.
+e74899c9	Écran allumé
+2a99768b	Durée de l'écran allumé
+b5cd3b7c	LED allumée
+3ea3bfc2	Durée de la LED allumée
+7735bf5f	Touches verrouillées
+fcc3a1bc	État du verrouillage du clavier.
+0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
+92f22ee4	«Radtel RT-850 programming software» (UV5118)
+4ebd3ae5	Plages verrouillées
+8a5e2a25	Double veille oui/non
+1e94bc3f	Rétroéclairage oui/non
+30111395	Direct / inversion
+db2d8bf5	Lecture de la fréquence
+68e6a9fd	Recherche de la tonalité (CTCSS/DCS)
+8a31aa90	Envoi de la tonalité unique
+fbf57709	Réception AM/FM
+0f716668	Enregistrer le canal
+e2158ebc	20 kHz
+cc19ce03	500 kHz
+4baefa89	1 MHz
+286e8545	5 MHz
+7dab84fd	«Diretta» trasmette sulla frequenza di ricezione, senza passare dal ponte; «Frequenze invertite» scambia ricezione e trasmissione (per ascoltare l'ingresso del ponte).
+50d50889	Amplification du microphone en émission (0-31).
+97767e02	Volume de réception
+3875e9d6	Niveau du son en réception (0-63).
+8ec31dfb	Seuil du canal adjacent
+a1410ed8	Seuil avec lequel la radio rejette les perturbations des canaux voisins (0-10). Sans raison précise, laissez la valeur actuelle.
+e1209b49	Délai après la queue du relais
+16d336bb	Temps d'attente après la fin de l'émission avant de rouvrir l'écoute : il évite d'entendre la queue du relais.
+6828f256	Seuil du VOX
+5f804bc1	Tonalité de début d'émission
+9402a713	La radio émet une tonalité lorsqu'elle commence à émettre.
+6a08bdd7	Ce que la radio envoie quand vous relâchez le PTT : rien, une tonalité (roger beep), l'indicatif ou la position GPS.
+169c5cdd	Envoyer l'indicatif
+22bdad69	Envoyer la position GPS
+0ec95515	Fréquence de la tonalité unique (Hz)
+bd59a58b	Fréquence de la tonalité envoyée avec la fonction « Envoi de la tonalité unique » (par exemple 1750 Hz pour ouvrir les relais).
+2063fedd	Plage du fréquencemètre
+e44b1f4d	Plage dans laquelle la fonction « Lecture de la fréquence » cherche le signal.
+2f193534	18-64 MHz
+79e921d1	64-136 MHz
+15f5f061	136-174 MHz
+aceefc8d	174-240 MHz
+f000362e	240-320 MHz
+172a3144	320-400 MHz
+38b8b55b	400-480 MHz
+517bb4f2	480-560 MHz
+4d24f57c	560-640 MHz
+c8ab699a	840-920 MHz
+205f5dc5	920-1000 MHz
+f6929a5d	Bande du PTT principal
+6bc98c4f	Sur quelle bande émet la touche PTT principale.
+21d3170b	Bande A : mode de travail
+09162f06	Bande A : à l'écran
+a226ce12	Bande B : mode de travail
+3159c3d9	Bande B : à l'écran
+510bda43	Sens du balayage
+ec3ce716	Vers le bas
+c01040ca	CO : le balayage reprend quand le signal disparaît ; TO : il reprend après le temps d'arrêt ; SE : il s'arrête sur le premier signal.
+1db503f6	À la fin du balayage, revenir à
+e50f1121	Canal de départ
+fc7b50fb	Canal courant
+e093b102	Arrêt du balayage
+d7257747	Temps d'arrêt sur un canal occupé (mode TO).
+e50cff45	Démarrage de l'économiseur d'écran
+de3bb41c	Après ce temps, l'économiseur d'écran démarre.
+343ac6c1	Après ce temps sans toucher les touches, la radio quitte le menu.
+cb6cfa0e	Chiffres pour saisir la fréquence
+913374e8	Nombre de chiffres à taper au clavier pour saisir une fréquence.
+798cebd6	6 chiffres
+590cd4f0	8 chiffres
+0bbea147	Actualisation de l'indicateur de voix
+408c86e5	Fréquence d'actualisation à l'écran du niveau de la voix en émission.
+f5a8980c	Actualisation de l'indicateur de signal
+f860a2ce	Fréquence d'actualisation à l'écran de la force du signal reçu.
+3a0c4ad1	Démarrage de l'économie
+efadfed0	Temps sans signaux après lequel l'économie de batterie démarre.
+0c496f71	Touche {0}, appui long
+677f6000	Plage {0}
+bb3fdef7	Ce qui est permis entre les deux fréquences indiquées ci-dessous : tout, la réception seulement ou rien.
+5dee346e	Libre
+5ef9b7ea	Verrouillée
+a7661999	Plage {0} : de (MHz)
+f2fbf1f9	Plage {0} : à (MHz)
+2ce78fb1	Ce que fait la touche d'alarme : seule la radio sonne, l'alarme est émise, ou les deux.
+7ab59ed8	Locale et distante
+51a66fac	Envoi automatique du DTMF
+4cb7978a	Quand la radio envoie d'elle-même le code DTMF choisi ci-dessous.
+bb5f903a	Code DTMF à envoyer
+e132d568	DTMF-{0}{1}
+22066c91	DTMF : délai avant l'envoi
+4d733da8	DTMF : durée de chaque chiffre
+12b83b47	DTMF : pause entre les chiffres
+05f1deca	Afficher les DTMF reçus
+a694d839	DTMF : niveau d'émission
+939db74a	Niveau des tonalités DTMF émises (0-127).
+02ebbb79	DTMF : seuil de décodage
+8497e757	Niveau minimal pour qu'une tonalité DTMF reçue soit reconnue (0-63).
+7ac7e2f3	Commandes à distance par DTMF
+f270db7b	La radio accepte les commandes à distance reçues en DTMF.
+dab5681b	Réglage de l'heure par radio
+16399562	La radio règle l'horloge avec les données reçues.
+c07d51a5	Avec les commandes à distance activées, quiconque connaît les codes peut agir sur la radio à distance : ne les activez que si vous en avez besoin.
+2700c301	«Radtel RT-871A CPS» (250707)
+0dc6b4aa	Off
+86cc09a7	30 seconds
+1f37498e	60 seconds
+f777d6b9	90 seconds
+02579e3f	120 seconds
+e382ab38	150 seconds
+ba727161	180 seconds
+6201f2a1	210 seconds
+0adb7730	240 seconds
+429a8c2f	«JJCC-7700 CPS» v1.0.8
+75afe364	All
+307bedb4	«Radio CPS» v1.1.0 (RT-330)
+1c820e4d	5 seconds
+a339de11	10 seconds
+e36ad11e	15 seconds
+6b27c5e2	20 seconds
+983277c4	1 minute
+d405b9a4	2 minutes
+21d03b33	3 minutes
+7025b545	settings_twin: {0}

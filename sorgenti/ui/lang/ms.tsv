@@ -6045,3 +6045,179 @@ b26d2b6b	Kekunci sisi 1
 b36d2cfe	Kekunci sisi 2
 82cf4523	Penunjuk yang berdenyut semasa siap sedia («breathing light»)
 f552ed5e	Penunjuk radio berdenyut perlahan semasa radio dihidupkan dan dalam keadaan siap sedia.
+d6151086	Dalam program pengeluar, tetapan ini dibaca dengan cara yang berbeza daripada cara ia ditulis: di sini cara penulisan diikuti. Jika kesan pada radio tidak seperti yang dijangka, kembalikan nilai sebelumnya.
+6af4461c	Tahap VOX
+4c6be8c8	Tahap suara yang memulakan pemancaran dengan VOX.
+f51b5b8f	Berapa lama radio terus memancar selepas suara berhenti.
+361de9e5	Nada pemancaran
+5eff59ac	Nada yang dikeluarkan apabila PTT ditekan atau dilepaskan.
+04774500	Pendek
+63d152a0	Panjang
+9d8cf0b8	Ekor akhir pemancaran
+0b094a9c	Nada yang menghapuskan desiran pada akhir pemancaran.
+46f57faf	0,25 kHz
+af1c7ca6	1,25 kHz
+227cc35d	Langkah yang digunakan oleh kekunci untuk menukar frekuensi dalam mod VFO.
+51cebd75	+ (pemancaran lebih tinggi)
+bfe6572c	− (pemancaran lebih rendah)
+91fffb5f	Dalam mod VFO: sama ada pemancaran dianjak berbanding penerimaan (pengulang) dan ke arah mana.
+9bfbd69c	Scrambler (kod)
+66f3fb31	Penyongsangan suara: hanya difahami oleh radio yang menggunakan kod yang sama.
+5ebadd97	Semasa menunggu, radio mematikan penerima secara berkala: semakin tinggi nisbah, semakin jimat bateri (dan semakin mudah terlepas permulaan panggilan).
+e1df03d9	Radio mendengar dua jalur (A dan B) secara bergilir.
+1566b209	Jalur semasa
+5f62cc51	Jalur tempat radio bekerja.
+b2b0b49a	Jalur yang sedang menerima
+5396342b	Keutamaan pemancaran
+8dba904e	Dengan dengar berkembar: apabila PTT ditekan, pemancaran dibuat pada jalur yang dipilih atau pada jalur yang sedang menerima.
+4e8162d2	Mod kerja
+49ce251a	Saluran dipaparkan sebagai
+0cc37dd4	Saluran jalur A
+0fc3828d	Saluran jalur B
+0847ddf2	Saluran cuaca NOAA
+859fc2d5	Kekunci radio
+1d9c3d17	Apa yang didengar dengan fungsi radio: stesen FM atau saluran cuaca NOAA (aktif di Amerika Utara sahaja).
+58531701	Pemantauan saluran semasa radio
+66954822	Semasa mendengar radio FM, radio terus memantau saluran dan beralih kepada panggilan apabila ia tiba.
+f5416c3d	Radio mengumumkan saluran dan fungsi dengan suara.
+0e83a136	Isyarat bunyi pada setiap tekanan kekunci.
+d69474fa	Selepas masa ini tanpa menyentuh kekunci, paparan dimatikan.
+dc697424	Kunci kekunci automatik
+88774891	Selepas masa ini tanpa menyentuh kekunci, papan kekunci terkunci sendiri.
+c227c504	Tiada fungsi
+73ea4b1b	Penggera jauh
+41bc3c33	Paparan hidup/mati
+4b24f37e	Kunci frekuensi
+6d510efd	Carian frekuensi dan nada
+69ac5d15	Anjakan pengulang
+40900ab0	Dalam mod VFO pemancaran dianjak berbanding penerimaan (pengulang).
+d20e644c	Memampatkan suara semasa memancar dan mengembangkannya semasa menerima untuk mengurangkan hingar: hanya berguna antara radio yang kedua-duanya menggunakannya.
+2bd42c33	Menghalang penukaran frekuensi daripada kekunci.
+4d66be8f	Jauh (dipancarkan)
+c4b5da24	Jenis penggera
+b8f22727	Penggera berbunyi pada radio sahaja atau dipancarkan juga.
+40821b7a	Mengaktifkan fungsi radio FM.
+e74899c9	Paparan hidup
+2a99768b	Tempoh paparan hidup
+b5cd3b7c	LED hidup
+3ea3bfc2	Tempoh LED hidup
+7735bf5f	Kekunci dikunci
+fcc3a1bc	Keadaan kunci papan kekunci.
+0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
+92f22ee4	«Radtel RT-850 programming software» (UV5118)
+4ebd3ae5	Julat dikunci
+8a5e2a25	Dengar berkembar hidup/mati
+1e94bc3f	Lampu latar hidup/mati
+30111395	Terus / songsang
+db2d8bf5	Bacaan frekuensi
+68e6a9fd	Carian nada (CTCSS/DCS)
+8a31aa90	Hantar nada tunggal
+fbf57709	Penerimaan AM/FM
+0f716668	Simpan saluran
+e2158ebc	20 kHz
+cc19ce03	500 kHz
+4baefa89	1 MHz
+286e8545	5 MHz
+7dab84fd	«Diretta» trasmette sulla frequenza di ricezione, senza passare dal ponte; «Frequenze invertite» scambia ricezione e trasmissione (per ascoltare l'ingresso del ponte).
+50d50889	Penguatan mikrofon semasa memancar (0-31).
+97767e02	Kelantangan penerimaan
+3875e9d6	Tahap audio semasa menerima (0-63).
+8ec31dfb	Ambang saluran bersebelahan
+a1410ed8	Ambang yang digunakan radio untuk menolak gangguan saluran berdekatan (0-10). Jika tiada sebab yang jelas, biarkan nilai yang ada.
+e1209b49	Lengah selepas ekor pengulang
+16d336bb	Masa menunggu selepas tamat pemancaran sebelum membuka semula pendengaran: supaya ekor pengulang tidak kedengaran.
+6828f256	Ambang VOX
+5f804bc1	Nada permulaan pemancaran
+9402a713	Radio mengeluarkan nada apabila mula memancar.
+6a08bdd7	Apa yang dihantar radio apabila PTT dilepaskan: tiada, nada (roger beep), tanda panggilan atau kedudukan GPS.
+169c5cdd	Hantar tanda panggilan
+22bdad69	Hantar kedudukan GPS
+0ec95515	Frekuensi nada tunggal (Hz)
+bd59a58b	Frekuensi nada yang dihantar dengan fungsi «Hantar nada tunggal» (contohnya 1750 Hz untuk membuka pengulang).
+2063fedd	Julat pembilang frekuensi
+e44b1f4d	Julat tempat fungsi «Bacaan frekuensi» mencari isyarat.
+2f193534	18-64 MHz
+79e921d1	64-136 MHz
+15f5f061	136-174 MHz
+aceefc8d	174-240 MHz
+f000362e	240-320 MHz
+172a3144	320-400 MHz
+38b8b55b	400-480 MHz
+517bb4f2	480-560 MHz
+4d24f57c	560-640 MHz
+c8ab699a	840-920 MHz
+205f5dc5	920-1000 MHz
+f6929a5d	Jalur PTT utama
+6bc98c4f	Pada jalur mana kekunci PTT utama memancar.
+21d3170b	Jalur A: mod kerja
+09162f06	Jalur A: pada paparan
+a226ce12	Jalur B: mod kerja
+3159c3d9	Jalur B: pada paparan
+510bda43	Arah imbasan
+ec3ce716	Ke bawah
+c01040ca	CO: imbasan disambung apabila isyarat hilang; TO: disambung selepas masa berhenti; SE: berhenti pada isyarat pertama.
+1db503f6	Pada akhir imbasan kembali ke
+e50f1121	Saluran permulaan
+fc7b50fb	Saluran semasa
+e093b102	Hentian imbasan
+d7257747	Masa berhenti pada saluran yang sibuk (mod TO).
+e50cff45	Permulaan penyelamat skrin
+de3bb41c	Selepas masa ini penyelamat skrin bermula.
+343ac6c1	Selepas masa ini tanpa menyentuh kekunci, radio keluar daripada menu.
+cb6cfa0e	Digit untuk memasukkan frekuensi
+913374e8	Bilangan digit yang perlu ditaip pada papan kekunci untuk memasukkan frekuensi.
+798cebd6	6 digit
+590cd4f0	8 digit
+0bbea147	Kemas kini penunjuk suara
+408c86e5	Berapa kerap tahap suara semasa memancar dikemas kini pada paparan.
+f5a8980c	Kemas kini penunjuk isyarat
+f860a2ce	Berapa kerap kekuatan isyarat yang diterima dikemas kini pada paparan.
+3a0c4ad1	Permulaan penjimatan
+efadfed0	Masa tanpa isyarat yang selepasnya penjimatan bateri bermula.
+0c496f71	Kekunci {0}, tekanan lama
+677f6000	Julat {0}
+bb3fdef7	Apa yang dibenarkan antara dua frekuensi yang ditunjukkan di bawah: semua, penerimaan sahaja atau tiada.
+5dee346e	Bebas
+5ef9b7ea	Dikunci
+a7661999	Julat {0}: dari (MHz)
+f2fbf1f9	Julat {0}: hingga (MHz)
+2ce78fb1	Apa yang dilakukan kekunci penggera: radio sahaja berbunyi, penggera dipancarkan, atau kedua-duanya.
+7ab59ed8	Tempatan dan jauh
+51a66fac	Penghantaran DTMF automatik
+4cb7978a	Bila radio menghantar sendiri kod DTMF yang dipilih di bawah.
+bb5f903a	Kod DTMF untuk dihantar
+e132d568	DTMF-{0}{1}
+22066c91	DTMF: lengah sebelum penghantaran
+4d733da8	DTMF: tempoh setiap digit
+12b83b47	DTMF: jeda antara digit
+05f1deca	Papar DTMF yang diterima
+a694d839	DTMF: tahap pemancaran
+939db74a	Tahap nada DTMF yang dipancarkan (0-127).
+02ebbb79	DTMF: ambang penyahkodan
+8497e757	Tahap minimum supaya nada DTMF yang diterima dikenali (0-63).
+7ac7e2f3	Arahan jauh melalui DTMF
+f270db7b	Radio menerima arahan jauh yang diterima dalam DTMF.
+dab5681b	Pelarasan masa melalui radio
+16399562	Radio melaraskan jam dengan data yang diterima.
+c07d51a5	Dengan arahan jauh aktif, sesiapa yang mengetahui kod boleh mengawal radio dari jauh: aktifkan hanya jika anda memerlukannya.
+2700c301	«Radtel RT-871A CPS» (250707)
+0dc6b4aa	Off
+86cc09a7	30 seconds
+1f37498e	60 seconds
+f777d6b9	90 seconds
+02579e3f	120 seconds
+e382ab38	150 seconds
+ba727161	180 seconds
+6201f2a1	210 seconds
+0adb7730	240 seconds
+429a8c2f	«JJCC-7700 CPS» v1.0.8
+75afe364	All
+307bedb4	«Radio CPS» v1.1.0 (RT-330)
+1c820e4d	5 seconds
+a339de11	10 seconds
+e36ad11e	15 seconds
+6b27c5e2	20 seconds
+983277c4	1 minute
+d405b9a4	2 minutes
+21d03b33	3 minutes
+7025b545	settings_twin: {0}

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.42.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.43.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,14 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.43.0:
+- Error corregido: en 33 radios (entre ellas Baofeng UV-17 Pro, UV-17 Pro GPS, UV-21
+  Pro, UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22, HA1G, Kenwood TK-2140 / TK-3140) y
+  en las 8 «gemelas» de la 4.42 los ajustes no aparecían después de leer la radio por
+  cable, sino solo al abrir un archivo de CHIRP.
+- Ajustes para otras cinco Radtel (RT-817A / RT-871A, RT-830, RT-850, RT-330, RT-400), a
+  partir de los programas del fabricante.
+- Galería: 663 modelos de 54 marcas (609 con canales, 546 con ajustes).
 Novedades de la 4.42.0:
 - La pestaña Inicio ahora cabe entera en la ventana: recuadro de marcas más ancho y una
   página que se adapta sola al tamaño de la ventana.

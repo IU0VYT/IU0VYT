@@ -7,6 +7,30 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.43.0 (16/11/2026)
+-------------------
+- Error corregido, presente desde que existen los ajustes: en 33 radios tomadas de CHIRP
+  y en las 8 «gemelas» añadidas en la 4.42, tras leer la radio por cable la pestaña
+  Ajustes respondía que la memoria abierta no correspondía a la tabla de ajustes; los
+  ajustes solo se veían al abrir un archivo .img de CHIRP. Causa: la tabla se daba solo
+  a las memorias tan largas como el archivo de CHIRP, que termina con el nombre del
+  modelo u otras zonas, mientras que la memoria leída por nuestro controlador es unos
+  bytes más corta. Ahora basta con que la memoria sea tan larga como el mapa de la
+  radio. Radios afectadas: Baofeng UV-17, UV-17Pro, UV-17Pro GPS, UV-17R Plus, UV-21Pro
+  GPS, UV-21Pro V2, UV-25, UV-32, UV-5G Plus, UV-5RH, K5 Plus, UV-6 / UV-7, UV-5G
+  (GMRS), MP31; MaxTalker P15, MT-5RM; Retevis RT22, RT22FRS, RT622, RB17, HA1G, HA1UV;
+  Kenwood TK-2140K, TK-3140K / K2 / K3; Radioddity R2; WLN KD-C1; Zastone ZT-X6; Luiton
+  LT-316; TID TD-M8; TYT TH-UV8000D / E; Yaesu FT5DR / FT5DE; UV-17R, UV-21R, UV-21L,
+  UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro. Una prueba nueva lee las radios
+  simuladas con nuestro controlador y comprueba que la tabla esté.
+- Radtel RT-817A / RT-871A (65 ajustes), RT-830 (26) y RT-850 (36): tablas tomadas de
+  los programas del fabricante. En la RT-830 y la RT-850 dos elementos llevan un aviso,
+  porque esos programas los leen de forma distinta a como los escriben: se sigue la
+  escritura.
+- Radtel RT-400 (33 ajustes) y RT-330 (30): la tabla de CHIRP de la radio con el mismo
+  bloque de ajustes (RT-470), limitada a los elementos que los programas del fabricante
+  leen y escriben igual. Ninguno de los ajustes nuevos se ha probado en una radio real.
+
 4.42.0 (16/11/2026)
 -------------------
 - Pestaña Inicio: con 54 marcas el recuadro de marcas se había hecho demasiado alto y la

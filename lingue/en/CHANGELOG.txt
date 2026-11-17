@@ -7,6 +7,31 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.43.0 (16/11/2026)
+-------------------
+- Bug fixed, present ever since settings exist: for 33 radios taken from CHIRP and for
+  the 8 «twins» added in 4.42, after reading the radio by cable the Settings tab
+  answered that the open memory did not match the settings table; the settings were
+  visible only when opening a CHIRP .img file. Cause: the table was given only to
+  memories as long as the CHIRP file, which ends with the model name or other areas,
+  while the memory read by our driver is a few bytes shorter. Now it is enough for the
+  memory to be as long as the radio's map. Radios concerned: Baofeng UV-17, UV-17Pro,
+  UV-17Pro GPS, UV-17R Plus, UV-21Pro GPS, UV-21Pro V2, UV-25, UV-32, UV-5G Plus,
+  UV-5RH, K5 Plus, UV-6 / UV-7, UV-5G (GMRS), MP31; MaxTalker P15, MT-5RM; Retevis RT22,
+  RT22FRS, RT622, RB17, HA1G, HA1UV; Kenwood TK-2140K, TK-3140K / K2 / K3; Radioddity
+  R2; WLN KD-C1; Zastone ZT-X6; Luiton LT-316; TID TD-M8; TYT TH-UV8000D / E; Yaesu
+  FT5DR / FT5DE; UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152
+  Pro. A new test reads the simulated radios with our driver and checks that the table
+  is there.
+- Radtel RT-817A / RT-871A (65 settings), RT-830 (26) and RT-850 (36): tables taken from
+  the manufacturer's programs. In RT-830 and RT-850 two entries carry a warning, because
+  those programs read them differently from how they write them: the writing is
+  followed.
+- Radtel RT-400 (33 settings) and RT-330 (30): the CHIRP table of the radio with the
+  same settings block (RT-470), limited to the entries that the manufacturer's programs
+  read and write in the same way. None of the new settings has been tried on a real
+  radio.
+
 4.42.0 (16/11/2026)
 -------------------
 - Home tab: with 54 brands the brand box had grown too tall and the lower part of the

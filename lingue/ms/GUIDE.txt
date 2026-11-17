@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.42.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.43.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,14 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.43.0:
+- Ralat dibetulkan: bagi 33 radio (termasuk Baofeng UV-17 Pro, UV-17 Pro GPS, UV-21 Pro,
+  UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22, HA1G, Kenwood TK-2140 / TK-3140) dan bagi
+  8 «kembar» versi 4.42, tetapan tidak muncul selepas radio dibaca melalui kabel, hanya
+  apabila fail CHIRP dibuka.
+- Tetapan untuk lima lagi radio Radtel (RT-817A / RT-871A, RT-830, RT-850, RT-330,
+  RT-400), daripada program pengeluar.
+- Galeri: 663 model daripada 54 jenama (609 dengan saluran, 546 dengan tetapan).
 Baharu dalam 4.42.0:
 - Tab Laman Utama kini muat sepenuhnya dalam tetingkap: kotak jenama lebih lebar dan
   halaman yang menyesuaikan diri dengan saiz tetingkap.

@@ -7,6 +7,32 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.43.0 (16/11/2026)
+-------------------
+- Erreur corrigée, présente depuis que les réglages existent : pour 33 radios issues de
+  CHIRP et pour les 8 « jumelles » ajoutées dans la 4.42, après la lecture de la radio
+  par câble, l'onglet Réglages répondait que la mémoire ouverte ne correspondait pas à
+  la table des réglages ; les réglages n'étaient visibles qu'en ouvrant un fichier .img
+  de CHIRP. Cause : la table n'était donnée qu'aux mémoires aussi longues que le fichier
+  CHIRP, qui se termine par le nom du modèle ou par d'autres zones, alors que la mémoire
+  lue par notre pilote est plus courte de quelques octets. Il suffit maintenant que la
+  mémoire soit aussi longue que la carte mémoire de la radio. Radios concernées :
+  Baofeng UV-17, UV-17Pro, UV-17Pro GPS, UV-17R Plus, UV-21Pro GPS, UV-21Pro V2, UV-25,
+  UV-32, UV-5G Plus, UV-5RH, K5 Plus, UV-6 / UV-7, UV-5G (GMRS), MP31; MaxTalker P15,
+  MT-5RM; Retevis RT22, RT22FRS, RT622, RB17, HA1G, HA1UV; Kenwood TK-2140K, TK-3140K /
+  K2 / K3; Radioddity R2; WLN KD-C1; Zastone ZT-X6; Luiton LT-316; TID TD-M8; TYT
+  TH-UV8000D / E; Yaesu FT5DR / FT5DE; UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro,
+  UV-29 Pro, UV-7B, AR-152 Pro. Un nouveau test lit les radios simulées avec notre
+  pilote et vérifie que la table est bien là.
+- Radtel RT-817A / RT-871A (65 réglages), RT-830 (26) et RT-850 (36) : tables tirées des
+  programmes du constructeur. Sur la RT-830 et la RT-850, deux éléments portent un
+  avertissement, car ces programmes les lisent autrement qu'ils ne les écrivent : on
+  suit l'écriture.
+- Radtel RT-400 (33 réglages) et RT-330 (30) : table CHIRP de la radio ayant le même
+  bloc de réglages (RT-470), limitée aux éléments que les programmes du constructeur
+  lisent et écrivent de la même façon. Aucun des nouveaux réglages n'a été essayé sur
+  une vraie radio.
+
 4.42.0 (16/11/2026)
 -------------------
 - Onglet Accueil : avec 54 marques, le cadre des marques était devenu trop haut et le

@@ -1,6 +1,6 @@
 IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 =====================================================================
-버전 4.42.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
+버전 4.43.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
 작성자: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 웹사이트: https://iu0vyt.github.io/IU0VYT/
 소스 코드와 릴리스: https://github.com/IU0VYT/IU0VYT
@@ -8,6 +8,10 @@ IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 AUTHORS_AND_LICENSES.txt를 보세요.
 이 파일은 LEGGIMI.txt의 한국어 번역입니다(이탈리아어 원문이 기준이 되는 글입니다). 이전 버전의 새 기능은 메인 폴더의 이탈리아어
 CHANGELOG.txt에 있습니다(여기의 CHANGELOG.txt에는 4.13 항목의 번역이 있습니다).
+4.43.0의 새로운 점:
+- 오류 수정: 33개 무전기(Baofeng UV-17 Pro, UV-17 Pro GPS, UV-21 Pro, UV-25, UV-32, UV-5RH, K5 Plus, Retevis RT22, HA1G, Kenwood TK-2140 / TK-3140 등)와 4.42의 «쌍둥이» 8개 모델에서 케이블로 무전기를 읽은 뒤 설정이 나타나지 않고 CHIRP 파일을 열 때만 나타났습니다.
+- Radtel 5개 모델(RT-817A / RT-871A, RT-830, RT-850, RT-330, RT-400)에 설정 추가: 제조사 프로그램에서 가져왔습니다.
+- 갤러리: 54개 브랜드 663개 모델(채널 지원 609개, 설정 지원 546개).
 4.42.0의 새로운 점:
 - «홈» 탭 전체가 이제 창 안에 들어옵니다. 브랜드 상자가 넓어졌고 페이지가 창 크기에 맞춰 스스로 조정됩니다.
 - 채널만 있던 30개 모델에 설정 추가: Baofeng D 시리즈 (BF-V1D … BF-V12D, 888SD, 889D, 1901D, 1904D, 1909D, W31D, BF-T20D), BF-88ST, BF-C2 / BF-V2, GT-68, GT-22, T22, UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro, Radtel RT-13.

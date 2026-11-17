@@ -6045,3 +6045,179 @@ b26d2b6b	Seitentaste 1
 b36d2cfe	Seitentaste 2
 82cf4523	Anzeige, die im Standby pulsiert («breathing light»)
 f552ed5e	Die Anzeige des Geräts pulsiert langsam, während das Gerät eingeschaltet und in Bereitschaft ist.
+d6151086	Im Programm des Herstellers wird diese Einstellung anders gelesen, als sie geschrieben wird: Hier wird dem Schreiben gefolgt. Wenn die Wirkung am Funkgerät nicht die erwartete ist, stelle den vorherigen Wert wieder ein.
+6af4461c	VOX-Pegel
+4c6be8c8	Sprachpegel, der das Senden mit VOX auslöst.
+f51b5b8f	Wie lange das Funkgerät nach dem Ende der Sprache auf Sendung bleibt.
+361de9e5	Sendeton
+5eff59ac	Ton, der beim Drücken oder Loslassen der PTT ausgegeben wird.
+04774500	Kurz
+63d152a0	Lang
+9d8cf0b8	Nachlauf am Sendeende
+0b094a9c	Ton, der das Rauschen am Sendeende unterdrückt.
+46f57faf	0,25 kHz
+af1c7ca6	1,25 kHz
+227cc35d	Schrittweite, mit der die Tasten im VFO-Modus die Frequenz ändern.
+51cebd75	+ (Senden höher)
+bfe6572c	− (Senden tiefer)
+91fffb5f	Im VFO-Modus: ob das Senden gegenüber dem Empfang versetzt ist (Relais) und in welche Richtung.
+9bfbd69c	Scrambler (Code)
+66f3fb31	Sprachinvertierung: nur mit Funkgeräten verständlich, die denselben Code verwenden.
+5ebadd97	Im Wartezustand schaltet das Funkgerät den Empfänger in Abständen aus: Je höher das Verhältnis, desto mehr Akku wird gespart (und desto leichter verpasst man den Anfang eines Anrufs).
+e1df03d9	Das Funkgerät hört die beiden Bänder (A und B) abwechselnd ab.
+1566b209	Aktuelles Band
+5f62cc51	Band, auf dem das Funkgerät arbeitet.
+b2b0b49a	Band, das gerade empfängt
+5396342b	Sendepriorität
+8dba904e	Mit Zweikanalüberwachung: Beim Drücken der PTT wird auf dem gewählten Band oder auf dem gerade empfangenden gesendet.
+4e8162d2	Arbeitsmodus
+49ce251a	Kanal angezeigt als
+0cc37dd4	Kanal von Band A
+0fc3828d	Kanal von Band B
+0847ddf2	NOAA-Wetterkanäle
+859fc2d5	Radiotaste
+1d9c3d17	Was mit der Radiofunktion gehört wird: UKW-Sender oder die NOAA-Wetterkanäle (nur in Nordamerika aktiv).
+58531701	Kanalüberwachung während des Radios
+66954822	Während des UKW-Radios überwacht das Funkgerät weiter den Kanal und wechselt zum Anruf, wenn er eintrifft.
+f5416c3d	Das Funkgerät sagt Kanäle und Funktionen per Sprache an.
+0e83a136	Signalton bei jedem Tastendruck.
+d69474fa	Nach dieser Zeit ohne Tastenberührung schaltet sich das Display aus.
+dc697424	Automatische Tastensperre
+88774891	Nach dieser Zeit ohne Tastenberührung sperrt sich die Tastatur von selbst.
+c227c504	Keine Funktion
+73ea4b1b	Fernalarm
+41bc3c33	Display ein/aus
+4b24f37e	Frequenzsperre
+6d510efd	Frequenz- und Tonsuche
+69ac5d15	Relaisablage
+40900ab0	Im VFO-Modus ist das Senden gegenüber dem Empfang versetzt (Relais).
+d20e644c	Komprimiert die Sprache beim Senden und dehnt sie beim Empfang, um das Rauschen zu verringern: nur zwischen Funkgeräten sinnvoll, die es beide verwenden.
+2bd42c33	Verhindert das Ändern der Frequenz über die Tasten.
+4d66be8f	Fern (gesendet)
+c4b5da24	Alarmtyp
+b8f22727	Der Alarm ertönt nur am Funkgerät oder wird auch gesendet.
+40821b7a	Aktiviert die UKW-Radiofunktion.
+e74899c9	Display ein
+2a99768b	Dauer des eingeschalteten Displays
+b5cd3b7c	LED ein
+3ea3bfc2	Dauer der eingeschalteten LED
+7735bf5f	Tasten gesperrt
+fcc3a1bc	Zustand der Tastatursperre.
+0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
+92f22ee4	«Radtel RT-850 programming software» (UV5118)
+4ebd3ae5	Gesperrte Bereiche
+8a5e2a25	Zweikanalüberwachung ein/aus
+1e94bc3f	Hintergrundbeleuchtung ein/aus
+30111395	Direkt / Umkehrung
+db2d8bf5	Frequenzmessung
+68e6a9fd	Tonsuche (CTCSS/DCS)
+8a31aa90	Einzelton senden
+fbf57709	AM/FM-Empfang
+0f716668	Kanal speichern
+e2158ebc	20 kHz
+cc19ce03	500 kHz
+4baefa89	1 MHz
+286e8545	5 MHz
+7dab84fd	«Diretta» trasmette sulla frequenza di ricezione, senza passare dal ponte; «Frequenze invertite» scambia ricezione e trasmissione (per ascoltare l'ingresso del ponte).
+50d50889	Mikrofonverstärkung beim Senden (0-31).
+97767e02	Empfangslautstärke
+3875e9d6	Audiopegel beim Empfang (0-63).
+8ec31dfb	Schwelle des Nachbarkanals
+a1410ed8	Schwelle, mit der das Funkgerät Störungen der Nachbarkanäle verwirft (0-10). Ohne genauen Grund den vorhandenen Wert lassen.
+e1209b49	Verzögerung nach dem Relaisnachlauf
+16d336bb	Wartezeit nach dem Sendeende, bevor der Empfang wieder geöffnet wird: So hört man den Relaisnachlauf nicht.
+6828f256	VOX-Schwelle
+5f804bc1	Ton am Sendebeginn
+9402a713	Das Funkgerät gibt einen Ton aus, wenn es zu senden beginnt.
+6a08bdd7	Was das Funkgerät sendet, wenn du die PTT loslässt: nichts, einen Ton (Roger-Beep), das Rufzeichen oder die GPS-Position.
+169c5cdd	Rufzeichen senden
+22bdad69	GPS-Position senden
+0ec95515	Frequenz des Einzeltons (Hz)
+bd59a58b	Frequenz des Tons, der mit der Funktion «Einzelton senden» gesendet wird (zum Beispiel 1750 Hz zum Öffnen der Relais).
+2063fedd	Bereich des Frequenzzählers
+e44b1f4d	Bereich, in dem die Funktion «Frequenzmessung» das Signal sucht.
+2f193534	18-64 MHz
+79e921d1	64-136 MHz
+15f5f061	136-174 MHz
+aceefc8d	174-240 MHz
+f000362e	240-320 MHz
+172a3144	320-400 MHz
+38b8b55b	400-480 MHz
+517bb4f2	480-560 MHz
+4d24f57c	560-640 MHz
+c8ab699a	840-920 MHz
+205f5dc5	920-1000 MHz
+f6929a5d	Band der Haupt-PTT
+6bc98c4f	Auf welchem Band die Haupt-PTT-Taste sendet.
+21d3170b	Band A: Arbeitsmodus
+09162f06	Band A: auf dem Display
+a226ce12	Band B: Arbeitsmodus
+3159c3d9	Band B: auf dem Display
+510bda43	Suchlaufrichtung
+ec3ce716	Abwärts
+c01040ca	CO: Der Suchlauf läuft weiter, wenn das Signal verschwindet; TO: Er läuft nach der Verweilzeit weiter; SE: Er hält beim ersten Signal an.
+1db503f6	Am Ende des Suchlaufs zurück zu
+e50f1121	Startkanal
+fc7b50fb	Aktueller Kanal
+e093b102	Verweilzeit des Suchlaufs
+d7257747	Verweilzeit auf einem belegten Kanal (TO-Modus).
+e50cff45	Start des Bildschirmschoners
+de3bb41c	Nach dieser Zeit startet der Bildschirmschoner.
+343ac6c1	Nach dieser Zeit ohne Tastenberührung verlässt das Funkgerät das Menü.
+cb6cfa0e	Ziffern zur Frequenzeingabe
+913374e8	Anzahl der Ziffern, die zur Eingabe einer Frequenz auf der Tastatur zu tippen sind.
+798cebd6	6 Ziffern
+590cd4f0	8 Ziffern
+0bbea147	Aktualisierung der Sprachanzeige
+408c86e5	Wie oft der Sprachpegel beim Senden auf dem Display aktualisiert wird.
+f5a8980c	Aktualisierung der Signalanzeige
+f860a2ce	Wie oft die Stärke des empfangenen Signals auf dem Display aktualisiert wird.
+3a0c4ad1	Start des Sparmodus
+efadfed0	Zeit ohne Signale, nach der das Akkusparen beginnt.
+0c496f71	Taste {0}, langer Druck
+677f6000	Bereich {0}
+bb3fdef7	Was zwischen den beiden unten angegebenen Frequenzen erlaubt ist: alles, nur Empfang oder nichts.
+5dee346e	Frei
+5ef9b7ea	Gesperrt
+a7661999	Bereich {0}: von (MHz)
+f2fbf1f9	Bereich {0}: bis (MHz)
+2ce78fb1	Was die Alarmtaste tut: Nur das Funkgerät ertönt, der Alarm wird gesendet oder beides.
+7ab59ed8	Lokal und fern
+51a66fac	Automatisches Senden des DTMF
+4cb7978a	Wann das Funkgerät den unten gewählten DTMF-Code von selbst sendet.
+bb5f903a	Zu sendender DTMF-Code
+e132d568	DTMF-{0}{1}
+22066c91	DTMF: Verzögerung vor dem Senden
+4d733da8	DTMF: Dauer jeder Ziffer
+12b83b47	DTMF: Pause zwischen den Ziffern
+05f1deca	Empfangene DTMF anzeigen
+a694d839	DTMF: Sendepegel
+939db74a	Pegel der gesendeten DTMF-Töne (0-127).
+02ebbb79	DTMF: Dekodierschwelle
+8497e757	Mindestpegel, damit ein empfangener DTMF-Ton erkannt wird (0-63).
+7ac7e2f3	Fernbefehle über DTMF
+f270db7b	Das Funkgerät nimmt per DTMF empfangene Fernbefehle an.
+dab5681b	Uhrzeiteinstellung über Funk
+16399562	Das Funkgerät stellt die Uhr mit den empfangenen Daten.
+c07d51a5	Mit aktiven Fernbefehlen kann jeder, der die Codes kennt, aus der Ferne auf das Funkgerät einwirken: Aktiviere sie nur, wenn du sie brauchst.
+2700c301	«Radtel RT-871A CPS» (250707)
+0dc6b4aa	Off
+86cc09a7	30 seconds
+1f37498e	60 seconds
+f777d6b9	90 seconds
+02579e3f	120 seconds
+e382ab38	150 seconds
+ba727161	180 seconds
+6201f2a1	210 seconds
+0adb7730	240 seconds
+429a8c2f	«JJCC-7700 CPS» v1.0.8
+75afe364	All
+307bedb4	«Radio CPS» v1.1.0 (RT-330)
+1c820e4d	5 seconds
+a339de11	10 seconds
+e36ad11e	15 seconds
+6b27c5e2	20 seconds
+983277c4	1 minute
+d405b9a4	2 minutes
+21d03b33	3 minutes
+7025b545	settings_twin: {0}

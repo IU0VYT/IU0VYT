@@ -5740,6 +5740,179 @@ cf0ba7aa	Nome mostrato dalla radio (di solito il nominativo), fino a 16 caratter
 0fdc29b8	Numero DMR personale (ID radio), assegnato da RadioID.net al nominativo.
 daf6364d	Prima riga del messaggio mostrato all'accensione (10 caratteri).
 7730bf65	Seconda riga del messaggio mostrato all'accensione (10 caratteri).
+d6151086	Nel programma del costruttore questa voce è letta in modo diverso da come è scritta: qui si segue la scrittura. Se sulla radio l'effetto non è quello atteso, rimetti il valore di prima.
+6af4461c	Livello del VOX
+4c6be8c8	Livello di voce che fa partire la trasmissione con il VOX.
+f51b5b8f	Per quanto tempo la radio resta in trasmissione dopo che la voce è cessata.
+903de02f	A inizio trasmissione
+acf9776b	A fine trasmissione
+de5f87a4	A inizio e a fine
+361de9e5	Tono di trasmissione
+5eff59ac	Tono emesso quando si preme o si rilascia il PTT.
+04774500	Corta
+63d152a0	Lunga
+9d8cf0b8	Coda di fine trasmissione
+0b094a9c	Tono che elimina il fruscio a fine trasmissione.
+46f57faf	0,25 kHz
+af1c7ca6	1,25 kHz
+8b68364d	2,5 kHz
+e23ae463	5 kHz
+3d72e229	6,25 kHz
+38ea4037	10 kHz
+dd925812	12,5 kHz
+cbcc5c53	25 kHz
+46b6fb53	50 kHz
+1ecf13bf	100 kHz
+227cc35d	Passo con cui i tasti cambiano la frequenza in modo VFO.
+51cebd75	+ (trasmissione più alta)
+bfe6572c	− (trasmissione più bassa)
+91fffb5f	In modo VFO: se la trasmissione è spostata rispetto alla ricezione (ponti ripetitori) e in quale verso.
+9bfbd69c	Scrambler (codice)
+66f3fb31	Inversione della voce: si capisce solo con radio che usano lo stesso codice.
+5ebadd97	In attesa la radio spegne il ricevitore a intervalli: più alto il rapporto, più batteria si risparmia (e più facile è perdere l'inizio di una chiamata).
+e1df03d9	La radio ascolta le due bande (A e B) alternandole.
+1566b209	Banda corrente
+5f62cc51	Banda su cui la radio lavora.
+fa38c884	Banda selezionata
+b2b0b49a	Banda che sta ricevendo
+5396342b	Priorità di trasmissione
+8dba904e	Con il doppio ascolto: premendo il PTT si trasmette sulla banda selezionata oppure su quella che sta ricevendo.
+4e8162d2	Modo di lavoro
+49ce251a	Canale mostrato come
+0cc37dd4	Canale della banda A
+0fc3828d	Canale della banda B
+0847ddf2	Canali meteo NOAA
+859fc2d5	Tasto radio
+1d9c3d17	Che cosa si ascolta con la funzione radio: le stazioni FM oppure i canali meteo NOAA (attivi solo in Nord America).
+58531701	Ascolto dei canali durante la radio
+66954822	Mentre si ascolta la radio FM la radio continua a sorvegliare il canale e passa alla chiamata quando arriva.
+f5416c3d	La radio annuncia a voce canali e funzioni.
+0e83a136	Segnale acustico a ogni pressione di un tasto.
+d69474fa	Dopo questo tempo senza toccare i tasti il display si spegne.
+dc697424	Blocco automatico dei tasti
+88774891	Dopo questo tempo senza toccare i tasti la tastiera si blocca da sola.
+0b7d9ed8	Tasti programmabili
+c227c504	Nessuna funzione
+73ea4b1b	Allarme remoto
+41bc3c33	Display acceso/spento
+4b24f37e	Blocco della frequenza
+6d510efd	Ricerca di frequenza e tono
+69ac5d15	Scostamento per i ponti
+40900ab0	In modo VFO la trasmissione è spostata rispetto alla ricezione (ponti ripetitori).
+d20e644c	Comprime la voce in trasmissione e la espande in ricezione per ridurre il rumore: serve solo fra radio che lo usano entrambe.
+2bd42c33	Impedisce di cambiare frequenza dai tasti.
+4d66be8f	Remoto (trasmesso)
+c4b5da24	Tipo di allarme
+b8f22727	L'allarme suona solo sulla radio oppure viene anche trasmesso.
+40821b7a	Abilita la funzione radio FM.
+e74899c9	Display acceso
+2a99768b	Durata del display acceso
+b5cd3b7c	LED acceso
+3ea3bfc2	Durata del LED acceso
+7735bf5f	Tasti bloccati
+fcc3a1bc	Stato del blocco della tastiera.
+0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
+92f22ee4	«Radtel RT-850 programming software» (UV5118)
+4ebd3ae5	Gamme bloccate
+8a5e2a25	Doppio ascolto sì/no
+1e94bc3f	Retroilluminazione sì/no
+30111395	Diretta / inversione
+db2d8bf5	Lettura della frequenza
+68e6a9fd	Ricerca del tono (CTCSS/DCS)
+8a31aa90	Invio del tono singolo
+fbf57709	Ricezione AM/FM
+0f716668	Salva canale
+e2158ebc	20 kHz
+cc19ce03	500 kHz
+4baefa89	1 MHz
+286e8545	5 MHz
+7dab84fd	«Diretta» trasmette sulla frequenza di ricezione, senza passare dal ponte; «Frequenze invertite» scambia ricezione e trasmissione (per ascoltare l'ingresso del ponte).
+5aa4df2e	Diretta (senza ponte)
+ea75db5c	Frequenze invertite
+50d50889	Amplificazione del microfono in trasmissione (0-31).
+97767e02	Volume di ricezione
+3875e9d6	Livello dell'audio in ricezione (0-63).
+8ec31dfb	Soglia del canale adiacente
+a1410ed8	Soglia con cui la radio scarta i disturbi dei canali vicini (0-10). Se non hai un motivo preciso, lascia il valore che c'è.
+e1209b49	Ritardo dopo la coda del ponte
+16d336bb	Tempo di attesa dopo la fine della trasmissione prima di riaprire l'ascolto: serve a non sentire la coda del ponte.
+6828f256	Soglia del VOX
+5f804bc1	Tono di inizio trasmissione
+9402a713	La radio emette un tono quando inizia a trasmettere.
+6a08bdd7	Che cosa la radio invia quando rilasci il PTT: niente, un tono (roger beep), il nominativo oppure la posizione GPS.
+33f7d5d8	Tono 1
+36f7da91	Tono 2
+169c5cdd	Invia il nominativo
+22bdad69	Invia la posizione GPS
+0ec95515	Frequenza del tono singolo (Hz)
+bd59a58b	Frequenza del tono inviato con la funzione «Invio del tono singolo» (per esempio 1750 Hz per aprire i ponti).
+2063fedd	Gamma del frequenzimetro
+e44b1f4d	Gamma in cui la funzione «Lettura della frequenza» cerca il segnale.
+2f193534	18-64 MHz
+79e921d1	64-136 MHz
+15f5f061	136-174 MHz
+aceefc8d	174-240 MHz
+f000362e	240-320 MHz
+172a3144	320-400 MHz
+38b8b55b	400-480 MHz
+517bb4f2	480-560 MHz
+4d24f57c	560-640 MHz
+c8ab699a	840-920 MHz
+205f5dc5	920-1000 MHz
+f6929a5d	Banda del PTT principale
+6bc98c4f	Su quale banda trasmette il tasto PTT principale.
+21d3170b	Banda A: modo di lavoro
+09162f06	Banda A: sul display
+a226ce12	Banda B: modo di lavoro
+3159c3d9	Banda B: sul display
+510bda43	Direzione della scansione
+ec3ce716	In giù
+c01040ca	CO: la scansione riparte quando il segnale sparisce; TO: riparte dopo il tempo di sosta; SE: si ferma sul primo segnale.
+1db503f6	Al termine della scansione torna a
+e50f1121	Canale di partenza
+fc7b50fb	Canale corrente
+e093b102	Sosta della scansione
+d7257747	Tempo di sosta su un canale occupato (modo TO).
+e50cff45	Avvio del salvaschermo
+de3bb41c	Dopo questo tempo parte il salvaschermo.
+343ac6c1	Dopo questo tempo senza toccare i tasti la radio esce dal menu.
+cb6cfa0e	Cifre per inserire la frequenza
+913374e8	Numero di cifre da battere sulla tastiera per inserire una frequenza.
+798cebd6	6 cifre
+590cd4f0	8 cifre
+0bbea147	Aggiornamento dell'indicatore della voce
+408c86e5	Ogni quanto si aggiorna sul display il livello della voce in trasmissione.
+f5a8980c	Aggiornamento dell'indicatore del segnale
+f860a2ce	Ogni quanto si aggiorna sul display la forza del segnale ricevuto.
+3a0c4ad1	Avvio del risparmio
+efadfed0	Tempo senza segnali dopo il quale parte il risparmio della batteria.
+0c496f71	Tasto {0}, pressione lunga
+677f6000	Gamma {0}
+bb3fdef7	Che cosa è permesso fra le due frequenze indicate sotto: tutto, solo la ricezione oppure niente.
+5dee346e	Libera
+5ef9b7ea	Bloccata
+a7661999	Gamma {0}: da (MHz)
+f2fbf1f9	Gamma {0}: a (MHz)
+2ce78fb1	Che cosa fa il tasto di allarme: suona solo la radio, trasmette l'allarme oppure tutte e due le cose.
+7ab59ed8	Locale e remoto
+51a66fac	Invio automatico del DTMF
+4cb7978a	Quando la radio invia da sola il codice DTMF scelto sotto.
+bb5f903a	Codice DTMF da inviare
+e132d568	DTMF-{0}{1}
+22066c91	DTMF: ritardo prima dell'invio
+4d733da8	DTMF: durata di ogni cifra
+12b83b47	DTMF: pausa fra le cifre
+05f1deca	Mostra i DTMF ricevuti
+a694d839	DTMF: livello di trasmissione
+939db74a	Livello dei toni DTMF trasmessi (0-127).
+02ebbb79	DTMF: soglia di decodifica
+8497e757	Livello minimo perché un tono DTMF ricevuto sia riconosciuto (0-63).
+7ac7e2f3	Comandi remoti via DTMF
+f270db7b	La radio accetta i comandi remoti ricevuti in DTMF.
+dab5681b	Regolazione dell'ora via radio
+16399562	La radio regola l'orologio con i dati ricevuti.
+c07d51a5	Con i comandi remoti attivi chi conosce i codici può agire sulla radio a distanza: attivali solo se ti servono.
+2700c301	«Radtel RT-871A CPS» (250707)
 0ba685f5	Funzione di scansione dei canali accesa o spenta.
 96245b83	Blocco della trasmissione con tensione bassa
 802acd28	Impedisce di trasmettere quando la tensione della batteria è troppo bassa (protegge la radio).
@@ -5757,17 +5930,9 @@ b36d2cfe	Tasto laterale 2
 82cf4523	Spia che pulsa in attesa («breathing light»)
 f552ed5e	La spia della radio pulsa lentamente mentre la radio è accesa e in attesa.
 d0e2b5a6	programma del costruttore {0}
-0b7d9ed8	Tasti programmabili
 fd9e406e	Scansione e modo di lavoro
 221815ab	Funzione del tasto, con i nomi del programma del costruttore.
 8c5b9131	Meteo
-8b68364d	2,5 kHz
-e23ae463	5 kHz
-3d72e229	6,25 kHz
-38ea4037	10 kHz
-dd925812	12,5 kHz
-cbcc5c53	25 kHz
-46b6fb53	50 kHz
 a92a7d97	0,5 kHz
 7fd014ec	8,33 kHz
 66752345	VFO e canali
@@ -5798,12 +5963,9 @@ ea70871f	Sul TD-H3 SE questa scelta non c'è: lasciala com'è.
 c6574f94	Tasto superiore, pressione breve
 c8e83f55	Tasto superiore, pressione lunga
 60c98f42	Sensibilità del microfono: più alto il numero, più forte l'audio trasmesso.
-fa38c884	Banda selezionata
 e182c192	Banda dell'ultima chiamata ricevuta
 26f3c057	Trasmissione con il doppio ascolto
 9477264f	A fine trasmissione la radio manda un segnale che fa chiudere subito lo squelch di chi ascolta con il tono, senza il fruscio finale.
-33f7d5d8	Tono 1
-36f7da91	Tono 2
 92c6ff92	Trasmissione sulla banda dei 200 MHz
 1250a55f	Voci «TX 200», «TX 350» e «TX 500» del programma del costruttore: abilitano la trasmissione su quella banda.
 3aae5620	Trasmissione sulla banda dei 350 MHz
@@ -5846,21 +6008,37 @@ f5862bb7	Chiamata 2
 afcc8f6f	TDQ-{0}
 0bc4f6b8	«T6UV Series EN CPS»
 8317e850	«BF-UVs CPS»
+0dc6b4aa	Off
+86cc09a7	30 seconds
+1f37498e	60 seconds
+f777d6b9	90 seconds
+02579e3f	120 seconds
+e382ab38	150 seconds
+ba727161	180 seconds
+6201f2a1	210 seconds
+0adb7730	240 seconds
+429a8c2f	«JJCC-7700 CPS» v1.0.8
+75afe364	All
+307bedb4	«Radio CPS» v1.1.0 (RT-330)
+1c820e4d	5 seconds
+a339de11	10 seconds
+e36ad11e	15 seconds
+6b27c5e2	20 seconds
+983277c4	1 minute
+d405b9a4	2 minutes
+21d03b33	3 minutes
 ed9db3bd	«Baofeng T22 CPS» (PMR446)
+7025b545	settings_twin: {0}
 f47e9acb	Ascolto del canale prioritario
 948f479e	La radio controlla ogni tanto i canali segnati come prioritari mentre è su un altro canale.
 6f139dce	Livello della riduzione del rumore
 03252bf4	Quanto viene ridotto il rumore di fondo dell'audio ricevuto: più alto il livello, più forte la riduzione.
 e09e3b2c	Riduzione del rumore del microfono
 b3e96fa9	Riduce il rumore dell'ambiente raccolto dal microfono mentre trasmetti.
-1ecf13bf	100 kHz
 10297dff	Luminosità della retroilluminazione del display.
 9fcb981b	Dopo quanto tempo senza toccare la radio la retroilluminazione si spegne.
 f217e6d3	Colore della retroilluminazione
 13b70667	Colore della luce del display.
-903de02f	A inizio trasmissione
-acf9776b	A fine trasmissione
-de5f87a4	A inizio e a fine
 0e66e58d	Suono di trasmissione (roger)
 ed06da3f	Breve suono mandato in aria quando premi o rilasci il PTT, per far capire agli altri quando inizi o finisci di parlare.
 96f6c973	Abbinamento con un tasto
@@ -5870,9 +6048,7 @@ ed06da3f	Breve suono mandato in aria quando premi o rilasci il PTT, per far capi
 98678065	Allarme sulla radio
 fe4605ae	Allarme trasmesso
 b5b3f1aa	VOX acceso / spento
-5aa4df2e	Diretta (senza ponte)
 9897783e	Meteo NOAA
-ea75db5c	Frequenze invertite
 a6263d4e	WLT
 b0659828	archivio non valido
 dc8f0e14	file vuoto

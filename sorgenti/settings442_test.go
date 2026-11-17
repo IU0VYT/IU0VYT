@@ -301,8 +301,14 @@ func TestSettings442Bfd(t *testing.T) {
 func TestSettings442Twins(t *testing.T) {
 	wantN := map[string]int{"bf-uv17r": 85, "bf-uv21r": 85, "bf-uv21l": 85, "bf-uv25plus": 99, "bf-uv28pro": 99,
 		"bf-uv29pro": 36, "bf-uv7b": 36, "bf-ar152pro": 36, "bf-t22": 7}
-	if len(wantN) != len(twinSettings) {
-		t.Fatalf("%d gemelle nella prova, %d nel programma", len(wantN), len(twinSettings))
+	same := 0
+	for _, tw := range twinSettings {
+		if !tw.anyClass { // quelle con una classe propria hanno la loro prova (settings443_test.go)
+			same++
+		}
+	}
+	if len(wantN) != same {
+		t.Fatalf("%d gemelle nella prova, %d nel programma", len(wantN), same)
 	}
 	for kind, n := range wantN {
 		tw := twinSettings[kind]
@@ -447,9 +453,22 @@ func TestSettings442API(t *testing.T) {
 		{"bf-uv7b", "settings.beep", "Beep", 0}, {"bf-uv25plus", "settings.pttdly", "700 ms", 0}, {"bf-t22", "voxgain", "5", 0},
 	}
 	for _, tc := range cases {
+		apiCase442(t, tc.kind, tc.key, tc.val, tc.groups, noChirpBase(t, genByID[tc.kind]))
+	}
+}
+
+// apiCase442: la radio kind, aperta da un file con la memoria mem, mostra le
+// impostazioni; la voce key si cambia in val, resta nel file salvato e i canali
+// non si perdono
+func apiCase442(t *testing.T, kind, key, val string, ngroups int, mem []byte) {
+	t.Helper()
+	tc := struct {
+		kind, key, val string
+		groups         int
+	}{kind, key, val, ngroups}
+	{
 		m := genByID[tc.kind]
 		dir := t.TempDir()
-		mem := noChirpBase(t, m)
 		if err := m.Fam.Set(m, mem, 0, &Chan{Rx: 446006250, Tx: 446006250, Narrow: true, Scan: m.HasScan}); err != nil {
 			t.Fatalf("%s: %v", tc.kind, err)
 		}

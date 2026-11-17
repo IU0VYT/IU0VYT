@@ -7,6 +7,32 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.43.0 (16.11.2026)
+-------------------
+- Fehler behoben, der seit Einführung der Einstellungen bestand: Bei 33 aus CHIRP
+  übernommenen Funkgeräten und bei den 8 in der 4.42 hinzugefügten «Zwillingen» meldete
+  der Tab Einstellungen nach dem Auslesen per Kabel, der geöffnete Speicher passe nicht
+  zur Einstellungstabelle; die Einstellungen waren nur beim Öffnen einer
+  CHIRP-.img-Datei sichtbar. Ursache: Die Tabelle wurde nur Speichern gegeben, die so
+  lang wie die CHIRP-Datei sind, die mit dem Modellnamen oder anderen Bereichen endet,
+  während der von unserem Treiber gelesene Speicher einige Bytes kürzer ist. Jetzt
+  genügt es, dass der Speicher so lang ist wie die Speicherkarte des Geräts. Betroffene
+  Geräte: Baofeng UV-17, UV-17Pro, UV-17Pro GPS, UV-17R Plus, UV-21Pro GPS, UV-21Pro V2,
+  UV-25, UV-32, UV-5G Plus, UV-5RH, K5 Plus, UV-6 / UV-7, UV-5G (GMRS), MP31; MaxTalker
+  P15, MT-5RM; Retevis RT22, RT22FRS, RT622, RB17, HA1G, HA1UV; Kenwood TK-2140K,
+  TK-3140K / K2 / K3; Radioddity R2; WLN KD-C1; Zastone ZT-X6; Luiton LT-316; TID TD-M8;
+  TYT TH-UV8000D / E; Yaesu FT5DR / FT5DE; UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28
+  Pro, UV-29 Pro, UV-7B, AR-152 Pro. Ein neuer Test liest die simulierten Geräte mit
+  unserem Treiber und prüft, dass die Tabelle vorhanden ist.
+- Radtel RT-817A / RT-871A (65 Einstellungen), RT-830 (26) und RT-850 (36): Tabellen aus
+  den Programmen des Herstellers. Bei RT-830 und RT-850 tragen zwei Einträge einen
+  Hinweis, weil diese Programme sie anders lesen, als sie sie schreiben: Es wird dem
+  Schreiben gefolgt.
+- Radtel RT-400 (33 Einstellungen) und RT-330 (30): die CHIRP-Tabelle des Geräts mit
+  demselben Einstellungsblock (RT-470), beschränkt auf die Einträge, die die
+  Herstellerprogramme genauso lesen und schreiben. Keine der neuen Einstellungen wurde
+  an einem echten Gerät erprobt.
+
 4.42.0 (16.11.2026)
 -------------------
 - Start-Tab: Mit 54 Marken war der Markenkasten zu hoch geworden, und der untere Teil

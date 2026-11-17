@@ -1,11 +1,15 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.42.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.43.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.43.0 的新内容：
+- 修复错误：33 款电台（包括 Baofeng UV-17 Pro、UV-17 Pro GPS、UV-21 Pro、UV-25、UV-32、UV-5RH、K5 Plus、Retevis RT22、HA1G、Kenwood TK-2140 / TK-3140）以及 4.42 的 8 款“孪生”电台，通过数据线读取电台后不显示设置，只有打开 CHIRP 文件时才显示。
+- 又有五款 Radtel 电台有了设置（RT-817A / RT-871A、RT-830、RT-850、RT-330、RT-400），取自厂家程序。
+- 图库：54 个品牌的 663 个型号（609 个支持信道，546 个支持设置）。
 4.42.0 的新内容：
 - “主页”选项卡现在可以完整显示在窗口中：品牌框更宽，页面会自动适应窗口大小。
 - 为此前只有信道的 30 个型号增加了设置：Baofeng D 系列 (BF-V1D … BF-V12D、888SD、889D、1901D、1904D、1909D、W31D、BF-T20D)、BF-88ST、BF-C2 / BF-V2、GT-68、GT-22、T22、UV-17R、UV-21R、UV-21L、UV-25 Plus、UV-28 Pro、UV-29 Pro、UV-7B、AR-152 Pro 和 Radtel RT-13。
