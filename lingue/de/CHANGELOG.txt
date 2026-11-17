@@ -7,6 +7,24 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.42.0 (16.11.2026)
+-------------------
+- Start-Tab: Mit 54 Marken war der Markenkasten zu hoch geworden, und der untere Teil
+  der Seite lag außerhalb des Fensters, ohne dass man scrollen konnte. Der Kasten ist
+  jetzt breiter, mit mehr Spalten, und die Seite verkleinert sich selbst, wenn sie nicht
+  passt (bei jeder Änderung von Fenstergröße, Sprache oder Tab). Auf Arabisch erschienen
+  die Buchstaben des Titels in umgekehrter Reihenfolge: behoben.
+- Einstellungen aus den Programmen der Hersteller für Funkgeräte, die bisher nur Kanäle
+  hatten: Baofeng D-Serie (16 Modelle, «BF Series CPS» v1.5.1), BF-88ST, BF-C2 / BF-V2,
+  GT-68, GT-22 und Radtel RT-13. Im Programm der D-Serie sind «Sprachansage» und
+  «Tastenton» zwischen Lesen und Schreiben vertauscht: Es gilt das Schreiben, und beide
+  Einstellungen tragen einen Hinweis.
+- Einstellungen für die «Zwillinge» von CHIRP-Geräten, beschränkt auf die Punkte, die
+  das Herstellerprogramm des jeweiligen Modells genauso liest und schreibt wie CHIRP:
+  UV-17R, UV-21R, UV-21L (vollständig: dieselbe Programmdatei wie beim UV-17 Pro), UV-25
+  Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro und T22. Keine dieser Einstellungen
+  wurde an einem echten Gerät getestet.
+
 4.41.0 (16.11.2026)
 -------------------
 - Neue Funkgeräte nach den CHIRP-Treibern, von Grund auf neu geschrieben. Yaesu VX-1R:

@@ -6024,3 +6024,24 @@ a0cce57a	banda A
 9fcce3e7	banda B
 88098e0a	canal {0}: la radio guarda {1} MHz en lugar de {2} MHz (el paso de esa banda)
 42954be8	frecuencia {0} MHz fuera de la banda B de la radio (118-174 y 350-470 MHz): usa la banda A
+3c8dfdbf	Tabla obtenida del código de CHIRP y verificada con el
+b3907a40	Tabla obtenida del código de CHIRP y verificada con el {0}: solo se muestran los ajustes en los que ambos coinciden.
+e85b5724	: solo se muestran los ajustes en los que ambos coinciden.
+03cb7a08	En el programa del fabricante «Guía de voz» y «Sonido de las teclas» aparecen intercambiadas entre la lectura y la escritura: aquí se sigue la escritura, como en las demás radios de la misma familia. Si en la radio el efecto está intercambiado, usa el otro ajuste.
+f224e4e4	Siempre abierto
+78f032cd	Reforzado
+2f95969f	Estricto
+57253ac4	Umbral de apertura del audio. Con «Siempre abierto» el audio queda siempre abierto (se oye el soplido); en los demás niveles hace falta una señal cada vez más fuerte.
+d8059263	Primer idioma de la radio
+1cb9fd6b	Segundo idioma de la radio
+5a846d28	Idioma de la guía de voz. Cada radio tiene una pareja de idiomas (normalmente inglés y chino): cuál es el primero depende de la versión de la radio.
+b0e3754d	Filtro que atenúa el ruido de fondo del audio.
+feddc78d	«BF Series CPS» v1.5.1
+0bc4f6b8	«T6UV Series EN CPS»
+8317e850	«BF-UVs CPS»
+ed9db3bd	«Baofeng T22 CPS» (PMR446)
+fff42a63	Relación entre el tiempo en que el receptor permanece encendido y el tiempo en que está apagado cuando el canal está libre (1:4 = encendido una parte de cada cuatro): más ahorro, pero pueden perderse los primeros instantes de una llamada.
+b26d2b6b	Tecla lateral 1
+b36d2cfe	Tecla lateral 2
+82cf4523	Indicador que parpadea suavemente en espera («breathing light»)
+f552ed5e	El indicador de la radio pulsa lentamente mientras la radio está encendida y en espera.

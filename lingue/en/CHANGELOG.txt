@@ -7,6 +7,24 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.42.0 (16/11/2026)
+-------------------
+- Home tab: with 54 brands the brand box had grown too tall and the lower part of the
+  page ended up outside the window, with no way to scroll it. The box is now wider, with
+  more columns, and the page shrinks by itself when it does not fit (on every change of
+  window size, language or tab). In Arabic the letters of the title were shown in
+  reverse order: fixed.
+- Settings taken from the manufacturers' programs for radios that had channels only:
+  Baofeng D series (16 models, «BF Series CPS» v1.5.1), BF-88ST, BF-C2 / BF-V2, GT-68,
+  GT-22 and Radtel RT-13. In the D-series program «voice guide» and «key beep» are
+  swapped between reading and writing: the writing is followed, and the two settings
+  carry a notice.
+- Settings for the «twins» of CHIRP radios, limited to the entries that the
+  manufacturer's program of each model reads and writes in the same way as CHIRP:
+  UV-17R, UV-21R, UV-21L (complete: same program file as the UV-17 Pro), UV-25 Plus,
+  UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro and T22. None of these settings has been
+  tested on a real radio.
+
 4.41.0 (16/11/2026)
 -------------------
 - New radios from CHIRP drivers, rewritten from scratch. Yaesu VX-1R: channels and

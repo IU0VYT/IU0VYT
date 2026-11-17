@@ -7,6 +7,24 @@ das versões anteriores (1.0 - 4.12) está no original italiano, CHANGELOG.txt, 
 principal do pacote; as principais novidades de cada versão estão também resumidas em
 LEIAME.txt.
 
+4.42.0 (16/11/2026)
+-------------------
+- Separador Início: com 54 marcas a caixa das marcas tinha ficado demasiado alta e a
+  parte de baixo da página ficava fora da janela, sem se poder deslocar. A caixa está
+  agora mais larga, com mais colunas, e a página reduz-se sozinha quando não cabe (a
+  cada mudança de tamanho da janela, de língua ou de separador). Em árabe as letras do
+  título apareciam pela ordem inversa: corrigido.
+- Definições tiradas dos programas dos fabricantes para rádios que só tinham os canais:
+  Baofeng série D (16 modelos, «BF Series CPS» v1.5.1), BF-88ST, BF-C2 / BF-V2, GT-68,
+  GT-22 e Radtel RT-13. No programa da série D «guia de voz» e «som das teclas» estão
+  trocados entre a leitura e a escrita: segue-se a escrita, e as duas definições têm um
+  aviso.
+- Definições para os «gémeos» de rádios do CHIRP, limitadas aos elementos que o programa
+  do fabricante de cada modelo lê e escreve da mesma forma que o CHIRP: UV-17R, UV-21R,
+  UV-21L (completas: o mesmo ficheiro de programa do UV-17 Pro), UV-25 Plus, UV-28 Pro,
+  UV-29 Pro, UV-7B, AR-152 Pro e T22. Nenhuma destas definições foi testada num rádio
+  real.
+
 4.41.0 (16/11/2026)
 -------------------
 - Rádios novos a partir dos drivers do CHIRP, reescritos de raiz. Yaesu VX-1R: canais e

@@ -7,6 +7,24 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.42.0 (16/11/2026)
+-------------------
+- Onglet Accueil : avec 54 marques, le cadre des marques était devenu trop haut et le
+  bas de la page sortait de la fenêtre, sans pouvoir la faire défiler. Le cadre est
+  maintenant plus large, avec plus de colonnes, et la page se réduit toute seule quand
+  elle ne tient pas (à chaque changement de taille de fenêtre, de langue ou d'onglet).
+  En arabe, les lettres du titre apparaissaient dans l'ordre inverse : corrigé.
+- Réglages tirés des programmes des constructeurs pour des radios qui n'avaient que les
+  canaux : Baofeng série D (16 modèles, « BF Series CPS » v1.5.1), BF-88ST, BF-C2 /
+  BF-V2, GT-68, GT-22 et Radtel RT-13. Dans le programme de la série D, « guide vocal »
+  et « son des touches » sont inversés entre la lecture et l'écriture : on suit
+  l'écriture, et les deux réglages portent un avertissement.
+- Réglages pour les « jumelles » de radios de CHIRP, limités aux éléments que le
+  programme du constructeur de chaque modèle lit et écrit de la même façon que CHIRP :
+  UV-17R, UV-21R, UV-21L (complets : même fichier de programme que l'UV-17 Pro), UV-25
+  Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro et T22. Aucun de ces réglages n'a été
+  essayé sur une vraie radio.
+
 4.41.0 (16/11/2026)
 -------------------
 - Nouvelles radios d'après les pilotes de CHIRP, réécrits de zéro. Yaesu VX-1R : canaux

@@ -32,8 +32,48 @@ function brandMarquee(brands, where) {
 const Home = {
   built: false,
 
+  // 4.42: la Home deve stare tutta nella finestra. Se il contenuto è più alto dello spazio
+  // disponibile lo si rimpicciolisce quanto basta (zoom, che riadatta anche le colonne);
+  // sotto il 60% non si scende, perché non si leggerebbe più: in quel caso la pagina
+  // scorre. Le misure si prendono sulla pagina (che non è rimpicciolita), così valgono
+  // con qualsiasi carattere, lingua e dimensione della finestra.
+  minZoom: 0.6,
+  fit() {
+    const page = this.page, inner = page && $('.home-inner', page);
+    if (!inner || !page.clientHeight) return; // scheda non visibile
+    inner.style.zoom = '';
+    if (page.scrollHeight <= page.clientHeight) return; // ci sta già
+    const fits = (z) => { inner.style.zoom = String(z); return page.scrollHeight <= page.clientHeight; };
+    let lo = this.minZoom, hi = 1;
+    if (!fits(lo)) return; // nemmeno al minimo: resta al minimo e la pagina scorre
+    // si cerca il valore più grande che ci sta (7 passi: precisione di circa 0,3%)
+    for (let i = 0; i < 7; i++) {
+      const mid = Math.round((lo + hi) * 500) / 1000;
+      if (fits(mid)) lo = mid; else hi = mid;
+    }
+    inner.style.zoom = String(lo);
+  },
+  watchFit(page) {
+    this.page = page;
+    let pending = false;
+    const later = () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => { pending = false; this.fit(); });
+    };
+    // la finestra cambia dimensione, la scheda torna visibile, i testi vengono tradotti
+    if (typeof ResizeObserver === 'function') {
+      const ro = new ResizeObserver(later);
+      ro.observe(page);
+      const inner = $('.home-inner', page);
+      if (inner) ro.observe(inner);
+    }
+    window.addEventListener('resize', later);
+    this.fit();
+  },
+
   async render(page) {
-    if (this.built) return;
+    if (this.built) { this.fit(); return; }
     this.built = true;
     let d = { name: 'IU0VYT Flash', version: '', buildDate: '', author: 'Daniele "IU0VYT" Bonifazi', license: 'GNU GPL v3 o successiva' };
     try { d = await api('info', {}, { quiet: true }); } catch (e) { /* si mostra comunque */ }
@@ -82,5 +122,6 @@ const Home = {
       }
       App.showTab(g);
     });
+    this.watchFit(page);
   },
 };

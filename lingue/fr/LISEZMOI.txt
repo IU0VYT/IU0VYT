@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.41.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.42.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,14 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.42.0 :
+- L'onglet Accueil tient maintenant en entier dans la fenêtre : cadre des marques plus
+  large et page qui s'adapte toute seule à la taille de la fenêtre.
+- Réglages pour 30 modèles qui n'avaient que les canaux : Baofeng série D (BF-V1D …
+  BF-V12D, 888SD, 889D, 1901D, 1904D, 1909D, W31D, BF-T20D), BF-88ST, BF-C2 / BF-V2,
+  GT-68, GT-22, T22, UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B,
+  AR-152 Pro et Radtel RT-13.
+- Galerie : 663 modèles de 54 marques (609 avec canaux, 541 avec réglages).
 Nouveautés de la 4.41.0 :
 - Nouvelles radios (les portatifs de CHIRP qui manquaient) : Yaesu VX-1R (canaux et
   réglages), Icom IC-91AD et IC-92AD (deux bandes, aussi D-STAR), BTECH UV-PRO (par
@@ -725,10 +733,14 @@ RÉGLAGES DES RADIOS (3.6)
   Radioddity GD-77 tels que les décrit qdmr (nom et ID DMR comme dmrconfig) ; les mots
   de passe ne sont pas touchés. Baofeng DM-1701 (4.10) : nom, ID DMR et textes
   d'allumage, les seuls champs sur lesquels dmrconfig et qdmr s'accordent.
-- Pas encore disponibles : série D, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2,
-  BF-88ST, BF-9700 / BF-S56 Max, DM-5000, DR-1801UV et les modèles de la famille UV-17
-  Pro que CHIRP ne liste pas (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B,
-  UV-17R, UV-21R, UV-21L) : pour celles-ci, utilisez le programme du fabricant.
+- (4.42) Baofeng série D, BF-88ST, BF-C2 / BF-V2, GT-68, GT-22 et Radtel RT-13 :
+  tables tirées des programmes des constructeurs. UV-17R, UV-21R, UV-21L, UV-25 Plus,
+  UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro et T22 : table de CHIRP de la radio ayant la
+  même mémoire, réduite aux éléments que le programme du constructeur du modèle lit et
+  écrit de la même façon (la fenêtre des réglages l'indique).
+- Pas encore disponibles pour certaines radios, dont BF-T9, BF-9700 / BF-S56 Max,
+  DM-5000, DR-1801UV et plusieurs Radtel, Icom, Kenwood et Alinco : pour celles-ci,
+  utilisez le programme du fabricant.
 
 FICHIERS .DAT DE LA BAJETON BJ-8300 (3.6)
 Le programme BT-11_CPS v1.0.9 enregistre les canaux dans une liste unique de 960 (la

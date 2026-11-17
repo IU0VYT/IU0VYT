@@ -7,6 +7,24 @@ completa de las versiones anteriores (1.0 - 4.12) está en el original italiano,
 CHANGELOG.txt, en la carpeta principal del paquete; las principales novedades de cada
 versión también se resumen en LEEME.txt.
 
+4.42.0 (16/11/2026)
+-------------------
+- Pestaña Inicio: con 54 marcas el recuadro de marcas se había hecho demasiado alto y la
+  parte baja de la página quedaba fuera de la ventana, sin poder desplazarla. Ahora el
+  recuadro es más ancho, con más columnas, y la página se reduce sola cuando no cabe (en
+  cada cambio de tamaño de ventana, de idioma o de pestaña). En árabe las letras del
+  título aparecían en orden inverso: corregido.
+- Ajustes tomados de los programas de los fabricantes para radios que solo tenían los
+  canales: Baofeng serie D (16 modelos, «BF Series CPS» v1.5.1), BF-88ST, BF-C2 / BF-V2,
+  GT-68, GT-22 y Radtel RT-13. En el programa de la serie D «guía de voz» y «sonido de
+  las teclas» están intercambiados entre la lectura y la escritura: se sigue la
+  escritura, y los dos ajustes llevan un aviso.
+- Ajustes para las «gemelas» de radios de CHIRP, limitados a los elementos que el
+  programa del fabricante de cada modelo lee y escribe igual que CHIRP: UV-17R, UV-21R,
+  UV-21L (completos: el mismo archivo de programa que la UV-17 Pro), UV-25 Plus, UV-28
+  Pro, UV-29 Pro, UV-7B, AR-152 Pro y T22. Ninguno de estos ajustes se ha probado con
+  una radio real.
+
 4.41.0 (16/11/2026)
 -------------------
 - Radios nuevas a partir de los drivers de CHIRP, reescritos desde cero. Yaesu VX-1R:

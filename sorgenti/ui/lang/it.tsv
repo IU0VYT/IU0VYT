@@ -1329,6 +1329,9 @@ f93c1ba8	Lettura delle impostazioni…
 eb86ce5e	Impostazioni della radio
 42dcf8e8	Impostazioni non disponibili.
 e0004bfa	Tabella ricavata dal codice di CHIRP per questa radio e verificata con esso.
+3c8dfdbf	Tabella ricavata dal codice di CHIRP e verificata sul
+b3907a40	Tabella ricavata dal codice di CHIRP e verificata sul {0}: sono mostrate solo le voci su cui i due concordano.
+e85b5724	: sono mostrate solo le voci su cui i due concordano.
 c2dc43e0	Tabella ricavata dal
 14ba649c	Tabella ricavata dal {0}.
 617ef409	Cerca un'impostazione…
@@ -4893,6 +4896,21 @@ f582fdf6	Programmazione via Bluetooth
 a0ee96a9	Permette di leggere e scrivere la radio via Bluetooth (con l'app del costruttore).
 29632a8c	Con la programmazione Bluetooth attiva chiunque sia vicino può tentare di leggere o modificare la radio.
 6ea04692	programma BT-11_CPS del costruttore (finestra «Optional Features»)
+03cb7a08	Nel programma del costruttore «Guida vocale» e «Suono dei tasti» risultano scambiate fra la lettura e la scrittura: qui si segue la scrittura, come nelle altre radio della stessa famiglia. Se sulla radio l'effetto è scambiato, usa l'altra voce.
+f224e4e4	Sempre aperto
+78f032cd	Rinforzato
+2f95969f	Rigoroso
+57253ac4	Soglia di apertura dell'audio. Con «Sempre aperto» l'audio resta sempre aperto (si sente il fruscio); negli altri livelli serve un segnale via via più forte.
+d8059263	Prima lingua della radio
+1cb9fd6b	Seconda lingua della radio
+5a846d28	Lingua della guida vocale. Ogni radio ha una coppia di lingue (di solito inglese e cinese): quale sia la prima dipende dalla versione della radio.
+b0e3754d	Filtro che attenua il rumore di fondo dell'audio.
+76ef509c	Cambio di potenza
+31db0d08	Tasto laterale
+96a49cd5	Funzione del tasto laterale.
+cddf33a5	Allarme («Rx Emergency»)
+fb443a2f	Accende o spegne la funzione di allarme: nel programma del costruttore la voce si chiama «Rx Emergency» in inglese e «interruttore dell'allarme» in cinese.
+feddc78d	«BF Series CPS» v1.5.1
 d60d9df2	Scansione dei toni
 a19415f6	Squelch
 446b0253	Passo di frequenza
@@ -5274,8 +5292,6 @@ be51ab72	Tasti laterali disattivati
 f08c266b	Tasto laterale $1 (pressione lunga)
 08df7fe9	Funzione del tasto laterale $1 tenuto premuto.
 ae9ec1e1	side key( function)?
-31db0d08	Tasto laterale
-96a49cd5	Funzione del tasto laterale.
 0c1eea16	input dtmf
 9014ad77	Inserimento DTMF
 854c4be9	Permette di inserire toni DTMF dalla tastiera.
@@ -5729,15 +5745,17 @@ daf6364d	Prima riga del messaggio mostrato all'accensione (10 caratteri).
 802acd28	Impedisce di trasmettere quando la tensione della batteria è troppo bassa (protegge la radio).
 bcd2bbe9	Blocco della trasmissione con tensione alta
 fc24dac8	Impedisce di trasmettere quando la tensione della batteria è troppo alta (protegge la radio).
-76ef509c	Cambio di potenza
-cddf33a5	Allarme («Rx Emergency»)
-fb443a2f	Accende o spegne la funzione di allarme: nel programma del costruttore la voce si chiama «Rx Emergency» in inglese e «interruttore dell'allarme» in cinese.
 7b8ae352	«T17-T18 PMR446 PRO» v1.2.2
 92aad8ad	«T17-T18 FRS» v1.2.2
 a1ad8564	«BAOFENG GT18 PMR» v1.2.1
 5ca37d7b	«Radioddity T3» v1.3
 be542c64	«T20 FRS» v1.0.1
 760bbadb	«CPS_F8_FRS» v1.0
+fff42a63	Rapporto fra il tempo in cui il ricevitore resta acceso e quello in cui è spento quando il canale è libero (1:4 = acceso una parte su quattro): più risparmio, ma i primi istanti di una chiamata possono andare persi.
+b26d2b6b	Tasto laterale 1
+b36d2cfe	Tasto laterale 2
+82cf4523	Spia che pulsa in attesa («breathing light»)
+f552ed5e	La spia della radio pulsa lentamente mentre la radio è accesa e in attesa.
 d0e2b5a6	programma del costruttore {0}
 0b7d9ed8	Tasti programmabili
 fd9e406e	Scansione e modo di lavoro
@@ -5826,6 +5844,9 @@ f5862bb7	Chiamata 2
 49ec873a	Monitor finché tieni premuto
 3dbc701b	Preavviso del tempo massimo
 afcc8f6f	TDQ-{0}
+0bc4f6b8	«T6UV Series EN CPS»
+8317e850	«BF-UVs CPS»
+ed9db3bd	«Baofeng T22 CPS» (PMR446)
 f47e9acb	Ascolto del canale prioritario
 948f479e	La radio controlla ogni tanto i canali segnati come prioritari mentre è su un altro canale.
 6f139dce	Livello della riduzione del rumore

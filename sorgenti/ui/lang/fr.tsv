@@ -6024,3 +6024,24 @@ a0cce57a	bande A
 9fcce3e7	bande B
 88098e0a	canal {0} : la radio mémorise {1} MHz au lieu de {2} MHz (le pas de cette bande)
 42954be8	fréquence {0} MHz hors de la bande B de la radio (118-174 et 350-470 MHz) : utilisez la bande A
+3c8dfdbf	Tableau tiré du code de CHIRP et vérifié sur le
+b3907a40	Tableau tiré du code de CHIRP et vérifié sur le {0} : seuls les réglages sur lesquels les deux concordent sont affichés.
+e85b5724	 : seuls les réglages sur lesquels les deux concordent sont affichés.
+03cb7a08	Dans le programme du constructeur, « Guide vocal » et « Son des touches » sont inversés entre la lecture et l'écriture : ici on suit l'écriture, comme pour les autres radios de la même famille. Si l'effet sur la radio est inversé, utilisez l'autre réglage.
+f224e4e4	Toujours ouvert
+78f032cd	Renforcé
+2f95969f	Strict
+57253ac4	Seuil d'ouverture de l'audio. Avec « Toujours ouvert », l'audio reste toujours ouvert (on entend le souffle) ; aux autres niveaux, il faut un signal de plus en plus fort.
+d8059263	Première langue de la radio
+1cb9fd6b	Deuxième langue de la radio
+5a846d28	Langue du guide vocal. Chaque radio a une paire de langues (en général anglais et chinois) : celle qui vient en premier dépend de la version de la radio.
+b0e3754d	Filtre qui atténue le bruit de fond de l'audio.
+feddc78d	«BF Series CPS» v1.5.1
+0bc4f6b8	«T6UV Series EN CPS»
+8317e850	«BF-UVs CPS»
+ed9db3bd	«Baofeng T22 CPS» (PMR446)
+fff42a63	Rapport entre le temps où le récepteur reste allumé et celui où il est éteint quand le canal est libre (1:4 = allumé une partie sur quatre) : plus d'économie, mais les premiers instants d'un appel peuvent être perdus.
+b26d2b6b	Touche latérale 1
+b36d2cfe	Touche latérale 2
+82cf4523	Voyant qui pulse en veille (« breathing light »)
+f552ed5e	Le voyant de la radio pulse lentement lorsque la radio est allumée et en veille.

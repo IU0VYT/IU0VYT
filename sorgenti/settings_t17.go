@@ -56,6 +56,7 @@ type t17SetDef struct {
 	mask              byte
 	opts              []string // vuoto: OFF/ON
 	first             int      // valore della prima scelta (0 di solito)
+	vals              []int    // valore di ogni scelta, quando non sono consecutivi (4.42)
 	group, label, dsc string
 	warn              string
 }
@@ -106,6 +107,16 @@ func t17SetDefsFor(txEnd byte) []t17SetDef {
 
 // anaSetDefs (4.32): voci dei programmi «T20 FRS» e «CPS_F8_FRS»; a = indirizzo
 // del blocco con suoni, squelch, tasto laterale e TOT
+//
+// 4.42: valgono anche per le gemelle della BF-888S che hanno un programma «AnaCps»
+// proprio, con a = 0x3C0 (la mappa della BF-888S): BF-88ST (programma «BF-889»),
+// BF-C2 / BF-V2 e GT-68 (lo stesso «BF_V1_FH» v1.0.8), GT-22 («GT-22»). Verificato
+// programma per programma: readInfo e writeInfo usano gli stessi tre blocchi (0x2B0
+// otto byte, 0x2B8 un byte, 0x3C0 quattro byte) con le stesse voci, le caselle sono
+// collegate alle stesse proprietà e hanno le stesse scelte (squelch 0-9, TOT ogni
+// 30 s fino a 300, tasto laterale a quattro scelte, VOX 1-5). La GT-22 non ha tasto
+// laterale, scansione e «Rx Emergency»: il suo programma non li mostra e non li
+// scrive. La BF-9700 resta senza impostazioni (programma non leggibile).
 func anaSetDefs(a int) []t17SetDef {
 	g1, g2, g3 := "Ricezione e trasmissione", "Display, suoni e tasti", "DTMF, allarme e funzioni remote"
 	t := t17SetDefsFor(0)
@@ -145,7 +156,11 @@ func t17SetTableSize(defs []t17SetDef, src string, size int) *setTable {
 			sh++
 		}
 		val := func(i int) *string {
-			s := hex.EncodeToString([]byte{byte((i+b.first)<<sh) & b.mask})
+			v := i + b.first
+			if len(b.vals) > 0 {
+				v = b.vals[i]
+			}
+			s := hex.EncodeToString([]byte{byte(v<<sh) & b.mask})
 			return &s
 		}
 		enc := &setEnc{Kind: "table", Fields: [][2]interface{}{{float64(b.off), hex.EncodeToString([]byte{b.mask})}}}
@@ -175,6 +190,59 @@ var t17Settings = map[string]*setTable{
 	"bf-t22frs":  t17SetTableSize(anaSetDefs(0x2C0), t17Src("«T20 FRS» v1.0.1"), 0x340),
 	"td-m8s":     t17SetTableSize(anaSetDefs(0x2C0), t17Src("«T20 FRS» v1.0.1"), 0x340),
 	"td-v2":      t17SetTableSize(anaSetDefs(0x3C0), t17Src("«CPS_F8_FRS» v1.0"), bfdMemsize),
+	// 4.42: gemelle della BF-888S con un programma «AnaCps» proprio (vedi anaSetDefs)
+	"bf-88st":  t17SetTableSize(anaSetDefs(0x3C0), t17Src("«BF-889» (20200722)"), bfdMemsize),
+	"bf-c2":    t17SetTableSize(anaSetDefs(0x3C0), t17Src("«BF_V1_FH» v1.0.8"), bfdMemsize),
+	"bf-gt68":  t17SetTableSize(anaSetDefs(0x3C0), t17Src("«BF_V1_FH» v1.0.8"), bfdMemsize),
+	"rtl-rt13": t17SetTableSize(rt13SetDefs(), t17Src("«RT-13» V1.7"), rt13Size),
+	"bf-gt22":  t17SetTableSize(anaSetDefsWithout(0x3C0, "side_key", "scan_on", "rx_emerg"), t17Src("«GT-22» (20200318)"), bfdMemsize),
+}
+
+// rt13SetDefs (4.42): Radtel RT-13, programma «RT-13» V1.7 del costruttore (ancora
+// «AnaCps», classe DataSysFunc con tre proprietà in più). Blocchi come anaSetDefs(0x3C0),
+// con queste differenze lette in readInfo / writeInfo e nelle risorse della finestra:
+//
+//	0x2B4  livello del VOX: la casella va da 1 a 9 e nella memoria c'è il livello meno 1;
+//	0x2B9  «呼吸灯» (spia che pulsa in attesa), 0/1;
+//	0x3C0  bit 0 suono dei tasti; bit 1-3 risparmio della batteria a sei scelte
+//	       (spento, 1:4, 1:6, 1:8, 1:10, 1:12);
+//	0x3C2  tasto laterale 1: spento, monitor, scansione;
+//	0x3C4  tasto laterale 2: spento, monitor, alta/bassa potenza, allarme.
+func rt13SetDefs() []t17SetDef {
+	g2 := "Display, suoni e tasti"
+	var out []t17SetDef
+	for _, d := range anaSetDefs(0x3C0) {
+		switch d.key {
+		case "vox_level":
+			d.opts, d.first = strNums(9, 1, 1, ""), 0
+		case "save":
+			d.mask, d.opts = 0x0E, []string{"OFF", "1:4", "1:6", "1:8", "1:10", "1:12"}
+			d.dsc = "Rapporto fra il tempo in cui il ricevitore resta acceso e quello in cui è spento quando il canale è libero (1:4 = acceso una parte su quattro): più risparmio, ma i primi istanti di una chiamata possono andare persi."
+		case "side_key":
+			d.label, d.opts = "Tasto laterale 1", []string{"Nessuna", "Monitor", "Scansione"}
+			out = append(out, d)
+			d.key, d.off, d.label, d.opts = "side_key2", 0x3C4, "Tasto laterale 2", []string{"Nessuna", "Monitor", "Cambio di potenza", "Allarme"}
+		}
+		out = append(out, d)
+	}
+	return append(out, t17SetDef{key: "light", off: 0x2B9, mask: 0xFF, group: g2, label: "Spia che pulsa in attesa («breathing light»)",
+		dsc: "La spia della radio pulsa lentamente mentre la radio è accesa e in attesa."})
+}
+
+// anaSetDefsWithout: le voci di anaSetDefs meno quelle che il programma del modello
+// non ha (né nella finestra né nei blocchi che scrive)
+func anaSetDefsWithout(a int, drop ...string) []t17SetDef {
+	var out []t17SetDef
+next:
+	for _, d := range anaSetDefs(a) {
+		for _, k := range drop {
+			if d.key == k {
+				continue next
+			}
+		}
+		out = append(out, d)
+	}
+	return out
 }
 
 func t17Src(prog string) string { return fmt.Sprintf("programma del costruttore %s", prog) }

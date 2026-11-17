@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.41.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.42.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,14 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.42.0:
+- Der Start-Tab passt jetzt vollständig ins Fenster: breiterer Markenkasten und eine
+  Seite, die sich selbst an die Fenstergröße anpasst.
+- Einstellungen für 30 Modelle, die bisher nur Kanäle hatten: Baofeng D-Serie (BF-V1D …
+  BF-V12D, 888SD, 889D, 1901D, 1904D, 1909D, W31D, BF-T20D), BF-88ST, BF-C2 / BF-V2,
+  GT-68, GT-22, T22, UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B,
+  AR-152 Pro und Radtel RT-13.
+- Galerie: 663 Modelle von 54 Marken (609 mit Kanälen, 541 mit Einstellungen).
 Neu in 4.41.0:
 - Neue Funkgeräte (die Handfunkgeräte aus CHIRP, die noch fehlten): Yaesu VX-1R (Kanäle
   und Einstellungen), Icom IC-91AD und IC-92AD (zwei Bänder, auch D-STAR), BTECH UV-PRO
@@ -730,10 +738,14 @@ EINSTELLUNGEN DER FUNKGERÄTE (3.6)
   Radioddity GD-77, wie qdmr sie beschreibt (DMR-Name und -ID wie dmrconfig);
   Passwörter werden nicht angetastet. Baofeng DM-1701 (4.10): Name, DMR-ID und
   Einschalttexte, die einzigen Felder, bei denen dmrconfig und qdmr übereinstimmen.
-- Noch nicht verfügbar: D-Serie, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST,
-  BF-9700 / BF-S56 Max, DM-5000, DR-1801UV und die Modelle der UV-17-Pro-Familie, die
-  CHIRP nicht aufführt (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B, UV-17R,
-  UV-21R, UV-21L): für diese das Herstellerprogramm verwenden.
+- (4.42) Baofeng D-Serie, BF-88ST, BF-C2 / BF-V2, GT-68, GT-22 und Radtel RT-13:
+  Tabellen aus den Programmen der Hersteller. UV-17R, UV-21R, UV-21L, UV-25 Plus,
+  UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro und T22: die CHIRP-Tabelle des Geräts mit
+  demselben Speicher, beschränkt auf die Punkte, die das Herstellerprogramm des
+  Modells genauso liest und schreibt (das Einstellungsfenster weist darauf hin).
+- Noch nicht verfügbar für einige Geräte, darunter BF-T9, BF-9700 / BF-S56 Max,
+  DM-5000, DR-1801UV sowie mehrere Modelle von Radtel, Icom, Kenwood und Alinco: für
+  diese das Herstellerprogramm verwenden.
 
 .DAT-DATEIEN DER BAJETON BJ-8300 (3.6)
 Das Programm BT-11_CPS v1.0.9 speichert die Kanäle in einer einzigen Liste mit 960

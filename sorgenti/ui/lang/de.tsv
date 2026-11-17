@@ -6024,3 +6024,24 @@ a0cce57a	Band A
 9fcce3e7	Band B
 88098e0a	Kanal {0}: das Gerät speichert {1} MHz statt {2} MHz (die Schrittweite dieses Bandes)
 42954be8	Frequenz {0} MHz außerhalb von Band B des Geräts (118-174 und 350-470 MHz): verwende Band A
+3c8dfdbf	Tabelle aus dem CHIRP-Code abgeleitet und geprüft mit dem
+b3907a40	Tabelle aus dem CHIRP-Code abgeleitet und mit dem {0} geprüft: Es werden nur die Einstellungen gezeigt, bei denen beide übereinstimmen.
+e85b5724	: Es werden nur die Einstellungen gezeigt, bei denen beide übereinstimmen.
+03cb7a08	Im Herstellerprogramm sind «Sprachansage» und «Tastenton» zwischen Lesen und Schreiben vertauscht: Hier gilt das Schreiben, wie bei den anderen Geräten derselben Familie. Ist die Wirkung am Gerät vertauscht, verwende die andere Einstellung.
+f224e4e4	Immer offen
+78f032cd	Verstärkt
+2f95969f	Streng
+57253ac4	Schwelle, ab der der Ton geöffnet wird. Bei «Immer offen» bleibt der Ton immer offen (man hört das Rauschen); bei den anderen Stufen ist ein immer stärkeres Signal nötig.
+d8059263	Erste Sprache des Geräts
+1cb9fd6b	Zweite Sprache des Geräts
+5a846d28	Sprache der Sprachansage. Jedes Gerät hat ein Sprachpaar (meist Englisch und Chinesisch): Welche die erste ist, hängt von der Version des Geräts ab.
+b0e3754d	Filter, der das Hintergrundrauschen des Tons verringert.
+feddc78d	«BF Series CPS» v1.5.1
+0bc4f6b8	«T6UV Series EN CPS»
+8317e850	«BF-UVs CPS»
+ed9db3bd	«Baofeng T22 CPS» (PMR446)
+fff42a63	Verhältnis zwischen der Zeit, in der der Empfänger eingeschaltet bleibt, und der Zeit, in der er aus ist, wenn der Kanal frei ist (1:4 = ein Viertel der Zeit eingeschaltet): mehr Ersparnis, aber die ersten Augenblicke eines Anrufs können verloren gehen.
+b26d2b6b	Seitentaste 1
+b36d2cfe	Seitentaste 2
+82cf4523	Anzeige, die im Standby pulsiert («breathing light»)
+f552ed5e	Die Anzeige des Geräts pulsiert langsam, während das Gerät eingeschaltet und in Bereitschaft ist.

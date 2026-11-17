@@ -6024,3 +6024,24 @@ a0cce57a	band A
 9fcce3e7	band B
 88098e0a	channel {0}: the radio stores {1} MHz instead of {2} MHz (the step of that band)
 42954be8	frequency {0} MHz outside band B of the radio (118-174 and 350-470 MHz): use band A
+3c8dfdbf	Table derived from the CHIRP code and checked against the
+b3907a40	Table derived from the CHIRP code and checked against the {0}: only the settings on which the two agree are shown.
+e85b5724	: only the settings on which the two agree are shown.
+03cb7a08	In the manufacturer's program «Voice guide» and «Key beep» are swapped between reading and writing: here the writing is followed, as in the other radios of the same family. If the effect on the radio is swapped, use the other setting.
+f224e4e4	Always open
+78f032cd	Enhanced
+2f95969f	Strict
+57253ac4	Audio opening threshold. With «Always open» the audio stays always open (you hear the hiss); at the other levels an increasingly strong signal is needed.
+d8059263	First language of the radio
+1cb9fd6b	Second language of the radio
+5a846d28	Language of the voice guide. Each radio has a pair of languages (usually English and Chinese): which one comes first depends on the radio version.
+b0e3754d	Filter that reduces the background noise of the audio.
+feddc78d	«BF Series CPS» v1.5.1
+0bc4f6b8	«T6UV Series EN CPS»
+8317e850	«BF-UVs CPS»
+ed9db3bd	«Baofeng T22 CPS» (PMR446)
+fff42a63	Ratio between the time the receiver stays on and the time it is off when the channel is free (1:4 = on one part in four): more saving, but the first moments of a call may be lost.
+b26d2b6b	Side key 1
+b36d2cfe	Side key 2
+82cf4523	Indicator that pulses in standby («breathing light»)
+f552ed5e	The radio's indicator pulses slowly while the radio is on and in standby.

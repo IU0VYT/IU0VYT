@@ -6,6 +6,23 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.42.0 (16/11/2026)
+-------------------
+- Tab Laman Utama: dengan 54 jenama, kotak jenama menjadi terlalu tinggi dan bahagian
+  bawah halaman terkeluar dari tetingkap tanpa dapat ditatal. Kotak itu kini lebih lebar
+  dengan lebih banyak lajur, dan halaman mengecil sendiri apabila tidak muat (setiap
+  kali saiz tetingkap, bahasa atau tab berubah). Dalam bahasa Arab huruf tajuk
+  dipaparkan dalam susunan terbalik: dibetulkan.
+- Tetapan daripada program pengeluar untuk radio yang hanya mempunyai saluran: Baofeng
+  siri D (16 model, «BF Series CPS» v1.5.1), BF-88ST, BF-C2 / BF-V2, GT-68, GT-22 dan
+  Radtel RT-13. Dalam program siri D, «panduan suara» dan «bip kekunci» tertukar antara
+  bacaan dan penulisan: penulisan diikuti, dan kedua-dua tetapan itu mempunyai notis.
+- Tetapan untuk «kembar» radio CHIRP, terhad kepada item yang dibaca dan ditulis oleh
+  program pengeluar setiap model dengan cara yang sama seperti CHIRP: UV-17R, UV-21R,
+  UV-21L (lengkap: fail program yang sama dengan UV-17 Pro), UV-25 Plus, UV-28 Pro,
+  UV-29 Pro, UV-7B, AR-152 Pro dan T22. Tiada satu pun tetapan ini telah diuji pada
+  radio sebenar.
+
 4.41.0 (16/11/2026)
 -------------------
 - Radio baharu daripada pemacu CHIRP, ditulis semula dari awal. Yaesu VX-1R: saluran dan

@@ -558,6 +558,17 @@ kbd { background: #f3f5f8; border: 1px solid var(--line); border-bottom-width: 2
   .home-card span { font-size: 11.5px; line-height: 1.3; }
 }
 
+/* 4.42: le marche sono più di 50: riquadro più largo con più colonne (meno righe), così
+   in basso tornano visibili copyright, sito web e sorgenti. La Home non viene più
+   tagliata in basso: se non sta nella finestra si rimpicciolisce da sola (Home.fit in
+   home.js) e, se nemmeno così basta, la pagina scorre */
+.home { flex: none; }
+.hb-home { max-width: 1060px; }
+.hb-home .hb-grid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 2px 12px; }
+/* 4.42: con l'arabo (scrittura da destra a sinistra) le lettere del titolo comparivano in
+   ordine inverso: il titolo si scrive sempre da sinistra a destra */
+.neon { direction: ltr; }
+
 /* 4.10: selettore della lingua (accanto a «ℹ Info») */
 .langsel { flex: none; display: flex; align-items: center; margin-left: 6px; }
 .langbtn { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 6px; border-radius: 6px;

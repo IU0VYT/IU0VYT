@@ -6024,3 +6024,24 @@ a0cce57a	jalur A
 9fcce3e7	jalur B
 88098e0a	saluran {0}: radio menyimpan {1} MHz dan bukannya {2} MHz (langkah jalur itu)
 42954be8	frekuensi {0} MHz di luar jalur B radio (118-174 dan 350-470 MHz): gunakan jalur A
+3c8dfdbf	Jadual diperoleh daripada kod CHIRP dan disemak dengan
+b3907a40	Jadual diperoleh daripada kod CHIRP dan disemak dengan {0}: hanya tetapan yang dipersetujui kedua-duanya dipaparkan.
+e85b5724	: hanya tetapan yang dipersetujui kedua-duanya dipaparkan.
+03cb7a08	Dalam program pengeluar, «Panduan suara» dan «Bip kekunci» tertukar antara bacaan dan penulisan: di sini penulisan diikuti, seperti radio lain dalam keluarga yang sama. Jika kesan pada radio tertukar, gunakan tetapan yang satu lagi.
+f224e4e4	Sentiasa terbuka
+78f032cd	Diperkuat
+2f95969f	Ketat
+57253ac4	Ambang pembukaan audio. Dengan «Sentiasa terbuka» audio kekal terbuka (desis kedengaran); pada tahap lain isyarat yang semakin kuat diperlukan.
+d8059263	Bahasa pertama radio
+1cb9fd6b	Bahasa kedua radio
+5a846d28	Bahasa panduan suara. Setiap radio mempunyai sepasang bahasa (biasanya Inggeris dan Cina): yang mana satu pertama bergantung pada versi radio.
+b0e3754d	Penapis yang mengurangkan hingar latar audio.
+feddc78d	«BF Series CPS» v1.5.1
+0bc4f6b8	«T6UV Series EN CPS»
+8317e850	«BF-UVs CPS»
+ed9db3bd	«Baofeng T22 CPS» (PMR446)
+fff42a63	Nisbah antara masa penerima kekal hidup dengan masa ia dimatikan apabila saluran kosong (1:4 = hidup satu bahagian daripada empat): lebih jimat, tetapi detik-detik awal panggilan mungkin terlepas.
+b26d2b6b	Kekunci sisi 1
+b36d2cfe	Kekunci sisi 2
+82cf4523	Penunjuk yang berdenyut semasa siap sedia («breathing light»)
+f552ed5e	Penunjuk radio berdenyut perlahan semasa radio dihidupkan dan dalam keadaan siap sedia.

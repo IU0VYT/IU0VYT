@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.41.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.42.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,14 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.42.0:
+- Tab Laman Utama kini muat sepenuhnya dalam tetingkap: kotak jenama lebih lebar dan
+  halaman yang menyesuaikan diri dengan saiz tetingkap.
+- Tetapan untuk 30 model yang hanya mempunyai saluran: Baofeng siri D (BF-V1D … BF-V12D,
+  888SD, 889D, 1901D, 1904D, 1909D, W31D, BF-T20D), BF-88ST, BF-C2 / BF-V2, GT-68,
+  GT-22, T22, UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152
+  Pro dan Radtel RT-13.
+- Galeri: 663 model daripada 54 jenama (609 dengan saluran, 541 dengan tetapan).
 Baharu dalam 4.41.0:
 - Radio baharu (radio genggam CHIRP yang belum ada): Yaesu VX-1R (saluran dan tetapan),
   Icom IC-91AD dan IC-92AD (dua jalur, juga D-STAR), BTECH UV-PRO (melalui Bluetooth,
@@ -692,10 +700,14 @@ TETAPAN RADIO (3.6)
   seperti yang dihuraikan oleh qdmr (nama dan ID DMR seperti dalam dmrconfig); kata
   laluan tidak disentuh. Baofeng DM-1701 (4.10): nama, ID DMR dan teks semasa
   dihidupkan, satu-satunya medan yang dipersetujui oleh dmrconfig dan qdmr.
-- Belum tersedia: siri D, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST, BF-9700 /
-  BF-S56 Max, DM-5000, DR-1801UV dan model keluarga UV-17 Pro yang tidak disenaraikan
-  oleh CHIRP (UV-25 Plus, AR-152 Pro, UV-29 Pro, UV-28 Pro, UV-7B, UV-17R, UV-21R,
-  UV-21L): untuk radio ini gunakan program pengeluar.
+- (4.42) Baofeng siri D, BF-88ST, BF-C2 / BF-V2, GT-68, GT-22 dan Radtel RT-13: jadual
+  diambil daripada program pengeluar. UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro,
+  UV-29 Pro, UV-7B, AR-152 Pro dan T22: jadual CHIRP bagi radio dengan memori yang
+  sama, dihadkan kepada item yang dibaca dan ditulis oleh program pengeluar model itu
+  dengan cara yang sama (tetingkap tetapan menyatakannya).
+- Belum tersedia untuk sesetengah radio, termasuk BF-T9, BF-9700 / BF-S56 Max, DM-5000,
+  DR-1801UV dan beberapa model Radtel, Icom, Kenwood dan Alinco: untuk radio ini
+  gunakan program pengeluar.
 
 FAIL .DAT BAJETON BJ-8300 (3.6)
 Program BT-11_CPS v1.0.9 menyimpan saluran dalam satu senarai 960 (v1.0.8 dalam 15 zon

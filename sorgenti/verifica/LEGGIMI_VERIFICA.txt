@@ -276,3 +276,14 @@ ESEGUIBILE WINDOWS SOTTO WINE
 
 Le prove TestDiffK67*, TestDiffBt* e TestDiffRh5 richiedono materiale non
 distribuito con il programma: senza le variabili indicate vengono saltate.
+
+SCHEDA HOME IN UN BROWSER (4.42)
+Gli script di verifica/ui aprono l'interfaccia in Chrome (serve Python con
+«playwright») e controllano che la scheda Home stia tutta nella finestra:
+     python3 verifica/ui/home_misura.py <indirizzo> [cartella schermate] [lingue]
+     python3 verifica/ui/home_scenari.py <indirizzo>
+L'indirizzo è quello che il programma stampa all'avvio nella versione Linux
+(con GESTIONE_CANALI_TOKEN si sceglie il gettone). home_misura.py prova 14
+dimensioni di finestra per ogni lingua; home_scenari.py il ridimensionamento, il
+cambio di scheda, il cambio di lingua e una finestra bassissima. L'ultima riga
+dei due deve essere «NON A POSTO: 0».

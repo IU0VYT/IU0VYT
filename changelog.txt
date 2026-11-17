@@ -3,6 +3,63 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.42.0 (16/11/2026)
+-------------------
+La scheda Home entra tutta nella finestra; impostazioni per 30 modelli che
+avevano solo i canali, ricavate dai programmi dei costruttori.
+- Home: con 54 marche il riquadro «PLAYER SELECT» era diventato troppo alto e
+  la parte bassa della pagina (pulsante, riquadri, versione, sito e sorgenti)
+  finiva fuori dalla finestra, senza poterla scorrere. Ora il riquadro delle
+  marche è più largo e ha più colonne (7 righe invece di 14) e la pagina si
+  adatta da sola: se non sta nella finestra viene rimpicciolita quanto basta,
+  a ogni cambio di dimensione, di lingua o di scheda; solo sotto il 60%
+  (finestre minuscole) compare lo scorrimento. Provata a 14 dimensioni di
+  finestra in tutte le 13 lingue.
+- Home in arabo: le lettere del titolo «IUØVYT FLASH» comparivano in ordine
+  inverso. Corretto.
+- Baofeng serie D (BF-V1D, 888SD, 1901D, 889D, V2D, V4D, V5D, V6D, V8D, V9D,
+  V10D, V12D, 1904D, 1909D, W31D, BF-T20D): impostazioni dal programma del
+  costruttore «BF Series CPS» v1.5.1, controllate anche sulla versione 1.3.19:
+  squelch a quattro livelli, TOT, VOX e livello, blocchi della trasmissione
+  per tensione, riduzione del rumore, guida vocale e lingua, suono dei tasti,
+  risparmio della batteria, tasto laterale (secondo il modello), allarme.
+  Attenzione: in quel programma «guida vocale» e «suono dei tasti» sono
+  scambiate fra lettura e scrittura, in tutte e due le versioni. Qui si segue
+  la scrittura, che coincide con le altre radio della famiglia della BF-888S;
+  le due voci hanno un avviso che lo dice.
+- Baofeng BF-88ST, BF-C2 / BF-V2, GT-68 e GT-22: impostazioni dai rispettivi
+  programmi («BF-889», «BF_V1_FH» v1.0.8, «GT-22»), che usano gli stessi tre
+  blocchi della BF-888S. La GT-22 non ha tasto laterale, scansione e allarme.
+- Radtel RT-13: impostazioni dal programma «RT-13» V1.7 (VOX a nove livelli,
+  risparmio a sei scelte, due tasti laterali, spia che pulsa in attesa).
+- Baofeng UV-17R, UV-21R, UV-21L: impostazioni complete della UV-17 Pro. Il
+  programma del costruttore dei tre pacchetti è lo stesso file, byte per byte,
+  di quello di UV-17 Pro, UV-5RM e K5 Plus.
+- Baofeng UV-25 Plus, UV-28 Pro, UV-29 Pro / SW-9, UV-7B, AR-152 Pro:
+  impostazioni della UV-17 Pro GPS, limitate alle voci che il programma
+  «BF-UVs CPS» di ogni modello legge e scrive allo stesso modo di CHIRP. Tolti
+  il tasto laterale 2 (il programma lo scrive in un altro modo) e il fuso
+  orario del GPS (il programma non lo ha); beep a due scelte, ritardo
+  dell'identificativo fino a 700 ms. Per UV-29 Pro, UV-7B e AR-152 Pro restano
+  solo le impostazioni di base: VFO e DTMF nei loro programmi sono gestiti in
+  modo diverso.
+- Baofeng T22 (PMR446): squelch, TOT, VOX, livello e ritardo del VOX,
+  risparmio e beep, cioè le voci su cui il programma del costruttore e CHIRP
+  (classe W31E) concordano.
+- Nella finestra delle impostazioni di queste radio è scritto da dove viene la
+  tabella: dal programma del costruttore, oppure da CHIRP con le sole voci
+  confermate dal programma del costruttore.
+- Restano senza impostazioni: la BF-9700 (programma non leggibile) e, per la
+  prossima versione, le altre Radtel (RT-4D, RT-5D, RT-6D, RT-69 GPS, RT-330,
+  RT-400, RT-480, RT-68, RT-830, RT-850, RT-871A, RT-1000 Pro).
+- Dubbio lasciato aperto su CHIRP: per UV-32 e UV-28 Plus il programma del
+  costruttore scrive il tasto laterale 2 come numero d'ordine (0-3), CHIRP
+  come codice del tasto. Per i modelli di CHIRP resta come in CHIRP.
+- Piccola pulizia: la pagina ora dichiara la sua icona (prima il browser
+  interno la cercava senza trovarla).
+- Nessuna di queste impostazioni è stata provata su una radio vera.
+- Galleria: 663 modelli di 54 marche (609 con canali, 541 con impostazioni).
+
 4.41.0 (16/11/2026)
 -------------------
 I palmari di CHIRP che mancavano (Yaesu VX-1R, Icom IC-91AD / IC-92AD, BTECH

@@ -1,11 +1,15 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.41.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.42.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.42.0 的新内容：
+- “主页”选项卡现在可以完整显示在窗口中：品牌框更宽，页面会自动适应窗口大小。
+- 为此前只有信道的 30 个型号增加了设置：Baofeng D 系列 (BF-V1D … BF-V12D、888SD、889D、1901D、1904D、1909D、W31D、BF-T20D)、BF-88ST、BF-C2 / BF-V2、GT-68、GT-22、T22、UV-17R、UV-21R、UV-21L、UV-25 Plus、UV-28 Pro、UV-29 Pro、UV-7B、AR-152 Pro 和 Radtel RT-13。
+- 图库：54 个品牌的 663 个型号（609 个支持信道，541 个支持设置）。
 4.41.0 的新内容：
 - 新增电台（CHIRP 中此前缺少的手持机）：Yaesu VX-1R（信道和设置）、Icom IC-91AD 和 IC-92AD（两个频段，也支持 D-STAR）、BTECH UV-PRO（蓝牙，无需写频线）以及 AOR AR8200 接收机（新品牌）。
 - 为此前只有信道的电台增加了设置：Yaesu FT-7800 / FT-7900、Icom IC-Q7A、TIDRADIO TD-M11。
@@ -232,7 +236,8 @@ RADTEL RT-950 PRO 和 BAJETON BJ-9000（4.6）
 - Bajeton BJ-9000、Radtel RT-950 Pro 和 RT-950（57 项）：厂家程序的“Optional Features”窗口；只修改每一项的位，其他字节保持电台中的值。各频段的活动区域为 10 或 15 个，取决于固件版本。
 - 使用 CHIRP 驱动的电台（63 个系列：UV-5R、UV-17 Pro、防水型、BF-888S、UV-B5、BF-T1、BJ-7800、BJ-7700、H 系列……）：每个系列的表格都由 CHIRP 代码得出（对每一项让 CHIRP 写入每个值并观察哪些位发生变化），各项均已翻译。不包括校准、测试或出厂项。含非拉丁字符的文本（例如厂家程序写入的中文名称）只能替换。
 - Baofeng RD-5R 和 DM-1801（4.10，31 项）：按 qdmr 描述的 Radioddity GD-77 系列常规设置（DMR 名称和 ID 与 dmrconfig 相同）；不改动密码。Baofeng DM-1701（4.10）：名称、DMR ID 和开机文字，这是 dmrconfig 与 qdmr 一致的仅有字段。
-- 尚不可用：D 系列、T17 / T18、GT-18、T9、GT-22、GT-68、BF-C2、BF-88ST、BF-9700 / BF-S56 Max、DM-5000、DR-1801UV，以及 CHIRP 未列出的 UV-17 Pro 系列型号（UV-25 Plus、AR-152 Pro、UV-29 Pro、UV-28 Pro、UV-7B、UV-17R、UV-21R、UV-21L）：这些电台请使用厂家程序。
+- （4.42）Baofeng D 系列、BF-88ST、BF-C2 / BF-V2、GT-68、GT-22 和 Radtel RT-13：表格取自厂家程序。UV-17R、UV-21R、UV-21L、UV-25 Plus、UV-28 Pro、UV-29 Pro、UV-7B、AR-152 Pro 和 T22：使用存储结构相同的电台的 CHIRP 表格，并仅保留该型号的厂家程序以相同方式读写的项目（设置窗口中有说明）。
+- 部分电台尚不可用，包括 BF-T9、BF-9700 / BF-S56 Max、DM-5000、DR-1801UV 以及若干 Radtel、Icom、Kenwood 和 Alinco 型号：这些电台请使用厂家程序。
 
 BAJETON BJ-8300 的 .DAT 文件（3.6）
 BT-11_CPS v1.0.9 程序把信道保存为 960 个的单一列表（v1.0.8 为 15 个区域，每区 64 个），并多一项（“信道划分”）：v1.0.9 打不开 v1.0.8 的文件，反之亦然。IU0VYT Flash 能打开这两种格式，并以文件打开时的格式保存。在 8300 标签页中，“用于 BT-11_CPS 的文件”选择版本：打开的文件会被转换（信道和设置不变），新文件和从电台读取的数据都将使用该格式（默认：v1.0.8，即 Bajeton 下载页面上为 8300 标明的版本）。

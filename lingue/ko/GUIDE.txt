@@ -1,6 +1,6 @@
 IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 =====================================================================
-버전 4.41.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
+버전 4.42.0 - 실행 파일 하나, 설치 필요 없음, 13개 언어의 인터페이스.
 작성자: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 웹사이트: https://iu0vyt.github.io/IU0VYT/
 소스 코드와 릴리스: https://github.com/IU0VYT/IU0VYT
@@ -8,6 +8,10 @@ IU0VYT FLASH - 무전기의 채널, 중계기, 펌웨어
 AUTHORS_AND_LICENSES.txt를 보세요.
 이 파일은 LEGGIMI.txt의 한국어 번역입니다(이탈리아어 원문이 기준이 되는 글입니다). 이전 버전의 새 기능은 메인 폴더의 이탈리아어
 CHANGELOG.txt에 있습니다(여기의 CHANGELOG.txt에는 4.13 항목의 번역이 있습니다).
+4.42.0의 새로운 점:
+- «홈» 탭 전체가 이제 창 안에 들어옵니다. 브랜드 상자가 넓어졌고 페이지가 창 크기에 맞춰 스스로 조정됩니다.
+- 채널만 있던 30개 모델에 설정 추가: Baofeng D 시리즈 (BF-V1D … BF-V12D, 888SD, 889D, 1901D, 1904D, 1909D, W31D, BF-T20D), BF-88ST, BF-C2 / BF-V2, GT-68, GT-22, T22, UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro, Radtel RT-13.
+- 갤러리: 54개 브랜드 663개 모델(채널 지원 609개, 설정 지원 541개).
 4.41.0의 새로운 점:
 - 새 무전기(CHIRP에 있지만 빠져 있던 휴대기): Yaesu VX-1R(채널과 설정), Icom IC-91AD와 IC-92AD(두 밴드, D-STAR 포함), BTECH UV-PRO(블루투스, 케이블 없음), 수신기 AOR AR8200(새 브랜드).
 - 채널만 있던 무전기에 설정 추가: Yaesu FT-7800 / FT-7900, Icom IC-Q7A, TIDRADIO TD-M11.
@@ -399,9 +403,12 @@ Plus: 공식 프로그램이 있으면 갤러리에 링크가 있습니다.
 - Baofeng RD-5R와 DM-1801(4.10, 31개 항목): qdmr가 설명하는 Radioddity GD-77 계열의 일반 설정(DMR 이름과
   ID는 dmrconfig처럼). 암호는 건드리지 않습니다. Baofeng DM-1701(4.10): 이름, DMR ID, 전원을 켤 때의 문구.
   dmrconfig와 qdmr가 일치하는 항목은 이것뿐입니다.
-- 아직 없음: D 시리즈, T17 / T18, GT-18, T9, GT-22, GT-68, BF-C2, BF-88ST, BF-9700 / BF-S56
-  Max, DM-5000, DR-1801UV, 그리고 CHIRP에 없는 UV-17 Pro 계열 모델(UV-25 Plus, AR-152 Pro, UV-29
-  Pro, UV-28 Pro, UV-7B, UV-17R, UV-21R, UV-21L). 이들은 제조사 프로그램을 쓰세요.
+- (4.42) Baofeng D 시리즈, BF-88ST, BF-C2 / BF-V2, GT-68, GT-22, Radtel RT-13: 제조사 프로그램에서
+  가져온 표. UV-17R, UV-21R, UV-21L, UV-25 Plus, UV-28 Pro, UV-29 Pro, UV-7B, AR-152 Pro,
+  T22: 메모리 구성이 같은 무전기의 CHIRP 표를, 해당 모델의 제조사 프로그램이 같은 방식으로 읽고 쓰는 항목으로 줄인 것(설정 창에
+  표시됩니다).
+- 일부 무전기는 아직 없음: BF-T9, BF-9700 / BF-S56 Max, DM-5000, DR-1801UV 및 Radtel, Icom,
+  Kenwood, Alinco의 여러 모델. 이들은 제조사 프로그램을 쓰세요.
 
 BAJETON BJ-8300 .DAT 파일(3.6)
 BT-11_CPS v1.0.9 프로그램은 채널을 960개 목록 하나로 저장하고(v1.0.8은 64채널 구역 15개) 항목이 하나 더 있습니다("채널

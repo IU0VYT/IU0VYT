@@ -22,7 +22,10 @@ const RadioSettings = {
     const changes = {};
     const src = r.source === 'CHIRP'
       ? 'Tabella ricavata dal codice di CHIRP per questa radio e verificata con esso.'
-      : (r.source ? 'Tabella ricavata dal ' + r.source + '.' : '');
+      : (r.source && r.source.startsWith('CHIRP+')
+        // 4.42: radio «gemelle» (tabella di CHIRP ristretta alle voci confermate dal programma del costruttore)
+        ? 'Tabella ricavata dal codice di CHIRP e verificata sul ' + r.source.slice(6) + ': sono mostrate solo le voci su cui i due concordano.'
+        : (r.source ? 'Tabella ricavata dal ' + r.source + '.' : ''));
     const m = openModal(`<div class="dialog big setdlg"><header>⚙ Impostazioni — ${esc(view.def.name)}
         <input type="search" data-q placeholder="Cerca un'impostazione…" style="margin-left:auto;width:260px"></header>
       <div class="body flush"><div class="setwrap">
