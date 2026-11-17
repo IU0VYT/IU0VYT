@@ -1770,6 +1770,7 @@ mengedarkannya semula (juga yang diubah) mesti menggunakan lesen yang sama, meny
 kod sumber dan mengekalkan notis hak cipta.
 Pemacu radio sebahagian besarnya berasal daripada CHIRP (GNU GPL): pengarang dan lesen
 semua komponen ada dalam AUTHORS_AND_LICENSES.txt.
-Program bebas, tidak bergabung dengan atau disokong oleh Baofeng atau Bajeton: nama
-model hanya menunjukkan radio yang berfungsi dengannya; tanda dagangan adalah milik
-pemilik masing-masing.
+Program bebas, tidak bergabung dengan atau disokong oleh pengeluar radio (Baofeng,
+Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO dan lain-lain): nama model
+hanya menunjukkan radio yang berfungsi dengannya; tanda dagangan adalah milik pemilik
+masing-masing.

@@ -193,14 +193,28 @@ body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-in
 @media (max-height: 820px) and (min-width: 721px) {
   .hero { padding-top: 18px; }
   .tag { margin: 12px 0 8px; }
+  .hb { margin-bottom: 18px; }
   .lead { margin-bottom: 20px; }
   .hero-ver { margin-top: 12px; }
 }
 @media (max-height: 680px) and (min-width: 721px) {
   .hero { padding-top: 12px; }
   .tag { margin: 8px 0 6px; }
-  .lead { font-size: 16px; margin-bottom: 14px; }
+  .hb { margin: 6px auto 14px; }
+  .hb-in { padding: 6px 14px 8px; }
+  .lead { max-width: 980px; font-size: 16px; margin-bottom: 12px; }
+  .start { padding: 12px 26px; }
   .hero-ver { margin-top: 8px; }
+}
+/* 18/11/2026: schermi molto bassi (1280×720 con le barre del browser, zoom al 150%) */
+@media (max-height: 600px) and (min-width: 721px) {
+  .hero { padding-top: 8px; }
+  .tag { margin: 6px 0 4px; }
+  .hb { margin: 4px auto 10px; }
+  .lead { font-size: 15px; margin-bottom: 10px; }
+  .lead br { display: none; } /* il testo scorre su due righe invece di tre */
+  .start { font-size: 18px; padding: 11px 24px; }
+  .hero-ver { margin-top: 6px; }
 }
 
 /* ---------- sezioni */
@@ -276,7 +290,7 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
 .hb { --notch: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
   100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
   8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
-  max-width: 640px; margin: 8px auto 26px; filter: drop-shadow(0 0 10px rgba(255,46,200,.45)) drop-shadow(0 0 18px rgba(0,229,255,.25)); }
+  max-width: 980px; margin: 8px auto 26px; filter: drop-shadow(0 0 10px rgba(255,46,200,.45)) drop-shadow(0 0 18px rgba(0,229,255,.25)); }
 .hb-frame { clip-path: var(--notch); background: repeating-linear-gradient(90deg, #ff2ec8 0 12px, #ffd23f 12px 24px, #00e5ff 24px 36px); padding: 4px; }
 .hb-in { clip-path: var(--notch); background: #12052e; padding: 8px 14px 10px;
   background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 6px 6px; }
@@ -285,11 +299,14 @@ footer .over { font: 700 12px var(--mono); letter-spacing: .3em; color: var(--pi
 .hb-inv { fill: #00ff41; filter: drop-shadow(0 0 3px #00ff41); animation: hb-march 1.2s steps(2) infinite; }
 .hb-inv2 { fill: #ff2ec8; filter: drop-shadow(0 0 3px #ff2ec8); animation-delay: .6s; }
 @keyframes hb-march { 50% { transform: translateX(3px); } }
-.hb-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px 14px; }
+/* 18/11/2026: con 54 marche le 4 colonne erano 14 righe e spingevano «PRESS START» e la versione
+   sotto il bordo dello schermo. Ora il riquadro è più largo e le colonne sono quante ce ne stanno
+   (9 su uno schermo largo: 6 righe), come nella Home del programma dalla 4.42. */
+.hb-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 3px 14px; }
 .hb-grid li { display: flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   font: 700 11px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #cfe6ff; text-align: start; }
 .hb-dot { flex: none; width: 6px; height: 6px; }
-@media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(2, minmax(0, max-content)); justify-content: center; column-gap: 28px; } }
+@media (max-width: 560px) { .hb-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); column-gap: 8px; } }
 @media (prefers-reduced-motion: reduce) { .hb-inv { animation: none; } }
 
 /* ---------- testo leggibile su schermi stretti */

@@ -1723,6 +1723,7 @@ PARTICULAR PURPOSE. Full text in LICENSE.txt. Whoever redistributes it (also mod
 must use the same license, provide the source code and keep the copyright notices.
 The radio drivers derive largely from CHIRP (GNU GPL): authors and licenses of all
 components in AUTHORS_AND_LICENSES.txt.
-Independent program, not affiliated with or endorsed by Baofeng or Bajeton: the model
-names only indicate which radios it works with; trademarks belong to their respective
-owners.
+Independent program, not affiliated with or endorsed by the radio manufacturers
+(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO and the others): the
+model names only indicate which radios it works with; trademarks belong to their
+respective owners.

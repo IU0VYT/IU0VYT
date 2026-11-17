@@ -1878,6 +1878,7 @@ doit utiliser la même licence, fournir le code source et conserver les mentions
 copyright.
 Les pilotes des radios dérivent en grande partie de CHIRP (GNU GPL) : auteurs et
 licences de tous les composants dans AUTEURS_ET_LICENCES.txt.
-Programme indépendant, ni affilié à Baofeng ou Bajeton ni approuvé par eux : les noms
+Programme indépendant, ni affilié ni approuvé par les fabricants des radios (Baofeng,
+Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO et les autres) : les noms
 des modèles indiquent seulement avec quelles radios il fonctionne ; les marques
 appartiennent à leurs titulaires respectifs.

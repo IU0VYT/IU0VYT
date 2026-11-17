@@ -2714,6 +2714,7 @@ LICENSE.txt. Chi lo ridistribuisce (anche modificato) deve usare la stessa licen
 fornire il codice sorgente e conservare le note di copyright.
 I driver delle radio derivano in gran parte da CHIRP (GNU GPL): autori e licenze di
 tutti i componenti in AUTORI_E_LICENZE.txt.
-Programma indipendente, non affiliato né approvato da Baofeng o da Bajeton: i nomi
-dei modelli indicano solo con quali radio funziona; i marchi appartengono ai
+Programma indipendente, non affiliato né approvato dai costruttori delle radio
+(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e gli altri): i
+nomi dei modelli indicano solo con quali radio funziona; i marchi appartengono ai
 rispettivi titolari.

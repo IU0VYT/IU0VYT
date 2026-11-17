@@ -589,4 +589,4 @@ BTECH DMR-6X2：引导式固件升级（3.8）
 许可证
 IU0VYT Flash，Copyright (C) 2026 Daniele "IU0VYT" Bonifazi。自由软件：你可以按照自由软件基金会发布的 GNU 通用公共许可证（第 3 版或你选择的任何更高版本）的条款重新分发和/或修改它。发布它是希望它有用，但不提供任何担保，甚至不包括对适销性或特定用途适用性的默示担保。全文见 LICENSE.txt。重新分发者（包括修改后的版本）必须使用相同的许可证、提供源代码并保留版权声明。
 电台驱动大部分源自 CHIRP（GNU GPL）：所有组件的作者和许可证见 AUTHORS_AND_LICENSES.txt。
-独立程序，与 Baofeng 或 Bajeton 没有关联，也未获其认可：型号名称仅表示它适用于哪些电台；商标归各自所有者所有。
+独立程序，与电台厂家（Baofeng、Bajeton、Quansheng、Retevis、Radtel、Radioddity、TIDRADIO 等）没有关联，也未获其认可：型号名称仅表示它适用于哪些电台；商标归各自所有者所有。

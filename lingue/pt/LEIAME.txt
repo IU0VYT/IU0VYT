@@ -1763,6 +1763,7 @@ completo em LICENSE.txt. Quem o redistribuir (também modificado) deve usar a me
 licença, fornecer o código-fonte e conservar os avisos de copyright.
 Os controladores dos rádios derivam em grande parte do CHIRP (GNU GPL): autores e
 licenças de todos os componentes em AUTORES_E_LICENCAS.txt.
-Programa independente, não afiliado nem aprovado pela Baofeng ou pela Bajeton: os
-nomes dos modelos indicam apenas com que rádios funciona; as marcas pertencem aos
-respetivos titulares.
+Programa independente, não afiliado nem aprovado pelos fabricantes dos rádios (Baofeng,
+Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO e os outros): os nomes dos
+modelos indicam apenas com que rádios funciona; as marcas pertencem aos respetivos
+titulares.

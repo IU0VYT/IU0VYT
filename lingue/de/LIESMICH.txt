@@ -1909,6 +1909,7 @@ Vollständiger Text in LICENSE.txt. Wer sie (auch verändert) weitergibt, muss d
 Lizenz verwenden, den Quellcode bereitstellen und die Urheberrechtshinweise erhalten.
 Die Treiber der Funkgeräte stammen zum großen Teil aus CHIRP (GNU GPL): Autoren und
 Lizenzen aller Bestandteile in AUTOREN_UND_LIZENZEN.txt.
-Unabhängiges Programm, weder mit Baofeng oder Bajeton verbunden noch von ihnen
-genehmigt: die Modellnamen geben nur an, mit welchen Funkgeräten es funktioniert; die
-Marken gehören ihren jeweiligen Inhabern.
+Unabhängiges Programm, weder mit den Herstellern der Funkgeräte (Baofeng, Bajeton,
+Quansheng, Retevis, Radtel, Radioddity, TIDRADIO und den übrigen) verbunden noch von
+ihnen genehmigt: die Modellnamen geben nur an, mit welchen Funkgeräten es funktioniert;
+die Marken gehören ihren jeweiligen Inhabern.

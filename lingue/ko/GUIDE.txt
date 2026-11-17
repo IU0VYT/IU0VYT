@@ -1085,5 +1085,5 @@ Foundation이 공표한 GNU General Public License 버전 3 또는 (선택에 �
 LICENSE.txt에 있습니다. (수정해서라도) 다시 배포하는 사람은 같은 라이선스를 쓰고, 소스 코드를 제공하고, 저작권 고지를 유지해야 합니다.
 무전기 드라이버는 대부분 CHIRP(GNU GPL)에서 왔습니다: 모든 구성 요소의 작성자와 라이선스는 AUTHORS_AND_LICENSES.txt에
 있습니다.
-Baofeng이나 Bajeton과 제휴하거나 그들이 보증하지 않은 독립 프로그램입니다. 모델 이름은 어떤 무전기와 동작하는지 나타낼 뿐이며 상표는 각
-소유자의 것입니다.
+무전기 제조사(Baofeng, Bajeton, Quansheng, Retevis, Radtel, Radioddity, TIDRADIO 등)와 제휴하거나 그들이 보증하지 않은
+독립 프로그램입니다. 모델 이름은 어떤 무전기와 동작하는지 나타낼 뿐이며 상표는 각 소유자의 것입니다.
