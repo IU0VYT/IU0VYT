@@ -8,12 +8,14 @@
 // All'indirizzo principale (pagina italiana) si passa alla lingua scelta a mano con le
 // bandiere oppure, se non è mai stata scelta, alla prima lingua del browser fra quelle
 // del sito; se nessuna è del sito, all'inglese. I motori di ricerca e chi arriva da
-// un'altra pagina del sito restano sulla pagina italiana.
+// un'altra pagina del sito restano sulla pagina italiana. Fra i motori anche gli strumenti
+// di prova di Google (Google-InspectionTool: Rich Results Test e Controllo URL), che nel
+// nome non hanno «bot».
 (function () {
   'use strict';
   var L = ['it', 'en', 'fr', 'de', 'es', 'pt', 'ru', 'zh', 'ja', 'ko', 'ar', 'ms', 'hi'];
   if (document.documentElement.lang !== 'it') return;
-  if (/bot|crawl|spider|slurp|lighthouse|facebookexternalhit|embedly|preview/i.test(navigator.userAgent || '')) return;
+  if (/bot|crawl|spider|slurp|lighthouse|inspectiontool|facebookexternalhit|embedly|preview/i.test(navigator.userAgent || '')) return;
   var here = location.href.split('#')[0].split('?')[0].replace(/index\.html$/, '');
   if (document.referrer && document.referrer.indexOf(here) === 0) return;
   var pick = null;
