@@ -211,6 +211,13 @@ func kwlInt(s string) int64 {
 	return v
 }
 
+// kwlNum: come kwlInt per i numeri piccoli (codici, indici, posizioni), letti
+// direttamente come int senza passare da una conversione che può troncare
+func kwlNum(s string) int {
+	v, _ := strconv.Atoi(strings.TrimSpace(s))
+	return v
+}
+
 func kwlSplitTx(r []byte) int64 {
 	if r[1] != 1 {
 		return 0
@@ -244,7 +251,7 @@ func (f kwlFam) Get(m *genModel, img []byte, i int) *Chan {
 		}
 	}
 	tone := func(k int) string {
-		n := int(kwlInt(fl[k])) - ix.codeB
+		n := kwlNum(fl[k]) - ix.codeB
 		if n < 0 || n >= len(o.tones) {
 			return "88.5"
 		}
@@ -253,7 +260,7 @@ func (f kwlFam) Get(m *genModel, img []byte, i int) *Chan {
 	switch {
 	case ix.dcs >= 0 && kwlInt(fl[ix.dcs]) == 1:
 		code := 23
-		if n := int(kwlInt(fl[ix.dcode])); n >= 0 && n < len(dtcsCodes) {
+		if n := kwlNum(fl[ix.dcode]); n >= 0 && n < len(dtcsCodes) {
 			code = dtcsCodes[n]
 		}
 		c.TxTone = fmt.Sprintf("D%03dN", code)
@@ -343,9 +350,9 @@ func (f kwlFam) tones(m *genModel, c *Chan, old []string) (tone, ctcss, dcs bool
 	tcode, _ = find(885)
 	ccode = tcode
 	if old != nil {
-		tcode, ccode = int(kwlInt(old[ix.tcode])), int(kwlInt(old[ix.ccode]))
+		tcode, ccode = kwlNum(old[ix.tcode]), kwlNum(old[ix.ccode])
 		if ix.dcode >= 0 {
-			dcode = int(kwlInt(old[ix.dcode]))
+			dcode = kwlNum(old[ix.dcode])
 		}
 	}
 	t, e := genToneParse(c.TxTone)
@@ -448,7 +455,7 @@ func (f kwlFam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	// passo: resta quello del canale se la frequenza è un suo multiplo
 	if len(o.steps) > 0 {
 		cur, e := strconv.ParseInt(fl[ix.step], 16, 64)
-		if e != nil || old == nil || cur < 0 || int(cur) >= len(o.steps) || !kwlStepOK(c.Rx, o.steps[cur]) {
+		if e != nil || old == nil || cur < 0 || cur >= int64(len(o.steps)) || !kwlStepOK(c.Rx, o.steps[cur]) {
 			k := -1
 			for n, s := range o.steps {
 				if kwlStepOK(c.Rx, s) {

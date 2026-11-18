@@ -198,7 +198,7 @@ func (e *kwlEmu) answer(line string) string {
 		if at >= len(fl) || len(fl[at]) != ix.numW {
 			return 0, false
 		}
-		n := int(kwlInt(fl[at]))
+		n := kwlNum(fl[at])
 		return n, n >= 0 && n < e.m.Slots
 	}
 	f := kwlFam{}

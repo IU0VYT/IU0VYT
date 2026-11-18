@@ -276,7 +276,12 @@ func (f kwx180Fam) LockedImg(m *genModel, img []byte, i int, old, want *Chan) er
 // shuffle_zone di CHIRP: i canali della zona in ordine di numero, con i loro
 // bit di scansione
 func (f kwx180Fam) shuffle(img []byte, z kwx180Zone) {
-	idx := make([]int, z.count)
+	// una zona non ha mai più canali di quanti la radio ne tiene in tutto
+	n := z.count
+	if n < 0 || n > kwx180Max {
+		return
+	}
+	idx := make([]int, n)
 	for k := range idx {
 		idx[k] = k
 	}
@@ -289,9 +294,9 @@ func (f kwx180Fam) shuffle(img []byte, z kwx180Zone) {
 		return
 	}
 	off := z.flagOff(img)
-	raw := make([][]byte, z.count)
+	raw := make([][]byte, n)
 	type flag struct{ v, ok bool }
-	skip := make([]flag, z.count)
+	skip := make([]flag, n)
 	for k, src := range idx {
 		raw[k] = append([]byte{}, z.rec(img, src)...)
 		skip[k].v, skip[k].ok = kwx180SkipGet(img, off, src)
