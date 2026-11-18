@@ -155,4 +155,9 @@ func TestSitoMarche(t *testing.T) {
 	if n := regexp.MustCompile(`PLAYER SELECT · <span data-n="marche">(\d+)</span>`).FindStringSubmatch(s); n == nil || n[1] != strconv.Itoa(len(cat)) {
 		t.Errorf("numero di marche nel titolo del riquadro: %v, nel catalogo %d", n, len(cat))
 	}
+	// Anche il testo per i lettori di schermo del riquadro (rimasto a 52 dalla 4.40
+	// alla 4.45) deve dire quante sono le marche.
+	if n := regexp.MustCompile(`aria-label="Marche di radio gestite: (\d+)"`).FindStringSubmatch(s); n == nil || n[1] != strconv.Itoa(len(cat)) {
+		t.Errorf("numero di marche nell'etichetta aria-label del riquadro: %v, nel catalogo %d", n, len(cat))
+	}
 }

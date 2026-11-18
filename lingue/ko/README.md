@@ -48,7 +48,7 @@
 - 체크한 채널의 **일괄 편집**: 출력, 대역폭, 스캔, 서브톤, 시프트 또는 송신을 한꺼번에 바꾸며, 각 채널의 나머지는 그대로입니다.
 - 54개 브랜드 **673개 모델의 갤러리**: 호환과 비호환으로, 종류(아마추어, DMR, GMRS/FRS, PMR446, 어린이용)와 브랜드별로 나뉘며, 검색, 필터, 공식 프로그램과 설명서 링크가 있습니다.
 - [IK2ANE](https://www.ik2ane.it)의 최신 목록을 바탕으로 한 **중계기 보관함**: 필터와 무전기에 넣기, 쓰기 전 중계기와 무전기 사이 호환성 확인.
-- 57개 모델의 **펌웨어 업데이트**(Quansheng UV-K5, UV-K6, UV-5R Plus, Quansheng과 Radtel의 .bin 파일로 Radtel RT-590과 RT-600, Radtel의 .kdhx 파일로 Radtel RT-470, RT-470L, RT-470X, RT-495, RT-630, 제조사의 .BIN 파일로 TIDRADIO TD-H3, TD-H8과 Radtel RT-730, .bin 파일로 Retevis RA79 V3와 RA89, Retevis의 .hex 파일로 Retevis RT85, .BTF 파일로 Radtel RT-950 Pro와 RT-950, Bajeton BJ-9000, .anc 파일로 Radtel RT-920와 RT-910B, .BTU 파일로 블루투스 없는 Radtel RT-910과 RT-900, Bajeton BJ-7700, Radtel과 M7OCM의 .bin 파일로 Radtel RT-890, Baofeng의 .bin 파일로 USB를 통한 Baofeng DM-1701, .sgl 파일로 USB를 통한 Baofeng RD-5R와 DM-1801 포함), 파일 확인과 무전기 백업 사본과 함께. BTECH DMR-6X2와 DMR-6X2 PRO는 공식 프로그램으로 안내에 따른 업데이트.
+- 58개 모델의 **펌웨어 업데이트**(Quansheng UV-K5, UV-K6, UV-5R Plus, Quansheng과 Radtel의 .bin 파일로 Radtel RT-590과 RT-600, Radtel의 .kdhx 파일로 Radtel RT-470, RT-470L, RT-470X, RT-495, RT-630, 제조사의 .BIN 파일로 TIDRADIO TD-H3, TD-H8과 Radtel RT-730, .bin 파일로 Retevis RA79 V3와 RA89, Retevis의 .hex 파일로 Retevis RT85, .BTF 파일로 Radtel RT-950 Pro와 RT-950, Bajeton BJ-9000, .anc 파일로 Radtel RT-920와 RT-910B, .BTU 파일로 블루투스 없는 Radtel RT-910과 RT-900, Bajeton BJ-7700, Radtel과 M7OCM의 .bin 파일로 Radtel RT-890, Baofeng의 .bin 파일로 USB를 통한 Baofeng DM-1701, .sgl 파일로 USB를 통한 Baofeng RD-5R와 DM-1801 포함), 파일 확인과 무전기 백업 사본과 함께. BTECH DMR-6X2와 DMR-6X2 PRO는 공식 프로그램으로 안내에 따른 업데이트.
 - 쓰기 전마다 자동 **백업 사본**, 쓴 뒤에는 확인.
 - 시작할 때마다 프로그램 **업데이트 확인**.
 

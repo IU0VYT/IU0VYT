@@ -48,7 +48,7 @@
 - **批量修改**已勾选的信道：同时修改功率、带宽、扫描、亚音、频差或发射，每个信道的其余部分保持不变。
 - **型号库**收录 54 个品牌的 673 个型号，分为兼容和不兼容，按类型（业余、DMR、GMRS/FRS、PMR446、儿童）和品牌分类，带搜索、筛选以及官方程序和手册的链接。
 - **中继台档案**，基于 [IK2ANE](https://www.ik2ane.it) 的最新列表，带筛选和写入电台功能，写入前检查中继台与电台的兼容性。
-- 57 个型号的**固件升级**（包括 Quansheng UV-K5、UV-K6 和 UV-5R Plus，使用 Quansheng 和 Radtel .bin 文件的 Radtel RT-590 和 RT-600，使用 Radtel .kdhx 文件的 Radtel RT-470、RT-470L、RT-470X、RT-495 和 RT-630，使用厂家 .BIN 文件的 TIDRADIO TD-H3、TD-H8 和 Radtel RT-730，使用 .bin 文件的 Retevis RA79 V3 和 RA89，以及使用 Retevis .hex 文件的 Retevis RT85，使用 .BTF 文件的 Radtel RT-950 Pro、RT-950 和 Bajeton BJ-9000，使用 .anc 文件的 Radtel RT-920 和 RT-910B，使用 .BTU 文件的 Radtel RT-910、RT-900 和无蓝牙 Bajeton BJ-7700，使用 Radtel 和 M7OCM .bin 文件的 Radtel RT-890，通过 USB 使用 Baofeng .bin 文件的 Baofeng DM-1701，通过 USB 使用 .sgl 文件的 Baofeng RD-5R 和 DM-1801），带文件检查和电台备份；BTECH DMR-6X2 和 DMR-6X2 PRO 可使用官方程序进行引导式升级。
+- 58 个型号的**固件升级**（包括 Quansheng UV-K5、UV-K6 和 UV-5R Plus，使用 Quansheng 和 Radtel .bin 文件的 Radtel RT-590 和 RT-600，使用 Radtel .kdhx 文件的 Radtel RT-470、RT-470L、RT-470X、RT-495 和 RT-630，使用厂家 .BIN 文件的 TIDRADIO TD-H3、TD-H8 和 Radtel RT-730，使用 .bin 文件的 Retevis RA79 V3 和 RA89，以及使用 Retevis .hex 文件的 Retevis RT85，使用 .BTF 文件的 Radtel RT-950 Pro、RT-950 和 Bajeton BJ-9000，使用 .anc 文件的 Radtel RT-920 和 RT-910B，使用 .BTU 文件的 Radtel RT-910、RT-900 和无蓝牙 Bajeton BJ-7700，使用 Radtel 和 M7OCM .bin 文件的 Radtel RT-890，通过 USB 使用 Baofeng .bin 文件的 Baofeng DM-1701，通过 USB 使用 .sgl 文件的 Baofeng RD-5R 和 DM-1801），带文件检查和电台备份；BTECH DMR-6X2 和 DMR-6X2 PRO 可使用官方程序进行引导式升级。
 - 每次写入前自动**备份**，写入后校验。
 - 每次启动时**检查程序更新**。
 

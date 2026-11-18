@@ -48,7 +48,7 @@
 - チェックしたチャンネルの**一括編集**：出力、帯域幅、スキャン、サブトーン、シフト、送信をまとめて変更し、各チャンネルの残りはそのままです。
 - 54 ブランド 673 機種の**ギャラリー**：対応と非対応、種類（アマチュア無線、DMR、GMRS/FRS、PMR446、子ども向け）、ブランドで分類し、検索、フィルター、公式プログラムやマニュアルへのリンク付き。
 - [IK2ANE](https://www.ik2ane.it) の最新リストに基づく**レピーターのアーカイブ**：フィルターと無線機への入力、書き込み前のレピーターと無線機の互換性チェック付き。
-- 57 機種の**ファームウェア更新**（Quansheng UV-K5、UV-K6、UV-5R Plus、Quansheng と Radtel の .bin ファイルによる Radtel RT-590 と RT-600、Radtel の .kdhx ファイルによる Radtel RT-470、RT-470L、RT-470X、RT-495、RT-630、メーカーの .BIN ファイルによる TIDRADIO TD-H3、TD-H8 と Radtel RT-730、.bin ファイルによる Retevis RA79 V3 と RA89、Retevis の .hex ファイルによる Retevis RT85、.BTF ファイルによる Radtel RT-950 Pro、RT-950 と Bajeton BJ-9000、.anc ファイルによる Radtel RT-920 と RT-910B、.BTU ファイルによる Radtel RT-910、RT-900 と Bluetooth なしの Bajeton BJ-7700、Radtel と M7OCM の .bin ファイルによる Radtel RT-890、USB で Baofeng の .bin ファイルによる Baofeng DM-1701、USB で .sgl ファイルによる Baofeng RD-5R と DM-1801 も）。ファイルのチェックと無線機のバックアップ付き。BTECH DMR-6X2 と DMR-6X2 PRO は公式プログラムによるガイド付き更新。
+- 58 機種の**ファームウェア更新**（Quansheng UV-K5、UV-K6、UV-5R Plus、Quansheng と Radtel の .bin ファイルによる Radtel RT-590 と RT-600、Radtel の .kdhx ファイルによる Radtel RT-470、RT-470L、RT-470X、RT-495、RT-630、メーカーの .BIN ファイルによる TIDRADIO TD-H3、TD-H8 と Radtel RT-730、.bin ファイルによる Retevis RA79 V3 と RA89、Retevis の .hex ファイルによる Retevis RT85、.BTF ファイルによる Radtel RT-950 Pro、RT-950 と Bajeton BJ-9000、.anc ファイルによる Radtel RT-920 と RT-910B、.BTU ファイルによる Radtel RT-910、RT-900 と Bluetooth なしの Bajeton BJ-7700、Radtel と M7OCM の .bin ファイルによる Radtel RT-890、USB で Baofeng の .bin ファイルによる Baofeng DM-1701、USB で .sgl ファイルによる Baofeng RD-5R と DM-1801 も）。ファイルのチェックと無線機のバックアップ付き。BTECH DMR-6X2 と DMR-6X2 PRO は公式プログラムによるガイド付き更新。
 - 書き込みのたびに自動で**バックアップ**し、書き込み後に確認。
 - 起動のたびにプログラムの**アップデートを確認**。
 
