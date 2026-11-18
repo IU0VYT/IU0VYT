@@ -50,6 +50,7 @@ import (
 	"context"
 	"encoding/binary"
 	"fmt"
+	"math"
 	"regexp"
 	"strconv"
 	"strings"
@@ -157,6 +158,22 @@ func (f ar82Fam) get(img []byte, i int) *ar82Chan {
 		adj: int(r[12])<<16 | int(r[13])<<8 | int(r[14]), name: strings.TrimRight(string(r[16:28]), " \x00"), sel: r[28] != 0, selIdx: int(r[29])}
 }
 
+// ar82U8 e ar82U32: il valore se sta nel campo dell'immagine (uno o quattro
+// byte), altrimenti 0: un numero fuori campo non viene mai troncato in un altro
+func ar82U8(n int) byte {
+	if n >= 0 && n <= math.MaxUint8 {
+		return byte(n)
+	}
+	return 0
+}
+
+func ar82U32(n int64) uint32 {
+	if n >= 0 && n <= math.MaxUint32 {
+		return uint32(n)
+	}
+	return 0
+}
+
 func (f ar82Fam) put(img []byte, i int, c *ar82Chan) {
 	r := f.rec(img, i)
 	for k := range r {
@@ -171,9 +188,9 @@ func (f ar82Fam) put(img []byte, i int, c *ar82Chan) {
 			r[1] |= 1 << k
 		}
 	}
-	binary.BigEndian.PutUint32(r[2:6], uint32(c.freq))
+	binary.BigEndian.PutUint32(r[2:6], ar82U32(c.freq))
 	r[6], r[7], r[8] = byte(c.step>>16), byte(c.step>>8), byte(c.step)
-	r[9], r[10], r[11] = byte(c.mode), byte(c.of), byte(c.dup)
+	r[9], r[10], r[11] = ar82U8(c.mode), ar82U8(c.of), ar82U8(c.dup)
 	r[12], r[13], r[14] = byte(c.adj>>16), byte(c.adj>>8), byte(c.adj)
 	copy(r[16:28], fmt.Sprintf("%-12.12s", c.name))
 	if c.sel {
@@ -419,7 +436,7 @@ func (s *ar82Sess) head(m *genModel, img []byte) (sel map[string]int, err error)
 		n, _ := strconv.Atoi(e[1])
 		hz, _ := strconv.ParseInt(e[2], 10, 64)
 		if n < 50 {
-			binary.BigEndian.PutUint32(img[ar82OLAt+4*n:], uint32(hz))
+			binary.BigEndian.PutUint32(img[ar82OLAt+4*n:], ar82U32(hz))
 		}
 	}
 	// scansione selettiva: un elenco fino alla riga «---» (o cento righe). Se
@@ -465,7 +482,7 @@ func (s *ar82Sess) readAll(m *genModel, prog Progress, what string) ([]byte, err
 			return nil, genFail("Lettura", err)
 		}
 		n, _ := strconv.Atoi(mw[1])
-		img[ar82SizesAt+pair] = byte(n)
+		img[ar82SizesAt+pair] = ar82U8(n)
 		if pair == 0 {
 			if sel, err = s.head(m, img); err != nil {
 				return nil, genFail("Lettura", err)
