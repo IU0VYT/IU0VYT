@@ -7,6 +7,25 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.46.0 (21/11/2026)
+-------------------
+- Radtel RT-880G : elle n'est plus indiquée comme radio GMRS / FRS. C'est un
+  émetteur-récepteur radioamateur VHF/UHF (avec GPS et APRS), comme la RT-880 et la
+  RT-860 : le type dans le catalogue était faux. L'avertissement « Radio vendue comme
+  GMRS » n'apparaît plus avant l'écriture, et dans la galerie la radio est parmi les
+  radios radioamateurs.
+- Radtel RT-880G : la relecture de vérification après « Écrire dans la radio » échouait.
+  À la fin de l'écriture, la radio enregistre les données et redémarre en deux secondes
+  environ ; le programme la cherchait après 3 secondes puis toutes les 3 secondes, et la
+  radio ne répondait plus. Désormais le programme attend 10 secondes sans la déranger,
+  puis réessaie toutes les 15 secondes, jusqu'à 90 secondes. Testé sur une vraie RT-880G
+  : la relecture démarre seule après le redémarrage et réussit. Les mêmes délais valent
+  pour les RT-880, RT-860 et RT-817A / RT-871A, qui utilisent le même pilote (non
+  testées en réel) ; les autres radios gardent les délais d'avant.
+- Contrôles plus stricts sur les valeurs reçues de l'AR8200, des Kenwood et de la TK-180
+  (signalements CodeQL) : avec des valeurs valides rien ne change ; les valeurs hors
+  limites sont désormais écartées au lieu d'être tronquées.
+
 4.45.0 (17/11/2026)
 -------------------
 - Radios DMR de la famille AnyTone : AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,

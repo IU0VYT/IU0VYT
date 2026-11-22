@@ -4,6 +4,7 @@ The notes of every release, in English on the [release page](https://github.com/
 
 | Version | Release | Translations |
 |---|---|---|
+| 4.46.0 | [V.4.46.0](https://github.com/IU0VYT/IU0VYT/releases/tag/V.4.46.0) | [it](4.46.0/it.md) · [fr](4.46.0/fr.md) · [de](4.46.0/de.md) · [es](4.46.0/es.md) · [pt](4.46.0/pt.md) · [ru](4.46.0/ru.md) · [zh](4.46.0/zh.md) · [ja](4.46.0/ja.md) · [ko](4.46.0/ko.md) · [ar](4.46.0/ar.md) · [ms](4.46.0/ms.md) · [hi](4.46.0/hi.md) |
 | 4.45.0 | [V.4.45.0](https://github.com/IU0VYT/IU0VYT/releases/tag/V.4.45.0) | [it](4.45.0/it.md) · [fr](4.45.0/fr.md) · [de](4.45.0/de.md) · [es](4.45.0/es.md) · [pt](4.45.0/pt.md) · [ru](4.45.0/ru.md) · [zh](4.45.0/zh.md) · [ja](4.45.0/ja.md) · [ko](4.45.0/ko.md) · [ar](4.45.0/ar.md) · [ms](4.45.0/ms.md) · [hi](4.45.0/hi.md) |
 | 4.23.0 | [V.4.23.0](https://github.com/IU0VYT/IU0VYT/releases/tag/V.4.23.0) | [it](4.23.0/it.md) · [fr](4.23.0/fr.md) · [de](4.23.0/de.md) · [es](4.23.0/es.md) · [pt](4.23.0/pt.md) · [ru](4.23.0/ru.md) · [zh](4.23.0/zh.md) · [ja](4.23.0/ja.md) · [ko](4.23.0/ko.md) · [ar](4.23.0/ar.md) · [ms](4.23.0/ms.md) · [hi](4.23.0/hi.md) |
 | 4.12.0 | [V.4.12.0](https://github.com/IU0VYT/IU0VYT/releases/tag/V.4.12.0) | [it](4.12.0/it.md) · [fr](4.12.0/fr.md) · [de](4.12.0/de.md) · [es](4.12.0/es.md) · [pt](4.12.0/pt.md) · [ru](4.12.0/ru.md) · [zh](4.12.0/zh.md) · [ja](4.12.0/ja.md) · [ko](4.12.0/ko.md) · [ar](4.12.0/ar.md) · [ms](4.12.0/ms.md) · [hi](4.12.0/hi.md) |

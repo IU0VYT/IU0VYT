@@ -500,7 +500,7 @@ func (a *App) runGenCable(ctx context.Context, j *cableJob, m *genModel, req *ca
 	a.mu.Unlock()
 	if req.Verify {
 		var mem []byte
-		err := verifyRead(ctx, j, func(phase string) error {
+		err := verifyRead(ctx, j, verifyPlanFor(m.Fam), func(phase string) error {
 			var e error
 			mem, e = read(phase)
 			return e

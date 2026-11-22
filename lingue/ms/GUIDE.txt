@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.45.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.46.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,17 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.46.0:
+- Radtel RT-880G: tidak lagi ditunjukkan sebagai radio GMRS / FRS. Ia ialah radio amatur
+  VHF/UHF, seperti RT-880 dan RT-860: amaran «Radio dijual sebagai GMRS» tidak lagi
+  muncul sebelum penulisan.
+- RT-880G: pengesahan selepas penulisan gagal kerana radio, yang menyimpan data dan
+  dimulakan semula, dihubungi terlalu awal dan terlalu kerap. Kini program menunggu 10
+  saat dan mencuba semula setiap 15 saat (paling lama 90). Diuji pada RT-880G sebenar;
+  masa yang sama digunakan untuk RT-880, RT-860 dan RT-817A / RT-871A (pemacu yang
+  sama), radio lain tidak berubah.
+- Semakan lebih ketat pada nilai yang diterima daripada AR8200, Kenwood dan TK-180
+  (laporan CodeQL).
 Baharu dalam 4.45.0:
 - Radio DMR keluarga AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus, AT-D878UV
   II Plus serta BTECH DMR-6X2 dan DMR-6X2 PRO (dua yang terakhir ini dahulu «tidak

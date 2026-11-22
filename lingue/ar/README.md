@@ -28,7 +28,7 @@
 <img src="https://img.shields.io/badge/languages-13-orange" alt="13 languages">
 </p>
 
-**الإصدار 4.45.0** · Windows · واجهة بـ 13 لغة (italiano، English، Français، Deutsch، Español، Português، Русский، 中文، 日本語، 한국어، العربية، Bahasa Melayu، हिन्दी) · ملف تنفيذي واحد، دون تثبيت
+**الإصدار 4.46.0** · Windows · واجهة بـ 13 لغة (italiano، English، Français، Deutsch، Español، Português، Русский، 中文، 日本語، 한국어، العربية، Bahasa Melayu، हिन्दी) · ملف تنفيذي واحد، دون تثبيت
 
 برنامج لهواة اللاسلكي ومستخدمي أجهزة الإرسال والاستقبال من **54 علامة تجارية** (**Baofeng** و**Bajeton** و**Quansheng** و**Retevis** و**Radtel** و**Radioddity** و**TIDRADIO** و**TYT** و**Hiroyasu** وTalkpod وAnysecu وMaxTalker وAbbree وIntek وMaverick وBTECH وWLN وZastone وLuiton وTID وExplorer وMMLradio وJJCC وSocotran وJianpai وBoristone وHamGeek وSenhaiX وCignus وPuxing وFeidaxin وKYD وKSUN وLanchonlh وBoblov وWouxun وAnyTone وQYT وRugged وBaojie وMTC وZartek وRuyage وTDXone وYaesu وIcom وKenwood وAlinco وAOR): يقرأ القنوات والترددات والإعدادات ويكتبها عبر كابل البرمجة، ويدير أرشيفًا للمرحّلات الإيطالية، ويحدّث البرنامج الثابت للأجهزة المدعومة.
 

@@ -1,6 +1,6 @@
 IU0VYT FLASH - CHANNELS, REPEATERS AND FIRMWARE OF TRANSCEIVER RADIOS
 =====================================================================
-Version 4.45.0 - a single executable file, no installation, interface in 13 languages.
+Version 4.46.0 - a single executable file, no installation, interface in 13 languages.
 Author: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
 Source code and releases: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,17 @@ WARRANTY): see LICENSE.txt and AUTHORS_AND_LICENSES.txt.
 This is the English translation of LEGGIMI.txt (the Italian original is the reference
 text). The news of the earlier versions is in the Italian CHANGELOG.txt in the main
 folder (CHANGELOG.txt here contains the translated 4.13 entry).
+What's new in 4.46.0:
+- Radtel RT-880G: no longer shown as a GMRS / FRS radio. It is an amateur VHF/UHF radio,
+  like the RT-880 and RT-860: the «Radio sold as GMRS» warning no longer appears before
+  writing.
+- RT-880G: the verification after writing failed because the radio, which saves the data
+  and restarts, was contacted too early and too often. Now the program waits 10 seconds
+  and retries every 15 seconds (90 at most). Tested on a real RT-880G; the same timings
+  apply to the RT-880, RT-860 and RT-817A / RT-871A (same driver), the other radios do
+  not change.
+- Stricter checks on the values received from AR8200, Kenwood and TK-180 (CodeQL
+  findings).
 What's new in 4.45.0:
 - DMR radios of the AnyTone family: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,
   AT-D878UV II Plus and BTECH DMR-6X2 and DMR-6X2 PRO (these two were «not compatible»).

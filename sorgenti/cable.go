@@ -441,7 +441,7 @@ func (a *App) runCable(ctx context.Context, j *cableJob, req *cableReq, payload 
 	}
 	if req.Verify {
 		var file []byte
-		err := verifyRead(ctx, j, func(phase string) error {
+		err := verifyRead(ctx, j, stdVerifyPlan(), func(phase string) error {
 			j.set(phase, true)
 			var e error
 			file, _, _, e = a.cableRead(ctx, j, req)
@@ -506,6 +506,36 @@ var (
 	verifyMaxWait   = 45 * time.Second
 )
 
+// 4.46: verifica «in silenzio». La Radtel RT-880G (e le gemelle del suo driver),
+// finita la scrittura, salva i dati e si riavvia in un paio di secondi; la
+// rilettura fatta a mano subito dopo il riavvio riesce, ma la verifica che la
+// cercava dopo 3 secondi e poi ogni 3 secondi non ha mai avuto risposta in 45
+// secondi (prove di Daniele del 20 e 21/11/2026). Per queste radio il programma,
+// dopo la scrittura, non manda nulla per verifyQuietFirst e fra un tentativo e
+// l'altro le lascia in pace per verifyQuietRetry. Le attese sono solo più lunghe
+// di quelle di prima; le altre radio restano come prima.
+var (
+	verifyQuietFirst = 10 * time.Second
+	verifyQuietRetry = 15 * time.Second
+	verifyQuietMax   = 90 * time.Second
+)
+
+// verifyPlan: attese della rilettura di verifica
+type verifyPlan struct{ first, retry, max time.Duration }
+
+func stdVerifyPlan() verifyPlan { return verifyPlan{verifyFirstWait, verifyRetryWait, verifyMaxWait} }
+
+// quietVerifier: famiglia di driver con radio da lasciare in pace dopo la scrittura
+type quietVerifier interface{ quietAfterWrite() bool }
+
+// verifyPlanFor: attese della verifica per la famiglia di driver fam
+func verifyPlanFor(fam interface{}) verifyPlan {
+	if q, ok := fam.(quietVerifier); ok && q.quietAfterWrite() {
+		return verifyPlan{verifyQuietFirst, verifyQuietRetry, verifyQuietMax}
+	}
+	return stdVerifyPlan()
+}
+
 // errVerify: rilettura di verifica non riuscita neppure riprovando
 type errVerify struct {
 	tries int
@@ -517,9 +547,9 @@ func (e *errVerify) Error() string { return e.last.Error() }
 
 // verifyRead: read(fase) viene chiamata finché riesce; restituisce nil,
 // errCancelled o *errVerify
-func verifyRead(ctx context.Context, j *cableJob, read func(phase string) error) error {
+func verifyRead(ctx context.Context, j *cableJob, plan verifyPlan, read func(phase string) error) error {
 	start := time.Now()
-	wait := verifyFirstWait
+	wait := plan.first
 	for try := 1; ; try++ {
 		j.set("Verifica: attendo che la radio sia di nuovo pronta…", true)
 		if try > 1 {
@@ -545,10 +575,10 @@ func verifyRead(ctx context.Context, j *cableJob, read func(phase string) error)
 			return errCancelled
 		}
 		j.logf("verifica, tentativo %d: %v", try, err)
-		if time.Since(start)+verifyRetryWait >= verifyMaxWait {
+		if time.Since(start)+plan.retry >= plan.max {
 			return &errVerify{tries: try, secs: int(time.Since(start).Round(time.Second).Seconds()), last: err}
 		}
-		wait = verifyRetryWait
+		wait = plan.retry
 	}
 }
 

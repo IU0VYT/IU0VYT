@@ -7,6 +7,26 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.46.0 (21.11.2026)
+-------------------
+- Radtel RT-880G: wird nicht mehr als GMRS- / FRS-Funkgerät angezeigt. Es ist ein
+  VHF/UHF-Amateurfunkgerät (mit GPS und APRS), wie das RT-880 und das RT-860: der Typ im
+  Katalog war falsch. Die Warnung «Funkgerät verkauft als GMRS» erscheint vor dem
+  Schreiben nicht mehr, und in der Galerie steht das Funkgerät bei den
+  Amateurfunkgeräten.
+- Radtel RT-880G: das Kontrolllesen nach «In Funkgerät schreiben» schlug fehl. Am Ende
+  des Schreibens speichert das Funkgerät die Daten und startet in etwa zwei Sekunden
+  neu; das Programm suchte es nach 3 Sekunden und dann alle 3 Sekunden, und das
+  Funkgerät antwortete nicht mehr. Jetzt wartet das Programm 10 Sekunden, ohne es zu
+  stören, und versucht es dann alle 15 Sekunden erneut, bis zu 90 Sekunden. Mit einem
+  echten RT-880G getestet: das Lesen startet nach dem Neustart von selbst und gelingt.
+  Dieselben Zeiten gelten für RT-880, RT-860 und RT-817A / RT-871A, die denselben
+  Treiber verwenden (nicht mit echten Geräten getestet); die anderen Funkgeräte behalten
+  die bisherigen Zeiten.
+- Strengere Prüfungen der Werte, die von AR8200, Kenwood und TK-180 empfangen werden
+  (CodeQL-Meldungen): mit gültigen Werten ändert sich nichts; Werte außerhalb des
+  Bereichs werden jetzt verworfen statt abgeschnitten.
+
 4.45.0 (17.11.2026)
 -------------------
 - DMR-Funkgeräte der AnyTone-Familie: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,

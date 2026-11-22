@@ -3,6 +3,29 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.46.0 (21/11/2026)
+-------------------
+Due correzioni per la Radtel RT-880G, provate sulla radio vera, e i
+controlli delle segnalazioni CodeQL.
+- Radtel RT-880G: non è più indicata come radio GMRS / FRS. È un
+  ricetrasmettitore radioamatoriale VHF/UHF (con GPS e APRS), come la RT-880
+  e la RT-860: nel catalogo il tipo era sbagliato. Prima della scrittura non
+  compare più l'avviso «Radio venduta come GMRS» e nella galleria la radio è
+  fra quelle radioamatoriali (prova TestRT880GNonGMRS).
+- Radtel RT-880G: la rilettura di verifica dopo «Scrivi nella radio»
+  falliva. Finita la scrittura la radio salva i dati e si riavvia in un paio
+  di secondi; il programma la cercava dopo 3 secondi e poi ogni 3 secondi, e
+  la radio non rispondeva più. Ora il programma aspetta 10 secondi senza
+  disturbarla, poi riprova ogni 15 secondi, fino a 90 secondi. Provato sulla
+  RT-880G vera: la rilettura parte da sola dopo il riavvio e va a buon fine.
+  Gli stessi tempi valgono per RT-880, RT-860 e RT-817A / RT-871A, che usano
+  lo stesso driver (non provate dal vero); le altre radio usano i tempi di
+  prima (prove TestVerifyQuietRT880G e TestVerifyPlanFamilies).
+- Controlli più severi sui valori ricevuti da AR8200, Kenwood e TK-180
+  (segnalazioni CodeQL): con i valori validi non cambia nulla, quelli fuori
+  campo ora si scartano invece di essere troncati.
+
+
 4.45.0 (17/11/2026)
 -------------------
 Radio DMR della famiglia AnyTone e della famiglia TYT, e le schede «non

@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.45.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.46.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,17 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.46.0:
+- Radtel RT-880G: wird nicht mehr als GMRS- / FRS-Funkgerät angezeigt. Es ist ein
+  VHF/UHF-Amateurfunkgerät, wie das RT-880 und das RT-860: die Warnung «Funkgerät
+  verkauft als GMRS» erscheint vor dem Schreiben nicht mehr.
+- RT-880G: die Kontrolle nach dem Schreiben schlug fehl, weil das Funkgerät, das die
+  Daten speichert und neu startet, zu früh und zu oft angesprochen wurde. Jetzt wartet
+  das Programm 10 Sekunden und versucht es alle 15 Sekunden erneut (höchstens 90). Mit
+  einem echten RT-880G getestet; dieselben Zeiten gelten für RT-880, RT-860 und RT-817A
+  / RT-871A (gleicher Treiber), die anderen Funkgeräte ändern sich nicht.
+- Strengere Prüfungen der Werte, die von AR8200, Kenwood und TK-180 empfangen werden
+  (CodeQL-Meldungen).
 Neu in 4.45.0:
 - DMR-Funkgeräte der AnyTone-Familie: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,
   AT-D878UV II Plus sowie BTECH DMR-6X2 und DMR-6X2 PRO (diese beiden waren «nicht

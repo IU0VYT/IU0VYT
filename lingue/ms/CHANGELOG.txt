@@ -6,6 +6,25 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.46.0 (21/11/2026)
+-------------------
+- Radtel RT-880G: tidak lagi ditunjukkan sebagai radio GMRS / FRS. Ia ialah
+  pemancar-penerima radio amatur VHF/UHF (dengan GPS dan APRS), seperti RT-880 dan
+  RT-860: jenis dalam katalog adalah salah. Amaran «Radio dijual sebagai GMRS» tidak
+  lagi muncul sebelum penulisan, dan dalam galeri radio ini berada di antara radio
+  amatur.
+- Radtel RT-880G: bacaan pengesahan selepas «Tulis ke radio» gagal. Apabila penulisan
+  tamat, radio menyimpan data dan dimulakan semula dalam kira-kira dua saat; program
+  mencarinya selepas 3 saat dan kemudian setiap 3 saat, dan radio tidak lagi menjawab.
+  Kini program menunggu 10 saat tanpa mengganggunya, kemudian mencuba semula setiap 15
+  saat, sehingga 90 saat. Diuji pada RT-880G sebenar: bacaan bermula sendiri selepas
+  dimulakan semula dan berjaya. Masa yang sama digunakan untuk RT-880, RT-860 dan
+  RT-817A / RT-871A, yang menggunakan pemacu yang sama (belum diuji pada radio sebenar);
+  radio lain mengekalkan masa yang sebelumnya.
+- Semakan lebih ketat pada nilai yang diterima daripada AR8200, Kenwood dan TK-180
+  (laporan CodeQL): dengan nilai yang sah tiada apa yang berubah; nilai di luar julat
+  kini dibuang dan bukan dipotong.
+
 4.45.0 (17/11/2026)
 -------------------
 - Radio DMR keluarga AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus, AT-D878UV

@@ -1,11 +1,22 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.45.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.46.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.46.0:
+- Radtel RT-880G: non è più indicata come radio GMRS / FRS. È una radio
+  radioamatoriale VHF/UHF, come la RT-880 e la RT-860: prima della scrittura
+  non compare più l'avviso «Radio venduta come GMRS».
+- RT-880G: la verifica dopo la scrittura falliva perché la radio, che salva i
+  dati e si riavvia, veniva cercata troppo presto e troppo spesso. Ora il
+  programma aspetta 10 secondi e riprova ogni 15 secondi (al massimo 90).
+  Provato sulla RT-880G vera; gli stessi tempi valgono per RT-880, RT-860 e
+  RT-817A / RT-871A (stesso driver), le altre radio non cambiano.
+- Controlli più severi sui valori ricevuti da AR8200, Kenwood e TK-180
+  (segnalazioni CodeQL).
 Novità della 4.45.0:
 - Radio DMR della famiglia AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV
   Plus, AT-D878UV II Plus e BTECH DMR-6X2 e DMR-6X2 PRO (queste due erano «non

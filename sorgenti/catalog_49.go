@@ -139,8 +139,10 @@ var catalog49 = []catItem{
 		Notes: "Canali con il driver di M7OCM per CHIRP (chirp-next-radtel-rt-890-m7ocm.py, GPL v2 o successiva; non compreso in CHIRP): " +
 			"999 canali con nomi di 10 caratteri, 10-1300 MHz, modulazione FM/AM/LSB/USB e otto liste di scansione. Verificato con l'immagine " +
 			"di esempio del suo autore e con la radio simulata (da verificare con una radio vera); solo per la RT-890 PCB 2.0 con il firmware M7OCM."},
-	{ID: "rtl-rt-880g", Brand: "Radtel", Name: "RT-880G", Type: "gmrs", Drivers: []string{"rtl-rt880g"}, Links: []catLink{info("Programmi Radtel", rtlDown)},
-		Notes: chirpNote("RT880G") + usNote},
+	// 4.46: la RT-880G è un ricetrasmettitore radioamatoriale VHF/UHF (con GPS e APRS),
+	// non una radio GMRS: tipo «analog» come la RT-880 e la RT-860, senza la nota sugli Stati Uniti
+	{ID: "rtl-rt-880g", Brand: "Radtel", Name: "RT-880G", Type: "analog", Drivers: []string{"rtl-rt880g"}, Links: []catLink{info("Programmi Radtel", rtlDown)},
+		Notes: chirpNote("RT880G")},
 	{ID: "tid-td-m11", Brand: "TIDRADIO", Name: "TD-M11", Aliases: []string{"TD-M11 22 FRS", "TD-M11 16 PMR"}, Type: "pmr",
 		Drivers: []string{"tdr-tdm11-22", "tdr-tdm11-16", "tdr-tdm11-16v095"}, Links: []catLink{info("Programmi TIDRADIO", tidDown)},
 		Notes: chirpNote("TDM11_22") + " Tre versioni: 22 FRS (firmware 0.9.4), 16 PMR (firmware 1.0.3) e 16 PMR con firmware 0.9.5; leggendo la radio il programma riconosce la versione. " +

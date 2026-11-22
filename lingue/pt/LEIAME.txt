@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAIS, REPETIDORES E FIRMWARE DOS RÁDIOS TRANSCETORES
 =====================================================================
-Versão 4.45.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
+Versão 4.46.0 - um só ficheiro executável, sem instalação, interface em 13 línguas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sítio web: https://iu0vyt.github.io/IU0VYT/
 Código-fonte e versões: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,17 @@ QUALQUER GARANTIA): ver LICENSE.txt e AUTORES_E_LICENCAS.txt.
 Esta é a tradução portuguesa de LEGGIMI.txt (o original italiano é o texto de
 referência). As novidades das versões anteriores estão no CHANGELOG.txt italiano da
 pasta principal (CHANGELOG.txt aqui contém a entrada 4.13 traduzida).
+Novidades da 4.46.0:
+- Radtel RT-880G: já não é indicado como rádio GMRS / FRS. É um rádio de radioamador
+  VHF/UHF, como o RT-880 e o RT-860: o aviso «Rádio vendido como GMRS» já não aparece
+  antes da escrita.
+- RT-880G: a verificação após a escrita falhava porque o rádio, que guarda os dados e
+  reinicia, era contactado cedo demais e com demasiada frequência. Agora o programa
+  espera 10 segundos e tenta de novo a cada 15 segundos (no máximo 90). Testado num
+  RT-880G real; os mesmos tempos valem para o RT-880, o RT-860 e o RT-817A / RT-871A
+  (mesmo controlador), os outros rádios não mudam.
+- Controlos mais rigorosos dos valores recebidos do AR8200, dos Kenwood e do TK-180
+  (avisos do CodeQL).
 Novidades da 4.45.0:
 - Rádios DMR da família AnyTone: AnyTone AT-D868UV, AT-D878UV / AT-D878UV Plus,
   AT-D878UV II Plus e BTECH DMR-6X2 e DMR-6X2 PRO (estes dois eram «não compatíveis»).

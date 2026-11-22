@@ -224,6 +224,11 @@ func (f iradioFam) PutRec(m *genModel, img []byte, i int, raw []byte) { f.rec(i)
 func (f iradioFam) Match(m *genModel, img []byte) bool                { return false }
 func (iradioFam) crossband() bool                                     { return false }
 
+// quietAfterWrite (4.46): la RT-880G e le gemelle del suo driver, dopo la
+// scrittura, salvano i dati e si riavviano: la verifica le lascia in pace
+// (verifyPlanFor in cable.go)
+func (f iradioFam) quietAfterWrite() bool { return f.kind == irRT880G || f.kind == irRT871A }
+
 // toni (_decode_tone / _encode_tone di iradio_uv_5118.py): 0x3000 nessuno,
 // 0x1000 DCS normale, 0x2000 DCS invertito (codice ottale in 9 bit)
 func iradioToneDec(v int64) string {
