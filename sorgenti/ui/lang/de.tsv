@@ -6260,7 +6260,6 @@ bd9e89ea	DMR-Funkgerät der Marke BTECH (BaofengTech, USA), von den AnyTone-Ger�
 14f85b7a	Zweite Serie des DMR-6X2 (Firmware «DMR_6X2II», Kennung «D6X2UV2»): Die Firmware ist eine andere Datei, nicht die des anderen Funkgeräts verwenden. Geführte Aktualisierung mit dem offiziellen Programm, wie beim DMR-6X2. Kanäle und Zonen (experimentell): wie beim DMR-6X2, mit den Adressen, die das freie Programm qdmr für dieses Modell verwendet.
 25dd7543	MD1702-tools (Werkzeuge von OK2MOP für die USB-Verbindung)
 f023d637	{0} Mit der Original-Firmware haben MD-UV380, MD-UV390, MD-2017 und MD-9600 ihre eigene Karte; das MD-380 wird nicht unterstützt.
-6f673a7c	DMR-Funkgerät mit 4000 Kanälen, mit seinem eigenen USB-Kabel angeschlossen (serieller Anschluss). Speicher und Protokoll der freien Programme dmrconfig und qdmr, mit dem Originalcode von dmrconfig geprüft. Geschrieben werden nur Kanäle, Zonen und Suchlauflisten. «Identifizieren» probiert es nach allen anderen Funkgeräten.
 c3827a39	Mit der Original-Firmware: gleicher Speicher und gleiches Protokoll wie beim Baofeng DM-1701, per USB im DFU-Modus (das freie Programm dmrconfig verwendet für diese Modelle denselben Code).
 5732831a	AT-D878UV / AT-D878UV Plus
 3ce8fe8d	AT-D878UV Plus
@@ -6268,7 +6267,6 @@ c3827a39	Mit der Original-Firmware: gleicher Speicher und gleiches Protokoll wie
 15e852ed	AT-D878UV II Plus
 c9665837	AT-D878UVII Plus
 9835a587	TYT MD-UV390
-33158a39	Angeschlossen wird es mit dem USB-Kabel des Funkgeräts, das als serieller Anschluss (COM) erscheint; legt Windows ihn nicht an, wird der Treiber «USB Virtual Com Port» des Herstellers benötigt. Geändert werden Frequenzen, Namen (16 Zeichen), Betriebsart (analog / DMR), Leistung, Bandbreite, Töne und Nur-Empfang; in DMR-Kanälen bleiben Color Code, Slot, Kontakt und Gruppenliste wie eingestellt. Ein neuer Kanal kommt in die erste Zone mit einem freien Platz. Geschrieben werden nur Kanäle, Zonen und Suchlauflisten: Kontakte, Gruppen, Nachrichten, IDs und Einstellungen werden nicht angetastet. Nicht an einem echten Gerät getestet: zuerst nur lesen.
 10a3ed24	AnyTone AT-D868UV
 9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
 bccf031b	AnyTone AT-D878UV II Plus
@@ -6277,3 +6275,89 @@ ce976301	Experimentell: Modell in dmrconfig nicht vorhanden, Adressen aus dem fr
 2219008e	TYT MD-UV390 / Retevis RT3S
 1e8c276f	TYT MD-2017 / Retevis RT82
 33c3b9a7	Wie das Baofeng DM-1701: gleicher Speicher und gleiches Protokoll (das freie Programm dmrconfig verwendet denselben Code). USB im DFU-Modus: Benötigt wird der USB-Treiber des Herstellerprogramms (STTub30) oder mit Zadig installiertes WinUSB. Antwortet das Funkgerät mit einem anderen Namen, hält das Programm vor dem Lesen oder Schreiben an. Nicht an einem echten Gerät getestet: zuerst nur lesen.
+b17da535	Testversion (Betatest): Nutzung auf eigenes Risiko. Für den normalen Gebrauch die neueste stabile Version herunterladen.
+06dce278	Eine neue Testversion von IU0VYT Flash ist verfügbar: {0}
+d7aa904d	Testversion {0} ist verfügbar
+cedac075	{0} {1} beta.zip
+e35c4375	IU0VYT.Flash-rc.zip
+b02c57ef	Angeschlossen wird es mit dem USB-Kabel des Funkgeräts, das als serieller Anschluss (COM) erscheint; legt Windows ihn nicht an, wird der Treiber «USB Virtual Com Port» des Herstellers benötigt. Geändert werden Frequenzen, Namen (16 Zeichen), Betriebsart (analog / DMR), Leistung, Bandbreite, Töne und Nur-Empfang; in DMR-Kanälen bleiben Color Code, Slot, Kontakt und Gruppenliste wie eingestellt. Ein neuer Kanal kommt in die erste Zone mit einem freien Platz. Geschrieben werden Kanäle, Zonen und Suchlauflisten; ID, Name, Einschalttext und allgemeine Einstellungen nur, wenn sie geändert wurden (Fenster «Einstellungen»). Kontakte, Gruppen und Nachrichten werden nicht angetastet. Nicht an einem echten Gerät getestet: zuerst nur lesen.
+ccfa337a	Amateur
+48392b85	Professionell
+09f1c584	Im professionellen Modus sperrt das Funkgerät einige Menüs und einige Tastenfunktionen.
+994331c3	Uhr im Display
+9e1ef018	10 Minuten
+1ecf177a	30 Minuten
+28ee8049	60 Minuten
+19cc8f62	120 Minuten
+d710bd69	Squelch von Band A
+d410b8b0	Squelch von Band B
+ae8b682e	Verbesserter Klang
+28426410	Einschaltton
+5e1257b2	Ton am Rufende
+a894c919	Nachrichtenhinweis
+c7a643bc	Rufhinweis
+d1a378cf	Speicherbeschreibung von qdmr und dmrconfig (allgemeine Einstellungen der Familie AnyTone AT-D868UV / AT-D878UV)
+91fae64f	vom Autor der Firmware nicFW880 / nicFW950 veröffentlichte Dokumentation (nicsure/nicFW880_950_Docs)
+f9fcaec6	Squelch: Rauschschwelle
+522125e6	Rauschpegel, unter dem der Squelch öffnet (0-127, Standard 48).
+8ce18fcf	Squelch: Rauschobergrenze
+a3c04a23	Bei gleichem oder höherem Rauschen schließt der Squelch sofort (0-127, Standard 60).
+c8791899	Squelch: Rauschhysterese
+0e3f061f	Abstand zwischen Öffnen und Schließen des Squelch (0-20, Standard 4).
+ea411cd6	Squelch: Verlangsamung
+f39446ce	Unterdrückung des Squelch-Schwanzes (STE)
+a9ac582e	Rauschfilter (Noise Gate)
+9be2d17f	Dauer der Überwachung des empfangenen Tons (s)
+d96223b1	Sekunden, nach denen sich der Bildschirm ausschaltet (0 = immer an).
+0f432b7c	Blinken bei eingeschaltetem Gerät (s)
+e39206c8	Alle wie viele Sekunden die LED bei ausgeschaltetem Bildschirm blinkt (0 = nie).
+1d1abf17	Bildschirm-Gamma
+73f5f79d	Helligkeit am Tag
+32578757	Helligkeit in der Nacht
+aadeb108	Verwendete Helligkeit
+66c6478b	Tag
+1e15024d	Nacht
+95b373a9	ANYTONE
+96ff393f	DMR-Funkgerät mit 4000 Kanälen, mit seinem eigenen USB-Kabel angeschlossen (serieller Anschluss). Speicher und Protokoll der freien Programme dmrconfig und qdmr, mit dem Originalcode von dmrconfig geprüft. Geschrieben werden Kanäle, Zonen und Suchlauflisten und, wenn sie geändert wurden, die allgemeinen Einstellungen. «Identifizieren» probiert es nach allen anderen Funkgeräten.
+87746b94	Retevis B3B
+1af651d8	Retevis B63B
+aee8f6b5	Retevis RT22P
+11556f69	Retevis RT622P
+2fbed3fd	dieses Funkgerät gehört zu einer älteren Serie mit einem anderen Speicherformat: Es wird noch nicht unterstützt
+853a2ccd	Retevis RB666
+57943b27	Retevis RB666P
+81746222	Retevis B3H
+14f64866	Retevis B63H
+743594dc	Retevis RB647
+2766e50b	Retevis RT68H
+20e15187	Retevis RT668H
+07dd5689	dieses Funkgerät hat nur eine Frequenz pro Kanal und sendet dort, wo es empfängt
+7c676702	dieses Funkgerät hat nur einen Ton pro Kanal, gleich für Empfang und Senden
+d90b8f70	Retevis RB65
+243f733c	Retevis NR10
+97486db0	Retevis NR610
+e03abc0e	Retevis RB66S
+58943cba	Retevis RB666S
+2166db99	Retevis RT68B
+1ae14815	Retevis RT668B
+763a1530	Retevis RB669
+292132fd	Kanalansage
+08013239	Code-Prüfung (Code switch)
+8173efb6	Art des Spezialcodes (Spec mode)
+01cf6eba	Taste ab (lang drücken)
+fb9fa33a	Verschlüsselung
+f189824c	Spec Code 1
+f4898705	Spec Code 2
+7f905037	Spec Code
+df368834	LCD
+660d6fc8	RTV-{0}
+09f7e05f	Gleicher Kanalspeicher wie die neue Version des Retevis H777; Protokoll aus dem Programm des Herstellers ermittelt. Kanäle (16, ohne Namen) und Einstellungen, einschließlich Programmierpasswort: Ein bereits gesetztes Passwort verhindert weder das Lesen noch das Schreiben. Nicht an einem echten Gerät getestet: zuerst nur lesen.
+a29ad221	Protokoll aus dem Programm des Herstellers ermittelt. Kanäle (ohne Namen) und Einstellungen, einschließlich Programmierpasswort: Ein bereits gesetztes Passwort verhindert weder das Lesen noch das Schreiben. Nicht an einem echten Gerät getestet: zuerst nur lesen.
+f1e46926	Lizenzfreies Funkgerät mit dem gleichen Kanalspeicher wie die neue Version des Retevis H777 und einem eigenen Verbindungskürzel. Protokoll aus dem Programm des Herstellers ermittelt: 16 Kanäle ohne Namen; die Einstellungen ändert man im Tab «Einstellungen», einschließlich Programmierpasswort. Ein bereits gesetztes Programmierpasswort verhindert weder das Lesen noch das Schreiben (wie in CHIRP). Nicht an einem echten Gerät getestet: zuerst nur lesen.
+6993e4d3	Lizenzfreies Funkgerät; Protokoll aus dem Programm des Herstellers ermittelt: Kanäle ohne Namen; die Einstellungen ändert man im Tab «Einstellungen», einschließlich Programmierpasswort. Ein bereits gesetztes Programmierpasswort verhindert weder das Lesen noch das Schreiben (wie in CHIRP). Ein Kanal, den das Programm des Herstellers als «verschlüsselt» anzeigt, bleibt unverändert, solange man ihn nicht bearbeitet. Nicht an einem echten Gerät getestet: zuerst nur lesen.
+bdcd3c94	Programmierpasswort
+0799ad01	Passwort, das das Programm des Herstellers vor dem Lesen oder Schreiben des Funkgeräts verlangt; leer = kein Passwort. Dieses Programm liest und schreibt das Funkgerät auch dann, wenn eines gesetzt ist (wie CHIRP): Hier können Sie es sehen, ändern oder entfernen, und die Änderung gelangt beim Schreiben ins Funkgerät. Länge und Zeichen entsprechen dem Programm des Herstellers (Ziffern und Buchstaben, Groß- und Kleinschreibung wird unterschieden).
+75c613de	Passwort, das das Programm des Herstellers vor dem Lesen oder Schreiben des Funkgeräts verlangt; leer = kein Passwort. Dieses Programm liest und schreibt das Funkgerät auch dann, wenn eines gesetzt ist (wie CHIRP): Hier können Sie es sehen, ändern oder entfernen, und die Änderung gelangt beim Schreiben ins Funkgerät. Länge und Zeichen entsprechen dem Programm des Herstellers (nur Ziffern).
+9bc8db54	Ist ein Passwort gesetzt, liest und schreibt das Programm des Herstellers das Funkgerät nur, wenn man ihm dasselbe Passwort gibt. Von hier aus können Sie es jederzeit sehen und entfernen.
+5655abb1	Das Programm des Herstellers für dieses Modell zeigt das Passwortfeld nicht an: Wenn Sie eines setzen, liest und schreibt jenes Programm das Funkgerät nicht mehr, bis Sie es hier wieder entfernen.
+2cc30838	Passwort

@@ -1,11 +1,17 @@
 IU0VYT FLASH - 收发信机电台的信道、中继台与固件
 ================================================
-版本 4.46.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
+版本 4.47.0 - 单个可执行文件，无需安装，界面支持 13 种语言。
 作者：Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 网站：https://iu0vyt.github.io/IU0VYT/
 源代码与发布：https://github.com/IU0VYT/IU0VYT
 许可证：GNU General Public License 第 3 版或更高版本（自由软件，不提供任何担保）：见 LICENSE.txt 和 AUTHORS_AND_LICENSES.txt。
 本文件是 LEGGIMI.txt 的中文译本（以意大利文原文为准）。以前版本的新内容见主文件夹中的意大利文 CHANGELOG.txt（这里的 CHANGELOG.txt 包含 4.13 条目的译文）。
+4.47.0 的新内容：
+- 新增 24 款 Retevis 电台，取自厂家程序：B3B、B63B、RT22P、RT622P、RB666、RB666P、RB45、RB645、RB47、B3H、B63H、RB647、RT68H、RT668H、NR10、NR610、RB66S、RB666S、RB65、RB66、RB66P、RT68B、RT668B、RB669。支持信道和设置（共 241 项）。均未在真机上测试：请先只读取。
+- 这些电台以及新版 Retevis H777 的编程密码：与 CHIRP 相同，不会阻止读取或写入。密码以明文显示在设置中，可以修改或清除，长度和字符与厂家程序一致。
+- 为原先只有信道的电台增加了设置：AnyTone 系列（AT-D868UV、AT-D878UV、AT-D878UV II Plus、BTECH DMR-6X2 和 DMR-6X2 PRO）、TYT MD-UV380、MD-UV390、MD-2017 和 MD-9600、Retevis RT3S 和 RT82、使用 nicFW 固件的 Radtel RT-880 和 RT-950 Pro、TID TD-UV68、使用 M7OCM 固件的 Radtel RT-890。
+- 测试版：版本号高于最新稳定版的程序会显示一条警告栏，并且只有它才会提示后续的测试版。
+- 图库：54 个品牌的 697 个型号（647 个支持信道，596 个支持设置）。
 4.46.0 的新内容：
 - Radtel RT-880G：不再被标为 GMRS / FRS 电台。它是业余无线电 VHF/UHF 电台，与 RT-880 和 RT-860 相同：写入前不再出现“电台的销售类型为 GMRS”的警告。
 - RT-880G：写入后的校验会失败，因为电台在保存数据并重启时，程序联系它太早、太频繁。现在程序等待 10 秒，并每 15 秒重试一次（最长 90 秒）。已在真实的 RT-880G 上测试；同样的时间也用于 RT-880、RT-860 和 RT-817A / RT-871A（同一驱动），其他电台不变。

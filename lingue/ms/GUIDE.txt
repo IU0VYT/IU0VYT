@@ -1,6 +1,6 @@
 IU0VYT FLASH - SALURAN, PENGULANG DAN PERISIAN TEGAR RADIO PEMANCAR-PENERIMA
 ===========================================================================
-Versi 4.46.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
+Versi 4.47.0 - satu fail boleh laku sahaja, tanpa pemasangan, antara muka dalam 13 bahasa.
 Pengarang: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Laman web: https://iu0vyt.github.io/IU0VYT/
 Kod sumber dan keluaran: https://github.com/IU0VYT/IU0VYT
@@ -9,6 +9,24 @@ SEBARANG JAMINAN): lihat LICENSE.txt dan AUTHORS_AND_LICENSES.txt.
 Ini ialah terjemahan bahasa Melayu bagi LEGGIMI.txt (teks asal bahasa Itali ialah teks
 rujukan). Berita versi terdahulu ada dalam CHANGELOG.txt bahasa Itali dalam folder
 utama (CHANGELOG.txt di sini mengandungi entri 4.14 yang diterjemahkan).
+Baharu dalam 4.47.0:
+- 24 lagi radio Retevis, diperoleh daripada program pengeluar: B3B, B63B, RT22P, RT622P,
+  RB666, RB666P, RB45, RB645, RB47, B3H, B63H, RB647, RT68H, RT668H, NR10, NR610, RB66S,
+  RB666S, RB65, RB66, RB66P, RT68B, RT668B, RB669. Saluran dan tetapan (241 item
+  kesemuanya). Tiada satu pun diuji pada peranti sebenar: baca sahaja dahulu.
+- Kata laluan pengaturcaraan radio-radio ini dan versi baharu Retevis H777: seperti
+  dalam CHIRP, ia tidak menghalang pembacaan atau penulisan. Ia dipaparkan dengan jelas
+  dalam tetapan dan boleh ditukar atau dibuang, dengan panjang dan aksara program
+  pengeluar.
+- Tetapan untuk radio yang sebelum ini hanya mempunyai saluran: keluarga AnyTone
+  (AT-D868UV, AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 dan DMR-6X2 PRO), TYT
+  MD-UV380, MD-UV390, MD-2017 dan MD-9600, Retevis RT3S dan RT82, Radtel RT-880 dan
+  RT-950 Pro dengan perisian tegar nicFW, TID TD-UV68, Radtel RT-890 dengan perisian
+  tegar M7OCM.
+- Versi percubaan: salinan dengan nombor yang lebih tinggi daripada versi stabil terkini
+  memaparkan bar amaran dan, hanya salinan itu, menawarkan versi percubaan yang
+  berikutnya.
+- Galeri: 697 model daripada 54 jenama (647 dengan saluran, 596 dengan tetapan).
 Baharu dalam 4.46.0:
 - Radtel RT-880G: tidak lagi ditunjukkan sebagai radio GMRS / FRS. Ia ialah radio amatur
   VHF/UHF, seperti RT-880 dan RT-860: amaran «Radio dijual sebagai GMRS» tidak lagi

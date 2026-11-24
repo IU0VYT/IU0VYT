@@ -16,7 +16,8 @@ package main
 //          (elenco, sì/no, numeri piccoli: un valore per ogni numero);
 //   num    numero: raw = v·num/den + add, scritto in binario, BCD o una cifra per
 //          byte nei bit della maschera;
-//   str    testo: un byte per carattere (tabella dei caratteri) e riempimento.
+//   str    testo: un byte per carattere (tabella dei caratteri) e riempimento
+//          (fmt «skip»: in lettura i byte fuori dalla tabella si saltano).
 // Le tabelle delle radio gestite con i driver di CHIRP sono ricavate dal codice di
 // CHIRP (verifica/chirp/chirpsettings.py) e verificate con esso (settings_test.go);
 // le altre radio hanno tabelle ricavate dai programmi dei costruttori.
@@ -484,6 +485,15 @@ func readSetting(d *setDef, img []byte) (string, error) {
 				return "", errors.New("impostazione fuori dalla memoria")
 			}
 			b := int(img[off])
+			if e.Fmt == "skip" {
+				// 4.47 (password di programmazione dei programmi «Analog1»): un byte
+				// fuori dalla tabella dei caratteri vale «vuoto» e si salta, ovunque sia,
+				// come fa il programma del costruttore quando la confronta
+				if c, ok := rev[b]; ok {
+					out = append(out, c)
+				}
+				continue
+			}
 			if e.Pad != nil && b == *e.Pad {
 				break
 			}
@@ -608,6 +618,15 @@ func writeSetting(d *setDef, img []byte, v string) error {
 		}
 		if len(r) < d.MinLen {
 			return fmt.Errorf("almeno %d caratteri", d.MinLen)
+		}
+		if e.Fmt == "skip" && d.Charset != "" {
+			// 4.47: la tabella serve a leggere tutti i caratteri che la radio può avere;
+			// si possono scrivere solo quelli che il programma del costruttore accetta
+			for _, c := range r {
+				if !strings.ContainsRune(d.Charset, c) {
+					return fmt.Errorf("carattere non ammesso: %q", string(c))
+				}
+			}
 		}
 		if d.Autopad {
 			for len(r) < len(e.Offs) {

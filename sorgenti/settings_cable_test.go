@@ -68,8 +68,15 @@ func TestSettingsAfterCableRead(t *testing.T) {
 			}
 		}
 		// nessuna voce di CHIRP sta nella coda che il driver non legge
-		if len(tb.Settings) != len(full.Settings) {
-			t.Errorf("%s (%s): %d voci invece di %d", m.ID, m.RClass, len(tb.Settings), len(full.Settings))
+		want := len(full.Settings)
+		if _, ok := rtvPwDefs[m.ID]; ok {
+			// 4.47 (H777 nuova versione): in coda alle voci di CHIRP c'è la password di programmazione
+			if want++; tb.Settings[len(tb.Settings)-1].Key != "progpw" {
+				t.Errorf("%s: manca la password di programmazione in coda alla tabella", m.ID)
+			}
+		}
+		if len(tb.Settings) != want {
+			t.Errorf("%s (%s): %d voci invece di %d", m.ID, m.RClass, len(tb.Settings), want)
 		}
 	}
 	if risk < 30 {

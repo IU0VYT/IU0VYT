@@ -80,6 +80,8 @@ rd-r2: rd-r2 rt-h777s rt-rt24 rt-rt24v
 rd-t3: bf-t9 rd-t3 rt-rb18 rt-rb618
 rd-ub15g: rd-db35g rd-db35uv rd-ub15g rd-ub15g-110
 rg-rh5rv2: rg-rh5rv2
+rt-b3b: rt-b3b rt-b63b rt-rt22p rt-rt622p
+rt-b3h: rt-b3h rt-b63h
 rt-c2: rt-c2
 rt-c66: rt-c66
 rt-c6: rt-c6
@@ -89,6 +91,7 @@ rt-h777v4: rt-h777v4
 rt-ha1g: rt-ha1g
 rt-ha1uv: rt-ha1uv
 rt-ha2: rt-ha2
+rt-nr10: rt-nr10 rt-nr610
 rt-p2: rt-p2 rt-p62
 rt-ra685: ab-arf5 rt-ra685 rt-ra85
 rt-ra89: rt-ra89
@@ -102,10 +105,17 @@ rt-rb28: rt-rb28
 rt-rb28b: rt-rb28b
 rt-rb29: rt-rb29 rt-rb629
 rt-rb39: rt-rb39 rt-rb639
+rt-rb45: rt-rb45 rt-rb645
+rt-rb47: rt-rb47
 rt-rb48: rt-rb48
 rt-rb628: rt-rb628
 rt-rb628b: rt-rb628b
+rt-rb647: rt-rb647
 rt-rb648: rt-rb648
+rt-rb65: rt-rb65
+rt-rb666: rt-rb666 rt-rb666p
+rt-rb66: rt-rb66 rt-rb66p
+rt-rb66s: rt-rb666s rt-rb66s
 rt-rb75: rt-rb75
 rt-rb85: rt-rb85
 rt-rb87: rt-rb87
@@ -126,6 +136,8 @@ rt-rt470: hy-hi8811 rt-rt400 rt-rt470 rt-rt470l rt-rt470x rt-rt470xbt rt-rt495 r
 rt-rt47: rt-rt47 rt-rt47v rt-rt647
 rt-rt619: rt-rt619
 rt-rt68: rt-rt668 rt-rt68
+rt-rt68b: rt-rt668b rt-rt68b
+rt-rt68h: rt-rb669 rt-rt668h rt-rt68h
 rt-rt6: bf-a58 bf-a58s bf-gt3wp bf-uv82wp bf-uv9r rt-rt6
 rt-rt730: rt-rt730
 rt-rt76: rt-rt76

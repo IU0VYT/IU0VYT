@@ -44,8 +44,10 @@ package main
 // 35 nome (16 caratteri). DMR-6X2: otto liste di scansione da 54.
 //
 // SCRITTURA: qui si scrivono SOLO i canali validi, la tabella dei canali validi, le
-// zone (elenchi, nomi, tabella, canale A e B di ogni zona) e le liste di scansione.
-// Contatti, gruppi, messaggi, ID e impostazioni della radio non si toccano
+// zone (elenchi, nomi, tabella, canale A e B di ogni zona) e le liste di scansione;
+// dalla 4.47 anche le impostazioni generali, le righe di accensione e il primo ID
+// (settings_447.go), ma solo le righe diverse da quelle della radio.
+// Contatti, gruppi e messaggi non si toccano
 // (dmrconfig riscrive tutto e ricostruisce l'indice dei contatti). Non è copiato
 // l'errore di dmrconfig che, creando le zone, scrive il canale A e B della zona n
 // nella posizione 2·n della tabella.
@@ -168,8 +170,8 @@ type atFam struct{}
 const atNoteCommon = "Si collega con il cavo USB della radio, che compare come porta seriale (COM); se Windows non la crea serve il driver " +
 	"«USB Virtual Com Port» del costruttore. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda, toni e " +
 	"solo ricezione; nei canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati. Un canale nuovo entra nella " +
-	"prima zona con un posto libero. Si scrivono solo canali, zone e liste di scansione: contatti, gruppi, messaggi, ID e impostazioni " +
-	"non si toccano. Non provata su una radio vera: prima la sola lettura."
+	"prima zona con un posto libero. Si scrivono canali, zone e liste di scansione; ID, nome, testo di accensione e impostazioni generali " +
+	"solo se li hai cambiati (finestra «Impostazioni»). Contatti, gruppi e messaggi non si toccano. Non provata su una radio vera: prima la sola lettura."
 
 func init() {
 	mk := func(id, vendor, model, name, ident string, x6 bool, extra string) *genModel {
@@ -947,6 +949,30 @@ func (f atFam) Upload(ctx context.Context, m *genModel, port string, img []byte,
 				return info, genFail("Scrittura", err)
 			}
 			done++
+		}
+	}
+	// 4.47: impostazioni generali, righe di accensione e primo ID della radio.
+	// Si rileggono dalla radio e si scrivono solo le righe diverse: se le
+	// impostazioni non sono state cambiate qui non si scrive nulla.
+	for _, sp := range atSetSpans {
+		for k := 0; k < sp.n; k += 16 {
+			if ctx.Err() != nil {
+				s.end()
+				return info, errCancelled
+			}
+			want := img[sp.off+k : sp.off+k+16]
+			have, err := s.read16(sp.addr + uint32(k))
+			if err != nil {
+				s.end()
+				return info, genFail("Scrittura", err)
+			}
+			if bytes.Equal(have, want) {
+				continue
+			}
+			if err := s.write16(sp.addr+uint32(k), want); err != nil {
+				s.end()
+				return info, genFail("Scrittura", err)
+			}
 		}
 	}
 	s.end()

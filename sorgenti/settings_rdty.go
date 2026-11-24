@@ -159,7 +159,17 @@ var tytSettings = func() *setTable {
 
 func init() {
 	settingsProviders = append(settingsProviders, settingsProvider{
-		has: func(kind string) bool { return kind == "bf-dm1701" },
+		// 4.47: anche le altre radio della famiglia (MD-UV380, MD-UV390 / RT3S,
+		// MD-2017 / RT82, MD-9600): dmrconfig (uv380.c) e qdmr (tyt_codeplug.cc)
+		// usano per tutte le stesse posizioni di nome, ID e testo di accensione
+		has: func(kind string) bool {
+			m := genByID[kind]
+			if m == nil {
+				return false
+			}
+			_, ok := m.Fam.(tytFam)
+			return ok
+		},
 		get: func(kind string, img []byte) *setTable {
 			if len(img) < tytSettings.Size {
 				return nil

@@ -70,6 +70,8 @@ func fmtBuildDate(s string) string {
 type updState struct {
 	mu      sync.Mutex
 	version string          // versione pubblicata trovata dall'ultima verifica
+	source  string          // pacchetto da scaricare (4.47: la stabile o la pre-release proposta)
+	pre     bool            // la versione proposta è una pre-release (solo in una copia di prova)
 	saved   map[string]bool // file salvati dal programma (si possono mostrare in Esplora risorse)
 }
 
@@ -501,13 +503,44 @@ func remoteVersionOnce(u string, whole bool) (version, built string, size, read 
 func (a *App) apiUpdateCheck(r *http.Request) (interface{}, error) {
 	v, built, size, read, err := remoteVersion(updateSource)
 	if err != nil {
-		return nil, err
+		// 4.47: senza collegamento l'ultima stabile vista (salvata nelle
+		// impostazioni) dice ancora se questa copia è di prova
+		saved := a.store.Get().LastStable
+		if saved == "" {
+			return nil, err
+		}
+		return map[string]interface{}{"offline": true, "error": err.Error(), "local": appVersion, "stable": saved,
+			"beta": cmpVersion(saved, appVersion) < 0}, nil
+	}
+	a.rememberStable(v)
+	beta := cmpVersion(v, appVersion) < 0
+	res := map[string]interface{}{"remote": v, "remoteBuild": fmtBuildDate(built), "local": appVersion, "stable": v,
+		"cmp": cmpVersion(v, appVersion), "size": size, "read": read, "beta": beta, "pre": false}
+	src, pre := updateSource, false
+	if beta {
+		// solo una copia di prova guarda le pre-release: chi usa la stabile non le vede mai
+		if p, ok := checkPreRelease(); ok {
+			if cv, isPre := chooseUpdate(appVersion, v, p.version); isPre && cv == p.version {
+				res["remote"], res["remoteBuild"], res["cmp"] = p.version, fmtBuildDate(p.built), 1
+				res["size"], res["read"], res["pre"] = p.size, read+p.read, true
+				src, pre = p.url, true
+			}
+		}
 	}
 	upd.mu.Lock()
-	upd.version = v
+	upd.version, upd.source, upd.pre = res["remote"].(string), src, pre
 	upd.mu.Unlock()
-	return map[string]interface{}{"remote": v, "remoteBuild": fmtBuildDate(built), "local": appVersion,
-		"cmp": cmpVersion(v, appVersion), "size": size, "read": read}, nil
+	return res, nil
+}
+
+// rememberStable salva l'ultima stabile vista (solo se è cambiata)
+func (a *App) rememberStable(v string) {
+	st := a.store.Get()
+	if st.LastStable == v {
+		return
+	}
+	st.LastStable = v
+	_ = a.store.SaveSettings(st)
 }
 
 func (a *App) apiUpdateSave(r *http.Request) (interface{}, error) {
@@ -518,15 +551,21 @@ func (a *App) apiUpdateSave(r *http.Request) (interface{}, error) {
 		return nil, err
 	}
 	upd.mu.Lock()
-	checked := upd.version
+	checked, src, pre := upd.version, upd.source, upd.pre
 	upd.mu.Unlock()
 	if checked == "" || cmpVersion(checked, appVersion) <= 0 {
 		return nil, errors.New("nessun aggiornamento da scaricare: verifica prima gli aggiornamenti")
+	}
+	if src == "" {
+		src = updateSource
 	}
 	// prima la scelta della cartella, poi il download (una volta sola)
 	p := req.Path
 	if p == "" {
 		name := appName + " " + checked + ".zip"
+		if pre {
+			name = appName + " " + checked + " beta.zip"
+		}
 		dir := ""
 		if h, err := os.UserHomeDir(); err == nil {
 			if d := filepath.Join(h, "Downloads"); dirExists(d) {
@@ -542,7 +581,7 @@ func (a *App) apiUpdateSave(r *http.Request) (interface{}, error) {
 			return nil, err
 		}
 	}
-	b, err := downloadUpdate(updateSource)
+	b, err := downloadUpdate(src)
 	if err != nil {
 		return nil, err
 	}
@@ -559,7 +598,7 @@ func (a *App) apiUpdateSave(r *http.Request) (interface{}, error) {
 	upd.mu.Lock()
 	upd.saved[p] = true
 	upd.mu.Unlock()
-	return map[string]interface{}{"path": p, "version": v, "size": len(b)}, nil
+	return map[string]interface{}{"path": p, "version": v, "size": len(b), "pre": pre}, nil
 }
 
 func dirExists(p string) bool {

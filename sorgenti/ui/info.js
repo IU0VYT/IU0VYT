@@ -10,6 +10,10 @@
 // (indirizzo fisso, nel programma) a ogni avvio e con il pulsante «Verifica
 // aggiornamenti» di questa scheda (4.10: non più nella barra in alto). La verifica legge solo il numero di versione; il pacchetto si
 // scarica solo se è più recente e solo quando lo chiedi.
+// Copie di prova (4.47): se il numero del programma è più alto dell'ultima
+// stabile compare la barra «Versione di prova»; solo allora la verifica guarda
+// anche le pre-release e, se ce n'è una più recente, la propone. Senza Internet
+// vale l'ultima stabile vista (salvata nelle impostazioni).
 
 const Updates = {
   last: null,      // esito dell'ultima verifica
@@ -24,8 +28,12 @@ const Updates = {
       try {
         const r = await api('update/check', {}, { quiet: true });
         this.last = r;
-        if (r.cmp > 0) this.showBanner(r, !!opts.auto);
-        else this.hideBanner();
+        this.betaBar(!!r.beta);
+        // senza collegamento (r.offline) non si propone nulla e la barra degli aggiornamenti resta com'era
+        if (!r.offline) {
+          if (r.cmp > 0) this.showBanner(r, !!opts.auto);
+          else this.hideBanner();
+        }
         this.listeners.forEach(f => f(r));
         return r;
       } finally {
@@ -33,6 +41,16 @@ const Updates = {
       }
     })();
     return this.running;
+  },
+
+  // barra fissa delle copie di prova: sparisce da sola quando la versione diventa stabile
+  betaBar(on) {
+    let b = $('#betabanner');
+    if (!on) { if (b) b.remove(); return; }
+    if (b) return;
+    b = h(`<div id="betabanner" role="alert"><span class="updicon">⚠</span>
+      <span class="updtext"><b>Versione di prova (beta testing): usala a tuo rischio. Per l'uso normale scarica l'ultima versione stabile.</b></span></div>`);
+    $('#topbar').after(b);
   },
 
   showBanner(r, auto) {
@@ -44,8 +62,12 @@ const Updates = {
       $('#topbar').after(b);
     }
     const built = r.remoteBuild ? ` del ${esc(r.remoteBuild)}` : '';
+    // le due frasi restano intere: la traduzione le riconosce così come compaiono a schermo
+    const text = r.pre
+      ? `<span class="updtext"><b>È disponibile una nuova versione di prova di IU0VYT Flash: la ${esc(r.remote)}</b>${built}. Stai usando la ${esc(r.local)}.</span>`
+      : `<span class="updtext"><b>È disponibile una nuova versione di IU0VYT Flash: la ${esc(r.remote)}</b>${built}. Stai usando la ${esc(r.local)}.</span>`;
     b.innerHTML = `<span class="updicon">⬆</span>
-      <span class="updtext"><b>È disponibile una nuova versione di IU0VYT Flash: la ${esc(r.remote)}</b>${built}. Stai usando la ${esc(r.local)}.</span>
+      ${text}
       <button class="btn primary" data-dl>⬇ Scarica l'aggiornamento (${esc(fmtSize(r.size))})</button>
       <button class="btn" data-more>Dettagli</button>
       <button class="updx" data-x title="Nascondi (il controllo si ripete al prossimo avvio)">×</button>`;
@@ -199,6 +221,11 @@ const Info = {
     const res = $('[data-res]', page);
     if (!res) return;
     res.style.display = '';
+    if (r.offline) {
+      res.className = 'infores bad';
+      res.textContent = '✖ Verifica non riuscita: ' + r.error;
+      return;
+    }
     const built = r.remoteBuild ? ` (compilata il ${esc(r.remoteBuild)})` : '';
     if (r.cmp <= 0) {
       res.className = 'infores ok';
@@ -207,7 +234,9 @@ const Info = {
         : `✔ <b>Il software è aggiornato</b>: la versione in uso (${esc(r.local)}) è più recente di quella pubblicata (${esc(r.remote)}). Non c'è nulla da scaricare.`;
     } else {
       res.className = 'infores new';
-      res.innerHTML = `⬆ <b>È disponibile la versione ${esc(r.remote)}</b>${built}; stai usando la ${esc(r.local)}.
+      res.innerHTML = (r.pre
+        ? `⬆ <b>È disponibile la versione di prova ${esc(r.remote)}</b>${built}; stai usando la ${esc(r.local)}.`
+        : `⬆ <b>È disponibile la versione ${esc(r.remote)}</b>${built}; stai usando la ${esc(r.local)}.`) + `
         <div style="margin-top:8px"><button class="btn primary" data-save>⬇ Scarica l'aggiornamento (${esc(fmtSize(r.size))})</button></div>`;
       $('[data-save]', res).onclick = () => Updates.download();
     }

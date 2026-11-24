@@ -6260,7 +6260,6 @@ bd9e89ea	DMR radio of the BTECH brand (BaofengTech, United States), derived from
 14f85b7a	Second series of the DMR-6X2 (firmware «DMR_6X2II», identifier «D6X2UV2»): the firmware is a different file, do not use the one for the other radio. Guided update with the official program, as for the DMR-6X2. Channels and zones (experimental): as for the DMR-6X2, with the addresses that the free program qdmr uses for this model.
 25dd7543	MD1702-tools (OK2MOP's tools for the USB link)
 f023d637	{0} With the original firmware the MD-UV380, MD-UV390, MD-2017 and MD-9600 have their own tab; the MD-380 is not supported.
-6f673a7c	DMR radio with 4000 channels, connected with its own USB cable (serial port). Memory and protocol of the free programs dmrconfig and qdmr, verified with the original dmrconfig code. Only channels, zones and scan lists are written. «Identify» tries it after all the other radios.
 c3827a39	With the original firmware: same memory and same protocol as the Baofeng DM-1701, via USB in DFU mode (the free program dmrconfig uses the same code for these models).
 5732831a	AT-D878UV / AT-D878UV Plus
 3ce8fe8d	AT-D878UV Plus
@@ -6268,7 +6267,6 @@ c3827a39	With the original firmware: same memory and same protocol as the Baofen
 15e852ed	AT-D878UV II Plus
 c9665837	AT-D878UVII Plus
 9835a587	TYT MD-UV390
-33158a39	It connects with the radio's USB cable, which appears as a serial port (COM); if Windows does not create it, the manufacturer's «USB Virtual Com Port» driver is needed. You can change frequencies, names (16 characters), mode (analog / DMR), power, bandwidth, tones and receive only; in DMR channels the color code, slot, contact and group list stay as set. A new channel goes into the first zone with a free place. Only channels, zones and scan lists are written: contacts, groups, messages, IDs and settings are not touched. Not tested on a real radio: read only first.
 10a3ed24	AnyTone AT-D868UV
 9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
 bccf031b	AnyTone AT-D878UV II Plus
@@ -6277,3 +6275,89 @@ ce976301	Experimental: model not present in dmrconfig, addresses from the free p
 2219008e	TYT MD-UV390 / Retevis RT3S
 1e8c276f	TYT MD-2017 / Retevis RT82
 33c3b9a7	Like the Baofeng DM-1701: same memory and same protocol (the free program dmrconfig uses the same code). USB in DFU mode: you need the USB driver of the manufacturer's program (STTub30) or WinUSB installed with Zadig. If the radio answers with a different name, the program stops before reading or writing. Not tested on a real radio: read only first.
+b17da535	Test version (beta testing): use it at your own risk. For normal use, download the latest stable version.
+06dce278	A new test version of IU0VYT Flash is available: {0}
+d7aa904d	Test version {0} is available
+cedac075	{0} {1} beta.zip
+e35c4375	IU0VYT.Flash-rc.zip
+b02c57ef	It connects with the radio's USB cable, which appears as a serial port (COM); if Windows does not create it, the manufacturer's «USB Virtual Com Port» driver is needed. You can change frequencies, names (16 characters), mode (analog / DMR), power, bandwidth, tones and receive only; in DMR channels the color code, slot, contact and group list stay as set. A new channel goes into the first zone with a free place. Channels, zones and scan lists are written; ID, name, power-on text and general settings only if you changed them («Settings» window). Contacts, groups and messages are not touched. Not tested on a real radio: read only first.
+ccfa337a	Amateur
+48392b85	Professional
+09f1c584	In professional mode the radio locks some menus and some key functions.
+994331c3	Clock on the display
+9e1ef018	10 minutes
+1ecf177a	30 minutes
+28ee8049	60 minutes
+19cc8f62	120 minutes
+d710bd69	Squelch of band A
+d410b8b0	Squelch of band B
+ae8b682e	Enhanced audio
+28426410	Power-on tone
+5e1257b2	End-of-call tone
+a894c919	Message alert
+c7a643bc	Call alert
+d1a378cf	memory description from qdmr and dmrconfig (general settings of the AnyTone AT-D868UV / AT-D878UV family)
+91fae64f	documentation published by the author of the nicFW880 / nicFW950 firmware (nicsure/nicFW880_950_Docs)
+f9fcaec6	Squelch: noise trigger
+522125e6	Noise level below which the squelch opens (0-127, default 48).
+8ce18fcf	Squelch: noise ceiling
+a3c04a23	With noise at or above this value the squelch closes at once (0-127, default 60).
+c8791899	Squelch: noise hysteresis
+0e3f061f	Distance between opening and closing of the squelch (0-20, default 4).
+ea411cd6	Squelch: throttle
+f39446ce	Squelch tail elimination (STE)
+a9ac582e	Noise filter (noise gate)
+9be2d17f	Duration of the received-tone monitor (s)
+d96223b1	Seconds after which the screen turns off (0 = always on).
+0f432b7c	Radio-on blink (s)
+e39206c8	Every how many seconds the LED blinks with the screen off (0 = never).
+1d1abf17	Screen gamma
+73f5f79d	Daytime brightness
+32578757	Night brightness
+aadeb108	Brightness in use
+66c6478b	Day
+1e15024d	Night
+95b373a9	ANYTONE
+96ff393f	DMR radio with 4000 channels, connected with its own USB cable (serial port). Memory and protocol of the free programs dmrconfig and qdmr, verified with the original dmrconfig code. Channels, zones and scan lists are written and, if you changed them, the general settings. «Identify» tries it after all the other radios.
+87746b94	Retevis B3B
+1af651d8	Retevis B63B
+aee8f6b5	Retevis RT22P
+11556f69	Retevis RT622P
+2fbed3fd	this radio belongs to an older series, with its memory in a different format: it is not supported yet
+853a2ccd	Retevis RB666
+57943b27	Retevis RB666P
+81746222	Retevis B3H
+14f64866	Retevis B63H
+743594dc	Retevis RB647
+2766e50b	Retevis RT68H
+20e15187	Retevis RT668H
+07dd5689	this radio has a single frequency per channel and transmits where it receives
+7c676702	this radio has a single tone per channel, the same for receive and transmit
+d90b8f70	Retevis RB65
+243f733c	Retevis NR10
+97486db0	Retevis NR610
+e03abc0e	Retevis RB66S
+58943cba	Retevis RB666S
+2166db99	Retevis RT68B
+1ae14815	Retevis RT668B
+763a1530	Retevis RB669
+292132fd	Channel announcement
+08013239	Code check (Code switch)
+8173efb6	Special code type (Spec mode)
+01cf6eba	Down key (long press)
+fb9fa33a	Encryption
+f189824c	Spec Code 1
+f4898705	Spec Code 2
+7f905037	Spec Code
+df368834	LCD
+660d6fc8	RTV-{0}
+09f7e05f	Same channel memory as the new version of the Retevis H777; protocol taken from the manufacturer's program. Channels (16, without names) and settings, programming password included: a password already set does not stop reading or writing. Not tested on a real radio: read only first.
+a29ad221	Protocol taken from the manufacturer's program. Channels (without names) and settings, programming password included: a password already set does not stop reading or writing. Not tested on a real radio: read only first.
+f1e46926	Licence-free radio with the same channel memory as the new version of the Retevis H777 and a connection code of its own. Protocol taken from the manufacturer's program: 16 channels without names; the settings are changed from the «Settings» tab, programming password included. A programming password already set does not stop reading or writing (as in CHIRP). Not tested on a real radio: read only first.
+6993e4d3	Licence-free radio; protocol taken from the manufacturer's program: channels without names; the settings are changed from the «Settings» tab, programming password included. A programming password already set does not stop reading or writing (as in CHIRP). A channel that the manufacturer's program shows as «encrypted» stays as it is until you change it. Not tested on a real radio: read only first.
+bdcd3c94	Programming password
+0799ad01	Password that the manufacturer's program asks for before reading or writing the radio; empty = no password. This program reads and writes the radio even when one is set (as CHIRP does): here you can see it, change it or remove it, and the change reaches the radio when you write it. Length and characters are those of the manufacturer's program (digits and letters, upper and lower case are different).
+75c613de	Password that the manufacturer's program asks for before reading or writing the radio; empty = no password. This program reads and writes the radio even when one is set (as CHIRP does): here you can see it, change it or remove it, and the change reaches the radio when you write it. Length and characters are those of the manufacturer's program (digits only).
+9bc8db54	With a password set, the manufacturer's program reads and writes the radio only if it is given the same password. From here you can always see it and remove it.
+5655abb1	The manufacturer's program for this model does not show the password box: if you set one, that program will no longer read or write the radio until you remove it from here.
+2cc30838	Password

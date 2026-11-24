@@ -118,8 +118,11 @@ func TestRobustShortUpload(t *testing.T) {
 		m := m
 		t.Run(m.ID, func(t *testing.T) {
 			base := robustBase(t, m)
+			if base == nil { // 4.47: prima il controllo, poi la radio simulata (senza CHIRP_DIR la UV-5R non ha immagine)
+				t.Skip("nessuna immagine di partenza o nessuna radio simulata")
+			}
 			emu := genEmuFor(m, base)
-			if base == nil || emu == nil {
+			if emu == nil {
 				t.Skip("nessuna immagine di partenza o nessuna radio simulata")
 			}
 			openPortFunc = func(name string, baud int) (Port, error) {

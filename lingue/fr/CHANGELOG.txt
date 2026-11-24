@@ -7,6 +7,42 @@ complet des versions précédentes (1.0 - 4.12) se trouve dans l'original italie
 CHANGELOG.txt, dans le dossier principal du paquet ; les principales nouveautés de
 chaque version sont aussi résumées dans LISEZMOI.txt.
 
+4.47.0 (24/11/2026)
+-------------------
+- Retevis, 24 nouveaux modèles tirés des programmes du constructeur : B3B, B63B, RT22P,
+  RT622P, RB666, RB666P (même mémoire des canaux que la nouvelle version de la H777) ;
+  RB45, RB645, RB47 ; B3H, B63H, RB647, RT68H, RT668H, NR10, NR610, RB66S, RB666S,
+  RT68B, RT668B, RB669 (famille de la T18) ; RB65, RB66, RB66P (une fréquence et une
+  tonalité par canal). La connexion, la lecture et l'écriture sont réécrites à partir de
+  zéro et contrôlées avec les fichiers de données d'usine des programmes. Les RB66 et
+  RB66P, ainsi que les RB669, RT68H et RT668H, répondent avec le même code : la bonne
+  fiche doit être choisie à la main.
+- Réglages des 24 modèles Retevis : 241 éléments en tout (squelch, durée maximale
+  d'émission, VOX, balayage, guide vocal, économie de batterie, bip, touches
+  latérales…). Seuls les éléments que le programme du modèle affiche sont proposés ; les
+  valeurs des 24 fichiers d'usine sont toutes des choix admis.
+- Mot de passe de programmation : sur les 24 modèles Retevis et sur la nouvelle version
+  de la Retevis H777, il n'empêche ni la lecture ni l'écriture, comme dans CHIRP (le
+  programme du constructeur, lui, s'arrête si le mot de passe n'est pas celui saisi par
+  l'utilisateur). C'est un élément des réglages, en clair : on peut le voir, le changer
+  et l'enlever. La longueur et les caractères sont ceux du programme du constructeur : 6
+  caractères (3 pour RB45, RB645, RB47 et RB66 ; 4 pour RB66P), chiffres et lettres
+  (chiffres uniquement pour RB65 et RB66). Pour B3H, B63H, RB45, RB645, RB66 et RB666,
+  dont le programme n'affiche pas la case du mot de passe, un avertissement le rappelle.
+- Réglages pour des radios qui n'avaient que les canaux : famille AnyTone (AT-D868UV,
+  AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 et DMR-6X2 PRO : 27 éléments, d'après les
+  descriptions de la mémoire de qdmr et de dmrconfig) ; TYT MD-UV380, MD-UV390, MD-2017
+  et MD-9600, Retevis RT3S et RT82 (les éléments de la Baofeng DM-1701) ; Radtel RT-880
+  et RT-950 Pro avec le firmware nicFW880 / nicFW950 (17 éléments, d'après la
+  documentation de l'auteur) ; TID TD-UV68 (les éléments de la TD-H8) ; Radtel RT-890
+  avec le firmware M7OCM (53 éléments).
+- Versions d'essai : une copie dont le numéro est plus élevé que celui de la dernière
+  version stable publiée affiche une barre d'avertissement (« Version d'essai
+  (bêta-test)… ») et, elle seule, propose la version d'essai suivante, toujours
+  téléchargée depuis GitHub. Ceux qui utilisent la version stable ne voient pas les
+  versions d'essai.
+- Galerie : 697 modèles de 54 marques (647 avec canaux, 596 avec réglages).
+
 4.46.0 (21/11/2026)
 -------------------
 - Radtel RT-880G : elle n'est plus indiquée comme radio GMRS / FRS. C'est un

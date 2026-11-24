@@ -643,7 +643,9 @@ func (f nicfw880Fam) Upload(ctx context.Context, m *genModel, port string, img [
 		return "", rErr("la radio ha un'altra versione del firmware nicFW rispetto all'immagine: leggi la radio e riporta i canali su quella lettura")
 	}
 	written := 0
-	for a := 0; a < nicfw880ChanHi; a += 128 {
+	// 4.47: oltre ai canali si scrivono i blocchi cambiati delle impostazioni
+	// (0x5F600-0x5F9FF); taratura e fasce di potenza (da 0x5FA00) mai
+	for a := 0; a < nicfw880CalLo; a += 128 {
 		if bytes.Equal(now[a:a+128], img[a:a+128]) {
 			continue
 		}

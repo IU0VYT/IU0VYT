@@ -3,6 +3,48 @@ IU0VYT FLASH - REGISTRO DELLE MODIFICHE
 Copyright (C) 2026 Daniele "IU0VYT" Bonifazi - GNU GPL v3 o successiva
 
 
+4.47.0 (24/11/2026)
+-------------------
+Le prime radio ricavate dai programmi dei costruttori già scaricati (punto 4
+dei lavori), le impostazioni per le radio che avevano solo i canali (punto 2),
+la password di programmazione trattata come in CHIRP e l'avviso per le
+versioni di prova.
+- Retevis, 24 modelli nuovi ricavati dai programmi del costruttore: B3B, B63B,
+  RT22P, RT622P, RB666, RB666P (stessa memoria dei canali della H777 nuova
+  versione); RB45, RB645, RB47; B3H, B63H, RB647, RT68H, RT668H, NR10, NR610,
+  RB66S, RB666S, RT68B, RT668B, RB669 (famiglia della T18); RB65, RB66, RB66P
+  (una frequenza e un tono per canale). Collegamento, lettura e scrittura sono
+  riscritti da zero e controllati con i file dati di fabbrica dei programmi.
+  RB66 e RB66P, e RB669, RT68H e RT668H, rispondono con la stessa sigla: la
+  scheda giusta va scelta a mano.
+- Impostazioni dei 24 modelli Retevis: 241 voci in tutto (squelch, tempo
+  massimo di trasmissione, VOX, scansione, guida vocale, risparmio della
+  batteria, bip, tasti laterali…). Si offrono solo le voci che il programma
+  del modello mostra; i valori dei 24 file di fabbrica sono tutti scelte
+  ammesse.
+- Password di programmazione: nei 24 modelli Retevis e nella Retevis H777
+  nuova versione non ferma la lettura né la scrittura, come in CHIRP (il
+  programma del costruttore invece si ferma, se la password non è quella
+  scritta dall'utente). È una voce delle impostazioni, in chiaro: si vede, si
+  cambia e si toglie. Lunghezza e caratteri sono quelli del programma del
+  costruttore: 6 caratteri (3 per RB45, RB645, RB47 e RB66; 4 per RB66P),
+  cifre e lettere (solo cifre per RB65 e RB66). Per B3H, B63H, RB45, RB645,
+  RB66 e RB666, il cui programma non mostra la casella della password, un
+  avviso lo ricorda.
+- Impostazioni per radio che avevano solo i canali: famiglia AnyTone
+  (AT-D868UV, AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 e DMR-6X2 PRO: 27
+  voci, dalle descrizioni della memoria di qdmr e dmrconfig); TYT MD-UV380,
+  MD-UV390, MD-2017 e MD-9600, Retevis RT3S e RT82 (le voci della Baofeng
+  DM-1701); Radtel RT-880 e RT-950 Pro con il firmware nicFW880 / nicFW950 (17
+  voci, dalla documentazione dell'autore); TID TD-UV68 (le voci della TD-H8);
+  Radtel RT-890 con il firmware M7OCM (53 voci).
+- Versioni di prova: una copia con un numero più alto dell'ultima versione
+  stabile pubblicata mostra una barra di avviso («Versione di prova (beta
+  testing)…») e, solo lei, propone la versione di prova successiva, scaricata
+  sempre da GitHub. Chi usa la versione stabile non vede le versioni di prova.
+- Galleria: 697 modelli di 54 marche (647 con canali, 596 con impostazioni).
+
+
 4.46.0 (21/11/2026)
 -------------------
 Due correzioni per la Radtel RT-880G, provate sulla radio vera, e i

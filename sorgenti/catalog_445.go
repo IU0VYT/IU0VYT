@@ -15,7 +15,7 @@ package main
 const (
 	dmrconfigSite = "https://github.com/OpenRTX/dmrconfig"
 	at445         = "Radio DMR con 4000 canali, collegata con il suo cavo USB (porta seriale). Memoria e protocollo dei programmi liberi " +
-		"dmrconfig e qdmr, verificati con il codice originale di dmrconfig. Si scrivono solo canali, zone e liste di scansione. " +
+		"dmrconfig e qdmr, verificati con il codice originale di dmrconfig. Si scrivono canali, zone e liste di scansione e, se le hai cambiate, le impostazioni generali. " +
 		"«Identifica» la prova dopo tutte le altre radio."
 	tyt445 = "Con il firmware originale: stessa memoria e stesso protocollo della Baofeng DM-1701, via USB in modalità DFU (il programma " +
 		"libero dmrconfig usa lo stesso codice per questi modelli)."

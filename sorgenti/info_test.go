@@ -166,6 +166,10 @@ func TestUpdateAPI(t *testing.T) {
 	}))
 	defer srv.Close()
 	defer func() { updateSource = defaultUpdateURL }()
+	// 4.47: le copie di prova leggono anche l'elenco delle release; qui niente
+	// elenco (404), così la prova non esce mai su Internet
+	releasesSource = srv.URL + "/nessun-elenco"
+	defer func() { releasesSource = defaultReleasesURL }()
 	dir := t.TempDir()
 	st, _ := openStore(dir)
 	app := newApp(st)
@@ -220,6 +224,11 @@ func TestUpdateAPI(t *testing.T) {
 	}
 	for p, msg := range map[string]string{"/manca.zip": "404", "/privato.zip": "accesso negato", "/pagina.zip": "pagina web"} {
 		updateSource = srv.URL + p
+		// senza un'ultima stabile salvata l'errore arriva com'è (4.47: con una
+		// stabile salvata la risposta è «offline», vedi TestUpdateBeta)
+		st := app.store.Get()
+		st.LastStable = ""
+		app.store.SaveSettings(st)
 		r, code := call("update/check", nil)
 		if code != 400 || !strings.Contains(r["error"].(string), msg) {
 			t.Fatalf("%s: %v", p, r)

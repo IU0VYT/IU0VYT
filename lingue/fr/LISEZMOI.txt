@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANAUX, RELAIS ET FIRMWARE DES RADIOS ÉMETTEURS-RÉCEPTEURS
 =========================================================================
-Version 4.46.0 - un seul fichier exécutable, aucune installation, interface en 13
+Version 4.47.0 - un seul fichier exécutable, aucune installation, interface en 13
 langues.
 Auteur : Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Site web : https://iu0vyt.github.io/IU0VYT/
@@ -10,6 +10,24 @@ AUCUNE GARANTIE) : voir LICENSE.txt et AUTEURS_ET_LICENCES.txt.
 Ceci est la traduction française de LEGGIMI.txt (l'original italien est le texte de
 référence). Les nouveautés des versions précédentes se trouvent dans le CHANGELOG.txt
 italien du dossier principal (CHANGELOG.txt ici contient l'entrée 4.13 traduite).
+Nouveautés de la 4.47.0 :
+- 24 radios Retevis de plus, tirées des programmes du constructeur : B3B, B63B, RT22P,
+  RT622P, RB666, RB666P, RB45, RB645, RB47, B3H, B63H, RB647, RT68H, RT668H, NR10,
+  NR610, RB66S, RB666S, RB65, RB66, RB66P, RT68B, RT668B, RB669. Canaux et réglages (241
+  éléments en tout). Aucune n'a été testée sur du matériel réel : d'abord la lecture
+  seule.
+- Mot de passe de programmation de ces radios et de la nouvelle version de la Retevis
+  H777 : comme dans CHIRP, il n'empêche ni la lecture ni l'écriture. Il s'affiche en
+  clair parmi les réglages et peut être changé ou enlevé, avec la longueur et les
+  caractères du programme du constructeur.
+- Réglages pour des radios qui n'avaient que les canaux : famille AnyTone (AT-D868UV,
+  AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 et DMR-6X2 PRO), TYT MD-UV380, MD-UV390,
+  MD-2017 et MD-9600, Retevis RT3S et RT82, Radtel RT-880 et RT-950 Pro avec le firmware
+  nicFW, TID TD-UV68, Radtel RT-890 avec le firmware M7OCM.
+- Versions d'essai : une copie dont le numéro est plus élevé que celui de la dernière
+  version stable affiche une barre d'avertissement et, elle seule, propose les versions
+  d'essai suivantes.
+- Galerie : 697 modèles de 54 marques (647 avec canaux, 596 avec réglages).
 Nouveautés de la 4.46.0 :
 - Radtel RT-880G : elle n'est plus indiquée comme radio GMRS / FRS. C'est une radio
   radioamateur VHF/UHF, comme la RT-880 et la RT-860 : l'avertissement « Radio vendue

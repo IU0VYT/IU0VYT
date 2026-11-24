@@ -27,6 +27,32 @@ type wxEmu struct {
 	base   int                // posizione nell'immagine dell'indirizzo 0 della radio
 	noAck  bool               // lettura senza conferma 06 (Retevis H777 V4, RT21H)
 	noAck0 bool               // 4.9: primo blocco (indirizzo 0) senza conferma (Retevis RB28)
+	pass   bool               // 4.47: risponde a 05 con la password di programmazione (famiglia H777 nuova versione)
+	ack    byte               // 4.47: conferma mandata dalla radio (0: 06; Retevis RB666: 66)
+	echo   bool               // 4.47: cavo a un filo, la radio rimanda ogni byte che riceve
+	passAt int                // 4.47: posizione della password (0: 0xDD)
+	passN  int                // 4.47: lunghezza della password (0: 6 byte)
+	ackW   byte               // 4.47: conferma dei soli blocchi scritti, per le prove (0: la stessa di ack)
+	hi01   int                // 4.47: da questo indirizzo la risposta a «R» porta 01 nel byte alto (file dati di RB45, RB645, RB47); 0: mai
+}
+
+// ackB: la conferma di questa radio
+func (e *wxEmu) ackB() byte {
+	if e.ack != 0 {
+		return e.ack
+	}
+	return 0x06
+}
+
+// emuEcho: cavo a un filo — al programma torna ogni byte che la radio riceve
+type emuEcho struct{ Port }
+
+func (e emuEcho) ReadFull(ctx context.Context, b []byte, timeout time.Duration) error {
+	err := e.Port.ReadFull(ctx, b, timeout)
+	if err == nil {
+		e.Port.Write(b)
+	}
+	return err
 }
 
 func newWxEmu(img []byte, size int, hello func(p Port) error) *wxEmu {
@@ -41,12 +67,33 @@ func newWxEmu(img []byte, size int, hello func(p Port) error) *wxEmu {
 func (e *wxEmu) image() []byte { e.mu.Lock(); defer e.mu.Unlock(); return append([]byte{}, e.img...) }
 
 func (e *wxEmu) serve(p Port) error {
+	if e.echo {
+		p = emuEcho{p}
+	}
 	if err := e.hello(p); err != nil {
 		return err
 	}
 	for {
 		c, err := emuByte(p)
-		if err != nil || c == 0x06 || c == 'E' {
+		if c == 0x05 && err == nil && e.pass { // 4.47: richiesta della password, poi 06 → 06
+			e.mu.Lock()
+			at, n := 0xDD, 6
+			if e.passN != 0 {
+				at, n = e.passAt, e.passN
+			}
+			pw := bytes.Repeat([]byte{0xFF}, n) // i byte oltre la memoria letta (RB66) valgono FF
+			if e.base+at < len(e.img) {
+				copy(pw, e.img[e.base+at:])
+			}
+			e.mu.Unlock()
+			p.Write(pw)
+			if b, err := emuByte(p); err != nil || b != 0x06 {
+				return fmt.Errorf("conferma attesa dopo la password")
+			}
+			p.Write([]byte{e.ackB()})
+			continue
+		}
+		if err != nil || c == 0x06 || c == 'E' || c == 'b' { // «b»: chiusura del programma del costruttore (famiglia H777 nuova versione)
 			return nil // fine della sessione
 		}
 		h, err := emuRead(p, 3)
@@ -63,7 +110,11 @@ func (e *wxEmu) serve(p Port) error {
 			}
 			d := append([]byte{}, e.img[e.base+a:e.base+a+n]...)
 			e.mu.Unlock()
-			p.Write(append([]byte{'W', h[0], h[1], h[2]}, d...))
+			hi := h[0]
+			if e.hi01 > 0 && a >= e.hi01 {
+				hi = 1
+			}
+			p.Write(append([]byte{'W', hi, h[1], h[2]}, d...))
 			if e.noAck || e.noAck0 && a == 0 {
 				continue
 			}
@@ -81,9 +132,14 @@ func (e *wxEmu) serve(p Port) error {
 				e.mu.Unlock()
 				return fmt.Errorf("indirizzo 0x%04X fuori dalla memoria", a)
 			}
+			if e.ackW != 0 { // radio che non accetta il blocco: non lo scrive
+				e.mu.Unlock()
+				p.Write([]byte{e.ackW})
+				continue
+			}
 			copy(e.img[e.base+a:], d)
 			e.mu.Unlock()
-			p.Write([]byte{0x06})
+			p.Write([]byte{e.ackB()})
 		default:
 			return fmt.Errorf("comando sconosciuto %02X", c)
 		}
@@ -504,18 +560,40 @@ func (h777v4Fam) emu(m *genModel, img []byte) genEmu {
 		if err := emuWaitFor(p, "\x02"+o.cmd); err != nil {
 			return err
 		}
-		p.Write([]byte{0x06})
+		p.Write([]byte{e.ackB()})
 		if err := emuExpect(p, "\x02"); err != nil {
 			return err
 		}
-		id := append([]byte{}, o.idents[0]...)
+		id := []byte{}
+		if len(o.idents) > 0 {
+			id = append(id, o.idents[0]...)
+		}
 		p.Write(append(id, make([]byte, 8-len(id))...))
 		if err := emuExpect(p, "\x06"); err != nil {
 			return err
 		}
-		return p.Write([]byte{0x06})
+		return p.Write([]byte{e.ackB()})
+	}
+	// 4.47: le RB666 confermano con 66 e, con il loro cavo, rimandano ciò che ricevono
+	e.ack, e.echo = o.ack, o.echo
+	// 4.47: la radio dà la password di programmazione (6 byte a 0xDD) a chi la
+	// chiede con 05, come fa il programma del costruttore; chi non la chiede
+	// (il driver di CHIRP) legge e scrive lo stesso
+	e.pass = o.pass
+	if o.rb45 {
+		// RB45, RB645, RB47: password di 3 byte in coda al blocco delle impostazioni
+		e.passAt, e.passN = 0xFA, 3
+	}
+	if o.rb66 {
+		// RB66 (6 byte) e RB66P (4 byte): password da 0xDD
+		e.passAt, e.passN = 0xDD, o.pwN
 	}
 	return e
+}
+
+// 4.47: memoria vuota (canali liberi, nessuna password) per i modelli che CHIRP non ha
+func (h777v4Fam) blankImg(m *genModel) []byte {
+	return bytes.Repeat([]byte{0xFF}, h777v4o(m).memsize)
 }
 
 func (tguv2pFam) emu(m *genModel, img []byte) genEmu {

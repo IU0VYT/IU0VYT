@@ -1,11 +1,30 @@
 IU0VYT FLASH - CANALI, PONTI E FIRMWARE DELLE RADIO RICETRASMITTENTI
 ====================================================================
-Versione 4.46.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
+Versione 4.47.0 - un solo file eseguibile, nessuna installazione, interfaccia in 13 lingue.
 Autore: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sito web: https://iu0vyt.github.io/IU0VYT/
 Codice sorgente e rilasci: https://github.com/IU0VYT/IU0VYT
 Licenza: GNU General Public License versione 3 o successiva (software libero, SENZA
 ALCUNA GARANZIA): vedi LICENSE.txt e AUTORI_E_LICENZE.txt.
+Novità della 4.47.0:
+- 24 radio Retevis in più, ricavate dai programmi del costruttore: B3B, B63B,
+  RT22P, RT622P, RB666, RB666P, RB45, RB645, RB47, B3H, B63H, RB647, RT68H,
+  RT668H, NR10, NR610, RB66S, RB666S, RB65, RB66, RB66P, RT68B, RT668B, RB669.
+  Canali e impostazioni (241 voci in tutto). Nessuna è stata provata su una
+  radio vera: prima la sola lettura.
+- Password di programmazione di queste radio e della Retevis H777 nuova
+  versione: come in CHIRP, non ferma la lettura né la scrittura. Si vede in
+  chiaro fra le impostazioni e si può cambiare o togliere, con la lunghezza e
+  i caratteri del programma del costruttore.
+- Impostazioni per radio che avevano solo i canali: famiglia AnyTone
+  (AT-D868UV, AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 e DMR-6X2 PRO), TYT
+  MD-UV380, MD-UV390, MD-2017 e MD-9600, Retevis RT3S e RT82, Radtel RT-880 e
+  RT-950 Pro con il firmware nicFW, TID TD-UV68, Radtel RT-890 con il firmware
+  M7OCM.
+- Versioni di prova: una copia con un numero più alto dell'ultima versione
+  stabile mostra una barra di avviso e, solo lei, propone le versioni di prova
+  successive.
+- Galleria: 697 modelli di 54 marche (647 con canali, 596 con impostazioni).
 Novità della 4.46.0:
 - Radtel RT-880G: non è più indicata come radio GMRS / FRS. È una radio
   radioamatoriale VHF/UHF, come la RT-880 e la RT-860: prima della scrittura

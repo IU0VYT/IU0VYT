@@ -60,6 +60,10 @@ type Settings struct {
 	FwURL      string `json:"fwURL"`
 	FwBaud     int    `json:"fwBaud"`
 	FwNoBackup bool   `json:"fwNoBackup"`
+	// LastStable (4.47): ultima versione stabile vista dalla verifica degli
+	// aggiornamenti. Senza Internet decide se questa copia è «di prova»
+	// (numero più alto dell'ultima stabile: barra di avviso)
+	LastStable string `json:"lastStable,omitempty"`
 	// non più usato dalla 3.1.1 (l'indirizzo degli aggiornamenti è fisso): resta per
 	// leggere le impostazioni salvate dalle versioni precedenti
 	UpdateURL string `json:"updateURL"`

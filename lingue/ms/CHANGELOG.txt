@@ -6,6 +6,40 @@ Ini ialah terjemahan bahasa Melayu bagi entri terkini CHANGELOG.txt. Sejarah len
 versi terdahulu (1.0 - 4.13) ada dalam teks asal bahasa Itali, CHANGELOG.txt, dalam
 folder utama pakej; berita utama setiap versi juga diringkaskan dalam GUIDE.txt.
 
+4.47.0 (24/11/2026)
+-------------------
+- Retevis, 24 model baharu yang diperoleh daripada program pengeluar: B3B, B63B, RT22P,
+  RT622P, RB666, RB666P (memori saluran yang sama dengan versi baharu H777); RB45,
+  RB645, RB47; B3H, B63H, RB647, RT68H, RT668H, NR10, NR610, RB66S, RB666S, RT68B,
+  RT668B, RB669 (keluarga T18); RB65, RB66, RB66P (satu frekuensi dan satu nada bagi
+  setiap saluran). Sambungan, pembacaan dan penulisan ditulis semula dari awal dan
+  disemak dengan fail data kilang program-program itu. RB66 dan RB66P, serta RB669,
+  RT68H dan RT668H, menjawab dengan kod yang sama: kad yang betul mesti dipilih sendiri.
+- Tetapan bagi 24 model Retevis: 241 item kesemuanya (squelch, had masa pemancaran, VOX,
+  imbasan, panduan suara, penjimatan bateri, bip, kekunci sisi…). Hanya item yang
+  dipaparkan oleh program model itu ditawarkan; nilai dalam 24 fail kilang semuanya
+  pilihan yang dibenarkan.
+- Kata laluan pengaturcaraan: pada 24 model Retevis dan pada versi baharu Retevis H777
+  ia tidak menghalang pembacaan atau penulisan, seperti dalam CHIRP (program pengeluar
+  pula berhenti jika kata laluan bukan yang ditaip oleh pengguna). Ia ialah satu item
+  tetapan, dipaparkan dengan jelas: ia boleh dilihat, ditukar dan dibuang. Panjang dan
+  aksara adalah seperti program pengeluar: 6 aksara (3 bagi RB45, RB645, RB47 dan RB66;
+  4 bagi RB66P), digit dan huruf (digit sahaja bagi RB65 dan RB66). Bagi B3H, B63H,
+  RB45, RB645, RB66 dan RB666, yang programnya tidak memaparkan kotak kata laluan, satu
+  amaran mengingatkannya.
+- Tetapan untuk radio yang sebelum ini hanya mempunyai saluran: keluarga AnyTone
+  (AT-D868UV, AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 dan DMR-6X2 PRO: 27 item,
+  daripada huraian memori qdmr dan dmrconfig); TYT MD-UV380, MD-UV390, MD-2017 dan
+  MD-9600, Retevis RT3S dan RT82 (item Baofeng DM-1701); Radtel RT-880 dan RT-950 Pro
+  dengan perisian tegar nicFW880 / nicFW950 (17 item, daripada dokumentasi
+  pengarangnya); TID TD-UV68 (item TD-H8); Radtel RT-890 dengan perisian tegar M7OCM (53
+  item).
+- Versi percubaan: salinan dengan nombor yang lebih tinggi daripada versi stabil terkini
+  yang diterbitkan memaparkan bar amaran («Versi percubaan (ujian beta)…») dan, hanya
+  salinan itu, menawarkan versi percubaan yang berikutnya, yang sentiasa dimuat turun
+  dari GitHub. Pengguna versi stabil tidak melihat versi percubaan.
+- Galeri: 697 model daripada 54 jenama (647 dengan saluran, 596 dengan tetapan).
+
 4.46.0 (21/11/2026)
 -------------------
 - Radtel RT-880G: tidak lagi ditunjukkan sebagai radio GMRS / FRS. Ia ialah

@@ -62,6 +62,13 @@ func main() {
 	if u := os.Getenv("GESTIONE_CANALI_UPD_URL"); u != "" {
 		updateSource = u
 	}
+	// 4.47: elenco delle release e pacchetti delle pre-release simulati
+	if u := os.Getenv("GESTIONE_CANALI_RELEASES_URL"); u != "" {
+		releasesSource = u
+	}
+	if u := os.Getenv("GESTIONE_CANALI_RC_BASE"); u != "" {
+		rcDownloadBase = u
+	}
 	app := newApp(st)
 	if t := os.Getenv("GESTIONE_CANALI_TOKEN"); t != "" {
 		app.token = t

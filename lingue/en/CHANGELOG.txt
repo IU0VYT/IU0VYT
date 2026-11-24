@@ -7,6 +7,39 @@ history of the earlier versions (1.0 - 4.12) is in the Italian original,
 CHANGELOG.txt, in the main folder of the package; the main news of each version is
 also summarized in GUIDE.txt.
 
+4.47.0 (24/11/2026)
+-------------------
+- Retevis, 24 new models derived from the manufacturer's programs: B3B, B63B, RT22P,
+  RT622P, RB666, RB666P (same channel memory as the new version of the H777); RB45,
+  RB645, RB47; B3H, B63H, RB647, RT68H, RT668H, NR10, NR610, RB66S, RB666S, RT68B,
+  RT668B, RB669 (T18 family); RB65, RB66, RB66P (one frequency and one tone per
+  channel). Connection, reading and writing are rewritten from scratch and checked
+  against the factory data files of the programs. The RB66 and RB66P, and the RB669,
+  RT68H and RT668H, answer with the same code: the right tab must be chosen by hand.
+- Settings of the 24 Retevis models: 241 items in all (squelch, time-out timer, VOX,
+  scan, voice prompt, battery save, beep, side keys…). Only the items that the program
+  of the model shows are offered; the values of the 24 factory files are all allowed
+  choices.
+- Programming password: on the 24 Retevis models and on the new version of the Retevis
+  H777 it does not stop reading or writing, as in CHIRP (the manufacturer's program
+  stops instead, if the password is not the one typed by the user). It is an item of the
+  settings, in clear: it can be seen, changed and removed. Length and characters are
+  those of the manufacturer's program: 6 characters (3 for RB45, RB645, RB47 and RB66; 4
+  for RB66P), digits and letters (digits only for RB65 and RB66). For B3H, B63H, RB45,
+  RB645, RB66 and RB666, whose program does not show the password box, a warning says
+  so.
+- Settings for radios that only had channels: AnyTone family (AT-D868UV, AT-D878UV,
+  AT-D878UV II Plus, BTECH DMR-6X2 and DMR-6X2 PRO: 27 items, from the memory
+  descriptions of qdmr and dmrconfig); TYT MD-UV380, MD-UV390, MD-2017 and MD-9600,
+  Retevis RT3S and RT82 (the items of the Baofeng DM-1701); Radtel RT-880 and RT-950 Pro
+  with the nicFW880 / nicFW950 firmware (17 items, from the author's documentation); TID
+  TD-UV68 (the items of the TD-H8); Radtel RT-890 with the M7OCM firmware (53 items).
+- Test versions: a copy with a number higher than the latest published stable version
+  shows a warning bar («Test version (beta testing)…») and, only then, offers the
+  following test version, always downloaded from GitHub. Users of the stable version do
+  not see test versions.
+- Gallery: 697 models of 54 brands (647 with channels, 596 with settings).
+
 4.46.0 (21/11/2026)
 -------------------
 - Radtel RT-880G: no longer shown as a GMRS / FRS radio. It is an amateur VHF/UHF

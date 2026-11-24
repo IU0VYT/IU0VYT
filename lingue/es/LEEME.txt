@@ -1,6 +1,6 @@
 IU0VYT FLASH - CANALES, REPETIDORES Y FIRMWARE DE LAS RADIOS TRANSCEPTORAS
 ==========================================================================
-Versión 4.46.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
+Versión 4.47.0 - un solo archivo ejecutable, sin instalación, interfaz en 13 idiomas.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Sitio web: https://iu0vyt.github.io/IU0VYT/
 Código fuente y versiones: https://github.com/IU0VYT/IU0VYT
@@ -10,6 +10,22 @@ Esta es la traducción al español de LEGGIMI.txt (el original italiano es el te
 referencia). Las novedades de las versiones anteriores están en el CHANGELOG.txt
 italiano de la carpeta principal (CHANGELOG.txt aquí contiene la entrada 4.13
 traducida).
+Novedades de la 4.47.0:
+- 24 radios Retevis más, obtenidas de los programas del fabricante: B3B, B63B, RT22P,
+  RT622P, RB666, RB666P, RB45, RB645, RB47, B3H, B63H, RB647, RT68H, RT668H, NR10,
+  NR610, RB66S, RB666S, RB65, RB66, RB66P, RT68B, RT668B, RB669. Canales y ajustes (241
+  elementos en total). Ninguna se ha probado en un equipo real: primero solo lectura.
+- Contraseña de programación de estas radios y de la nueva versión de la Retevis H777:
+  como en CHIRP, no impide la lectura ni la escritura. Se ve en claro entre los ajustes
+  y se puede cambiar o quitar, con la longitud y los caracteres del programa del
+  fabricante.
+- Ajustes para radios que solo tenían los canales: familia AnyTone (AT-D868UV,
+  AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 y DMR-6X2 PRO), TYT MD-UV380, MD-UV390,
+  MD-2017 y MD-9600, Retevis RT3S y RT82, Radtel RT-880 y RT-950 Pro con el firmware
+  nicFW, TID TD-UV68, Radtel RT-890 con el firmware M7OCM.
+- Versiones de prueba: una copia con un número más alto que la última versión estable
+  muestra una barra de aviso y, solo ella, propone las versiones de prueba siguientes.
+- Galería: 697 modelos de 54 marcas (647 con canales, 596 con ajustes).
 Novedades de la 4.46.0:
 - Radtel RT-880G: ya no se indica como radio GMRS / FRS. Es una radio de radioaficionado
   VHF/UHF, como la RT-880 y la RT-860: el aviso «Radio vendida como GMRS» ya no aparece

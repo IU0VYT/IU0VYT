@@ -46,6 +46,12 @@ func noChirpBase(t *testing.T, m *genModel) []byte {
 		size = o.memsize
 	case *h777Opt:
 		size = o.memsize
+	case *h777v4Opt: // 4.47: Retevis B3B, B63B, RT22P, RT622P
+		size = o.memsize
+	case *t18Opt: // 4.47: Retevis B3H, B63H, RB647, RT68H, RT668H, NR10, NR610
+		size = o.spec.memsize
+	case *rb65Opt: // 4.47: Retevis RB65
+		size = o.spec.memsize
 	case *rt22Opt:
 		size = o.memsize
 	case *bfdOpt:

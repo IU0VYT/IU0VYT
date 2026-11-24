@@ -1054,9 +1054,11 @@ a353e209	La radio collegata ha risposto come
 931af19c	Apri i canali
 8e33388d	alla porta
 aecc9933	alla porta {0}
-24fc2acf	Nascondi (il controllo si ripete al prossimo avvio)
-021c3f89	È disponibile una nuova versione di IU0VYT Flash: la {0}
+b17da535	Versione di prova (beta testing): usala a tuo rischio. Per l'uso normale scarica l'ultima versione stabile.
+06dce278	È disponibile una nuova versione di prova di IU0VYT Flash: la {0}
 da813bca	{0}. Stai usando la {1}.
+021c3f89	È disponibile una nuova versione di IU0VYT Flash: la {0}
+24fc2acf	Nascondi (il controllo si ripete al prossimo avvio)
 027e3aeb	⬇ Scarica l'aggiornamento ({0})
 671c8e71	Dettagli
 0229b1fa	Download dell'aggiornamento…
@@ -1104,19 +1106,20 @@ f77d4b9f	Indirizzo copiato negli appunti: incollalo nel campo «A» della tua po
 06802cf4	Impossibile usare gli appunti: l'indirizzo è mostrato come immagine.
 7a90f5b3	600 17px "Segoe UI", system-ui, sans-serif
 4413aad7	Scrivi l'indirizzo a mano nel campo «A» della tua posta.
+1569c21e	infores bad
+ecfdbd47	✖ Verifica non riuscita:
+52102339	✖ Verifica non riuscita: {0}
 3ec88cd1	(compilata il {0})
 8cd3b135	infores ok
 7ee696ed	Il software è aggiornato
 cb823131	: stai usando la versione {0}, la più recente{1}. Non c'è nulla da scaricare.
 6637ebc2	: la versione in uso ({0}) è più recente di quella pubblicata ({1}). Non c'è nulla da scaricare.
 7202250b	infores new
-70808630	È disponibile la versione {0}
+d7aa904d	È disponibile la versione di prova {0}
 604cedb5	{0}; stai usando la {1}.
+70808630	È disponibile la versione {0}
 c361b21b	infores note
 03fd683b	Verifica in corso…
-1569c21e	infores bad
-ecfdbd47	✖ Verifica non riuscita:
-52102339	✖ Verifica non riuscita: {0}
 d5a036fa	Baofeng K67 Pro
 f59c3db7	Bajeton 8300
 c3104b1a	.bin / .hex
@@ -2190,7 +2193,7 @@ ad68d871	AOR
 9cdd2da2	Sito AOR
 e747f447	{0}Ricevitore palmare a larga banda (da 0,1 a 2040 MHz): le 1000 memorie di scansione, nomi di 12 caratteri; canali di sola ricezione.
 d8547031	Palmare bibanda con ricevitore a larga banda e D-STAR: banda A 800 memorie, banda B 400 memorie (anche D-STAR), più limiti di scansione e canali di chiamata; nomi di 8 caratteri. Le due bande si scelgono come due radio distinte.
-6f673a7c	Radio DMR con 4000 canali, collegata con il suo cavo USB (porta seriale). Memoria e protocollo dei programmi liberi dmrconfig e qdmr, verificati con il codice originale di dmrconfig. Si scrivono solo canali, zone e liste di scansione. «Identifica» la prova dopo tutte le altre radio.
+96ff393f	Radio DMR con 4000 canali, collegata con il suo cavo USB (porta seriale). Memoria e protocollo dei programmi liberi dmrconfig e qdmr, verificati con il codice originale di dmrconfig. Si scrivono canali, zone e liste di scansione e, se le hai cambiate, le impostazioni generali. «Identifica» la prova dopo tutte le altre radio.
 c3827a39	Con il firmware originale: stessa memoria e stesso protocollo della Baofeng DM-1701, via USB in modalità DFU (il programma libero dmrconfig usa lo stesso codice per questi modelli).
 4717b662	Sito AnyTone
 5732831a	AT-D878UV / AT-D878UV Plus
@@ -2201,6 +2204,8 @@ c9665837	AT-D878UVII Plus
 65260961	Sito TYT
 9835a587	TYT MD-UV390
 90e0a554	TYT MD-2017
+09f7e05f	Stessa memoria dei canali della Retevis H777 nuova versione; protocollo ricavato dal programma del costruttore. Canali (16, senza nomi) e impostazioni, password di programmazione compresa: una password già presente non ferma la lettura né la scrittura. Non provata su una radio vera: prima la sola lettura.
+a29ad221	Protocollo ricavato dal programma del costruttore. Canali (senza nomi) e impostazioni, password di programmazione compresa: una password già presente non ferma la lettura né la scrittura. Non provata su una radio vera: prima la sola lettura.
 7c9f6115	{0} 128 canali con nomi di 6 caratteri, VHF/UHF.
 e9de9bfc	TH-UV3R 2,5 kHz
 d10461a3	{0} Versione con passo da 2,5 kHz e due potenze.
@@ -2564,7 +2569,7 @@ b8a90ea7	scrittura del blocco 0x{0}: i dati tornati dal cavo sono diversi da que
 136cbe01	la radio non ha questa combinazione di toni (subtono in trasmissione o nei due versi, lo stesso codice DCS nei due versi; mai codici invertiti)
 6e71b0e3	Scrittura del blocco 0x{0}
 7d85b321	la radio non ha accettato il blocco 0x{0} (risposta «{1}»)
-33158a39	Si collega con il cavo USB della radio, che compare come porta seriale (COM); se Windows non la crea serve il driver «USB Virtual Com Port» del costruttore. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda, toni e solo ricezione; nei canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati. Un canale nuovo entra nella prima zona con un posto libero. Si scrivono solo canali, zone e liste di scansione: contatti, gruppi, messaggi, ID e impostazioni non si toccano. Non provata su una radio vera: prima la sola lettura.
+b02c57ef	Si collega con il cavo USB della radio, che compare come porta seriale (COM); se Windows non la crea serve il driver «USB Virtual Com Port» del costruttore. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda, toni e solo ricezione; nei canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati. Un canale nuovo entra nella prima zona con un posto libero. Si scrivono canali, zone e liste di scansione; ID, nome, testo di accensione e impostazioni generali solo se li hai cambiati (finestra «Impostazioni»). Contatti, gruppi e messaggi non si toccano. Non provata su una radio vera: prima la sola lettura.
 10a3ed24	AnyTone AT-D868UV
 9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
 bccf031b	AnyTone AT-D878UV II Plus
@@ -3043,7 +3048,17 @@ c3507ffd	Retevis H777 V4 (nuova versione)
 26ecd3b2	Nuova versione della Retevis H777 (versioni FRS e PMR446, CHIRP permette tutta la gamma 400-520 MHz): 16 canali senza nomi; blocco del canale occupato e scrambler si conservano. Driver di CHIRP.
 bceb4b56	Retevis RT21H
 ca896b9d	Versioni FRS e PMR446 (CHIRP permette tutta la gamma 400-502 MHz): 16 canali senza nomi; blocco del canale occupato, scrambler (con le 8 varianti), compander e codice speciale si conservano. Driver di CHIRP.
+f1e46926	Radio senza licenza con la stessa memoria dei canali della Retevis H777 nuova versione e una sigla di collegamento sua. Protocollo ricavato dal programma del costruttore: 16 canali senza nomi; le impostazioni si cambiano dalla scheda «Impostazioni», password di programmazione compresa. Una password di programmazione già presente non ferma la lettura né la scrittura (come in CHIRP). Non provata su una radio vera: prima la sola lettura.
+87746b94	Retevis B3B
+1af651d8	Retevis B63B
+aee8f6b5	Retevis RT22P
+11556f69	Retevis RT622P
+853a2ccd	Retevis RB666
+57943b27	Retevis RB666P
+6993e4d3	Radio senza licenza; protocollo ricavato dal programma del costruttore: canali senza nomi; le impostazioni si cambiano dalla scheda «Impostazioni», password di programmazione compresa. Una password di programmazione già presente non ferma la lettura né la scrittura (come in CHIRP). Un canale che il programma del costruttore mostra come «cifrato» resta com'è finché non lo si modifica. Non provata su una radio vera: prima la sola lettura.
+ba06d2c5	Retevis {0}
 e8241761	frequenza {0} MHz fuori dalla memoria della radio
+2fbed3fd	questa radio è di una serie più vecchia, con la memoria in un altro formato: non è ancora compatibile
 a898af24	frequenza che questa radio non può memorizzare
 3b8bfec3	Copia a 115200 baud con il cavo USB della radio. Come in CHIRP: niente canali in sola ricezione né spostamenti oltre 70 MHz; TOT, permessi di trasmissione, squelch, allarme, DTMF, talk around, VOX, compander e scrambler del canale si conservano; cancellando un canale si tolgono i suoi riferimenti (accensione, zone, scansioni, allarmi). Driver di CHIRP.
 29c93640	Retevis (Ailunce) HA1G (GMRS)
@@ -3389,7 +3404,6 @@ a0880d1b	Retevis H777S
 0731b154	TYOGRAM
 b0984978	la radio non è entrata in modalità di programmazione dopo 5 tentativi: controlla il cavo e riaccendi la radio
 6592d419	la radio è protetta da una password: toglila dal menu della radio o con il programma del costruttore
-ba06d2c5	Retevis {0}
 772bd7a2	99 canali senza nome, 400-480 MHz (venduta come radio {0} ma programmabile su tutta la gamma: in trasmissione rispetta le bande consentite). Blocco del canale occupato e codifica si conservano. Driver di CHIRP.
 db303bcc	la radio non è entrata in programmazione dopo 5 tentativi: controlla il cavo e riaccendi la radio
 8343f1ff	Retevis RB17P (GMRS)
@@ -3414,6 +3428,9 @@ aedefcaf	i canali {0} sono sempre a banda stretta
 044299f1	sul canale {0} la trasmissione non si può attivare o disattivare (come in CHIRP)
 7ff918f4	i canali FRS 8-14 sono sempre a bassa potenza
 12572387	i canali PMR446 sono sempre a 0,5 W
+d90b8f70	Retevis RB65
+07dd5689	questa radio ha una sola frequenza per canale e trasmette dove riceve
+7c676702	questa radio ha un solo tono per canale, uguale in ricezione e in trasmissione
 3bab83ea	Radio DMR collegata via USB (dispositivo HID, nessuna porta COM): memoria e protocollo come nei programmi liberi dmrconfig e qdmr, confrontati con il codice di dmrconfig. Si modificano frequenze, nomi (16 caratteri), modo (analogico / DMR), potenza, banda e toni; per i canali DMR color code, slot, contatto e lista dei gruppi restano quelli impostati (i canali DMR nuovi: color code 1, slot 1, senza contatto). Contatti, gruppi, messaggi e impostazioni della radio non si toccano.
 4744a1c7	Baofeng RD-5R / DM-5R Tier II
 f4693817	la radio non ha confermato {0}
@@ -3639,6 +3656,18 @@ fe43e5a4	Retevis RB629
 6b10f274	Retevis RB87
 43e82aba	Retevis H777H (FRS)
 2f32a690	Retevis H777H (PMR446)
+81746222	Retevis B3H
+14f64866	Retevis B63H
+743594dc	Retevis RB647
+2766e50b	Retevis RT68H
+20e15187	Retevis RT668H
+243f733c	Retevis NR10
+97486db0	Retevis NR610
+e03abc0e	Retevis RB66S
+58943cba	Retevis RB666S
+2166db99	Retevis RT68B
+1ae14815	Retevis RT668B
+763a1530	Retevis RB669
 d2bfc173	nella posizione {0} della {1} la frequenza {2} MHz non è ammessa (canali fissi)
 51c1ed42	Baofeng BF-T20
 b34c7305	Baofeng W31E
@@ -4611,12 +4640,14 @@ bee7b511	il pacchetto pubblicato non è un archivio .zip valido ({0})
 f3b612c8	nel pacchetto pubblicato non è indicata la versione del programma
 ae64380f	nessun aggiornamento da scaricare: verifica prima gli aggiornamenti
 87568423	{0} {1}.zip
+cedac075	{0} {1} beta.zip
 1bda4985	Salva l'aggiornamento di {0}
 b688aff8	Archivio zip (*.zip)|*.zip
 c825ac9f	pacchetto scaricato non valido: {0}
 72fcd52d	il pacchetto scaricato contiene la versione {0}, non più recente di quella installata
 ced728f6	file non disponibile
 d5718f7f	collegamento non valido
+e35c4375	IU0VYT.Flash-rc.zip
 56911635	operazione annullata
 b7faa115	INFORMATION
 7e77875d	password di programmazione errata
@@ -4805,11 +4836,81 @@ c4f1815c	Per vedere e modificare le impostazioni leggi prima la radio via cavo (
 d63b0d31	impostazioni non disponibili per questa radio
 0a1d1912	{0}: impostazione sconosciuta
 d518fd3d	impostazioni non applicate: {0}
-fc8883bd	programmi del costruttore «RB39 CPS» e «Retevis Analog CPS» (finestra «System Information»)
+a1ffae22	Radio e identificativo DMR
+0f04dab2	Funzionamento
+0664e2f4	Toni e segnalazioni
+5a05d9b5	Display
+95b373a9	ANYTONE
+d1a378cf	descrizione della memoria di qdmr e dmrconfig (impostazioni generali della famiglia AnyTone AT-D868UV / AT-D878UV)
+217697ea	ID DMR della radio
+0fdc29b8	Numero DMR personale (ID radio), assegnato da RadioID.net al nominativo.
+cf0ba7aa	Nome mostrato dalla radio (di solito il nominativo), fino a 16 caratteri.
+0e05b66f	Testo di accensione, riga 1
+0f05b802	Testo di accensione, riga 2
+6da999ba	Logo
+33b4e0f9	Testo (le due righe)
+c0a52290	Immagine
+792443f8	Schermata di accensione
+ccfa337a	Amatoriale
+48392b85	Professionale
+5e550a7a	Modalità di funzionamento
+09f1c584	In modalità professionale la radio blocca alcuni menu e alcune funzioni dei tasti.
+30dd3eff	Canale
+49ce251a	Canale mostrato come
+7e413e21	Luminosità del display
+994331c3	Orologio sul display
+dc697424	Blocco automatico dei tasti
+9e1ef018	10 minuti
+1ecf177a	30 minuti
+28ee8049	60 minuti
+19cc8f62	120 minuti
+46a6651c	Spegnimento automatico
+4edaa503	Risparmio della batteria
+d710bd69	Squelch della banda A
+d410b8b0	Squelch della banda B
+6af4461c	Livello del VOX
+acc5a606	Guadagno del microfono
+ae8b682e	Audio migliorato
+8415fec3	GPS
+a795c390	Toni dei tasti
+abeb3995	Tono di canale libero
+3be42168	Tono di permesso (digitale)
+f0eb0896	Tono di permesso (analogico)
+1c4aafad	Tono di ripristino
+28426410	Tono di accensione
+5e1257b2	Tono di fine chiamata
+a894c919	Avviso dei messaggi
+c7a643bc	Avviso di chiamata
+7edbe3f2	Ricezione e audio
+91fae64f	documentazione pubblicata dall'autore del firmware nicFW880 / nicFW950 (nicsure/nicFW880_950_Docs)
+a19415f6	Squelch
+f9fcaec6	Squelch: soglia del rumore
+522125e6	Livello di rumore sotto il quale lo squelch si apre (0-127, predefinito 48).
+8ce18fcf	Squelch: tetto del rumore
+a3c04a23	Con un rumore uguale o superiore lo squelch si chiude subito (0-127, predefinito 60).
+c8791899	Squelch: isteresi del rumore
+0e3f061f	Distanza fra apertura e chiusura dello squelch (0-20, predefinito 4).
+ea411cd6	Squelch: rallentamento
+f39446ce	Eliminazione della coda dello squelch (STE)
+5d51c05f	Ricezione
 49659a9f	Ricezione e trasmissione
+a9ac582e	Filtro del rumore (noise gate)
+9be2d17f	Durata del controllo del tono ricevuto (s)
+6b65e33c	VOX (trasmissione a voce)
+2a99768b	Durata del display acceso
+d96223b1	Secondi dopo i quali lo schermo si spegne (0 = sempre acceso).
+0f432b7c	Lampeggio di radio accesa (s)
+e39206c8	Ogni quanti secondi il LED lampeggia a schermo spento (0 = mai).
+62130d36	Colori dello schermo invertiti
+1d1abf17	Gamma dello schermo
+73f5f79d	Luminosità di giorno
+32578757	Luminosità di notte
+aadeb108	Luminosità in uso
+66c6478b	Giorno
+1e15024d	Notte
+fc8883bd	programmi del costruttore «RB39 CPS» e «Retevis Analog CPS» (finestra «System Information»)
 ab87998f	Tempo massimo di trasmissione (TOT)
 5a49217d	Dopo questo tempo di trasmissione continua la radio smette di trasmettere da sola.
-6b65e33c	VOX (trasmissione a voce)
 629b3c59	Con il VOX la radio trasmette da sola quando sente la voce, senza premere il PTT.
 9289035a	Sensibilità del VOX
 43a92045	Livello di voce che fa partire la trasmissione con il VOX (di solito numeri bassi = più sensibile; OFF, se c'è, spegne il VOX).
@@ -4826,7 +4927,6 @@ f41134b1	Allarme
 e60c8ab9	Monitor
 efbcdf5c	Tasto laterale (pressione lunga)
 c9363874	Funzione del tasto laterale tenuto premuto.
-4edaa503	Risparmio della batteria
 a603c107	La radio spegne il ricevitore per brevi intervalli quando il canale è libero: più risparmio, ma i primi istanti di una chiamata possono andare persi.
 403414bd	Bluetooth
 73b10bc8	Accende o spegne il Bluetooth della radio (solo RB39P e RB639P).
@@ -4877,7 +4977,6 @@ c724821f	Display della banda B
 88270e10	Cosa mostra il display per i canali della banda B.
 9de1c90a	Spegnimento della retroilluminazione
 50c01ced	Dopo quanto tempo senza usare la radio si spegne la luce del display (Sempre accesa = non si spegne).
-792443f8	Schermata di accensione
 92e2c383	Cosa mostra la radio all'accensione: il logo predefinito o la tensione della batteria.
 d519010b	Lingua
 b055dff9	Lingua dei menu e delle voci della radio.
@@ -4933,7 +5032,6 @@ cddf33a5	Allarme («Rx Emergency»)
 fb443a2f	Accende o spegne la funzione di allarme: nel programma del costruttore la voce si chiama «Rx Emergency» in inglese e «interruttore dell'allarme» in cinese.
 feddc78d	«BF Series CPS» v1.5.1
 d60d9df2	Scansione dei toni
-a19415f6	Squelch
 446b0253	Passo di frequenza
 296bb125	Memorizza canale
 b77a1927	Scelta della zona
@@ -4990,9 +5088,6 @@ d7c16464	Tasto {0} (pressione lunga)
 6d6e38f9	Funzione rapida del tasto numerico {0} tenuto premuto.
 dd6aedb9	programmi del costruttore BJ-9000_CPS / RT-950PRO_CPS v1.2.1 e successivi (finestra «Optional Features»)
 b3350823	programmi del costruttore BJ-9000_CPS / RT-950PRO_CPS fino a v1.2.0 (finestra «Optional Features»)
-0f04dab2	Funzionamento
-7edbe3f2	Ricezione e audio
-5a05d9b5	Display
 e414d862	Tasti laterali
 2c56ad74	Nomi
 af91da8c	5 min
@@ -5030,7 +5125,6 @@ b2557f98	Doppio
 15a6c14a	Doppio bloccato (DW LOCK)
 fe8f7e3e	Doppio collegato (DW LINK)
 16a15383	Split
-6da999ba	Logo
 55f8df9d	1 VFO
 1f5b4ad8	2 VFO
 88a0c1f7	3 VFO
@@ -5052,7 +5146,6 @@ f3122804	Scrambler
 2f6a861f	Rubrica
 9f3ff85c	Chiamata CQ in CW
 9d56b202	Deviazione in trasmissione (0 normale, 9 massima)
-acc5a606	Guadagno del microfono
 0b30eeb1	Bip dei tasti
 9e7c5071	AFC (controllo automatico della frequenza)
 a8b566a5	Blocco delle frequenze di trasmissione (F-Lock)
@@ -5186,7 +5279,6 @@ abec3801	Ascolto singolo
 87fe566a	(vfo/mr mode|work mode|frequency mode|radio work mode\((a|b)\)|channel (a|b) work mode)
 6b23f9bd	Modalità di lavoro $2$3
 9cdfb9d6	radio operating mode
-5e550a7a	Modalità di funzionamento
 aa218697	Modalità di funzionamento della radio.
 bfd9d184	vfo/mr button
 4cd9851f	Tasto VFO/MR
@@ -5318,7 +5410,6 @@ ae9ec1e1	side key( function)?
 854c4be9	Permette di inserire toni DTMF dalla tastiera.
 c910819e	Bluetooth della radio (auricolari o app).
 b166c2e4	gps on
-8415fec3	GPS
 b84bea2d	Ricevitore GPS acceso.
 a024a002	gps (mode|speed units|timezone)
 1c83b5ca	GPS: $1
@@ -5456,7 +5547,6 @@ a240a00e	Servizio
 c278ad15	Disattivato
 54252f86	narrow (12.5 khz)
 af20dc0f	wide (25 khz)
-30dd3eff	Canale
 4c2033dd	channel number
 a552880b	Entrambi
 191b094d	All'inizio (BOT)
@@ -5520,7 +5610,6 @@ fe543d54	Display doppio, ascolto singolo
 14f2c0fd	normal mode
 4004f8ff	super mode
 9ca1d6ca	deep mode
-5d51c05f	Ricezione
 7276864f	ptt only
 7cf7824a	Solo PTT
 86f0782b	sk only
@@ -5561,7 +5650,6 @@ b5e52eec	GPS, APRS e altre funzioni
 49283e49	La banda B (inferiore) lavora in modo VFO (frequenza libera) oppure MR (canali in memoria).
 54cb6532	Durata della retroilluminazione
 07e45f16	Dopo quanti secondi senza usare la radio si spegne l'illuminazione del display. «Sempre accesa» consuma di più la batteria.
-7e413e21	Luminosità del display
 5bc95366	Livello di luminosità della retroilluminazione, da 1 (minima) a 5 (massima).
 dd845af5	Visualizzazione dei canali della banda A
 83e56f74	Che cosa mostra il display per i canali in memoria della banda A: la frequenza, il nome, il numero del canale o frequenza e nome insieme.
@@ -5571,7 +5659,6 @@ c5c0f863	Orientamento del display
 78f49088	Display normale o capovolto (utile se la radio è appesa a testa in giù, ad esempio al taschino).
 d4cb972c	Capovolto
 54ddadcd	Che cosa compare all'accensione: un'immagine, il testo del messaggio di accensione o la tensione della batteria.
-c0a52290	Immagine
 c5ce8c07	Testo (messaggio di accensione)
 a6367280	Lingua dei menu
 a014a1b5	Lingua dei menu della radio.
@@ -5603,7 +5690,6 @@ abff1692	VOX (trasmissione a comando vocale)
 a78ddf47	Tono di chiamata (burst)
 d3c80bdf	Frequenza del tono di chiamata inviato con il tasto «1750 Hz», usato per aprire alcuni ponti radio analogici (in Italia di solito 1750 Hz).
 d2325ef9	Annunci vocali della radio (numero del canale, funzioni dei menu).
-a795c390	Toni dei tasti
 72556254	Segnale acustico alla pressione dei tasti.
 2a66a563	Tono di fine trasmissione (roger beep)
 48099fbe	Breve tono inviato quando si rilascia il PTT, per segnalare la fine del proprio passaggio. Su molti ponti radio non è gradito.
@@ -5630,7 +5716,6 @@ d968bfaf	Password di accensione
 1f8f3847	Modo di risparmio energetico in ricezione: la radio «dorme» per brevi periodi (rapporto acceso:spento). Rapporti più alti risparmiano di più ma possono far perdere l'inizio delle chiamate.
 741ea9f5	Attesa prima del risparmio
 cf477537	Dopo quanti secondi senza segnali parte il risparmio della batteria.
-46a6651c	Spegnimento automatico
 8992ec2d	La radio si spegne da sola dopo questo tempo senza essere usata.
 e1cd9076	30 min
 5431687b	60 min
@@ -5679,24 +5764,17 @@ c37e6b8b	Mostra il tono ricevuto
 7a9f4017	Percentuale
 06f13811	Indicatore della batteria
 4d79a23b	Luminosità dello schermo
-62130d36	Colori dello schermo invertiti
 56af356e	Blocco dei tasti
 c556b943	documentazione pubblicata dall'autore del firmware nicFW (nicsure/nicfw2docs)
-a1ffae22	Radio e identificativo DMR
 9435ad5f	Chiamate e tempi
-0664e2f4	Toni e segnalazioni
 0a78f6a1	Scansione, risparmio e display
 5047f224	RDTY
 da9656b2	descrizione della memoria di qdmr e dmrconfig (impostazioni generali della famiglia Radioddity GD-77)
 7919275f	Nome mostrato dalla radio (di solito il nominativo), fino a 8 caratteri.
-217697ea	ID DMR della radio
 f6db0374	Numero DMR personale (ID radio), assegnato da RadioID.net al nominativo. Le altre stazioni e i ponti lo vedono come mittente.
-0e05b66f	Testo di accensione, riga 1
 fd54bf97	Prima riga del messaggio mostrato all'accensione (16 caratteri).
-0f05b802	Testo di accensione, riga 2
 7226248f	Seconda riga del messaggio mostrato all'accensione (16 caratteri).
 f6f6c475	Che cosa mostra la radio all'accensione: il logo del costruttore o le due righe di testo.
-33b4e0f9	Testo (le due righe)
 f35a7776	Durata del preambolo DMR (ms)
 07b8ca7e	Durata del segnale che apre la trasmissione digitale, a passi di 60 ms (predefinito 360 ms).
 f4dd8574	Tipo di monitor
@@ -5716,7 +5794,6 @@ ece49e31	Attesa dopo una chiamata privata (ms)
 90a56a01	Nel modo canali il tasto giù passa alla frequenza libera (VFO).
 24f848aa	Tasto su: modalità VFO
 e0d4a6ed	Nel modo canali il tasto su passa alla frequenza libera (VFO).
-1c4aafad	Tono di ripristino
 42458267	Tono all'arrivo di un comando di ripristino.
 53ce9101	Tono per numero sconosciuto
 c9fbf23d	Tono quando chiama una stazione che non è nella rubrica.
@@ -5724,13 +5801,10 @@ af0ffec7	Tono ARTS
 e8846f47	Segnalazione acustica del controllo automatico del collegamento (ARTS).
 e9d6eb73	Una volta
 d1b5c8e1	Sempre
-3be42168	Tono di permesso (digitale)
 f1a3fe0f	Tono che indica che si può parlare dopo aver premuto il PTT in DMR.
-f0eb0896	Tono di permesso (analogico)
 2fa48851	Tono che indica che si può parlare dopo aver premuto il PTT in FM.
 b4188885	Tono di autodiagnosi
 654cbea9	Tono all'accensione, dopo il controllo della radio.
-abeb3995	Tono di canale libero
 9af97dd5	Tono quando il canale torna libero.
 98856b7e	Tutti i toni
 fbc08be1	Spento: la radio non emette nessun tono.
@@ -5757,8 +5831,6 @@ da740268	Eliminazione della coda del ponte (STE)
 3dac186f	Eliminazione del rumore alla fine della trasmissione di un ponte (0-15).
 127634c9	{0}àèéìòùÀÈÉÌÒÙçÇñÑäöüÄÖÜß°
 2a585c78	descrizione della memoria di dmrconfig e qdmr (impostazioni generali della famiglia TYT MD-UV380)
-cf0ba7aa	Nome mostrato dalla radio (di solito il nominativo), fino a 16 caratteri.
-0fdc29b8	Numero DMR personale (ID radio), assegnato da RadioID.net al nominativo.
 daf6364d	Prima riga del messaggio mostrato all'accensione (10 caratteri).
 7730bf65	Seconda riga del messaggio mostrato all'accensione (10 caratteri).
 bba8dc05	La radio non trasmette se sul canale c'è già un segnale.
@@ -5773,7 +5845,6 @@ c01040ca	CO: la scansione riparte quando il segnale sparisce; TO: riparte dopo i
 40821b7a	Abilita la funzione radio FM.
 0e83a136	Segnale acustico a ogni pressione di un tasto.
 f5416c3d	La radio annuncia a voce canali e funzioni.
-dc697424	Blocco automatico dei tasti
 88774891	Dopo questo tempo senza toccare i tasti la tastiera si blocca da sola.
 7735bf5f	Tasti bloccati
 fcc3a1bc	Stato del blocco della tastiera.
@@ -5826,7 +5897,6 @@ d1f25d27	Tasto laterale 3, pressione breve
 3721a7de	Tasto laterale 3, pressione lunga
 ec87d22c	«RT-5D CPS» 2.0.5
 d6151086	Nel programma del costruttore questa voce è letta in modo diverso da come è scritta: qui si segue la scrittura. Se sulla radio l'effetto non è quello atteso, rimetti il valore di prima.
-6af4461c	Livello del VOX
 4c6be8c8	Livello di voce che fa partire la trasmissione con il VOX.
 361de9e5	Tono di trasmissione
 5eff59ac	Tono emesso quando si preme o si rilascia il PTT.
@@ -5854,7 +5924,6 @@ fa38c884	Banda selezionata
 b2b0b49a	Banda che sta ricevendo
 5396342b	Priorità di trasmissione
 8dba904e	Con il doppio ascolto: premendo il PTT si trasmette sulla banda selezionata oppure su quella che sta ricevendo.
-49ce251a	Canale mostrato come
 0cc37dd4	Canale della banda A
 0fc3828d	Canale della banda B
 859fc2d5	Tasto radio
@@ -5874,7 +5943,6 @@ d20e644c	Comprime la voce in trasmissione e la espande in ricezione per ridurre 
 4d66be8f	Remoto (trasmesso)
 b8f22727	L'allarme suona solo sulla radio oppure viene anche trasmesso.
 e74899c9	Display acceso
-2a99768b	Durata del display acceso
 b5cd3b7c	LED acceso
 3ea3bfc2	Durata del LED acceso
 0ba7fe24	«Radtel RT830» (UV-83 Radio Program Software)
@@ -5966,6 +6034,25 @@ c07d51a5	Con i comandi remoti attivi chi conosce i codici può agire sulla radio
 2700c301	«Radtel RT-871A CPS» (250707)
 35a06be1	rs871Pick: {0}
 cfd00999	rs871Pick: manca {0}
+c3d3983c	Blocco del canale
+292132fd	Annuncio del canale
+08013239	Controllo del codice (Code switch)
+8173efb6	Tipo di codice speciale (Spec mode)
+f189824c	Spec Code 1
+f4898705	Spec Code 2
+01cf6eba	Tasto giù (pressione lunga)
+49ec873a	Monitor finché tieni premuto
+7f905037	Spec Code
+fb9fa33a	Cifratura
+df368834	LCD
+bdcd3c94	Password di programmazione
+0799ad01	Password che il programma del costruttore chiede prima di leggere o scrivere la radio; vuota = nessuna password. Questo programma legge e scrive la radio anche quando c'è (come CHIRP): qui la vedi, la cambi o la togli, e la modifica arriva alla radio quando la scrivi. Lunghezza e caratteri sono quelli del programma del costruttore (cifre e lettere, maiuscole e minuscole distinte).
+75c613de	Password che il programma del costruttore chiede prima di leggere o scrivere la radio; vuota = nessuna password. Questo programma legge e scrive la radio anche quando c'è (come CHIRP): qui la vedi, la cambi o la togli, e la modifica arriva alla radio quando la scrivi. Lunghezza e caratteri sono quelli del programma del costruttore (solo cifre).
+9bc8db54	Con una password impostata il programma del costruttore legge e scrive la radio solo se gli si dà la stessa password. Da qui la si può sempre vedere e togliere.
+5655abb1	Il programma del costruttore di questo modello non mostra la casella della password: se ne imposti una, quel programma non leggerà e non scriverà più la radio finché non la togli da qui.
+2cc30838	Password
+660d6fc8	RTV-{0}
+d0e2b5a6	programma del costruttore {0}
 0ba685f5	Funzione di scansione dei canali accesa o spenta.
 96245b83	Blocco della trasmissione con tensione bassa
 802acd28	Impedisce di trasmettere quando la tensione della batteria è troppo bassa (protegge la radio).
@@ -5982,7 +6069,6 @@ b26d2b6b	Tasto laterale 1
 b36d2cfe	Tasto laterale 2
 82cf4523	Spia che pulsa in attesa («breathing light»)
 f552ed5e	La spia della radio pulsa lentamente mentre la radio è accesa e in attesa.
-d0e2b5a6	programma del costruttore {0}
 fd9e406e	Scansione e modo di lavoro
 221815ab	Funzione del tasto, con i nomi del programma del costruttore.
 8c5b9131	Meteo
@@ -6051,12 +6137,10 @@ a97c957b	Testo mostrato all'accensione (fino a 16 caratteri, senza lettere accen
 bc3ed66a	Se l'allarme suona soltanto dall'altoparlante della radio oppure viene anche trasmesso.
 5b0f15f8	TDCPS-{0}
 8ff788d4	programma del costruttore TIDRadioCPS
-c3d3983c	Blocco del canale
 f6862d4a	Chiamata 1
 f5862bb7	Chiamata 2
 9a160905	Scansione delle frequenze
 84bc0aa8	Copia via radio
-49ec873a	Monitor finché tieni premuto
 3dbc701b	Preavviso del tempo massimo
 afcc8f6f	TDQ-{0}
 0bc4f6b8	«T6UV Series EN CPS»

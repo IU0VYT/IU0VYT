@@ -6260,7 +6260,6 @@ bd9e89ea	Radio DMR jenama BTECH (BaofengTech, Amerika Syarikat), terbitan daripa
 14f85b7a	Siri kedua DMR-6X2 (perisian tegar «DMR_6X2II», pengecam «D6X2UV2»): perisian tegarnya fail yang berbeza, jangan gunakan fail radio yang satu lagi. Kemas kini berpandu dengan program rasmi, seperti DMR-6X2. Saluran dan zon (eksperimen): seperti DMR-6X2, dengan alamat yang digunakan oleh program bebas qdmr untuk model ini.
 25dd7543	MD1702-tools (alat OK2MOP untuk sambungan USB)
 f023d637	{0} Dengan perisian tegar asal, MD-UV380, MD-UV390, MD-2017 dan MD-9600 mempunyai kad sendiri; MD-380 tidak disokong.
-6f673a7c	Radio DMR dengan 4000 saluran, disambungkan dengan kabel USB sendiri (port bersiri). Memori dan protokol program bebas dmrconfig dan qdmr, disahkan dengan kod asal dmrconfig. Hanya saluran, zon dan senarai imbasan ditulis. «Kenal pasti» mencubanya selepas semua radio lain.
 c3827a39	Dengan perisian tegar asal: memori dan protokol yang sama seperti Baofeng DM-1701, melalui USB dalam mod DFU (program bebas dmrconfig menggunakan kod yang sama untuk model-model ini).
 5732831a	AT-D878UV / AT-D878UV Plus
 3ce8fe8d	AT-D878UV Plus
@@ -6268,7 +6267,6 @@ c3827a39	Dengan perisian tegar asal: memori dan protokol yang sama seperti Baofe
 15e852ed	AT-D878UV II Plus
 c9665837	AT-D878UVII Plus
 9835a587	TYT MD-UV390
-33158a39	Ia disambungkan dengan kabel USB radio, yang muncul sebagai port bersiri (COM); jika Windows tidak menciptanya, pemacu «USB Virtual Com Port» daripada pengeluar diperlukan. Anda boleh mengubah frekuensi, nama (16 aksara), mod (analog / DMR), kuasa, lebar jalur, ton dan terima sahaja; dalam saluran DMR, kod warna, slot, kenalan dan senarai kumpulan kekal seperti yang ditetapkan. Saluran baharu masuk ke zon pertama yang mempunyai tempat kosong. Hanya saluran, zon dan senarai imbasan ditulis: kenalan, kumpulan, mesej, ID dan tetapan tidak disentuh. Belum diuji pada radio sebenar: baca sahaja dahulu.
 10a3ed24	AnyTone AT-D868UV
 9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
 bccf031b	AnyTone AT-D878UV II Plus
@@ -6277,3 +6275,89 @@ ce976301	Eksperimen: model tiada dalam dmrconfig, alamat daripada program bebas 
 2219008e	TYT MD-UV390 / Retevis RT3S
 1e8c276f	TYT MD-2017 / Retevis RT82
 33c3b9a7	Seperti Baofeng DM-1701: memori dan protokol yang sama (program bebas dmrconfig menggunakan kod yang sama). USB dalam mod DFU: pemacu USB program pengeluar (STTub30) atau WinUSB yang dipasang dengan Zadig diperlukan. Jika radio menjawab dengan nama lain, program berhenti sebelum membaca atau menulis. Belum diuji pada radio sebenar: baca sahaja dahulu.
+b17da535	Versi percubaan (ujian beta): gunakan atas risiko sendiri. Untuk kegunaan biasa, muat turun versi stabil terkini.
+06dce278	Versi percubaan baharu IU0VYT Flash tersedia: {0}
+d7aa904d	Versi percubaan {0} tersedia
+cedac075	{0} {1} beta.zip
+e35c4375	IU0VYT.Flash-rc.zip
+b02c57ef	Ia disambungkan dengan kabel USB radio, yang muncul sebagai port bersiri (COM); jika Windows tidak menciptanya, pemacu «USB Virtual Com Port» daripada pengeluar diperlukan. Anda boleh mengubah frekuensi, nama (16 aksara), mod (analog / DMR), kuasa, lebar jalur, ton dan terima sahaja; dalam saluran DMR, kod warna, slot, kenalan dan senarai kumpulan kekal seperti yang ditetapkan. Saluran baharu masuk ke zon pertama yang mempunyai tempat kosong. Saluran, zon dan senarai imbasan ditulis; ID, nama, teks hidup dan tetapan umum hanya jika anda mengubahnya (tetingkap «Tetapan»). Kenalan, kumpulan dan mesej tidak disentuh. Belum diuji pada radio sebenar: baca sahaja dahulu.
+ccfa337a	Amatur
+48392b85	Profesional
+09f1c584	Dalam mod profesional, radio mengunci sesetengah menu dan sesetengah fungsi kekunci.
+994331c3	Jam pada paparan
+9e1ef018	10 minit
+1ecf177a	30 minit
+28ee8049	60 minit
+19cc8f62	120 minit
+d710bd69	Squelch jalur A
+d410b8b0	Squelch jalur B
+ae8b682e	Audio dipertingkat
+28426410	Nada hidup
+5e1257b2	Nada tamat panggilan
+a894c919	Amaran mesej
+c7a643bc	Amaran panggilan
+d1a378cf	huraian memori daripada qdmr dan dmrconfig (tetapan umum keluarga AnyTone AT-D868UV / AT-D878UV)
+91fae64f	dokumentasi yang diterbitkan oleh pengarang perisian tegar nicFW880 / nicFW950 (nicsure/nicFW880_950_Docs)
+f9fcaec6	Squelch: ambang hingar
+522125e6	Aras hingar yang di bawahnya squelch terbuka (0-127, lalai 48).
+8ce18fcf	Squelch: siling hingar
+a3c04a23	Dengan hingar yang sama atau lebih tinggi, squelch tertutup serta-merta (0-127, lalai 60).
+c8791899	Squelch: histeresis hingar
+0e3f061f	Jarak antara pembukaan dan penutupan squelch (0-20, lalai 4).
+ea411cd6	Squelch: pendikit
+f39446ce	Penghapusan ekor squelch (STE)
+a9ac582e	Penapis hingar (noise gate)
+9be2d17f	Tempoh pemantauan nada diterima (s)
+d96223b1	Saat sebelum skrin dipadamkan (0 = sentiasa hidup).
+0f432b7c	Kelipan radio hidup (s)
+e39206c8	Setiap berapa saat LED berkelip semasa skrin padam (0 = tidak pernah).
+1d1abf17	Gama skrin
+73f5f79d	Kecerahan siang
+32578757	Kecerahan malam
+aadeb108	Kecerahan yang digunakan
+66c6478b	Siang
+1e15024d	Malam
+95b373a9	ANYTONE
+96ff393f	Radio DMR dengan 4000 saluran, disambungkan dengan kabel USB sendiri (port bersiri). Memori dan protokol program bebas dmrconfig dan qdmr, disahkan dengan kod asal dmrconfig. Saluran, zon dan senarai imbasan ditulis dan, jika anda mengubahnya, tetapan umum. «Kenal pasti» mencubanya selepas semua radio lain.
+87746b94	Retevis B3B
+1af651d8	Retevis B63B
+aee8f6b5	Retevis RT22P
+11556f69	Retevis RT622P
+2fbed3fd	radio ini daripada siri yang lebih lama, dengan memori dalam format lain: belum disokong
+853a2ccd	Retevis RB666
+57943b27	Retevis RB666P
+81746222	Retevis B3H
+14f64866	Retevis B63H
+743594dc	Retevis RB647
+2766e50b	Retevis RT68H
+20e15187	Retevis RT668H
+07dd5689	radio ini hanya mempunyai satu frekuensi bagi setiap saluran dan memancar pada frekuensi terimaan
+7c676702	radio ini hanya mempunyai satu ton bagi setiap saluran, sama untuk terimaan dan pancaran
+d90b8f70	Retevis RB65
+243f733c	Retevis NR10
+97486db0	Retevis NR610
+e03abc0e	Retevis RB66S
+58943cba	Retevis RB666S
+2166db99	Retevis RT68B
+1ae14815	Retevis RT668B
+763a1530	Retevis RB669
+292132fd	Pengumuman saluran
+08013239	Semakan kod (Code switch)
+8173efb6	Jenis kod khas (Spec mode)
+01cf6eba	Kekunci bawah (tekan lama)
+fb9fa33a	Penyulitan
+f189824c	Spec Code 1
+f4898705	Spec Code 2
+7f905037	Spec Code
+df368834	LCD
+660d6fc8	RTV-{0}
+09f7e05f	Memori saluran yang sama dengan versi baharu Retevis H777; protokol diperoleh daripada program pengeluar. Saluran (16, tanpa nama) dan tetapan, termasuk kata laluan pengaturcaraan: kata laluan yang sudah ada tidak menghalang pembacaan atau penulisan. Belum diuji pada radio sebenar: baca sahaja dahulu.
+a29ad221	Protokol diperoleh daripada program pengeluar. Saluran (tanpa nama) dan tetapan, termasuk kata laluan pengaturcaraan: kata laluan yang sudah ada tidak menghalang pembacaan atau penulisan. Belum diuji pada radio sebenar: baca sahaja dahulu.
+f1e46926	Radio tanpa lesen dengan memori saluran yang sama seperti versi baharu Retevis H777 dan kod sambungan tersendiri. Protokol diperoleh daripada program pengeluar: 16 saluran tanpa nama; tetapan diubah daripada tab «Tetapan», termasuk kata laluan pengaturcaraan. Kata laluan pengaturcaraan yang sudah ada tidak menghalang pembacaan atau penulisan (seperti dalam CHIRP). Belum diuji pada radio sebenar: baca sahaja dahulu.
+6993e4d3	Radio tanpa lesen; protokol diperoleh daripada program pengeluar: saluran tanpa nama; tetapan diubah daripada tab «Tetapan», termasuk kata laluan pengaturcaraan. Kata laluan pengaturcaraan yang sudah ada tidak menghalang pembacaan atau penulisan (seperti dalam CHIRP). Saluran yang ditunjukkan oleh program pengeluar sebagai «disulitkan» kekal seadanya sehingga ia diubah. Belum diuji pada radio sebenar: baca sahaja dahulu.
+bdcd3c94	Kata laluan pengaturcaraan
+0799ad01	Kata laluan yang diminta oleh program pengeluar sebelum membaca atau menulis radio; kosong = tiada kata laluan. Program ini membaca dan menulis radio walaupun kata laluan ada (seperti CHIRP): di sini anda boleh melihat, menukar atau membuangnya, dan perubahan sampai ke radio apabila anda menulisnya. Panjang dan aksara adalah seperti program pengeluar (digit dan huruf, huruf besar dan kecil dibezakan).
+75c613de	Kata laluan yang diminta oleh program pengeluar sebelum membaca atau menulis radio; kosong = tiada kata laluan. Program ini membaca dan menulis radio walaupun kata laluan ada (seperti CHIRP): di sini anda boleh melihat, menukar atau membuangnya, dan perubahan sampai ke radio apabila anda menulisnya. Panjang dan aksara adalah seperti program pengeluar (digit sahaja).
+9bc8db54	Dengan kata laluan ditetapkan, program pengeluar hanya membaca dan menulis radio jika diberi kata laluan yang sama. Dari sini anda sentiasa boleh melihat dan membuangnya.
+5655abb1	Program pengeluar bagi model ini tidak memaparkan kotak kata laluan: jika anda menetapkannya, program itu tidak akan lagi membaca atau menulis radio sehingga anda membuangnya dari sini.
+2cc30838	Kata laluan

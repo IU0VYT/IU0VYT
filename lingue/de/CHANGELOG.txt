@@ -7,6 +7,40 @@ vollständige Geschichte der früheren Versionen (1.0 - 4.12) steht im italienis
 Original CHANGELOG.txt im Hauptordner des Pakets; die wichtigsten Neuerungen jeder
 Version sind auch in LIESMICH.txt zusammengefasst.
 
+4.47.0 (24.11.2026)
+-------------------
+- Retevis, 24 neue Modelle, aus den Programmen des Herstellers ermittelt: B3B, B63B,
+  RT22P, RT622P, RB666, RB666P (gleicher Kanalspeicher wie die neue Version des H777);
+  RB45, RB645, RB47; B3H, B63H, RB647, RT68H, RT668H, NR10, NR610, RB66S, RB666S, RT68B,
+  RT668B, RB669 (T18-Familie); RB65, RB66, RB66P (eine Frequenz und ein Ton pro Kanal).
+  Verbindung, Lesen und Schreiben sind von Grund auf neu geschrieben und mit den
+  Werksdatendateien der Programme geprüft. RB66 und RB66P sowie RB669, RT68H und RT668H
+  antworten mit demselben Kürzel: Die richtige Karte muss von Hand gewählt werden.
+- Einstellungen der 24 Retevis-Modelle: insgesamt 241 Einträge (Squelch,
+  Sendezeitbegrenzung, VOX, Suchlauf, Sprachansage, Batteriesparfunktion, Tastenton,
+  Seitentasten…). Angeboten werden nur die Einträge, die das Programm des Modells
+  anzeigt; die Werte der 24 Werksdateien sind alle zulässige Auswahlen.
+- Programmierpasswort: bei den 24 Retevis-Modellen und bei der neuen Version des Retevis
+  H777 verhindert es weder das Lesen noch das Schreiben, wie in CHIRP (das Programm des
+  Herstellers hält dagegen an, wenn das Passwort nicht das vom Benutzer eingegebene
+  ist). Es ist ein Eintrag der Einstellungen, im Klartext: Man kann es sehen, ändern und
+  entfernen. Länge und Zeichen entsprechen dem Programm des Herstellers: 6 Zeichen (3
+  bei RB45, RB645, RB47 und RB66; 4 bei RB66P), Ziffern und Buchstaben (nur Ziffern bei
+  RB65 und RB66). Bei B3H, B63H, RB45, RB645, RB66 und RB666, deren Programm das
+  Passwortfeld nicht anzeigt, weist ein Hinweis darauf hin.
+- Einstellungen für Funkgeräte, die bisher nur die Kanäle hatten: AnyTone-Familie
+  (AT-D868UV, AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 und DMR-6X2 PRO: 27 Einträge,
+  aus den Speicherbeschreibungen von qdmr und dmrconfig); TYT MD-UV380, MD-UV390,
+  MD-2017 und MD-9600, Retevis RT3S und RT82 (die Einträge des Baofeng DM-1701); Radtel
+  RT-880 und RT-950 Pro mit der Firmware nicFW880 / nicFW950 (17 Einträge, aus der
+  Dokumentation des Autors); TID TD-UV68 (die Einträge des TD-H8); Radtel RT-890 mit der
+  M7OCM-Firmware (53 Einträge).
+- Testversionen: Eine Kopie mit einer höheren Nummer als die letzte veröffentlichte
+  stabile Version zeigt eine Warnleiste («Testversion (Betatest)…») und bietet – nur sie
+  – die nächste Testversion an, die immer von GitHub heruntergeladen wird. Wer die
+  stabile Version verwendet, sieht keine Testversionen.
+- Galerie: 697 Modelle von 54 Marken (647 mit Kanälen, 596 mit Einstellungen).
+
 4.46.0 (21.11.2026)
 -------------------
 - Radtel RT-880G: wird nicht mehr als GMRS- / FRS-Funkgerät angezeigt. Es ist ein

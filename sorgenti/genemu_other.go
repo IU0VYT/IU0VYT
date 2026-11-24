@@ -750,6 +750,12 @@ type rbEmu struct {
 	mu  sync.Mutex
 	sp  *rbSpec
 	img []byte
+	// 4.47, per le prove: ident sostituisce l'identificativo mandato dalla radio;
+	// ackW la conferma dei blocchi scritti (0: 06; un valore diverso da 06 e da 86 è
+	// un rifiuto: il blocco non viene scritto); log tiene gli indirizzi chiesti
+	ident []byte
+	ackW  byte
+	log   []string
 }
 
 func newRBEmu(sp *rbSpec, img []byte) *rbEmu {
@@ -763,6 +769,19 @@ func newRBEmu(sp *rbSpec, img []byte) *rbEmu {
 
 func (bft8Fam) emu(m *genModel, img []byte) genEmu { return newRBEmu(bft8o(m).spec, img) }
 func (t18Fam) emu(m *genModel, img []byte) genEmu  { return newRBEmu(t18o(m).spec, img) }
+
+// 4.47: Retevis RB65 (stesso dialogo dei modelli da 8 byte della famiglia della T18)
+func (rb65Fam) emu(m *genModel, img []byte) genEmu { return newRBEmu(rb65o(m).spec, img) }
+func (rb65Fam) blankImg(m *genModel) []byte {
+	return bytes.Repeat([]byte{0xFF}, rb65o(m).spec.memsize)
+}
+
+// chirpInvalid: canali di prova che la RB65 non può contenere (trasmissione su
+// un'altra frequenza, toni diversi nei due versi)
+func (f rb65Fam) chirpInvalid(m *genModel, c *Chan) bool { ok, _ := f.fit(m, c); return !ok }
+
+// 4.47: lo stesso per RB66 e RB66P (una frequenza e un tono per canale)
+func (f rb66Fam) chirpInvalid(m *genModel, c *Chan) bool { ok, _ := f.fit(m, c); return !ok }
 func (rt21Fam) emu(m *genModel, img []byte) genEmu {
 	// RB28B/RB628B: memoria di 0x1F0 byte letta a blocchi di 0x20 (CHIRP legge
 	// anche l'ultimo blocco intero)
@@ -796,7 +815,11 @@ func (e *rbEmu) serve(p Port) error {
 	if b, err := one(); err != nil || b != 0x02 {
 		return fmt.Errorf("0x02 atteso")
 	}
-	if e.sp.fingers != nil {
+	if e.ident != nil {
+		p.Write(e.ident)
+	} else if e.sp.anyID {
+		p.Write([]byte("SMP558\x00\x00")) // 4.47: identificativo che il programma non controlla
+	} else if e.sp.fingers != nil {
 		id := append(append([]byte{}, e.sp.fingers[0]...), make([]byte, 8)...)[:8]
 		p.Write(id)
 	} else {
@@ -835,6 +858,9 @@ func (e *rbEmu) serve(p Port) error {
 			return err
 		}
 		a, n := int(h[0])<<8|int(h[1]), int(h[2])
+		e.mu.Lock()
+		e.log = append(e.log, fmt.Sprintf("%c%04X", c, a))
+		e.mu.Unlock()
 		switch c {
 		case 'R':
 			e.mu.Lock()
@@ -858,10 +884,18 @@ func (e *rbEmu) serve(p Port) error {
 			if err != nil {
 				return err
 			}
+			if e.ackW != 0 && e.ackW != 0x06 && e.ackW != 0x86 {
+				p.Write([]byte{e.ackW}) // blocco rifiutato: non si scrive
+				continue
+			}
 			e.mu.Lock()
 			copy(e.img[a:], d)
 			e.mu.Unlock()
-			p.Write([]byte{0x06})
+			if e.ackW != 0 {
+				p.Write([]byte{e.ackW})
+			} else {
+				p.Write([]byte{0x06})
+			}
 		default:
 			return fmt.Errorf("comando sconosciuto %02X", c)
 		}

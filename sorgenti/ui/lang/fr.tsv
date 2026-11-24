@@ -6260,7 +6260,6 @@ bd9e89ea	Radio DMR de la marque BTECH (BaofengTech, États-Unis), dérivée des 
 14f85b7a	Deuxième série de la DMR-6X2 (firmware « DMR_6X2II », identifiant « D6X2UV2 ») : le firmware est un fichier différent, n'utilisez pas celui de l'autre radio. Mise à jour guidée avec le programme officiel, comme pour la DMR-6X2. Canaux et zones (expérimental) : comme pour la DMR-6X2, avec les adresses que le programme libre qdmr utilise pour ce modèle.
 25dd7543	MD1702-tools (outils d'OK2MOP pour la liaison USB)
 f023d637	{0} Avec le firmware d'origine, les MD-UV380, MD-UV390, MD-2017 et MD-9600 ont leur propre fiche ; la MD-380 n'est pas gérée.
-6f673a7c	Radio DMR à 4000 canaux, branchée avec son câble USB (port série). Mémoire et protocole des programmes libres dmrconfig et qdmr, vérifiés avec le code d'origine de dmrconfig. Seuls les canaux, les zones et les listes de balayage sont écrits. « Identifier » l'essaie après toutes les autres radios.
 c3827a39	Avec le firmware d'origine : même mémoire et même protocole que la Baofeng DM-1701, en USB en mode DFU (le programme libre dmrconfig utilise le même code pour ces modèles).
 5732831a	AT-D878UV / AT-D878UV Plus
 3ce8fe8d	AT-D878UV Plus
@@ -6268,7 +6267,6 @@ c3827a39	Avec le firmware d'origine : même mémoire et même protocole que la B
 15e852ed	AT-D878UV II Plus
 c9665837	AT-D878UVII Plus
 9835a587	TYT MD-UV390
-33158a39	Elle se branche avec le câble USB de la radio, qui apparaît comme un port série (COM) ; si Windows ne le crée pas, il faut le pilote « USB Virtual Com Port » du constructeur. On modifie les fréquences, les noms (16 caractères), le mode (analogique / DMR), la puissance, la largeur de bande, les tonalités et la réception seule ; dans les canaux DMR, le color code, le slot, le contact et la liste de groupes restent ceux qui sont réglés. Un nouveau canal entre dans la première zone qui a une place libre. Seuls les canaux, les zones et les listes de balayage sont écrits : les contacts, les groupes, les messages, les ID et les réglages ne sont pas touchés. Non testée sur une vraie radio : d'abord la lecture seule.
 10a3ed24	AnyTone AT-D868UV
 9abb65d8	AnyTone AT-D878UV / AT-D878UV Plus
 bccf031b	AnyTone AT-D878UV II Plus
@@ -6277,3 +6275,89 @@ ce976301	Expérimental : modèle absent de dmrconfig, adresses du programme libr
 2219008e	TYT MD-UV390 / Retevis RT3S
 1e8c276f	TYT MD-2017 / Retevis RT82
 33c3b9a7	Comme la Baofeng DM-1701 : même mémoire et même protocole (le programme libre dmrconfig utilise le même code). USB en mode DFU : il faut le pilote USB du programme du constructeur (STTub30) ou WinUSB installé avec Zadig. Si la radio répond avec un autre nom, le programme s'arrête avant de lire ou d'écrire. Non testée sur une vraie radio : d'abord la lecture seule.
+b17da535	Version d'essai (bêta-test) : à utiliser à vos risques. Pour un usage normal, téléchargez la dernière version stable.
+06dce278	Une nouvelle version d'essai d'IU0VYT Flash est disponible : la {0}
+d7aa904d	La version d'essai {0} est disponible
+cedac075	{0} {1} beta.zip
+e35c4375	IU0VYT.Flash-rc.zip
+b02c57ef	Elle se branche avec le câble USB de la radio, qui apparaît comme un port série (COM) ; si Windows ne le crée pas, il faut le pilote « USB Virtual Com Port » du constructeur. On modifie les fréquences, les noms (16 caractères), le mode (analogique / DMR), la puissance, la largeur de bande, les tonalités et la réception seule ; dans les canaux DMR, le color code, le slot, le contact et la liste de groupes restent ceux qui sont réglés. Un nouveau canal entre dans la première zone qui a une place libre. Les canaux, les zones et les listes de balayage sont écrits ; l'ID, le nom, le texte de mise en marche et les réglages généraux seulement si vous les avez modifiés (fenêtre « Réglages »). Les contacts, les groupes et les messages ne sont pas touchés. Non testée sur une vraie radio : d'abord la lecture seule.
+ccfa337a	Amateur
+48392b85	Professionnel
+09f1c584	En mode professionnel, la radio verrouille certains menus et certaines fonctions des touches.
+994331c3	Horloge à l'écran
+9e1ef018	10 minutes
+1ecf177a	30 minutes
+28ee8049	60 minutes
+19cc8f62	120 minutes
+d710bd69	Squelch de la bande A
+d410b8b0	Squelch de la bande B
+ae8b682e	Audio amélioré
+28426410	Tonalité de mise en marche
+5e1257b2	Tonalité de fin d'appel
+a894c919	Alerte de message
+c7a643bc	Alerte d'appel
+d1a378cf	description de la mémoire de qdmr et dmrconfig (réglages généraux de la famille AnyTone AT-D868UV / AT-D878UV)
+91fae64f	documentation publiée par l'auteur du firmware nicFW880 / nicFW950 (nicsure/nicFW880_950_Docs)
+f9fcaec6	Squelch : seuil de bruit
+522125e6	Niveau de bruit sous lequel le squelch s'ouvre (0-127, par défaut 48).
+8ce18fcf	Squelch : plafond de bruit
+a3c04a23	Avec un bruit égal ou supérieur, le squelch se ferme aussitôt (0-127, par défaut 60).
+c8791899	Squelch : hystérésis du bruit
+0e3f061f	Écart entre l'ouverture et la fermeture du squelch (0-20, par défaut 4).
+ea411cd6	Squelch : ralentissement
+f39446ce	Élimination de la queue de squelch (STE)
+a9ac582e	Filtre de bruit (noise gate)
+9be2d17f	Durée du contrôle de la tonalité reçue (s)
+d96223b1	Secondes après lesquelles l'écran s'éteint (0 = toujours allumé).
+0f432b7c	Clignotement de radio allumée (s)
+e39206c8	Toutes les combien de secondes la LED clignote écran éteint (0 = jamais).
+1d1abf17	Gamma de l'écran
+73f5f79d	Luminosité de jour
+32578757	Luminosité de nuit
+aadeb108	Luminosité utilisée
+66c6478b	Jour
+1e15024d	Nuit
+95b373a9	ANYTONE
+96ff393f	Radio DMR à 4000 canaux, branchée avec son câble USB (port série). Mémoire et protocole des programmes libres dmrconfig et qdmr, vérifiés avec le code d'origine de dmrconfig. Les canaux, les zones et les listes de balayage sont écrits et, si vous les avez modifiés, les réglages généraux. « Identifier » l'essaie après toutes les autres radios.
+87746b94	Retevis B3B
+1af651d8	Retevis B63B
+aee8f6b5	Retevis RT22P
+11556f69	Retevis RT622P
+2fbed3fd	cette radio appartient à une série plus ancienne, avec la mémoire dans un autre format : elle n'est pas encore prise en charge
+853a2ccd	Retevis RB666
+57943b27	Retevis RB666P
+81746222	Retevis B3H
+14f64866	Retevis B63H
+743594dc	Retevis RB647
+2766e50b	Retevis RT68H
+20e15187	Retevis RT668H
+07dd5689	cette radio n'a qu'une seule fréquence par canal et émet là où elle reçoit
+7c676702	cette radio n'a qu'une seule tonalité par canal, la même en réception et en émission
+d90b8f70	Retevis RB65
+243f733c	Retevis NR10
+97486db0	Retevis NR610
+e03abc0e	Retevis RB66S
+58943cba	Retevis RB666S
+2166db99	Retevis RT68B
+1ae14815	Retevis RT668B
+763a1530	Retevis RB669
+292132fd	Annonce du canal
+08013239	Contrôle du code (Code switch)
+8173efb6	Type de code spécial (Spec mode)
+01cf6eba	Touche bas (appui long)
+fb9fa33a	Chiffrement
+f189824c	Spec Code 1
+f4898705	Spec Code 2
+7f905037	Spec Code
+df368834	LCD
+660d6fc8	RTV-{0}
+09f7e05f	Même mémoire des canaux que la nouvelle version de la Retevis H777 ; protocole tiré du programme du constructeur. Canaux (16, sans noms) et réglages, mot de passe de programmation compris : un mot de passe déjà présent n'empêche ni la lecture ni l'écriture. Non testée sur une vraie radio : d'abord la lecture seule.
+a29ad221	Protocole tiré du programme du constructeur. Canaux (sans noms) et réglages, mot de passe de programmation compris : un mot de passe déjà présent n'empêche ni la lecture ni l'écriture. Non testée sur une vraie radio : d'abord la lecture seule.
+f1e46926	Radio sans licence avec la même mémoire des canaux que la nouvelle version de la Retevis H777 et un code de connexion qui lui est propre. Protocole tiré du programme du constructeur : 16 canaux sans noms ; les réglages se modifient depuis l'onglet « Réglages », mot de passe de programmation compris. Un mot de passe de programmation déjà présent n'empêche ni la lecture ni l'écriture (comme dans CHIRP). Non testée sur une vraie radio : d'abord la lecture seule.
+6993e4d3	Radio sans licence ; protocole tiré du programme du constructeur : canaux sans noms ; les réglages se modifient depuis l'onglet « Réglages », mot de passe de programmation compris. Un mot de passe de programmation déjà présent n'empêche ni la lecture ni l'écriture (comme dans CHIRP). Un canal que le programme du constructeur affiche comme « chiffré » reste tel quel tant qu'on ne le modifie pas. Non testée sur une vraie radio : d'abord la lecture seule.
+bdcd3c94	Mot de passe de programmation
+0799ad01	Mot de passe que le programme du constructeur demande avant de lire ou d'écrire la radio ; vide = aucun mot de passe. Ce programme lit et écrit la radio même quand il y en a un (comme CHIRP) : ici vous pouvez le voir, le changer ou l'enlever, et la modification arrive dans la radio quand vous l'écrivez. La longueur et les caractères sont ceux du programme du constructeur (chiffres et lettres, majuscules et minuscules distinctes).
+75c613de	Mot de passe que le programme du constructeur demande avant de lire ou d'écrire la radio ; vide = aucun mot de passe. Ce programme lit et écrit la radio même quand il y en a un (comme CHIRP) : ici vous pouvez le voir, le changer ou l'enlever, et la modification arrive dans la radio quand vous l'écrivez. La longueur et les caractères sont ceux du programme du constructeur (chiffres uniquement).
+9bc8db54	Avec un mot de passe défini, le programme du constructeur ne lit et n'écrit la radio que si on lui donne le même mot de passe. D'ici, vous pouvez toujours le voir et l'enlever.
+5655abb1	Le programme du constructeur de ce modèle n'affiche pas la case du mot de passe : si vous en définissez un, ce programme ne lira plus et n'écrira plus la radio tant que vous ne l'aurez pas enlevé d'ici.
+2cc30838	Mot de passe

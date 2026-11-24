@@ -1969,6 +1969,10 @@ func identShape(m *genModel) string {
 		if o.spec != nil {
 			n = o.spec.memsize // 4.9: la RB27V (5 canali) ha la memoria della RB27
 		}
+	case *h777v4Opt:
+		if o.rb66 {
+			n = o.memsize // 4.47: RB66 (224 byte) e RB66P (232): stessa sigla, memorie diverse
+		}
 	}
 	return fmt.Sprintf("%s/%d", famName(m), n)
 }

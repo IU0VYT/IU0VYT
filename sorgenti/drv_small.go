@@ -1189,6 +1189,21 @@ type rbSpec struct {
 	// 0x05 restituisce i 6 byte della password di programmazione, confermati con 0x06
 	preDelay time.Duration
 	pwStep   bool
+	// 4.47 (modelli ricavati dai programmi dei costruttori, famiglia «Analog1» con
+	// blocchi da 8 byte): anyID: l'identificativo (8 byte) non si controlla, come fa
+	// il programma del costruttore. Con pwStep la password di programmazione si chiede
+	// (è il dialogo del programma) ma non ferma mai la lettura né la scrittura
+	// (decisione del 23/11/2026: come CHIRP con la RT18); resta nella memoria a
+	// 0x03B0 e si vede e si cambia fra le impostazioni (settings_rtv447.go)
+	anyID bool
+	// 4.47 (programmi «Analog1» della generazione successiva: RT68B, RT668B, RB669):
+	// rranges: intervalli letti, gli stessi che il programma del costruttore legge e
+	// scrive (nil: tutta la memoria); il resto dell'immagine resta a FF e alla radio non
+	// si chiede mai; ack86: un blocco scritto vale anche se la radio lo conferma con 86,
+	// come accetta il programma; noExitRead: dopo la lettura nessun comando di uscita
+	rranges    [][2]int
+	ack86      bool
+	noExitRead bool
 }
 
 // rbSend: invia e, con i cavi che restituiscono i byte inviati, li scarta
@@ -1252,7 +1267,10 @@ func (s *rawSess) rbEnter(sp *rbSpec) error {
 	}
 	var id []byte
 	known := false
-	if sp.fingers != nil {
+	if sp.anyID {
+		id = readUpTo(s.ctx, s.p, 8, sp.to)
+		known = len(id) == 8
+	} else if sp.fingers != nil {
 		id = readUpTo(s.ctx, s.p, 8, sp.to)
 		for _, f := range sp.fingers {
 			known = known || bytes.HasPrefix(id, f)
@@ -1323,41 +1341,53 @@ func rbDownload(ctx context.Context, port string, baud int, sp *rbSpec, prog Pro
 		return nil, genFail("Identificazione", err)
 	}
 	var data []byte
-	for a := 0; a < sp.memsize; a += sp.block {
-		if ctx.Err() != nil {
-			return nil, errCancelled
-		}
-		prog(a, sp.memsize, "Lettura…")
-		cmd := []byte{'R', byte(a >> 8), byte(a), byte(sp.block)}
-		if err := s.rbSend(sp, cmd); err != nil {
-			return nil, err
-		}
-		resp := readUpTo(ctx, s.p, 4+sp.block, sp.to)
-		if len(resp) != 4+sp.block || !bytes.Equal(resp[:4], append([]byte{'W'}, cmd[1:]...)) {
-			if !sp.quiet {
-				_ = s.send(sp.exitCmd())
-			}
+	rr := [][2]int{{0, sp.memsize}}
+	if sp.rranges != nil {
+		rr, data = sp.rranges, bytes.Repeat([]byte{0xFF}, sp.memsize)
+	}
+	for _, r := range rr {
+		for a := r[0]; a < r[1]; a += sp.block {
 			if ctx.Err() != nil {
 				return nil, errCancelled
 			}
-			return nil, rErr("lettura del blocco 0x%04X non riuscita", a)
-		}
-		if !sp.noAck && (a != 0 || !sp.noAckFirst) {
-			if err := s.rbSend(sp, []byte{0x06}); err != nil {
+			prog(a, sp.memsize, "Lettura…")
+			cmd := []byte{'R', byte(a >> 8), byte(a), byte(sp.block)}
+			if err := s.rbSend(sp, cmd); err != nil {
 				return nil, err
 			}
-			ack := readUpTo(ctx, s.p, 1, sp.to)
-			if len(ack) != 1 || ack[0] != 0x06 {
+			resp := readUpTo(ctx, s.p, 4+sp.block, sp.to)
+			if len(resp) != 4+sp.block || !bytes.Equal(resp[:4], append([]byte{'W'}, cmd[1:]...)) {
 				if !sp.quiet {
 					_ = s.send(sp.exitCmd())
 				}
-				return nil, rErr("nessuna conferma leggendo il blocco 0x%04X", a)
+				if ctx.Err() != nil {
+					return nil, errCancelled
+				}
+				return nil, rErr("lettura del blocco 0x%04X non riuscita", a)
+			}
+			if !sp.noAck && (a != 0 || !sp.noAckFirst) {
+				if err := s.rbSend(sp, []byte{0x06}); err != nil {
+					return nil, err
+				}
+				ack := readUpTo(ctx, s.p, 1, sp.to)
+				if len(ack) != 1 || ack[0] != 0x06 {
+					if !sp.quiet {
+						_ = s.send(sp.exitCmd())
+					}
+					return nil, rErr("nessuna conferma leggendo il blocco 0x%04X", a)
+				}
+			}
+			if sp.rranges != nil {
+				copy(data[a:], resp[4:])
+			} else {
+				data = append(data, resp[4:]...)
 			}
 		}
-		data = append(data, resp[4:]...)
 	}
-	if err := s.rbSend(sp, sp.exitCmd()); err != nil {
-		return nil, err
+	if !sp.noExitRead {
+		if err := s.rbSend(sp, sp.exitCmd()); err != nil {
+			return nil, err
+		}
 	}
 	prog(sp.memsize, sp.memsize, "Lettura completata")
 	return data, nil
@@ -1387,7 +1417,7 @@ func rbUpload(ctx context.Context, port string, baud int, sp *rbSpec, img []byte
 				return err
 			}
 			ack := readUpTo(ctx, s.p, 1, sp.to)
-			if len(ack) != 1 || ack[0] != 0x06 {
+			if len(ack) != 1 || (ack[0] != 0x06 && !(sp.ack86 && ack[0] == 0x86)) {
 				if !sp.quiet {
 					_ = s.send(sp.exitCmd())
 				}
@@ -1767,6 +1797,12 @@ type t18Opt struct {
 	reserved bool     // gli ultimi 3 byte del canale si conservano anche cancellandolo (H777H)
 	extras   []string // bit del canale conservati se il canale esisteva (impostazioni «extra» di CHIRP)
 	lock     string   // canali con frequenza fissa: frs, frs16, murs, pmr, gmrs
+	// 4.47: modello ricavato dal programma del costruttore (non da CHIRP). Il bit 1
+	// delle opzioni a 0 segna un canale di tipo speciale («ScanFreq» nel programma):
+	// frequenza scritta come numero a 32 bit invece che in BCD e toni che il
+	// programma mostra come «cifrati». Un canale così si legge con la sola
+	// frequenza e, se non lo si modifica, si lascia byte per byte com'è.
+	vend bool
 }
 
 type t18Fam struct{}
@@ -1839,6 +1875,25 @@ func init() {
 		return t18Opt{power: "rw", reset: 0xF9, lock: lock, extras: append([]string{"bcl"}, extras...)}
 	}
 	sc := []string{"scramble", "compander", "speccode"}
+	// 4.47: modelli ricavati dai programmi del costruttore
+	pw447 := []genPower{{"Alta", 0, 0}, {"Bassa", 0, 2}}
+	vend447 := func(magic string) t18Opt {
+		sp := spec(magic, nil, 8, false, "b", false, 0x03F0, all)
+		sp.anyID, sp.pwStep = true, true
+		return t18Opt{spec: sp, power: "rw", reset: 0xFB, reserved: true, vend: true, extras: append([]string{"bcl"}, sc...)}
+	}
+	// 4.47: RT68B, RT668B («T68BRAM») e RB669 («H32GRAM»): programmi «Analog1» di una
+	// generazione successiva. Stessa memoria (canali da 16 byte da 0x0010, password a
+	// 0x03B0) e stesso dialogo, con quattro differenze lette nei programmi: la risposta
+	// di identificazione deve cominciare con «S»; si leggono e si scrivono solo i canali
+	// (da 0x0000 a chEnd) e l'ultima parte della memoria (0x03A0-0x03EF); un blocco
+	// scritto vale anche se confermato con 86; la RB669 dopo la lettura non manda «b»
+	vend447b := func(magic string, chEnd int, noExitRead bool) t18Opt {
+		rr := [][2]int{{0x0000, chEnd}, {0x03A0, 0x03F0}}
+		sp := spec(magic, [][]byte{[]byte("S")}, 8, false, "b", false, 0x03F0, rr)
+		sp.rranges, sp.pwStep, sp.ack86, sp.noExitRead = rr, true, true, noExitRead
+		return t18Opt{spec: sp, power: "rw", reset: 0xFB, reserved: true, vend: true, extras: append([]string{"bcl"}, sc...)}
+	}
 	list := []v{
 		{"bf-v8a", "Baofeng", "BF-V8A", "BFV8ARadio", "Baofeng BF-V8A", 16, pmr(2, 0.5), uhf,
 			t18Opt{format: t18FormatN(16), spec: spec("PROGRAM", [][]byte{[]byte("P3107\xF7\x00\x00")}, 8, true, "b", false, 0x03F0, all),
@@ -1893,6 +1948,40 @@ func init() {
 			withSpec(t18Res(t18("frs16", sc...)), spec("C701RAD", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
 		{"rt-h777h-pmr", "Retevis", "H777H_PMR", "H777HPMRRadio", "Retevis H777H (PMR446)", 16, pmr(0.5, 0.5), uhf,
 			withSpec(t18Pow(t18Res(t18("pmr", sc...)), "high"), spec("C701RAD", smp("\x02"), 8, false, "b", false, 0x03F0, all))},
+		// 4.47: Retevis B3H, B63H («C170RAM»), RB647 («C90GRAM»), RT68H e RT668H («H32GRAM»),
+		// ricavati dai programmi del costruttore (famiglia «Analog1», blocchi da 8 byte).
+		// Stesso dialogo del programma della RB29, che CHIRP conosce: 02 e sigla, 02 (8 byte
+		// di identificazione, non controllati), 06, 05 (6 byte: la password di
+		// programmazione, che è anche in memoria a 0x03B0), 06, poi i 126 blocchi da 8 byte
+		// (0x0000-0x03EF) e la chiusura «b». Canale nella stessa posizione e con la stessa
+		// codifica di radtel_t18.py (frequenze in BCD, toni, un byte di opzioni con gli
+		// stessi bit); verificato anche sui file dati di fabbrica dei cinque programmi.
+		// Un canale nuovo prende le opzioni che gli dà il programma (FB); gli ultimi tre
+		// byte del canale, che il programma non tocca, si conservano sempre.
+		{"rt-b3h", "Retevis", "B3H", "IU0VYT_Retevis_B3H", "Retevis B3H", 16, pw447, uhf, vend447("C170RAM")},
+		{"rt-b63h", "Retevis", "B63H", "IU0VYT_Retevis_B63H", "Retevis B63H", 16, pw447, uhf, vend447("C170RAM")},
+		{"rt-rb647", "Retevis", "RB647", "IU0VYT_Retevis_RB647", "Retevis RB647", 16, pw447, uhf, vend447("C90GRAM")},
+		{"rt-rt68h", "Retevis", "RT68H", "IU0VYT_Retevis_RT68H", "Retevis RT68H", 16, pw447, uhf, vend447("H32GRAM")},
+		{"rt-rt668h", "Retevis", "RT668H", "IU0VYT_Retevis_RT668H", "Retevis RT668H", 16, pw447, uhf, vend447("H32GRAM")},
+		// NR10 e NR610 («KY666AM»): stesso dialogo in lettura, stessa mappa del canale e stesse
+		// scritture dei campi della B3H. Il loro programma, quando scrive, rilegge ogni blocco
+		// dei canali («R» dopo la conferma) e lo confronta: è un controllo del programma, non
+		// un passo che la radio richiede (CHIRP scrive la H777H, che ha un programma fatto
+		// allo stesso modo, senza rileggere); qui la rilettura la fa la verifica dopo la scrittura.
+		{"rt-nr10", "Retevis", "NR10", "IU0VYT_Retevis_NR10", "Retevis NR10", 16, pw447, uhf, vend447("KY666AM")},
+		{"rt-nr610", "Retevis", "NR610", "IU0VYT_Retevis_NR610", "Retevis NR610", 16, pw447, uhf, vend447("KY666AM")},
+		// RB66S (22 canali, FRS) e RB666S (16, PMR446), sigla «HZ3GRAh»: stesso dialogo e stesso
+		// canale. Dopo i 126 blocchi il loro programma legge anche un blocco di sole
+		// informazioni a 0xDD00, che non scrive mai: qui non si legge. Gamme come nel
+		// file di configurazione del programma (460-470 e 446-447 MHz).
+		{"rt-rb66s", "Retevis", "RB66S", "IU0VYT_Retevis_RB66S", "Retevis RB66S", 22, pw447, []band{{460000000, 470000000}}, vend447("HZ3GRAh")},
+		{"rt-rb666s", "Retevis", "RB666S", "IU0VYT_Retevis_RB666S", "Retevis RB666S", 16, pw447, []band{{446000000, 447000000}}, vend447("HZ3GRAh")},
+		// RT68B (FRS) e RT668B (PMR446), 16 canali; RB669, 32 canali VHF e UHF (stessa sigla
+		// di RT68H e RT668H, ma con il doppio dei canali). Gamme come nei file di
+		// configurazione dei programmi.
+		{"rt-rt68b", "Retevis", "RT68B", "IU0VYT_Retevis_RT68B", "Retevis RT68B", 16, pw447, []band{{462550000, 462725000}}, vend447b("T68BRAM", 0x0110, false)},
+		{"rt-rt668b", "Retevis", "RT668B", "IU0VYT_Retevis_RT668B", "Retevis RT668B", 16, pw447, []band{{446006250, 446193750}}, vend447b("T68BRAM", 0x0110, false)},
+		{"rt-rb669", "Retevis", "RB669", "IU0VYT_Retevis_RB669", "Retevis RB669", 32, pw447, []band{{136000000, 470000000}}, vend447b("H32GRAM", 0x0220, true)},
 	}
 	for _, x := range list {
 		o := x.o
@@ -1902,6 +1991,9 @@ func init() {
 		m := &genModel{ID: x.id, Vendor: x.vendor, Model: x.model, RClass: x.rclass, Name: x.name, Slots: x.slots, First: 1,
 			Powers: x.pw, Bands: x.bands, Narrow: true, HasScan: true, DCS: dtcsCodes, Baud: 9600,
 			Fam: t18Fam{}, Opt: &o, Notes: "Radio senza nomi dei canali."}
+		if o.vend {
+			m.NoChirp, m.Notes = true, rb45Note447
+		}
 		if x.rclass == "RT647Radio" {
 			o.spec.enterAck = 0xF0
 		}
@@ -2035,6 +2127,16 @@ func t18ToneEnc(dst []byte, t genTone) {
 func (f t18Fam) Get(m *genModel, img []byte, i int) *Chan {
 	o := t18o(m)
 	r := f.rec(m, i)
+	if o.vend && !r.F("unknown2").Bool(img) && !bytes.Equal(r.F("rxfreq").Raw(img), []byte{0xFF, 0xFF, 0xFF, 0xFF}) {
+		// 4.47: canale «cifrato» dei modelli ricavati dai programmi dei costruttori
+		b := r.F("rxfreq").Raw(img)
+		c := &Chan{Rx: (int64(b[3])<<24 | int64(b[2])<<16 | int64(b[1])<<8 | int64(b[0])) * 10}
+		c.Tx = c.Rx
+		c.Narrow = r.F("narrow").Bool(img)
+		c.Scan = !r.F("skip").Bool(img)
+		c.Power = m.powerSem(int(1 - r.F("highpower").Int(img)))
+		return c
+	}
 	rx := r.F("rxfreq").Int(img) * 10
 	if rx == 0 || bytes.Equal(r.F("rxfreq").Raw(img), []byte{0xFF, 0xFF, 0xFF, 0xFF}) {
 		return nil
@@ -2132,6 +2234,12 @@ func (f t18Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 		return nil
 	}
 	wasEmpty := f.Get(m, img, i) == nil
+	if o.vend && !wasEmpty && !r.F("unknown2").Bool(img) {
+		if old := f.Get(m, img, i); old.Rx == c.Rx && old.Tx == c.Tx && old.TxOff == c.TxOff && old.RxTone == c.RxTone && old.TxTone == c.TxTone &&
+			old.Scan == c.Scan && old.Narrow == c.Narrow && m.powerIndex(old.Power) == m.powerIndex(c.Power) {
+			return nil // 4.47: canale «cifrato» non modificato: resta com'è
+		}
+	}
 	oldHigh := r.F("highpower").Int(img)
 	keep := map[string]int64{}
 	for _, k := range o.extras {
@@ -2147,6 +2255,9 @@ func (f t18Fam) Set(m *genModel, img []byte, i int, c *Chan) error {
 	}
 	if o.reserved {
 		r.SetRaw(img, append(make([]byte, 13), rsvd...))
+		if o.vend {
+			r.Raw(img)[12] = o.reset // 4.47: un canale nuovo parte dalle opzioni che gli dà il programma del costruttore
+		}
 	} else {
 		r.SetRaw(img, append(make([]byte, 12), o.reset, 0xFF, 0xFF, 0xFF))
 	}

@@ -1,6 +1,6 @@
 IU0VYT FLASH - KANÄLE, RELAIS UND FIRMWARE VON FUNKGERÄTEN
 ==========================================================
-Version 4.46.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
+Version 4.47.0 - eine einzige ausführbare Datei, keine Installation, Oberfläche in 13
 Sprachen.
 Autor: Daniele "IU0VYT" Bonifazi - https://www.qrz.com/db/IU0VYT
 Website: https://iu0vyt.github.io/IU0VYT/
@@ -11,6 +11,23 @@ Dies ist die deutsche Übersetzung von LEGGIMI.txt (das italienische Original is
 maßgebliche Text). Die Neuerungen früherer Versionen stehen im italienischen
 CHANGELOG.txt im Hauptordner (CHANGELOG.txt hier enthält den übersetzten Eintrag
 4.13).
+Neu in 4.47.0:
+- 24 weitere Retevis-Funkgeräte, aus den Programmen des Herstellers ermittelt: B3B,
+  B63B, RT22P, RT622P, RB666, RB666P, RB45, RB645, RB47, B3H, B63H, RB647, RT68H,
+  RT668H, NR10, NR610, RB66S, RB666S, RB65, RB66, RB66P, RT68B, RT668B, RB669. Kanäle
+  und Einstellungen (insgesamt 241 Einträge). Keines wurde an echter Hardware getestet:
+  zuerst nur lesen.
+- Programmierpasswort dieser Funkgeräte und der neuen Version des Retevis H777: Wie in
+  CHIRP verhindert es weder das Lesen noch das Schreiben. Es wird im Klartext bei den
+  Einstellungen angezeigt und lässt sich ändern oder entfernen, mit der Länge und den
+  Zeichen des Herstellerprogramms.
+- Einstellungen für Funkgeräte, die bisher nur die Kanäle hatten: AnyTone-Familie
+  (AT-D868UV, AT-D878UV, AT-D878UV II Plus, BTECH DMR-6X2 und DMR-6X2 PRO), TYT
+  MD-UV380, MD-UV390, MD-2017 und MD-9600, Retevis RT3S und RT82, Radtel RT-880 und
+  RT-950 Pro mit der nicFW-Firmware, TID TD-UV68, Radtel RT-890 mit der M7OCM-Firmware.
+- Testversionen: Eine Kopie mit einer höheren Nummer als die letzte stabile Version
+  zeigt eine Warnleiste und bietet – nur sie – die folgenden Testversionen an.
+- Galerie: 697 Modelle von 54 Marken (647 mit Kanälen, 596 mit Einstellungen).
 Neu in 4.46.0:
 - Radtel RT-880G: wird nicht mehr als GMRS- / FRS-Funkgerät angezeigt. Es ist ein
   VHF/UHF-Amateurfunkgerät, wie das RT-880 und das RT-860: die Warnung «Funkgerät
